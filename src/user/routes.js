@@ -1,11 +1,11 @@
-import { App } from "antd";
+// import { App } from "antd";
 
-const userRoutes = [
-    {
-        path: '/',
-        component: App,
-        exact: true
-    }
-]
+// const userRoutes = [
+//     {
+//         path: '/',
+//         component: App,
+//         exact: true
+//     }
+// ]
 
-export default userRoutes;
+// export default userRoutes;

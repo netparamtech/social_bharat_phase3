@@ -45,12 +45,12 @@ const AdminLayout = ({ children }) => {
       <div id="wrapper">
         <Sidebar />
         {/*  Content Wrapper  */}
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" className="d-flex flex-column">
           {/* Main Content  */}
           <div id="content">
             <Topbar />
             {/* Begin Page Content */}
-            <div class="container-fluid">
+            <div className="container-fluid">
               {/* <!-- Content Row --> */}
               <main>{children}</main>
             </div>
@@ -61,8 +61,8 @@ const AdminLayout = ({ children }) => {
       </div>
 
       {/* Scroll to Top Button--> */}
-      <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
+      <a className="scroll-to-top rounded" href="#page-top">
+        <i className="fas fa-angle-up"></i>
       </a>
     </>
   );

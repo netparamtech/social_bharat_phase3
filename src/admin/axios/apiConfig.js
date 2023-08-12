@@ -26,7 +26,7 @@ const apiWithHeaders = axios.create({
 
 // Interceptor to set headers before each request
 apiWithHeaders.interceptors.request.use((config) => {
-  const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token.token);
   config.headers = setHeaders(token);
   return config;
 });

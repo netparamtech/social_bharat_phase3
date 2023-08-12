@@ -1,4 +1,4 @@
-import apiConfig from "../axios/apiConfig"
+import {apiConfig, apiWithHeaders} from "../axios/apiConfig"
 
 export const login = async (email, password) => {
     try {

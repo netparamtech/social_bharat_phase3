@@ -9,7 +9,7 @@ const LoginPage = () => {
    return (
     <>
     <Helmet>
-        <link rel="stylesheet" href="/admin/styles/sb-admin-2.min.css" />
+        <link rel="stylesheet" href="/admin/css/sb-admin-2.min.css" />
     </Helmet>
       <div className="container">
         <div className="row justify-content-center">

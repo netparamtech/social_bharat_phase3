@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import userRoutes from './user/routes';
 import adminRoutes from "./admin/routes";
+import ProtectedRoute from "./admin/utils/ProtectedRoute";
 
 function App() {
   return (
@@ -20,7 +21,14 @@ function App() {
           <Routes>
             {
               adminRoutes.map((route, index) => (
-                <Route key={index} path={route.path} element={<route.component />} />
+                <Route key={index} path={route.path} 
+                element={
+                  route.path !== '/admin' ? (
+                    <ProtectedRoute element={<route.component />} />
+                  ) : (
+                    <route.component />
+                  )
+                } />
               ))
             }
           </Routes>

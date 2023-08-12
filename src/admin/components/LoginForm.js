@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { login } from '../services/AdminService';
 
 const LoginForm = () => {
 
@@ -16,9 +17,46 @@ const LoginForm = () => {
     setPassword(event.target.value);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log(email, password)
+   
+    try{
+
+     const response = await login(email,password);
+
+     if (response && response.status === 200) {
+      setErrors('');
+      setMessage(response.data.message);
+      setAlertClass('alert-success');
+      localStorage.setItem('token', response.data.token.token);
+
+    }
+
+
+    }catch(error){
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+      }
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+        
+      }
+      else if (error.response && error.response.status === 404) {
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+        
+      }
+
+    }
   }
   return (
     <form className="user" onSubmit={handleSubmit}>

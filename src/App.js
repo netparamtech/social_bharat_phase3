@@ -24,7 +24,7 @@ function App() {
                 <Route key={index} path={route.path} 
                 element={
                   route.path !== '/admin' ? (
-                    <ProtectedRoute element={<route.component />} />
+                    <ProtectedRoute element={route.component} />
                   ) : (
                     <route.component />
                   )

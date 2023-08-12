@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element: Component }) => {
   if (isAuthenticated) {
     return <Component />;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/admin" />;
   }
 };
 

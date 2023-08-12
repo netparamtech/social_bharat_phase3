@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { login } from '../services/AdminService';
+import { useDispatch } from 'react-redux';
+import {login as adminlogin} from '../actions/authActions';
+import { useNavigate } from 'react-router';
 
 const LoginForm = () => {
 
@@ -9,6 +12,9 @@ const LoginForm = () => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
   const [alertClass, setAlertClass] = useState('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -28,7 +34,10 @@ const LoginForm = () => {
       setErrors('');
       setMessage(response.data.message);
       setAlertClass('alert-success');
-      localStorage.setItem('token', response.data.token.token);
+      dispatch(adminlogin(response.data.user));
+      setTimeout(()=>{
+        navigate('/admin/dashboard')
+      },1000)
 
     }
 

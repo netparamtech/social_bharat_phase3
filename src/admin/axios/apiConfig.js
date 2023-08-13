@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { adminStore } from '../store';
 
 // Create a base axios instance without default headers
 const apiConfig = axios.create({
@@ -26,7 +26,7 @@ const apiWithHeaders = axios.create({
 
 // Interceptor to set headers before each request
 apiWithHeaders.interceptors.request.use((config) => {
-  const token = useSelector((state) => state.auth.token.token);
+  const token = adminStore.getState().auth.token?.token; // Use optional chaining
   config.headers = setHeaders(token);
   return config;
 });

@@ -46,6 +46,42 @@ function Sidebar() {
         </div>
       </li>
 
+      {/* <!-- Nav Item - Comminity Collapse Menu --> */}
+
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCommunity"
+          aria-expanded="true" aria-controls="collapseTwo">
+          <i className="fas fa-fw fa-folder"></i>
+
+          <span>Communities</span>
+        </a>
+        <div id="collapseCommunity" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+
+            <a className="collapse-item" href="/admin/create-community">Create</a>
+            <a className="collapse-item" href="/admin/index">List</a>
+          </div>
+        </div>
+      </li>
+
+      {/* <!-- Nav Item - Banner Collapse Menu --> */}
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanner"
+          aria-expanded="true" aria-controls="collapseBanner">
+           <i className="fas fa-fw fa-folder"></i>
+
+          <span>Banners</span>
+        </a>
+        <div id="collapseBanner" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+
+            <a className="collapse-item" href="create-banner">Create</a>
+            <a className="collapse-item" href="banner-index">List</a>
+          </div>
+        </div>
+      </li>
+
+
       {/* Nav Item - Utilities Collapse Menu */}
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

@@ -3,6 +3,9 @@ import DashboardPage from "./pages/DashboardPage";
 import ChangeProfilePage from "./pages/ChangeProfilePage";
 import CreateCommunityPage from "./pages/CreateCommunityPage";
 import UpdateCommunityPage from "./pages/UpdateCommunityPage";
+import CreateBannerPage from "./pages/CreateBannerPage";
+import UpdateBannerPage from "./pages/UpdateBannerPage";
+import SettingPage from "./pages/SettingPage";
 
 const adminRoutes = [
     {
@@ -32,6 +35,24 @@ const adminRoutes = [
     {
         path: '/admin/update-community',
         component: UpdateCommunityPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/create-banner',
+        component: CreateBannerPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/update-banner',
+        component: UpdateBannerPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/setting',
+        component: SettingPage,
         exact: true
     },
 ]

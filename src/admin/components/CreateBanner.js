@@ -141,7 +141,7 @@ const CreateBanner = () => {
                 defaultValue={status}
                 onChange={handleStatusChange}
               >
-                <option value="Active" selected>Active</option>
+                <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
               {errors.status && <span className='validation-error'>{errors.status}</span>}

@@ -9,3 +9,12 @@ export const login = async (email, password) => {
     }
 }
 
+export const logout = async () => {
+    try{
+        const response = await apiWithHeaders.post('/logout')
+        return response;
+    }catch(error) {
+        throw error;
+    }
+}
+

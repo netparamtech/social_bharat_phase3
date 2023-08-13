@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import adminStore from '../store';
+import { logout } from '../actions/authActions';
 
 // Create a base axios instance without default headers
 const apiConfig = axios.create({
@@ -32,5 +33,17 @@ apiWithHeaders.interceptors.request.use((config) => {
   config.headers = setHeaders(token);
   return config;
 });
+
+// Axios Interceptor
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response.status === 401 /* && error.response.data.error === 'TokenExpiredError' */) {
+      store.dispatch(logout());
+        history.push('/admin');
+        return Promise.reject(refreshError);
+    }
+  }
+);
 
 export { apiConfig, apiWithHeaders };

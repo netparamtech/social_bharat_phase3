@@ -10,13 +10,13 @@ function App() {
     
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
-          {/* <Routes>
+          <Routes>
             {
               userRoutes.map((route, index) => (
                 <Route key={index} path={route.path} element={<route.component />} />
               ))
             }
-          </Routes> */}
+          </Routes>
         
           <Routes>
             {

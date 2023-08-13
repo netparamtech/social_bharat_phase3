@@ -1,9 +1,9 @@
-import { App } from "antd";
+import Homepage from './pages/HomePage';
 
 const userRoutes = [
     {
         path: '/',
-        component: App,
+        component: Homepage,
         exact: true
     }
 ]

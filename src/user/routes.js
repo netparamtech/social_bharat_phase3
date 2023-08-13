@@ -1,11 +1,11 @@
-// import { App } from "antd";
+import Homepage from './pages/HomePage';
 
-// const userRoutes = [
-//     {
-//         path: '/',
-//         component: App,
-//         exact: true
-//     }
-// ]
+const userRoutes = [
+    {
+        path: '/',
+        component: Homepage,
+        exact: true
+    }
+]
 
-// export default userRoutes;
+export default userRoutes;

@@ -68,7 +68,7 @@ function Sidebar() {
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanner"
           aria-expanded="true" aria-controls="collapseBanner">
-           <i className="fas fa-fw fa-folder"></i>
+          <i className="fas fa-fw fa-folder"></i>
 
           <span>Banners</span>
         </a>
@@ -143,6 +143,13 @@ function Sidebar() {
         <a className="nav-link" href="tables.html">
           <i className="fas fa-fw fa-table"></i>
           <span>Tables</span>
+        </a>
+      </li>
+
+      <li className="nav-item">
+        <a className="nav-link" href="/admin/setting">
+          <i className="fas fa-fw fa-cog"></i>
+          <span>Setting</span>
         </a>
       </li>
 

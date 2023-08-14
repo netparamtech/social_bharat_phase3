@@ -1,11 +1,11 @@
+import UserLayout from "../layouts/UserLayout";
 import Banner from "../components/Banner";
-import Matrimonial from "../components/Matrimonial";
 import OurPartner from "../components/OurPartner";
+import WhySocial from "../components/WhySocial";
 import PromoteBusiness from "../components/PromoteBusiness";
 import Services from "../components/Services";
+import Matrimonial from "../components/Matrimonial";
 import Testimonials from "../components/Testimonial";
-import WhySocial from "../components/WhySocial";
-import UserLayout from "../layouts/UserLayout";
 
 const HomePage = () => {
     return (

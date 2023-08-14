@@ -2,7 +2,8 @@ import React from 'react';
 
 const Footer = () => {
     return (
-            <div  className="container text-start lh-lg wow animate__animated animate__fadeInUp">
+        <div className=''>
+            <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
                 <div className="row pt-5 pb-5">
                     <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
                         <h3>Social Bharat</h3>
@@ -70,6 +71,7 @@ const Footer = () => {
                         </p>
                     </div>
                 </div>
+            </div>
                 {/* Footer End */}
             <div id="footer-end">
                 <div className="container">

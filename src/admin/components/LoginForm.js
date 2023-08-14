@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../services/AdminService';
 import { useDispatch } from 'react-redux';
 import {login as adminlogin} from '../actions/authActions';
+import {login as userlogin} from '../../user/actions/userAction';
 import { useNavigate } from 'react-router';
 
 const LoginForm = () => {

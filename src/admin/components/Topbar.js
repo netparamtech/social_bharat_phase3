@@ -1,7 +1,7 @@
 import React from 'react';
 import { logout } from '../services/AdminService';
 import { useDispatch, useSelector } from 'react-redux';
-import {logout as adminLogout} from '../actions/authActions'
+import { logout as adminLogout } from '../actions/authActions'
 import { useNavigate } from 'react-router-dom';
 
 function Topbar() {
@@ -13,16 +13,17 @@ function Topbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = async() => {
-    try{
+  const handleLogout = async () => {
+    try {
       const response = await logout();
-      if(response&&response.status===200){
+      if (response && response.status === 200) {
         dispatch(adminLogout())
         navigate('/admin')
       }
-    } catch(error) {
-      if(error.response&&error.response.status===401){
-          navigate('/admin')
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(adminLogout())
+        navigate('/admin')
       }
     }
   }
@@ -130,8 +131,8 @@ function Topbar() {
         {/* Nav Item - User Information */}
         <li className="nav-item dropdown no-arrow">
           <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">Welcome {user&&user.name} </span>
-            <img className="img-profile rounded-circle" src={user&&user.photo?user.photo:defaultPhoto}/>
+            <span className="mr-2 d-none d-lg-inline text-gray-600 small">Welcome {user && user.name} </span>
+            <img className="img-profile rounded-circle" src={user && user.photo ? user.photo : defaultPhoto} />
           </a>
           {/* Dropdown - User Information */}
           <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

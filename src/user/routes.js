@@ -8,6 +8,11 @@ import SetPasswordPage from './pages/SetPasswordPage';
 import UpdateProfilePhotoPage from './pages/UpdateProfilePhotoPage';
 import UpdateMobilePage from './pages/UpdateMobilePage';
 import UpdateBasicProfilePage from './pages/UpdateBasicProfilePage';
+import UpdateMatrimonialPage from './pages/UpdateMatrimonialPage';
+import UpdateJobPage from './pages/UpdateJobPage';
+import UpdateContactPage from './pages/UpdateContactPage';
+import UpdateEducationPage from './pages/UpdateEducationPage';
+import UpdateBusinessPage from './pages/UpdateBusinessPage';
 
 const userRoutes = [
     {
@@ -70,6 +75,36 @@ const userRoutes = [
     {
         path: '/update-basic-profile',
         component: UpdateBasicProfilePage,
+        exact: true
+    },
+
+    {
+        path: '/update-matrimonial-profile',
+        component: UpdateMatrimonialPage,
+        exact: true
+    },
+
+    {
+        path: '/update-job-profile',
+        component: UpdateJobPage,
+        exact: true
+    },
+
+    {
+        path: '/update-contact',
+        component: UpdateContactPage,
+        exact: true
+    },
+
+    {
+        path: '/update-education-profile',
+        component: UpdateEducationPage,
+        exact: true
+    },
+
+    {
+        path: '/update-business-profile',
+        component: UpdateBusinessPage,
         exact: true
     },
    

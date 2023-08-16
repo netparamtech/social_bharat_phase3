@@ -4,6 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { updateBasicProfile, updateImage } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userAction";
 
 const UpdateProfilePhoto = () => {
 
@@ -96,7 +97,7 @@ const UpdateProfilePhoto = () => {
         setErrors('');
         setMessage(response.data.message);
         setAlertClass('alert-success');
-        // dispatch(login(response.data.data));
+        dispatch(login(response.data.data));
         setTimeout(() => {
           navigate('/dashboard');
         }, 1000);

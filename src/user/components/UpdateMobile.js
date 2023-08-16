@@ -99,11 +99,8 @@ const UpdateMobile = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
-                localStorage.setItem('token', response.data.token.token);
-                setUserId(response.data.data.id);
-
-                dispatch(login(response.data.data, response.data.token))
-
+                console.log("check mobile no",response.data.data,response.data.token)
+                dispatch(login(response.data.data))
                 clearInterval(tick.current)
                 setMobile('')
                 setOTP('')

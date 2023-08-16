@@ -206,6 +206,7 @@ hr {
     padding: 6px 10px;
 }
 
+
 /* why social section */
 #why-social-section h1, #partner h1{
     font-weight: 600;
@@ -579,8 +580,21 @@ position: sticky;
     border: none;
     cursor: pointer;
     border-radius: 100%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    padding: 4px;
+}
+
+#profile-name-logo  img{
+    /* background-color: #008374; */
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
     padding: 4px;
 }
 

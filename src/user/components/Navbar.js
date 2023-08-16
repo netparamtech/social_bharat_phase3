@@ -61,11 +61,13 @@ const Navbar = () => {
             <li className="nav-item me-3">
               <a className="nav-link" href="contact.html">Contact</a>
             </li>
-            {user.isAuthenticated ? (<li className="nav-item me-3">
+            {user.isAuthenticated ? (
+            <li className="nav-item me-3">
               <div className="dropdown " id="profile-name-logo">
-                <button className="dropbtn  fw-bold fs-5" type="button" data-bs-toggle="dropdown" >
+                
+                {(user&&user.user&&user.user.photo&&user.user.photo)?(<img src={user.user.photo} data-bs-toggle="dropdown" className=''  />):(<button className="dropbtn  fw-bold fs-5" type="button" data-bs-toggle="dropdown" >
                   {user && user.user && user.user.name.charAt(0)}
-                </button>
+                </button>)}
                 <ul className="dropdown-menu" >
                 <li><a className="dropdown-item" href="/update-photo">Update Profile Picture</a></li>
                   <li><a className="dropdown-item" href="/setPassword">Change Password</a></li>

@@ -10,10 +10,7 @@ const UpdateProfilePhotoPage = () => {
                 <div className="container">
                     <div id="profile-page">
                         <div className="row">
-                            
-                           
                                 <UpdateProfilePhoto />
-                            
                         </div>
                     </div>
                 </div>

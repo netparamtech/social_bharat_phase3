@@ -41,7 +41,6 @@ const UpdateProfilePhoto = () => {
       setProfileImage(file);
       setPreviewImage(""); // Clear previous preview image
       setPreviewImage(URL.createObjectURL(file));
-      getTempImageUrl();
     },
   });
 

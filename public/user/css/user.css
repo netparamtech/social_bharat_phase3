@@ -558,17 +558,17 @@ position: sticky;
 }
 
 /* Profile Page */
-#profile-page{
-    margin-top: 90px;
+#profile-page {
+    margin-top: 67px;
 }
 
-#profile-page-bg{
-    background-color: #e7e2e2f4;
+#profile-page-bg {
+    background-color: #e7efef;
     padding-bottom: 20px;
 }
 
-#profile-page-bg .bg-white-smoke{
-    background-color: whitesmoke;
+#profile-page-bg .bg-white-smoke {
+    background-color: #f9fafa;
 }
 
 #profile-name-logo .dropbtn {
@@ -582,68 +582,80 @@ position: sticky;
     width: 40px;
     height: 40px;
     padding: 4px;
-  }
+}
 
-  #profile-name-logo .dropbtn:hover, .dropbtn:focus {
+#profile-name-logo .dropbtn:hover,
+.dropbtn:focus {
     background-color: #009282;
-  }
-  
-  #profile-name-logo  .dropdown-menu a:hover {
+}
+
+#profile-name-logo .dropdown-menu a:hover {
     color: #009282;
-  }
-  
- #profile-name-logo .dropdown-menu {
+}
+
+#profile-name-logo .dropdown-menu {
     min-width: 100px;
     margin-top: 6px;
- }
-    
+}
+
 /* .................... */
-#profile-page .side-bar{
+#profile-page .side-bar {
     position: sticky;
     z-index: 1;
-    top: 100PX;
+    top: 90PX;
     left: 50PX;
 }
 
-#profile-page .side-bar-stickey-top{
+#profile-page .side-bar-stickey-top {
     position: sticky;
     top: 70px;
     left: 0;
-    z-index: 1;}
+    z-index: 1;
+}
 
-#profile-page .side-bar h4{
+#profile-page .side-bar .profile-detail  h4 {
     color: #32353a;
     font-size: 18px;
     font-weight: 700px;
     font-family: sans-serif;
     padding-bottom: 0;
     margin-bottom: 0px;
+    /* float: right; */
+    top: 20px;
+    /* right: 80px; */
 }
 
-#profile-page .side-bar .description{
+
+
+
+.profile-detail{
+    /* float: right; */
+}
+
+#profile-page .side-bar .description {
     line-height: 24px;
     font-size: 14px;
-    padding-top: 0px !important ;
+    padding-top: 0px !important;
 }
 
-#profile-page .side-bar .profile-side-bar-details{
+#profile-page .side-bar .profile-side-bar-details {
     font-size: 15px;
     line-height: 2rem;
 }
 
-#profile-page .side-bar .card-body nav a{
+#profile-page .side-bar .card-body nav a {
     color: #008374 !important;
 }
 
-#profile-page .side-bar .card-body nav a:hover{
-   color: #009282 !important;
+#profile-page .side-bar .card-body nav a:hover {
+    color: #009282 !important;
 }
 
-#profile-page .card-header-tabs .nav-link{
+#profile-page .card-header-tabs .nav-link {
     color: #008374;
 }
 
-#profile-page .card-header-tabs .nav-link:hover{
+#profile-page .card-header-tabs .nav-link:hover {
     color: #008577;
 }
 
@@ -653,7 +665,7 @@ position: sticky;
 #profile-page #businessInfo,
 #profile-page #jobInfo,
 #profile-page #contactInfo,
-#profile-page #search-panel{
+#profile-page #search-panel {
     font-size: 12px;
     font-family: sans-serif;
 }
@@ -664,42 +676,45 @@ position: sticky;
 #profile-page #contactInfo h1,
 #profile-page #businessInfo h1,
 #profile-page #jobInfo h1,
-#profile-page #search-panel h1{
+#profile-page #search-panel h1 {
     font-size: 16px;
     margin-bottom: 0px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 600;
 }
 
-#profile-page .card-body{
+#profile-page .card-body {
     padding-top: 0px !important;
+}
+
+#profile-page a i {
+    color: #008374;
 }
 
 /* User Photo Edit */
 .container-profilepic {
-    width: 130px;
-    height: 130px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    /* border: 1px solid rgb(245, 244, 244) ; */
     margin-top: 10px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: cover;
-    background: linear-gradient(yellow,orange,pink,purple,blue) ;
+    background: linear-gradient(yellow, orange, pink, purple, blue);
     padding: 2px;
+    /* display: inline-flex; */
+    margin-left: 20px;
 }
-
 
 .middle-profilepic {
     background-color: #ffffffb0;
 }
 
 .container-profilepic:hover .middle-profilepic {
-    display: flex!important;
+    display: flex !important;
     cursor: pointer;
 }
-
 /* ......Search Bar........ */
 #search-panel .container-input {
     position: relative;
@@ -1118,3 +1133,43 @@ span {
     color: gray;
 }
 /* ------------------- */
+
+/* --------Set Password----------- */
+#setPassword{
+    margin-top: 67px;
+    background-color: #e7efef;
+    padding-bottom: 90px;
+    padding-top: 90px;
+    box-shadow: 5px 4px 30px #f4f4f4;
+    
+}
+
+#setPassword h5{
+    color: rgb(57, 57, 57);
+}
+
+#setPassword .setPassword{
+    width: 400px;
+    height: auto;
+    background-color: #f9fafa;
+}
+
+#setPassword .setPassword input{
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 1rem 0;
+    font-size: 15px;
+    letter-spacing: 1px;
+    outline: none;
+    border: 1px solid rgb(187, 187, 187);
+    color: gray;
+
+}
+
+/* Error */
+.validation-error {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #de0000;
+  }

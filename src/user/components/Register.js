@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { apiConfig } from '../axios/apiConfig';
+import { login } from '../actions/userAction';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -47,6 +48,13 @@ const Register = () => {
         SetCommunity_id(parseInt(event.target.value, 10));
     };
 
+    //fetch all active communities
+
+    const fetchAllActiveCommunities = async () => {
+        const response = await apiConfig.get('/communities/1')
+        setCasts(response.data.data)
+      }
+
 
 
     // Function to start the OTP timer
@@ -70,7 +78,7 @@ const Register = () => {
             }
 
             if ((minutes === 0 && seconds === 0) || minutes < 0 || seconds < 0) {
-                console.log(minutes * 60 + seconds, "i am out")
+                
                 setOTP(''); // Clear the OTP
                 setOtpTimerExpired(true);
                 setAddDisabledClass(true)
@@ -119,17 +127,21 @@ const Register = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
-                localStorage.setItem('token', response.data.token.token);
+                
                 setUserId(response.data.data.id);
+                dispatch(login(response.data.data, response.data.token));
 
-                clearInterval(tick.current)
-                setName('')
-                setMobile('')
-                setOTP('')
+                clearInterval(tick.current);
+                setName('');
+                setMobile('');
+                setOTP('');
+                navigate('/dashboard');
 
-                // setTimeout(() => {
-                //     navigate('/user/change-password')
-                // }, 2000)
+                if(response.data.data.is_password_set){
+                    navigate('/dashboard');
+                } else {
+                    navigate('/setPassword');
+                }
 
             }
         } catch (error) {
@@ -264,7 +276,9 @@ const Register = () => {
         }
     }, [timerStarted]);
 
-
+    useEffect(() => {
+        fetchAllActiveCommunities();
+      }, []);
 
 
     return (

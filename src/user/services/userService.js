@@ -1,0 +1,41 @@
+import {apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
+
+//update image section
+export const updateImage = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-image',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const updateBasicProfile = async (data) => {
+   
+    try {
+        const response = await apiWithHeaders.put('/profile/update-basic-profile',data);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//update mobile section
+export const updateAttemptMobile = async (mobile) => {
+    try {
+        const response = await apiWithHeaders.put('/profile/attempt-update-mobile',{mobile});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const updateMobile = async (mobile,otp) => {
+   
+    try {
+        const response = await apiWithHeaders.put('/profile/update-mobile',{mobile,otp});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

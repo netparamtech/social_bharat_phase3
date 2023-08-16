@@ -8,7 +8,7 @@ const SideBar = () => {
                 <div className="card-body bg-white-smoke">
                     <div className="row">
                         <div className="col-lg-6 container-profilepic card card-block-md overflow-hidden">
-                            <img src="img/slide-1.webp" className="img-fluid max-width-100" alt="Profile Picture" />
+                            <img src="user/images/slide-1.webp" className="img-fluid max-width-100" alt="Profile Picture" />
                             <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">
                                 <div className="text-profilepic text-success">
                                     <i className="fas fa-camera fs-6"></i>
@@ -25,20 +25,20 @@ const SideBar = () => {
                     </div>
 
                     <nav className="nav profile-side-bar-details d-md-block d-none">
-                        <a data-toggle="tab" className="nav-link" href="search.html"> <i className="fa-solid fa-magnifying-glass"></i>
+                        <a data-toggle="tab" className="nav-link" href="search.html"> <i className="fa-solid fa-magnifying-glass me-1"></i>
                             Search People</a>
-                        <a data-toggle="tab" className="nav-link active" href="#basicProfile"> <i className="fa-solid fa-user"></i>
+                        <a data-toggle="tab" className="nav-link active" href="#basicProfile"> <i className="fa-solid fa-user me-1"></i>
                             Basic profile</a>
-                        <a data-toggle="tab" className="nav-link" href="#matrimonialInfo"> <i className='fas fa-ring'></i>
+                        <a data-toggle="tab" className="nav-link" href="#matrimonialInfo"> <i className='fas fa-ring me-1'></i>
                             Matrimonial Info</a>
-                        <a data-toggle="tab" className="nav-link" href="#educationInfo"> <i className='fas fa-user-graduate'></i>
+                        <a data-toggle="tab" className="nav-link" href="#educationInfo"> <i className='fas fa-user-graduate me-1'></i>
                             Education Info</a>
-                        <a data-toggle="tab" className="nav-link" href="#businessInfo"> <i className='fas fa-business-time'></i>
+                        <a data-toggle="tab" className="nav-link" href="#businessInfo"> <i className='fas fa-business-time me-1'></i>
                             Business Info</a>
                         <a data-toggle="tab" className="nav-link" href="#contactInfo">
-                            <i className="fa-solid fa-address-card"></i>
+                            <i className="fa-solid fa-address-card me-1"></i>
                             Contact Info</a>
-                        <a data-toggle="tab" className="nav-link" href="#jobInfo"> <i className="fa-solid fa-briefcase"></i>
+                        <a data-toggle="tab" className="nav-link" href="#jobInfo"> <i className="fa-solid fa-briefcase me-1"></i>
                             Job Info</a>
                     </nav>
                 </div>

@@ -30,6 +30,7 @@ const apiWithHeaders = axios.create({
 apiWithHeaders.interceptors.request.use((config) => {
  // const token = useSelector((state) => state.auth.token.token);
  const token = adminStore.getState().auth.token?.token
+ console.log(token,"check token admin")
   config.headers = setHeaders(token);
   return config;
 });

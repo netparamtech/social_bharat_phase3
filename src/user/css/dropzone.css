@@ -1,0 +1,57 @@
+.fullscreen-dropzone {
+    position: relative;
+    width: 100%; /* Full screen width */
+    height: 300px; /* Fixed height */
+    
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+  }
+  
+  .dropzone {
+    border: 2px dashed #cccccc;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Fill the full height of the parent */
+  }
+  
+  .dropzone h2 {
+    margin: 0;
+    color: gray;
+  }
+
+  .dropzone h4 {
+    margin: 0;
+    color: gray;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    
+  }
+  
+  aside {
+    background-color: #ffffff;
+    padding: 10px;
+  }
+
+ .uploadIcon{
+   
+    font-size: 50px;
+    text-align: center
+ }
+
+ .profile-image{
+  height:200px;
+  width: 200px;
+  padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+ }
+
+ .btn-style{
+  background-color: aliceblue;
+ }

@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Dropzone from 'react-dropzone';
+
 
 const UpdateCommunityForm = () => {
 
@@ -15,17 +16,32 @@ const UpdateCommunityForm = () => {
     const [thumbnailPreview, setThumbnailPreview] = useState('');
     const [bannerPreview, setBannerPreview] = useState('');
 
-    const handleThumbnailImageChange = (e) => {
-        const file = e.target.files[0];
-        console.log(file);
-        setThumbnailImage(file);
-        setThumbnailPreview(URL.createObjectURL(file));
+    const handleDropThumbnail = async (acceptedFiles) => {
+        const thumbnailFile = acceptedFiles[0];
+        setThumbnailImage(thumbnailFile);
+
+        const formData = new FormData();
+        formData.append('thumbnail_image', thumbnailFile);
+
+        try {
+
+        } catch (error) {
+            // Handle fetch error
+        }
     };
 
-    const handleBannerImageChange = (e) => {
-        const file = e.target.files[0];
-        setBannerImage(file);
-        setBannerPreview(URL.createObjectURL(file));
+    const handleDropBanner = async (acceptedFiles) => {
+        const bannerFile = acceptedFiles[0];
+        setBannerImage(bannerFile);
+
+        const formData = new FormData();
+        formData.append('banner_image', bannerFile);
+
+        try {
+
+        } catch (error) {
+            // Handle fetch error
+        }
     };
 
     useEffect(() => {
@@ -61,11 +77,11 @@ const UpdateCommunityForm = () => {
                             </div>
                         )}
 
-                        <div className="form-group">
+                        <div className="row form-group">
                             <label htmlFor="name">Name</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control w-50 mx-auto"
                                 id="name"
                                 defaultValue=""
                                 onChange={(e) => setName(e.target.value)}
@@ -74,54 +90,12 @@ const UpdateCommunityForm = () => {
                             {errors.name && <span className="validation-error">{errors.name}</span>}
                         </div>
 
-                        <div className="row mt-5">
-                            <div className="col-sm-6">
-                                <div className="form-group">
-                                    <label htmlFor="thumbnailImage">Thumbnail Image</label>
-
-                                    <input
-                                        type="file"
-                                        className="form-control-file"
-                                        id="thumbnailImage"
-                                        onInput={handleThumbnailImageChange}
-                                    />
-                                    {errors.thumbnail_image && (
-                                        <span className="validation-error">{errors.thumbnail_image}</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                {thumbnailPreview && <img src={thumbnailPreview} alt="Thumbnail" className="thumbnail-image" />}
-                            </div>
-                        </div>
 
 
-                        <div className="row mt-5">
-                            <div className="col-sm-6">
-                                <div className="form-group">
-                                    <label htmlFor="bannerImage">Banner Image</label>
-
-                                    <input
-                                        type="file"
-                                        className="form-control-file"
-                                        id="bannerImage"
-                                        onChange={handleBannerImageChange}
-                                    />
-                                    {errors.banner_image && (
-                                        <span className="validation-error">{errors.banner_image}</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                {bannerPreview && <img src={bannerPreview} alt="Banner" className="banner-image" />}
-                            </div>
-                        </div>
-
-
-                        <div className="form-group">
+                        <div className="row form-group">
                             <label htmlFor="status">Status</label>
                             <select
-                                className="form-control"
+                                className="form-control w-50 mx-auto"
                                 id="status"
                                 defaultValue=""
                                 onChange={(e) => setStatus(e.target.value)}
@@ -137,7 +111,52 @@ const UpdateCommunityForm = () => {
 
                         </div>
 
-                        <button type="submit" className="btn btn-primary">
+                            <div className="row form-group mt-5">
+                               
+                                <Dropzone
+                                    accept="image/*"
+                                    onDrop={handleDropThumbnail}
+                                >
+                                    {({ getRootProps, getInputProps, acceptedFiles }) => (
+                                        <div className="dropzone w-100 mx-auto p-5 border-success "  {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            {acceptedFiles.length > 0 ? (
+                                                <img src={URL.createObjectURL(acceptedFiles[0])} alt="Thumbnail" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                            ) : (
+                                                <p>Drag & drop a thumbnail image here, or click to select one</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </Dropzone>
+
+                                {errors.thumbnail_image && (
+                                    <span className="validation-error">{errors.thumbnail_image}</span>
+                                )}
+                            </div>
+
+                            <div className="row form-group mt-5">
+                                
+                                <Dropzone
+                                    accept="image/*"
+                                    onDrop={handleDropBanner}
+                                >
+                                    {({ getRootProps, getInputProps, acceptedFiles }) => (
+                                        <div className="dropzone w-100 mx-auto p-5 border-success" {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            {acceptedFiles.length > 0 ? (
+                                                <img src={URL.createObjectURL(acceptedFiles[0])} alt="Banner" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                            ) : (
+                                                <p>Drag & drop a banner image here, or click to select one</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </Dropzone>
+                                {errors.banner_image && (
+                                    <span className="validation-error">{errors.banner_image}</span>
+                                )}
+                            </div>
+
+                        <button type="submit" className="btn btn-primary w-25">
                             Update
                         </button>
                     </form>

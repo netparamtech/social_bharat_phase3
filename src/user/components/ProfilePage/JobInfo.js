@@ -6,7 +6,7 @@ const JobInfo = () => {
       <div className="card-body tab-content border-0 bg-white-smoke">
         <div className="tab-pane active" id="jobInfo">
           <h1 className="d-inline-flex">Job Info</h1>
-          <a href="profileUpdate/jobInfo.html" className="float-end" title="Edit Job">
+          <a href="update-job-profile" className="float-end" title="Edit Job">
             <i className="ms-5 fa-solid fa-user-pen mt-3 fs-5"></i>
           </a>
           <div className="table-responsive-sm" style={{ overflowX: 'auto' }}>

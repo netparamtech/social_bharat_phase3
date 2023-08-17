@@ -1,4 +1,4 @@
-import {apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
+import {apiConfig, apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
 
 //update image section
 export const updateImage = async (formData) => {
@@ -34,6 +34,26 @@ export const updateMobile = async (mobile,otp) => {
    
     try {
         const response = await apiWithHeaders.put('/profile/update-mobile',{mobile,otp});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const updateContactDetail = async (data) => {
+   
+    try {
+        const response = await apiWithHeaders.put('/profile/update-contact-details',data);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const getUserFullProfile = async () => {
+   
+    try {
+        const response = await apiWithHeaders.get('/profile');  
         return response;
     } catch(error) {
         throw error;

@@ -1,17 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import React, { useState } from 'react';
+import Dropzone from 'react-dropzone';
 
-const UpdateBannerForm = (props) => {
-    const { item,
-        changeIsEditableFlag } = props;
-
-    const [bannerUrl, setBannerUrl] = useState("");
-    const [section, setSection] = useState('');
-    const [page, setPage] = useState('');
-    const [featured, setFeatured] = useState('');
-    const [status, setStatus] = useState('');
-    const [isFeatured, setIsFeatured] = useState(false)
+const UpdateBannerForm = () => {
+    const [bannerUrl, setBannerUrl] = useState(null);
+    const [section, setSection] = useState("");
+    const [page, setPage] = useState("");
+    const [featured, setFeatured] = useState(false);
+    const [status, setStatus] = useState("Active");
 
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
@@ -19,109 +14,111 @@ const UpdateBannerForm = (props) => {
 
     const [bannerPreview, setBannerPreview] = useState("");
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const handleDropBanner = async (acceptedFiles) => {
+        const bannerFile = acceptedFiles[0];
+        setBannerUrl(bannerFile);
 
-    const handleBannerImageChange = (e) => {
-        const file = e.target.files[0];
-        console.log(file);
-        setBannerUrl(file);
-        setBannerPreview(URL.createObjectURL(file));
+        try {
+
+        } catch (error) {
+            // Handle fetch error
+        }
+    };
+
+    const handleSectionChange = (e) => {
+        setSection(e.target.value);
+    };
+
+    const handlePageChange = (e) => {
+        setPage(e.target.value);
     };
 
     const handleFeaturedChange = (e) => {
         setFeatured(e.target.checked ? 1 : 0);
     };
 
-
+    const handleStatusChange = (e) => {
+        setStatus(e.target.value === "Active" ? "Active" : "Inactive");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        // Create a new FormData object
+        const formData = new FormData();
 
-            const formData = new FormData();
-            formData.append('banner_url', bannerUrl);
-            formData.append('section', section);
-            formData.append('page', page);
-            formData.append('featured', featured);
-            formData.append('status', status);
+        // Append form data
+        formData.append("banner_url", bannerUrl);
+        formData.append("section", section);
+        formData.append("page", page);
+        formData.append("featured", featured);
+        formData.append("status", status);
 
-            console.log(bannerUrl,section,page,featured,status)
+        // Perform form submission logic or API call here
+        // You can access the field values and file data from the formData object
 
-           
-            // Redirect to the admin dashboard or desired page
-        } catch (error) {
-            // Handle validation errors
-           
-        }
     };
 
     return (
-        <div className="container-fluid" style={{ minHeight: '100vh' }}>
+        <div className="container-fluid">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Update Banner</h1>
             </div>
             <div className="card">
                 <div className="card-body">
-                    <form onSubmit={handleSubmit} className="p-5 w-75">
-                        {message && (
-                            <div className={`alert ${alertClass}`}>
-                                {alertClass === 'alert-success' ? (
-                                    <i className="fas fa-check-circle"></i>
-                                ) : (
-                                    <i className="fas fa-exclamation-triangle"></i>
+                    <form onSubmit={handleSubmit}>
+                        {message && <div className={`alert ${alertClass}`}>
+                            {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                            {" " + message}
+                        </div>
+                        }
+
+                        <div className="row form-group">
+
+                            <Dropzone
+                                accept="image/*"
+                                onDrop={handleDropBanner}
+                            >
+                                {({ getRootProps, getInputProps, acceptedFiles }) => (
+                                    <div className="dropzone w-75 mx-auto p-5 border-success" {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {acceptedFiles.length > 0 ? (
+                                            <img src={URL.createObjectURL(acceptedFiles[0])} alt="Banner" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                        ) : (
+                                            <p>Drag & drop a banner image here, or click to select one</p>
+                                        )}
+                                    </div>
                                 )}
-                                {' ' + message}
-                            </div>
-                        )}
-
-
-                        <div className="row">
-                            <div className="col-sm-6">
-                                <div className="form-group">
-                                    <label htmlFor="bannerImage">Banner Image</label>
-
-                                    <input
-                                        type="file"
-                                        className="form-control-file"
-                                        id="bannerImage"
-                                        onInput={handleBannerImageChange}
-                                    />
-                                    {errors.banner_url && (
-                                        <span className="validation-error">{errors.banner_url}</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                {bannerPreview && <img src={bannerPreview} alt="Banner" className="thumbnail-image" />}
-                            </div>
+                            </Dropzone>
+                            {errors.banner_image && (
+                                <span className="validation-error">{errors.banner_image}</span>
+                            )}
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="name">Section</label>
+                        <div className="row form-group">
+                            <label htmlFor="section">Section</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control w-50 mx-auto"
                                 id="section"
-                                defaultValue=""
-                                onChange={(e) => setSection(e.target.value)}
-                                placeholder="Enter Section"
+                                name="section"
+                                value={section}
+                                onChange={handleSectionChange}
                             />
-                            {errors.section && <span className="validation-error">{errors.section}</span>}
+                            {errors.section && <span className='validation-error'>{errors.section}</span>}
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="name">Page</label>
+                        <div className="row form-group">
+                            <label htmlFor="page">Page</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control w-50 mx-auto"
                                 id="page"
-                                defaultValue=""
-                                onChange={(e) => setPage(e.target.value)}
-                                placeholder="Enter Section"
+                                name="page"
+                                value={page}
+                                onChange={handlePageChange}
                             />
-                            {errors.page && <span className="validation-error">{errors.page}</span>}
+                            {errors.page && <span className='validation-error'>{errors.page}</span>}
                         </div>
 
                         <div className="form-group">
@@ -131,7 +128,7 @@ const UpdateBannerForm = (props) => {
                                     className="form-check-input"
                                     id="featured"
                                     name="featured"
-                                    checked=""
+                                    checked={featured}
                                     onChange={handleFeaturedChange}
                                 />
                                 <label className="form-check-label" htmlFor="featured">
@@ -141,34 +138,27 @@ const UpdateBannerForm = (props) => {
                             {errors.featured && <span className='validation-error'>{errors.featured}</span>}
                         </div>
 
-
-                        <div className="form-group">
+                        <div className="row form-group">
                             <label htmlFor="status">Status</label>
                             <select
-                                className="form-control"
+                                className="form-control w-50 mx-auto"
                                 id="status"
-                                defaultValue=""
-                                onChange={(e) => setStatus(e.target.value)}
+                                name="status"
+                                defaultValue={status}
+                                onChange={handleStatusChange}
                             >
-                                <option value="">Select status</option>
-                                <option value="Active" >
-                                    Active
-                                </option>
-                                <option value="Inactive" >
-                                    Inactive
-                                </option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
                             </select>
-
+                            {errors.status && <span className='validation-error'>{errors.status}</span>}
                         </div>
 
-                        <button type="submit" className="btn btn-primary">
-                            Update
-                        </button>
+                        <button type="submit" className="btn btn-primary w-25">Update</button>
                     </form>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default UpdateBannerForm;

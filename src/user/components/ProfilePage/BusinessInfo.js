@@ -6,7 +6,7 @@ const BusinessInfo = () => {
       <div className="card-body tab-content border-0 bg-white-smoke">
         <div className="tab-pane active" id="businessInfo">
           <h1 className="d-inline-flex">Business Info</h1>
-          <a href="profileUpdate/businessInfo.html" className="float-end" title="Edit Business">
+          <a href="/update-business-profile" className="float-end" title="Edit Business">
             <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
           </a>
           <div className="row">

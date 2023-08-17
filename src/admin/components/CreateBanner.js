@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import Dropzone from 'react-dropzone';
 
 const CreateBanner = () => {
   const [bannerUrl, setBannerUrl] = useState(null);
@@ -11,13 +11,18 @@ const CreateBanner = () => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
   const [alertClass, setAlertClass] = useState('');
-  
+
   const [bannerPreview, setBannerPreview] = useState("");
 
-  const handleBannerUrlChange = (e) => {
-    const file = e.target.files[0];
-    setBannerUrl(file)
-    setBannerPreview(URL.createObjectURL(file));
+  const handleDropBanner = async (acceptedFiles) => {
+    const bannerFile = acceptedFiles[0];
+    setBannerUrl(bannerFile);
+
+    try {
+
+    } catch (error) {
+      // Handle fetch error
+    }
   };
 
   const handleSectionChange = (e) => {
@@ -61,39 +66,40 @@ const CreateBanner = () => {
       </div>
       <div className="card">
         <div className="card-body">
-          <form onSubmit={handleSubmit} className="p-5 w-75">
+          <form onSubmit={handleSubmit} className="">
             {message && <div className={`alert ${alertClass}`}>
               {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
               {" " + message}
             </div>
             }
 
-            <div className="row">
-              <div className="col-sm-6">
-                <div className="form-group">
-                  <label htmlFor="bannerUrl">Banner Url</label>
+            <div className="row form-group">
 
-                  <input
-                    type="file"
-                    className="form-control-file"
-                    id="bannerUrl"
-                    onInput={handleBannerUrlChange}
-                  />
-                  {errors.banner_url && (
-                    <span className="validation-error">{errors.banner_url}</span>
-                  )}
-                </div>
-              </div>
-              <div className="col-sm-6">
-                {bannerPreview && <img src={bannerPreview} alt="Banner" className="thumbnail-image" />}
-              </div>
+              <Dropzone
+                accept="image/*"
+                onDrop={handleDropBanner}
+              >
+                {({ getRootProps, getInputProps, acceptedFiles }) => (
+                  <div className="dropzone w-75 mx-auto p-5 border-success" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {acceptedFiles.length > 0 ? (
+                      <img src={URL.createObjectURL(acceptedFiles[0])} alt="Banner" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    ) : (
+                      <p>Drag & drop a banner image here, or click to select one</p>
+                    )}
+                  </div>
+                )}
+              </Dropzone>
+              {errors.banner_image && (
+                <span className="validation-error">{errors.banner_image}</span>
+              )}
             </div>
 
-            <div className="form-group">
+            <div className="row form-group">
               <label htmlFor="section">Section</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control w-50 mx-auto"
                 id="section"
                 name="section"
                 value={section}
@@ -102,11 +108,11 @@ const CreateBanner = () => {
               {errors.section && <span className='validation-error'>{errors.section}</span>}
             </div>
 
-            <div className="form-group">
+            <div className="row form-group">
               <label htmlFor="page">Page</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control w-50 mx-auto"
                 id="page"
                 name="page"
                 value={page}
@@ -132,10 +138,10 @@ const CreateBanner = () => {
               {errors.featured && <span className='validation-error'>{errors.featured}</span>}
             </div>
 
-            <div className="form-group">
+            <div className="row form-group">
               <label htmlFor="status">Status</label>
               <select
-                className="form-control"
+                className="form-control w-50 mx-auto"
                 id="status"
                 name="status"
                 defaultValue={status}
@@ -147,7 +153,7 @@ const CreateBanner = () => {
               {errors.status && <span className='validation-error'>{errors.status}</span>}
             </div>
 
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary w-25">Submit</button>
           </form>
         </div>
       </div>

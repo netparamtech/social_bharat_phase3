@@ -6,6 +6,8 @@ import UpdateCommunityPage from "./pages/UpdateCommunityPage";
 import CreateBannerPage from "./pages/CreateBannerPage";
 import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
+import CommunitiesPage from "./pages/CommunitiesPage";
+import BannerIndex from "./pages/BannerIndex";
 
 const adminRoutes = [
     {
@@ -53,6 +55,18 @@ const adminRoutes = [
     {
         path: '/admin/setting',
         component: SettingPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/index',
+        component: CommunitiesPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/banner/index',
+        component: BannerIndex,
         exact: true
     },
 ]

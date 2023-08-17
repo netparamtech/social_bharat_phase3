@@ -11,7 +11,7 @@ const DashboardIteam = () => {
                          <div className="col mr-2">
                              <div
                                  className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                 <a className="text-success" href="/update-basic-profile"> Profile Update</a>
+                                 <a className="text-success" href="/profile"> User Profile</a>
                              </div>
  
                          </div>

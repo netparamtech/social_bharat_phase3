@@ -7,7 +7,7 @@ const MatrimonialInfo = () => {
         <div className="tab-pane active" id="matrimonialInfo">
           <form action="#">
             <h1 className="d-inline-flex">Matrimonial Info</h1>
-            <a href="profileUpdate/matrimonialInfo.html" className="float-end" title="Edit Matrimonial">
+            <a href="/update-matrimonial-profile" className="float-end" title="Edit Matrimonial">
               <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
             </a>
             <div className="row">

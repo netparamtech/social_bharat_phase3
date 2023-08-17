@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Dropzone from 'react-dropzone';
 
 const ChangeProfileForm = () => {
   const [name, setName] = useState('');
@@ -25,86 +26,98 @@ const ChangeProfileForm = () => {
     setUsername(e.target.value);
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setPhoto(file);
-    setPhotoPreview(URL.createObjectURL(file));
-  };
+  const handleDropBanner = async (acceptedFiles) => {
+    const bannerFile = acceptedFiles[0];
+    setPhoto(bannerFile);
 
+    try {
+
+    } catch (error) {
+      // Handle fetch error
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(name,username,mobile,photo,email)
+    console.log(name, username, mobile, photo, email)
 
     const formData = new FormData();
     formData.append('name', name);
     formData.append('username', username);
     formData.append('mobile', mobile);
     formData.append('photo', photo);
-    
+
     formData.append('email', email);
   };
 
 
 
   return (
-    <div className="container-fluid" style={{ minHeight: '100vh' }}>
+    <div>
       <div className="d-sm-flex align-items-center justify-content-between mb-2">
         <h1 className="h3 mb-0 text-gray-800">Change Profile</h1>
       </div>
       <div className="card">
         <div className="card-body">
-          <form onSubmit={handleSubmit} className="ps-3 w-50">
+          <form onSubmit={handleSubmit} className="w-auto">
             {message && <div className={`alert ${alertClass}`}>
               {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
               {" " + message}
             </div>
             }
-            <div className="mb-2">
-              <label htmlFor="name" className="form-label">Name</label>
-              <input type="text" className="form-control" id="name" value={name} onChange={handleNameChange} />
-              {errors.name && <span className='validation-error'>{errors.name}</span>}
+
+            <div className="row form-group">
+
+              <Dropzone
+                accept="image/*"
+                onDrop={handleDropBanner}
+              >
+                {({ getRootProps, getInputProps, acceptedFiles }) => (
+                  <div className="dropzone w-75 mx-auto p-5 border-success" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {acceptedFiles.length > 0 ? (
+                      <img src={URL.createObjectURL(acceptedFiles[0])} alt="Banner" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    ) : (
+                      <p>Drag & drop a profile image here, or click to select one</p>
+                    )}
+                  </div>
+                )}
+              </Dropzone>
+              {errors.banner_image && (
+                <span className="validation-error">{errors.banner_image}</span>
+              )}
             </div>
-            <div className="mb-2">
+            <div className="row form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                className="form-control w-50 mx-auto"
+                id="name"
+                defaultValue=""
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter Name"
+              />
+              {errors.name && <span className="validation-error">{errors.name}</span>}
+            </div>
+
+            <div className="row form-group">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control" id="email" disabled defaultValue={email} />
+              <input type="email" className="form-control w-50 mx-auto" id="email" disabled defaultValue={email} />
 
             </div>
-            <div className="mb-2">
+            <div className="row form-group">
               <label htmlFor="mobile" className="form-label">Mobile Number</label>
-              <input type="tel" className="form-control" id="mobile" value={mobile} onChange={handleMobileChange} />
+              <input type="tel" className="form-control w-50 mx-auto" id="mobile" value={mobile} onChange={handleMobileChange} />
               {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
             </div>
 
-
-            <div className="row">
-              <div className="col-sm-6">
-                <div className="form-group">
-                  <label htmlFor="photo">Photo</label>
-
-                  <input
-                    type="file"
-                    className="form-control-file"
-                    id="photo"
-                    onChange={handlePhotoChange}
-                  />
-                  {errors.photo && (
-                    <span className="validation-error">{errors.photo}</span>
-                  )}
-                </div>
-              </div>
-              <div className="col-sm-6">
-                {photoPreview && <img src={photoPreview} alt="Banner" className="banner-image" />}
-              </div>
-            </div>
-
-            <div className="mb-2">
+            <div className="row form-group">
               <label htmlFor="username" className="form-label">Username</label>
-              <input type="text" className="form-control" id="name" defaultValue={username} onChange={handleUsernameChange} />
+              <input type="text" className="form-control w-50 mx-auto" id="name" defaultValue={username} onChange={handleUsernameChange} />
               {errors.username && <span className='validation-error'>{errors.username}</span>}
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary w-25">Submit</button>
           </form>
         </div>
       </div>

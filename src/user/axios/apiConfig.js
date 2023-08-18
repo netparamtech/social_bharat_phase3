@@ -28,7 +28,7 @@ const apiWithHeaders = axios.create({
 
 // Interceptor to set headers before each request
 apiWithHeaders.interceptors.request.use((config) => {
- const token = userStore.getState().userAuth.token?.token;
+ const token = adminStore.getState().userAuth.token?.token;
   config.headers = setHeaders(token);
   return config;
 });
@@ -53,7 +53,7 @@ const apiWithFileHeaders = axios.create({
 
 // Interceptor to set headers before each request
 apiWithFileHeaders.interceptors.request.use((config) => {
- const token = userStore.getState().userAuth.token?.token;
+ const token = adminStore.getState().userAuth.token?.token;
   config.headers = setHeadersForFile(token);
   return config;
 });
@@ -65,7 +65,7 @@ axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response.status === 401 /* && error.response.data.error === 'TokenExpiredError' */) {
-     userStore.dispatch(logout())
+     adminStore.dispatch(logout())
       const navigate = useNavigate();
         navigate('/login');
        // return Promise.reject(refreshError);

@@ -402,6 +402,7 @@ const Login = () => {
                                                 <p className="login-option">or</p>
                                                 <button type="button" id="loginWithOTP" className="mt-2 btn btn-orange-md w-100 fw-bold" onClick={changeLoginWithPassword}>Login With OTP</button>
                                             </div>
+                                            <p>New User? <a href="/register">Signup</a>.</p>
                                         </form>) : (
                                             <form id='otpForm' onSubmit={handleSubmit}>
                                                 {message && <div className={`alert ${alertClass}`}>

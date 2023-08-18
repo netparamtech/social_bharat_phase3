@@ -82,6 +82,24 @@ function Sidebar() {
       </li>
 
 
+        {/* <!-- Nav Item - User Collapse Menu --> */}
+        <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
+          aria-expanded="true" aria-controls="collapseUser">
+          <i className="fas fa-fw fa-folder"></i>
+
+          <span>Users</span>
+        </a>
+        <div id="collapseUser" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+
+            <a className="collapse-item" href="#">Action</a>
+            <a className="collapse-item" href="#">List</a>
+          </div>
+        </div>
+      </li>
+
+
       {/* Nav Item - Utilities Collapse Menu */}
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

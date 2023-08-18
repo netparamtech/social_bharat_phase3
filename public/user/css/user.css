@@ -905,13 +905,30 @@ position: sticky;
 } */
 
 /* ----OTP------ */
-.loginDetail .otp-container input{
+/* .loginDetail .otp-container input{
     width: 16% !important;
 }
 
 #otpForm  .otp-container input{
     width: 16% !important;
-}
+} */
+#otp .inputs input {
+    width: 40px;
+    height: 40px
+  }
+  
+  #otp input[type=number]::-webkit-inner-spin-button,
+  #otp input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+  }
+  
+  #otp .form-control:focus {
+    box-shadow: none;
+    border: 2px solid #008374;
+  }
 /* ---------------- */
 
 /* -----Login 2----------- */
@@ -972,9 +989,10 @@ span {
     font-weight: 700;
 }
 .loginDetail > div:nth-child(2) p {
-    color: gray;
-    font-size: 14px;
+    color: rgb(29, 28, 28);
+    font-size: 16px;
     margin: 5px 0;
+    font-weight: 500
 }
 .loginDetail > div:nth-child(2) p a {
     color: #009282;
@@ -1165,7 +1183,7 @@ span {
 #setPassword .setPassword{
     width: 400px;
     height: auto;
-    background-color: #f9fafa;
+    background-color: #ffffff;
 }
 
 #setPassword .setPassword input{
@@ -1196,6 +1214,7 @@ span {
      margin-left: 150px !important;
      margin-top: 0px !important;
      margin-bottom: 0px !important;
+     
 }
 
 .btn-orange-md {
@@ -1211,4 +1230,9 @@ span {
     cursor: pointer;
     font-weight: 700;
     border-radius: 0px !important;
+}
+
+
+.btn-mobile-change {
+    margin-right : 300px;
 }

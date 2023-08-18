@@ -92,14 +92,14 @@ const UpdateMobile = () => {
 
         try {
 
-            const response = await updateMobile(mobile,otp);
+            const response = await updateMobile(mobile, otp);
 
             if (response && response.status === 200) {
                 setIsUpdateClicked(false);
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
-                console.log("check mobile no",response.data.data,response.data.token)
+                console.log("check mobile no", response.data.data, response.data.token)
                 dispatch(login(response.data.data))
                 clearInterval(tick.current)
                 setMobile('')
@@ -246,86 +246,90 @@ const UpdateMobile = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-6 bg-white mx-auto p-4" >
-                        
 
-                            {isUpdateClicked ? (
-                                <form id='otpForm'>
-                                    {message && <div className={`alert ${alertClass}`}>
-                                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                                        {" " + message}
 
-                                    </div>
-                                    }
+                        {isUpdateClicked ? (
+                            <form id='otpForm' className='mx-auto'>
+                                {message && <div className={`alert ${alertClass}`} >
+                                    {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                                    {" " + message}
 
-                                    {otpTimer > 0 && !otpTimerExpired && (
-                                        <div>
-                                            <p className='fw-1 fs-5 text-danger'><b>{Math.floor(otpTimer / 60)}:{otpTimer % 60}</b></p>
-                                        </div>
-                                    )}
-                                    {otpTimer === 0 && !otpTimerExpired && (
-                                        <div className="text-center">
-                                            <p>OTP has expired. Please request a new one.</p>
-                                        </div>
-                                    )}
+                                </div>
+                                }
 
-                                    <div className='otp-container w-75 mx-auto'>
-
-                                        {otpBoxes.map((index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className=""
-                                                id={`otp-${index}`}
-                                                value={otp[index] || ''}
-                                                maxLength="1" // Limit the input to one character
-                                                onChange={(e) => handleOTPChange(e, index)}
-                                            />
-                                        ))}
-
-                                        {errors.otp && <span className='validation-error'>{errors.otp}</span>}
-
-                                    </div>
-                                    <button
-                                        type="button"
-                                        className={`form-control  btn btn-green-md mb-3 mt-3 ${addDisabledClass ? 'disabled' : ''}`}
-                                        onClick={handleVarifiedClicked}
-                                    >
-                                        Verify OTP
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        className={`form-control  btn btn-green-md mb-3 mt-1 ${!addDisabledClass ? 'disabled' : ''}`}
-                                        onClick={handleResendOTPclicked}
-                                    >
-                                        Resend OTP
-                                    </button>
-                                </form>
-                            ) : (
-                                <form className='setPassword mx-auto p-4' onSubmit={handleSubmit}>
-                                    {message && <div className={`alert ${alertClass}`}>
-                                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                                        {" " + message}
-                                    </div>
-                                    }
-                                     <h5>Change Mobile</h5>
-
+                                {otpTimer > 0 && !otpTimerExpired && (
                                     <div>
-                                        <input  className="mt-3 w-100" name="mobile" type="text" id="mobileInput" placeholder="Enter Mobile Number" onChange={handleMobileInput} />
-                                        {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
+                                        <p className=' fw-1 fs-5 text-danger'><b>{Math.floor(otpTimer / 60)}:{otpTimer % 60}</b></p>
                                     </div>
+                                )}
+                                {otpTimer === 0 && !otpTimerExpired && (
+                                    <div className="text-center">
+                                        <p>OTP has expired. Please request a new one.</p>
+                                    </div>
+                                )}
 
-                                    <button type="submit" className='mt-3 btn btn-green-md' id="sendOTPButton">Update</button>
+                                <div id='otp' className="ms-5 w-75 inputs d-flex flex-row justify-content-center mt-2">
 
-                                </form>
-                            )}
+                                    {otpBoxes.map((index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            className="m-2 text-center form-control rounded mb-3"
+                                            id={`otp-${index}`}
+                                            value={otp[index] || ''}
+                                            maxLength="1" // Limit the input to one character
+                                            onChange={(e) => handleOTPChange(e, index)}
+                                        />
+                                    ))}
+
+
+
+                                </div>
+                                {errors.otp && <span className='ms-5 validation-error'>{errors.otp}</span>}
+                                <button
+                                    type="button"
+                                    className={` form-control ms-5 w-75 btn btn-green-md mb-3 mt-3 ${addDisabledClass ? 'disabled' : ''}`}
+                                    onClick={handleVarifiedClicked}
+                                >
+                                    Verify OTP
+                                </button>
+
+
+
+                                <button
+                                    type="button"
+                                    className={` form-control ms-5  w-75 btn btn-green-md mb-3 mt-1 ${!addDisabledClass ? 'disabled' : ''}`}
+                                    onClick={handleResendOTPclicked}
+                                >
+                                    Resend OTP
+                                </button>
+
+                            </form>
+                        ) : (
+                            <form className='setPassword mx-auto p-4' onSubmit={handleSubmit}>
+                                {message && <div className={`alert ${alertClass}`}>
+                                    {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                                    {" " + message}
+                                </div>
+                                }
+                                <h5>Change Mobile</h5>
+
+                                <div>
+                                    <input className="mt-3 w-100" name="mobile" type="text" id="mobileInput" placeholder="Enter Mobile Number" onChange={handleMobileInput} />
+                                    {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
+                                </div>
+
+                                <button type="submit" className='mt-3 btn btn-green-md' id="sendOTPButton">Update</button>
+
+                            </form>
+                        )}
 
 
                     </div>
                 </div>
             </div>
         </div>
-                
+
     );
 };
 

@@ -53,7 +53,7 @@ const Register = () => {
     const fetchAllActiveCommunities = async () => {
         const response = await apiConfig.get('/communities/1')
         setCasts(response.data.data)
-      }
+    }
 
 
 
@@ -78,7 +78,7 @@ const Register = () => {
             }
 
             if ((minutes === 0 && seconds === 0) || minutes < 0 || seconds < 0) {
-                
+
                 setOTP(''); // Clear the OTP
                 setOtpTimerExpired(true);
                 setAddDisabledClass(true)
@@ -127,7 +127,7 @@ const Register = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
-                
+
                 setUserId(response.data.data.id);
                 dispatch(login(response.data.data, response.data.token));
 
@@ -137,7 +137,7 @@ const Register = () => {
                 setOTP('');
                 navigate('/dashboard');
 
-                if(response.data.data.is_password_set){
+                if (response.data.data.is_password_set) {
                     navigate('/dashboard');
                 } else {
                     navigate('/setPassword');
@@ -278,7 +278,7 @@ const Register = () => {
 
     useEffect(() => {
         fetchAllActiveCommunities();
-      }, []);
+    }, []);
 
 
     return (
@@ -312,13 +312,13 @@ const Register = () => {
                                         </div>
                                     )}
 
-                                    <div className='otp-container'>
+                                    <div id='otp' className="inputs d-flex flex-row justify-content-center mt-2">
 
                                         {otpBoxes.map((index) => (
                                             <input
                                                 key={index}
                                                 type="text"
-                                                className=""
+                                                className="m-2 text-center form-control rounded mb-3"
                                                 id={`otp-${index}`}
                                                 value={otp[index] || ''}
                                                 maxLength="1" // Limit the input to one character

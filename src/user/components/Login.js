@@ -352,13 +352,13 @@ const Login = () => {
                                                     </div>
                                                 )}
 
-                                                <div className='otp-container'>
+                                                <div id='otp' className="inputs d-flex flex-row justify-content-center mt-2">
 
                                                     {otpBoxes.map((index) => (
                                                         <input
                                                             key={index}
                                                             type="text"
-                                                            className=""
+                                                            className="m-2 text-center form-control rounded mb-3"
                                                             id={`otp-${index}`}
                                                             value={otp[index] || ''}
                                                             maxLength="1" // Limit the input to one character
@@ -399,10 +399,10 @@ const Login = () => {
                                             <div className="">
 
                                                 <button type="submit" id="login">Login With Password</button>
-                                                <p className="login-option">or</p>
+                                                <p className="login-option fw-bold">OR</p>
                                                 <button type="button" id="loginWithOTP" className="mt-2 btn btn-orange-md w-100 fw-bold" onClick={changeLoginWithPassword}>Login With OTP</button>
                                             </div>
-                                            <p>New User? <a href="/register">Signup</a>.</p>
+                                            <p>New User? <a href="/register">Register</a>.</p>
                                         </form>) : (
                                             <form id='otpForm' onSubmit={handleSubmit}>
                                                 {message && <div className={`alert ${alertClass}`}>
@@ -417,8 +417,8 @@ const Login = () => {
                                                 </div>
 
                                                 <button type="submit" id="sendOTPButton">Login With OTP</button>
-                                                <button type="button" id="loginWithPassword" onClick={handleLoginWithPassword}>Login With Password</button>
-                                                <p>New User? <a href="/register">Signup</a>.</p>
+                                                <button type="button" id="loginWithPassword" className='mt-2 btn btn-orange-md w-100 fw-bold' onClick={handleLoginWithPassword}>Login With Password</button>
+                                                <p>New User? <a href="/register">Register</a>.</p>
                                             </form>
                                         ))}
 

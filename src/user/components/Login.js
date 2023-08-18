@@ -385,14 +385,14 @@ const Login = () => {
                                                     Resend OTP
                                                 </button>
                                             </form>
-                                        ) : (!isLoginWithPasswordClicked ? (<form action="" className="mx-auto pt-5" onSubmit={handleSubmit}>
+                                        ) : (!isLoginWithPasswordClicked ? (<form action="" className="mx-auto " onSubmit={handleSubmit}>
                                             {message && <div className={`alert ${alertClass}`}>
                                                 {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
                                                 {" " + message}
                                             </div>
                                             }
 
-                                            <input type="text" className="mt-3 " placeholder="Enter Mobile No" onChange={handleMobileInput} />
+                                            <input type="text" className="mt-3" placeholder="Enter Mobile No" onChange={handleMobileInput} />
                                             {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
                                             <input type="password" className="mt-2 " placeholder="Enter Password" onChange={handlePasswordInput} />
                                             {errors.password && <span className='validation-error'>{errors.password}</span>}
@@ -417,6 +417,7 @@ const Login = () => {
                                                 </div>
 
                                                 <button type="submit" id="sendOTPButton">Login With OTP</button>
+                                                <p className="login-option fw-bold">OR</p>
                                                 <button type="button" id="loginWithPassword" className='mt-2 btn btn-orange-md w-100 fw-bold' onClick={handleLoginWithPassword}>Login With Password</button>
                                                 <p>New User? <a href="/register">Register</a>.</p>
                                             </form>

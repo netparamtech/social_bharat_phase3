@@ -1187,3 +1187,28 @@ span {
     margin-left: 10px;
     color: #de0000;
   }
+
+
+
+  .login-option{
+    font-size: 16px !important ;
+    font-weight: 400 ;
+     margin-left: 150px !important;
+     margin-top: 0px !important;
+     margin-bottom: 0px !important;
+}
+
+.btn-orange-md {
+    background-color: rgb(233, 163, 33) !important;
+    width: 100%;
+    padding: 10px;
+    margin: 1rem 0;
+    font-size: 15px;
+    letter-spacing: 1px;
+    /* background-color: #008374; */
+    border: none;
+    color: white !important;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 0px !important;
+}

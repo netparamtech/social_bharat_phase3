@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { updateContactDetail } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateContact = () => {
 
@@ -12,6 +13,8 @@ const UpdateContact = () => {
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
     const [alertClass, setAlertClass] = useState('');
+
+    const navigate = useNavigate();
 
     const handleAddressTypeChange = (event) => {
         setAddressType(event.target.value);
@@ -47,7 +50,9 @@ const UpdateContact = () => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
 
-                // navigate('/dashboard');
+                setTimeout(() => {
+                    navigate('/profile');
+                  }, 1000);
 
             }
         } catch (error) {

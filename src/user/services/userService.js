@@ -1,4 +1,15 @@
 import {apiConfig, apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
+//login with password
+
+export const loginWithPassword = async (mobile,password) => {
+   
+    try {
+        const response = await apiConfig.post('/login-by-password',{mobile,password});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
 
 //update image section
 export const updateImage = async (formData) => {
@@ -54,6 +65,19 @@ export const getUserFullProfile = async () => {
    
     try {
         const response = await apiWithHeaders.get('/profile');  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
+//educational detail update module
+
+export const updateEducationalDetails = async (data) => {
+   
+    try {
+        const response = await apiWithHeaders.put('/profile/update-educational-details',data);  
         return response;
     } catch(error) {
         throw error;

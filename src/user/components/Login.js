@@ -2,21 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { apiConfig } from '../axios/apiConfig';
-import { login} from '../actions/userAction';
-import {logout} from '../../admin/actions/authActions'
+import { apiConfig, apiWithHeaders } from '../axios/apiConfig';
+import { login } from '../actions/userAction';
+import { logout } from '../../admin/actions/authActions'
+import { loginWithPassword } from '../services/userService';
 
 const Login = () => {
-    const [mobile, setMobile] = useState('')
-    const [otp, setOTP] = useState('')
+    const [mobile, setMobile] = useState('');
+    const [password, setPassword] = useState('');
+    const [otp, setOTP] = useState('');
     const [userId, setUserId] = useState('');
 
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
     const [alertClass, setAlertClass] = useState('');
-    const [backgroundImage, setBackgroundImage] = useState('');
 
-    const [isLoginClicked, setIsLoginClicked] = useState(false);
+    const [isLoginWithOtp, setisLoginWithOTP] = useState(false);
 
     const [otpTimer, setOtpTimer] = useState(0); // 120 seconds (2 minutes) initial timer
     const [otpTimerExpired, setOtpTimerExpired] = useState(false);
@@ -24,7 +25,7 @@ const Login = () => {
     const [addDisabledClass, setAddDisabledClass] = useState(false)
 
     const [timerStarted, setTimerStarted] = useState(false);
-    const [isPasswordSet,setIsPasswordSet] = useState(false);
+    const [isLoginWithPasswordClicked, setIsLoginWithPasswordClicked] = useState(false);
 
     const tick = useRef();
     const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
@@ -36,11 +37,29 @@ const Login = () => {
         setMobile(e.target.value)
     }
 
-    const handleLoginClicked = () => {
+    const handlePasswordInput = (e) => {
+        setPassword(e.target.value)
+    }
+
+    const handleLoginWithOTPClicked = () => {
         setOtpTimerExpired(false);
-        setIsLoginClicked(true);
+        setisLoginWithOTP(true);
         setOtpTimer(120);
         setTimerStarted(true);
+    }
+
+    const handleLoginWithPassword = () => {
+        setErrors('');
+        setMessage('');
+        setAlertClass('');
+        setIsLoginWithPasswordClicked(false);
+    }
+
+    const changeLoginWithPassword = () => {
+        setErrors('');
+        setMessage('');
+        setAlertClass('');
+        setIsLoginWithPasswordClicked(true);
     }
 
     const handleOTPChange = (e, index) => {
@@ -77,7 +96,7 @@ const Login = () => {
             }
 
             if ((minutes === 0 && seconds === 0) || minutes < 0 || seconds < 0) {
-                
+
                 setOTP(''); // Clear the OTP
                 setOtpTimerExpired(true);
                 setAddDisabledClass(true)
@@ -99,7 +118,7 @@ const Login = () => {
             })
 
             if (response && response.status === 200) {
-                setIsLoginClicked(false);
+                setisLoginWithOTP(false);
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
@@ -110,12 +129,12 @@ const Login = () => {
                 setMobile('');
                 setOTP('');
 
-                if(response.data.data.is_password_set){
+                if (response.data.data.is_password_set) {
                     navigate('/dashboard');
                 } else {
                     navigate('/setPassword');
                 }
-                
+
             }
         } catch (error) {
 
@@ -160,7 +179,7 @@ const Login = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
-                handleLoginClicked()
+                handleLoginWithOTPClicked()
                 setAddDisabledClass(false)
                 setTimerStarted(true);
                 setOtpTimer(120)
@@ -200,50 +219,100 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await apiConfig.post('/attempt-login', {
-                mobile
-            });
+        if (!isLoginWithPasswordClicked) {
 
-            if (response && response.status === 200) {
-                setErrors('');
-                setMessage(response.data.message);
-                setAlertClass('alert-success');
-                handleLoginClicked()
-            }
-            // Redirect to the admin dashboard or desired page
-        } catch (error) {
+            try {
+                const response = await loginWithPassword(mobile, password);
 
-            // Handle validation errors
-            if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Unauthorized
-            else if (error.response && error.response.status === 401) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-                localStorage.removeItem('token');
-            }
-            else if (error.response && error.response.status === 404) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-                localStorage.removeItem('token');
+                if (response && response.status === 200) {
+                    setErrors('');
+                    setMessage(response.data.message);
+                    setAlertClass('alert-success');
+                    //setIsLoginWithPasswordClicked(false);
+
+                    dispatch(login(response.data.data, response.data.token));
+
+                    if (response.data.data.is_password_set) {
+                        navigate('/dashboard');
+                    } else {
+                        navigate('/setPassword');
+                    }
+                }
+                // Redirect to the admin dashboard or desired page
+            } catch (error) {
+
+                // Handle validation errors
+                if (error.response && error.response.status === 400) {
+                    setErrors(error.response.data.errors);
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                }
+                //Internal Server Error
+                else if (error.response && error.response.status === 500) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                }
+                //Unauthorized
+                else if (error.response && error.response.status === 401) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                    localStorage.removeItem('token');
+                }
+                else if (error.response && error.response.status === 404) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                    localStorage.removeItem('token');
+                }
+
             }
 
+        } else {
+            try {
+                const response = await apiConfig.post('/attempt-login', {
+                    mobile
+                });
+
+                if (response && response.status === 200) {
+                    setErrors('');
+                    setMessage(response.data.message);
+                    setAlertClass('alert-success');
+                    handleLoginWithOTPClicked()
+                }
+                // Redirect to the admin dashboard or desired page
+            } catch (error) {
+
+                // Handle validation errors
+                if (error.response && error.response.status === 400) {
+                    setErrors(error.response.data.errors);
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                }
+                //Internal Server Error
+                else if (error.response && error.response.status === 500) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                }
+                //Unauthorized
+                else if (error.response && error.response.status === 401) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                    localStorage.removeItem('token');
+                }
+                else if (error.response && error.response.status === 404) {
+                    setMessage(error.response.data.message);
+                    setAlertClass('alert-danger');
+                    localStorage.removeItem('token');
+                }
+
+            }
         }
     };
 
 
 
+
     useEffect(() => {
-        if (isLoginClicked && timerStarted) {
+        if (isLoginWithOtp && timerStarted) {
             startOtpTimer();
         }
     }, [timerStarted]);
@@ -261,11 +330,11 @@ const Login = () => {
                                 </div>
                                 <div className="loginDetail">
                                     <div>
-                                        <h3>Login</h3>
+                                        <h2>Login</h2>
                                     </div>
                                     <div>
 
-                                        {isLoginClicked ? (
+                                        {isLoginWithOtp ? (
                                             <form id='otpForm'>
                                                 {message && <div className={`alert ${alertClass}`}>
                                                     {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
@@ -316,7 +385,24 @@ const Login = () => {
                                                     Resend OTP
                                                 </button>
                                             </form>
-                                        ) : (
+                                        ) : (!isLoginWithPasswordClicked ? (<form action="" className="mx-auto pt-5" onSubmit={handleSubmit}>
+                                            {message && <div className={`alert ${alertClass}`}>
+                                                {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                                                {" " + message}
+                                            </div>
+                                            }
+
+                                            <input type="text" className="mt-3 " placeholder="Enter Mobile No" onChange={handleMobileInput} />
+                                            {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
+                                            <input type="password" className="mt-2 " placeholder="Enter Password" onChange={handlePasswordInput} />
+                                            {errors.password && <span className='validation-error'>{errors.password}</span>}
+                                            <div className="">
+
+                                                <button type="submit" id="login">Login With Password</button>
+                                                <p className="login-option">or</p>
+                                                <button type="button" id="loginWithOTP" className="mt-2 btn btn-orange-md w-100 fw-bold" onClick={changeLoginWithPassword}>Login With OTP</button>
+                                            </div>
+                                        </form>) : (
                                             <form id='otpForm' onSubmit={handleSubmit}>
                                                 {message && <div className={`alert ${alertClass}`}>
                                                     {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
@@ -329,10 +415,11 @@ const Login = () => {
                                                     {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
                                                 </div>
 
-                                                <button type="submit" id="sendOTPButton">Log in</button>
+                                                <button type="submit" id="sendOTPButton">Login With OTP</button>
+                                                <button type="button" id="loginWithPassword" onClick={handleLoginWithPassword}>Login With Password</button>
                                                 <p>New User? <a href="/register">Signup</a>.</p>
                                             </form>
-                                        )}
+                                        ))}
 
 
                                     </div>

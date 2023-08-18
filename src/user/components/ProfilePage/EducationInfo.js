@@ -5,8 +5,8 @@ const EducationInfo = (props) => {
   const [educationDetails, setEducationDetails] = useState([]);
 
   useEffect(() => {
-    if (user && user.education) {
-      setEducationDetails(user.education);
+    if (user && user.data.education) {
+      setEducationDetails(user.data.education);
     }
   }, [user]);
 
@@ -22,7 +22,7 @@ const EducationInfo = (props) => {
             <table className="table table-striped">
               <thead>
                 <tr className="fw-bold">
-                  <th scope="col">No.</th>
+                 
                   <th>Degree</th>
                   <th>Study Field</th>
                   <th>University/Institution</th>

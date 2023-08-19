@@ -54,3 +54,34 @@ export const updateCommunity = async (formData) => {
     }
 }
 
+export const fetchAllUsers = async (page, size) => {
+    try {
+      const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}`);
+      return response; // Assuming your API response contains the data directly
+    } catch (error) {
+      throw error;
+    }
+  };
+
+//update password
+
+export const updatePassword = async (password, confirm_password) => {
+    try {
+        const response = await apiWithHeaders.put('/update-password', {password, confirm_password});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
+//Fetch All Communities
+
+export const fetchAllCommunities = async () => {
+    try{
+        const response = await apiWithHeaders.get();
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

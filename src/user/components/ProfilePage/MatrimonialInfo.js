@@ -2,84 +2,100 @@ import React from 'react';
 
 const MatrimonialInfo = () => {
   return (
-    <div className="card mt-4">
-      <div className="card-body tab-content border-0 bg-white-smoke">
-        <div className="tab-pane active" id="matrimonialInfo">
-          <form action="#">
-            <h1 className="d-inline-flex">Matrimonial Info</h1>
-            <a href="/update-matrimonial-profile" className="float-end" title="Edit Matrimonial">
-              <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
-            </a>
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
             <div className="row">
-              <label htmlFor="fatherName" className="col-sm-3 col-form-label"> Father Name </label>
-              <div className="col-sm-7">
-                <input type="text" readOnly className="form-control-plaintext" id="fatherName" value="" placeholder="NaN" />
-              </div>
-            </div>
+              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3">Matrimonial Info</h3>
+                </div>
+                <form action="" className="w-100 w-lg-75">
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Father Name</label>
+                      <input type="text" name="fatherName" id="fatherName" placeholder="Enter Father Name" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Mother Name</label>
+                      <input type="text" name="motherName" id="motherName" placeholder="Enter Mother Name" className="form-control" />
+                    </div>
+                  </div>
 
-            <div className="row">
-              <label htmlFor="motherName" className="col-sm-3 col-form-label"> Mother Name </label>
-              <div className="col-sm-7">
-                <input type="text" readOnly className="form-control-plaintext" id="motherName" value="" placeholder="NaN" />
-              </div>
-            </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Skin Tone</label>
+                      <select className="form-select form-control" aria-label="Default select example">
+                        <option selected>---Select Skin---</option>
+                        <option value="1">Fair</option>
+                        <option value="2">Dark</option>
+                        <option value="3">Wheatish</option>
+                      </select>
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Height</label>
+                      <div className="d-flex">
+                        <div>
+                          <label htmlFor="feet" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Feet:</label>
+                          <input type="range" name="feet" id="feet" min="1" max="15" />
+                        </div>
+                        <div>
+                          <label htmlFor="inch" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Inch:</label>
+                          <input type="range" name="inch" id="inch" min="1" max="12" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="row">
-              <label htmlFor="skinTone" className="col-sm-3 col-form-label"> Skin Tone </label>
-              <div className="col-sm-7">
-                <input type="text" readOnly className="form-control-plaintext" id="skinTone" value="" placeholder="NaN" />
-              </div>
-            </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Weight</label>
+                      <input type="number" name="weight" id="weight" placeholder="Enter Weight" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Cast</label>
+                      <input type="text" name="cast" id="cast" placeholder="Enter Cast" className="form-control" />
+                    </div>
+                  </div>
 
-            <div className="row">
-              <label htmlFor="height" className="col-sm-3 col-form-label">Height (In Centimeter)</label>
-              <div className="col-sm-7">
-                <input type="number" readOnly className="form-control-plaintext" id="height" value="" placeholder="NaN" />
-              </div>
-            </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Gotra </label>
+                      <input type="text" name="gotra" id="gotra" placeholder="Enter Gotra" className="form-control" />
+                    </div>
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Paternal Gotra</label>
+                      <input type="text" name="paternal" id="paternal" placeholder="Enter Paternal Gotra" className="form-control" />
+                    </div>
+                  </div>
 
-            <div className="row">
-              <label htmlFor="weight" className="col-sm-3 col-form-label">Weight</label>
-              <div className="col-sm-7">
-                <input type="number" readOnly className="form-control-plaintext" id="weight" value="" placeholder="NaN" />
-              </div>
-            </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Maternal Gotra</label>
+                      <input type="text" name="maternal" id="maternal" placeholder="Enter Maternal Gotra" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Proposal Photo </label>
+                      <input type="file" className="form-control" multiple accept=".png, .jpg, .jpeg" id="proposalPhoto" value="" />
+                    </div>
+                  </div>
 
-            <div className="row">
-              <label htmlFor="cast" className="col-sm-3 col-form-label">Cast</label>
-              <div className="col-sm-7">
-                <input type="number" readOnly className="form-control-plaintext" id="cast" value="" placeholder="NaN" />
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Biodata </label>
+                      <input type="file" className="form-control" accept=".pdf, .doc, .docx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="biodata" value="" />
+                    </div>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
-
-            <div className="row">
-              <label className="col-sm-3 col-form-label">Gotra Self</label>
-              <div className="col-sm-7">
-                <input type="text" readOnly className="form-control-plaintext" id="gotraSelf" value="" placeholder="NaN" />
-              </div>
-            </div>
-
-            <div className="row">
-              <label htmlFor="maternalGotra" className="col-sm-3 col-form-label">Maternal Gotra</label>
-              <div className="col-sm-7">
-                <input type="text" readOnly className="form-control-plaintext" id="maternalGotra" value="" placeholder="NaN" />
-              </div>
-            </div>
-
-            <div className="row">
-              <label htmlFor="proposalPhoto" className="col-sm-3 col-form-label">Proposal Photo</label>
-              <div className="col-sm-7">
-                {/* Add your Proposal Photo content here */}
-              </div>
-            </div>
-
-            <div className="row">
-              <label htmlFor="biodata" className="col-sm-3 col-form-label">Biodata</label>
-              <div className="col-sm-7">
-                {/* Add your Biodata content here */}
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

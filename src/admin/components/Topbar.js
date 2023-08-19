@@ -138,12 +138,12 @@ function Topbar() {
           <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             <a className="dropdown-item" href="/admin/change-profile">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Change Profile
+              Update Profile
             </a>
             {/* More user information items */}
-            <a className="dropdown-item" href="/admin/change-password">
+            <a className="dropdown-item" href="/admin/update-password">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Change Password
+              Update Password
             </a>
             {/* ... */}
             <a className="dropdown-item" href="#" onClick={handleLogout}>

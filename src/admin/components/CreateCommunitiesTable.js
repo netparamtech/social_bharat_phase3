@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import UpdateCommunityForm from './UpdateCommunityForm';
+import { fetchAllCommunities } from '../services/AdminService';
 
 const CreateCommunityTable = () => {
   const [data, setData] = useState([]);
@@ -34,22 +34,10 @@ const CreateCommunityTable = () => {
       setIsEditClicked(value)
   }
 
-  const fetchCommunities = () => {
-    
-    // axios.get('/api/admin/communities', {
-    //   headers: {
-    //     'Authorization': 'Bearer '+localStorage.getItem('token')
-    //   }
-    // })
-    //   .then(response => {
-    //     setData(response.data.data);
-    //   })
-    //   .catch(error => {
-    //     if (error.response && error.response.status === 401) {
-    //       navigate('/admin')
-    //     }
-    //   });
+  const fetchCommunities = async() => {
 
+    const response = await fetchAllCommunities();
+    
   };
 
   useEffect(() => {

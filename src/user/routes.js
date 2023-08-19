@@ -1,6 +1,5 @@
 import Homepage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import OtpPage from './pages/OtpPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import DashboardPage from './pages/DashboardPage';
@@ -13,6 +12,7 @@ import UpdateJobPage from './pages/UpdateJobPage';
 import UpdateContactPage from './pages/UpdateContactPage';
 import UpdateEducationPage from './pages/UpdateEducationPage';
 import UpdateBusinessPage from './pages/UpdateBusinessPage';
+import LoginWithPassword from './components/LoginWithPassword';
 
 const userRoutes = [
     {
@@ -24,12 +24,6 @@ const userRoutes = [
     {
         path: '/login',
         component: LoginPage,
-        exact: true
-    },
-
-    {
-        path: '/otp',
-        component: OtpPage,
         exact: true
     },
 
@@ -105,6 +99,12 @@ const userRoutes = [
     {
         path: '/update-business-profile',
         component: UpdateBusinessPage,
+        exact: true
+    },
+
+    {
+        path: '/login-with-password',
+        component: LoginWithPassword,
         exact: true
     },
    

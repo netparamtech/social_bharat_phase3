@@ -62,20 +62,19 @@ const Navbar = () => {
               <a className="nav-link" href="contact.html">Contact</a>
             </li>
             {user.isAuthenticated ? (
-            <li className="nav-item me-3">
-              <div className="dropdown " id="profile-name-logo">
-                
-                {(user&&user.user&&user.user.photo&&user.user.photo)?(<img src={user.user.photo} data-bs-toggle="dropdown" className=''  />):(<button className="dropbtn  fw-bold fs-5" type="button" data-bs-toggle="dropdown" >
-                  {user && user.user && user.user.name.charAt(0)}
-                </button>)}
-                <ul className="dropdown-menu" >
-                <li><a className="dropdown-item" href="/update-photo">Update Profile Picture</a></li>
-                  <li><a className="dropdown-item" href="/setPassword">Change Password</a></li>
-                  <li><a className="dropdown-item" href="#">Change Profile</a></li>
-                  <li><a className="dropdown-item " onClick={handleLogOutClick}>Logout</a></li>
-                </ul>
-              </div>
-            </li>) : (<a href="/login" className="btn btn-green">Login</a>)}
+              <li className="nav-item me-3">
+                <div className="dropdown " id="profile-name-logo">
+
+                  {(user && user.user && user.user.photo && user.user.photo) ? (<img src={user.user.photo} data-bs-toggle="dropdown" className='' />) : (<button className="dropbtn  fw-bold fs-5" type="button" data-bs-toggle="dropdown" >
+                    {user && user.user && user.user.name.charAt(0)}
+                  </button>)}
+                  <ul className="dropdown-menu" >
+                    <li><a className="dropdown-item" href="/update-photo">Update Profile Picture</a></li>
+                    <li><a className="dropdown-item" href="/setPassword">Change Password</a></li>
+                    <li><a className="dropdown-item " onClick={handleLogOutClick}>Logout</a></li>
+                  </ul>
+                </div>
+              </li>) : (<a href="/login" className="btn btn-green">Login</a>)}
 
           </ul>
         </div>

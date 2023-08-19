@@ -1,4 +1,38 @@
 import {apiConfig, apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
+
+//attempt login with mobile
+
+export const attemptLoginWithMobile = async (mobile) => {
+    try {
+        const response = await apiConfig.post('/attempt-login',{mobile});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//login with otp
+
+export const mobileVarified = async (mobile,otp) => {
+    try {
+        const response = await apiConfig.post('/login',{mobile,otp});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//Resend otp
+
+export const resendOtp = async (mobile) => {
+    try {
+        const response = await apiConfig.post('/resendOTP',{mobile});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //login with password
 
 export const loginWithPassword = async (mobile,password) => {

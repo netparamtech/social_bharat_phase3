@@ -8,6 +8,8 @@ import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
 import CommunitiesPage from "./pages/CommunitiesPage";
 import BannerIndex from "./pages/BannerIndex";
+import UsersIndex from "./pages/UsersIndex";
+import PasswordUpdatePage from "./pages/PasswordUpdatePage";
 
 const adminRoutes = [
     {
@@ -67,6 +69,18 @@ const adminRoutes = [
     {
         path: '/admin/banner/index',
         component: BannerIndex,
+        exact: true
+    },
+
+    {
+        path: '/admin/users',
+        component: UsersIndex,
+        exact: true
+    },
+
+    {
+        path: '/admin/update-password',
+        component: PasswordUpdatePage,
         exact: true
     },
 ]

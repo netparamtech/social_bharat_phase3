@@ -1,50 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const EducationInfo = (props) => {
-  const {user} = props;
-  const [educationDetails, setEducationDetails] = useState([]);
-
-  useEffect(() => {
-    if (user && user.data.education) {
-      setEducationDetails(user.data.education);
-    }
-  }, [user]);
-
+const EducationInfo = () => {
   return (
-    <div className="card mt-4">
-      <div className="card-body tab-content border-0 bg-white-smoke">
-        <div className="tab-pane active" id="educationInfo">
-          <h1 className="d-inline-flex">Education Info</h1>
-          <a href="/update-education-profile" className="float-end" title="Edit Education">
-            <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
-          </a>
-          <div className="table-responsive-sm" style={{ overflowX: 'auto' }}>
-            <table className="table table-striped">
-              <thead>
-                <tr className="fw-bold">
-                 
-                  <th>Degree</th>
-                  <th>Study Field</th>
-                  <th>University/Institution</th>
-                  <th>Score</th>
-                  <th>Score Type</th>
-                  <th>Passing Year</th>
-                </tr>
-              </thead>
-              <tbody>
-              {educationDetails && educationDetails.map((item, idx) => (
-                <tr key={idx}>
-                  <td>{item.degree}</td>
-                  <td>{item.field_of_study}</td>
-                  <td>{item.institution_name}</td>
-                  <td>{item.score}</td>
-                  <td>{item.score_type}</td>
-                  <td>{item.passing_year}</td>
-                </tr>
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3 d-inline-flex">Education Info</h3>
+                  <a href="#" title="Add More Details"> <i data-repeater-create className="mt-3 float-end fa-solid fa-user-plus fs-5"></i>
+                  </a>
+                </div>
+                <form action="" className="w-100 w-lg-75">
+                  <div className="card p-3">
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Degree</label>
+                        <input type="text" name="degree" id="degree" placeholder="Enter your degree name" className="form-control" />
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Study Field</label>
+                        <input type="text" name="studyField" id="studyField" placeholder="Enter Study Field" className="form-control" />
+                      </div>
+                    </div>
 
-              ))}
-              </tbody>
-            </table>
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">University/Institution</label>
+                        <input type="text" name="university" id="university" placeholder="Enter university name" className="form-control" />
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score</label>
+                        <input type="number" name="Score" id="Score" placeholder="Enter Score" className="form-control" />
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score Type</label>
+                        <input type="number" name="scoreType" id="scoreType" placeholder="Enter Score Type" className="form-control" />
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Passing Year</label>
+                        <input type="month" name="year" id="year" placeholder="Enter Passing Year" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col-lg-2 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

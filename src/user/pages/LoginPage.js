@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserLayout from '../layouts/UserLayout';
-import Login from '../components/Login';
+import LoginWithPassword from '../components/LoginWithPassword';
+import LoginWithOtp from '../components/LoginWithOtp';
 
 
 const LoginPage = () => {
+    const [isOtpLogin,setIsOtpLogin] = useState(false);
+
+    const chnageFlag = (value) => {
+        setIsOtpLogin(value)
+    }
     return (
         <UserLayout>
-            <Login />
+            {
+            isOtpLogin?( <LoginWithOtp chnageFlag = {chnageFlag} />)
+            :
+            (<LoginWithPassword chnageFlag = {chnageFlag} />)
+            }
         </UserLayout>
         
         );

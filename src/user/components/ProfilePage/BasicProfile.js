@@ -1,105 +1,64 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 const BasicProfile = () => {
-
-    const user = useSelector((state) => state.userAuth.user);
-
-    const name = user && user.name && user.name;
-    const email = user && user.user && user.user.email;
-    const mobile = user && user.mobile && user.mobile;
-    const community = user && user.community_id && user.community_id;
-    const gender = user && user.gender && user.gender;
-    
-    return (
-        <div className="card">
-            <div className="card-body tab-content border-0 bg-white-smoke">
-                {/* Basic Profile */}
-                <div className="tab-pane active" id="basicProfile">
-                    <form action="#">
-                        <h1 className="d-inline-flex">Basic Profile</h1>
-                        <a href="/update-basic-profile" className="float-end" title="Edit Profile">
-                            <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
-                        </a>
-                        <div className="row">
-                            <label htmlFor="name" className="col-sm-3 col-form-label">
-                                Name
-                            </label>
-                            <div className="col-sm-7">
-                                <input type="text" readOnly className="form-control-plaintext" id="name" defaultValue={name} />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <label htmlFor="email" className="col-sm-3 col-form-label">
-                                Email
-                            </label>
-                            <div className="col-sm-7">
-                                <input
-                                    type="email"
-                                    readOnly
-                                    className="form-control-plaintext"
-                                    id="email"
-                                    defaultValue={email}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <label htmlFor="gender" className="col-sm-3 col-form-label">
-                                Gender
-                            </label>
-                            <div className="col-sm-7">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control-plaintext"
-                                    id="gender"
-                                    defaultValue={gender}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <label htmlFor="community" className="col-sm-3 col-form-label">
-                            Community
-                            </label>
-                            <div className="col-sm-7">
-                                <input
-                                    type="text"
-                                    readOnly
-                                    className="form-control-plaintext"
-                                    id="community"
-                                    defaultValue={community}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <label htmlFor="mobile" className="col-sm-3 col-form-label">
-                                Mobile
-                            </label>
-                            <div className="col-sm-7 d-inline-flex">
-                                <input
-                                    type="number"
-                                    readOnly
-                                    className="form-control-plaintext"
-                                    id="mobile"
-                                    defaultValue={mobile}
-                                />
-                                <a
-                                    href="update-mobile"
-                                    className="btn btn-sm btn-outline-success btn-mobile-change"
-                                >
-                                    Update
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+  return (
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div id="profile-img">
+        <div className="container">
+          <div className="row">
+            <div className="card shadow col-lg-4 me-1 pt-1">
+              <img className="profile-img mx-auto" src="images/logo.png" alt="" title="" />
+              <div className="card-body">
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
             </div>
+            <div className="card shadow col-lg-7">
+              <div className="card-body">
+                <form action="" className="w-100 w-lg-75">
+                  <div className="mb-2 row">
+                    <label htmlFor="" className="col-sm-2 col-form-label">Name</label>
+                    <div className="col-sm-10">
+                      <p>{/* Name content goes here */}</p>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-2">Email</label>
+                    <div className="col-sm-10"><span className="text-muted">abc@example.com</span></div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-2 col-form-label">Gender</label>
+                    <div className="col-sm-10">{/* Gender content goes here */}</div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-3 col-form-label">Community</label>
+                    <div className="col-sm-8">
+                      <p>{/* Community content goes here */}</p>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-3 col-form-label">Mobile No</label>
+                    <div className="col-sm-8">
+                      <p>{/* Mobile No content goes here */}</p>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default BasicProfile;

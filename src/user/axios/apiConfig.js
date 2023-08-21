@@ -35,6 +35,7 @@ apiWithHeaders.interceptors.request.use((config) => {
 
 // Create a function to set headers, including optional authorization token
 const setHeadersForFile = (token) => {
+  console.log("checking token",token)
   const headers = {
     'Content-Type': 'multipart/form-data',
   };
@@ -55,6 +56,7 @@ const apiWithFileHeaders = axios.create({
 apiWithFileHeaders.interceptors.request.use((config) => {
  const token = adminStore.getState().userAuth.token?.token;
   config.headers = setHeadersForFile(token);
+  console.log(config.headers,"hii")
   return config;
 });
 

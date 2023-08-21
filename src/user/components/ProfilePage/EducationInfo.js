@@ -1,47 +1,56 @@
 import React from 'react';
 
-const EducationInfo = () => {
+const EducationInfo = (props) => {
+  const {user} = props;
+  const educationDetails = user&&user.data&&user.data.education;
+
   return (
     <div id="education-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
+        <div class="edit-icon add-more-detail"><a href="/update-education-profile" title="Add More Detail"><i className="fas fa-plus"></i></a></div>
           <div className="card-body">
             <h5 className="fw-3 mb-3">Education Info</h5>
             <div className="row">
+            {educationDetails&&educationDetails.map((item, idx) => (
               <div className="col-md-6">
-                <div className="card shadow">
+                <div className="card shadow mt-2">
+                <div class="edit-icon"><a href="/update-education-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">
                         <label htmlFor="" className="col-sm-3 d-inline-flex">Degree</label>
-                        <div className="col-sm-8"><span className="text-muted">M.Tech</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.degree}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Study Field</label>
-                        <div className="col-sm-8"><span className="text-muted">Computer Science</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.field_of_study}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">University</label>
-                        <div className="col-sm-8"><span className="text-muted">RU</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.institution_name}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Score</label>
-                        <div className="col-sm-8"><span className="text-muted">9.0 GPA</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.score}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Score Type</label>
-                        <div className="col-sm-8"><span className="text-muted">Grade</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.score_type}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Passing Year</label>
-                        <div className="col-sm-8"><span className="text-muted">2021</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.passing_year}</span></div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-md-6">
+
+            ))}
+              {/* <div className="col-md-6">
                 <div className="card shadow">
+                <div class="edit-icon"><a href="#" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">
@@ -71,7 +80,8 @@ const EducationInfo = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+
             </div>
           </div>
         </div>

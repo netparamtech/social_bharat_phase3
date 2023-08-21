@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactInfo = () => {
+const ContactInfo = (props) => {
   return (
     <div id="contact-section" className="content-wrapper pt-4">
       <div className="container">

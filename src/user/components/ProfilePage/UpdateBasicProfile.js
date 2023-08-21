@@ -40,7 +40,7 @@ const UpdateBasicProfile = () => {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/dashboard')
+        navigate('/profile')
       }
     } catch (error) {
       // Handle error

@@ -67,8 +67,8 @@ export const loginWithPassword = async (mobile,password) => {
     }
 }
 
-//update image section
-export const updateImage = async (formData) => {
+//upload image section
+export const uploadImage = async (formData) => {
     try {
         const response = await apiWithFileHeaders.post('/upload-image',formData);  
         return response;
@@ -76,6 +76,17 @@ export const updateImage = async (formData) => {
         throw error;
     }
 }
+
+//upload pdf section
+export const uploadPdf = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-pdf',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 
 export const updateBasicProfile = async (data) => {
    
@@ -107,10 +118,22 @@ export const updateMobile = async (mobile,otp) => {
     }
 }
 
+//update contact details
 export const updateContactDetail = async (data) => {
    
     try {
         const response = await apiWithHeaders.put('/profile/update-contact-details',data);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//update job info 
+export const updateJobDetail = async (data) => {
+   
+    try {
+        const response = await apiWithHeaders.put('/profile/update-job-details',data);  
         return response;
     } catch(error) {
         throw error;
@@ -134,6 +157,17 @@ export const updateEducationalDetails = async (data) => {
    
     try {
         const response = await apiWithHeaders.put('/profile/update-educational-details',data);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//update matrimonial profile
+
+export const updateMatrimonialInfo = async (data) => {
+    try {
+        const response = await apiWithHeaders.put('/profile/update-matrimonial-details',data);
         return response;
     } catch(error) {
         throw error;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { updateBasicProfile, updateImage } from "../services/userService";
+import { updateBasicProfile, uploadImage } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userAction";
@@ -55,7 +55,7 @@ const UpdateProfilePhoto = () => {
     formData.append('image', profileImage);
     console.log(profileImage,"profile photo")
     try {
-      const response = await updateImage(formData);
+      const response = await uploadImage(formData);
 
       if (response && response.status === 200) {
         setTempImageUrl(response.data.data.image);

@@ -66,7 +66,7 @@ const UpdateEducationProfile = () => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/dashboard')
+        navigate('/profile')
       }
     } catch (error) {
       // Handle error

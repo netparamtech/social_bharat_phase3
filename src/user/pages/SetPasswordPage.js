@@ -6,7 +6,7 @@ import SetPassword from '../components/SetPassword';
 const SetPasswordPage = () => {
     return (
         <UserLayout>
-            <SetPassword/>
+            <SetPassword />
         </UserLayout>
         
         );

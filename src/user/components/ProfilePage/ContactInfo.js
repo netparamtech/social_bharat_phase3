@@ -1,55 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const ContactInfo = (props) => {
-  const {user} = props;
-  const [contacts,setContacts] = useState([]);
-  useEffect(() => {
-    if (user && user.data.contacts) {
-      setContacts(user.data.education);
-    }
-  }, [user]);
+const ContactInfo = () => {
   return (
-    <div className="card mt-4 mb-5">
-      <div className="card-body tab-content border-0 bg-white-smoke">
-        <div className="tab-pane active" id="jobInfo">
-          <h1 className="d-inline-flex">Contact Info</h1>
-          <a href="update-job-profile" className="float-end" title="Edit Job">
-            <i className="ms-5 fa-solid fa-user-pen mt-3 fs-5"></i>
-          </a>
-          <div className="table-responsive-sm" style={{ overflowX: 'auto' }}>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Address Type</th>
-                  <th scope="col">Address Line</th>
-                  <th scope="col">City</th>
-                  <th scope="col">State</th>
-                  <th scope="col">Country</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contacts && contacts.map((item, idx) => (
-                  <tr data-repeater-item scope="row">
-                    <td>
-                     {item.address_type}
-                    </td>
-                    <td>
-                      {item.address_line}
-                    </td>
-                    <td>
-                      {item.city}
-                    </td>
-                    <td>
-                     {item.state}
-                    </td>
-                    <td>
-                     {item.country}
-                    </td>
-                  </tr>
-                ))}
-                {/* Add more job rows here */}
-              </tbody>
-            </table>
+    <div id="contact-section" className="content-wrapper pt-4">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <h5 className="fw-3 mb-3">Contact Info</h5>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="w-100 w-lg-75">
+                      <div className="mb-2 row">
+                        <label className="text-muted">
+                          747, Janpath, Rani sathi nagar, Nirman nagar,
+                          Jaipur(302020), Rajasthan, India
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="w-100 w-lg-75">
+                      <div className="mb-2 row">
+                        <label className="text-muted">
+                          747, Janpath, Rani sathi nagar, Nirman nagar,
+                          Jaipur(302020), Rajasthan, India
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../actions/userAction';
 
-const SetPassword = () => {
+const UpdatePassword = () => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -78,7 +78,7 @@ const SetPassword = () => {
                         <div className="row">
                             <div className="col-md-12 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
-                                    <h3 className="mb-3">Set Password</h3>
+                                    <h3 className="mb-3">Update Password</h3>
                                 </div>
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {message && <div className={`alert ${alertClass}`}>
@@ -106,7 +106,7 @@ const SetPassword = () => {
                                             className="form-control"
                                             onChange={handleConfirmPasswordChange}
                                         />
-                                        {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
+                                         {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <button type="submit" className="btn btn-primary">
@@ -123,5 +123,5 @@ const SetPassword = () => {
     );
 };
 
-export default SetPassword;
+export default UpdatePassword;
 

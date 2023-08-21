@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { mobileVarified, resendOtp } from '../services/userService';
+import { createUser, resendOtp } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../actions/userAction';
 
-const LoginWithOtp = (props) => {
+const RegisterWithOtp = (props) => {
 
+    const {userDetail} = props;
 
-    const [mobile, setMobile] = useState(props.mobile);
     const [otp, setOtp] = useState('');
 
     const [remainingTime, setRemainingTime] = useState(120);
@@ -41,14 +41,14 @@ const LoginWithOtp = (props) => {
     }
 
     const handleVarifiedClicked = async () => {
+        const updatedUserDetail = { ...userDetail, otp: otp }; // Append the OTP to the userDetail object
 
         try {
 
-            const response = await mobileVarified(mobile, otp);
+            const response = await createUser(updatedUserDetail);
 
-            if (response && response.status === 200) {
+            if (response && response.status === 201) {
                 dispatch(login(response.data.data, response.data.token));
-                setMobile('');
                 setOtp('');
 
                 if (response.data.data.is_password_set) {
@@ -78,7 +78,7 @@ const LoginWithOtp = (props) => {
     const resendOTP = async () => {
         setErrors('');
         try {
-            const response = await resendOtp(mobile);
+            const response = await resendOtp(userDetail.mobile);
 
             if (response && response.status === 200) {
                 handleResendOTP();
@@ -130,7 +130,7 @@ const LoginWithOtp = (props) => {
                                           id="mobile"
                                          placeholder="Enter your mobile number" 
                                          className="form-control"
-                                         value={mobile}
+                                         value={userDetail.mobile}
                                          disabled
                                          />
                                          
@@ -198,4 +198,4 @@ const LoginWithOtp = (props) => {
     );
 };
 
-export default LoginWithOtp;
+export default RegisterWithOtp;

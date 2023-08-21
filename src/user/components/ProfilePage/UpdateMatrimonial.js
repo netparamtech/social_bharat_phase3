@@ -2,113 +2,99 @@ import React from 'react';
 
 const UpdateMatrimonial = () => {
   return (
-    <div className="col-lg-9 col-md-8 mt-4">
-      {/* Matrimonial Info */}
-      <div className="card">
-        <div className="card-body tab-content border-0 bg-white-smoke">
-          <div className="tab-pane active" id="matrimonialInfo">
-            <form action="#">
-              <h1 className="d-inline-flex">Matrimonial Info</h1>
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3">Matrimonial Info</h3>
+                </div>
+                <form action="" className="w-100 w-lg-75">
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Father Name</label>
+                      <input type="text" name="fatherName" id="fatherName" placeholder="Enter Father Name" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Mother Name</label>
+                      <input type="text" name="motherName" id="motherName" placeholder="Enter Mother Name" className="form-control" />
+                    </div>
+                  </div>
 
-              <div className="row">
-                <label htmlFor="fatherName" className="col-sm-3 col-form-label">Father Name</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control w-75 mb-2" id="fatherName" value="" placeholder="Enter Father Name" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="motherName" className="col-sm-3 col-form-label">Mother Name</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control w-75 mb-2" id="motherName" value="" placeholder="Enter Mother Name" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="skinTone" className="col-sm-3 col-form-label">Skin Tone</label>
-                <div className="col-sm-7">
-                  <select className="form-control w-75 mb-2">
-                    <option>---Select---</option>
-                    <option>Fair</option>
-                    <option>Dark</option>
-                    <option>Wheatish</option>
-                  </select>
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="height" className="col-sm-3 col-form-label">Height</label>
-                <div className="col-sm-7 d-flex">
-                  <select className="form-control w-25 mb-2 me-1">
-                    <option>Feet</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Skin Tone</label>
+                      <select className="form-select form-control" aria-label="Default select example">
+                        <option selected>---Select Skin---</option>
+                        <option value="1">Fair</option>
+                        <option value="2">Dark</option>
+                        <option value="3">Wheatish</option>
+                      </select>
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Height</label>
+                      <div className="d-flex">
+                        <div>
+                          <label htmlFor="feet" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Feet:</label>
+                          <input type="range" name="" id="" min="1" max="15" />
+                        </div>
+                        <div>
+                          <label htmlFor="inch" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Inch:</label>
+                          <input type="range" name="" id="" min="1" max="12" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                  </select>
-                  <select className="form-control w-25 mb-2">
-                    <option>Inch</option>
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Weight</label>
+                      <input type="number" name="weight" id="weight" placeholder="Enter Weight" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Cast</label>
+                      <input type="text" name="cast" id="cast" placeholder="Enter Cast" className="form-control" />
+                    </div>
+                  </div>
 
-                  </select>
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="weight" className="col-sm-3 col-form-label">Weight</label>
-                <div className="col-sm-7">
-                  <input type="number" className="form-control w-75 mb-2" id="weight" value="" placeholder="Enter Weight" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="cast" className="col-sm-3 col-form-label">Cast</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control w-75 mb-2" id="cast" value="" placeholder="Enter Cast" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="gotraSelf" className="col-sm-3 col-form-label">Gotra Self</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control w-75 mb-2" id="gotraSelf" value="" placeholder="Enter Gotra Self" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="maternalGotra" className="col-sm-3 col-form-label">Maternal Gotra</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control w-75 mb-2" id="maternalGotra" value="" placeholder="Enter Maternal Gotra" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="proposalPhoto" className="col-sm-3 col-form-label">Proposal Photo</label>
-                <div className="col-sm-7">
-                  <input type="file" className="form-control w-75 mb-2" multiple accept=".png, .jpg, .jpeg" id="proposalPhoto" />
-                </div>
-              </div>
-              <div className="row">
-                <label htmlFor="biodata" className="col-sm-3 col-form-label">Biodata</label>
-                <div className="col-sm-7">
-                  <input type="file" className="form-control w-75 mb-2" accept=".pdf,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="biodata" />
-                </div>
-              </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Gotra </label>
+                      <input type="text" name="gotra" id="gotra" placeholder="Enter Gotra" className="form-control" />
+                    </div>
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Paternal Self</label>
+                      <input type="text" name="paternal" id="paternal" placeholder="Enter Paternal Gotra" className="form-control" />
+                    </div>
+                  </div>
 
-              <div>
-                <a href="#" className="btn btn-green w-25 mt-2">Update</a>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Maternal Gotra</label>
+                      <input type="text" name="maternal" id="maternal" placeholder="Enter Maternal Gotra" className="form-control" />
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Proposal Photo </label>
+                      <input type="file" className="form-control" multiple accept=".png, .jpg, .jpeg" id="proposalPhoto" />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Biodata </label>
+                      <input type="file" className="form-control" accept=".pdf ,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="biodata" />
+                    </div>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

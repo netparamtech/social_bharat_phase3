@@ -1,25 +1,73 @@
 import React from 'react';
 
-const BusinessInfo = () => {
+const JobInfo = () => {
   return (
-    <div className="card mt-4">
-      <div className="card-body tab-content border-0 bg-white-smoke">
-        <div className="tab-pane active" id="businessInfo">
-          <h1 className="d-inline-flex">Business Info</h1>
-          <a href="/update-business-profile" className="float-end" title="Edit Business">
-            <i className="fa-solid fa-user-pen mt-3 fs-5"></i>
-          </a>
-          <div className="row">
-            <label htmlFor="businessName" className="col-sm-3 col-form-label">Business Name</label>
-            <div className="col-sm-7">
-              <input type="text" readOnly className="form-control-plaintext" id="businessName" value="" placeholder="NetParam College" />
-            </div>
-          </div>
-
-          <div className="row">
-            <label htmlFor="businessLocation" className="col-sm-3 col-form-label">Location</label>
-            <div className="col-sm-7">
-              <input type="text" readOnly className="form-control-plaintext" id="businessLocation" value="" placeholder="Jaipur College" />
+    <div id="job-section" className="content-wrapper pt-4 mb-4">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <h5 className="fw-3 mb-3">Job Info</h5>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <table className="table table-striped">
+                      <tbody>
+                        <tr>
+                          <td>Company Name</td>
+                          <td className="text-muted">NetParam</td>
+                        </tr>
+                        <tr>
+                          <td>Designation</td>
+                          <td className="text-muted">Software Developer</td>
+                        </tr>
+                        <tr>
+                          <td>Job Start Date</td>
+                          <td className="text-muted">Jan, 2021</td>
+                        </tr>
+                        <tr>
+                          <td>Job End Date</td>
+                          <td className="text-muted">Jan, 2022</td>
+                        </tr>
+                        <tr>
+                          <td>Active Company</td>
+                          <td className="text-muted">No</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <table className="table table-striped">
+                      <tbody>
+                        <tr>
+                          <td>Company Name</td>
+                          <td className="text-muted">NetParam</td>
+                        </tr>
+                        <tr>
+                          <td>Designation</td>
+                          <td className="text-muted">Software Developer</td>
+                        </tr>
+                        <tr>
+                          <td>Job Start Date</td>
+                          <td className="text-muted">Jan, 2021</td>
+                        </tr>
+                        <tr>
+                          <td>Job End Date</td>
+                          <td className="text-muted">Jan, 2022</td>
+                        </tr>
+                        <tr>
+                          <td>Active Company</td>
+                          <td className="text-muted">No</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -28,4 +76,4 @@ const BusinessInfo = () => {
   );
 };
 
-export default BusinessInfo;
+export default JobInfo;

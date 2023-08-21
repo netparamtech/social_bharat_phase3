@@ -3,7 +3,6 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import DashboardPage from './pages/DashboardPage';
-import SetPasswordPage from './pages/SetPasswordPage';
 import UpdateProfilePhotoPage from './pages/UpdateProfilePhotoPage';
 import UpdateMobilePage from './pages/UpdateMobilePage';
 import UpdateBasicProfilePage from './pages/UpdateBasicProfilePage';
@@ -13,6 +12,8 @@ import UpdateContactPage from './pages/UpdateContactPage';
 import UpdateEducationPage from './pages/UpdateEducationPage';
 import UpdateBusinessPage from './pages/UpdateBusinessPage';
 import LoginWithPassword from './components/LoginWithPassword';
+import UpdatePasswordPage from './pages/UpdatePasswordPage';
+import SetPasswordPage from './pages/SetPasswordPage';
 
 const userRoutes = [
     {
@@ -35,7 +36,13 @@ const userRoutes = [
     },
 
     {
-        path: '/setPassword',
+        path: '/update-password',
+        component: UpdatePasswordPage,
+        exact: true
+    },
+
+    {
+        path: '/set-password',
         component: SetPasswordPage,
         exact: true
     },

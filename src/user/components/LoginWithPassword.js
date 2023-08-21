@@ -67,7 +67,7 @@ const LoginWithPassword = (props) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-6 d-none d-md-block">
-                                <img src="images/signup.png" className="img-fluid" alt="Signup" />
+                                <img src="/user/images/signup.png" className="img-fluid" alt="Signup" />
                             </div>
                             <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
@@ -115,6 +115,9 @@ const LoginWithPassword = (props) => {
                                         <button type="submit" className="btn btn-secondary" onClick={openLoginWithOtpForm}>
                                             Login With OTP
                                         </button>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <p className="fw-lighter fs-6">New User? <a href="/register" className="text-primary">Signup</a>.</p>
                                     </div>
                                 </form>
                             </div>

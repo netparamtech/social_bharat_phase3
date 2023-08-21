@@ -1,188 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import { getUserFullProfile, updateEducationalDetails } from '../../services/userService';
+import { useState } from 'react';
+import { updateEducationalDetails } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateEducationProfile = () => {
-  const [educationDetails, setEducationDetails] = useState([]);
-  const [errors, setErrors] = useState('');
-  const [message, setMessage] = useState('');
-  const [alertClass, setAlertClass] = useState('');
+  const [degree, setDegree] = useState('');
+  const [studyField, setStudyField] = useState('');
+  const [university, setUniversity] = useState('');
+  const [score, setScore] = useState('');
+  const [scoreType, setScoreType] = useState('');
+  const [passingYear, setPassingYear] = useState('');
 
-  const [isError, setIsError] = useState(false);
+  const [errors, setErrors] = useState('');
 
   const navigate = useNavigate();
 
-
-  const handleChange = (index, field, value) => {
-    const updatedDetails = [...educationDetails];
-    updatedDetails[index][field] = value;
-    setEducationDetails(updatedDetails);
+  // Handle onChange for each input field
+  const handleDegreeChange = (e) => {
+    setDegree(e.target.value);
   };
 
-
-  const fetchEducationDetails = async () => {
-    try {
-      const response = await getUserFullProfile();
-      if (response.data && response.data.data.education && Array.isArray(response.data.data.education)) {
-        setEducationDetails(response.data.data.education);
-      }
-    } catch (error) {
-      console.error('Error fetching education details:', error);
-    }
+  const handleStudyFieldChange = (e) => {
+    setStudyField(e.target.value);
   };
 
-  const updateEducationDetail = async (index) => {
-    const updatedDetail = educationDetails[index]; // Get the detail for the specified index
+  const handleUniversityChange = (e) => {
+    setUniversity(e.target.value);
+  };
+
+  const handleScoreChange = (e) => {
+    setScore(e.target.value);
+  };
+
+  const handleScoreTypeChange = (e) => {
+    setScoreType(e.target.value);
+  };
+
+  const handlePassingYearChange = (e) => {
+    setPassingYear(e.target.value);
+  };
+
+  const passingYearOptions = [];
+  const currentYear = new Date().getFullYear();
+  for (let year = currentYear; year >= currentYear - 50; year--) {
+    passingYearOptions.push(
+      <option key={year} value={year}>
+        {year}
+      </option>
+    );
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const requestData = {
+      degree,
+      field_of_study: studyField,
+      institution_name: university,
+      score,
+      score_type: scoreType,
+      passing_year: passingYear
+    };
+
     try {
-      const response = await updateEducationalDetails(updatedDetail);
+      const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
-        setIsError(false);
         setErrors('');
-        setMessage(response.data.message);
-        setAlertClass('alert-success');
+        navigate('/dashboard')
       }
     } catch (error) {
-      setIsError(true);
+      // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setMessage(error.response.data.message);
-        setAlertClass('alert-danger');
+
       }
-      // Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setMessage(error.response.data.message);
-        setAlertClass('alert-danger');
-        setErrors('')
-      }
-      // Unauthorized
+
+      //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate('/login')
-      }
-      else if (error.response && error.response.status === 404) {
-        setMessage(error.response.data.message);
-        setAlertClass('alert-danger');
-        setErrors('')
-
+        navigate('/login');
       }
     }
   };
 
-  const deleteEducationDetail = async (index) => {
-    try {
-      // Make delete API call for educationDetails[index]
-      // Update educationDetails state after successful delete
-    } catch (error) {
-      console.error('Error deleting education detail:', error);
-    }
-  };
-
-  const addNewRow = () => {
-    const newRow = {
-      degree: '',
-      field_of_study: '',
-      institution_name: '',
-      score: '',
-      score_type: '',
-      passing_year: '',
-    };
-    if(!isError){
-      setErrors('');
-      setMessage('');
-      setAlertClass('');
-      setEducationDetails([...educationDetails, newRow]);
-    }
-  };
-
-  const handleDelete = (index) => {
-    const updatedDetails = [...educationDetails];
-    updatedDetails.splice(index, 1);
-    setEducationDetails(updatedDetails);
-  };
-
-  // Fetch education details on page load
-  useEffect(() => {
-    fetchEducationDetails();
-  }, []);
 
   return (
-    <div className="card">
-      <div className="card-body tab-content border-0 bg-white-smoke">
-        <div className="tab-pane active" id="educationInfo">
-          <form action="#" className="repeater">
-            {message && <div className={`alert ${alertClass} mt-2`}>
-              {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-              {" " + message}
-            </div>
-            }
-            <h1 className="d-inline-flex">Education Info</h1>
-            <i
-              onClick={addNewRow}
-              className="mt-3 float-end fa-solid fa-user-plus fs-5"
-            ></i>
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3">Education Info</h3>
+                </div>
+                <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                  <div className="card p-3">
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Degree</label>
+                        <input
+                          type="text"
+                          name="degree"
+                          id="degree"
+                          placeholder="Enter your degree name"
+                          className="form-control"
+                          onChange={handleDegreeChange}
+                        />
+                        {errors.degree && <span className='error'>{errors.degree}</span>}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Study Field</label>
+                        <input
+                          type="text"
+                          name="studyField"
+                          id="studyField"
+                          placeholder="Enter Study Field"
+                          className="form-control"
+                          onChange={handleStudyFieldChange}
+                        />
+                        {errors.field_of_study && <span className='error'>{errors.field_of_study}</span>}
+                      </div>
+                    </div>
 
-            <div className="table-responsive">
-              <table className="table table-striped" data-repeater-list="tasks">
-                <thead>
-                  <tr className="text-center">
-                    <th>Degree</th>
-                    <th>Study Field</th>
-                    <th>University/Institution</th>
-                    <th>Score</th>
-                    <th>Score Type</th>
-                    <th>Passing Year</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {educationDetails.map((detail, index) => (
-                    <tr key={index} data-repeater-item>
-                      <td><input type="text" className="form-control" value={detail.degree} onChange={(e) => handleChange(index, 'degree', e.target.value)} />
-                        {errors.degree && <span className='validation-error'>{errors.degree}</span>}
-                      </td>
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">University/Institution</label>
+                        <input
+                          type="text"
+                          name="university"
+                          id="university"
+                          placeholder="Enter university name"
+                          className="form-control"
+                          onChange={handleUniversityChange}
+                        />
+                        {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score</label>
+                        <input
+                          type="number"
+                          name="Score"
+                          id="Score"
+                          placeholder="Enter Score"
+                          className="form-control"
+                          onChange={handleScoreChange}
+                        />
+                        {errors.score && <span className='error'>{errors.score}</span>}
+                      </div>
+                    </div>
 
-                      <td><input type="text" className="form-control" defaultValue={detail.field_of_study} onChange={(e) => handleChange(index, 'field_of_study', e.target.value)} />
-                        {errors.field_of_study && <span className='validation-error'>{errors.field_of_study}</span>}
-
-                      </td>
-                      <td><input type="text" className="form-control" defaultValue={detail.institution_name} onChange={(e) => handleChange(index, 'institution_name', e.target.value)} />
-                        {errors.institution_name && <span className='validation-error'>{errors.institution_name}</span>}
-
-                      </td>
-                      <td><input type="text" className="form-control" defaultValue={detail.score} onChange={(e) => handleChange(index, 'score', e.target.value)} />
-                        {errors.score && <span className='validation-error'>{errors.score}</span>}
-
-                      </td>
-
-                      <td><input type="text" className="form-control" defaultValue={detail.score_type} onChange={(e) => handleChange(index, 'score_type', e.target.value)} />
-                        {errors.score_type && <span className='validation-error'>{errors.score_type}</span>}
-
-                      </td>
-                      <td><input type="text" className="form-control" defaultValue={detail.passing_year} onChange={(e) => handleChange(index, 'passing_year', e.target.value)} />
-                        {errors.passing_year && <span className='validation-error'>{errors.passing_year}</span>}
-
-                      </td>
-                      <td>
-                        <a
-                          type="button"
-                          className="btn btn-success"
-                          onClick={() => updateEducationDetail(index, detail)}
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score Type</label>
+                        <select class="form-select form-control" aria-label="Default select example" onChange={handleScoreTypeChange}>
+                          <option value="">---Select Score Type---</option>
+                          <option value="PERCENTAGE">PERCENTAGE</option>
+                          <option value="GRADE">GRADE</option>
+                        </select>
+                        {errors.score_type && <span className='error'>{errors.score_type}</span>}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Passing Year</label>
+                        <select
+                          name="year"
+                          id="year"
+                          className="form-control"
+                          value={passingYear}
+                          onChange={handlePassingYearChange}
                         >
-                          Save
-                        </a>
-                        <button
-                          type="button"
-                          className="btn btn-green-lg"
-                          onClick={() => handleDelete(index)}
-                        >
-                          <i className="fas fa-trash" style={{ color: "red" }}></i>
-                        </button>
-                      </td>
-                    </tr>
-
-                  ))}
-                </tbody>
-              </table>
+                          <option value="" >---Select Passing Year---</option>
+                          {passingYearOptions}
+                        </select>
+                        {errors.passing_year && <span className='error'>{errors.passing_year}</span>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col-lg-2 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,27 @@
 import {apiConfig, apiWithFileHeaders, apiWithHeaders} from '../axios/apiConfig';
 
+//Create Temp User in temp_user
+
+export const createTempUser = async (data) => {
+    try {
+        const response = await apiConfig.post('/create-tmp-user',data);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//Create User in Database
+
+export const createUser = async (data) => {
+    try {
+        const response = await apiConfig.post('/register',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //attempt login with mobile
 
 export const attemptLoginWithMobile = async (mobile) => {
@@ -114,6 +136,27 @@ export const updateEducationalDetails = async (data) => {
         const response = await apiWithHeaders.put('/profile/update-educational-details',data);  
         return response;
     } catch(error) {
+        throw error;
+    }
+}
+
+//fetch all community
+
+export const fetchAllActiveCommunities = async () => {
+    try {
+        const response = await apiConfig.get('/communities/1');  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch all states
+export const fetchStates = async() => {
+    try {
+        const response = await apiConfig.get('https://api.countrystatecity.in/v1/countries/IN/states');
+        return response;
+    } catch (error) {
         throw error;
     }
 }

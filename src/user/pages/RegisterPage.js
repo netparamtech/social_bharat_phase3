@@ -1,12 +1,12 @@
 import React from 'react';
 import UserLayout from '../layouts/UserLayout';
-import Register from '../components/Register';
+import RegisterForm from '../components/RegisterForm';
 
 
 const RegisterPage = () => {
     return (
         <UserLayout>
-            <Register />
+            <RegisterForm />
         </UserLayout>
         
         );

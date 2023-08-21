@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import UserLayout from '../layouts/UserLayout';
 import LoginWithPassword from '../components/LoginWithPassword';
 import LoginWithOtp from '../components/LoginWithOtp';
+import LoginWithMobile from '../components/LoginWithMobile';
 
 
 const LoginPage = () => {
@@ -13,7 +14,7 @@ const LoginPage = () => {
     return (
         <UserLayout>
             {
-            isOtpLogin?( <LoginWithOtp chnageFlag = {chnageFlag} />)
+            isOtpLogin?( <LoginWithMobile chnageFlag = {chnageFlag} />)
             :
             (<LoginWithPassword chnageFlag = {chnageFlag} />)
             }

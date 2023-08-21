@@ -1,174 +1,194 @@
-import React, { useState } from 'react';
-import { updateContactDetail } from '../../services/userService';
+import { useEffect, useState } from 'react';
+import { fetchStates, updateContactDetail } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateContact = () => {
 
-    const [address_type, setAddressType] = useState('');
-    const [address_line, setAddressLine] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
+  const [addressType, setAddressType] = useState('');
+  const [addressLine, setAddressLine] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState([]);
+  const [country, setCountry] = useState('India');
 
-    const [errors, setErrors] = useState('');
-    const [message, setMessage] = useState('');
-    const [alertClass, setAlertClass] = useState('');
+  const [errors, setErrors] = useState('');
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleAddressTypeChange = (event) => {
-        setAddressType(event.target.value);
+  const handleAddressTypeChange = (e) => {
+    setAddressType(e.target.value);
+  };
+
+  const handleAddressLineChange = (e) => {
+    setAddressLine(e.target.value);
+  };
+
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  const handleStateChange = (e) => {
+    setState(e.target.value);
+  };
+
+  const handleCountryChange = (e) => {
+    setCountry(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const updatedData = {
+      address_type: addressType,
+      address_line: addressLine,
+      city,
+      state,
+      country,
+    };
+
+    try {
+      const response = await updateContactDetail(updatedData);
+
+      if (response && response.status === 200) {
+        setErrors('');
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      // Handle error
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
     }
+  };
 
-    const handleAddressLineChange = (event) => {
-        setAddressLine(event.target.value);
-    }
+  const [states, setStates] = useState([]);
+  const [isLoadingStates, setIsLoadingStates] = useState(true);
 
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
-    }
+  useEffect(() => {
+    const fetchStatesData = async () => {
+      try {
+        const response = await fetchStates();
 
-    const handleStateChange = (event) => {
-        setState(event.target.value);
-    }
-
-    const handleCountryChange = (event) => {
-        setCountry(event.target.value);
-    }
-
-    const data = {
-        address_type, address_line, city, state, country
-    }
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await updateContactDetail(data);
-
-            if (response && response.status === 200) {
-
-                setErrors('');
-                setMessage(response.data.message);
-                setAlertClass('alert-success');
-
-                setTimeout(() => {
-                    navigate('/profile');
-                  }, 1000);
-
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Unauthorized
-            else if (error.response && error.response.status === 401) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-                localStorage.removeItem('token');
-            }
-            else if (error.response && error.response.status === 404) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-                localStorage.removeItem('token');
-            }
-
+        if (response && response.status === 200) {
+          setStates(response.data);
         }
-    }
-    return (
-        <div className="card mt-4 mb-5">
-            <div className="card-body tab-content border-0 bg-white-smoke">
-                <div className="tab-pane active" id="jobInfo">
-                    <form className="repeater" onSubmit={handleSubmit}>
-                        {message && <div className={`alert ${alertClass} mt-2`}>
-                            {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                            {" " + message}
-                        </div>
-                        }
 
-                        <div className="table-responsive">
-                            <table
-                                data-repeater-list="tasks"
-                                className="table table-striped"
-                            >
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Address Type</th>
-                                        <th scope="col">Address Line</th>
-                                        <th scope="col">City</th>
-                                        <th scope="col">State</th>
-                                        <th scope="col">Country</th>
+      } catch (error) {
+        console.error('An error occurred while fetching states', error);
+      } finally {
+        setIsLoadingStates(false);
+      }
+    };
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr data-repeater-item scope="row">
-                                        <td>
-                                            <select
-                                                className="form-select me-4"
-                                                name="address_type"
-                                                onChange={handleAddressTypeChange}
-                                            >
-                                                <option value="select">Select Address Type</option>
-                                                <option>PERMANENT</option>
-                                                <option>CURRENT</option>
-                                            </select>
-                                            {errors.address_type && <span className='validation-error'>{errors.address_type}</span>}
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                onChange={handleAddressLineChange}
-                                            />
-                                            {errors.address_line && <span className='validation-error'>{errors.address_line}</span>}
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                onChange={handleCityChange}
-                                            />
-                                            {errors.city && <span className='validation-error'>{errors.city}</span>}
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                onChange={handleStateChange}
-                                            />
-                                            {errors.state && <span className='validation-error'>{errors.state}</span>}
-                                        </td>
-                                        <td>
-                                            <select
-                                                className="form-select me-4"
-                                                name="country"
-                                                onChange={handleCountryChange}
-                                            >
-                                                <option value="select">Select Country</option>
-                                                <option value="INDIA">INDIA</option>
-                                            </select>
-                                            {errors.country && <span className='validation-error'>{errors.country}</span>}
-                                        </td>
+    fetchStatesData();
+  }, []);
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div className="mt-2">
-                            <button type='submit' className="btn btn-green w-25 mt-2">Submit</button>
-                        </div>
-                    </form>
+  return (
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3">Contact</h3>
                 </div>
+                <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Address Type</label>
+                      <select className="form-select form-control" aria-label="Default select example" onChange={handleAddressTypeChange}>
+                        <option value="">---Address Type---</option>
+                        <option value="PERMANENT">PERMANENT</option>
+                        <option value="CURRENT">CURRENT</option>
+                      </select>
+                      {errors.address_type && <span className='error'>{errors.address_type}</span>}
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Address Line</label>
+                      <input
+                        type="text"
+                        name="addressLine"
+                        id="addressLine"
+                        placeholder="Enter Address Line"
+                        className="form-control"
+                        onChange={handleAddressLineChange}
+                      />
+                      {errors.address_line && <span className='error'>{errors.address_line}</span>}
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Country</label>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Default select example"
+                        onChange={handleCountryChange}
+                      >
+                        <option value="">---Select Country---</option>
+                        <option value="India" selected>India</option>
+                      </select>
+                      {errors.country && <span className='error'>{errors.country}</span>}
+                    </div>
+
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">State</label>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Default select example"
+                        value={state}
+                        onChange={handleStateChange}
+                      >
+                        <option value="">---Select State---</option>
+                        {
+                          states.map((stateData) => (
+                            <option key={stateData.id} value={stateData.name}>
+                              {stateData.name}
+                            </option>
+                          
+                       ) )}
+                      </select>
+                      {errors.state && <span className='error'>{errors.state}</span>}
+                    </div>
+                  </div>
+
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <label className="form-label">City</label>
+                    <select
+                      className="form-select form-control"
+                      aria-label="Default select example"
+                      onChange={handleCityChange}
+                    >
+                      <option selected>---Select City---</option>
+                      <option value="1">Jaipur</option>
+                      <option value="2">Sikar</option>
+                      <option value="3">Other</option>
+                    </select>
+                    {errors.city && <span className='error'>{errors.city}</span>}
+
+                  </div>
+
+                  <div className="row mt-4">
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
+                      <button type="submit" className="btn btn-primary">
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-    );
+      </div >
+    </div >
+  );
 };
 
 export default UpdateContact;

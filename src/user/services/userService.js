@@ -194,3 +194,16 @@ export const fetchStates = async() => {
         throw error;
     }
 }
+
+
+//update profile image
+
+export const updateProfilePhoto = async(formData) => {
+    console.log("checked")
+    try{
+        const response = await apiWithFileHeaders.post('/profile/update-profile-picture',formData);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

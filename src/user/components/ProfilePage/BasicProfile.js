@@ -1,21 +1,37 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
+import { updateProfilePhoto } from '../../services/userService';
 
 const BasicProfile = (props) => {
   const { user } = props;
-  const image = user&&user.user&&user.user.photo&&user.user.photo;
-  const [profileImage, setProfileImage] = useState(image?image:'/user/images/OIP.jpg');
+  const [profileImage,setProfileImage] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
 
   const handleImageClick = () => {
     imageInputRef.current.click();
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
+
+    const formData = new FormData();
+    formData.append('profile_pic', file);
+
+    try {
+      const response = await updateProfilePhoto(formData);
+      setProfileImage(response.data.data.photo);
+      setImagePreview(URL.createObjectURL(file));
+    } catch (error) {
+
     }
+
   };
+
+  useEffect(()=>{
+    setProfileImage(user?.data?.photo || '/user/images/OIP.jpg');
+  })
+
+
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -25,15 +41,15 @@ const BasicProfile = (props) => {
             <div className="card shadow">
               <input
                 type="file"
-               ref={imageInputRef}
+                ref={imageInputRef}
                 style={{ display: 'none' }}
                 accept="image/*"
-               onChange={handleImageChange}
+                onChange={handleImageChange}
               />
 
               <img
                 className="img-fluid img-circle profile-picture mt-3"
-                src={profileImage}
+                src={imagePreview||profileImage}
                 alt=""
                 title=""
                 onClick={handleImageClick}

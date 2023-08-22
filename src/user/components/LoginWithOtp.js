@@ -148,7 +148,7 @@ const LoginWithOtp = (props) => {
                                                     value={otp[index] || ''}
                                                     maxLength="1" // Limit the input to one character
                                                     onChange={(e) => handleOTPChange(e, index)}
-                                                    autoFocus
+                                                    autoFocus={index === 0}
                                                 />
                                             ))}
                                         </div>

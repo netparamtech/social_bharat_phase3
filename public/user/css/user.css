@@ -410,8 +410,11 @@ a.btn.dropdown-toggle.show:focus {
 .dropdown-user-img {
   height: 2.5rem;
   width: 2.5rem;
-  margin-right: 1rem;
   border-radius: 100%;
+  background-position: center;
+  font-size: 16px;
+  font-weight: 600;
+  
 }
 
 .dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-name {

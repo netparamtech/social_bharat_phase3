@@ -148,6 +148,7 @@ const RegisterWithOtp = (props) => {
                                                     value={otp[index] || ''}
                                                     maxLength="1" // Limit the input to one character
                                                     onChange={(e) => handleOTPChange(e, index)}
+                                                    autoFocus={index === 0}
                                                     
                                                 />
                                             ))}

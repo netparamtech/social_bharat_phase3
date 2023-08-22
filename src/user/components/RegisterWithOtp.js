@@ -40,7 +40,8 @@ const RegisterWithOtp = (props) => {
         setRemainingTime(120);
     }
 
-    const handleVarifiedClicked = async () => {
+    const handleVarifiedClicked = async (event) => {
+        event.preventDefault();
         const updatedUserDetail = { ...userDetail, otp: otp }; // Append the OTP to the userDetail object
 
         try {
@@ -122,7 +123,7 @@ const RegisterWithOtp = (props) => {
                                 <div className="card-title">
                                     <h3 className="mb-3">Sign in</h3>
                                 </div>
-                                <form className="w-100 w-lg-75">
+                                <form action='/dashboard' className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
                                     <div className="row mb-3">
                                         <input type="text"
@@ -147,6 +148,7 @@ const RegisterWithOtp = (props) => {
                                                     value={otp[index] || ''}
                                                     maxLength="1" // Limit the input to one character
                                                     onChange={(e) => handleOTPChange(e, index)}
+                                                    
                                                 />
                                             ))}
                                         </div>
@@ -159,9 +161,8 @@ const RegisterWithOtp = (props) => {
 
                                     <div className="row mb-3">
 
-                                        <button type="button"
+                                        <button type="submit"
                                             className="btn btn-primary"
-                                            onClick={handleVarifiedClicked}
                                             disabled={isTimeExpired}
                                         >
                                             Varified With OTP

@@ -80,7 +80,7 @@ const SetPassword = () => {
                                 <div className="card-title">
                                     <h3 className="mb-3">Set Password</h3>
                                 </div>
-                                <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                                <form action='/dashboard' onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {message && <div className={`alert ${alertClass}`}>
                                         {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
                                         {" " + message}
@@ -94,6 +94,7 @@ const SetPassword = () => {
                                             placeholder="Enter New Password"
                                             className="form-control"
                                             onChange={handlePasswordChange}
+                                            autoFocus
                                         />
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>

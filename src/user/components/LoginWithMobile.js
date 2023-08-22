@@ -64,7 +64,7 @@ const LoginWithMobile = (props) => {
                   <h3 className="mb-3">Sign in</h3>
                 </div>
                 
-                   <form action="" className="w-100 w-lg-75">
+                   <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                    <div className="row mb-3">
                      <input
                        type="text"
@@ -73,12 +73,13 @@ const LoginWithMobile = (props) => {
                        placeholder="Enter your mobile number"
                        className="form-control"
                        onChange={handleMobileChange}
+                       autoFocus
  
                      />
-                     {errors.mobile && <p className='text-center mb-0 mt-1'><span className='error'>{errors.mobile}</span></p>}
+                     {errors.mobile && <span className='error'>{errors.mobile}</span>}
                    </div>
                    <div className="row mb-3">
-                     <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+                     <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                        Login With OTP
                      </button>
                    </div>

@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateEducationalDetails } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateEducationProfile = () => {
+  const { id } = useParams();
+
+  const [educationDetails,setEducationDetails] = useState({});
+
   const [degree, setDegree] = useState('');
   const [studyField, setStudyField] = useState('');
   const [university, setUniversity] = useState('');
@@ -52,6 +56,7 @@ const UpdateEducationProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(educationDetails,"send data");
 
     const requestData = {
       degree,
@@ -81,7 +86,6 @@ const UpdateEducationProfile = () => {
       }
     }
   };
-
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">

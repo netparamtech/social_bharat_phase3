@@ -17,7 +17,7 @@ function App() {
             userRoutes.map((route, index) => (
               <Route key={index} path={route.path}
                 element={
-                  route.path !== '/login' ? (
+                 ( route.path !== '/login' && route.path !== '/register') ? (
                     <UserProtectedRoute element={route.component} />
                   ) : (
                     <route.component />

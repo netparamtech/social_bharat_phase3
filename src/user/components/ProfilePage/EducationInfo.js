@@ -15,7 +15,7 @@ const EducationInfo = (props) => {
             {educationDetails&&educationDetails.map((item, idx) => (
               <div className="col-md-6">
                 <div className="card shadow mt-2">
-                <div class="edit-icon"><a href="/update-education-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                <div class="edit-icon"><a href={`/update-education-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">

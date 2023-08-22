@@ -72,7 +72,6 @@ const RegisterForm = () => {
     fetchCommunities();
   }, []);
 
-
   return (
     <>
       {!isTempUserCreated ? (
@@ -88,7 +87,7 @@ const RegisterForm = () => {
                     <div className="card-title">
                       <h3 className="mb-3">Sign up</h3>
                     </div>
-                    <form action="" className="w-100 w-lg-75">
+                    <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       <div className="row mb-3">
                         <input
                           type="text"
@@ -97,8 +96,9 @@ const RegisterForm = () => {
                           placeholder="Enter your name"
                           className="form-control"
                           onChange={handleNameChange}
+                          autoFocus
                         />
-                        {errors.name && <p className='text-center mb-0 mt-1'><span className='error'>{errors.name}</span></p>}
+                        {errors.name && <span className='error'>{errors.name}</span>}
                       </div>
                       <div className="row mb-3">
                         <input
@@ -109,7 +109,7 @@ const RegisterForm = () => {
                           className="form-control"
                           onChange={handleMobileChange}
                         />
-                        {errors.mobile && <p className='text-center mb-0 mt-1'><span className='error'>{errors.mobile}</span></p>}
+                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
                       </div>
                       <div className="row mb-3">
                         
@@ -122,10 +122,10 @@ const RegisterForm = () => {
                           ))}
                         </select>
 
-                        {errors.community_id && <p className='text-center mb-0 mt-1'><span className='error'>{errors.community_id}</span></p>}
+                        {errors.community_id && <span className='error'>{errors.community_id}</span>}
                       </div>
                       <div className="row mb-3">
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+                        <button type="submit" className="btn btn-primary">
                           Register
                         </button>
                       </div>

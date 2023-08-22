@@ -1,6 +1,7 @@
 import React from 'react';
 
-const BusinessInfo = () => {
+const BusinessInfo = (props) => {
+    const {user} = props;
     return (
         <div id="business-section" className="content-wrapper pt-4">
             <div className="container">

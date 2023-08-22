@@ -98,7 +98,7 @@ const userRoutes = [
     },
 
     {
-        path: '/update-education-profile',
+        path: '/update-education-profile/:id',
         component: UpdateEducationPage,
         exact: true
     },

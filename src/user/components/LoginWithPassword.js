@@ -73,7 +73,7 @@ const LoginWithPassword = (props) => {
                                 <div className="card-title">
                                     <h3 className="mb-3">Sign in</h3>
                                 </div>
-                                <form action="" className="w-100 w-lg-75" onSubmit={handleSubmit}>
+                                <form action='/dashboard' className="w-100 w-lg-75" onSubmit={handleSubmit}>
                                     <div className="row mb-3">
                                         <input
                                             type="text"
@@ -83,7 +83,7 @@ const LoginWithPassword = (props) => {
                                             className="form-control"
                                             onChange={handleMobileChange}
                                         />
-                                        {errors.mobile && <p className='text-center mb-0 mt-1'><span className='error'>{errors.mobile}</span></p>}
+                                         {errors.mobile && <span className='error'>{errors.mobile}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <input
@@ -93,8 +93,9 @@ const LoginWithPassword = (props) => {
                                             placeholder="Enter Password"
                                             className="form-control"
                                             onChange={handlePasswordChange}
+                                            autoFocus
                                         />
-                                        {errors.password && <p className='text-center mb-0 mt-1'><span className='error'>{errors.password}</span></p>}
+                                        {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <button type="submit" className="btn btn-primary">
@@ -112,7 +113,7 @@ const LoginWithPassword = (props) => {
                                         </div>
                                     </div>
                                     <div className="row mt-3">
-                                        <button type="submit" className="btn btn-secondary" onClick={openLoginWithOtpForm}>
+                                        <button type = "button" className="btn btn-secondary" onClick={openLoginWithOtpForm}>
                                             Login With OTP
                                         </button>
                                     </div>

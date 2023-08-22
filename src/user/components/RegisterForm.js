@@ -11,6 +11,7 @@ const RegisterForm = () => {
 
   const [isTempUserCreated, setIsTempUserCreated] = useState(false);
   const [errors, setErrors] = useState('');
+  const [message,setMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -52,6 +53,7 @@ const RegisterForm = () => {
       const response = await createTempUser(userData);
       if (response && response.status === 201) {
         setErrors('');
+        setMessage(response.data.message);
         tempUserCreated();
       }
     } catch (error) {
@@ -141,7 +143,7 @@ const RegisterForm = () => {
             </div>
           </div>
         </div>
-      ) : (<RegisterWithOtp userDetail={{ mobile, name, community_id }} />)}
+      ) : (<RegisterWithOtp userDetail={{ mobile, name, community_id }} message = {message} />)}
 
     </>
   );

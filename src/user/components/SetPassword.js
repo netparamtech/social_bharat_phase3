@@ -48,24 +48,10 @@ const SetPassword = () => {
             // Handle validation errors
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
             }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-
-            }
-            else if (error.response && error.response.status === 404) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-
+               navigate('/login');
             }
 
         }
@@ -81,11 +67,6 @@ const SetPassword = () => {
                                     <h3 className="mb-3">Set Password</h3>
                                 </div>
                                 <form action='/dashboard' onSubmit={handleSubmit} className="w-100 w-lg-75">
-                                    {message && <div className={`alert ${alertClass}`}>
-                                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                                        {" " + message}
-                                    </div>
-                                    }
                                     <div className="row mb-3">
                                         <input
                                             type="password"

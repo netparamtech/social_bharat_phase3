@@ -9,6 +9,7 @@ const LoginWithMobile = (props) => {
 
   const [mobile, setMobile] = useState('');
   const [errors, setErrors] = useState('');
+  const [message,setMessage] = useState('');
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const LoginWithMobile = (props) => {
       if (response && response.status === 200) {
         console.log("clicked")
         setErrors('');
+        setMessage(response.data.message);
         handleLoginClicked();
       }
 
@@ -109,7 +111,7 @@ const LoginWithMobile = (props) => {
         </div>
       </div>
     </div>
-  ):<LoginWithOtp mobile = {mobile} />}
+  ):<LoginWithOtp mobile={mobile} message = {message} />}
   </>
   );
 };

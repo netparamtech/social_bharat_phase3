@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { mobileVarified, resendOtp } from '../services/userService';
+import { mobileVarified, resendOtp, updateMobile } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../actions/userAction';
 
-const LoginWithOtp = (props) => {
+const CheckOtpToUpdateMobile = (props) => {
+
     const {mobile,message} = props;
 
     const [otp, setOtp] = useState('');
@@ -44,17 +45,12 @@ const LoginWithOtp = (props) => {
 
         try {
 
-            const response = await mobileVarified(mobile, otp);
+            const response = await updateMobile(mobile, otp);
 
             if (response && response.status === 200) {
-                dispatch(login(response.data.data, response.data.token));
                 setOtp('');
 
-                if (response.data.data.is_password_set) {
-                    navigate('/dashboard');
-                } else {
-                    navigate('/set-password');
-                }
+                navigate('/profile');
 
             }
         } catch (error) {
@@ -119,7 +115,7 @@ const LoginWithOtp = (props) => {
                             </div>
                             <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
-                                    <h3 className="mb-3">Verify OTP</h3>
+                                    <h3 className="mb-3">Verify Mobile</h3>
                                 </div>
                                 <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
@@ -136,7 +132,7 @@ const LoginWithOtp = (props) => {
                                     </div>
 
                                     <div className="row mb-3">
-                                        {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
+                                    {message&&<p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
                                         <div id="otp-form">
                                             {otpBoxes.map((index) => (
                                                 <input
@@ -198,4 +194,4 @@ const LoginWithOtp = (props) => {
     );
 };
 
-export default LoginWithOtp;
+export default CheckOtpToUpdateMobile;

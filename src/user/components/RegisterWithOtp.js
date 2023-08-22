@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../actions/userAction';
 
 const RegisterWithOtp = (props) => {
-
-    const {userDetail} = props;
+    const {userDetail,message} = props;
 
     const [otp, setOtp] = useState('');
 
@@ -121,7 +120,7 @@ const RegisterWithOtp = (props) => {
                             </div>
                             <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
-                                    <h3 className="mb-3">Sign in</h3>
+                                    <h3 className="mb-3">Verify OTP</h3>
                                 </div>
                                 <form action='/dashboard' className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
@@ -138,6 +137,7 @@ const RegisterWithOtp = (props) => {
                                     </div>
 
                                     <div className="row mb-3">
+                                    {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
                                         <div id="otp-form">
                                             {otpBoxes.map((index) => (
                                                 <input

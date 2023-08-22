@@ -6,7 +6,7 @@ import { logout } from '../actions/userAction';
 
 const Navbar = () => {
     const user = useSelector((state) => state.userAuth);
-    const isAuthenticUser = user&&user.isAuthenticated;
+    const isAuthenticUser = user && user.isAuthenticated;
     const [id, setId] = useState(user && user.user && user.user.id);
 
     const dispatch = useDispatch();
@@ -79,15 +79,15 @@ const Navbar = () => {
                         {/* You can add more nav items here */}
                     </ul>
                     <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-                        {isAuthenticUser&&isAuthenticUser?'':(
+                        {isAuthenticUser && isAuthenticUser ? '' : (
                             <li className="nav-item">
-                            <a className="nav-link btn btn-primary login-btn" href="#">
-                                Login
-                            </a>
-                        </li>
+                                <a className="nav-link btn btn-primary login-btn" href="#">
+                                    Login
+                                </a>
+                            </li>
                         )}
                     </ul>
-                    <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+                    {/* <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                            {
                             isAuthenticUser&&isAuthenticUser?(
@@ -132,6 +132,56 @@ const Navbar = () => {
                                 <a className="dropdown-item" href="#" onClick={handleLogOutClick}>
                                     <div className="dropdown-item-icon"><i className="fas fa-sign-out"></i></div>
                                     Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul> */}
+
+                    <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+                        {
+                            isAuthenticUser&&isAuthenticUser?(
+                            <a
+                                className="btn btn-icon btn-transparent-dark dropdown-toggle"
+                                id="navbarDropdownUserImage"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                <img className="dropdown-user-img me-2" src={user&&user.user&&user.user.photo&&user.user.photo} alt="{user&&user.user&&user.user.name&&user.user.name}" title={user&&user.user&&user.user.name&&user.user.name} />
+                            </a>
+                             ):''
+                            }
+                            <div
+                                className="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                                aria-labelledby="navbarDropdownUserImage"
+                                data-bs-popper="static"
+                            >
+                                <h6 className="dropdown-header d-flex align-items-center">
+                                    <img className="dropdown-user-img me-2" src={user&&user.user&&user.user.photo&&user.user.photo} alt="User" />
+                                    <div className="dropdown-user-details">
+                                        <div className="dropdown-user-details-name">{user&&user.user&&user.user.name&&user.user.name}</div>
+                                        <div className="dropdown-user-details-email">{user&&user.user&&user.user.email&&user.user.email}</div>
+                                    </div>
+                                </h6>
+                                <div className="dropdown-divider"></div>
+                                <a className="dropdown-item" href="/profile">
+                                    <div className="dropdown-item-icon"><i className="fas fa-user-alt"></i></div>
+                                    <span className="ms-2">Profile</span>
+                                </a>
+                                <a className="dropdown-item" href="/update-password">
+                                    <div className="dropdown-item-icon"><i className="fas fa-key"></i></div>
+                                    <span className="ms-2">Change Password</span>
+                                </a>
+                                <a className="dropdown-item" href="#!">
+                                    <div className="dropdown-item-icon"><i className="fas fa-cog"></i></div>
+                                    <span className="ms-2">Settings</span>
+                                </a>
+                                <a className="dropdown-item" href="#" onClick={handleLogOutClick}>
+                                    <div className="dropdown-item-icon"><i className="fas fa-sign-out"></i></div>
+                                    <span className="ms-2">Logout</span>
                                 </a>
                             </div>
                         </li>

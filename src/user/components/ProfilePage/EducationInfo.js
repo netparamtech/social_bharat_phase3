@@ -8,7 +8,7 @@ const EducationInfo = (props) => {
     <div id="education-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
-        <div class="edit-icon add-more-detail"><a href="/update-education-profile" title="Add More Detail"><i className="fas fa-plus"></i></a></div>
+        <div class="edit-icon add-more-detail"><a href="/update-education-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
           <div className="card-body">
             <h5 className="fw-3 mb-3">Education Info</h5>
             <div className="row">

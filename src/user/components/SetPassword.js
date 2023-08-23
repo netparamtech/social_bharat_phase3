@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { apiWithHeaders } from '../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../actions/userAction';
 
 const SetPassword = () => {
 
@@ -51,7 +50,7 @@ const SetPassword = () => {
             }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-               navigate('/login');
+                navigate('/login');
             }
 
         }

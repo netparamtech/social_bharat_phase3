@@ -10,8 +10,6 @@ const UpdatePassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const [errors, setErrors] = useState('');
-    const [message, setMessage] = useState('');
-    const [alertClass, setAlertClass] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -36,38 +34,19 @@ const UpdatePassword = () => {
             if (response && response.status === 200) {
 
                 setErrors('');
-                setMessage(response.data.message);
-                setAlertClass('alert-success');
-                setTimeout(() => {
-                    navigate('/dashboard');
-                }, 1000)
-
-
+                navigate('/dashboard');
             }
         } catch (error) {
             // Handle validation errors
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
             }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
+                navigate('/login');
 
             }
-            else if (error.response && error.response.status === 404) {
-                setMessage(error.response.data.message);
-                setAlertClass('alert-danger');
-
-            }
-
+           
         }
     };
     return (
@@ -81,11 +60,6 @@ const UpdatePassword = () => {
                                     <h3 className="mb-3">Update Password</h3>
                                 </div>
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-                                    {message && <div className={`alert ${alertClass}`}>
-                                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                                        {" " + message}
-                                    </div>
-                                    }
                                     <div className="row mb-3">
                                         <input
                                             type="password"

@@ -1,11 +1,18 @@
 import React, { useEffect, useRef, useState} from 'react';
 import { updateProfilePhoto } from '../../services/userService';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/userAction';
 
 const BasicProfile = (props) => {
+  const loggedUser = useSelector((state) => state.userAuth);
+
   const { user } = props;
   const [profileImage,setProfileImage] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
+  const [token,setToken] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleImageClick = () => {
     imageInputRef.current.click();
@@ -21,6 +28,7 @@ const BasicProfile = (props) => {
       const response = await updateProfilePhoto(formData);
       setProfileImage(response.data.data.photo);
       setImagePreview(URL.createObjectURL(file));
+      dispatch(login(response.data.data, token));
     } catch (error) {
 
     }
@@ -29,6 +37,7 @@ const BasicProfile = (props) => {
 
   useEffect(()=>{
     setProfileImage(user?.data?.photo || '/user/images/OIP.jpg');
+    setToken(loggedUser.token);
   })
 
 

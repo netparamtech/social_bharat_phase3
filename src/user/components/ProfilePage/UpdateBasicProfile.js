@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { updateBasicProfile } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/userAction';
 
 const UpdateBasicProfile = () => {
+  const user = useSelector((state) => state.userAuth);
 
-  const [name, setName] = useState(''); // Initial name
-  const [gender, setGender] = useState(''); // Initial gender
-  const [email, setEmail] = useState(''); // Initial email
+  const [name, setName] = useState(user.user.name); // Initial name
+  const [gender, setGender] = useState(user.user.gender); // Initial gender
+  const [email, setEmail] = useState(user.user.email); // Initial email
+  const [token,setToken] = useState(''); 
 
   const [errors, setErrors] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -40,13 +45,13 @@ const UpdateBasicProfile = () => {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
         setErrors('');
+        dispatch(login(response.data.data,token));
         navigate('/profile')
       }
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-
       }
 
       //Unauthorized
@@ -56,6 +61,10 @@ const UpdateBasicProfile = () => {
     }
 
   }
+
+  useEffect(()=>{
+    setToken(user.token || '');
+  },[user])
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -71,20 +80,20 @@ const UpdateBasicProfile = () => {
                   <div className="row ">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
                       <label className="form-label">Name</label>
-                      <input type="text" name="name" id="name" placeholder="Enter your name" className="form-control" onChange={handleNameChange} />
+                      <input type="text" name="name" id="name" placeholder="Enter your name" className="form-control" defaultValue={name} onChange={handleNameChange} />
                       {errors.name && <span className='error'>{errors.name}</span>}
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Email </label>
-                      <input type="text" name="email" id="email" placeholder="Enter Email" className="form-control" onChange={handleEmailChange} />
+                      <input type="text" name="email" id="email" placeholder="Enter Email" className="form-control" defaultValue={email} onChange={handleEmailChange} />
                       {errors.email && <span className='error'>{errors.email}</span>}
                     </div>
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Gender</label>
-                      <select className="form-select form-control" aria-label="Default select example" onChange={handleGenderChange}>
+                      <select className="form-select form-control" aria-label="Default select example" defaultValue={gender} onChange={handleGenderChange}>
                         <option value="">---Select Gender---</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>

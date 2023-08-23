@@ -8,14 +8,22 @@ const Navbar = () => {
     const user = useSelector((state) => state.userAuth);
     const isAuthenticUser = user && user.isAuthenticated;
     const [id, setId] = useState(user && user.user && user.user.id);
-
-    const [userName,setUserName] = useState(user&&user.user&&user.user.name&&user.user.name);
-    const [userEmail,setUserEmail] = useState(user&&user.user&&user.user.email&&user.user.email);
-    const [userProfile,setUserProfile] = useState(user&&user.user&&user.user.photo&&user.user.photo);
-    const [loggedButton,setLoggedButton] = useState('');
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userProfile, setUserProfile] = useState('');
+    const [loggedButton, setLoggedButton] = useState('');
+
+    useEffect(() => {
+        if (user && user.user) {
+            setUserName(user.user.name || '');
+            setUserEmail(user.user.email || '');
+            setUserProfile(user.user.photo || '');
+            setLoggedButton(user.user.name ? user.user.name.charAt(0).toUpperCase() : '');
+        }
+    }, [user]);
 
     const handleLogOutClick = async () => {
         try {
@@ -32,9 +40,9 @@ const Navbar = () => {
             }
         }
     }
-    useEffect(()=>{
-        const loggedUser = user&&user.user&&user.user.name&&user.user.name;
-        setLoggedButton(loggedUser&&loggedUser.charAt(0).toUpperCase());
+    useEffect(() => {
+        const loggedUser = user && user.user && user.user.name && user.user.name;
+        setLoggedButton(loggedUser && loggedUser.charAt(0).toUpperCase());
 
     })
     return (
@@ -100,26 +108,26 @@ const Navbar = () => {
 
                     <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-                        {
-                            isAuthenticUser&&isAuthenticUser?(
-                            <a
-                                className="btn btn-icon btn-transparent-dark dropdown-toggle"
-                                id="navbarDropdownUserImage"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                {
-                                    userProfile&&userProfile?(<img className="dropdown-user-img me-2" src={userProfile} alt={userName} title={userName} />)
-                                    :
-                                    (<button type='button' className='dropdown-user-img '>{loggedButton}</button>)
-                                }
-                            
-                                
-                            </a>
-                             ):''
+                            {
+                                isAuthenticUser && isAuthenticUser ? (
+                                    <a
+                                        className="btn btn-icon btn-transparent-dark dropdown-toggle"
+                                        id="navbarDropdownUserImage"
+                                        href="#"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >
+                                        {
+                                            userProfile && userProfile ? (<img className="dropdown-user-img me-2" src={userProfile} alt={userName} title={userName} />)
+                                                :
+                                                (<button type='button' className='dropdown-user-img '>{loggedButton}</button>)
+                                        }
+
+
+                                    </a>
+                                ) : ''
                             }
                             <div
                                 className="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
@@ -127,7 +135,7 @@ const Navbar = () => {
                                 data-bs-popper="static"
                             >
                                 <h6 className="dropdown-header d-flex align-items-center">
-                                    <img className="dropdown-user-img me-2" src={userProfile?userProfile:'/user/images/OIP.jpg'} alt="User" />
+                                    <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
                                     <div className="dropdown-user-details">
                                         <div className="dropdown-user-details-name">{userName}</div>
                                         <div className="dropdown-user-details-email">{userEmail}</div>

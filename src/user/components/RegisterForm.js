@@ -6,7 +6,7 @@ import RegisterWithOtp from './RegisterWithOtp';
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
-  const [community_id, SetCommunity_id] = useState(1);
+  const [community_id, SetCommunity_id] = useState('');
   const [casts, setCasts] = useState([]);
 
   const [isTempUserCreated, setIsTempUserCreated] = useState(false);
@@ -35,7 +35,7 @@ const RegisterForm = () => {
 
   const fetchCommunities = async () => {
     const response = await fetchAllActiveCommunities();
-    if (response && response.status === 201) {
+    if (response && response.status === 200) {
       setCasts(response.data.data);
     }
   }

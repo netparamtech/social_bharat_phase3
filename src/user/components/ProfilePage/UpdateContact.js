@@ -50,7 +50,7 @@ const UpdateContact = () => {
 
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/dashboard')
+        navigate('/profile')
       }
     } catch (error) {
       // Handle error
@@ -147,13 +147,17 @@ const UpdateContact = () => {
                         onChange={handleStateChange}
                       >
                         <option value="">---Select State---</option>
-                        {
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Madhypradesh">Madhypradesh</option>
+
+                        {/* {
                           states.map((stateData) => (
                             <option key={stateData.id} value={stateData.name}>
                               {stateData.name}
                             </option>
                           
-                       ) )}
+                       ) )} */}
                       </select>
                       {errors.state && <span className='error'>{errors.state}</span>}
                     </div>

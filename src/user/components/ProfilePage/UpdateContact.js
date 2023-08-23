@@ -118,6 +118,7 @@ const UpdateContact = () => {
                         placeholder="Enter Address Line"
                         className="form-control"
                         onChange={handleAddressLineChange}
+                        autoFocus
                       />
                       {errors.address_line && <span className='error'>{errors.address_line}</span>}
                     </div>

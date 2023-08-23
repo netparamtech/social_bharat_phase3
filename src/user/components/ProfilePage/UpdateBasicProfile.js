@@ -80,7 +80,7 @@ const UpdateBasicProfile = () => {
                   <div className="row ">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
                       <label className="form-label">Name</label>
-                      <input type="text" name="name" id="name" placeholder="Enter your name" className="form-control" defaultValue={name} onChange={handleNameChange} />
+                      <input type="text" name="name" id="name" placeholder="Enter your name" className="form-control" defaultValue={name} onChange={handleNameChange} autoFocus />
                       {errors.name && <span className='error'>{errors.name}</span>}
                     </div>
 

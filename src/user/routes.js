@@ -104,6 +104,12 @@ const userRoutes = [
     },
 
     {
+        path: '/update-education-profile',
+        component: UpdateEducationPage,
+        exact: true
+    },
+
+    {
         path: '/update-business-profile',
         component: UpdateBusinessPage,
         exact: true

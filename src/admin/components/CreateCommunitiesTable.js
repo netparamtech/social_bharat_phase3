@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import UpdateCommunityForm from './UpdateCommunityForm';
-import { fetchAllCommunities } from '../services/AdminService';
+import { fetchAllCommunity } from '../services/AdminService';
 
 const CreateCommunityTable = () => {
   const [data, setData] = useState([]);
@@ -8,24 +9,14 @@ const CreateCommunityTable = () => {
   const [id, setId] = useState(0);
   const [item,setItem] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleDelete = (id) => {
-        
-    // axios.delete(`/api/admin/communities/${id}`,{
-    //   headers: {
-    //     'Authorization': 'Bearer '+localStorage.getItem('token')
-    //   }
-    // })
-    //   .then(response => {
-    //     console.log('Community deleted successfully.');
-    //     fetchCommunities();
-    //   })
-    //   .catch(error => {
-    //     console.error('Error deleting community:', adminLoading);
-    //   });
-    //   dispatch(clearAdminLoading())
+    
   };
 
   const handleUpdate = (item) => {
+    console.log(item)
     setItem(item)
     setIsEditClicked(true)
   }
@@ -35,13 +26,23 @@ const CreateCommunityTable = () => {
   }
 
   const fetchCommunities = async() => {
-
-    const response = await fetchAllCommunities();
     
+    try {
+      const response = await fetchAllCommunity();
+      if(response && response.status === 200){
+        setData(response.data.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+    }
+     
   };
 
   useEffect(() => {
     fetchCommunities();
+    console.log("Call fetchCommunities on page reload")
   }, [isEditClicked]);
 
   return (
@@ -49,7 +50,8 @@ const CreateCommunityTable = () => {
     <div className="container-fluid">
 
       {
-        isEditClicked ? (<UpdateCommunityForm
+        isEditClicked ? (
+          <UpdateCommunityForm
             item={item}
             changeIsEditableFlag={changeIsEditableFlag}
           />

@@ -116,7 +116,7 @@ const RegisterForm = () => {
                       <div className="row mb-3">
                         
                         <select id="community_id" className="form-select form-control" aria-label="Default select example" value={community_id} onChange={handleSelectChange}>
-                          <option selected>---Select Community---</option>
+                          <option va>---Select Community---</option>
                           {casts.map((cast) => (
                             <option key={cast.id} value={cast.id}>
                               {cast.name}

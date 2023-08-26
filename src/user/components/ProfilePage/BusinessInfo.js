@@ -6,7 +6,7 @@ const BusinessInfo = (props) => {
         <div id="business-section" className="content-wrapper pt-4">
             <div className="container">
                 <div className="card shadow">
-                    <div class="edit-icon add-more-detail"><a href="/update-business-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
+                    <div className="edit-icon add-more-detail"><a href="/update-business-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
                     <div className="card-body">
                         <h5 className="fw-3 mb-3">Business Info</h5>
                         <div className="row">

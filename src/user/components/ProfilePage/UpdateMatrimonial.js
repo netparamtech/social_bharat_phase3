@@ -118,6 +118,7 @@ const UpdateMatrimonial = () => {
                        id="fatherName" 
                        placeholder="Enter Father Name" 
                        className="form-control"
+                       autoFocus
                        onChange={(e) => setFatherName(e.target.value)}
                        />
                        {errors.father_name && <span className='error'>{errors.father_name}</span>}

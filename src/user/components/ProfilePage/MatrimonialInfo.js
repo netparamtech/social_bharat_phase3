@@ -7,8 +7,8 @@ const MatrimonialInfo = (props) => {
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
-          {matrimonialDetails&&matrimonialDetails.length>0?(<div class="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-          ):( <div class="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
+          {matrimonialDetails&&matrimonialDetails.length>0?(<div className="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+          ):( <div className="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
           <div className="card-body">
             <h5 className="fw-3 mb-3">Matrimonial Info</h5>
             {matrimonialDetails&&matrimonialDetails.length>0?( <div className="row">

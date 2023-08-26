@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { updateProfilePhoto } from '../../services/userService';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/userAction';
@@ -7,10 +7,10 @@ const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
 
   const { user } = props;
-  const [profileImage,setProfileImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
-  const [token,setToken] = useState('');
+  const [token, setToken] = useState('');
 
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const BasicProfile = (props) => {
 
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setProfileImage(user?.data?.photo || '/user/images/OIP.jpg');
     setToken(loggedUser.token);
   })
@@ -48,21 +48,40 @@ const BasicProfile = (props) => {
         <div className="row">
           <div className="col-md-3">
             <div className="card shadow">
-              <input
-                type="file"
-                ref={imageInputRef}
-                style={{ display: 'none' }}
-                accept="image/*"
-                onChange={handleImageChange}
-              />
 
-              <img
-                className="img-fluid img-circle profile-picture mt-3"
-                src={imagePreview||profileImage}
-                alt=""
-                title=""
-                onClick={handleImageClick}
-              />
+              <div class="container-profilepic mx-auto card card-block-md overflow-hidden ">
+
+                <input
+                  type="file"
+                  ref={imageInputRef}
+                  style={{ display: 'none' }}
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+
+                <img
+                  className="img-fluid max-width-100"
+                  src={imagePreview || profileImage}
+                  alt=""
+                  title=""
+                  onClick={handleImageClick}
+                />
+
+                <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">
+                  <div className="text-profilepic text-success">
+                    <i className="fas fa-camera fs-6"></i>
+                    <div className="text-profilepic fs-6">
+                      <a
+                        href="#"
+                        className="text-decoration-none text-success"
+                        onClick={handleImageClick}
+                      >
+                        Edit
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="card-body ">
                 <p className="card-text text-center mb-0">{user && user.data && user.data.name}</p>
                 <p className="card-text text-center text-muted">Jaipur - Software Developer</p>
@@ -71,7 +90,7 @@ const BasicProfile = (props) => {
           </div>
           <div className="col-md-9">
             <div className="card shadow">
-              <div class="edit-icon"><a href="/update-basic-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+              <div className="edit-icon"><a href="/update-basic-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
               <div className="card-body ">
                 <div className="w-100 w-lg-75">
                   <div className="mb-2 row">
@@ -96,7 +115,16 @@ const BasicProfile = (props) => {
 
                   <div className="mb-2 row">
                     <label className="col-sm-3">Mobile No</label>
-                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.mobile}</span></div>
+                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.mobile}</span>
+
+                      <a href='/update-mobile'>
+                        <button
+                          className="btn btn-outline-info btn-sm ms-2"
+                        >
+                          Update
+                        </button>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

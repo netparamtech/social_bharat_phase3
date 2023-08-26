@@ -14,6 +14,7 @@ import UpdateBusinessPage from './pages/UpdateBusinessPage';
 import LoginWithPassword from './components/LoginWithPassword';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import SetPasswordPage from './pages/SetPasswordPage';
+import LocationComponent from './components/LocationComponent';
 
 const userRoutes = [
     {
@@ -92,6 +93,12 @@ const userRoutes = [
     },
 
     {
+        path: '/update-job-profile/:id',
+        component: UpdateJobPage,
+        exact: true
+    },
+
+    {
         path: '/update-contact',
         component: UpdateContactPage,
         exact: true
@@ -118,6 +125,12 @@ const userRoutes = [
     {
         path: '/login-with-password',
         component: LoginWithPassword,
+        exact: true
+    },
+
+    {
+        path: '/state-city',
+        component: LocationComponent,
         exact: true
     },
    

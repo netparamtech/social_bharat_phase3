@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { updateEducationalDetails } from '../../services/userService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { decode } from '../../encryt/encode';
 
 const UpdateEducationProfile = () => {
   const { id } = useParams();
+
+  useEffect(()=>{
+    
+  },[]);
 
   const [educationDetails,setEducationDetails] = useState({});
 
@@ -108,6 +113,7 @@ const UpdateEducationProfile = () => {
                           id="degree"
                           placeholder="Enter your degree name"
                           className="form-control"
+                          autoFocus
                           onChange={handleDegreeChange}
                         />
                         {errors.degree && <span className='error'>{errors.degree}</span>}

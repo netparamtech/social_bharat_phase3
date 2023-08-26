@@ -19,6 +19,10 @@ body {
   margin: auto 10px;
 }
 
+nav .nav-item .btn{
+  border: none !important;
+}
+
 /* Dark Navbar */
 .navbar-dark {
   background-color: #008374 !important;
@@ -377,9 +381,7 @@ body {
   font-style: italic;
 }
 
-
-
-/*  */
+/* User Image On Navbar  */
 .dropdown-user .dropdown-menu .dropdown-header {
   text-transform: none;
   letter-spacing: normal;
@@ -389,10 +391,13 @@ body {
   height: 4rem;
   width: 4rem;
   border-radius: 100%;
-  background-position: center;
+  vertical-align: middle;
+ 
 }
+
 #navbarDropdownUserImage img {
-  border-radius: 100%;  
+  border-radius: 100%;
+ 
 }
 
 a.btn.dropdown-toggle.show:focus {
@@ -410,11 +415,8 @@ a.btn.dropdown-toggle.show:focus {
 .dropdown-user-img {
   height: 2.5rem;
   width: 2.5rem;
+  margin-right: 1rem;
   border-radius: 100%;
-  background-position: center;
-  font-size: 16px;
-  font-weight: 600;
-  
 }
 
 .dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-name {
@@ -426,6 +428,7 @@ a.btn.dropdown-toggle.show:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-email {
   color: #69707a;
   font-size: 0.75rem;
@@ -567,7 +570,6 @@ a.btn.dropdown-toggle.show:focus {
   color: #ffffff;
 }
 
-
 /* OTP input boxes */
 .otp-input {
   width: 40px;
@@ -613,12 +615,12 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 /* Profile img */
-.profile-picture{
+/* .profile-picture{
   width: 110px;
   height: 110px;
   border-radius: 100%;
   margin: 0px auto;
-}
+} */
 
 .proposal-Photo img{
   width: 40px;
@@ -665,6 +667,7 @@ a.btn.dropdown-toggle.show:focus {
 #dashboard a:hover{
   text-decoration: underline;
 }
+
 .bg-lightorange {
   background-color: #F28157 !important;
 }
@@ -722,4 +725,137 @@ a.btn.dropdown-toggle.show:focus {
 
 .edit-icon a i{
   color: #008374;
+}
+
+/* User Photo Edit */
+.container-profilepic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  background: linear-gradient(yellow, orange, pink, purple, blue);
+}
+
+.container-profilepic img{
+  /* background: linear-gradient(yellow, orange, pink, purple, blue) !important; */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.middle-profilepic {
+  background-color: #ffffffb0;
+}
+
+.container-profilepic:hover .middle-profilepic {
+  display: flex !important;
+  cursor: pointer;
+}
+
+/* Home page banners */
+.banner-area {
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 550px;
+  overflow: hidden;
+  z-index: 0;
+  
+}
+
+.banner-area::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: .7;
+  z-index: -1;
+}
+
+#banners-section h2 {
+  font-size: 35px;
+  color: #ffffff; 
+}
+
+#banners-section h2 span{
+  color: yellow;
+}
+
+.overlay {
+  /* background-color: rgb(41, 53, 56); */
+  background-color: rgb(46, 48, 49);
+  bottom: 0;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.hero-btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 12px 34px;
+  font-size: 13px;
+  background: transparent;
+  position: relative;
+}
+
+.hero-btn:hover {
+  border: 1px solid #008374 !important;
+  background: #008374 !important;
+  transition: 1s !important;
+  color: #fff;
+}
+
+.carousel-caption {
+  margin-bottom: 200px;
+}
+
+/* ......Search Bar........ */
+#searchPeople-section .container-input {
+  position: relative;
+}
+
+#searchPeople-section .input{
+  padding-left: 40px !important;
+}
+
+#searchPeople-section .container-input i {
+  position: absolute;
+  top: 50%;
+  left: 10px; 
+  transform: translate(0, -50%);
+  opacity: 0.5;
+}
+
+/* Search People Page */
+#searchPeople-section .avatar {
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  background-position: center;
+  background-size: cover;
+}
+
+#searchPeople-section .user-detail p{
+  margin: 0px !important;
+  font-size: 12px;
 }

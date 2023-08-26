@@ -3,17 +3,15 @@ import Select from 'react-select';
 import { Country, State } from 'country-state-city';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { updateContactDetail } from '../../services/userService';
-const UpdateContact = () => {
+import { updateContactDetail } from '../services/userService';
 
+function LocationComponent() {
   const [addressType, setAddressType] = useState('');
   const [addressLine, setAddressLine] = useState('');
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [cities, setCities] = useState([]);
-
-  const [isLoadingCities, setIsLoadingCities] = useState(false);
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
@@ -47,9 +45,9 @@ const UpdateContact = () => {
     const updatedData = {
       address_type: addressType,
       address_line: addressLine,
-      city:selectedCity&&selectedCity.value,
-      state:selectedState&&selectedState.label,
-      country:selectedCountry&&selectedCountry.label,
+      selectedCity,
+      selectedState,
+      selectedCountry,
     };
 
     try {
@@ -73,37 +71,19 @@ const UpdateContact = () => {
     }
   };
 
-  const fetchCities = async (stateCode) => {
-    try {
-      const response = await axios.get(`http://api.geonames.org/searchJSON`, {
-        params: {
-          country: 'IN', // Assuming India based on your previous example
-          adminCode1: stateCode, // State code (e.g., 'RJ' for Rajasthan)
-          maxRows: 50, // Number of cities to retrieve
-          username: 'rahulsharma799', // Replace with your GeoNames username
-        }
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
-
 
   useEffect(() => {
-    if (selectedState) {
-      setIsLoadingCities(true);
-      fetchCities(selectedState.isoCode)
+    if (selectedCountry && selectedState) {
+      // Replace 'YOUR_API_URL' with the actual API endpoint
+      axios.get(`YOUR_API_URL?country=${selectedCountry.value}&state=${selectedState.value}`)
         .then(response => {
-          setCities(response.geonames);
-          setIsLoadingCities(false);
+          setCities(response.data.cities);
         })
         .catch(error => {
           console.error('Error fetching cities:', error);
-          setIsLoadingCities(false);
         });
     }
-  }, [selectedState]);
+  }, [selectedCountry, selectedState]);
 
   const countries = Country.getAllCountries().map(country => ({
     value: country.isoCode,
@@ -161,7 +141,7 @@ const UpdateContact = () => {
                       <label className="form-label">Country</label>
 
                       <Select
-                       // className="form-select form-control"
+                        className="form-select form-control"
                         options={countries}
                         value={selectedCountry}
                         onChange={handleCountryChange}
@@ -176,7 +156,7 @@ const UpdateContact = () => {
                       <label className="form-label">State</label>
 
                       <Select
-                        //className="form-select form-control"
+                        className="form-select form-control"
                         options={states}
                         value={selectedState}
                         onChange={handleStateChange}
@@ -191,7 +171,7 @@ const UpdateContact = () => {
                     <label className="form-label">City</label>
 
                     <Select
-                      //className="form-select form-control"
+                      className="form-select form-control"
                       options={cityOptions}
                       value={selectedCity}
                       onChange={handleCityChange}
@@ -217,6 +197,6 @@ const UpdateContact = () => {
     </div >
 
   );
-};
+}
 
-export default UpdateContact;
+export default LocationComponent;

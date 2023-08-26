@@ -38,7 +38,7 @@ export const createCommunity = async (formData) => {
 
 export const fetchAllCommunity = async () => {
     try{
-        const response = await apiWithHeaders.post('/fetch-all-communities');
+        const response = await apiWithHeaders.get('/communities');
         return response;
     } catch(error) {
         throw error;
@@ -68,18 +68,6 @@ export const fetchAllUsers = async (page, size) => {
 export const updatePassword = async (password, confirm_password) => {
     try {
         const response = await apiWithHeaders.put('/update-password', {password, confirm_password});  
-        return response;
-    } catch(error) {
-        throw error;
-    }
-}
-
-
-//Fetch All Communities
-
-export const fetchAllCommunities = async () => {
-    try{
-        const response = await apiWithHeaders.get();
         return response;
     } catch(error) {
         throw error;

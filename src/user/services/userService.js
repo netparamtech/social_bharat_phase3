@@ -140,6 +140,15 @@ export const updateJobDetail = async (data) => {
     }
 }
 
+export const getSingleJobDetails = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/jobs/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 export const getUserFullProfile = async () => {
    
     try {

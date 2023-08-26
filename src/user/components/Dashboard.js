@@ -108,7 +108,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classNameicbrown text-white h-100">
+            <div className="card bg-classicbrown text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
@@ -128,7 +128,7 @@ const Dashboard = () => {
           {/* <!-- Second Line --> */}
 
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classNameicblue text-white h-100">
+            <div className="card bg-classicblue text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
@@ -182,7 +182,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classNameicpink text-white h-100">
+            <div className="card bg-classicpink text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">

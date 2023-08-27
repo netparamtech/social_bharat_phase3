@@ -1,9 +1,30 @@
 import React from 'react';
 import { encode } from '../../encryt/encode';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../actions/userAction';
+import { deleteSingleJobDetails } from '../../services/userService';
 
 const JobInfo = (props) => {
   const { user } = props;
   const jobDetails = user?.data?.jobs;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const deleteUserJobDetails = async (id) => {
+    try{
+      const response = await deleteSingleJobDetails(id);
+      if(response && response.status === 200){
+        navigate('/profile')
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+    }
+  }
 
   return (
     <div id="job-section" className="content-wrapper pt-4 mb-4">
@@ -18,6 +39,7 @@ const JobInfo = (props) => {
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow">
                     <div className="edit-icon"><a href={`/update-job-profile/${encode(item.id)}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                    <div class="delete-icon"><a href="" title="Delete" onClick={deleteUserJobDetails(item.id)}><i class="fa-solid fa-trash"></i></a></div>
                       <div className="card-body">
                         <table className="table table-striped">
                           <tbody>

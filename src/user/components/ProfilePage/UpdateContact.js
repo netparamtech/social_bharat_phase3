@@ -4,7 +4,10 @@ import { Country, State } from 'country-state-city';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { updateContactDetail } from '../../services/userService';
-const UpdateContact = () => {
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
+const UpdateContact = (props) => {
+  const {contactDetails} = props;
 
   const [addressType, setAddressType] = useState('');
   const [addressLine, setAddressLine] = useState('');
@@ -17,6 +20,7 @@ const UpdateContact = () => {
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAddressTypeChange = (e) => {
     setAddressType(e.target.value);
@@ -68,6 +72,7 @@ const UpdateContact = () => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate('/login');
       }
     }
@@ -88,6 +93,23 @@ const UpdateContact = () => {
       throw error;
     }
   };
+
+  useEffect(() => {
+    // Set default values from contactDetails prop when it changes
+    if (contactDetails) {
+      setAddressType(contactDetails.address_type || '');
+      setAddressLine(contactDetails.address_line || '');
+  
+      // Find the selectedCountry option that matches the label from contactDetails
+      const defaultCountry = countries.find(country => country.label === contactDetails.country);
+      setSelectedCountry(defaultCountry || null);
+  
+      // Find the selectedState option that matches the label from contactDetails
+      const defaultState = states.find(state => state.label === contactDetails.state);
+      setSelectedState(defaultState || null);
+    }
+  }, [contactDetails]);
+  
 
 
   useEffect(() => {
@@ -134,7 +156,7 @@ const UpdateContact = () => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Address Type</label>
-                      <select className="form-select form-control" aria-label="Default select example" onChange={handleAddressTypeChange}>
+                      <select className="form-select form-control" aria-label="Default select example" value={addressType} onChange={handleAddressTypeChange}>
                         <option value="">---Address Type---</option>
                         <option value="PERMANENT">PERMANENT</option>
                         <option value="CURRENT">CURRENT</option>
@@ -149,6 +171,7 @@ const UpdateContact = () => {
                         id="addressLine"
                         placeholder="Enter Address Line"
                         className="form-control"
+                        defaultValue={addressLine}
                         onChange={handleAddressLineChange}
                         autoFocus
                       />

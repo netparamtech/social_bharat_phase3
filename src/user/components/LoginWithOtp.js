@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../actions/userAction';
 
 const LoginWithOtp = (props) => {
-    const {mobile,message} = props;
+    const { mobile, message } = props;
 
     const [otp, setOtp] = useState('');
 
@@ -109,92 +109,76 @@ const LoginWithOtp = (props) => {
     }
 
     return (
-        <div id="auth-wrapper" className="pt-5 pb-5">
-            <div className="container">
-                <div className="card shadow">
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-md-6 d-none d-md-block">
-                                <img src="/user/images/signup.png" className="img-fluid" alt="Signup" />
-                            </div>
-                            <div className="col-md-6 col-sm-12 col-xs-12 p-5">
-                                <div className="card-title">
-                                    <h3 className="mb-3">Verify OTP</h3>
-                                </div>
-                                <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
+        <>
+            <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
-                                    <div className="row mb-3">
-                                        <input type="text"
-                                            name="mobile"
-                                            id="mobile"
-                                            placeholder="Enter your mobile number"
-                                            className="form-control"
-                                            value={mobile}
-                                            disabled
-                                        />
+                <div className="row mb-3">
+                    <input type="text"
+                        name="mobile"
+                        id="mobile"
+                        placeholder="Enter your mobile number"
+                        className="form-control"
+                        value={mobile}
+                        disabled
+                    />
 
-                                    </div>
+                </div>
 
-                                    <div className="row mb-3">
-                                        {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
-                                        <div id="otp-form">
-                                            {otpBoxes.map((index) => (
-                                                <input
-                                                    key={index}
-                                                    type="text"
-                                                    className="form-control otp-input"
-                                                    id={`otp-${index}`}
-                                                    value={otp[index] || ''}
-                                                    maxLength="1" // Limit the input to one character
-                                                    onChange={(e) => handleOTPChange(e, index)}
-                                                    autoFocus={index === 0}
-                                                />
-                                            ))}
-                                        </div>
-                                        {errors.otp && <p className='text-center mb-0 mt-1'><span className='error'>{errors.otp}</span></p>}
-                                    </div>
+                <div className="row mb-3">
+                    {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
+                    <div id="otp-form">
+                        {otpBoxes.map((index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                className="form-control otp-input"
+                                id={`otp-${index}`}
+                                value={otp[index] || ''}
+                                maxLength="1" // Limit the input to one character
+                                onChange={(e) => handleOTPChange(e, index)}
+                                autoFocus={index === 0}
+                            />
+                        ))}
+                    </div>
+                    {errors.otp && <p className='text-center mb-0 mt-1'><span className='error'>{errors.otp}</span></p>}
+                </div>
 
-                                    <div className="row text-center">
-                                        <span id="timer">{formatTime()}</span>
-                                    </div>
+                <div className="row text-center">
+                    <span id="timer">{formatTime()}</span>
+                </div>
 
-                                    <div className="row mb-3">
+                <div className="row mb-3">
 
-                                        <button type="submit"
-                                            className="btn btn-primary"
-                                            disabled={isTimeExpired}
-                                        >
-                                            Varified With OTP
-                                        </button>
-                                    </div>
+                    <button type="submit"
+                        className="btn btn-primary"
+                        disabled={isTimeExpired}
+                    >
+                        Varified With OTP
+                    </button>
+                </div>
 
-                                    <div className="row">
-                                        <div className="col-5 col-md-4">
-                                            <hr />
-                                        </div>
-                                        <div className="col-2 col-md-4 text-center mt-1">OR</div>
-                                        <div className="col-5 col-md-4">
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div className="row mt-3">
-
-                                        <button type="button"
-                                            className="btn btn-secondary"
-                                            onClick={resendOTP}
-                                            disabled={!isTimeExpired}
-                                        >
-                                            Resend OTP
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
+                <div className="row">
+                    <div className="col-5 col-md-4">
+                        <hr />
+                    </div>
+                    <div className="col-2 col-md-4 text-center mt-1">OR</div>
+                    <div className="col-5 col-md-4">
+                        <hr />
                     </div>
                 </div>
-            </div>
-        </div>
+                <div className="row mt-3">
+
+                    <button type="button"
+                        className="btn btn-secondary"
+                        onClick={resendOTP}
+                        disabled={!isTimeExpired}
+                    >
+                        Resend OTP
+                    </button>
+                </div>
+
+            </form>
+        </>
     );
 };
 

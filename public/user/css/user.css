@@ -419,6 +419,17 @@ a.btn.dropdown-toggle.show:focus {
   border-radius: 100%;
 }
 
+.dropdown-user-img-letter{
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 100% !important;  
+  background-color: #6387A6 !important;
+  border: 1px solid rgb(247, 240, 240) !important;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
 .dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-name {
   color: #212832;
   font-weight: 500;
@@ -503,6 +514,11 @@ a.btn.dropdown-toggle.show:focus {
   background-color: #e58d285b;
   border-color: #e58d28a6;
   color: #fff;
+}
+
+.btn-set{
+  width: 80px;
+  height: 40px;
 }
 
 .form-control {
@@ -719,12 +735,19 @@ a.btn.dropdown-toggle.show:focus {
 /* card edit icon */
 .edit-icon {
   position: absolute;
-  right: 10px;
+  right: 40px;
   top: 10px;
 }
 
-.edit-icon a i{
+.edit-icon a i,
+.delete-icon a i{
   color: #008374;
+}
+
+.delete-icon{
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 /* User Photo Edit */
@@ -733,22 +756,19 @@ a.btn.dropdown-toggle.show:focus {
   height: 80px;
   border-radius: 50%;
   margin-top: 10px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
-  background: linear-gradient(yellow, orange, pink, purple, blue);
+
+  /* background: linear-gradient(yellow, orange, pink, purple, blue); */
 }
 
 .container-profilepic img{
   /* background: linear-gradient(yellow, orange, pink, purple, blue) !important; */
   width: 80px;
   height: 80px;
-  border-radius: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .middle-profilepic {
@@ -848,11 +868,13 @@ a.btn.dropdown-toggle.show:focus {
 
 /* Search People Page */
 #searchPeople-section .avatar {
-  vertical-align: middle;
-  width: 100px;
-  height: 100px;
+  /* vertical-align: middle; */
+  width: 50px;
+  height: 50px;
   background-position: center;
   background-size: cover;
+  background-image: url("/images/matrimonial-1.jpg");
+  border-radius: 100%;
 }
 
 #searchPeople-section .user-detail p{

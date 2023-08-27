@@ -11,7 +11,7 @@ const RegisterForm = () => {
 
   const [isTempUserCreated, setIsTempUserCreated] = useState(false);
   const [errors, setErrors] = useState('');
-  const [message,setMessage] = useState('');
+  const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -75,77 +75,78 @@ const RegisterForm = () => {
   }, []);
 
   return (
-    <>
-      {!isTempUserCreated ? (
-        <div id="auth-wrapper" className="pt-5 pb-5">
-          <div className="container">
-            <div className="card shadow">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-md-6 d-none d-md-block">
-                    <img src="/user/images/signup.png" className="img-fluid" alt="Sign Up" />
-                  </div>
-                  <div className="col-md-6 col-sm-12 col-xs-12 p-5">
-                    <div className="card-title">
-                      <h3 className="mb-3">Sign up</h3>
-                    </div>
-                    <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
-                      <div className="row mb-3">
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          placeholder="Enter your name"
-                          className="form-control"
-                          onChange={handleNameChange}
-                          autoFocus
-                        />
-                        {errors.name && <span className='error'>{errors.name}</span>}
-                      </div>
-                      <div className="row mb-3">
-                        <input
-                          type="text"
-                          name="mobile"
-                          id="mobile"
-                          placeholder="Enter your mobile number"
-                          className="form-control"
-                          onChange={handleMobileChange}
-                        />
-                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
-                      </div>
-                      <div className="row mb-3">
-                        
-                        <select id="community_id" className="form-select form-control" aria-label="Default select example" value={community_id} onChange={handleSelectChange}>
-                          <option va>---Select Community---</option>
-                          {casts.map((cast) => (
-                            <option key={cast.id} value={cast.id}>
-                              {cast.name}
-                            </option>
-                          ))}
-                        </select>
-
-                        {errors.community_id && <span className='error'>{errors.community_id}</span>}
-                      </div>
-                      <div className="row mb-3">
-                        <button type="submit" className="btn btn-primary">
-                          Register
-                        </button>
-                      </div>
-                      <div className="row mt-3">
-                        <p className="fw-lighter fs-6">
-                          Already User? <a href="/login" className="text-primary">Login</a>.
-                        </p>
-                      </div>
-                    </form>
-                  </div>
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-6 d-none d-md-block">
+                <img src="/user/images/signup.png" className="img-fluid" alt="Sign Up" />
+              </div>
+              <div className="col-md-6 col-sm-12 col-xs-12 p-5">
+                <div className="card-title">
+                  <h3 className="mb-3">Sign up</h3>
                 </div>
+                {
+                  !isTempUserCreated ? (
+                    <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
+                  <div className="row mb-3">
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      placeholder="Enter your name"
+                      className="form-control"
+                      onChange={handleNameChange}
+                      autoFocus
+                    />
+                    {errors.name && <span className='error'>{errors.name}</span>}
+                  </div>
+                  <div className="row mb-3">
+                    <input
+                      type="text"
+                      name="mobile"
+                      id="mobile"
+                      placeholder="Enter your mobile number"
+                      className="form-control"
+                      onChange={handleMobileChange}
+                    />
+                    {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                  </div>
+                  <div className="row mb-3">
+
+                    <select id="community_id" className="form-select form-control" aria-label="Default select example" value={community_id} onChange={handleSelectChange}>
+                      <option va>---Select Community---</option>
+                      {casts.map((cast) => (
+                        <option key={cast.id} value={cast.id}>
+                          {cast.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    {errors.community_id && <span className='error'>{errors.community_id}</span>}
+                  </div>
+                  <div className="row mb-3">
+                    <button type="submit" className="btn btn-primary">
+                      Register
+                    </button>
+                  </div>
+                  <div className="row mt-3">
+                    <p className="fw-lighter fs-6">
+                      Already User? <a href="/login" className="text-primary">Login</a>.
+                    </p>
+                  </div>
+                </form>
+                  ):(
+                    <RegisterWithOtp userDetail = {{mobile,name,community_id}} message = {message} />
+                  )
+                }
               </div>
             </div>
           </div>
         </div>
-      ) : (<RegisterWithOtp userDetail={{ mobile, name, community_id }} message = {message} />)}
-
-    </>
+      </div>
+    </div>
   );
 };
 

@@ -8,12 +8,15 @@ import { getUserFullProfile } from '../services/userService';
 import { useNavigate } from 'react-router-dom';
 import JobInfo from '../components/ProfilePage/JobInfo';
 import BusinessInfo from '../components/ProfilePage/BusinessInfo';
+import { useDispatch } from 'react-redux';
+import { logout } from '../actions/userAction';
 
 
 const ProfilePage = () => {
 
     const [user, setUser] = useState();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const getUserProfile = async () => {
         try{
@@ -24,6 +27,7 @@ const ProfilePage = () => {
         } catch (error) {
               //Unauthorized
               if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate('/login');
               }
         }

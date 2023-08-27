@@ -122,7 +122,7 @@ const Navbar = () => {
                                         {
                                             userProfile && userProfile ? (<img className="dropdown-user-img me-2" src={userProfile} alt={userName} title={userName} />)
                                                 :
-                                                (<button type='button' className='dropdown-user-img '>{loggedButton}</button>)
+                                                (<button type='button' className='dropdown-user-img-letter'>{loggedButton}</button>)
                                         }
 
 

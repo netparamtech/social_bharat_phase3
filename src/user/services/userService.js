@@ -129,6 +129,24 @@ export const updateContactDetail = async (data) => {
     }
 }
 
+export const getSingleContactDetails = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/contacts/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const deleteContact = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/contacts/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //update job info 
 export const updateJobDetail = async (data) => {
    
@@ -143,6 +161,15 @@ export const updateJobDetail = async (data) => {
 export const getSingleJobDetails = async (id) => {
     try {
         const response = await apiWithHeaders.get(`/user/jobs/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const deleteSingleJobDetails = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/jobs/${id}`);
         return response;
     } catch(error) {
         throw error;

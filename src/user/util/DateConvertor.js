@@ -6,7 +6,7 @@ export const yyyyMmDdFormat = (inputDate) => {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
     const day = String(date.getDate()).padStart(2, '0');
 
-    return `${year}-${month}-${day}`;
+    return `${year}/${month}/${day}`;
 };
 
 //convert date string into dd/mm/yyyy formate

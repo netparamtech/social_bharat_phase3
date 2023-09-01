@@ -1,5 +1,4 @@
-import React from 'react';
-import { encode } from '../../encryt/encode';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../actions/userAction';
@@ -7,16 +6,24 @@ import { deleteSingleJobDetails } from '../../services/userService';
 
 const JobInfo = (props) => {
   const { user } = props;
-  const jobDetails = user?.data?.jobs;
+  const initialJobDetails = user?.data?.jobs; // Store initial job details
+  const [jobDetails, setJobDetails] = useState(initialJobDetails);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setJobDetails(initialJobDetails); // Update jobDetails when user changes
+  }, [user]);
+
   const deleteUserJobDetails = async (id) => {
-    try{
+    try {
       const response = await deleteSingleJobDetails(id);
-      if(response && response.status === 200){
-        navigate('/profile')
+      if (response && response.status === 200) {
+        // Remove the deleted item from jobDetails
+        const updatedJobDetails = jobDetails.filter((item) => item.id !== id);
+        setJobDetails(updatedJobDetails); // Update state to trigger a re-render
+        navigate('/profile');
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -38,8 +45,15 @@ const JobInfo = (props) => {
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow">
-                    <div className="edit-icon"><a href={`/update-job-profile/${encode(item.id)}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-                    <div class="delete-icon"><a href="" title="Delete" onClick={deleteUserJobDetails(item.id)}><i class="fa-solid fa-trash"></i></a></div>
+                      <div className="edit-icon"><a href={`/update-job-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                      <div class="delete-icon"><a href="" title="Delete" onClick={(e) => {
+                        e.preventDefault();
+                        deleteUserJobDetails(item.id)
+                      }}
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </a>
+                      </div>
                       <div className="card-body">
                         <table className="table table-striped">
                           <tbody>

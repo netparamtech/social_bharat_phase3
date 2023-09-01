@@ -3,17 +3,33 @@ import React from 'react';
 const MatrimonialInfo = (props) => {
   const { user } = props;
   const matrimonialDetails = user?.data?.matrimonial;
-  const proposalPhotos = user?.data?.matrimonial?.proposal_photos;
+  const proposalPhotos = user && user.data && user.data.matrimonial[0] && user.data.matrimonial[0].proposal_photos;
+  const getFileType = (url) => {
+    // Extract the file extension from the URL
+    const extension = url.split('.').pop().toLowerCase();
+
+    // Define mappings of common file types
+    const fileTypeMappings = {
+      pdf: 'PDF',
+      doc: 'DOC',
+      docx: 'DOCX',
+      txt: 'TXT',
+      // Add more file types as needed
+    };
+
+    // Use the mapping or show the extension as-is
+    return fileTypeMappings[extension] || extension.toUpperCase();
+  };
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
-          {matrimonialDetails&&matrimonialDetails.length>0?(<div className="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-          ):( <div className="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
-         <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
+          {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+          ) : (<div className="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
+          <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
           <div className="card-body">
             <h5 className="fw-3 mb-3">Matrimonial Info</h5>
-            {matrimonialDetails&&matrimonialDetails.length>0?( <div className="row">
+            {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="row">
               <div className="col-md-6">
                 <div className="card shadow">
                   <div className="card-body">
@@ -64,20 +80,26 @@ const MatrimonialInfo = (props) => {
                         <tr>
                           <td>Biodata</td>
                           <td className="text-muted">
-                            <i className="fa-regular fa-file-lines"></i> {user && user.data && user.data.matrimonial[0] && user.data.matrimonial[0].biodata}
+                            {user && user.data && user.data.matrimonial[0] && user.data.matrimonial[0].biodata && (
+                              <span>
+                                <a href={user.data.matrimonial[0].biodata} download="biodata.pdf">
+                                  <i className="fa-regular fa-file-lines"></i> Download Biodata
+                                </a>
+                                &nbsp;({getFileType(user.data.matrimonial[0].biodata)})
+                              </span>
+                            )}
                           </td>
                         </tr>
                         <tr>
                           <td>Proposal Photo</td>
                           <td className="proposal-Photo">
-                            <img src={user && user.data && user.data.matrimonial && user.data.matrimonial.proposal_photos} alt=""
-                              title={user && user.data && user.data.name} />
-                              {
-                                proposalPhotos &&  proposalPhotos.map((item, idx) => (
-                                  <img src={item} />
-                                ))
-                              }
-                           
+
+                            {
+                              proposalPhotos && proposalPhotos.map((item, idx) => (
+                                <img src={item} />
+                              ))
+                            }
+
                           </td>
                         </tr>
                       </tbody>
@@ -85,12 +107,12 @@ const MatrimonialInfo = (props) => {
                   </div>
                 </div>
               </div>
-            </div>):(
-                <div className="col-md-12">
-                  <p className="text-muted">No matrimonial details available.</p>
-                </div>
-              )}
-           
+            </div>) : (
+              <div className="col-md-12">
+                <p className="text-muted">No matrimonial details available.</p>
+              </div>
+            )}
+
           </div>
         </div>
       </div>

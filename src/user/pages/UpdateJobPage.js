@@ -28,7 +28,7 @@ const UpdateJobPage = () => {
   }
   useEffect(()=>{
    if(id){
-    fetchJob(decode(id));
+    fetchJob(id);
    }
   },[id]);
   return (

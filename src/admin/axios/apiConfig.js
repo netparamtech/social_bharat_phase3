@@ -30,8 +30,32 @@ const apiWithHeaders = axios.create({
 apiWithHeaders.interceptors.request.use((config) => {
  // const token = useSelector((state) => state.auth.token.token);
  const token = adminStore.getState().auth.token?.token
- console.log(token,"check token admin")
   config.headers = setHeaders(token);
+  return config;
+});
+
+// Create a function to set headers, including optional authorization token
+const setHeadersForFile = (token) => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
+// Create an axios instance with the set headers function
+const apiWithFileHeaders = axios.create({
+  baseURL: '/api/admin', // Authentication-related API
+});
+
+// Interceptor to set headers before each request
+apiWithFileHeaders.interceptors.request.use((config) => {
+ const token = adminStore.getState().auth.token?.token;
+  config.headers = setHeadersForFile(token);
   return config;
 });
 
@@ -48,4 +72,4 @@ axios.interceptors.response.use(
   }
 );
 
-export { apiConfig, apiWithHeaders };
+export { apiConfig, apiWithHeaders, apiWithFileHeaders };

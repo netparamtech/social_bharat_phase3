@@ -22,7 +22,10 @@ function Topbar() {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(adminLogout())
+        dispatch(adminLogout)
+        navigate('/admin')
+      } else  if (error.response && error.response.status === 500) {
+        dispatch(adminLogout)
         navigate('/admin')
       }
     }

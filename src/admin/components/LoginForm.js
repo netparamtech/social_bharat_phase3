@@ -78,7 +78,7 @@ const LoginForm = () => {
           placeholder="Enter Email Address..."
           onChange={handleEmailChange}
         />
-        {errors.email && <span className='validation-error'>{errors.email}</span>}
+        {errors.email && <span className='error'>{errors.email}</span>}
       </div>
       <div className="form-group">
         <input
@@ -88,7 +88,7 @@ const LoginForm = () => {
           placeholder="Password"
           onChange={handlePasswordChange}
         />
-        {errors.password && <span className='validation-error'>{errors.password}</span>}
+        {errors.password && <span className='errorff'>{errors.password}</span>}
       </div>
       <button type='submit' className="btn btn-primary btn-user btn-block">
         Login

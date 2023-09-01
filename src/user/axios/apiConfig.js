@@ -56,7 +56,6 @@ const apiWithFileHeaders = axios.create({
 apiWithFileHeaders.interceptors.request.use((config) => {
  const token = adminStore.getState().userAuth.token?.token;
   config.headers = setHeadersForFile(token);
-  console.log(config.headers,"hii")
   return config;
 });
 

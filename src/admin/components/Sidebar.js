@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate();
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
@@ -58,8 +60,9 @@ function Sidebar() {
         <div id="collapseCommunity" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="/admin/create-community">Create</a>
-            <a className="collapse-item" href="/admin/index">List</a>
+            <a className="collapse-item" href="/admin/create/community">Create</a>
+
+            <a className="collapse-item" href="/admin/communities">List</a>
           </div>
         </div>
       </li>
@@ -82,8 +85,8 @@ function Sidebar() {
       </li>
 
 
-        {/* <!-- Nav Item - User Collapse Menu --> */}
-        <li className="nav-item">
+      {/* <!-- Nav Item - User Collapse Menu --> */}
+      <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
           aria-expanded="true" aria-controls="collapseUser">
           <i className="fas fa-fw fa-folder"></i>
@@ -94,7 +97,12 @@ function Sidebar() {
           <div className="bg-white py-2 collapse-inner rounded">
 
             <a className="collapse-item" href="#">Action</a>
-            <a className="collapse-item" href="/admin/users">List</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/users');
+            }}>
+              List
+            </a>
           </div>
         </div>
       </li>

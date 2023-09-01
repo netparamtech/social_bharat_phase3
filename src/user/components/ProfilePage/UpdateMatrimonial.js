@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { updateMatrimonialInfo, uploadImage, uploadPdf } from '../../services/userService';
+import { updateMatrimonialInfo, uploadImage, uploadMultipleImages, uploadMultiplePDFs, uploadPdf } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateMatrimonial = (props) => {
@@ -16,26 +16,30 @@ const UpdateMatrimonial = (props) => {
   const [paternalGotra, setPaternalGotra] = useState('');
   const [maternalGotra, setMaternalGotra] = useState('');
 
-  const [proposalPhoto, setProposalPhoto] = useState(null);
-  const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState('');
+  const [proposalPhoto, setProposalPhoto] = useState([]);
+  const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
 
-  const [biodataFile, setBiodataFile] = useState(null);
-  const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState('');
+  const [biodataFile, setBiodataFile] = useState([]);
+  const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState([]);
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
 
   const handleProposalPhotoChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    setProposalPhoto(selectedFile);
+    const selectedFiles = e.target.files;
+    setProposalPhoto(selectedFiles); // Set the selected files
 
     const formData = new FormData();
-    formData.append('image', selectedFile);
+
+    // Append each file to the FormData
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append('images', selectedFiles[i]);
+    }
 
     try {
-      const response = await uploadImage(formData); // Make an API call to get temporary URL
+      const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
       if (response.status === 200) {
-        setTempProposalPhotoUrl(response.data.data.image);
+        setTempProposalPhotoUrl(response.data.data.files);
       }
     } catch (error) {
       // Handle error or show an error message
@@ -43,16 +47,21 @@ const UpdateMatrimonial = (props) => {
   };
 
   const handleBiodataFileChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    setBiodataFile(selectedFile);
+    const selectedFiles = e.target.files;
+    setBiodataFile(selectedFiles);
 
     const formData = new FormData();
-    formData.append('pdf', selectedFile);
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append('pdfs', selectedFiles[i]);
+    }
+
 
     try {
-      const response = await uploadPdf(formData); // Make an API call to get temporary URL
-      if (response.status === 200) {
-        setTempBiodataFileUrl(response.data.data.file);
+      const response = await uploadMultiplePDFs(formData); // Make an API call to get temporary URL
+      if (response && response.status === 200) {
+        console.log("hello");
+        console.log(response.data.data.files)
+        setTempBiodataFileUrl(response.data.data.files);
       }
     } catch (error) {
       // Handle error or show an error message
@@ -63,6 +72,7 @@ const UpdateMatrimonial = (props) => {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
+    console.log(tempProposalPhotoUrl)
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,
@@ -73,7 +83,7 @@ const UpdateMatrimonial = (props) => {
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
       cast: cast,
-      proposal_photo: tempProposalPhotoUrl, // Use the temporary URL
+      proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
     };
 
@@ -114,7 +124,7 @@ const UpdateMatrimonial = (props) => {
       setGotraSelf(userMatrimonial.gotra || '');
       setMaternalGotra(userMatrimonial.maternal_gotra || '');
       setPaternalGotra(userMatrimonial.paternal_gotra || '');
-      setProposalPhoto(userMatrimonial.proposal_photo || '');
+      setProposalPhoto(userMatrimonial.proposal_photos || '');
       setBiodataFile(userMatrimonial.biodata || '');
 
       // You can similarly handle the proposalPhoto and biodataFile values here if needed
@@ -231,6 +241,7 @@ const UpdateMatrimonial = (props) => {
                         id="proposalPhoto"
                         defaultValue={proposalPhoto}
                         onChange={handleProposalPhotoChange}
+                        multiple
                       />
                       {errors.proposal_photo && <span className='error'>{errors.proposal_photo}</span>}
 
@@ -243,7 +254,9 @@ const UpdateMatrimonial = (props) => {
                       <input type="file" className="form-control"
                         accept=".pdf ,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         id="biodata"
-                        onChange={handleBiodataFileChange} />
+                        onChange={handleBiodataFileChange}
+                        multiple
+                      />
                       {errors.biodata && <span className='error'>{errors.biodata}</span>}
                     </div>
                   </div>

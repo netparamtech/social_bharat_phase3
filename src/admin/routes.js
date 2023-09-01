@@ -1,15 +1,16 @@
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import ChangeProfilePage from "./pages/ChangeProfilePage";
-import CreateCommunityPage from "./pages/CreateCommunityPage";
-import UpdateCommunityPage from "./pages/UpdateCommunityPage";
 import CreateBannerPage from "./pages/CreateBannerPage";
 import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
-import CommunitiesPage from "./pages/CommunitiesPage";
 import BannerIndex from "./pages/BannerIndex";
 import UsersIndex from "./pages/UsersIndex";
 import PasswordUpdatePage from "./pages/PasswordUpdatePage";
+import Community from "./pages/communities/create/Community";
+import UpdateCommunity from "./pages/communities/update/UpdateCommunity";
+import Index from "./pages/communities/list/Index";
+import ViewUser from "./pages/user/ViewUser";
 
 const adminRoutes = [
     {
@@ -31,14 +32,14 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/create-community',
-        component: CreateCommunityPage,
+        path: '/admin/create/community',
+        component: Community,
         exact: true
     },
 
     {
-        path: '/admin/update-community',
-        component: UpdateCommunityPage,
+        path: '/admin/update/community/:id',
+        component: UpdateCommunity,
         exact: true
     },
 
@@ -61,8 +62,8 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/index',
-        component: CommunitiesPage,
+        path: '/admin/Communities',
+        component: Index,
         exact: true
     },
 
@@ -83,6 +84,12 @@ const adminRoutes = [
         component: PasswordUpdatePage,
         exact: true
     },
+
+    {
+        path: '/users/view/:id',
+        component: ViewUser,
+        exact:true
+    }
 ]
 
 export default adminRoutes;

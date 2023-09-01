@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { updateJobDetail } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
-import { yyyyMmDdFormat } from '../../util/DateConvertor';
+import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const UpdateJobProfile = (props) => {
   const {jobDetails} = props;
@@ -15,8 +17,7 @@ const UpdateJobProfile = (props) => {
   const [errors, setErrors] = useState('');
 
   const navigate = useNavigate();
-
-  
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +25,11 @@ const UpdateJobProfile = (props) => {
     const jobProfileData = {
       company_name: companyName,
       designation,
-      job_start_date: jobStartDate,
-      job_end_date: jobEndDate,
+      job_start_date: ddmmyyyyFormat(jobStartDate),
+      job_end_date: ddmmyyyyFormat(jobEndDate),
       job_type: jobType,
     };
+    console.log(jobProfileData)
 
     try {
       const response = await updateJobDetail(jobProfileData);
@@ -44,6 +46,7 @@ const UpdateJobProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate('/login');
       }
     }
@@ -51,7 +54,6 @@ const UpdateJobProfile = (props) => {
   };
 
   useEffect(() => {
-    console.log(jobDetails,"ckjgkj")
     // Set default values from jobDetails prop when it changes
     if (jobDetails) {
       setCompanyName(jobDetails.company_name || '');

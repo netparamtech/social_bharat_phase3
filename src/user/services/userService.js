@@ -77,6 +77,24 @@ export const uploadImage = async (formData) => {
     }
 }
 
+export const uploadMultipleImages = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-multiple-images',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const uploadMultiplePDFs = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-multiple-pdfs',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //upload pdf section
 export const uploadPdf = async (formData) => {
     try {

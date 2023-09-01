@@ -1,126 +1,98 @@
-import React, { useState } from 'react';
-import Dropzone from 'react-dropzone';
+import React, { useEffect, useRef, useState } from 'react';
+import { Card, Input, Button } from 'antd';
+import 'antd/dist/antd';
 
-const ChangeProfileForm = () => {
+import { updateProfilePicture } from '../services/AdminService';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login,logout } from '../actions/authActions';
+
+const ChangeProfileForm = (props) => {
+  const { user } = props;
+  const [profilePreview, setProfilePreview] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [username, setUsername] = useState('');
-  const [photo, setPhoto] = useState("");
 
-  const [photoPreview, setPhotoPreview] = useState('');
+  const [errors,setErrors] = useState('');
+  const token = useSelector((state) => state.auth.token);
 
-  const [errors, setErrors] = useState('');
-  const [message, setMessage] = useState('');
-  const [alertClass, setAlertClass] = useState('');
+  const fileInputRef = useRef(null);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setName(user.name || '');
+    setEmail(user.email || '');
+    setProfilePreview(user.photo || '');
+    setProfilePhoto(user.photo);
+  }, [user])
+
+  const handlePlusIconClick = () => {
+    fileInputRef.current.click();
   };
 
-  const handleMobileChange = (e) => {
-    setMobile(e.target.value);
+  const handleProfilePhoto = (e) => {
+    const selectedFile = e.target.files[0];
+    setProfilePreview(URL.createObjectURL(selectedFile));
+    setProfilePhoto(selectedFile);
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleDropBanner = async (acceptedFiles) => {
-    const bannerFile = acceptedFiles[0];
-    setPhoto(bannerFile);
-
-    try {
-
-    } catch (error) {
-      // Handle fetch error
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    console.log(name, username, mobile, photo, email)
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('username', username);
-    formData.append('mobile', mobile);
-    formData.append('photo', photo);
-
-    formData.append('email', email);
-  };
-
-
+    formData.append('image', profilePhoto);
+    try {
+      const response = await updateProfilePicture(formData);
+      if (response && response.status === 200) {
+        dispatch(login(response.data.data, token));
+        navigate('/admin/dashboard')
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+      // Unauthorized
+      else if (error.response && error.response.status === 401) {
+       dispatch(logout());
+       navigate('/admin')
+      }
+      else if (error.response && error.response.status === 500) {
+       // dispatch(logout());
+       // navigate('/admin')
+       }
+    }
+  }
 
   return (
-    <div>
-      <div className="d-sm-flex align-items-center justify-content-between mb-2">
-        <h1 className="h3 mb-0 text-gray-800">Change Profile</h1>
-      </div>
-      <div className="card">
-        <div className="card-body">
-          <form onSubmit={handleSubmit} className="w-auto">
-            {message && <div className={`alert ${alertClass}`}>
-              {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-              {" " + message}
-            </div>
-            }
+    <div className="profile-card-container">
+      <Card className="profile-card">
+        <div className="profile-image" onClick={handlePlusIconClick}>
+          <img
+            src={profilePreview}
+            alt="Profile"
+            className="image-container"
+          />
+          {!profilePreview && <div className="plus-icon">+</div>}
+          <input
+            type="file"
+            ref={fileInputRef}
+            className='d-none'
+            accept="image/*"
+            onChange={handleProfilePhoto}
+          />
 
-            <div className="row form-group">
-
-              <Dropzone
-                accept="image/*"
-                onDrop={handleDropBanner}
-              >
-                {({ getRootProps, getInputProps, acceptedFiles }) => (
-                  <div className="dropzone w-75 mx-auto p-5 border-success" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    {acceptedFiles.length > 0 ? (
-                      <img src={URL.createObjectURL(acceptedFiles[0])} alt="Banner" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                    ) : (
-                      <p>Drag & drop a profile image here, or click to select one</p>
-                    )}
-                  </div>
-                )}
-              </Dropzone>
-              {errors.banner_image && (
-                <span className="validation-error">{errors.banner_image}</span>
-              )}
-            </div>
-            <div className="row form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                className="form-control w-50 mx-auto"
-                id="name"
-                defaultValue=""
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter Name"
-              />
-              {errors.name && <span className="validation-error">{errors.name}</span>}
-            </div>
-
-            <div className="row form-group">
-              <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" className="form-control w-50 mx-auto" id="email" disabled defaultValue={email} />
-
-            </div>
-            <div className="row form-group">
-              <label htmlFor="mobile" className="form-label">Mobile Number</label>
-              <input type="tel" className="form-control w-50 mx-auto" id="mobile" value={mobile} onChange={handleMobileChange} />
-              {errors.mobile && <span className='validation-error'>{errors.mobile}</span>}
-            </div>
-
-            <div className="row form-group">
-              <label htmlFor="username" className="form-label">Username</label>
-              <input type="text" className="form-control w-50 mx-auto" id="name" defaultValue={username} onChange={handleUsernameChange} />
-              {errors.username && <span className='validation-error'>{errors.username}</span>}
-            </div>
-            <button type="submit" className="btn btn-primary w-25">Submit</button>
-          </form>
         </div>
-      </div>
+        {/* <div className="profile-details">
+          <Input placeholder="Name" value={name} />
+          <Input placeholder="Email" value={email} />
+          <Button type="primary" onClick={handleSubmit}>Save</Button>
+        </div> */}
+        <div className='mt-5'>
+        <Button type="primary" onClick={handleSubmit}>Save</Button>
+        </div>
+      </Card>
     </div>
   );
 };

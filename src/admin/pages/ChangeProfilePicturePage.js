@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
-import ChangeProfileForm from "../components/ChangeProfileForm";
 import AdminLayout from "../layouts/AdminLayout";
+import ChangeProfilePicture from "../components/ChangeProfilePicture";
 
-const ChangeProfilePage = () => {
+const ChangeProfilePicturePage = () => {
     const user = useSelector((state) => state.auth.user);
 
     return (
         <AdminLayout>
-            <ChangeProfileForm user = {user} />
+            <ChangeProfilePicture user = {user} />
         </AdminLayout>
     );
 }
 
-export default ChangeProfilePage;
+export default ChangeProfilePicturePage;

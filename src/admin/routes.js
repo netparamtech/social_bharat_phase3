@@ -1,6 +1,5 @@
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import ChangeProfilePage from "./pages/ChangeProfilePage";
 import CreateBannerPage from "./pages/CreateBannerPage";
 import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
@@ -11,6 +10,8 @@ import Community from "./pages/communities/create/Community";
 import UpdateCommunity from "./pages/communities/update/UpdateCommunity";
 import Index from "./pages/communities/list/Index";
 import ViewUser from "./pages/user/ViewUser";
+import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
+import ChangeBasicDetailsPage from "./pages/ChangeBasicDetailsPage";
 
 const adminRoutes = [
     {
@@ -26,8 +27,14 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/change-profile',
-        component: ChangeProfilePage,
+        path: '/admin/change-profile-picture',
+        component: ChangeProfilePicturePage,
+        exact: true
+    },
+
+    {
+        path: '/admin/change-basic-informations',
+        component: ChangeBasicDetailsPage,
         exact: true
     },
 

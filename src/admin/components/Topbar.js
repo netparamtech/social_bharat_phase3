@@ -24,7 +24,7 @@ function Topbar() {
       if (error.response && error.response.status === 401) {
         dispatch(adminLogout)
         navigate('/admin')
-      } else  if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         dispatch(adminLogout)
         navigate('/admin')
       }
@@ -139,14 +139,29 @@ function Topbar() {
           </a>
           {/* Dropdown - User Information */}
           <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a className="dropdown-item" href="/admin/change-profile">
+            <a className="dropdown-item" href="#" onClick={
+              (e) => {
+                e.preventDefault();
+                navigate('/admin/change-profile-picture');
+              }
+            }>
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Update Profile
+              Change Profile Picture
             </a>
             {/* More user information items */}
             <a className="dropdown-item" href="/admin/update-password">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Update Password
+            </a>
+
+            <a className="dropdown-item" href="#" onClick={
+              (e) => {
+                e.preventDefault();
+                navigate('/admin/change-basic-informations');
+              }
+            }>
+              <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              Change Other Informations
             </a>
             {/* ... */}
             <a className="dropdown-item" href="#" onClick={handleLogout}>

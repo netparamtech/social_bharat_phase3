@@ -16,10 +16,9 @@
     height: 90vh;
   }
   
-  .profile-card {
-    width: 600px;
+  .profile-card-image {
+    width: 500px;
     text-align: center;
-    background-color: #f0f0f0;
   }
   
   .profile-image {

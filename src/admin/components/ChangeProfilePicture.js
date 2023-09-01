@@ -7,12 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login,logout } from '../actions/authActions';
 
-const ChangeProfileForm = (props) => {
+const ChangeProfilePicture = (props) => {
   const { user } = props;
   const [profilePreview, setProfilePreview] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
 
   const [errors,setErrors] = useState('');
   const token = useSelector((state) => state.auth.token);
@@ -23,10 +21,7 @@ const ChangeProfileForm = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setName(user.name || '');
-    setEmail(user.email || '');
     setProfilePreview(user.photo || '');
-    setProfilePhoto(user.photo);
   }, [user])
 
   const handlePlusIconClick = () => {
@@ -67,7 +62,7 @@ const ChangeProfileForm = (props) => {
 
   return (
     <div className="profile-card-container">
-      <Card className="profile-card">
+      <Card className="profile-card-image">
         <div className="profile-image" onClick={handlePlusIconClick}>
           <img
             src={profilePreview}
@@ -97,4 +92,4 @@ const ChangeProfileForm = (props) => {
   );
 };
 
-export default ChangeProfileForm;
+export default ChangeProfilePicture;

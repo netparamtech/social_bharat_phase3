@@ -57,9 +57,9 @@ export const createCommunity = async (data) => {
 }
 
 //update profile
-export const updatePBasicrofile= async (data) => {
+export const updatePBasicProfile= async (data) => {
     try {
-        const response = await apiWithHeaders.post('/update-profile', data);
+        const response = await apiWithHeaders.put('/update-profile', data);
         return response;
     } catch (error) {
         throw error;
@@ -107,6 +107,16 @@ export const updateCommunityStatus = async (id) => {
 export const deleteCommunity = async (id) => {
     try {
         const response = await apiWithHeaders.delete(`/communities/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch All Banners
+export const fetchAllBanners = async () => {
+    try {
+        const response = await apiWithHeaders.get('/banners');
         return response;
     } catch (error) {
         throw error;

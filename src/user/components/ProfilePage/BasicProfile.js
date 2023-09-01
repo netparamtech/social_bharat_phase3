@@ -22,7 +22,7 @@ const BasicProfile = (props) => {
     const file = event.target.files[0];
 
     const formData = new FormData();
-    formData.append('profile_pic', file);
+    formData.append('image', file);
 
     try {
       const response = await updateProfilePhoto(formData);

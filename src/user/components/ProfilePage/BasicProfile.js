@@ -110,7 +110,7 @@ const BasicProfile = (props) => {
 
                   <div className="mb-2 row">
                     <label className="col-sm-3">Community </label>
-                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.community.name}</span></div>
+                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.community&&user.data.community.name}</span></div>
                   </div>
 
                   <div className="mb-2 row">

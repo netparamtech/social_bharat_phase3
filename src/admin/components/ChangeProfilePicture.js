@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Card, Input, Button } from 'antd';
+import { Card, Button } from 'antd';
 import 'antd/dist/antd';
 
 import { updateProfilePicture } from '../services/AdminService';
@@ -79,11 +79,7 @@ const ChangeProfilePicture = (props) => {
           />
 
         </div>
-        {/* <div className="profile-details">
-          <Input placeholder="Name" value={name} />
-          <Input placeholder="Email" value={email} />
-          <Button type="primary" onClick={handleSubmit}>Save</Button>
-        </div> */}
+       
         <div className='mt-5'>
         <Button type="primary" onClick={handleSubmit}>Save</Button>
         </div>

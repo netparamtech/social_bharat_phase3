@@ -60,9 +60,9 @@ function Sidebar() {
         <div id="collapseCommunity" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
+          <a className="collapse-item" href="/admin/communities">List</a>
             <a className="collapse-item" href="/admin/create/community">Create</a>
 
-            <a className="collapse-item" href="/admin/communities">List</a>
           </div>
         </div>
       </li>
@@ -78,8 +78,9 @@ function Sidebar() {
         <div id="collapseBanner" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="create-banner">Create</a>
-            <a className="collapse-item" href="banner-index">List</a>
+          <a className="collapse-item" href="banner-index">List</a>
+            <a className="collapse-item" href="/admin/create/banners">Create</a>
+      
           </div>
         </div>
       </li>

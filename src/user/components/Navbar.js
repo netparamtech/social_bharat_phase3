@@ -99,7 +99,7 @@ const Navbar = () => {
                     <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                         {isAuthenticUser && isAuthenticUser ? '' : (
                             <li className="nav-item">
-                                <a className="nav-link btn btn-primary login-btn" href="#">
+                                <a className="nav-link btn btn-primary login-btn" href="/login">
                                     Login
                                 </a>
                             </li>

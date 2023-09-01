@@ -1,6 +1,5 @@
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import CreateBannerPage from "./pages/CreateBannerPage";
 import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
 import BannerIndex from "./pages/BannerIndex";
@@ -12,6 +11,7 @@ import Index from "./pages/communities/list/Index";
 import ViewUser from "./pages/user/ViewUser";
 import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
 import ChangeBasicDetailsPage from "./pages/ChangeBasicDetailsPage";
+import CreateBannerPage from "./pages/banners/CreateBannerPage";
 
 const adminRoutes = [
     {
@@ -50,11 +50,6 @@ const adminRoutes = [
         exact: true
     },
 
-    {
-        path: '/admin/create-banner',
-        component: CreateBannerPage,
-        exact: true
-    },
 
     {
         path: '/admin/update-banner',
@@ -71,6 +66,12 @@ const adminRoutes = [
     {
         path: '/admin/Communities',
         component: Index,
+        exact: true
+    },
+
+    {
+        path: '/admin/create/banners',
+        component:CreateBannerPage,
         exact: true
     },
 

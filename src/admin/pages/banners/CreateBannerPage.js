@@ -1,5 +1,5 @@
-import CreateBanner from "../components/CreateBanner";
-import AdminLayout from "../layouts/AdminLayout";
+import CreateBanner from "../../components/banners/CreateBanner";
+import AdminLayout from "../../layouts/AdminLayout";
 
 const CreateBannerPage = () => {
     return(

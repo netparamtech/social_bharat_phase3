@@ -47,6 +47,16 @@ export const updateProfilePicture = async (formData) => {
     }
 }
 
+//upload multiple images
+export const uploadMultipleImages = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-multiple-images',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 export const createCommunity = async (data) => {
     try {
         const response = await apiWithHeaders.post('/communities', data);
@@ -122,6 +132,17 @@ export const fetchAllBanners = async () => {
         throw error;
     }
 }
+
+//create banner 
+export const createBanner = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/banners',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 export const fetchAllUsers = async (page, size) => {
     try {

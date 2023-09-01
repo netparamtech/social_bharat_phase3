@@ -3,6 +3,7 @@ import React from 'react';
 const MatrimonialInfo = (props) => {
   const { user } = props;
   const matrimonialDetails = user?.data?.matrimonial;
+  const proposalPhotos = user?.data?.matrimonial?.proposal_photos;
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
@@ -69,12 +70,14 @@ const MatrimonialInfo = (props) => {
                         <tr>
                           <td>Proposal Photo</td>
                           <td className="proposal-Photo">
-                            <img src={user && user.data && user.data.matrimonial[0] && user.data.matrimonial[0].proposal_photo} alt=""
+                            <img src={user && user.data && user.data.matrimonial && user.data.matrimonial.proposal_photos} alt=""
                               title={user && user.data && user.data.name} />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
+                              {
+                                proposalPhotos &&  proposalPhotos.map((item, idx) => (
+                                  <img src={item} />
+                                ))
+                              }
+                           
                           </td>
                         </tr>
                       </tbody>

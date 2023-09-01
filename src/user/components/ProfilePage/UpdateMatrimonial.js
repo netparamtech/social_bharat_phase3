@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { updateMatrimonialInfo, uploadImage, uploadMultipleImages, uploadMultiplePDFs, uploadPdf } from '../../services/userService';
+import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateMatrimonial = (props) => {
@@ -19,8 +19,8 @@ const UpdateMatrimonial = (props) => {
   const [proposalPhoto, setProposalPhoto] = useState([]);
   const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
 
-  const [biodataFile, setBiodataFile] = useState([]);
-  const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState([]);
+  const [biodataFile, setBiodataFile] = useState('');
+  const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState('');
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
@@ -47,21 +47,19 @@ const UpdateMatrimonial = (props) => {
   };
 
   const handleBiodataFileChange = async (e) => {
-    const selectedFiles = e.target.files;
+    const selectedFiles = e.target.files[0];
     setBiodataFile(selectedFiles);
 
     const formData = new FormData();
-    for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append('pdfs', selectedFiles[i]);
-    }
+   formData.append('pdf',selectedFiles);
 
 
     try {
-      const response = await uploadMultiplePDFs(formData); // Make an API call to get temporary URL
+      const response = await uploadPdf(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
         console.log("hello");
         console.log(response.data.data.files)
-        setTempBiodataFileUrl(response.data.data.files);
+        setTempBiodataFileUrl(response.data.data.file);
       }
     } catch (error) {
       // Handle error or show an error message
@@ -243,7 +241,7 @@ const UpdateMatrimonial = (props) => {
                         onChange={handleProposalPhotoChange}
                         multiple
                       />
-                      {errors.proposal_photo && <span className='error'>{errors.proposal_photo}</span>}
+                      {errors.proposal_photos && <span className='error'>{errors.proposal_photos}</span>}
 
                     </div>
                   </div>

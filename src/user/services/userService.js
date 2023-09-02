@@ -239,10 +239,30 @@ export const fetchAllActiveCommunities = async () => {
     }
 }
 
-//fetch all states
-export const fetchStates = async() => {
+//fetch all countries
+export const fetchCountries = async() => {
     try {
-        const response = await apiConfig.get('https://api.countrystatecity.in/v1/countries/IN/states');
+        const response = await apiWithHeaders.get('/countries');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all states
+export const fetchAllStatesByCountryID = async(countryID) => {
+    try {
+        const response = await apiWithHeaders.get(`/states/${countryID}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all states
+export const fetchAllCitiesByStateID = async(stateID) => {
+    try {
+        const response = await apiWithHeaders.get(`/cities/${stateID}`);
         return response;
     } catch (error) {
         throw error;

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { fetchAllUsers } from '../services/AdminService'; // Import your fetch service
-import { updateToggleStatus } from '../services/AdminService';
+import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../actions/authActions';
+import { logout } from '../../actions/authActions';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -72,7 +71,7 @@ const UserList = () => {
 
   const columns = [
     {
-      name: 'Serial Number',
+      name: 'S.No',
       cell: (row, index) => index + 1 + (page - 1) * size,
     },
     {

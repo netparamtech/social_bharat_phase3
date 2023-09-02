@@ -1,5 +1,5 @@
-import AdminLayout from "../layouts/AdminLayout";
-import UserList from "../components/UserList";
+import UserList from "../../components/users/UserList";
+import AdminLayout from "../../layouts/AdminLayout";
 
 const UsersIndex = () => {
     return(

@@ -1,9 +1,7 @@
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import UpdateBannerPage from "./pages/UpdateBannerPage";
 import SettingPage from "./pages/SettingPage";
-import BannerIndex from "./pages/BannerIndex";
-import UsersIndex from "./pages/UsersIndex";
+import UsersIndex from "./pages/user/UsersIndex";
 import PasswordUpdatePage from "./pages/PasswordUpdatePage";
 import Community from "./pages/communities/create/Community";
 import UpdateCommunity from "./pages/communities/update/UpdateCommunity";
@@ -12,6 +10,8 @@ import ViewUser from "./pages/user/ViewUser";
 import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
 import ChangeBasicDetailsPage from "./pages/ChangeBasicDetailsPage";
 import CreateBannerPage from "./pages/banners/CreateBannerPage";
+import Banners from "./pages/banners/Banners";
+import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
 
 const adminRoutes = [
     {
@@ -76,8 +76,14 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/banner/index',
-        component: BannerIndex,
+        path: '/admin/banners',
+        component: Banners,
+        exact: true
+    },
+
+    {
+        path: '/admin/banners/:bannerPage/:bannerSection',
+        component: UpdateBannerPage,
         exact: true
     },
 
@@ -88,7 +94,7 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/update-password',
+        path: '/admin/change-password',
         component: PasswordUpdatePage,
         exact: true
     },

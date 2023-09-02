@@ -149,9 +149,9 @@ function Topbar() {
               Change Profile Picture
             </a>
             {/* More user information items */}
-            <a className="dropdown-item" href="/admin/update-password">
+            <a className="dropdown-item" href="/admin/change-password">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Update Password
+              Change Password
             </a>
 
             <a className="dropdown-item" href="#" onClick={
@@ -161,7 +161,7 @@ function Topbar() {
               }
             }>
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Change Other Informations
+              Change Profile
             </a>
             {/* ... */}
             <a className="dropdown-item" href="#" onClick={handleLogout}>

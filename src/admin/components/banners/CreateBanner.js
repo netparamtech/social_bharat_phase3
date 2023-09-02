@@ -98,12 +98,12 @@ const CreateBanner = () => {
                     onChange={handleBannerChange}
                     multiple
                   />
-                  {errors.banner_url && (
-                    <span className="error">{errors.banner_url}</span>
+                  {errors.banner_urls && (
+                    <span className="error">{errors.banner_urls}</span>
                   )}
                 </div>
               </div>
-              
+
             </div>
 
             <div className="form-group">
@@ -113,10 +113,9 @@ const CreateBanner = () => {
                 className="form-control"
                 id="section"
                 name="section"
-                value={section}
                 onChange={handleSectionChange}
               />
-              {errors.section && <span className='validation-error'>{errors.section}</span>}
+              {errors.section && <span className='error'>{errors.section}</span>}
             </div>
 
             <div className="form-group">
@@ -138,10 +137,9 @@ const CreateBanner = () => {
                 className="form-control"
                 id="status"
                 name="status"
-                defaultValue={status}
                 onChange={handleStatusChange}
-              >
-                <option value="Active" selected>Active</option>
+              ><option value="">Select Status</option>
+                <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
               {errors.status && <span className='error'>{errors.status}</span>}

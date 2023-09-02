@@ -6,7 +6,7 @@ function Sidebar() {
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
-      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/dashboard">
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
         </div>
@@ -18,7 +18,7 @@ function Sidebar() {
 
       {/* Nav Item - Dashboard */}
       <li className="nav-item active">
-        <a className="nav-link" href="index.html">
+        <a className="nav-link" href="/admin/dashboard">
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -78,7 +78,7 @@ function Sidebar() {
         <div id="collapseBanner" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-          <a className="collapse-item" href="banner-index">List</a>
+          <a className="collapse-item" href="/admin/banners">List</a>
             <a className="collapse-item" href="/admin/create/banners">Create</a>
       
           </div>
@@ -97,7 +97,6 @@ function Sidebar() {
         <div id="collapseUser" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="#">Action</a>
             <a className="collapse-item" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               navigate('/admin/users');

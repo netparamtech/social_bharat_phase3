@@ -153,6 +153,17 @@ export const fetchAllUsers = async (page, size) => {
     }
 };
 
+//fetch banner according to page and section
+export const fetchBannerWithPageAndSection = async (page, section) => {
+    try {
+        const response = await apiWithHeaders.get(`/banners/${page}/${section}`);
+        return response; // Assuming your API response contains the data directly
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 //view user on click
 export const fetchUserDetailsByClick = async (clickedUserId) => {
     try {

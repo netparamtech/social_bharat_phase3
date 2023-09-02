@@ -12,7 +12,7 @@ const UpdateBannerPage = () => {
         try {
             const response = await fetchBannerWithPageAndSection(page, section);
             if (response && response.status === 200) {
-                setBanner(response.data.data);
+                setBanner(response.data.data[0]);
             }
         } catch (error) {
 

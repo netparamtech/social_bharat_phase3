@@ -1,22 +1,45 @@
 import React, { useEffect, useState } from 'react';
 
-import { useNavigate} from 'react-router';
+import { useNavigate } from 'react-router';
 import { createBanner, uploadMultipleImages } from '../../services/AdminService';
 
 const UpdateBanner = (props) => {
-    const {banner} = props;
+    const { banner } = props;
     const [bannerTempUrl, setBannerTempUrl] = useState([]);
+    const [bannerPreview, setBannerPreview] = useState([]);
     const [section, setSection] = useState('');
     const [page, setPage] = useState('');
     const [status, setStatus] = useState('');
 
     const [errors, setErrors] = useState('');
+    const [message, setMessage] = useState('');
+    const [alertClass, setAlertClass] = useState('');
     const navigate = useNavigate();
-
-    const [bannerPreview, setBannerPreview] = useState("");
 
     const handleBannerChange = async (e) => {
         const selectedFiles = e.target.files;
+
+
+        const totalFiles = bannerTempUrl.length + selectedFiles.length;
+        console.log(totalFiles, "jkhkjg")
+
+
+        if (totalFiles > 5) {
+            alert("Total files (including existing ones) cannot exceed 5.");
+            e.target.value = null; // Clear the input field
+            return;
+        }
+
+        const previewUrls = [];
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const previewUrl = URL.createObjectURL(file);
+            previewUrls.push(previewUrl);
+        }
+        const combinedUrls = [...previewUrls, ...bannerTempUrl];
+
+        setBannerPreview(combinedUrls);
 
         const formData = new FormData();
 
@@ -28,7 +51,8 @@ const UpdateBanner = (props) => {
         try {
             const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
             if (response.status === 200) {
-                setBannerTempUrl(response.data.data.files);
+                const combineTempUrls = [...bannerTempUrl, ...response.data.data.files];
+                setBannerTempUrl(combineTempUrls);
             }
         } catch (error) {
             // Handle error or show an error message
@@ -47,9 +71,24 @@ const UpdateBanner = (props) => {
         setStatus(e.target.value === "Active" ? "Active" : "Inactive");
     };
 
+    const handleDeleteImage = (indexToDelete) => {
+        // Create copies of the current arrays
+        const updatedBannerPreview = [...bannerPreview];
+        const updatedBannerTempUrl = [...bannerTempUrl];
+
+        // Remove the image at the specified index from both arrays
+        updatedBannerPreview.splice(indexToDelete, 1);
+        updatedBannerTempUrl.splice(indexToDelete + 1, 1);
+
+        // Update the state variables with the updated arrays
+        setBannerPreview(updatedBannerPreview);
+        setBannerTempUrl(updatedBannerTempUrl);
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(banner)
+        console.log(bannerTempUrl, "check")
 
         const data = {
             banner_urls: bannerTempUrl,
@@ -61,6 +100,12 @@ const UpdateBanner = (props) => {
             const response = await createBanner(data);
             if (response && response.status === 200) {
                 setErrors('');
+                setMessage(response.data.message);
+                setAlertClass('alert-success');
+                setTimeout(() => {
+                    navigate('/admin/banners');
+                }, 1000)
+
             }
         } catch (error) {
 
@@ -77,12 +122,23 @@ const UpdateBanner = (props) => {
 
     };
 
-    useEffect(()=>{
-        setBannerTempUrl(banner.banner_urls||'');
-        setSection(banner.section||'');
-        setPage(banner.page||'');
-        setStatus(banner.status||'')
-    },[banner])
+    useEffect(() => {
+        console.log(banner, "hello")
+        {
+            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
+                :
+                (setBannerTempUrl([banner.banner_urls] || ''))
+        }
+        setSection(banner.section || '');
+        setPage(banner.page || '');
+        setStatus(banner.status || '');
+        {
+            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
+                :
+                (setBannerPreview([banner.banner_urls] || ''))
+        }
+       
+    }, [banner])
 
     return (
         <div className="container-fluid" style={{ minHeight: '100vh' }}>
@@ -92,12 +148,20 @@ const UpdateBanner = (props) => {
             <div className="card">
                 <div className="card-body">
                     <form onSubmit={handleSubmit} className="">
-
                         <div className="row">
-                            <div className="col-sm-6">
+                            <div className="col-md-6">
+                                {message && (
+                                    <div className={`alert ${alertClass}`}>
+                                        {alertClass === 'alert-success' ? (
+                                            <i className="fas fa-check-circle"></i>
+                                        ) : (
+                                            <i className="fas fa-exclamation-triangle"></i>
+                                        )}
+                                        {' ' + message}
+                                    </div>
+                                )}
                                 <div className="form-group">
                                     <label htmlFor="bannerUrl">Banner Url</label>
-
                                     <input
                                         type="file"
                                         className="form-control-file"
@@ -110,51 +174,60 @@ const UpdateBanner = (props) => {
                                         <span className="error">{errors.banner_urls}</span>
                                     )}
                                 </div>
+                                <div className='d-flex flex-wrap'>
+                                    {bannerPreview &&
+                                        bannerPreview.map((item, idx) => (
+                                            <div className='m-2' key={idx}>
+                                                <img src={item} width={100} alt={`Banner ${idx + 1}`} />
+                                                <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
+                                                    <i className="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        ))}
+                                </div>
                             </div>
-
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="section">Section</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="section"
+                                        name="section"
+                                        defaultValue={section}
+                                        onChange={handleSectionChange}
+                                    />
+                                    {errors.section && <span className='error'>{errors.section}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="page">Page</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="page"
+                                        name="page"
+                                        defaultValue={page}
+                                        onChange={handlePageChange}
+                                    />
+                                    {errors.page && <span className='error'>{errors.page}</span>}
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="status">Status</label>
+                                    <select
+                                        className="form-control"
+                                        id="status"
+                                        name="status"
+                                        value={status}
+                                        onChange={handleStatusChange}
+                                    >
+                                        <option value="">Select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                    {errors.status && <span className='error'>{errors.status}</span>}
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="form-group">
-                            <label htmlFor="section">Section</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="section"
-                                name="section"
-                                defaultValue={section}
-                                onChange={handleSectionChange}
-                            />
-                            {errors.section && <span className='error'>{errors.section}</span>}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="page">Page</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="page"
-                                name="page"
-                                defaultValue={page}
-                                onChange={handlePageChange}
-                            />
-                            {errors.page && <span className='error'>{errors.page}</span>}
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="status">Status</label>
-                            <select
-                                className="form-control"
-                                id="status"
-                                name="status"
-                                defaultValue={status}
-                                onChange={handleStatusChange}
-                            ><option value="">Select Status</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                            {errors.status && <span className='error'>{errors.status}</span>}
-                        </div>
-
                         <button type="submit" className="btn btn-primary">Update</button>
                     </form>
                 </div>

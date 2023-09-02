@@ -185,7 +185,6 @@ export const updateToggleStatus = async (clickedUserId) => {
 }
 
 //update password
-
 export const updatePassword = async (password, confirm_password) => {
     try {
         const response = await apiWithHeaders.put('/update-password', { password, confirm_password });

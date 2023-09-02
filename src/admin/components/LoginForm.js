@@ -38,7 +38,7 @@ const LoginForm = () => {
         dispatch(adminlogin(response.data.user, response.data.token));
         
         setTimeout(() => {
-          navigate('/admin/dashboard')
+          window.location.href = '/admin/dashboard';
         }, 1000);
       }
     } catch(error) {

@@ -33,7 +33,7 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/change-basic-informations',
+        path: '/admin/change-profile',
         component: ChangeBasicDetailsPage,
         exact: true
     },

@@ -139,12 +139,7 @@ function Topbar() {
           </a>
           {/* Dropdown - User Information */}
           <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <a className="dropdown-item" href="#" onClick={
-              (e) => {
-                e.preventDefault();
-                navigate('/admin/change-profile-picture');
-              }
-            }>
+            <a className="dropdown-item" href="/admin/change-profile-picture">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Change Profile Picture
             </a>
@@ -154,12 +149,7 @@ function Topbar() {
               Change Password
             </a>
 
-            <a className="dropdown-item" href="#" onClick={
-              (e) => {
-                e.preventDefault();
-                navigate('/admin/change-basic-informations');
-              }
-            }>
+            <a className="dropdown-item" href="/admin/change-profile">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Change Profile
             </a>

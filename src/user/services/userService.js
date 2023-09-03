@@ -216,6 +216,26 @@ export const updateEducationalDetails = async (data) => {
         throw error;
     }
 }
+//get single education details
+export const getSingleEducationDetails = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/educations/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//delete single education detail
+export const deleteSingleEducationDetails = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/educations/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 
 //update matrimonial profile
 
@@ -224,6 +244,16 @@ export const updateMatrimonialInfo = async (data) => {
         const response = await apiWithHeaders.put('/profile/update-matrimonial-details',data);
         return response;
     } catch(error) {
+        throw error;
+    }
+}
+
+//delete matrimonial details
+export const deleteMatrimonial = async () => {
+    try {
+        const response = await apiWithHeaders.delete('/user/matrimonials');
+        return response;
+    } catch (error) {
         throw error;
     }
 }

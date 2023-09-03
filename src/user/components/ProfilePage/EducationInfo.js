@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
-import { encode } from '../../encryt/encode';
+import React, { useEffect, useState } from 'react';
+import { deleteSingleEducationDetails } from '../../services/userService';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const EducationInfo = (props) => {
   const {user} = props;
-  const [id,setId] = useState('');
-  const educationDetails = user&&user.data&&user.data.education;
+  const [educationDetails,setEducationDetails] = useState([]);
 
-  const handleEditClicked = (id) => {
-    setId(encode(id));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const deleteUserEducationalDetails = async (id) => {
+    try {
+      const response = await deleteSingleEducationDetails(id);
+      if (response && response.status === 200) {
+        // Remove the deleted item from jobDetails
+        const updatedEducationDetails = educationDetails.filter((item) => item.id !== id);
+        setEducationDetails(updatedEducationDetails); // Update state to trigger a re-render
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+    }
   }
+
+  useEffect(()=>{
+   if(user){
+    setEducationDetails(user&&user.data&&user.data.education);
+   }
+  },[user])
 
   return (
     <div id="education-section" className="content-wrapper pt-4">
@@ -22,8 +45,8 @@ const EducationInfo = (props) => {
                 educationDetails.map((item, idx) => (
               <div className="col-md-6">
                 <div className="card shadow mt-2">
-                <div className="edit-icon"><a href={`/update-education-profile/${encode(item.id)}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-                <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
+                <div className="edit-icon"><a href={`/update-education-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                <div class="delete-icon"><a href="" title="Delete"><i class="fa-solid fa-trash" onClick={()=>deleteUserEducationalDetails(item.id)}></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">

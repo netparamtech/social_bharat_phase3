@@ -19,10 +19,7 @@ const UpdateBanner = (props) => {
     const handleBannerChange = async (e) => {
         const selectedFiles = e.target.files;
 
-
         const totalFiles = bannerTempUrl.length + selectedFiles.length;
-        console.log(totalFiles, "jkhkjg")
-
 
         if (totalFiles > 5) {
             alert("Total files (including existing ones) cannot exceed 5.");
@@ -133,7 +130,7 @@ const UpdateBanner = (props) => {
         setPage(banner.page || '');
         setStatus(banner.status || '');
         {
-            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
+            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerPreview(banner.banner_urls || ''))
                 :
                 (setBannerPreview([banner.banner_urls] || ''))
         }

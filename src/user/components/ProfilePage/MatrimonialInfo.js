@@ -1,4 +1,5 @@
 import React from 'react';
+import { deleteMatrimonial } from '../../services/userService';
 
 const MatrimonialInfo = (props) => {
   const { user } = props;
@@ -16,17 +17,32 @@ const MatrimonialInfo = (props) => {
       txt: 'TXT',
       // Add more file types as needed
     };
-
     // Use the mapping or show the extension as-is
     return fileTypeMappings[extension] || extension.toUpperCase();
   };
+  const deleteMatrimonialDetails = async () => {
+    try{
+      const response = await deleteMatrimonial();
+      if(response && response.status === 200){
+          window.location.href = '/profile';
+      }
+    } catch (error){
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        window.location.href = '/login';
+      }
+    }
+  }
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
           {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
           ) : (<div className="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
-          <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
+          {
+            matrimonialDetails && matrimonialDetails.length > 0 ?(<div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash" onClick={()=>deleteMatrimonialDetails()}></i></a></div>):('')
+          }
+          
           <div className="card-body">
             <h5 className="fw-3 mb-3">Matrimonial Info</h5>
             {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="row">
@@ -95,9 +111,9 @@ const MatrimonialInfo = (props) => {
                           <td className="proposal-Photo">
 
                             {
-                              proposalPhotos && proposalPhotos.map((item, idx) => (
+                              proposalPhotos && Array.isArray(proposalPhotos) ?(proposalPhotos.map((item, idx) => (
                                 <img src={item} />
-                              ))
+                              ))) :(<img src={proposalPhotos} />)
                             }
 
                           </td>

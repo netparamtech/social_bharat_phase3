@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
 import { updateEducationalDetails } from '../../services/userService';
-import { useNavigate, useParams } from 'react-router-dom';
-import { decode } from '../../encryt/encode';
+import { useNavigate } from 'react-router-dom';
 
-const UpdateEducationProfile = () => {
-  const { id } = useParams();
-
-  useEffect(()=>{
-    
-  },[]);
-
-  const [educationDetails,setEducationDetails] = useState({});
+const UpdateEducationProfile = (props) => {
+  const { educationDetails } = props;
 
   const [degree, setDegree] = useState('');
   const [studyField, setStudyField] = useState('');
@@ -61,7 +54,6 @@ const UpdateEducationProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(educationDetails,"send data");
 
     const requestData = {
       degree,
@@ -92,6 +84,18 @@ const UpdateEducationProfile = () => {
     }
   };
 
+  useEffect(() => {
+    // Set default values from jobDetails prop when it changes
+    if (educationDetails) {
+      setDegree(educationDetails.degree || '');
+      setStudyField(educationDetails.field_of_study || '');
+      setUniversity(educationDetails.institution_name || '');
+      setScore(educationDetails.score || '');
+      setScoreType(educationDetails.score_type || '');
+      setPassingYear(educationDetails.passing_year || '');
+    }
+  }, [educationDetails]);
+
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
@@ -114,6 +118,7 @@ const UpdateEducationProfile = () => {
                           placeholder="Enter your degree name"
                           className="form-control"
                           autoFocus
+                          defaultValue={degree}
                           onChange={handleDegreeChange}
                         />
                         {errors.degree && <span className='error'>{errors.degree}</span>}
@@ -126,6 +131,7 @@ const UpdateEducationProfile = () => {
                           id="studyField"
                           placeholder="Enter Study Field"
                           className="form-control"
+                          defaultValue={studyField}
                           onChange={handleStudyFieldChange}
                         />
                         {errors.field_of_study && <span className='error'>{errors.field_of_study}</span>}
@@ -141,6 +147,7 @@ const UpdateEducationProfile = () => {
                           id="university"
                           placeholder="Enter university name"
                           className="form-control"
+                          defaultValue={university}
                           onChange={handleUniversityChange}
                         />
                         {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
@@ -153,6 +160,7 @@ const UpdateEducationProfile = () => {
                           id="Score"
                           placeholder="Enter Score"
                           className="form-control"
+                          defaultValue={score}
                           onChange={handleScoreChange}
                         />
                         {errors.score && <span className='error'>{errors.score}</span>}
@@ -162,7 +170,10 @@ const UpdateEducationProfile = () => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Score Type</label>
-                        <select class="form-select form-control" aria-label="Default select example" onChange={handleScoreTypeChange}>
+                        <select class="form-select form-control" aria-label="Default select example" 
+                        onChange={handleScoreTypeChange}
+                        value={scoreType}
+                        >
                           <option value="">---Select Score Type---</option>
                           <option value="PERCENTAGE">PERCENTAGE</option>
                           <option value="GRADE">GRADE</option>

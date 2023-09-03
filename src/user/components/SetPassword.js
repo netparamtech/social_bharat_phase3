@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { apiWithHeaders } from '../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../actions/userAction';
 
 const SetPassword = () => {
+    const loggedUser = useSelector((state) => state.userAuth);
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [user,setUser] = useState({});
+    const [token,setToken] = useState('');
 
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
@@ -27,6 +31,11 @@ const SetPassword = () => {
 
         e.preventDefault();
 
+        const updatedUser = {
+            ...user, // Spread the original object to keep its other properties
+            is_password_set: 1, // Update the specific field
+          };
+
 
         try {
             const response = await apiWithHeaders.put('/profile/update-password', {
@@ -37,8 +46,9 @@ const SetPassword = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
+                dispatch(login(updatedUser, token));
                 setTimeout(() => {
-                    navigate('/dashboard');
+                    window.location.href = '/dashboard'
                 }, 1000)
 
 
@@ -55,6 +65,10 @@ const SetPassword = () => {
 
         }
     };
+    useEffect(()=>{
+        setUser(loggedUser?.user);
+        setToken(loggedUser?.token);
+    })
     return (
         <div id="auth-wrapper" className="pt-5 pb-5">
             <div id="changePassword" className="container">

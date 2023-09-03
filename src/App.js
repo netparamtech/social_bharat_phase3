@@ -18,7 +18,7 @@ function App() {
               <Route key={index} path={route.path}
                 element={
                  ( route.path !== '/login' &&route.path !== '/' && route.path !== '/register') ? (
-                    <UserProtectedRoute element={route.component} />
+                    <UserProtectedRoute element={route.component} path={route.path} />
                   ) : (
                     <route.component />
                   )

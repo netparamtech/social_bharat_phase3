@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import UserLayout from '../layouts/UserLayout';
 import LoginWithPassword from '../components/LoginWithPassword';
-import LoginWithOtp from '../components/LoginWithOtp';
 import LoginWithMobile from '../components/LoginWithMobile';
 
 

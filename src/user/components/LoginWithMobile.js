@@ -3,7 +3,7 @@ import { attemptLoginWithMobile } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../actions/userAction';
-import LoginWithOtp from './LoginWithOtp';
+import LoginWithOtp from './otp/LoginWithOtp';
 
 const LoginWithMobile = (props) => {
 

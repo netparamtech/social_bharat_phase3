@@ -2,12 +2,34 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const UserProtectedRoute = ({ element: Component }) => {
+const UserProtectedRoute = ({ element: Component, path }) => {
   const isAuthenticated = useSelector((state) => state.userAuth.isAuthenticated && state.userAuth.token !== null);
+  const isPasswordSet = useSelector((state) => state.userAuth.user?.is_password_set && state.userAuth.token !== null);
+
+
+  // Check if the route path is "/set-password"
+  if (path === "/set-password") {
+    if (isAuthenticated) {
+      // User is authenticated, allow access to the set password route.
+      return <Component />;
+    } else {
+      // User is not authenticated, redirect to the login page.
+      return <Navigate to="/login" />;
+    }
+  }
+
+  // For all other routes, including the dashboard, check password status.
 
   if (isAuthenticated) {
-    return <Component />;
+    if (isPasswordSet || path === "/dashboard") {
+      // User is authenticated, and either the password is set or the route is "/dashboard".
+      return <Component />;
+    } else {
+      // User is authenticated, but password is not set, redirect to the set password route.
+      return <Navigate to="/set-password" />;
+    }
   } else {
+    // User is not authenticated, redirect to the login page.
     return <Navigate to="/login" />;
   }
 };

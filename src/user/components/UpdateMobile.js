@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateAttemptMobile } from '../services/userService';
-import CheckOtpToUpdateMobile from './CheckOtpToUpdateMobile';
+import CheckOtpToUpdateMobile from './otp/CheckOtpToUpdateMobile';
 
 const UpdateMobile = () => {
 

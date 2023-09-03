@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { mobileVarified, resendOtp } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, logout } from '../actions/userAction';
+import { login, logout } from '../../actions/userAction';
+import { mobileVarified, resendOtp } from '../../services/userService';
 
 const LoginWithOtp = (props) => {
     const { mobile, message } = props;
@@ -51,9 +51,9 @@ const LoginWithOtp = (props) => {
                 setOtp('');
 
                 if (response.data.data.is_password_set) {
-                    navigate('/dashboard');
+                    window.location.href = '/dashboard';
                 } else {
-                    navigate('/set-password');
+                    window.location.href = '/set-password';
                 }
 
             }

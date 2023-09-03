@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { createUser, resendOtp } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, logout } from '../actions/userAction';
+import { login, logout } from '../../actions/userAction';
+import { resendOtp, updateMobile } from '../../services/userService';
 
-const RegisterWithOtp = (props) => {
-    const { userDetail, message } = props;
+const CheckOtpToUpdateMobile = (props) => {
+
+    const { mobile, message } = props;
 
     const [otp, setOtp] = useState('');
 
@@ -41,21 +42,15 @@ const RegisterWithOtp = (props) => {
 
     const handleVarifiedClicked = async (event) => {
         event.preventDefault();
-        const updatedUserDetail = { ...userDetail, otp: otp }; // Append the OTP to the userDetail object
 
         try {
 
-            const response = await createUser(updatedUserDetail);
+            const response = await updateMobile(mobile, otp);
 
-            if (response && response.status === 201) {
-                dispatch(login(response.data.data, response.data.token));
+            if (response && response.status === 200) {
                 setOtp('');
 
-                if (response.data.data.is_password_set) {
-                    navigate('/dashboard');
-                } else {
-                    navigate('/set-password');
-                }
+                navigate('/profile');
 
             }
         } catch (error) {
@@ -78,7 +73,7 @@ const RegisterWithOtp = (props) => {
     const resendOTP = async () => {
         setErrors('');
         try {
-            const response = await resendOtp(userDetail.mobile);
+            const response = await resendOtp(mobile);
 
             if (response && response.status === 200) {
                 handleResendOTP();
@@ -111,7 +106,7 @@ const RegisterWithOtp = (props) => {
 
     return (
         <>
-            <form action='/dashboard' className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
+            <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
                 <div className="row mb-3">
                     <input type="text"
@@ -119,7 +114,7 @@ const RegisterWithOtp = (props) => {
                         id="mobile"
                         placeholder="Enter your mobile number"
                         className="form-control"
-                        value={userDetail.mobile}
+                        value={mobile}
                         disabled
                     />
 
@@ -138,7 +133,6 @@ const RegisterWithOtp = (props) => {
                                 maxLength="1" // Limit the input to one character
                                 onChange={(e) => handleOTPChange(e, index)}
                                 autoFocus={index === 0}
-
                             />
                         ))}
                     </div>
@@ -180,8 +174,9 @@ const RegisterWithOtp = (props) => {
                 </div>
 
             </form>
+
         </>
     );
 };
 
-export default RegisterWithOtp;
+export default CheckOtpToUpdateMobile;

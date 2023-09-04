@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import UserLayout from '../layouts/UserLayout';
-import LoginWithPassword from '../components/LoginWithPassword';
-import LoginWithMobile from '../components/LoginWithMobile';
+import UserLayout from '../../layouts/UserLayout';
+import LoginWithMobile from '../../components/login/LoginWithMobile';
+import LoginWithPassword from '../../components/login/LoginWithPassword';
 
 
 const LoginPage = () => {

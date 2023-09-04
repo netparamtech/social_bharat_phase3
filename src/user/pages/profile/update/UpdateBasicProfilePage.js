@@ -1,6 +1,6 @@
 import React from 'react';
-import UserLayout from '../layouts/UserLayout';
-import UpdateBasicProfile from '../components/ProfilePage/UpdateBasicProfile';
+import UpdateBasicProfile from '../../../components/ProfilePage/UpdateBasicProfile';
+import UserLayout from '../../../layouts/UserLayout';
 
 
 

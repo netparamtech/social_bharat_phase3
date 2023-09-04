@@ -68,7 +68,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a className="text-white stretched-link" href="#!">View Tasks</a>
+                <a className="text-white stretched-link" href="/user/search">View Tasks</a>
                 <div className="text-white"><i className="fa-solid fa-arrow-right"></i></div>
               </div>
             </div>

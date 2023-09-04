@@ -42,7 +42,7 @@ const ChangeProfilePicture = (props) => {
       const response = await updateProfilePicture(formData);
       if (response && response.status === 200) {
         dispatch(login(response.data.data, token));
-        navigate('/admin/dashboard')
+        window.location.href = '/admin/dashboard';
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

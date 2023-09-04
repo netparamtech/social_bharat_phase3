@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import UserLayout from '../layouts/UserLayout';
-import UpdateJobProfile from '../components/ProfilePage/UpdateJobProfile';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getSingleJobDetails } from '../services/userService';
-import { decode } from '../encryt/encode';
 import { useEffect } from 'react';
+import { getSingleJobDetails } from '../../../services/userService';
+import UpdateJobProfile from '../../../components/ProfilePage/UpdateJobProfile';
+import UserLayout from '../../../layouts/UserLayout';
 
 const UpdateJobPage = () => {
   const { id } = useParams();

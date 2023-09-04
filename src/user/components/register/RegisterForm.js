@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTempUser, fetchAllActiveCommunities } from '../services/userService';
-import RegisterWithOtp from './otp/RegisterWithOtp';
+import { createTempUser, fetchAllActiveCommunities } from '../../services/userService';
+import RegisterWithOtp from '../otp/RegisterWithOtp';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -43,8 +43,6 @@ const RegisterForm = () => {
   //action on submit form
 
   const handleSubmit = async (e) => {
-    console.log(casts,"Check Casts")
-
     e.preventDefault();
 
     const userData = {
@@ -148,7 +146,7 @@ const RegisterForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default RegisterForm;

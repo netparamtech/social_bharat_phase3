@@ -84,7 +84,6 @@ const SearchPeople = () => {
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-4">
-                                                        
                                                         <img src={item.photo?item.photo:defaultImage} alt="Avatar" className="avatar img-fluid img-circle " />
                                                     </div>
                                                     <div className="col-8 user-detail">

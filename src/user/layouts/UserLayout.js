@@ -1,16 +1,15 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useEffect } from "react";
-
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../components/home/Navbar";
+import Footer from "../components/home/Footer";
 
 
 const UserLayout = ({ children }) => {
     useEffect(() => {
         // List of script sources
         const scriptSources = [
-          'https://code.jquery.com/jquery-1.12.4.min.js',
+          'https://code.jquery.com/jquery-1.12.4.min.js','https://cdn.jsdelivr.net/npm/typed.js@2.0.12',
           'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
           'http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js',
           'https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js',

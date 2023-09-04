@@ -1,25 +1,24 @@
-import Homepage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ProfilePage from './pages/ProfilePage';
-import DashboardPage from './pages/DashboardPage';
-import UpdateProfilePhotoPage from './pages/UpdateProfilePhotoPage';
-import UpdateMobilePage from './pages/UpdateMobilePage';
-import UpdateBasicProfilePage from './pages/UpdateBasicProfilePage';
-import UpdateMatrimonialPage from './pages/UpdateMatrimonialPage';
-import UpdateJobPage from './pages/UpdateJobPage';
-import UpdateContactPage from './pages/UpdateContactPage';
-import UpdateEducationPage from './pages/UpdateEducationPage';
-import UpdateBusinessPage from './pages/UpdateBusinessPage';
-import LoginWithPassword from './components/LoginWithPassword';
-import UpdatePasswordPage from './pages/UpdatePasswordPage';
-import SetPasswordPage from './pages/SetPasswordPage';
-import SearchPage from './pages/search/SearchPage';
+import LoginWithPassword from "./components/login/LoginWithPassword";
+import SetPasswordPage from "./pages/SetPasswordPage";
+import DashboardPage from "./pages/dashboard/DashboardPage";
+import HomePage from "./pages/home/HomePage";
+import LoginPage from "./pages/login/LoginPage";
+import ProfilePage from "./pages/profile/ProfilePage";
+import UpdateBasicProfilePage from "./pages/profile/update/UpdateBasicProfilePage";
+import UpdateBusinessPage from "./pages/profile/update/UpdateBusinessPage";
+import UpdateContactPage from "./pages/profile/update/UpdateContactPage";
+import UpdateEducationPage from "./pages/profile/update/UpdateEducationPage";
+import UpdateJobPage from "./pages/profile/update/UpdateJobPage";
+import UpdateMatrimonialPage from "./pages/profile/update/UpdateMatrimonialPage";
+import UpdateMobilePage from "./pages/profile/update/UpdateMobilePage";
+import UpdatePasswordPage from "./pages/profile/update/UpdatePasswordPage";
+import RegisterPage from "./pages/register/RegisterPage";
+import SearchPage from "./pages/search/SearchPage";
 
 const userRoutes = [
     {
         path: '/',
-        component: Homepage,
+        component: HomePage,
         exact: true
     },
 
@@ -59,14 +58,6 @@ const userRoutes = [
         component: ProfilePage,
         exact: true
     },
-
-    {
-        path: '/update-photo',
-        component: UpdateProfilePhotoPage,
-        exact: true
-    },
-
-   
 
     {
         path: '/update-mobile',

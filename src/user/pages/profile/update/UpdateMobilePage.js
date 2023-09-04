@@ -1,5 +1,5 @@
-import UpdateMobile from "../components/UpdateMobile";
-import UserLayout from "../layouts/UserLayout";
+import UpdateMobile from "../../../components/ProfilePage/UpdateMobile";
+import UserLayout from "../../../layouts/UserLayout";
 
 const UpdateMobilePage = () => {
     return(

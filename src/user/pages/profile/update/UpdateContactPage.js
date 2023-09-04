@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import UserLayout from '../layouts/UserLayout';
-import UpdateContact from '../components/ProfilePage/UpdateContact';
-import { getSingleContactDetails } from '../services/userService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { decode } from '../encryt/encode';
+import { getSingleContactDetails } from '../../../services/userService';
+import UserLayout from '../../../layouts/UserLayout';
+import UpdateContact from '../../../components/ProfilePage/UpdateContact';
 
 
 

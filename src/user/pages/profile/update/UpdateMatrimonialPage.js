@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import UserLayout from '../layouts/UserLayout';
-import UpdateMatrimonial from '../components/ProfilePage/UpdateMatrimonial';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUserFullProfile } from '../services/userService';
-import { logout } from '../actions/userAction';
+import { getUserFullProfile } from '../../../services/userService';
+import { logout } from '../../../actions/userAction';
+import UserLayout from '../../../layouts/UserLayout';
+import UpdateMatrimonial from '../../../components/ProfilePage/UpdateMatrimonial';
 
 const UpdateMatrimonialPage = () => {
 

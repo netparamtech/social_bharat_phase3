@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import UserLayout from '../layouts/UserLayout';
-import BasicProfile from '../components/ProfilePage/BasicProfile';
-import MatrimonialInfo from '../components/ProfilePage/MatrimonialInfo';
-import EducationInfo from '../components/ProfilePage/EducationInfo';
-import ContactInfo from '../components/ProfilePage/ContactInfo';
-import { getUserFullProfile } from '../services/userService';
+import UserLayout from '../../layouts/UserLayout';
+import BasicProfile from '../../components/ProfilePage/BasicProfile';
+import MatrimonialInfo from '../../components/ProfilePage/MatrimonialInfo';
+import EducationInfo from '../../components/ProfilePage/EducationInfo';
+import ContactInfo from '../../components/ProfilePage/ContactInfo';
+import { getUserFullProfile } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
-import JobInfo from '../components/ProfilePage/JobInfo';
-import BusinessInfo from '../components/ProfilePage/BusinessInfo';
+import JobInfo from '../../components/ProfilePage/JobInfo';
+import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
 import { useDispatch } from 'react-redux';
-import { logout } from '../actions/userAction';
+import { logout } from '../../actions/userAction';
 
 
 const ProfilePage = () => {

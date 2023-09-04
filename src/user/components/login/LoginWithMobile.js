@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { attemptLoginWithMobile } from '../services/userService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../actions/userAction';
-import LoginWithOtp from './otp/LoginWithOtp';
+import { attemptLoginWithMobile } from '../../services/userService';
+import { logout } from '../../actions/userAction';
+import LoginWithOtp from '../otp/LoginWithOtp';
 
 const LoginWithMobile = (props) => {
 
@@ -30,7 +30,6 @@ const LoginWithMobile = (props) => {
       const response = await attemptLoginWithMobile(mobile);
 
       if (response && response.status === 200) {
-        console.log("clicked")
         setErrors('');
         setMessage(response.data.message);
         handleLoginClicked();

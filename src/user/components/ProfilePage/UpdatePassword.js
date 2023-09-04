@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { apiWithHeaders } from '../axios/apiConfig';
+import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../actions/userAction';
+import { login } from '../../actions/userAction';
 
 const UpdatePassword = () => {
 
@@ -34,7 +34,7 @@ const UpdatePassword = () => {
             if (response && response.status === 200) {
 
                 setErrors('');
-                navigate('/dashboard');
+                window.location.href = '/dashboard';
             }
         } catch (error) {
             // Handle validation errors
@@ -57,7 +57,7 @@ const UpdatePassword = () => {
                         <div className="row">
                             <div className="col-md-12 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
-                                    <h3 className="mb-3">Update Password</h3>
+                                    <h3 className="mb-3">Change Password</h3>
                                 </div>
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     <div className="row mb-3">

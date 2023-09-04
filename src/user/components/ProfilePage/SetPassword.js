@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { apiWithHeaders } from '../axios/apiConfig';
+import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/userAction';
+import { login } from '../../actions/userAction';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);

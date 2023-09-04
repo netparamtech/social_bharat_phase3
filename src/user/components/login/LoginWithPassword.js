@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { loginWithPassword } from '../services/userService';
+import { loginWithPassword } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login, logout } from '../actions/userAction';
+import { login, logout } from '../../actions/userAction';
 
 const LoginWithPassword = (props) => {
     const { chnageFlag } = props;

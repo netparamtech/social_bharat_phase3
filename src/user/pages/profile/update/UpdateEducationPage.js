@@ -1,8 +1,8 @@
-import UserLayout from '../layouts/UserLayout';
-import UpdateEducationProfile from '../components/ProfilePage/UpdateEducationProfile';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getSingleEducationDetails } from '../services/userService';
 import { useEffect, useState } from 'react';
+import { getSingleEducationDetails } from '../../../services/userService';
+import UserLayout from '../../../layouts/UserLayout';
+import UpdateEducationProfile from '../../../components/ProfilePage/UpdateEducationProfile';
 
 const UpdateEducationPage = () => {
 

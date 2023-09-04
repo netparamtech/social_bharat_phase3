@@ -120,7 +120,7 @@ const UserList = () => {
             e.preventDefault(); // Prevent the default anchor tag behavior
             navigate(`/users/view/${row.id}`);
           }}>
-            view
+           <i className="fas fa-eye"></i>
           </a>
           {row.status === 'Active' ? (
             <a className="collapse-item m-2" href="#" onClick={(e) => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiWithHeaders } from '../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../actions/userAction';
+import { apiWithHeaders } from '../../axios/apiConfig';
+import { logout } from '../../actions/userAction';
 
 const Navbar = () => {
     const user = useSelector((state) => state.userAuth);

@@ -879,8 +879,10 @@ a.btn.dropdown-toggle.show:focus {
   height: 70px;
   background-position: center;
   background-size: cover;
-  background-image: url("/images/matrimonial-1.jpg");
+  /* background-image: url("/admin/img/de-default-1.jpeg"); */
   border-radius: 100%;
+  object-fit: cover;
+  background-repeat: no-repeat;
 }
 
 #searchPeople-section .user-detail p{

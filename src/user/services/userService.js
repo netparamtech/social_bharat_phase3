@@ -303,7 +303,6 @@ export const fetchAllCitiesByStateID = async(stateID) => {
 //update profile image
 
 export const updateProfilePhoto = async(formData) => {
-    console.log("checked")
     try{
         const response = await apiWithFileHeaders.post('/profile/update-profile-picture',formData);
         return response;
@@ -311,3 +310,14 @@ export const updateProfilePhoto = async(formData) => {
         throw error;
     }
 }
+
+//search people with searchText
+export const searchPeopleWithSearchText = async(searchText) => {
+    try{
+        const response = await apiWithHeaders.get(`/users/search?q=${searchText}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+

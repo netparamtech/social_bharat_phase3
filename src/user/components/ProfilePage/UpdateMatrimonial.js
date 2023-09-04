@@ -23,6 +23,7 @@ const UpdateMatrimonial = (props) => {
 
   const [biodataFile, setBiodataFile] = useState('');
   const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState('');
+  const [biodataPreview, setBiodataPreview] = useState('');
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ const UpdateMatrimonial = (props) => {
   const handleBiodataFileChange = async (e) => {
     const selectedFiles = e.target.files[0];
     setBiodataFile(selectedFiles);
+    setBiodataPreview(URL.createObjectURL(selectedFiles));
 
     const formData = new FormData();
     formData.append('pdf', selectedFiles);
@@ -171,6 +173,7 @@ const UpdateMatrimonial = (props) => {
       }
 
       setBiodataFile(userMatrimonial.biodata || '');
+      setBiodataPreview(userMatrimonial.biodata || '');
       setTempBiodataFileUrl(userMatrimonial.biodata || '');
 
       // You can similarly handle the proposalPhoto and biodataFile values here if needed
@@ -257,7 +260,7 @@ const UpdateMatrimonial = (props) => {
                           />
                           <span>{heightInch}</span> {/* Display the current value */}
                         </div>
-                       
+
                         {errors.height_in_feet && <span className='error'>{errors.height_in_feet}</span>}
                       </div>
                     </div>
@@ -333,6 +336,9 @@ const UpdateMatrimonial = (props) => {
                         multiple
                       />
                       {errors.biodata && <span className='error'>{errors.biodata}</span>}
+                      <div className="proposal-Photo d-flex">
+                        <span>{biodataPreview?"file selected":''}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-4">

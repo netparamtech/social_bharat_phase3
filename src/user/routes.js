@@ -75,49 +75,49 @@ const userRoutes = [
     },
 
     {
-        path: '/update-basic-profile',
+        path: '/user/update-basic-profile',
         component: UpdateBasicProfilePage,
         exact: true
     },
 
     {
-        path: '/update-matrimonial-profile',
+        path: '/user/update-matrimonial-profile',
         component: UpdateMatrimonialPage,
         exact: true
     },
 
     {
-        path: '/update-job-profile',
+        path: '/user/update-job-profile',
         component: UpdateJobPage,
         exact: true
     },
 
     {
-        path: '/update-job-profile/:id',
+        path: '/user/update-job-profile/:id',
         component: UpdateJobPage,
         exact: true
     },
 
     {
-        path: '/update-contact',
+        path: '/user/update-contact',
         component: UpdateContactPage,
         exact: true
     },
 
     {
-        path: '/update-contact/:id',
+        path: '/user/update-contact/:id',
         component: UpdateContactPage,
         exact: true
     },
 
     {
-        path: '/update-education-profile/:id',
+        path: '/user/update-education-profile/:id',
         component: UpdateEducationPage,
         exact: true
     },
 
     {
-        path: '/update-education-profile',
+        path: '/user/update-education-profile',
         component: UpdateEducationPage,
         exact: true
     },

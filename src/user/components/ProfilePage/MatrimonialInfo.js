@@ -37,8 +37,8 @@ const MatrimonialInfo = (props) => {
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
-          {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="edit-icon"><a href="/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-          ) : (<div className="edit-icon add-more-detail"><a href="/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
+          {matrimonialDetails && matrimonialDetails.length > 0 ? (<div className="edit-icon"><a href="/user/update-matrimonial-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+          ) : (<div className="edit-icon add-more-detail"><a href="/user/update-matrimonial-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>)}
           {
             matrimonialDetails && matrimonialDetails.length > 0 ?(<div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash" onClick={()=>deleteMatrimonialDetails()}></i></a></div>):('')
           }

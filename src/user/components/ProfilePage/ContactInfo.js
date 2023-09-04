@@ -35,7 +35,7 @@ const ContactInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className={`edit-icon add-more-detail ${contactDetails && contactDetails.length > 1 ? 'd-none' : ''}`}>
-            <a href="/update-contact" title="Add More Detail">
+            <a href="/user/update-contact" title="Add More Detail">
               <i className="btn btn-outline-info fas fa-plus"></i></a>
           </div>
           <div className="card-body">
@@ -46,7 +46,7 @@ const ContactInfo = (props) => {
                   <div className="col-md-6">
                     <div className="card shadow">
                       <div className="edit-icon">
-                        <a href={`/update-contact/${item.id}`} title="Edit">
+                        <a href={`/user/update-contact/${item.id}`} title="Edit">
                           <i className="fas fa-pencil-alt"></i>
                         </a>
                       </div>

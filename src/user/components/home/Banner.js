@@ -40,7 +40,7 @@ const Banner = () => {
         {/* Wrapper for slides */}
         <div className="carousel-inner" role="listbox">
           {imageUrls.map((imageUrl, index) => (
-            <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+            <div key={index} className='carousel-item active'>
               <img className="banner-area d-block w-100" src={imageUrl} alt={`Slide ${index + 1}`} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">

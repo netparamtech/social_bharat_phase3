@@ -35,7 +35,7 @@ const UpdateJobProfile = (props) => {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/profile')
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error

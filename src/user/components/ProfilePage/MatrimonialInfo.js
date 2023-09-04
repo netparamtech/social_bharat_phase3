@@ -112,7 +112,7 @@ const MatrimonialInfo = (props) => {
 
                             {
                               proposalPhotos && Array.isArray(proposalPhotos) ?(proposalPhotos.map((item, idx) => (
-                                <img src={item} />
+                                <img className='m-1' src={item} />
                               ))) :(<img src={proposalPhotos} />)
                             }
 

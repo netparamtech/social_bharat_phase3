@@ -14,9 +14,6 @@ const ChangeBasicDetails = (props) => {
 
     const [errors, setErrors] = useState('');
 
-
-
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -35,7 +32,7 @@ const ChangeBasicDetails = (props) => {
             const response = await updatePBasicProfile(data);
             if (response && response.status === 200) {
                 dispatch(login(response.data.data, token));
-                navigate('/admin/dashboard')
+                window.location.href = '/admin/dashboard';
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {

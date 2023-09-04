@@ -92,6 +92,9 @@ const CreateCommunityForm = () => {
         // Reset file inputs
         thumbnailImageRef.current.value = null;
         bannerImageRef.current.value = null;
+       setTimeout(()=>{
+        window.location.href = '/admin/communities';
+       },1000);
       }
       // Redirect to the admin dashboard or desired page
     } catch (error) {
@@ -118,7 +121,7 @@ const CreateCommunityForm = () => {
         <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         onClick={(e)=>{
           e.preventDefault();
-          navigate('/admin/communities');
+          window.location.href = '/admin/communities';
         }}
         >
           See All Communities

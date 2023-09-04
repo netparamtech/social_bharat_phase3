@@ -92,7 +92,7 @@ const CommunityUpdateForm = () => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
                 setTimeout(()=>{
-                    navigate('/admin/communities');
+                    window.location.href = '/admin/communities';
                 },1000);
 
             }

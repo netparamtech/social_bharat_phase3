@@ -48,7 +48,7 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="/">
                     <img src="/user/images/logo.png" alt="Logo" /> SocialBharat
                 </a>
                 <button
@@ -75,7 +75,7 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <a className="nav-link" href="/dashboard">
                                 Services
                             </a>
                         </li>
@@ -93,6 +93,15 @@ const Navbar = () => {
                             <a className="nav-link" href="#">
                                 Contact
                             </a>
+                        </li>
+                        <li className="nav-item">
+                            {
+                                isAuthenticUser && isAuthenticUser ? (
+                                    <a className="nav-link" href="/user/search">
+                                        Search
+                                    </a>
+                                ) : ''
+                            }
                         </li>
                         {/* You can add more nav items here */}
                     </ul>
@@ -154,7 +163,10 @@ const Navbar = () => {
                                     <div className="dropdown-item-icon"><i className="fas fa-cog"></i></div>
                                     <span className="ms-2">Settings</span>
                                 </a>
-                                <a className="dropdown-item" href="#" onClick={handleLogOutClick}>
+                                <a className="dropdown-item" href="#" onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLogOutClick();
+                                }}>
                                     <div className="dropdown-item-icon"><i className="fas fa-sign-out"></i></div>
                                     <span className="ms-2">Logout</span>
                                 </a>

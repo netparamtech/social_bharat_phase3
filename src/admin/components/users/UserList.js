@@ -45,28 +45,28 @@ const UserList = () => {
     console.log('User Details:', userDetails);
   };
 
- 
+
   const handleDeleteClick = userDetails => {
     console.log('Delete User:', userDetails);
   };
 
   const handleUserToggleStatus = async (id) => {
     console.log("Hello")
-      try {
-        const response = await updateToggleStatus(id);
-        if(response && response.status === 200){
-          fetchData();
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          dispatch(logout);
-          navigate('/admin');
-        }
-        else if (error.response && error.response.status === 500) {
-          dispatch(logout);
-          navigate('/admin');
-        }
+    try {
+      const response = await updateToggleStatus(id);
+      if (response && response.status === 200) {
+        fetchData();
       }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(logout);
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout);
+        navigate('/admin');
+      }
+    }
   }
 
   const columns = [
@@ -123,18 +123,18 @@ const UserList = () => {
             view
           </a>
           {row.status === 'Active' ? (
-            <a className="collapse-item" href="#" onClick={(e) => {
+            <a className="collapse-item m-2" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               handleUserToggleStatus(row.id);
             }}>
-              Deactivate
+              <i className="fa fa-thumbs-up text-primary" title="Active" />
             </a>
           ) : (
-            <a className="collapse-item" href="#" onClick={(e) => {
+            <a className="collapse-item text-secondary m-2" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               handleUserToggleStatus(row.id);
             }}>
-              Activate
+              <i className="fa fa-thumbs-down" title="Inactive" />
             </a>
           )}
           <a className="collapse-item" href="#" onClick={(e) => {
@@ -149,6 +149,15 @@ const UserList = () => {
     // ... other column definitions
   ];
 
+  const customStyles = {
+    headCells: {
+      style: {
+        fontWeight: 'bold',
+        fontSize: '16px',
+      },
+    },
+  };
+
   return (
     <div>
       <DataTable
@@ -160,6 +169,7 @@ const UserList = () => {
         paginationTotalRows={totalRows}
         onChangePage={newPage => handlePageChange(newPage)}
         onChangeRowsPerPage={newSize => setSize(newSize)}
+        customStyles={customStyles}
       />
     </div>
   );

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { login } from '../services/AdminService';
 import { useDispatch } from 'react-redux';
 import {login as adminlogin} from '../actions/authActions';
-import {login as userlogin} from '../../user/actions/userAction';
 import { useNavigate } from 'react-router';
 
 const LoginForm = () => {
@@ -88,7 +87,7 @@ const LoginForm = () => {
           placeholder="Password"
           onChange={handlePasswordChange}
         />
-        {errors.password && <span className='errorff'>{errors.password}</span>}
+        {errors.password && <span className='error'>{errors.password}</span>}
       </div>
       <button type='submit' className="btn btn-primary btn-user btn-block">
         Login

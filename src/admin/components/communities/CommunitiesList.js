@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import UpdateCommunityForm from './UpdateCommunityForm';
 import { deleteCommunity, fetchAllCommunity, updateCommunityStatus } from '../../services/AdminService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/authActions';
@@ -71,7 +70,7 @@ const CommunitiesList = () => {
           <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
             onClick={(e) => {
               e.preventDefault();
-              navigate('/admin/create/community');
+              window.location.href = '/admin/create/community';
             }}
           >
             Create Community
@@ -126,7 +125,7 @@ const CommunitiesList = () => {
                     <div className="d-flex">
                       <a className="collapse-item" href="#" onClick={(e) => {
                         e.preventDefault(); // Prevent the default anchor tag behavior
-                        navigate(`/admin/update/community/${item.id}`);
+                        window.location.href = `/admin/update/community/${item.id}`;
                       }}>
                         <i className="fa fa-edit mr-4" title='Edit' />
                       </a>

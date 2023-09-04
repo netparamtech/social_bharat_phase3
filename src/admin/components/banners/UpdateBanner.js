@@ -19,13 +19,7 @@ const UpdateBanner = (props) => {
     const handleBannerChange = async (e) => {
         const selectedFiles = e.target.files;
 
-        const totalFiles = bannerTempUrl.length + selectedFiles.length;
-
-        if (totalFiles > 5) {
-            alert("Total files (including existing ones) cannot exceed 5.");
-            e.target.value = null; // Clear the input field
-            return;
-        }
+        //const totalFiles = bannerTempUrl.length + selectedFiles.length;
 
         const previewUrls = [];
 
@@ -37,6 +31,7 @@ const UpdateBanner = (props) => {
         const combinedUrls = [...previewUrls, ...bannerTempUrl];
 
         setBannerPreview(combinedUrls);
+        setBannerTempUrl(combinedUrls)
 
         const formData = new FormData();
 
@@ -86,6 +81,7 @@ const UpdateBanner = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(bannerTempUrl, "check")
+        console.log(bannerTempUrl.length, "check")
 
         const data = {
             banner_urls: bannerTempUrl,

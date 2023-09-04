@@ -137,6 +137,17 @@ nav .nav-item .btn{
   font-weight: 400;
 }
 
+.dropdown-user-img-letter{
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 100% !important;  
+  background-color: #6387A6 !important;
+  border: 1px solid rgb(247, 240, 240) !important;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
 /* Our partners */
 #partner {
   width: 100%px;
@@ -419,17 +430,6 @@ a.btn.dropdown-toggle.show:focus {
   border-radius: 100%;
 }
 
-.dropdown-user-img-letter{
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 100% !important;  
-  background-color: #6387A6 !important;
-  border: 1px solid rgb(247, 240, 240) !important;
-  color: #fff !important;
-  font-weight: 600;
-  font-size: 18px;
-}
-
 .dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-name {
   color: #212832;
   font-weight: 500;
@@ -515,11 +515,11 @@ a.btn.dropdown-toggle.show:focus {
   border-color: #e58d28a6;
   color: #fff;
 }
-
-.btn-set{
+ 
+/* .btn-set{
   width: 80px;
   height: 40px;
-}
+}  */
 
 .form-control {
   border-radius: 0px !important;
@@ -750,12 +750,20 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
+.filter-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 /* User Photo Edit */
 .container-profilepic {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   margin-top: 10px;
+  background-position: center;
+  background-size: cover;
 
   /* background: linear-gradient(yellow, orange, pink, purple, blue); */
 }
@@ -783,14 +791,12 @@ a.btn.dropdown-toggle.show:focus {
 /* Home page banners */
 .banner-area {
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   position: relative;
   width: 100%;
   height: auto;
   max-height: 550px;
-  overflow: hidden;
-  z-index: 0;
-  
+  overflow: hidden;  
 }
 
 .banner-area::before {
@@ -869,8 +875,8 @@ a.btn.dropdown-toggle.show:focus {
 /* Search People Page */
 #searchPeople-section .avatar {
   /* vertical-align: middle; */
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   background-position: center;
   background-size: cover;
   background-image: url("/images/matrimonial-1.jpg");
@@ -880,4 +886,20 @@ a.btn.dropdown-toggle.show:focus {
 #searchPeople-section .user-detail p{
   margin: 0px !important;
   font-size: 12px;
+  padding: 0px !important;
+  line-height: .50cm;
 }
+
+#searchPeople-section .filter-content p{
+  /* position: absolute; */
+  right: 100px;
+  top: 15px;
+  padding: 0px !important;
+}
+
+/* Waiting Page */
+#waiting-Page{
+  margin: 150px auto;
+}
+
+

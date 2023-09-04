@@ -14,7 +14,7 @@ import UpdateBusinessPage from './pages/UpdateBusinessPage';
 import LoginWithPassword from './components/LoginWithPassword';
 import UpdatePasswordPage from './pages/UpdatePasswordPage';
 import SetPasswordPage from './pages/SetPasswordPage';
-import LocationComponent from './components/LocationComponent';
+import SearchPage from './pages/search/SearchPage';
 
 const userRoutes = [
     {
@@ -135,8 +135,8 @@ const userRoutes = [
     },
 
     {
-        path: '/state-city',
-        component: LocationComponent,
+        path: '/user/search',
+        component: SearchPage,
         exact: true
     },
    

@@ -36,9 +36,9 @@ const LoginWithPassword = (props) => {
                 dispatch(login(response.data.data, response.data.token));
 
                 if (response.data.data.is_password_set) {
-                    navigate('/dashboard');
+                    window.location.href = '/dashboard'
                 } else {
-                    navigate('/setPassword');
+                    window.location.href = '/setPassword'
                 }
             }
         } catch (error) {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { getFeet, getInches } from '../../util/Conversion';
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -135,12 +136,12 @@ const UpdateMatrimonial = (props) => {
 
     // Remove the image at the specified index from both arrays
     updatedProposalPreview.splice(indexToDelete, 1);
-    updatedProposalTempUrl.splice(indexToDelete , 1);
+    updatedProposalTempUrl.splice(indexToDelete, 1);
 
     // Update the state variables with the updated arrays
     setProposalPreview(updatedProposalPreview);
     setTempProposalPhotoUrl(updatedProposalTempUrl);
-};
+  };
 
 
   useEffect(() => {
@@ -150,8 +151,8 @@ const UpdateMatrimonial = (props) => {
       setFatherName(userMatrimonial.father_name || '');
       setMotherName(userMatrimonial.mother_name || '');
       setSkinTone(userMatrimonial.skin_tone || '');
-      setHeightFeet(userMatrimonial.height_feet || '');
-      setHeightInch(userMatrimonial.height_inch || '');
+      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || '');
+      setHeightInch(getInches(userMatrimonial.height_in_feet) || '');
       setWeight(userMatrimonial.weight_in_kg || '');
       setCast(userMatrimonial.cast || '');
       setGotraSelf(userMatrimonial.gotra || '');
@@ -232,14 +233,31 @@ const UpdateMatrimonial = (props) => {
                       <div className="d-flex">
                         <div>
                           <label htmlFor="feet" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Feet:</label>
-                          <input type="range" name="" id="" min="1" max="15" defaultValue={heightFeet} onChange={(e) => setHeightFeet(e.target.value)} />
-
+                          <input
+                            type="range"
+                            name=""
+                            id=""
+                            min="1"
+                            max="15"
+                            defaultValue={heightFeet}
+                            onChange={(e) => setHeightFeet(parseInt(e.target.value, 10))}
+                          />
+                          <span>{heightFeet}</span> {/* Display the current value */}
                         </div>
                         <div>
-                          <label htmlFor="inch" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Inch:</label>
-                          <input type="range" name="" id="" min="1" max="12" defaultValue={heightInch} onChange={(e) => setHeightInch(e.target.value)} />
-
+                          <label htmlFor="inch" className="col-lg-6 col-sm-12 col-xs-12 text-secondary">Inches:</label>
+                          <input
+                            type="range"
+                            name=""
+                            id=""
+                            min="1"
+                            max="12"
+                            defaultValue={heightInch}
+                            onChange={(e) => setHeightInch(parseInt(e.target.value, 10))}
+                          />
+                          <span>{heightInch}</span> {/* Display the current value */}
                         </div>
+                       
                         {errors.height_in_feet && <span className='error'>{errors.height_in_feet}</span>}
                       </div>
                     </div>
@@ -290,20 +308,20 @@ const UpdateMatrimonial = (props) => {
                       />
                       {errors.proposal_photos && <span className='error'>{errors.proposal_photos}</span>}
                       <div className='proposal-Photo d-flex'>
-                      {proposalPreview &&
-                        proposalPreview.map((item, idx) => (
-                          <div className='m-2' key={idx}>
-                            <img src={item} alt={`Photos ${idx + 1}`} />
-                            <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
-                              <i className="fas fa-trash"></i>
-                            </button>
-                          </div>
-                        ))}
+                        {proposalPreview &&
+                          proposalPreview.map((item, idx) => (
+                            <div className='m-2' key={idx}>
+                              <img src={item} alt={`Photos ${idx + 1}`} />
+                              <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
+                                <i className="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          ))}
+                      </div>
                     </div>
+
                   </div>
 
-                    </div>
-                   
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

@@ -9,6 +9,11 @@
   height: 100px;
 }
 
+.small-img-user-list {
+  width: 50px; /* Adjust the width to your desired size */
+  height: 50px;
+}
+
 .profile-card-container {
     display: flex;
     justify-content: center;

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchAllBanners } from '../../services/AdminService';
+import { logout } from '../../actions/authActions';
 
 const BannerList = () => {
     const [data, setData] = useState([]);
-    const [item, setItem] = useState(null);
     const [errors, setErrors] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,7 +27,8 @@ const BannerList = () => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                navigate('/admin')
+                dispatch(logout());
+                navigate('/admin');
             }
             else if (error.response && error.response.status === 500) {
 
@@ -75,11 +75,11 @@ const BannerList = () => {
                                                 {item.banner_urls && Array.isArray(item.banner_urls) ? (item.banner_urls.map((value, idx) => (
                                                     <div className="m-2" key={idx}>
                                                         <a href={item.banner_url} target="_blank">
-                                                            <img src={value} title="Banner image" width={100} alt="Banner" className="thumbnail-image" />
+                                                            <img src={value} title="Banner image" alt="Banner" className="small-img-thumbnail" />
                                                         </a>
                                                     </div>
-                                                ))) : (<a href={item.banner_url} target="_blank">
-                                                    <img src={item.banner_urls} title="Banner image" width={100} alt="Banner" className="thumbnail-image" />
+                                                ))) : (<a href={item.banner_urls} target="_blank">
+                                                    <img src={item.banner_urls} title="Banner image" alt="Banner" className="small-img-thumbnail" />
                                                 </a>)}
                                             </div>
                                         ) : (
@@ -93,13 +93,10 @@ const BannerList = () => {
                                     <td>{item.status}</td>
                                     <td key={item.id}>
                                         <div className="d-flex">
-                                            <a className="collapse-item">
-                                                <i className="fa fa-edit mr-4" title="Edit" onClick={(e) => {
-                                                    e.preventDefault();
-                                                    navigate(`/admin/banners/${item.page}/${item.section}`);
-                                                }} />
+                                            <a className="collapse-item" href={`/admin/banners/update/${item.page}/${item.section}`}>
+                                                <i className="fa fa-edit mr-4" title="Edit"/>
                                             </a>
-                                            <a className="collapse-item" href="">
+                                            <a className="collapse-item" href="#">
                                                 <i className="fa fa-trash" title="Delete" />
                                             </a>
                                         </div>

@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
 
 const PromoteBusiness = () => {
+    const [imageUrls, setImageUrls] = useState('');
+
+    const fetchBanners = async () => {
+        try {
+            const response = await fetchBannerWithPageAndSection("Home", "Promote-Business");
+            const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+            setImageUrls(activeBanners[0].banner_urls);
+        } catch (error) {
+
+        }
+    };
+    useEffect(() => {
+        fetchBanners();
+    }, []);
+    
     return (
         <div id="Promote-business" className="text-center stats mt-5">
             <div className="container">

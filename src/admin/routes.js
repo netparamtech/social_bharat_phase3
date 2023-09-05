@@ -82,7 +82,7 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/banners/:bannerPage/:bannerSection',
+        path: '/admin/banners/update/:bannerPage/:bannerSection',
         component: UpdateBannerPage,
         exact: true
     },

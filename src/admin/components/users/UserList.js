@@ -41,17 +41,11 @@ const UserList = () => {
     setPage(newPage);
   };
 
-  const handleUserClick = userDetails => {
-    console.log('User Details:', userDetails);
-  };
-
-
   const handleDeleteClick = userDetails => {
     console.log('Delete User:', userDetails);
   };
 
   const handleUserToggleStatus = async (id) => {
-    console.log("Hello")
     try {
       const response = await updateToggleStatus(id);
       if (response && response.status === 200) {
@@ -77,10 +71,9 @@ const UserList = () => {
     {
       name: 'Photo',
       selector: 'photo',
-      cell: row => <img src={row.photo ? row.photo : defaultImage} alt={row.name} title={row.name} width="50" onClick={(e) => {
-        e.preventDefault(); // Prevent the default anchor tag behavior
-        navigate(`/users/view/${row.id}`);
-      }} />,
+      cell: row =><a href={row.photo}>
+         <img src={row.photo ? row.photo : defaultImage} alt={row.name} title={row.name} className='small-img-user-list' />
+      </a>,
     },
     {
       name: 'Name',
@@ -94,8 +87,9 @@ const UserList = () => {
     },
     {
       name: 'Community',
-      selector: 'community_id',
+      selector: 'community.name',
       sortable: true,
+      cell: (row) => row.community?.name || 'N/A', // Use optional chaining to handle null 'community' and 'name'
     },
     {
       name: 'Status',
@@ -116,10 +110,7 @@ const UserList = () => {
       name: 'Actions',
       cell: row => (
         <div>
-          <a className="collapse-item" href="#" onClick={(e) => {
-            e.preventDefault(); // Prevent the default anchor tag behavior
-            navigate(`/users/view/${row.id}`);
-          }}>
+          <a className="collapse-item" href={`/users/view/${row.id}`} >
            <i className="fas fa-eye"></i>
           </a>
           {row.status === 'Active' ? (

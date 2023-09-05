@@ -36,7 +36,7 @@ const Testimonials = () => {
 
                     <div className="carousel-item" data-bs-interval="2000">
                         <img className="rounded-circle shadow-1-strong mb-4"
-                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp" alt="avatar"
+                            src="" alt="avatar"
                             style={{ width: '150px' }} />
                         <div className="row d-flex justify-content-center">
                             <div className="col-lg-8">

@@ -1,6 +1,22 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
 
 const WhySocial = () => {
+    const [imageUrls, setImageUrls] = useState('');
+
+    const fetchBanners = async () => {
+        try {
+            const response = await fetchBannerWithPageAndSection("Home", "WhySocialBharat");
+            const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+            setImageUrls(activeBanners[0].banner_urls);
+            console.log(activeBanners[0].banner_urls)
+        } catch (error) {
+
+        }
+    };
+    useEffect(() => {
+        fetchBanners();
+    }, []);
     return (
         <div id="why-social-section">
             <div className="container">
@@ -25,7 +41,7 @@ const WhySocial = () => {
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">
                         <div className="image-zoom-container">
-                            <img src="/user/images/section.jpg" className="img-fluid image-zoom" alt="..." />
+                            <img src={imageUrls} className="img-fluid image-zoom" alt="..." />
                         </div>
                     </div>
                 </div>

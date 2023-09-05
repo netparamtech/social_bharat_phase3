@@ -188,7 +188,7 @@ const CommunityUpdateForm = () => {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                {thumbnailPreview && <img src={thumbnailPreview} alt="Thumbnail" className="small-img-thumbnail" />}
+                                {thumbnailPreview && <img src={thumbnailPreview} alt="Thumbnail" title='Thumbnail' className="small-img-thumbnail" />}
                             </div>
                         </div>
 
@@ -210,7 +210,7 @@ const CommunityUpdateForm = () => {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                {bannerPreview && <img src={bannerPreview} alt="Banner" className="small-img-thumbnail" />}
+                                {bannerPreview && <img src={bannerPreview} alt="Banner" title='Banner' className="small-img-thumbnail" />}
                             </div>
                         </div>
 

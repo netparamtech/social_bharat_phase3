@@ -96,7 +96,7 @@ const UpdateBanner = (props) => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
                 setTimeout(() => {
-                    navigate('/admin/banners');
+                    window.location.href = '/admin/banners';
                 }, 1000)
 
             }
@@ -171,7 +171,7 @@ const UpdateBanner = (props) => {
                                     {bannerPreview &&
                                         bannerPreview.map((item, idx) => (
                                             <div className='m-2' key={idx}>
-                                                <img src={item} width={100} alt={`Banner ${idx + 1}`} />
+                                                <img src={item} alt={`Banner ${idx + 1}`} className='small-img-thumbnail' />
                                                 <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
                                                     <i className="fas fa-trash"></i>
                                                 </button>

@@ -153,7 +153,7 @@ const LoginWithOtp = (props) => {
                         className="btn btn-primary"
                         disabled={isTimeExpired}
                     >
-                        Varified With OTP
+                        Verify With OTP
                     </button>
                 </div>
 

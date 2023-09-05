@@ -112,13 +112,13 @@ const CommunitiesList = () => {
                   </td>
                   <td>
                     {item.status === 'Active' ? (
-                      <i className="fa fa-thumbs-up text-primary" title="Active"
-                        onClick={() => handleStatusToggle(item.id)}
-                      />
+                      <a href = "#" onClick={() => handleStatusToggle(item.id)}>
+                        <i className="fa fa-thumbs-up text-primary" title="Active" />
+                      </a>
                     ) : (
-                      <i className="fa fa-thumbs-down" title="Inactive"
-                        onClick={() => handleStatusToggle(item.id)}
-                      />
+                     <a href='#' onClick={() => handleStatusToggle(item.id)}>
+                       <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
+                     </a>
                     )}
                   </td>
                   <td key={item.id}>

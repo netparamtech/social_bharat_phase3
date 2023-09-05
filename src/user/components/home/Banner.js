@@ -1,28 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
+import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
 
 const Banner = () => {
   const typedRefs = useRef([]);
-  const [data, setData] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
 
-  // const fetchBanners = () => {
-  //   axios.get('/api/admin/banners/index/header')
-  //     .then(response => {
-  //       // Filter active banners and sort by featured (descending)
-  //       const activeBanners = response.data.data.filter(banner => banner.status === "Active");
-        
-  //       setData(activeBanners);
-  //     })
-  //     .catch(error => {
-  //       console.log('Error fetching banners:', error);
-  //     });
-  // };
-  const imageUrls = [
-    "/user/images/matrimonial-1.jpg",
-    "/user/images/matrimonial-2.jpg",
-    "/user/images/matrimonial-3.jpg",
-    // Add more image URLs as needed
-  ];
+  const fetchBanners = async () => {
+    try {
+      const response = await fetchBannerWithPageAndSection("home", "index");
+      const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+      setImageUrls(activeBanners);
+    } catch (error) {
+
+    }
+  };
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+  // const imageUrls = [
+  //   "/user/images/matrimonial-1.jpg",
+  //   "/user/images/matrimonial-2.jpg",
+  //   "/user/images/matrimonial-3.jpg",
+  //   // Add more image URLs as needed
+  // ];
 
   useEffect(() => {
     // Initialize Typed instances for each carousel item
@@ -39,7 +41,8 @@ const Banner = () => {
     return () => {
       typedInstances.forEach((typed) => typed.destroy());
     };
-  }, []);
+
+  }, [imageUrls]);
 
   return (
     <div id="banners-section">
@@ -55,14 +58,14 @@ const Banner = () => {
         <div className="carousel-inner" role="listbox">
           {imageUrls.map((imageUrl, index) => (
             <div key={index} className='carousel-item active'>
-              <img className="banner-area d-block w-100" src={imageUrl} alt={`Slide ${index + 1}`} />
+              <img className="banner-area d-block w-100" src={imageUrl.banner_urls} alt={`Slide ${index + 1}`} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">
                   <div className="container">
                     <h2>Connect with <span ref={(el) => (typedRefs.current[index] = el)} className="typed"></span></h2>
                   </div>
                   <div className="banner-button">
-                    <a className="hero-btn" href = '/register'>Get started</a>
+                    <a className="hero-btn" href='/register'>Get started</a>
                   </div>
                 </div>
               </div>

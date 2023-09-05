@@ -154,7 +154,7 @@ const CreateCommunityForm = () => {
               {errors.name && <span className="error">{errors.name}</span>}
             </div>
 
-            <div className="form-group mt-5">
+            <div className="form-group">
               <label htmlFor="thumbnailImage">Thumbnail Image</label>
               <input
                 type="file"
@@ -168,7 +168,7 @@ const CreateCommunityForm = () => {
               )}
             </div>
 
-            <div className="form-group mt-5">
+            <div className="form-group">
               <label htmlFor="bannerImage">Banner Image</label>
               <input
                 type="file"

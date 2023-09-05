@@ -5,8 +5,9 @@
   }
 
 .small-img-thumbnail {
-  width: 100px; /* Adjust the width to your desired size */
-  height: 100px;
+  height: 50px !important;
+  border-radius: 4px;
+  
 }
 
 .small-img-user-list {

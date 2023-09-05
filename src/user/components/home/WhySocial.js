@@ -2,13 +2,20 @@ import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const WhySocial = () => {
-    const [imageUrls, setImageUrls] = useState('');
+    const [imageUrls, setImageUrls] = useState([]);
 
     const fetchBanners = async () => {
         try {
-            const response = await fetchBannerWithPageAndSection("Home", "WhySocialBharat");
+            const response = await fetchBannerWithPageAndSection("Home", "Why Social Bharat");
             const activeBanners = response.data.data.filter(banner => banner.status === "Active");
-            setImageUrls(activeBanners[0].banner_urls);
+            if (!Array.isArray(activeBanners[0].banner_urls)) {
+                // Convert it into an array
+                const updatedBannerUrls = [activeBanners[0].banner_urls];
+        
+                // Update activeBanners with the updated banner URLs
+                activeBanners[0].banner_urls = updatedBannerUrls;
+              }
+            setImageUrls(activeBanners);
         } catch (error) {
 
         }
@@ -39,9 +46,11 @@ const WhySocial = () => {
                         </ul>
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">
+                    {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((banner, index) => (
                         <div className="image-zoom-container">
-                            <img src={imageUrls} className="img-fluid image-zoom" alt="..." />
+                           {index === 0 && <img src={banner} className="img-fluid image-zoom" alt="..." />}
                         </div>
+                    ))}
                     </div>
                 </div>
             </div>

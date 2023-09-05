@@ -8,6 +8,13 @@ const Matrimonial = () => {
         try {
             const response = await fetchBannerWithPageAndSection("Home", "Matrimonial");
             const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+            if (!Array.isArray(activeBanners[0].banner_urls)) {
+                // Convert it into an array
+                const updatedBannerUrls = [activeBanners[0].banner_urls];
+        
+                // Update activeBanners with the updated banner URLs
+                activeBanners[0].banner_urls = updatedBannerUrls;
+              }
             setImageUrls(activeBanners);
         } catch (error) {
             // Handle errors here if needed

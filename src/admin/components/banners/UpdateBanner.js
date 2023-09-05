@@ -193,6 +193,7 @@ const UpdateBanner = (props) => {
                                         <option value="Main Banners">Main Banners</option>
                                         <option value="Testimonial">Testimonial</option>
                                         <option value="Matrimonial">Matrimonial</option>
+                                        <option value="Why Social Bharat">Why Social Bharat</option>
                                         <option value="Stats Bg">Stats Bg</option>
                                         {/* Add other section options here if needed */}
                                     </select>

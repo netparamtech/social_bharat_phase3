@@ -8,7 +8,7 @@ const Banner = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetchBannerWithPageAndSection("Home", "header");
+      const response = await fetchBannerWithPageAndSection("Home", "Main Banners");
       const activeBanners = response.data.data.filter(banner => banner.status === "Active");
 
       // Check if activeBanner.banner_urls is not an array
@@ -30,12 +30,6 @@ const Banner = () => {
   useEffect(() => {
     fetchBanners();
   }, []);
-  // const imageUrls = [
-  //   "/user/images/matrimonial-1.jpg",
-  //   "/user/images/matrimonial-2.jpg",
-  //   "/user/images/matrimonial-3.jpg",
-  //   // Add more image URLs as needed
-  // ];
 
   useEffect(() => {
     // Initialize Typed instances for each carousel item
@@ -47,11 +41,6 @@ const Banner = () => {
         loop: true,
       });
     });
-
-    // Clean up the Typed instances when the component unmounts
-    // return () => {
-    //   typedInstances.forEach((typed) => typed.destroy());
-    // };
 
   }, [imageUrls]);
 

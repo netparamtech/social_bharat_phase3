@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
+import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const PromoteBusiness = () => {
     const [imageUrls, setImageUrls] = useState('');

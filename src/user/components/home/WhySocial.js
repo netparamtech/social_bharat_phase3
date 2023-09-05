@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
+import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const WhySocial = () => {
     const [imageUrls, setImageUrls] = useState('');

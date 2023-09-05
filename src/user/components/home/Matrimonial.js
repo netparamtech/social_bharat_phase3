@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
+import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const Matrimonial = () => {
     const [imageUrls, setImageUrls] = useState([]);

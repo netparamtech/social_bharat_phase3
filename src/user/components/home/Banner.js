@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
-import { fetchBannerWithPageAndSection } from '../../../admin/services/AdminService';
+import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const Banner = () => {
   const typedRefs = useRef([]);

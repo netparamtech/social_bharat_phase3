@@ -8,13 +8,24 @@ const Banner = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetchBannerWithPageAndSection("home", "index");
+      const response = await fetchBannerWithPageAndSection("Home", "header");
       const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+
+      // Check if activeBanner.banner_urls is not an array
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        // Convert it into an array
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+
+        // Update activeBanners with the updated banner URLs
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+
       setImageUrls(activeBanners);
     } catch (error) {
-
+      // Handle errors
     }
   };
+
 
   useEffect(() => {
     fetchBanners();
@@ -28,7 +39,7 @@ const Banner = () => {
 
   useEffect(() => {
     // Initialize Typed instances for each carousel item
-    const typedInstances = imageUrls.map((imageUrl, index) => {
+    const typedInstances = imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((imageUrl, index) => {
       return new Typed(typedRefs.current[index], {
         strings: ["Society", "Community", "Social Bharat"],
         typeSpeed: 150,
@@ -38,9 +49,9 @@ const Banner = () => {
     });
 
     // Clean up the Typed instances when the component unmounts
-    return () => {
-      typedInstances.forEach((typed) => typed.destroy());
-    };
+    // return () => {
+    //   typedInstances.forEach((typed) => typed.destroy());
+    // };
 
   }, [imageUrls]);
 
@@ -49,16 +60,17 @@ const Banner = () => {
       <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
         {/* Indicators */}
         <div className="carousel-indicators">
-          {imageUrls.map((_, index) => (
+
+          {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((_, index) => (
             <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index === 0 ? "active" : ""} aria-current={index === 0 ? "true" : "false"} aria-label={`Slide ${index + 1}`}></button>
           ))}
         </div>
 
         {/* Wrapper for slides */}
         <div className="carousel-inner" role="listbox">
-          {imageUrls.map((imageUrl, index) => (
-            <div key={index} className='carousel-item active'>
-              <img className="banner-area d-block w-100" src={imageUrl.banner_urls} alt={`Slide ${index + 1}`} />
+          {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((imageUrl, index) => (
+            <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+              <img className="banner-area d-block w-100" src={imageUrl} alt={`Slide ${index + 1}`} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">
                   <div className="container">

@@ -52,7 +52,7 @@ const BannerList = () => {
                 </a>
             </div>
             <div className="card">
-                <div class="card-body">
+                <div className="card-body">
                 <div className='table-responsive'>
                 <table className="table table-striped table-bordered table-sm">
                     <thead>

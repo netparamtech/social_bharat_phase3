@@ -49,9 +49,7 @@ const CheckOtpToUpdateMobile = (props) => {
 
             if (response && response.status === 200) {
                 setOtp('');
-
-                navigate('/profile');
-
+                window.location.href = '/profile';
             }
         } catch (error) {
 

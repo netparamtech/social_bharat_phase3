@@ -17,7 +17,7 @@ const BasicProfile = (props) => {
               </div>
               <div className="card-body ">
                 <p className="card-text text-center mb-0">{userDetails?.data?.name}</p>
-                <p className="card-text text-center text-muted">Jaipur - Software Developer</p>
+                <p className="card-text text-center text-muted"></p>
               </div>
             </div>
           </div>

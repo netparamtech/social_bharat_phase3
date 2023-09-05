@@ -1,8 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
 const Banner = () => {
   const typedRefs = useRef([]);
+  const [data, setData] = useState([]);
+
+  // const fetchBanners = () => {
+  //   axios.get('/api/admin/banners/index/header')
+  //     .then(response => {
+  //       // Filter active banners and sort by featured (descending)
+  //       const activeBanners = response.data.data.filter(banner => banner.status === "Active");
+        
+  //       setData(activeBanners);
+  //     })
+  //     .catch(error => {
+  //       console.log('Error fetching banners:', error);
+  //     });
+  // };
   const imageUrls = [
     "/user/images/matrimonial-1.jpg",
     "/user/images/matrimonial-2.jpg",

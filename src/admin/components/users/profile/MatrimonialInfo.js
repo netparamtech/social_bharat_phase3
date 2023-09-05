@@ -3,6 +3,23 @@ import React from 'react';
 const MatrimonialInfo = (props) => {
   const { userDetails } = props;
   const matrimonialDetails = userDetails?.data?.matrimonial;
+  const proposalPhotos = userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].proposal_photos;
+
+  const getFileType = (url) => {
+    // Extract the file extension from the URL
+    const extension = url.split('.').pop().toLowerCase();
+
+    // Define mappings of common file types
+    const fileTypeMappings = {
+      pdf: 'PDF',
+      doc: 'DOC',
+      docx: 'DOCX',
+      txt: 'TXT',
+      // Add more file types as needed
+    };
+    // Use the mapping or show the extension as-is
+    return fileTypeMappings[extension] || extension.toUpperCase();
+  };
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
@@ -60,18 +77,24 @@ const MatrimonialInfo = (props) => {
                         <tr>
                           <td>Biodata</td>
                           <td className="text-muted">
-                            <i className="fa-regular fa-file-lines"></i> {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].biodata}
+                            {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].biodata && (
+                              <span>
+                                <a href={userDetails.data.matrimonial[0].biodata} download="biodata.pdf">
+                                  <i className="fa-regular fa-file-lines"></i> Download Biodata
+                                </a>
+                                &nbsp;({getFileType(userDetails.data.matrimonial[0].biodata)})
+                              </span>
+                            )}
                           </td>
                         </tr>
                         <tr>
                           <td>Proposal Photo</td>
                           <td className="proposal-Photo">
-                            <img src={userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].proposal_photo} alt=""
-                              title={userDetails && userDetails.data && userDetails.data.name} />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
-                            <img src="images/logo.png" alt="" title="" />
+                            {
+                              proposalPhotos && Array.isArray(proposalPhotos) ? (proposalPhotos.map((item, idx) => (
+                                <img className='m-1' src={item} />
+                              ))) : (<img src={proposalPhotos} />)
+                            }
                           </td>
                         </tr>
                       </tbody>

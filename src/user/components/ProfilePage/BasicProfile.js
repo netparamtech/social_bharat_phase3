@@ -84,13 +84,13 @@ const BasicProfile = (props) => {
               </div>
               <div className="card-body ">
                 <p className="card-text text-center mb-0">{user && user.data && user.data.name}</p>
-                <p className="card-text text-center text-muted">Jaipur - Software Developer</p>
+                <p className="card-text text-center text-muted"></p>
               </div>
             </div>
           </div>
           <div className="col-md-9">
             <div className="card shadow">
-              <div className="edit-icon"><a href="/update-basic-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+              <div className="edit-icon"><a href="/user/update-basic-profile" title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
               <div className="card-body ">
                 <div className="w-100 w-lg-75">
                   <div className="mb-2 row">

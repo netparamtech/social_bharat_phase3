@@ -321,3 +321,13 @@ export const searchPeopleWithSearchText = async(searchText) => {
     }
 }
 
+//fetch banner according to page and section
+export const fetchBannerWithPageAndSection = async (page, section) => {
+    try {
+        const response = await apiWithHeaders.get(`/banners/${page}/${section}`);
+        return response; // Assuming your API response contains the data directly
+    } catch (error) {
+        throw error;
+    }
+};
+

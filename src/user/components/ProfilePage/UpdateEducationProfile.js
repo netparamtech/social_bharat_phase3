@@ -68,7 +68,7 @@ const UpdateEducationProfile = (props) => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/profile')
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error

@@ -196,7 +196,7 @@ nav .nav-item .btn{
 }
 
 #Promote-business {
-  background-image: url('../images/promot.jpeg');
+  background-image: url('/user/images/promot.jpeg');
   background-size: cover;
   background-attachment: fixed;
   padding: 100px 0;
@@ -879,10 +879,8 @@ a.btn.dropdown-toggle.show:focus {
   height: 70px;
   background-position: center;
   background-size: cover;
-  /* background-image: url("/admin/img/de-default-1.jpeg"); */
+  background-image: url("/images/matrimonial-1.jpg");
   border-radius: 100%;
-  object-fit: cover;
-  background-repeat: no-repeat;
 }
 
 #searchPeople-section .user-detail p{

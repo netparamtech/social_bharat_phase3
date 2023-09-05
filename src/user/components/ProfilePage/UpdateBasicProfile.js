@@ -46,7 +46,7 @@ const UpdateBasicProfile = () => {
       if (response && response.status === 200) {
         setErrors('');
         dispatch(login(response.data.data,token));
-        navigate('/profile')
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error

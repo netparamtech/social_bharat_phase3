@@ -114,7 +114,7 @@ const UpdateMatrimonial = (props) => {
       const response = await updateMatrimonialInfo(matrimonialData);
       if (response && response.status === 200) {
         setErrors('');
-        navigate('/profile')
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error

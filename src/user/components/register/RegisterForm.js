@@ -120,14 +120,21 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mb-3">
 
-                        <Select
-                          id="community_id"
-                          className="form-select"
-                          defaultValue={community_id} // Provide a selected option state
-                          onChange={handleSelectChange} // Your change handler function
-                          options={casts && casts.map((cast) => ({ value: cast.id, label: cast.name }))}
-                          placeholder="---Select Community---"
-                        />
+                      <select
+                      id="community_id"
+                      className="form-control"
+                      onChange={handleSelectChange}
+                      defaultValue={community_id}
+                    >
+                      <option value="" disabled>
+                        --- Select Community ---
+                      </option>
+                      {casts.map((cast) => (
+                        <option key={cast.id} value={cast.id}>
+                          {cast.name}
+                        </option>
+                      ))}
+                    </select>
 
                         {errors.community_id && <span className='error'>{errors.community_id}</span>}
                       </div>

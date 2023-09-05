@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { createTempUser, fetchAllActiveCommunities } from '../../services/userService';
 import RegisterWithOtp from '../otp/RegisterWithOtp';
 import Select from 'react-select';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -15,6 +17,7 @@ const RegisterForm = () => {
   const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -64,6 +67,7 @@ const RegisterForm = () => {
       }
       //Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate('/login');
       }
 
@@ -121,7 +125,7 @@ const RegisterForm = () => {
                           className="form-select"
                           defaultValue={community_id} // Provide a selected option state
                           onChange={handleSelectChange} // Your change handler function
-                          options={casts.map((cast) => ({ value: cast.id, label: cast.name }))}
+                          options={casts && casts.map((cast) => ({ value: cast.id, label: cast.name }))}
                           placeholder="---Select Community---"
                         />
 

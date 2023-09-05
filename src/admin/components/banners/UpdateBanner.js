@@ -130,7 +130,7 @@ const UpdateBanner = (props) => {
                 :
                 (setBannerPreview([banner.banner_urls] || ''))
         }
-       
+
     }, [banner])
 
     return (
@@ -182,26 +182,35 @@ const UpdateBanner = (props) => {
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label htmlFor="section">Section</label>
-                                    <input
-                                        type="text"
+                                    <select
                                         className="form-control"
                                         id="section"
                                         name="section"
-                                        defaultValue={section}
+                                        value={section}
                                         onChange={handleSectionChange}
-                                    />
+                                    >
+                                        <option value="">----Select Section----</option>
+                                        <option value="Main Banners">Main Banners</option>
+                                        <option value="Testimonial">Testimonial</option>
+                                        <option value="Matrimonial">Matrimonial</option>
+                                        <option value="Stats Bg">Stats Bg</option>
+                                        {/* Add other section options here if needed */}
+                                    </select>
                                     {errors.section && <span className='error'>{errors.section}</span>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="page">Page</label>
-                                    <input
-                                        type="text"
+                                    <select
                                         className="form-control"
                                         id="page"
                                         name="page"
-                                        defaultValue={page}
+                                        value={page}
                                         onChange={handlePageChange}
-                                    />
+                                    >
+                                        <option value="">----Select Page----</option>
+                                        <option value="Home">Home</option>
+                                        {/* Add other page options here if needed */}
+                                    </select>
                                     {errors.page && <span className='error'>{errors.page}</span>}
                                 </div>
                                 <div className="form-group">

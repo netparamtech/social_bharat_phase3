@@ -74,7 +74,7 @@ const BannerList = () => {
                                             <div className="d-flex flex-wrap">
                                                 {item.banner_urls && Array.isArray(item.banner_urls) ? (item.banner_urls.map((value, idx) => (
                                                     <div className="m-2" key={idx}>
-                                                        <a href={item.banner_url} target="_blank">
+                                                        <a href={value} target="_blank">
                                                             <img src={value} title="Banner image" alt="Banner" className="small-img-thumbnail" />
                                                         </a>
                                                     </div>

@@ -134,6 +134,7 @@ const CreateBanner = () => {
                     value={page}
                     onChange={handlePageChange}
                   >
+                    <option value="">----Select Page----</option>
                     <option value="Home">Home</option>
                     {/* Add other page options here if needed */}
                   </select>
@@ -147,7 +148,7 @@ const CreateBanner = () => {
                     name="section"
                     onChange={handleSectionChange}
                   >
-                    <option value="">Select Section</option>
+                    <option value="">----Select Section----</option>
                     <option value="Main Banners">Main Banners</option>
                     <option value="Testimonial">Testimonial</option>
                     <option value="Matrimonial">Matrimonial</option>

@@ -126,28 +126,35 @@ const CreateBanner = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="section">Section</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="section"
-                    name="section"
-                    onChange={handleSectionChange}
-                  />
-                  {errors.section && <span className='error'>{errors.section}</span>}
-                </div>
-
-                <div className="form-group">
                   <label htmlFor="page">Page</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control"
                     id="page"
                     name="page"
                     value={page}
                     onChange={handlePageChange}
-                  />
-                  {errors.page && <span className='error'>{errors.page}</span>}
+                  >
+                    <option value="Home">Home</option>
+                    {/* Add other page options here if needed */}
+                  </select>
+                  {errors.page && <span className="error">{errors.page}</span>}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="section">Section</label>
+                  <select
+                    className="form-control"
+                    id="section"
+                    name="section"
+                    onChange={handleSectionChange}
+                  >
+                    <option value="">Select Section</option>
+                    <option value="Main Banners">Main Banners</option>
+                    <option value="Testimonial">Testimonial</option>
+                    <option value="Matrimonial">Matrimonial</option>
+                    <option value="Stats Bg">Stats Bg</option>
+                    {/* Add other section options here if needed */}
+                  </select>
+                  {errors.section && <span className="error">{errors.section}</span>}
                 </div>
 
                 <div className="form-group">

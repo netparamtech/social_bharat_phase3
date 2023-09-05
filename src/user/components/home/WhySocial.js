@@ -9,7 +9,6 @@ const WhySocial = () => {
             const response = await fetchBannerWithPageAndSection("Home", "WhySocialBharat");
             const activeBanners = response.data.data.filter(banner => banner.status === "Active");
             setImageUrls(activeBanners[0].banner_urls);
-            console.log(activeBanners[0].banner_urls)
         } catch (error) {
 
         }

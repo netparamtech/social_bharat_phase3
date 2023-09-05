@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTempUser, fetchAllActiveCommunities } from '../../services/userService';
 import RegisterWithOtp from '../otp/RegisterWithOtp';
+import Select from 'react-select';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -23,8 +24,9 @@ const RegisterForm = () => {
     setMobile(e.target.value);
   }
 
-  const handleSelectChange = (event) => {
-    SetCommunity_id(parseInt(event.target.value, 10));
+  const handleSelectChange = (selectedOption) => {
+    console.log(selectedOption)
+    SetCommunity_id(selectedOption.value);
   };
 
   const tempUserCreated = () => {
@@ -89,55 +91,55 @@ const RegisterForm = () => {
                 {
                   !isTempUserCreated ? (
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
-                  <div className="row mb-3">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Enter your name"
-                      className="form-control"
-                      onChange={handleNameChange}
-                      autoFocus
-                    />
-                    {errors.name && <span className='error'>{errors.name}</span>}
-                  </div>
-                  <div className="row mb-3">
-                    <input
-                      type="text"
-                      name="mobile"
-                      id="mobile"
-                      placeholder="Enter your mobile number"
-                      className="form-control"
-                      onChange={handleMobileChange}
-                    />
-                    {errors.mobile && <span className='error'>{errors.mobile}</span>}
-                  </div>
-                  <div className="row mb-3">
+                      <div className="row mb-3">
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          placeholder="Enter your name"
+                          className="form-control"
+                          onChange={handleNameChange}
+                          autoFocus
+                        />
+                        {errors.name && <span className='error'>{errors.name}</span>}
+                      </div>
+                      <div className="row mb-3">
+                        <input
+                          type="text"
+                          name="mobile"
+                          id="mobile"
+                          placeholder="Enter your mobile number"
+                          className="form-control"
+                          onChange={handleMobileChange}
+                        />
+                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                      </div>
+                      <div className="row mb-3">
 
-                    <select id="community_id" className="form-select form-control" aria-label="Default select example" value={community_id} onChange={handleSelectChange}>
-                      <option va>---Select Community---</option>
-                      {casts.map((cast) => (
-                        <option key={cast.id} value={cast.id}>
-                          {cast.name}
-                        </option>
-                      ))}
-                    </select>
+                        <Select
+                          id="community_id"
+                          className="form-select"
+                          defaultValue={community_id} // Provide a selected option state
+                          onChange={handleSelectChange} // Your change handler function
+                          options={casts.map((cast) => ({ value: cast.id, label: cast.name }))}
+                          placeholder="---Select Community---"
+                        />
 
-                    {errors.community_id && <span className='error'>{errors.community_id}</span>}
-                  </div>
-                  <div className="row mb-3">
-                    <button type="submit" className="btn btn-primary">
-                      Register
-                    </button>
-                  </div>
-                  <div className="row mt-3">
-                    <p className="fw-lighter fs-6">
-                      Already User? <a href="/login" className="text-primary">Login</a>.
-                    </p>
-                  </div>
-                </form>
-                  ):(
-                    <RegisterWithOtp userDetail = {{mobile,name,community_id}} message = {message} />
+                        {errors.community_id && <span className='error'>{errors.community_id}</span>}
+                      </div>
+                      <div className="row mb-3">
+                        <button type="submit" className="btn btn-primary">
+                          Register
+                        </button>
+                      </div>
+                      <div className="row mt-3">
+                        <p className="fw-lighter fs-6">
+                          Already User? <a href="/login" className="text-primary">Login</a>.
+                        </p>
+                      </div>
+                    </form>
+                  ) : (
+                    <RegisterWithOtp userDetail={{ mobile, name, community_id }} message={message} />
                   )
                 }
               </div>

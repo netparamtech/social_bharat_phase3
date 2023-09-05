@@ -52,14 +52,15 @@ const BannerList = () => {
                 </a>
             </div>
             <div className="card">
+                <div class="card-body">
                 <div className='table-responsive'>
-                <table className="table table-striped table-bordered">
+                <table className="table table-striped table-bordered table-sm">
                     <thead>
                         <tr>
                             <th scope="col">S.No</th>
-                            <th scope="col">Banner_Url</th>
-                            <th scope="col">Section</th>
                             <th scope="col">Page</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Banners</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -69,6 +70,8 @@ const BannerList = () => {
                             data && data.map((item, index) => (
                                 <tr>
                                     <td>{index+1}</td>
+                                    <td>{item.page}</td>
+                                    <td>{item.section}</td>
                                     <td>
                                         {item.banner_urls ? (
                                             <div className="d-flex flex-wrap">
@@ -87,8 +90,6 @@ const BannerList = () => {
                                         )}
 
                                     </td>
-                                    <td>{item.section}</td>
-                                    <td>{item.page}</td>
 
                                     <td>{item.status}</td>
                                     <td key={item.id}>
@@ -107,6 +108,7 @@ const BannerList = () => {
 
                     </tbody>
                 </table>
+                </div>
                 </div>
             </div>
 

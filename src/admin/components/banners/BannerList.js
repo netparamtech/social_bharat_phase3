@@ -97,9 +97,7 @@ const BannerList = () => {
                                             <a className="collapse-item" href={`/admin/banners/update/${item.page}/${item.section}`}>
                                                 <i className="fa fa-edit mr-4" title="Edit"/>
                                             </a>
-                                            <a className="collapse-item" href="#">
-                                                <i className="fa fa-trash" title="Delete" />
-                                            </a>
+                                            
                                         </div>
                                     </td>
                                 </tr>

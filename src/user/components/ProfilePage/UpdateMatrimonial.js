@@ -281,12 +281,12 @@ const UpdateMatrimonial = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Gotra </label>
+                      <label className="form-label">Gotra Self </label>
                       <input type="text" name="gotra" id="gotra" placeholder="Enter Gotra" className="form-control" defaultValue={gotraSelf} onChange={(e) => setGotraSelf(e.target.value)} />
                       {errors.gotra && <span className='error'>{errors.gotra}</span>}
                     </div>
                     <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Paternal Self</label>
+                      <label className="form-label">Paternal Gotra</label>
                       <input type="text" name="paternal" id="paternal" placeholder="Enter Paternal Gotra" className="form-control" defaultValue={paternalGotra} onChange={(e) => setPaternalGotra(e.target.value)} />
                       {errors.paternal_gotra && <span className='error'>{errors.paternal_gotra}</span>}
                     </div>

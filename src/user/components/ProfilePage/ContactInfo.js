@@ -66,7 +66,7 @@ const ContactInfo = (props) => {
                   </div>
                 )) : (
                   <div className="add-more-info ">
-                <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Contact Info </a>
+                <a href='/user/update-contact' className='btn btn-outline-info'>Add Contact Info </a>
               </div>
                 )}
 

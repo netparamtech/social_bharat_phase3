@@ -80,7 +80,7 @@ const EducationInfo = (props) => {
 
             )) ) : (
               <div className="add-more-info ">
-                <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Education Info </a>
+                <a href='/user/update-education-profile' className='btn btn-outline-info'>Add Education Info </a>
               </div>
             )}
               

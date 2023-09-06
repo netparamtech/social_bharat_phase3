@@ -3,6 +3,7 @@ import Typed from 'typed.js';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 
 const Banner = () => {
+  
   const typedRefs = useRef([]);
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -15,10 +16,8 @@ const Banner = () => {
       if (!Array.isArray(activeBanners[0].banner_urls)) {
         // Convert it into an array
         const updatedBannerUrls = [activeBanners[0].banner_urls];
-
         // Update activeBanners with the updated banner URLs
         activeBanners[0].banner_urls = updatedBannerUrls;
-        console.log(activeBanners[0].banner_urls)
       }
 
       setImageUrls(activeBanners);

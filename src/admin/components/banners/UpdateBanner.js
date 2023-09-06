@@ -116,19 +116,26 @@ const UpdateBanner = (props) => {
     };
 
     useEffect(() => {
-        console.log(banner, "hello")
-        {
-            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
-                :
-                (setBannerTempUrl([banner.banner_urls] || ''))
-        }
-        setSection(banner.section || '');
-        setPage(banner.page || '');
-        setStatus(banner.status || '');
-        {
-            banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerPreview(banner.banner_urls || ''))
-                :
-                (setBannerPreview([banner.banner_urls] || ''))
+        if(banner){
+            {
+                banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
+                    :
+                    (setBannerTempUrl([banner.banner_urls] || ''))
+            }
+            setSection(banner.section || '');
+            setPage(banner.page || '');
+            setStatus(banner.status || '');
+            {
+                banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerPreview(banner.banner_urls || ''))
+                    :
+                    (setBannerPreview([banner.banner_urls] || ''))
+            }
+        } else{
+            setSection('');
+            setPage('');
+            setStatus('');
+            setBannerPreview('');
+            setBannerTempUrl('');
         }
 
     }, [banner])
@@ -136,7 +143,7 @@ const UpdateBanner = (props) => {
     return (
         <div className="container-fluid" style={{ minHeight: '100vh' }}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">Update Banner</h1>
+                <h1 className="h3 mb-0 text-gray-800">{banner?"Update Banner":"Create Banner"}</h1>
             </div>
             <div className="card">
                 <div className="card-body">
@@ -231,7 +238,7 @@ const UpdateBanner = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Update</button>
+                        <button type="submit" className="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>

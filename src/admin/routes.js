@@ -9,7 +9,6 @@ import Index from "./pages/communities/list/Index";
 import ViewUser from "./pages/user/ViewUser";
 import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
 import ChangeBasicDetailsPage from "./pages/ChangeBasicDetailsPage";
-import CreateBannerPage from "./pages/banners/CreateBannerPage";
 import Banners from "./pages/banners/Banners";
 import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
 
@@ -70,12 +69,6 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/create/banners',
-        component:CreateBannerPage,
-        exact: true
-    },
-
-    {
         path: '/admin/banners',
         component: Banners,
         exact: true
@@ -83,6 +76,12 @@ const adminRoutes = [
 
     {
         path: '/admin/banners/update/:bannerPage/:bannerSection',
+        component: UpdateBannerPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/banner/create',
         component: UpdateBannerPage,
         exact: true
     },

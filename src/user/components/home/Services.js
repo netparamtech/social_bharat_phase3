@@ -3,8 +3,8 @@ import React from 'react';
 const Services = () => {
     return (
         <div id="services">
-            <h1 className="fs-2 lh-base text-center mt-5 mb-5">Services</h1>
-            <div className="container mt-5">
+            <h1 className="fs-2 lh-base text-center pt-5">Services</h1>
+            <div className="container mt-5 pb-5">
                 <div className="row gy-4">
                     <div className="col-lg-6">
                         <div className="d-flex mb-4">

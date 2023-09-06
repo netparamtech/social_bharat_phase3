@@ -67,7 +67,7 @@ const UpdatePasswordForm = () => {
       <div className="card">
         <div className="card-body">
 
-          <form onSubmit={handleSubmit} className="p-5 w-75">
+          <form onSubmit={handleSubmit} className="p-3">
             {message && <div className={`alert ${alertClass}`}>
               {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
               {" " + message}

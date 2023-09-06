@@ -26,7 +26,7 @@ const Matrimonial = () => {
     }, []); // Run the fetchBanners function only once when the component mounts
 
     return (
-        <div id="matrimonial" className="mt-5">
+        <div id="matrimonial" className="">
             <div className="container">
                 <h1 className="fs-2 lh-base text-center text-white">Matrimonial Section</h1>
                 <hr className="mb-5" />

@@ -51,13 +51,13 @@ function Topbar() {
           <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             <a className="dropdown-item" href="/admin/change-profile-picture">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Change Profile Picture
+              Change Profile
             </a>
             <a className="dropdown-item" href="/admin/change-password">
               <i className="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
               Change Password
             </a>
-            
+
             <div className='dropdown-divider'></div>
             <a className="dropdown-item" href="#" onClick={handleLogout}>
               <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

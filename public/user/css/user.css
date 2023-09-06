@@ -931,7 +931,7 @@ a.btn.dropdown-toggle.show:focus {
   transition: all 100ms;
   background-color: hsl(0, 0%, 100%);
   border-color: hsl(0, 0%, 80%);
-  border-radius: 4px;
+  border-radius: 0px !important;
   border-style: solid  !important;
   /* border-width: 0px !important; */
   box-sizing: border-box;

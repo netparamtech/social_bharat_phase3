@@ -124,9 +124,12 @@ const MatrimonialInfo = (props) => {
                 </div>
               </div>
             </div>) : (
-              <div className="col-md-12">
-                <p className="text-muted">No matrimonial details available.</p>
-              </div>
+            
+  <div className="add-more-info ">
+    <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Matrimonial Info</a>
+
+</div>
+
             )}
 
           </div>

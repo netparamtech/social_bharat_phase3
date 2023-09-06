@@ -950,3 +950,7 @@ a.btn.dropdown-toggle.show:focus {
   box-sizing: border-box;
   padding: 0px !important;
 }
+
+.add-more-info{
+  text-align: center;
+}

@@ -79,8 +79,8 @@ const EducationInfo = (props) => {
               </div>
 
             )) ) : (
-              <div className="col-md-12">
-                <p className="text-muted">No education details available.</p>
+              <div className="add-more-info ">
+                <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Education Info </a>
               </div>
             )}
               

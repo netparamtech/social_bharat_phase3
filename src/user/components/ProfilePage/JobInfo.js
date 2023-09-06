@@ -84,9 +84,9 @@ const JobInfo = (props) => {
                   </div>
                 ))
               ) : (
-                <div className="col-md-12">
-                  <p className="text-muted">No job details available.</p>
-                </div>
+                <div className="add-more-info ">
+                <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Job Info </a>
+              </div>
               )}
             </div>
           </div>

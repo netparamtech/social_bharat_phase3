@@ -65,9 +65,9 @@ const ContactInfo = (props) => {
                     </div>
                   </div>
                 )) : (
-                  <div className="col-md-12">
-                    <p className="text-muted">No contact details available.</p>
-                  </div>
+                  <div className="add-more-info ">
+                <a href='/user/update-matrimonial-profile' className='btn btn-outline-info'>Add Contact Info </a>
+              </div>
                 )}
 
             </div>

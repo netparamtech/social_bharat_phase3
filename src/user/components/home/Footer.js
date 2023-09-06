@@ -82,7 +82,7 @@ const Footer = () => {
                                 All Rights Reserved
                             </div>
                             <div className="credits">
-                                Designed by <a href="#" className="text-decoration-none green-ever">NetParam</a>
+                                Designed by <a href="#" className="text-decoration-none text-primary">NetParam</a>
                             </div>
                         </div>
                     </div>

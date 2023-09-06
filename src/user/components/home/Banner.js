@@ -33,29 +33,16 @@ const Banner = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize Typed instances for each carousel item after images have loaded
-    const typedInstances = [];
-  
-    imageUrls.length > 0 &&
-      imageUrls[0]?.banner_urls?.forEach((imageUrl, index) => {
-        const img = new Image();
-        img.onload = () => {
-          // Create Typed instance after the image has loaded
-          const typedInstance = new Typed(typedRefs.current[index], {
-            strings: ["Society", "Community", "Social Bharat"],
-            typeSpeed: 150,
-            backSpeed: 150,
-            loop: true,
-          });
-          typedInstances.push(typedInstance);
-  
-          // Check if all Typed instances have been created
-          if (typedInstances.length === imageUrls[0].banner_urls.length) {
-            // All Typed instances have been created, do any additional logic here if needed
-          }
-        };
-        img.src = imageUrl;
+    // Initialize Typed instances for each carousel item
+    const typedInstances = imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((imageUrl, index) => {
+      return new Typed(typedRefs.current[index], {
+        strings: ["Society", "Community", "Social Bharat"],
+        typeSpeed: 150,
+        backSpeed: 150,
+        loop: true,
       });
+    });
+
   }, [imageUrls]);
 
   return (
@@ -72,16 +59,12 @@ const Banner = () => {
         {/* Wrapper for slides */}
         <div className="carousel-inner" role="listbox">
           {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((imageUrl, index) => (
-            <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`} >
-              <img
-                className="banner-area d-block w-100"
-                style={{
-                  backgroundImage: `url(${imageUrl.replace(/\\/g, '/')})`,
-                  width: '100%',  // Set the width to 100% for full-width images
-                  height: '1200px' // Set the desired height for your carousel images
-                }}
-                //alt={`Slide ${index + 1}`}
-              />
+            <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+              <img className="banner-area d-block w-100" style={{
+                backgroundImage: `url(${imageUrl.replace(/\\/g, '/')})`,
+                width: '100%',  // Set the width to 100% for full-width images
+                height: '1200px' // Set the desired height for your carousel images
+              }} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">
                   <div className="container">

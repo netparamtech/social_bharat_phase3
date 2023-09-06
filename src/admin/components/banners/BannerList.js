@@ -68,7 +68,7 @@ const BannerList = () => {
                     <tbody>
                         {
                             data && data.map((item, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.page}</td>
                                     <td>{item.section}</td>

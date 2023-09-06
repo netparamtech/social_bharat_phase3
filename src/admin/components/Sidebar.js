@@ -8,9 +8,11 @@ function Sidebar() {
       {/* Sidebar - Brand */}
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/dashboard">
         <div className="sidebar-brand-icon rotate-n-15">
-          <i className="fas fa-laugh-wink"></i>
+        <a class="" href="#">
+          <img src="/user/images/logo.png" width='50px'/> 
+        </a>
         </div>
-        <div className="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div className="sidebar-brand-text mx-3">SCOCIAL BHARAT </div>
       </a>
 
       {/* Divider */}
@@ -58,11 +60,7 @@ function Sidebar() {
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
           aria-expanded="true" aria-controls="collapseUser">
-
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16">
-            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
-          </svg>
-
+          <i class="far fa-user" width="16" height="16" fill="currentColor"   viewBox="0 0 16 16"></i>
           <span className='m-2'>Users</span>
         </a>
         <div id="collapseUser" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -123,11 +121,7 @@ function Sidebar() {
       </div>
 
       {/* Sidebar Message */}
-      <div className="sidebar-card d-none d-lg-flex">
-        <img className="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="..." />
-        <p className="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-        <a className="btn btn-success btn-sm" href="#">Upgrade to Pro!</a>
-      </div>
+      
     </ul>
   );
 }

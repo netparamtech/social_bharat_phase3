@@ -62,7 +62,7 @@ const Banner = () => {
               <img className="banner-area d-block w-100" style={{
                 backgroundImage: `url(${imageUrl.replace(/\\/g, '/')})`,
                 width: '100%',  // Set the width to 100% for full-width images
-                height: '1200px' // Set the desired height for your carousel images
+                height: '450px' // Set the desired height for your carousel images
               }} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">

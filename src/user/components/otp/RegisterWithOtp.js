@@ -155,7 +155,7 @@ const RegisterWithOtp = (props) => {
                         className="btn btn-primary"
                         disabled={isTimeExpired}
                     >
-                        Verify With OTP
+                        Verify OTP
                     </button>
                 </div>
 

@@ -18,6 +18,7 @@ const Banner = () => {
 
         // Update activeBanners with the updated banner URLs
         activeBanners[0].banner_urls = updatedBannerUrls;
+        console.log(activeBanners[0].banner_urls)
       }
 
       setImageUrls(activeBanners);
@@ -59,7 +60,7 @@ const Banner = () => {
         <div className="carousel-inner" role="listbox">
           {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((imageUrl, index) => (
             <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-              <img className="banner-area d-block w-100" src={imageUrl} alt={`Slide ${index + 1}`} />
+              <img className="banner-area d-block w-100"  style={{backgroundImage: `url(${imageUrl})`, height: '100px'}}  alt={`Slide ${index + 1}`} />
               <div className="overlay">
                 <div className="carousel-caption d-none d-md-block">
                   <div className="container">

@@ -99,7 +99,7 @@ const LoginWithMobile = (props) => {
                     </a>
                   </div>
                   <div className="row mt-3">
-                    <p className="fw-lighter fs-6">New User? <a href="/register" className="text-primary">Signup</a>.</p>
+                    <p className="fw-lighter fs-6">New User? <a href="/register" className="text-primary text-decoration-none">Signup</a>.</p>
                   </div>
                 </form>
                   ):(

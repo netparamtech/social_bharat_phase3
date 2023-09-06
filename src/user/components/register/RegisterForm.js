@@ -120,21 +120,14 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mb-3">
 
-                      <select
-                      id="community_id"
-                      className="form-control"
-                      onChange={handleSelectChange}
-                      defaultValue={community_id}
-                    >
-                      <option value="" disabled>
-                        --- Select Community ---
-                      </option>
-                      {casts.map((cast) => (
-                        <option key={cast.id} value={cast.id}>
-                          {cast.name}
-                        </option>
-                      ))}
-                    </select>
+                      <Select
+                          id="community_id"
+                          className=""
+                          defaultValue={community_id} // Provide a selected option state
+                          onChange={handleSelectChange} // Your change handler function
+                          options={casts && casts.map((cast) => ({ value: cast.id, label: cast.name }))}
+                          placeholder="---Select Community---"
+                        />
 
                         {errors.community_id && <span className='error'>{errors.community_id}</span>}
                       </div>
@@ -145,7 +138,7 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mt-3">
                         <p className="fw-lighter fs-6">
-                          Already User? <a href="/login" className="text-primary">Login</a>.
+                          Already User? <a href="/login" className="text-primary text-decoration-none">Login</a>.
                         </p>
                       </div>
                     </form>

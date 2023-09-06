@@ -57,11 +57,7 @@ function Topbar() {
               <i className="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
               Change Password
             </a>
-
-            <a className="dropdown-item" href="/admin/change-profile">
-              <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Change Profile
-            </a>
+            
             <div className='dropdown-divider'></div>
             <a className="dropdown-item" href="#" onClick={handleLogout}>
               <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

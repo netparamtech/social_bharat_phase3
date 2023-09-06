@@ -70,7 +70,10 @@ const UpdateBanner = (props) => {
 
         // Remove the image at the specified index from both arrays
         updatedBannerPreview.splice(indexToDelete, 1);
-        updatedBannerTempUrl.splice(indexToDelete + 1, 1);
+        updatedBannerTempUrl.splice(indexToDelete, 1);
+
+        console.log(updatedBannerPreview, "preview url");
+        console.log(updatedBannerTempUrl, "temp url");
 
         // Update the state variables with the updated arrays
         setBannerPreview(updatedBannerPreview);
@@ -80,11 +83,15 @@ const UpdateBanner = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(bannerTempUrl, "check")
-        console.log(bannerTempUrl.length, "check")
+
+        let updatedBannerTempUrl = bannerTempUrl; // Use let to allow reassignment
+
+        if (bannerTempUrl.length === 0) {
+            updatedBannerTempUrl = ""; // Assign the new value
+        }
 
         const data = {
-            banner_urls: bannerTempUrl,
+            banner_urls: updatedBannerTempUrl,
             section,
             page, status
         }
@@ -116,7 +123,7 @@ const UpdateBanner = (props) => {
     };
 
     useEffect(() => {
-        if(banner){
+        if (banner) {
             {
                 banner && banner.banner_urls && Array.isArray(banner.banner_urls) ? (setBannerTempUrl(banner.banner_urls || ''))
                     :
@@ -130,7 +137,7 @@ const UpdateBanner = (props) => {
                     :
                     (setBannerPreview([banner.banner_urls] || ''))
             }
-        } else{
+        } else {
             setSection('');
             setPage('');
             setStatus('');
@@ -143,7 +150,7 @@ const UpdateBanner = (props) => {
     return (
         <div className="container-fluid" style={{ minHeight: '100vh' }}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">{banner?"Update Banner":"Create Banner"}</h1>
+                <h1 className="h3 mb-0 text-gray-800">{banner ? "Update Banner" : "Create Banner"}</h1>
             </div>
             <div className="card">
                 <div className="card-body">

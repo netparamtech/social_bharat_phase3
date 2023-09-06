@@ -8,7 +8,6 @@ import UpdateCommunity from "./pages/communities/update/UpdateCommunity";
 import Index from "./pages/communities/list/Index";
 import ViewUser from "./pages/user/ViewUser";
 import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
-import ChangeBasicDetailsPage from "./pages/ChangeBasicDetailsPage";
 import Banners from "./pages/banners/Banners";
 import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
 
@@ -28,12 +27,6 @@ const adminRoutes = [
     {
         path: '/admin/change-profile-picture',
         component: ChangeProfilePicturePage,
-        exact: true
-    },
-
-    {
-        path: '/admin/change-profile',
-        component: ChangeBasicDetailsPage,
         exact: true
     },
 

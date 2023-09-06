@@ -208,7 +208,7 @@ const MatrimonialInfo = (props) => {
               <div className="add-more-info ">
                 <a
                   href="/user/update-matrimonial-profile"
-                  className="btn btn-outline-info"
+                  className="btn btn-secondary"
                 >
                   Add Matrimonial Info
                 </a>

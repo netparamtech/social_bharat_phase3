@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Topbar() {
 
-  const defaultPhoto = '/admin/img/matrimonial-0.jpg';
+  const defaultPhoto = '/admin/img/user-add-icon.png';
 
   const user = useSelector((state) => state.auth.user);
 

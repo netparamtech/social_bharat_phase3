@@ -54,7 +54,7 @@ function Topbar() {
               Change Profile Picture
             </a>
             <a className="dropdown-item" href="/admin/change-password">
-              <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              <i className="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
               Change Password
             </a>
 

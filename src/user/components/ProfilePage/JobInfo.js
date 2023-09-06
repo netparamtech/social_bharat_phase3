@@ -75,7 +75,7 @@ const JobInfo = (props) => {
                             </tr>
                             <tr>
                               <td>Job Type</td>
-                              <td className="text-muted">{item.job_type || 'NA'}</td>
+                              <td className="text-muted">{ item.job_type === 'PART_TIME' ? 'PART-TIME' : item.job_type === 'FULL_TIME' ? 'FULL-TIME' : ''}</td>
                             </tr>
                           </tbody>
                         </table>

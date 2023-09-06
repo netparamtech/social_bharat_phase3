@@ -7,11 +7,7 @@ const OurPartner = () => {
   const fetchCommunities = async () => {
     const response = await fetchAllActiveCommunities();
     if (response && response.status === 200) {
-      const communitiesWithThumbnails = response.data.data.map((community) => ({
-        ...community,
-        thumbnail_image: community.thumbnail_image.replace(/\\/g, '/'), // Replace backslashes with forward slashes
-      }));
-      setCasts(communitiesWithThumbnails);
+      setCasts(response.data.data);
     }
   };
 
@@ -22,10 +18,12 @@ const OurPartner = () => {
   return (
     <div className="wow animate__animated animate__fadeIn">
       <section id="partner">
-        <div className="row costomer-logos justify-content-between">
+        <div className="scrolling-container">
           {casts.map((community) => (
-            <div className="icon-box col-lg-2 col-md-4 col-sm-6" key={community.id}>
-              <img src={community.thumbnail_image} alt={community.name} title={community.name} />
+            <div className="icon-box" key={community.id}>
+              {community.thumbnail_image && (
+                <img src={community.thumbnail_image} alt={community.name} />
+              )}
             </div>
           ))}
         </div>

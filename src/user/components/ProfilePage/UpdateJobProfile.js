@@ -22,12 +22,16 @@ const UpdateJobProfile = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Map the selected job type back to "PART_TYPE" or "FULL_TYPE"
+  const mappedJobType = jobType === 'PART-TIME' ? 'PART_TIME' : jobType === 'FULL-TIME' ? 'FULL_TIME' : '';
+
+
     const jobProfileData = {
       company_name: companyName,
       designation,
       job_start_date: ddmmyyyyFormat(jobStartDate),
       job_end_date: ddmmyyyyFormat(jobEndDate),
-      job_type: jobType,
+      job_type: mappedJobType,
     };
     console.log(jobProfileData)
 
@@ -61,7 +65,17 @@ const UpdateJobProfile = (props) => {
       setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || '');
       setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || '');
       setJobType(jobDetails.job_type || '');
+
+       // Set jobType based on job_type from jobDetails
+    if (jobDetails.job_type === 'PART_TIME') {
+      setJobType('PART-TIME');
+    } else if (jobDetails.job_type === 'FULL_TIME') {
+      setJobType('FULL-TIME');
+    } else {
+      setJobType('');
     }
+  }
+    
   }, [jobDetails]);
 
   return (
@@ -143,8 +157,8 @@ const UpdateJobProfile = (props) => {
                         onChange={(e) => setJobType(e.target.value)}
                       >
                         <option value="">--- Job Type ---</option>
-                        <option value="PART_TIME">PART_TIME</option>
-                        <option value="FULL_TIME">FULL_TIME</option>
+                        <option value="PART-TIME">PART-TIME</option>
+                        <option value="FULL-TIME">FULL-TIME</option>
                       </select>
                       {errors.job_type && <span className='error'>{errors.job_type}</span>}
                     </div>

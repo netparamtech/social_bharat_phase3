@@ -902,4 +902,51 @@ a.btn.dropdown-toggle.show:focus {
   margin: 150px auto;
 }
 
+#community_id {
+  
+  /* width: 200px; */
+}
 
+ .css-13cymwt-control {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: default;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  min-height: 38px;
+  outline: 0!important;
+  position: relative;
+  -webkit-transition: all 100ms;
+  transition: all 100ms;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 0px !important;
+  border-style: solid  !important;
+  /* border-width: 0px !important; */
+  box-sizing: border-box;
+  /* margin-right: 69px !important; */
+}
+
+.css-t3ipsp-control {
+  min-height: 38px;
+  border-style: solid !important;
+  border-width: 0px !important;
+  /* box-sizing: border-box; */
+}
+
+.css-b62m3t-container {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0px !important;
+}

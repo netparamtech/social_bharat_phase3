@@ -67,7 +67,8 @@ export const createCommunity = async (data) => {
 }
 
 //update profile
-export const updatePBasicProfile= async (data) => {
+export const updateBasicProfile= async (data) => {
+    console.log(data)
     try {
         const response = await apiWithHeaders.put('/update-profile', data);
         return response;

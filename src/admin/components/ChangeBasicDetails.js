@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { updatePBasicProfile } from '../services/AdminService';
+import { updateBasicProfile } from '../services/AdminService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../actions/authActions';
@@ -29,7 +29,7 @@ const ChangeBasicDetails = (props) => {
             name, email
         }
         try {
-            const response = await updatePBasicProfile(data);
+            const response = await updateBasicProfile(data);
             if (response && response.status === 200) {
                 dispatch(login(response.data.data, token));
                 window.location.href = '/admin/dashboard';

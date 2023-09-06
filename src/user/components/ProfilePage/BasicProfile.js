@@ -69,7 +69,7 @@ const BasicProfile = (props) => {
 
                 <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">
                   <div className="text-profilepic text-success">
-                    <i className="fas fa-camera fs-6"></i>
+                    <i className="fas fa-camera fs-6" onClick={handleImageClick}></i>
                     <div className="text-profilepic fs-6">
                       <a
                         href="#"

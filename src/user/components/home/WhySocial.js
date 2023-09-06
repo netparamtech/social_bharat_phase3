@@ -47,7 +47,7 @@ const WhySocial = () => {
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">
                     {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((banner, index) => (
-                        <div className="image-zoom-container">
+                        <div key={index} className="image-zoom-container">
                            {index === 0 && <img src={banner} className="img-fluid image-zoom" alt="..." />}
                         </div>
                     ))}

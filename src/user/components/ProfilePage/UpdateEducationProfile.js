@@ -155,7 +155,7 @@ const UpdateEducationProfile = (props) => {
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Score</label>
                         <input
-                          type="number"
+                          type="text"
                           name="Score"
                           id="Score"
                           placeholder="Enter Score"

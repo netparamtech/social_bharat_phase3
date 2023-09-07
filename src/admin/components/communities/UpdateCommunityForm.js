@@ -144,6 +144,16 @@ const CommunityUpdateForm = () => {
     <div className="container-fluid" style={{ minHeight: "100vh" }}>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Update Community</h1>
+        <a
+          href="#"
+          className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            window.location.href = "/admin/communities";
+          }}
+        >
+          View All Communities
+        </a>
       </div>
       <div className="card">
         <div className="card-body">

@@ -125,7 +125,7 @@ const CreateCommunityForm = () => {
             window.location.href = "/admin/communities";
           }}
         >
-          See All Communities
+          View All Communities
         </a>
       </div>
       <div className="card">

@@ -27,6 +27,7 @@ const CreateCommunityForm = () => {
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
     const selectedFile = e.target.files[0];
+    console.log(selectedFile);
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -180,6 +181,7 @@ const CreateCommunityForm = () => {
                     className="form-control-file community-images"
                     id="thumbnailImage"
                     ref={thumbnailImageRef}
+                    accept="image/jpeg,image/jpg,image/png"
                     onChange={handleThumbnailImageChange}
                   />
                   {errors.thumbnail_image && (
@@ -194,6 +196,7 @@ const CreateCommunityForm = () => {
                     className="form-control-file community-images"
                     id="bannerImage"
                     ref={bannerImageRef}
+                    accept="image/jpeg,image/jpg,image/png"
                     onChange={handleBannerImageChange}
                   />
                   {errors.banner_image && (

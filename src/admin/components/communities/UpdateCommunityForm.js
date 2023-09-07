@@ -179,19 +179,17 @@ const CommunityUpdateForm = () => {
                   <select
                     className="form-control"
                     id="status"
-                    defaultValue={status}
+                    value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="">Select status</option>
                     <option
                       value="Active"
-                      selected={status === "Active" ? true : false}
                     >
                       Active
                     </option>
                     <option
                       value="Inactive"
-                      selected={status === "Inactive" ? true : false}
                     >
                       Inactive
                     </option>

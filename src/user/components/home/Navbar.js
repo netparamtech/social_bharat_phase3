@@ -31,12 +31,12 @@ const Navbar = () => {
 
             if (response.status === 200) {
                 dispatch(logout())
-                navigate('/login')
+                window.location.href = '/login';
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
+                window.location.href = '/login';
             }
         }
     }
@@ -155,7 +155,7 @@ const Navbar = () => {
                                     <div className="dropdown-item-icon"><i className="fas fa-user-alt"></i></div>
                                     <span className="ms-2">Profile</span>
                                 </a>
-                                <a className="dropdown-item" href="/update-password">
+                                <a className="dropdown-item" href="/change-password">
                                     <div className="dropdown-item-icon"><i className="fas fa-key"></i></div>
                                     <span className="ms-2">Change Password</span>
                                 </a>

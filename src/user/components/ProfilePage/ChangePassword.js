@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../actions/userAction';
 
-const UpdatePassword = () => {
+const ChangePassword = () => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -97,5 +97,5 @@ const UpdatePassword = () => {
     );
 };
 
-export default UpdatePassword;
+export default ChangePassword;
 

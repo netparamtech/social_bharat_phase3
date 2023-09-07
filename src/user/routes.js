@@ -1,4 +1,5 @@
 import LoginWithPassword from "./components/login/LoginWithPassword";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import SetPasswordPage from "./pages/SetPasswordPage";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import HomePage from "./pages/home/HomePage";
@@ -11,7 +12,6 @@ import UpdateEducationPage from "./pages/profile/update/UpdateEducationPage";
 import UpdateJobPage from "./pages/profile/update/UpdateJobPage";
 import UpdateMatrimonialPage from "./pages/profile/update/UpdateMatrimonialPage";
 import UpdateMobilePage from "./pages/profile/update/UpdateMobilePage";
-import UpdatePasswordPage from "./pages/profile/update/UpdatePasswordPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import SearchPage from "./pages/search/SearchPage";
 
@@ -36,8 +36,8 @@ const userRoutes = [
     },
 
     {
-        path: '/update-password',
-        component: UpdatePasswordPage,
+        path: '/change-password',
+        component: ChangePasswordPage,
         exact: true
     },
 

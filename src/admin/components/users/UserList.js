@@ -66,72 +66,90 @@ const UserList = () => {
   const columns = [
     {
       name: 'S.No',
-      cell: (row, index) => index + 1 + (page - 1) * size,
+      selector: (row, index) => index + 1 + (page - 1) * size,
     },
     {
       name: 'Photo',
-      selector: 'photo',
-      cell: row =><a href={row.photo}>
-         <img src={row.photo ? row.photo : defaultImage} alt={row.name} title={row.name} className='small-img-user-list' />
-      </a>,
+      selector: (row) => row.photo,
+      cell: (row) => (
+        <a href={row.photo}>
+          <img
+            src={row.photo ? row.photo : defaultImage}
+            alt={row.name}
+            title={row.name}
+            className='small-img-user-list'
+          />
+        </a>
+      ),
     },
     {
       name: 'Name',
-      selector: 'name',
+      selector: (row) => row.name,
       sortable: true,
     },
     {
       name: 'Mobile',
-      selector: 'mobile',
+      selector: (row) => row.mobile,
       sortable: true,
     },
     {
       name: 'Community',
-      selector: 'community.name',
+      selector: (row) => row.community?.name || 'N/A',
       sortable: true,
-      cell: (row) => row.community?.name || 'N/A', // Use optional chaining to handle null 'community' and 'name'
     },
     {
       name: 'Status',
-      selector: 'status',
+      selector: (row) => row.status,
       sortable: true,
     },
     {
       name: 'Created',
-      selector: 'created_at',
+      selector: (row) => row.created_at,
       sortable: true,
     },
     {
       name: 'Updated',
-      selector: 'updated_at',
+      selector: (row) => row.updated_at,
       sortable: true,
     },
     {
       name: 'Actions',
-      cell: row => (
+      cell: (row) => (
         <div>
-          <a className="collapse-item" href={`/users/view/${row.id}`} >
-           <i className="fas fa-eye"></i>
+          <a className="collapse-item" href={`/users/view/${row.id}`}>
+            <i className="fas fa-eye"></i>
           </a>
           {row.status === 'Active' ? (
-            <a className="collapse-item m-2" href="#" onClick={(e) => {
-              e.preventDefault(); // Prevent the default anchor tag behavior
-              handleUserToggleStatus(row.id);
-            }}>
+            <a
+              className="collapse-item m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleUserToggleStatus(row.id);
+              }}
+            >
               <i className="fa fa-thumbs-up text-primary" title="Active" />
             </a>
           ) : (
-            <a className="collapse-item text-secondary m-2" href="#" onClick={(e) => {
-              e.preventDefault(); // Prevent the default anchor tag behavior
-              handleUserToggleStatus(row.id);
-            }}>
+            <a
+              className="collapse-item text-secondary m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleUserToggleStatus(row.id);
+              }}
+            >
               <i className="fa fa-thumbs-down" title="Inactive" />
             </a>
           )}
-          <a className="collapse-item" href="#" onClick={(e) => {
-            e.preventDefault(); // Prevent the default anchor tag behavior
-            handleDeleteClick(row);
-          }}>
+          <a
+            className="collapse-item"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDeleteClick(row);
+            }}
+          >
             <i className="fa fa-trash" title='Delete' />
           </a>
         </div>

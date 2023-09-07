@@ -169,7 +169,7 @@ const UpdateEducationProfile = (props) => {
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Score Type</label>
+                        <label className="form-label">Score type</label>
                         <select class="form-select form-control" aria-label="Default select example" 
                         onChange={handleScoreTypeChange}
                         value={scoreType}

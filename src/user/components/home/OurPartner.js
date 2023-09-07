@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { fetchAllActiveCommunities } from '../../services/userService';
+import React, { useEffect, useState } from "react";
+import { fetchAllActiveCommunities } from "../../services/userService";
 
-const OurPartner = () => {
+function OurPartner() {
   const [casts, setCasts] = useState([]);
 
   const fetchCommunities = async () => {
@@ -12,24 +12,28 @@ const OurPartner = () => {
   };
 
   useEffect(() => {
+    // Fetch communities data
     fetchCommunities();
   }, []);
-
   return (
     <div className="wow animate__animated animate__fadeIn">
-      <section id="partner">
-        <div className="scrolling-container">
-          {casts.map((community) => (
-            <div className="icon-box" key={community.id}>
-              {community.thumbnail_image && (
-                <img src={community.thumbnail_image} alt={community.name} />
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+    <section id="partner">
+      <div className="row costomer-logos justify-content-between">
+     
+          {casts.length > 0 && (
+            casts.map((community) => (
+              community.thumbnail_image && (
+                <div className="icon-box" key={community.id}>
+                  <img src={community.thumbnail_image} alt={community.name} />
+                </div>
+              )
+            ))
+          )}
+        
+      </div>
+    </section>
     </div>
   );
-};
+}
 
 export default OurPartner;

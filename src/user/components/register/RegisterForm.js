@@ -28,7 +28,6 @@ const RegisterForm = () => {
   }
 
   const handleSelectChange = (selectedOption) => {
-    console.log(selectedOption)
     SetCommunity_id(selectedOption.value);
   };
 

@@ -101,7 +101,7 @@ function Sidebar() {
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDegree"
           aria-expanded="true" aria-controls="collapseDegree">
 
-          <i class="fas fa-graduation-cap" fill="currentColor"></i>
+          <i className="fas fa-graduation-cap" fill="currentColor"></i>
 
           <span className='m-2'>Degrees</span>
         </a>

@@ -4,19 +4,18 @@ import "antd/dist/antd";
 
 import {
   updateBasicProfile,
-  updateProfilePicture,
   uploadImage,
 } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../actions/authActions";
 
-const ChangeProfilePicture = (props) => {
+const ChangeProfile = (props) => {
   const { user } = props;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profilePreview, setProfilePreview] = useState(null);
-  const [profileTempUrl, setProfileTempUrl] = useState("");
+  const [profileTempUrl, setProfileTempUrl] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   const [errors, setErrors] = useState("");
@@ -30,7 +29,7 @@ const ChangeProfilePicture = (props) => {
   useEffect(() => {
     setName(user.name || "");
     setEmail(user.email || "");
-    setProfilePreview(user.photo || "");
+    setProfilePreview(user.photo ?user.photo: "/admin/img/user-add-icon.png");
     setProfileTempUrl(user.photo || "");
   }, [user]);
 
@@ -81,7 +80,7 @@ const ChangeProfilePicture = (props) => {
       const response = await updateBasicProfile(data);
       if (response && response.status === 200) {
         dispatch(login(response.data.data, token));
-        window.location.href = "/admin/dashboard";
+       // window.location.href = "/admin/dashboard";
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -163,4 +162,4 @@ const ChangeProfilePicture = (props) => {
   );
 };
 
-export default ChangeProfilePicture;
+export default ChangeProfile;

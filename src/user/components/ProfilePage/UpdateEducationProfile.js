@@ -3,7 +3,7 @@ import { fetchAllDegrees, updateEducationalDetails } from '../../services/userSe
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
-import Select from 'react-select';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
@@ -16,6 +16,9 @@ const UpdateEducationProfile = (props) => {
   const [score, setScore] = useState('');
   const [scoreType, setScoreType] = useState('');
   const [passingYear, setPassingYear] = useState('');
+
+  const [selectedDegree, setSelectedDegree] = useState([]);
+  const [initialDegree, setInitialDegree] = useState([]);
 
   const [errors, setErrors] = useState('');
 
@@ -130,13 +133,15 @@ const UpdateEducationProfile = (props) => {
       setScoreType(educationDetails.score_type || '');
       setPassingYear(educationDetails.passing_year || '');
 
-      // Find the corresponding degree's title based on degreeId
+      // Find the corresponding degree based on degreeId
       const selectedDegree = degrees.find(degree => degree.id === educationDetails.degree_id);
       if (selectedDegree) {
-        setDegree({ value: selectedDegree.id, label: selectedDegree.title });
+        setSelectedDegree([selectedDegree]);
+        setInitialDegree([selectedDegree]);
       }
     }
   }, [educationDetails, degrees]);
+
 
 
   return (
@@ -154,18 +159,20 @@ const UpdateEducationProfile = (props) => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
-                        <Select
+                        <Typeahead
                           id="degree"
-                          className="form-control"
-                          value={degree} // Provide an initial value
-                          onChange={handleDegreeIdChange}
-                          options={
-                            degrees &&
-                            degrees.map((degree) => ({
-                              value: degree.id,
-                              label: degree.title,
-                            }))
-                          }
+                          labelKey="title"
+                          multiple={false}
+                          options={degrees}
+                          selected={selectedDegree}
+                          onChange={(selected) => {
+                            setSelectedDegree(selected);
+                            if (selected.length > 0) {
+                              setDegreeId(selected[0].id);
+                            } else {
+                              setDegreeId('');
+                            }
+                          }}
                           placeholder="---Select Degree---"
                         />
                         {errors.degree_id && <span className='error'>{errors.degree_id}</span>}

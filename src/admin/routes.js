@@ -7,10 +7,10 @@ import Community from "./pages/communities/create/Community";
 import UpdateCommunity from "./pages/communities/update/UpdateCommunity";
 import Index from "./pages/communities/list/Index";
 import ViewUser from "./pages/user/ViewUser";
-import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
 import Banners from "./pages/banners/Banners";
 import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
 import Degrees from "./pages/degrees/Degrees";
+import ChangeProfilePage from "./pages/ChangeProfilePage";
 
 const adminRoutes = [
     {
@@ -27,7 +27,7 @@ const adminRoutes = [
 
     {
         path: '/admin/change-profile-picture',
-        component: ChangeProfilePicturePage,
+        component: ChangeProfilePage,
         exact: true
     },
 

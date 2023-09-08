@@ -6,6 +6,7 @@
 
 .small-img-thumbnail {
   height: 50px !important;
+  width: 80px !important;
   border-radius: 4px;
   
 }

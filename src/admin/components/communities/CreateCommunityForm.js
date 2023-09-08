@@ -176,14 +176,22 @@ const CreateCommunityForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="thumbnailImage">Thumbnail Image</label>
-                  <input
-                    type="file"
-                    className="form-control-file community-images"
-                    id="thumbnailImage"
-                    ref={thumbnailImageRef}
-                    accept="image/jpeg,image/jpg,image/png"
-                    onChange={handleThumbnailImageChange}
-                  />
+                  <div class="input-group mb-3">
+                    <div class="custom-file">
+                      <input
+                        type="file"
+                        class="custom-file-input community-images"
+                        id="thumbnailImage"
+                        ref={thumbnailImageRef}
+                        accept="image/jpeg,image/jpg,image/png"
+                        onChange={handleThumbnailImageChange}
+                      />
+                      <label class="custom-file-label" for="inputGroupFile01">
+                        Choose file
+                      </label>
+                    </div>
+                  </div>
+
                   {errors.thumbnail_image && (
                     <span className="error">{errors.thumbnail_image}</span>
                   )}
@@ -191,14 +199,22 @@ const CreateCommunityForm = () => {
 
                 <div className="form-group">
                   <label htmlFor="bannerImage">Banner Image</label>
-                  <input
-                    type="file"
-                    className="form-control-file community-images"
-                    id="bannerImage"
-                    ref={bannerImageRef}
+                  <div class="input-group mb-3">
+                    <div class="custom-file">
+                      <input
+                        type="file"
+                        class="custom-file-input community-images"
+                        id="bannerImage"
+                        ref={bannerImageRef}
                     accept="image/jpeg,image/jpg,image/png"
                     onChange={handleBannerImageChange}
-                  />
+                      />
+                      <label class="custom-file-label" for="inputGroupFile01">
+                        Choose file
+                      </label>
+                    </div>
+                  </div>
+                  
                   {errors.banner_image && (
                     <span className="error">{errors.banner_image}</span>
                   )}

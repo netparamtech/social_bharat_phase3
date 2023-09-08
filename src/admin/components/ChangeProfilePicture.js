@@ -102,44 +102,61 @@ const ChangeProfilePicture = (props) => {
     <div className="">
       <h1 className="h3 mb-0 text-gray-800">Create Profile</h1>
       <div className="card p-3 w-100 mt-3">
-        <div className="row">
-          <div className="col-md-2">
-            <div className="profile-image" onClick={handlePlusIconClick}>
-              <img
-                src={profilePreview?profilePreview:'/admin/img/user-add-icon.png'}
-                alt="Profile"
-                className="image-container"
-              />
-              {!profilePreview && <div className="plus-icon"></div>}
-              
-              <input
-                type="file"
-                ref={fileInputRef}
-                className="d-none"
-                accept="image/*"
-                onChange={handleProfilePhoto}
-              />
+        <div className="card-body">
+          <form className="">
+            <div className="row">
+              <div className="col-md-3">
+                <div
+                  className="profile-image form-group"
+                  onClick={handlePlusIconClick}
+                >
+                  <img
+                    src={
+                      profilePreview
+                        ? profilePreview
+                        : "/admin/img/user-add-icon.png"
+                    }
+                    alt="Profile"
+                    className="image-container "
+                  />
+                  {!profilePreview && <div className="plus-icon"></div>}
+
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    className="d-none form-control"
+                    accept="image/*"
+                    onChange={handleProfilePhoto}
+                  />
+                </div>
+              </div>
+              <div className="col-md-9">
+                <div className="form-group">
+                  <label>Name</label>
+                  <Input
+                    placeholder="Name"
+                    value={name}
+                    onChange={handleNameChange}
+                    className="form-control"
+                  />
+                  <label>Email</label>
+                  <Input
+                    placeholder="Email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    className="form-control"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="col-md-8">
-            <div className="form-group">
-            <label>Name</label>
-              <Input
-                placeholder="Name"
-                value={name}
-                onChange={handleNameChange}
-              />
-              <label>Email</label>
-              <Input
-                placeholder="Email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-          </div>
-          <Button type="submit" className="mt-2  btn-primary w-25" onClick={handleSubmit}>
-            Save
-          </Button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={handleSubmit}
+            >
+              Save
+            </button>
+          </form>
         </div>
       </div>
     </div>

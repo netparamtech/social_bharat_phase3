@@ -193,16 +193,8 @@ const CommunityUpdateForm = () => {
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="">Select status</option>
-                    <option
-                      value="Active"
-                    >
-                      Active
-                    </option>
-                    <option
-                      value="Inactive"
-                    >
-                      Inactive
-                    </option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                   </select>
                   {errors.status && (
                     <span className="error">{errors.status}</span>
@@ -212,22 +204,32 @@ const CommunityUpdateForm = () => {
 
               <div className="col-md-6 col-sm-12">
                 <div className="row">
-                  <div className="col-sm-6">
+                  <div className="col-sm-10">
                     <div className="form-group">
                       <label htmlFor="thumbnailImage">Thumbnail Image</label>
+                      <div class="input-group ">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="thumbnailImage"
+                            onInput={handleThumbnailImageChange}
+                          />
+                          <label
+                            class="custom-file-label"
+                            for="inputGroupFile01"
+                          >
+                            Choose file
+                          </label>
+                        </div>
+                      </div>
 
-                      <input
-                        type="file"
-                        className="form-control-file"
-                        id="thumbnailImage"
-                        onInput={handleThumbnailImageChange}
-                      />
                       {errors.thumbnail_image && (
                         <span className="error">{errors.thumbnail_image}</span>
                       )}
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-2">
                     {thumbnailPreview && (
                       <img
                         src={thumbnailPreview}
@@ -239,23 +241,33 @@ const CommunityUpdateForm = () => {
                   </div>
                 </div>
 
-                <div className="row mt-3">
-                  <div className="col-sm-6">
+                <div className="row">
+                  <div className="col-sm-10">
                     <div className="form-group">
                       <label htmlFor="bannerImage">Banner Image</label>
+                      <div class="input-group ">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="bannerImage"
+                            onChange={handleBannerImageChange}
+                          />
+                          <label
+                            class="custom-file-label"
+                            for="inputGroupFile01"
+                          >
+                            Choose file
+                          </label>
+                        </div>
+                      </div>
 
-                      <input
-                        type="file"
-                        className="form-control-file"
-                        id="bannerImage"
-                        onChange={handleBannerImageChange}
-                      />
                       {errors.banner_image && (
                         <span className="error">{errors.banner_image}</span>
                       )}
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-2">
                     {bannerPreview && (
                       <img
                         src={bannerPreview}

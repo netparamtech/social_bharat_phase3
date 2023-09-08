@@ -68,7 +68,6 @@ const DegreeList = () => {
           <thead>
             <tr>
               <th scope="col">S.No</th>
-              <th scope="col">Id</th>
               <th scope="col">Title</th>
               <th scope="col">Short Title</th>
               <th scope="col">Status</th>
@@ -80,7 +79,6 @@ const DegreeList = () => {
               data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{item.id}</td>
                   <td>{item.title}</td>
                   <td>{item.short_title}</td>
 

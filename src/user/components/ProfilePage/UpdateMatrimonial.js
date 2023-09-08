@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { getFeet, getInches } from '../../util/Conversion';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -27,6 +29,7 @@ const UpdateMatrimonial = (props) => {
 
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -64,7 +67,20 @@ const UpdateMatrimonial = (props) => {
         setTempProposalPhotoUrl(combineTempUrls);
       }
     } catch (error) {
-      // Handle error or show an error message
+        // Handle error
+        if (error.response && error.response.status === 400) {
+          setErrors(error.response.data.errors);
+        }
+  
+        //Unauthorized
+        else if (error.response && error.response.status === 401) {
+          dispatch(logout());
+          navigate('/login');
+        }
+        else if (error.response && error.response.status === 500) {
+          dispatch(logout());
+          navigate('/login');
+        }
     }
   };
 
@@ -85,7 +101,20 @@ const UpdateMatrimonial = (props) => {
         setTempBiodataFileUrl(response.data.data.file);
       }
     } catch (error) {
-      // Handle error or show an error message
+       // Handle error
+       if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
+      }
     }
   };
 

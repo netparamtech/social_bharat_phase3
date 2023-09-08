@@ -959,5 +959,7 @@ a.btn.dropdown-toggle.show:focus {
   text-align: center;
 }
 
+.fade-in-image { animation: fadeIn 5s; }
+
 
 

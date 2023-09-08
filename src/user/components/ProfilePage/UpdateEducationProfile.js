@@ -129,14 +129,19 @@ const UpdateEducationProfile = (props) => {
       setScore(educationDetails.score || '');
       setScoreType(educationDetails.score_type || '');
       setPassingYear(educationDetails.passing_year || '');  
+  
       // Find the corresponding degree's title based on degreeId
       const selectedDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
       if (selectedDegree) {
-        setDegree({ value: selectedDegree.id, label: selectedDegree.title });
+        setDegree({
+          value: selectedDegree.id,
+          label: selectedDegree.title
+        });
       }
     }
   }, [educationDetails, degrees]);
   
+
 
 
   return (
@@ -157,7 +162,7 @@ const UpdateEducationProfile = (props) => {
                         <Select
                           id="degree"
                           className="form-control"
-                          value={degree} // Provide an initial value
+                          value={degree} // Use the degree prop directly as the default value
                           onChange={handleDegreeIdChange}
                           options={
                             degrees &&

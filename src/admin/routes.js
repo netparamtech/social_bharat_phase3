@@ -10,6 +10,7 @@ import ViewUser from "./pages/user/ViewUser";
 import ChangeProfilePicturePage from "./pages/ChangeProfilePicturePage";
 import Banners from "./pages/banners/Banners";
 import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
+import Degrees from "./pages/degrees/Degrees";
 
 const adminRoutes = [
     {
@@ -76,6 +77,12 @@ const adminRoutes = [
     {
         path: '/admin/banner/create',
         component: UpdateBannerPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/degrees',
+        component: Degrees,
         exact: true
     },
 

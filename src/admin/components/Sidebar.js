@@ -96,6 +96,25 @@ function Sidebar() {
         </div>
       </li>
 
+      {/* <!-- Nav Item - Degrees Collapse Menu --> */}
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDegree"
+          aria-expanded="true" aria-controls="collapseDegree">
+
+          <i class="fas fa-graduation-cap" fill="currentColor"></i>
+
+          <span className='m-2'>Degrees</span>
+        </a>
+        <div id="collapseDegree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+
+            <a className="collapse-item" href="/admin/degrees">List</a>
+            <a className="collapse-item" href="/admin/degrees/create">Create</a>
+
+          </div>
+        </div>
+      </li>
+
 
 
 

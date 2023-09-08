@@ -39,7 +39,7 @@ const Testimonials = () => {
                                 className="rounded-circle shadow-1-strong mb-4"
                                 src={banner}
                                 alt={`avatar-${index}`}
-                                style={{ width: '50px', height: '' }}
+                                style={{ width: '110px', height: '110px' }}
                             />
                             <div className="row d-flex justify-content-center">
                                 <div className="col-lg-8">

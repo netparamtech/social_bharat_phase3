@@ -62,17 +62,19 @@ const EducationInfo = (props) => {
                         <div className="col-sm-8"><span className="text-muted">{item.institution_name}</span></div>
                       </div>
                       <div className="mb-2 row">
-                        <label className="col-sm-3">Score</label>
-                        <div className="col-sm-8"><span className="text-muted">{item.score}</span></div>
+                        <label className="col-sm-3">Passing Year</label>
+                        <div className="col-sm-8"><span className="text-muted">{item.passing_year}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Score Type</label>
                         <div className="col-sm-8"><span className="text-muted">{item.score_type}</span></div>
                       </div>
                       <div className="mb-2 row">
-                        <label className="col-sm-3">Passing Year</label>
-                        <div className="col-sm-8"><span className="text-muted">{item.passing_year}</span></div>
+                        <label className="col-sm-3">Score</label>
+                        <div className="col-sm-8"><span className="text-muted">{item.score}</span></div>
                       </div>
+                      
+                      
                     </div>
                   </div>
                 </div>

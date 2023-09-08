@@ -194,3 +194,13 @@ export const updatePassword = async (password, confirm_password) => {
         throw error;
     }
 }
+
+//fetch All Degrees
+export const fetchAllDegrees = async () => {
+    try {
+        const response = await apiWithHeaders.get('/degrees');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

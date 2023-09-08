@@ -43,10 +43,10 @@ const EducationInfo = (props) => {
             <div className="row">
             {educationDetails && educationDetails.length > 0 ? (
                 educationDetails.map((item, idx) => (
-              <div className="col-md-6">
+              <div className="col-md-6" key={idx}>
                 <div className="card shadow mt-2">
                 <div className="edit-icon"><a href={`/user/update-education-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-                <div class="delete-icon"><a href="" title="Delete"><i class="fa-solid fa-trash" onClick={()=>deleteUserEducationalDetails(item.id)}></i></a></div>
+                <div className="delete-icon"><a href="" title="Delete"><i className="fa-solid fa-trash" onClick={()=>deleteUserEducationalDetails(item.id)}></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">

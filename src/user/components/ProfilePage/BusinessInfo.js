@@ -17,7 +17,7 @@ const BusinessInfo = (props) => {
                                             <i className="fas fa-pencil-alt"></i>
                                         </a>
                                     </div>
-                                    <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
+                                    <div className="delete-icon"><a href="#" title="Delete"><i className="fa-solid fa-trash"></i></a></div>
                                     <div className="card-body ">
                                         <div className="w-100 w-lg-75">
                                             <div className="mb-2 row">
@@ -45,7 +45,7 @@ const BusinessInfo = (props) => {
                                             <i className="fas fa-pencil-alt"></i>
                                         </a>
                                     </div>
-                                    <div class="delete-icon"><a href="#" title="Delete"><i class="fa-solid fa-trash"></i></a></div>
+                                    <div className="delete-icon"><a href="#" title="Delete"><i className="fa-solid fa-trash"></i></a></div>
                                     <div className="card-body ">
                                         <div className="w-100 w-lg-75">
                                             <div className="mb-2 row">

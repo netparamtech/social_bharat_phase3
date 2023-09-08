@@ -49,7 +49,7 @@ const BasicProfile = (props) => {
           <div className="col-md-3">
             <div className="card shadow">
 
-              <div class="container-profilepic mx-auto card card-block-md overflow-hidden ">
+              <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
 
                 <input
                   type="file"

@@ -58,10 +58,10 @@ const MatrimonialInfo = (props) => {
             </div>
           )}
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
-            <div class="delete-icon">
+            <div className="delete-icon">
               <a href="#" title="Delete">
                 <i
-                  class="fa-solid fa-trash"
+                  className="fa-solid fa-trash"
                   onClick={() => deleteMatrimonialDetails()}
                 ></i>
               </a>
@@ -172,6 +172,7 @@ const MatrimonialInfo = (props) => {
                                     <a
                                       href={user.data.matrimonial[0].biodata}
                                       download="biodata.pdf"
+                                      target="_blank"
                                     >
                                       <i className="fa-regular fa-file-lines"></i>{" "}
                                       Download Biodata
@@ -191,10 +192,14 @@ const MatrimonialInfo = (props) => {
                               {proposalPhotos &&
                               Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
+                                  <a href={item} target="_blank">
                                   <img className="m-1" src={item} />
+                                  </a>
                                 ))
                               ) : (
-                                <img src={proposalPhotos} />
+                                <a href={proposalPhotos} target="_blank">
+                                  <img src={proposalPhotos} />
+                                </a>
                               )}
                             </td>
                           </tr>

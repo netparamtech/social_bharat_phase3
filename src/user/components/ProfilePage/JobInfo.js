@@ -46,12 +46,12 @@ const JobInfo = (props) => {
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow">
                       <div className="edit-icon"><a href={`/user/update-job-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
-                      <div class="delete-icon"><a href="" title="Delete" onClick={(e) => {
+                      <div className="delete-icon"><a href="" title="Delete" onClick={(e) => {
                         e.preventDefault();
                         deleteUserJobDetails(item.id)
                       }}
                       >
-                        <i class="fa-solid fa-trash"></i>
+                        <i className="fa-solid fa-trash"></i>
                       </a>
                       </div>
                       <div className="card-body">

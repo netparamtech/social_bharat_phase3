@@ -25,6 +25,7 @@ const UpdateEducationProfile = (props) => {
   // Handle onChange for each input field
   const handleDegreeIdChange = (selectedOption) => {
     setDegreeId(selectedOption.value);
+    setDegree(selectedOption); // Update the degree state with the selected option
   };
 
   const handleStudyFieldChange = (e) => {
@@ -75,7 +76,7 @@ const UpdateEducationProfile = (props) => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
-        //window.location.href = '/profile';
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error
@@ -128,8 +129,8 @@ const UpdateEducationProfile = (props) => {
       setUniversity(educationDetails.institution_name || '');
       setScore(educationDetails.score || '');
       setScoreType(educationDetails.score_type || '');
-      setPassingYear(educationDetails.passing_year || '');  
-  
+      setPassingYear(educationDetails.passing_year || '');
+
       // Find the corresponding degree's title based on degreeId
       const selectedDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
       if (selectedDegree) {
@@ -140,7 +141,7 @@ const UpdateEducationProfile = (props) => {
       }
     }
   }, [educationDetails, degrees]);
-  
+
 
 
 

@@ -3,7 +3,7 @@ import { fetchAllDegrees, updateEducationalDetails } from '../../services/userSe
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import Select from 'react-select';
 
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
@@ -16,9 +16,6 @@ const UpdateEducationProfile = (props) => {
   const [score, setScore] = useState('');
   const [scoreType, setScoreType] = useState('');
   const [passingYear, setPassingYear] = useState('');
-
-  const [selectedDegree, setSelectedDegree] = useState([]);
-  const [initialDegree, setInitialDegree] = useState([]);
 
   const [errors, setErrors] = useState('');
 
@@ -78,7 +75,7 @@ const UpdateEducationProfile = (props) => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        //window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error
@@ -131,17 +128,15 @@ const UpdateEducationProfile = (props) => {
       setUniversity(educationDetails.institution_name || '');
       setScore(educationDetails.score || '');
       setScoreType(educationDetails.score_type || '');
-      setPassingYear(educationDetails.passing_year || '');
-
-      // Find the corresponding degree based on degreeId
-      const selectedDegree = degrees.find(degree => degree.id === educationDetails.degree_id);
+      setPassingYear(educationDetails.passing_year || '');  
+      // Find the corresponding degree's title based on degreeId
+      const selectedDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
       if (selectedDegree) {
-        setSelectedDegree([selectedDegree]);
-        setInitialDegree([selectedDegree]);
+        setDegree({ value: selectedDegree.id, label: selectedDegree.title });
       }
     }
   }, [educationDetails, degrees]);
-
+  
 
 
   return (
@@ -159,25 +154,20 @@ const UpdateEducationProfile = (props) => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
-                        <Typeahead
+                        <Select
                           id="degree"
-                          labelKey="title"
-                          multiple={false}
-                          options={degrees}
-                          selected={selectedDegree}
-                          onChange={(selected) => {
-                            if (selected.length > 0) {
-                              setSelectedDegree(selected);
-                              setDegreeId(selected[0].id);
-                            } else {
-                              setSelectedDegree([]); // Clear the selected degree if no option is selected
-                              setDegreeId(''); // Optionally, set the degree ID to an empty string or null
-                            }
-                          }}
+                          className="form-control"
+                          value={degree} // Provide an initial value
+                          onChange={handleDegreeIdChange}
+                          options={
+                            degrees &&
+                            degrees.map((degree) => ({
+                              value: degree.id,
+                              label: degree.title,
+                            }))
+                          }
                           placeholder="---Select Degree---"
-                          className="custom-typeahead"
                         />
-
                         {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

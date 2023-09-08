@@ -325,7 +325,17 @@ export const searchPeopleWithSearchText = async(searchText) => {
 export const fetchBannerWithPageAndSection = async (page, section) => {
     try {
         const response = await apiConfig.get(`/banners/${page}/${section}`);
-        return response; // Assuming your API response contains the data directly
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+//fetch all degrees
+export const fetchAllDegrees = async () => {
+    try {
+        const response = await apiWithHeaders.get('/degrees');
+        return response;
     } catch (error) {
         throw error;
     }

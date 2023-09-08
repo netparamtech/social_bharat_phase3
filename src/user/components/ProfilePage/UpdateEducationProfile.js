@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-import { updateEducationalDetails } from '../../services/userService';
+import { fetchAllDegrees, updateEducationalDetails } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
+import Select from 'react-select';
 
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
+  const [degrees, setDegrees] = useState([]);
 
   const [degree, setDegree] = useState('');
   const [studyField, setStudyField] = useState('');
@@ -15,10 +19,11 @@ const UpdateEducationProfile = (props) => {
   const [errors, setErrors] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Handle onChange for each input field
-  const handleDegreeChange = (e) => {
-    setDegree(e.target.value);
+  const handleDegreeChange = (selectedOption) => {
+    setDegree(selectedOption.label);
   };
 
   const handleStudyFieldChange = (e) => {
@@ -54,9 +59,10 @@ const UpdateEducationProfile = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(degree, "Checked")
 
     const requestData = {
-      degree,
+      degree: degree,
       field_of_study: studyField,
       institution_name: university,
       score,
@@ -79,10 +85,39 @@ const UpdateEducationProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
         navigate('/login');
       }
     }
   };
+
+  const fetchDegrees = async () => {
+    try {
+      const response = await fetchAllDegrees();
+      if (response && response.status === 200) {
+        setDegrees(response.data.data);
+      }
+    } catch (error) {
+
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchDegrees();
+  }, []);
 
   useEffect(() => {
     // Set default values from jobDetails prop when it changes
@@ -111,15 +146,19 @@ const UpdateEducationProfile = (props) => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
-                        <input
-                          type="text"
-                          name="degree"
+                        <Select
                           id="degree"
-                          placeholder="Enter your degree name"
                           className="form-control"
-                          autoFocus
-                          defaultValue={degree}
+                          value={{ value: degree, label: degree }}  // Provide an initial value
                           onChange={handleDegreeChange}
+                          options={
+                            degrees &&
+                            degrees.map((degree) => ({
+                              value: degree.id,
+                              label: degree.title,
+                            }))
+                          }
+                          placeholder="---Select Degree---"
                         />
                         {errors.degree && <span className='error'>{errors.degree}</span>}
                       </div>
@@ -153,34 +192,6 @@ const UpdateEducationProfile = (props) => {
                         {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Score</label>
-                        <input
-                          type="text"
-                          name="Score"
-                          id="Score"
-                          placeholder="Enter Score"
-                          className="form-control"
-                          defaultValue={score}
-                          onChange={handleScoreChange}
-                        />
-                        {errors.score && <span className='error'>{errors.score}</span>}
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Score type</label>
-                        <select class="form-select form-control" aria-label="Default select example" 
-                        onChange={handleScoreTypeChange}
-                        value={scoreType}
-                        >
-                          <option value="">---Select Score Type---</option>
-                          <option value="PERCENTAGE">PERCENTAGE</option>
-                          <option value="GRADE">GRADE</option>
-                        </select>
-                        {errors.score_type && <span className='error'>{errors.score_type}</span>}
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Passing Year</label>
                         <select
                           name="year"
@@ -194,6 +205,36 @@ const UpdateEducationProfile = (props) => {
                         </select>
                         {errors.passing_year && <span className='error'>{errors.passing_year}</span>}
                       </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score Type</label>
+                        <select class="form-select form-control" aria-label="Default select example"
+                          onChange={handleScoreTypeChange}
+                          value={scoreType}
+                        >
+                          <option value="">---Select Score Type---</option>
+                          <option value="PERCENTAGE">PERCENTAGE</option>
+                          <option value="GRADE">GRADE</option>
+                        </select>
+                        {errors.score_type && <span className='error'>{errors.score_type}</span>}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Score</label>
+                        <input
+                          type="text"
+                          name="Score"
+                          id="Score"
+                          placeholder="Enter Score"
+                          className="form-control"
+                          defaultValue={score}
+                          onChange={handleScoreChange}
+                        />
+                        {errors.score && <span className='error'>{errors.score}</span>}
+                      </div>
+
+
                     </div>
                   </div>
                   <div className="row mt-4">

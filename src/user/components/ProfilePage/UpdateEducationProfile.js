@@ -166,15 +166,18 @@ const UpdateEducationProfile = (props) => {
                           options={degrees}
                           selected={selectedDegree}
                           onChange={(selected) => {
-                            setSelectedDegree(selected);
                             if (selected.length > 0) {
+                              setSelectedDegree(selected);
                               setDegreeId(selected[0].id);
                             } else {
-                              setDegreeId('');
+                              setSelectedDegree([]); // Clear the selected degree if no option is selected
+                              setDegreeId(''); // Optionally, set the degree ID to an empty string or null
                             }
                           }}
                           placeholder="---Select Degree---"
+                          className="custom-typeahead"
                         />
+
                         {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

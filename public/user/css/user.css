@@ -961,5 +961,27 @@ a.btn.dropdown-toggle.show:focus {
 
 .fade-in-image { animation: fadeIn 5s; }
 
+/* Custom CSS for the Typeahead component */
+.custom-typeahead {
+  /* Add custom styles to the Typeahead input field */
+  .rbt-input-main {
+    /* Add styles for the input field here */
+    padding-right: 30px; /* Add padding for the dropdown arrow */
+  }
+
+  /* Add styles to the dropdown arrow */
+  .rbt-input-wrapper .rbt-input {
+    background-image: url('path-to-your-dropdown-icon.png'); /* Replace with your dropdown icon image path */
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+
+  /* Open the dropdown on input click */
+  .rbt-input-main:focus + .rbt-menu {
+    display: block !important;
+  }
+}
+
+
 
 

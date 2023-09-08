@@ -9,6 +9,7 @@ const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
   const [degrees, setDegrees] = useState([]);
 
+  const [degreeId, setDegreeId] = useState('');
   const [degree, setDegree] = useState('');
   const [studyField, setStudyField] = useState('');
   const [university, setUniversity] = useState('');
@@ -22,8 +23,8 @@ const UpdateEducationProfile = (props) => {
   const dispatch = useDispatch();
 
   // Handle onChange for each input field
-  const handleDegreeChange = (selectedOption) => {
-    setDegree(selectedOption.label);
+  const handleDegreeIdChange = (selectedOption) => {
+    setDegreeId(selectedOption.value);
   };
 
   const handleStudyFieldChange = (e) => {
@@ -62,7 +63,7 @@ const UpdateEducationProfile = (props) => {
     console.log(degree, "Checked")
 
     const requestData = {
-      degree: degree,
+      degree_id: degreeId,
       field_of_study: studyField,
       institution_name: university,
       score,
@@ -120,16 +121,23 @@ const UpdateEducationProfile = (props) => {
   }, []);
 
   useEffect(() => {
-    // Set default values from jobDetails prop when it changes
+    // Set default values from educationDetails prop when it changes
     if (educationDetails) {
-      setDegree(educationDetails.degree || '');
+      setDegreeId(educationDetails.degree_id || '');
       setStudyField(educationDetails.field_of_study || '');
       setUniversity(educationDetails.institution_name || '');
       setScore(educationDetails.score || '');
       setScoreType(educationDetails.score_type || '');
       setPassingYear(educationDetails.passing_year || '');
+
+      // Find the corresponding degree's title based on degreeId
+      const selectedDegree = degrees.find(degree => degree.id === educationDetails.degree_id);
+      if (selectedDegree) {
+        setDegree({ value: selectedDegree.id, label: selectedDegree.title });
+      }
     }
-  }, [educationDetails]);
+  }, [educationDetails, degrees]);
+
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -149,8 +157,8 @@ const UpdateEducationProfile = (props) => {
                         <Select
                           id="degree"
                           className="form-control"
-                          value={{ value: degree, label: degree }}  // Provide an initial value
-                          onChange={handleDegreeChange}
+                          value={degree} // Provide an initial value
+                          onChange={handleDegreeIdChange}
                           options={
                             degrees &&
                             degrees.map((degree) => ({
@@ -160,7 +168,7 @@ const UpdateEducationProfile = (props) => {
                           }
                           placeholder="---Select Degree---"
                         />
-                        {errors.degree && <span className='error'>{errors.degree}</span>}
+                        {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Study Field</label>
@@ -205,12 +213,13 @@ const UpdateEducationProfile = (props) => {
                         </select>
                         {errors.passing_year && <span className='error'>{errors.passing_year}</span>}
                       </div>
+
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Score Type</label>
-                        <select class="form-select form-control" aria-label="Default select example"
+                        <select className="form-select form-control" aria-label="Default select example"
                           onChange={handleScoreTypeChange}
                           value={scoreType}
                         >

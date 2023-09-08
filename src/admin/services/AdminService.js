@@ -164,6 +164,16 @@ export const fetchBannerWithPageAndSection = async (page, section) => {
     }
 };
 
+//update Banner Status
+export const updateBannerToggleStatus = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/banners/${id}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 //view user on click
 export const fetchUserDetailsByClick = async (clickedUserId) => {

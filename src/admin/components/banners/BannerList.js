@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { fetchAllBanners } from '../../services/AdminService';
+import { fetchAllBanners, updateBannerToggleStatus } from '../../services/AdminService';
 import { logout } from '../../actions/authActions';
 
 const BannerList = () => {
@@ -39,17 +39,20 @@ const BannerList = () => {
     };
 
     const handleStatusToggle = async (bannerId) => {
-        // try {
-        //     const response = await updateBannerStatus(bannerId);
-        //     if (response && response.status === 200) {
-        //         fetchBanners();
-        //     }
-        // } catch (error) {
-        //     if (error.response && error.response.status === 401) {
-        //         dispatch(logout);
-        //         navigate('/admin');
-        //     }
-        // }
+        try {
+            const response = await updateBannerToggleStatus(bannerId);
+            if (response && response.status === 204) {
+                fetchBanners();
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                navigate('/admin');
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                navigate('/admin');
+            }
+        }
     }
 
     useEffect(() => {

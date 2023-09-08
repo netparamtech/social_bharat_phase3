@@ -51,7 +51,7 @@ const EducationInfo = (props) => {
                     <div className="w-100 w-lg-75">
                       <div className="mb-2 row">
                         <label htmlFor="" className="col-sm-3 d-inline-flex">Degree</label>
-                        <div className="col-sm-8"><span className="text-muted">{item.degree}</span></div>
+                        <div className="col-sm-8"><span className="text-muted">{item.degree_title}</span></div>
                       </div>
                       <div className="mb-2 row">
                         <label className="col-sm-3">Study Field</label>

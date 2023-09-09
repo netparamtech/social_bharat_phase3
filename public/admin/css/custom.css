@@ -77,4 +77,9 @@
     width: 100px;
     border-radius: 10px;
   }
+
+  .form-control:focus {
+    box-shadow: none;
+    outline: none;
+  }
  

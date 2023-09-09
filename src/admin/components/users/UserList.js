@@ -168,19 +168,73 @@ const UserList = () => {
     },
   };
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Function to handle search input changes
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    setPage(1); // Reset to the first page when searching
+
+    // Fetch data for the first page with the new search query
+    await fetchData();
+
+    // Check if the searched user exists on the current page
+    const userExistsOnCurrentPage = filteredData.some((row) =>
+      Object.values(row).some(
+        (value) =>
+          typeof value === 'string' &&
+          value.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+
+    // If the user is not found on the current page and there are more pages, increment the page and search again
+    if (!userExistsOnCurrentPage && page < Math.ceil(totalRows / size)) {
+      setPage(page + 1);
+      await fetchData();
+    }
+  };
+
+  // Function to filter data based on the search query
+  const filteredData = data.filter((row) =>
+    Object.values(row).some(
+      (value) =>
+        typeof value === 'string' &&
+        value.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
   return (
     <div>
-
       <DataTable
         title="User List"
         columns={columns}
-        data={data}
+        data={filteredData} // Use filteredData instead of data
         pagination
         paginationServer
         paginationTotalRows={totalRows}
-        onChangePage={newPage => handlePageChange(newPage)}
-        onChangeRowsPerPage={newSize => setSize(newSize)}
+        onChangePage={(newPage) => handlePageChange(newPage)}
+        onChangeRowsPerPage={(newSize) => setSize(newSize)}
         customStyles={customStyles}
+        subHeader // Enable the subHeader
+        subHeaderComponent={
+          // Add a search input for the entire table
+          <form className="form-inline mr-auto w-100 navbar-search">
+            <div className="input-group">
+              <input type="text" className="form-control bg-light border-0 small"
+                placeholder="Search for..." aria-label="Search"
+                aria-describedby="basic-addon2"
+                onChange={(e) => handleSearch(e.target.value)}
+               
+              />
+              <div className="input-group-append">
+                <button className="btn btn-primary" type="button">
+                  <i className="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+        }
       />
     </div>
   );

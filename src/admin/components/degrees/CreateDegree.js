@@ -29,7 +29,7 @@ const CreateDegree = () => {
 
       const response = await createDegree(degreeData);
 
-      if (response && response.status === 200) {
+      if (response && response.status === 201) {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");

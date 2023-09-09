@@ -13,6 +13,8 @@ import Degrees from "./pages/degrees/Degrees";
 import ChangeProfilePage from "./pages/ChangeProfilePage";
 import CreateDegreePage from "./pages/degrees/CreateDegreePage";
 
+import UpdateDegreePage from "./pages/degrees/UpdateDegreePage";
+
 const adminRoutes = [
     {
         path: '/admin',
@@ -90,6 +92,12 @@ const adminRoutes = [
     {
         path: '/admin/degree/create',
         component: CreateDegreePage,
+        exact: true
+    },
+
+    {
+        path: '/admin/degree/update/:id',
+        component: UpdateDegreePage,
         exact: true
     },
 

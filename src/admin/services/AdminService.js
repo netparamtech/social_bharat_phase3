@@ -226,10 +226,40 @@ export const createDegree = async (data) => {
     }
 }
 
-//delete community
+//delete degree
 export const deleteDegree = async (id) => {
     try {
         const response = await apiWithHeaders.delete(`/degrees/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update Degree Status
+export const updateDegreeStatus = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/degree/${id}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch Degree with id given
+export const fetchDegreeWithId = async (id) => {
+    try {
+        const response = await apiWithHeaders.get('/degrees');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update Degree
+export const updateDegree = async (id,data) => {
+    try {
+        const response = await apiWithHeaders.put(`/degrees/${id}`,data);
         return response;
     } catch (error) {
         throw error;

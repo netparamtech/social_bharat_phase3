@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteDegree, fetchAllDegrees } from "../../services/AdminService";
+import { deleteDegree, fetchAllDegrees, updateDegreeStatus } from "../../services/AdminService";
 import { logout } from "../../actions/authActions";
 
 const DegreeList = () => {
@@ -34,19 +34,22 @@ const DegreeList = () => {
     }
   };
 
-  const handleStatusToggle = async (degreeId) => {
-    // try {
-    //     const response = await updateBannerStatus(bannerId);
-    //     if (response && response.status === 200) {
-    //         fetchBanners();
-    //     }
-    // } catch (error) {
-    //     if (error.response && error.response.status === 401) {
-    //         dispatch(logout);
-    //         navigate('/admin');
-    //     }
-    // }
-  };
+  const handleStatusToggle = async (communityId) => {
+    try {
+      const response = await updateDegreeStatus(communityId);
+      if (response && response.status === 201) {
+        fetchDegrees();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(logout);
+        navigate('/admin');
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout);
+        navigate('/admin');
+      }
+    }
+  }
 
   const handleDelete = async (loggedUserid) => {
     try {
@@ -102,30 +105,26 @@ const DegreeList = () => {
                   <td>{item.short_title}</td>
 
                   <td>
-                    <a href="#" onClick={() => handleStatusToggle(item.id)}>
-                      {item.status === "Active" ? (
-                        <i
-                          className="fa fa-thumbs-up text-primary"
-                          title="Active"
-                        />
-                      ) : (
-                        <i
-                          className="fa fa-thumbs-down text-secondary"
-                          title="Inactive"
-                        />
-                      )}
+                  {item.status === 'Active' ? (
+                    <a href = "#" onClick={() => handleStatusToggle(item.id)}>
+                      <i className="fa fa-thumbs-up text-primary" title="Active" />
                     </a>
+                  ) : (
+                   <a href='#' onClick={() => handleStatusToggle(item.id)}>
+                     <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
+                   </a>
+                  )}
                   </td>
                   <td key={item.id}>
                     <div className="d-flex">
                       <a
                         className="collapse-item"
-                        href={`/admin/degree/update/${item.page}/${item.section}`}
+                        href={`/admin/degree/update/${item.id}`}
                       >
                         <i className="fa fa-edit mr-4" title="Edit" />
                       </a>
                       <a className="collapse-item" href="#" onClick={(e) => {
-                        e.preventDefault(); // Prevent the default anchor tag behavior
+                        e.preventDefault(); 
                         handleDelete(item.id);
                       }}>
                         <i className="fa fa-trash" title='Delete' />

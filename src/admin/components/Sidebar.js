@@ -7,8 +7,8 @@ function Sidebar() {
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/dashboard">
-        <div className="sidebar-brand-icon rotate-n-15">
-          <img src="/user/images/logo.png" width='50px' />
+        <div className="sidebar-brand-icon ">
+          <img src="/user/images/logo.jpg" width='100px' />
         </div>
         <div className="sidebar-brand-text mx-3">SCOCIAL BHARAT </div>
       </a>

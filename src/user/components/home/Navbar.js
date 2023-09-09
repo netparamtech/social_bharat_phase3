@@ -49,7 +49,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">
-                    <img src="/user/images/logo.png" alt="Logo" /> SocialBharat
+                    <img src="/user/images/logo.jpg"  alt="Logo" /> 
                 </a>
                 <button
                     className="navbar-toggler"

@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const Banner = () => {
   
   const typedRefs = useRef([]);
   const [imageUrls, setImageUrls] = useState([]);
+
+  const dispatch = useDispatch();
 
   const fetchBanners = async () => {
     try {
@@ -22,7 +27,14 @@ const Banner = () => {
 
       setImageUrls(activeBanners);
     } catch (error) {
-      // Handle errors
+       //Unauthorized
+       if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';      }
     }
   };
 

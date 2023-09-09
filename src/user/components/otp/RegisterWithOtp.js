@@ -84,9 +84,21 @@ const RegisterWithOtp = (props) => {
                 handleResendOTP();
             }
         } catch (error) {
-            if (error.response && error.response.status === 401) {
+            //Unauthorized
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+
+            }
+
+            //Unauthorized
+            else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login')
+                window.location.href = '/login';
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
             }
         }
     }

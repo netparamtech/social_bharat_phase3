@@ -1,9 +1,13 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { deleteMatrimonial } from "../../services/userService";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/userAction";
 
 const MatrimonialInfo = (props) => {
   const { user } = props;
-  const matrimonialDetails = user?.data?.matrimonial;
+  const [matrimonialDetails, setMatrimonialDetails] = useState([]);
+
+  const dispatch = useDispatch();
   const proposalPhotos =
     user &&
     user.data &&
@@ -28,15 +32,24 @@ const MatrimonialInfo = (props) => {
     try {
       const response = await deleteMatrimonial();
       if (response && response.status === 200) {
-        window.location.href = "/profile";
+        setMatrimonialDetails((prevDetails) =>
+          prevDetails.filter((detail) => detail.id !== user?.data?.matrimonial[0].id)
+        );
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        window.location.href = "/login";
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
   };
+  useEffect(()=>{
+    setMatrimonialDetails(user?.data?.matrimonial||'');
+  },[user]);
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
@@ -62,7 +75,10 @@ const MatrimonialInfo = (props) => {
               <a href="#" title="Delete">
                 <i
                   className="fa-solid fa-trash"
-                  onClick={() => deleteMatrimonialDetails()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteMatrimonialDetails();
+                  }}
                 ></i>
               </a>
             </div>

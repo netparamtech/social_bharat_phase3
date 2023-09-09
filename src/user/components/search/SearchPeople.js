@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { searchPeople, searchPeopleWithSearchText } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
+import { searchPeopleWithSearchText } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 
@@ -10,8 +9,6 @@ const SearchPeople = () => {
     const [searchText, setSearchText] = useState('');
     const [defaultImage, setDefaultImage] = useState('/admin/img/de-default-1.jpeg');
 
-
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSearchText = (e) => {
@@ -28,10 +25,13 @@ const SearchPeople = () => {
         } catch (error) {
 
             //Unauthorized
-            if (error.response && error.response.status === 401) {
-                dispatch(logout());
-                window.location.href = '/login';
-            }
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
         }
     }
     useEffect(() => {

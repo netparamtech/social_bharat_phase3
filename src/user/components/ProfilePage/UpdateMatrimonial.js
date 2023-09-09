@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
 import { getFeet, getInches } from '../../util/Conversion';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
@@ -28,7 +27,6 @@ const UpdateMatrimonial = (props) => {
   const [biodataPreview, setBiodataPreview] = useState('');
 
   const [errors, setErrors] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleProposalPhotoChange = async (e) => {
@@ -67,20 +65,19 @@ const UpdateMatrimonial = (props) => {
         setTempProposalPhotoUrl(combineTempUrls);
       }
     } catch (error) {
-        // Handle error
-        if (error.response && error.response.status === 400) {
-          setErrors(error.response.data.errors);
-        }
-  
-        //Unauthorized
-        else if (error.response && error.response.status === 401) {
-          dispatch(logout());
-          navigate('/login');
-        }
-        else if (error.response && error.response.status === 500) {
-          dispatch(logout());
-          navigate('/login');
-        }
+      // Handle error
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
     }
   };
 
@@ -101,19 +98,18 @@ const UpdateMatrimonial = (props) => {
         setTempBiodataFileUrl(response.data.data.file);
       }
     } catch (error) {
-       // Handle error
-       if (error.response && error.response.status === 400) {
+      // Handle error
+      if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
-      }
-      else if (error.response && error.response.status === 500) {
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
       }
     }
   };
@@ -154,7 +150,11 @@ const UpdateMatrimonial = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate('/login');
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
 
@@ -366,7 +366,7 @@ const UpdateMatrimonial = (props) => {
                       />
                       {errors.biodata && <span className='error'>{errors.biodata}</span>}
                       <div className="proposal-Photo d-flex">
-                        <span>{biodataPreview?"file selected":''}</span>
+                        <span>{biodataPreview ? "file selected" : ''}</span>
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { updateProfilePhoto } from '../../services/userService';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userAction';
+import { login, logout } from '../../actions/userAction';
 
 const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
@@ -11,6 +11,8 @@ const BasicProfile = (props) => {
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
   const [token, setToken] = useState('');
+
+  const [errors, setErrors] = useState();
 
   const dispatch = useDispatch();
 
@@ -31,6 +33,20 @@ const BasicProfile = (props) => {
       dispatch(login(response.data.data, token));
     } catch (error) {
 
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
     }
 
   };
@@ -110,7 +126,7 @@ const BasicProfile = (props) => {
 
                   <div className="mb-2 row">
                     <label className="col-sm-3">Community </label>
-                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.community&&user.data.community.name}</span></div>
+                    <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.community && user.data.community.name}</span></div>
                   </div>
 
                   <div className="mb-2 row">

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const WhySocial = () => {
     const [imageUrls, setImageUrls] = useState([]);
+    const dispatch = useDispatch();
 
     const fetchBanners = async () => {
         try {
@@ -17,7 +20,15 @@ const WhySocial = () => {
               }
             setImageUrls(activeBanners);
         } catch (error) {
-
+            //handle errors
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
+              else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
         }
     };
     useEffect(() => {

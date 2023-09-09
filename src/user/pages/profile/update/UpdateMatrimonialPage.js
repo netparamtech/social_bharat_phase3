@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUserFullProfile } from '../../../services/userService';
 import { logout } from '../../../actions/userAction';
@@ -10,21 +9,23 @@ import UpdateMatrimonial from '../../../components/ProfilePage/UpdateMatrimonial
 const UpdateMatrimonialPage = () => {
 
     const [userMatrimonial, setUserMatrimonial] = useState();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const getUserProfile = async () => {
-        try{
+        try {
             const response = await getUserFullProfile();
-        if (response && response.status === 200) {
-            setUserMatrimonial(response.data?.data?.matrimonial[0]);
-        }
+            if (response && response.status === 200) {
+                setUserMatrimonial(response.data?.data?.matrimonial[0]);
+            }
         } catch (error) {
-              //Unauthorized
-              if (error.response && error.response.status === 401) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
-              }
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
         }
     }
 
@@ -33,7 +34,7 @@ const UpdateMatrimonialPage = () => {
     }, [])
     return (
         <UserLayout>
-             <UpdateMatrimonial userMatrimonial = {userMatrimonial} />
+            <UpdateMatrimonial userMatrimonial={userMatrimonial} />
         </UserLayout>
     );
 };

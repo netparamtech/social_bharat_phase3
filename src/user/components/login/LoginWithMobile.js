@@ -13,7 +13,6 @@ const LoginWithMobile = (props) => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -44,7 +43,12 @@ const LoginWithMobile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
   }

@@ -16,7 +16,6 @@ const CheckOtpToUpdateMobile = (props) => {
     const [errors, setErrors] = useState('');
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
 
@@ -61,8 +60,12 @@ const CheckOtpToUpdateMobile = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
-
+                window.location.href = '/login';
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
             }
         }
     }
@@ -79,7 +82,17 @@ const CheckOtpToUpdateMobile = (props) => {
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login')
+                window.location.href = '/login';
+            }
+            //Unauthorized
+            else if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
             }
         }
     }

@@ -10,7 +10,6 @@ const JobInfo = (props) => {
   const [jobDetails, setJobDetails] = useState(initialJobDetails);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setJobDetails(initialJobDetails); // Update jobDetails when user changes
@@ -23,12 +22,14 @@ const JobInfo = (props) => {
         // Remove the deleted item from jobDetails
         const updatedJobDetails = jobDetails.filter((item) => item.id !== id);
         setJobDetails(updatedJobDetails); // Update state to trigger a re-render
-        navigate('/profile');
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
   }

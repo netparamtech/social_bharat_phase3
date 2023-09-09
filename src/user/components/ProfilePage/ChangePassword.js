@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { apiWithHeaders } from '../../axios/apiConfig';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../actions/userAction';
+import { logout } from '../../actions/userAction';
 
 const ChangePassword = () => {
 
@@ -11,7 +10,6 @@ const ChangePassword = () => {
 
     const [errors, setErrors] = useState('');
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handlePasswordChange = (event) => {
@@ -37,16 +35,21 @@ const ChangePassword = () => {
                 window.location.href = '/dashboard';
             }
         } catch (error) {
-            // Handle validation errors
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
             }
+
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                navigate('/login');
-
+                dispatch(logout());
+                window.location.href = '/login';
             }
-           
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
+
         }
     };
     return (
@@ -80,7 +83,7 @@ const ChangePassword = () => {
                                             className="form-control"
                                             onChange={handleConfirmPasswordChange}
                                         />
-                                         {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
+                                        {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <button type="submit" className="btn btn-primary">

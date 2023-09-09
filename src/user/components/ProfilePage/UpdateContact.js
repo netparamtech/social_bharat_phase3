@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchCountries, updateContactDetail } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
@@ -11,13 +10,12 @@ const UpdateContact = (props) => {
   const [addressLine, setAddressLine] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedState, setSelectedState] = useState('');
-  const [selectedCity,setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState('');
 
   const [errors, setErrors] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleAddressTypeChange = (e) => {
@@ -38,7 +36,7 @@ const UpdateContact = (props) => {
 
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
-  
+
     if (selectedOption) {
       const selectedStateObject = states.find((state) => state.name === selectedOption.value);
       if (selectedStateObject) {
@@ -81,7 +79,10 @@ const UpdateContact = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
   };
@@ -95,6 +96,15 @@ const UpdateContact = (props) => {
       }
     } catch (error) {
 
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
+
     }
   }
 
@@ -105,7 +115,14 @@ const UpdateContact = (props) => {
         setCities(response.data.data);
       }
     } catch (error) {
-
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
     }
   }
   useEffect(() => {
@@ -127,14 +144,14 @@ const UpdateContact = (props) => {
     }
   }, [selectedCountry]);
 
-  useEffect(()=>{    
-    if(states && contactDetails){
+  useEffect(() => {
+    if (states && contactDetails) {
       const selectedStateObject = states.find((state) => state.name === contactDetails.state);
-      if(selectedStateObject){
+      if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
     }
-  },[states])
+  }, [states])
 
 
   return (

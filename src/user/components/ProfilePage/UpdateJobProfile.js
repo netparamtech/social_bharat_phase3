@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { updateJobDetail } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
 import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 
 const UpdateJobProfile = (props) => {
-  const {jobDetails} = props;
+  const { jobDetails } = props;
 
   const [companyName, setCompanyName] = useState('');
   const [designation, setDesignation] = useState('');
@@ -16,14 +15,13 @@ const UpdateJobProfile = (props) => {
 
   const [errors, setErrors] = useState('');
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Map the selected job type back to "PART_TYPE" or "FULL_TYPE"
-  const mappedJobType = jobType === 'PART TIME' ? 'PART_TIME' : jobType === 'FULL TIME' ? 'FULL_TIME' : '';
+    const mappedJobType = jobType === 'PART TIME' ? 'PART_TIME' : jobType === 'FULL TIME' ? 'FULL_TIME' : '';
 
 
     const jobProfileData = {
@@ -51,7 +49,10 @@ const UpdateJobProfile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
 
@@ -66,16 +67,16 @@ const UpdateJobProfile = (props) => {
       setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || '');
       setJobType(jobDetails.job_type || '');
 
-       // Set jobType based on job_type from jobDetails
-    if (jobDetails.job_type === 'PART_TIME') {
-      setJobType('PART TIME');
-    } else if (jobDetails.job_type === 'FULL_TIME') {
-      setJobType('FULL TIME');
-    } else {
-      setJobType('');
+      // Set jobType based on job_type from jobDetails
+      if (jobDetails.job_type === 'PART_TIME') {
+        setJobType('PART TIME');
+      } else if (jobDetails.job_type === 'FULL_TIME') {
+        setJobType('FULL TIME');
+      } else {
+        setJobType('');
+      }
     }
-  }
-    
+
   }, [jobDetails]);
 
   return (

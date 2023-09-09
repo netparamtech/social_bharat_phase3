@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const Matrimonial = () => {
     const [imageUrls, setImageUrls] = useState([]);
+
+    const dispatch = useDispatch();
 
     const fetchBanners = async () => {
         try {
@@ -17,7 +22,14 @@ const Matrimonial = () => {
               }
             setImageUrls(activeBanners);
         } catch (error) {
-            // Handle errors here if needed
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
+              else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
         }
     };
 

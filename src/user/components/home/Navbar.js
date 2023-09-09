@@ -9,7 +9,6 @@ const Navbar = () => {
     const isAuthenticUser = user && user.isAuthenticated;
     const [id, setId] = useState(user && user.user && user.user.id);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -35,6 +34,9 @@ const Navbar = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
                 dispatch(logout());
                 window.location.href = '/login';
             }

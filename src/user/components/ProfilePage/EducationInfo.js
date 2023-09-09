@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { deleteSingleEducationDetails } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
-import { useNavigate } from 'react-router-dom';
 
 const EducationInfo = (props) => {
   const {user} = props;
   const [educationDetails,setEducationDetails] = useState([]);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const deleteUserEducationalDetails = async (id) => {
     try {
@@ -22,7 +20,10 @@ const EducationInfo = (props) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
   }

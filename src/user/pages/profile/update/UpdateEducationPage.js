@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { getSingleEducationDetails } from '../../../services/userService';
 import UserLayout from '../../../layouts/UserLayout';
 import UpdateEducationProfile from '../../../components/ProfilePage/UpdateEducationProfile';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../actions/userAction';
 
 const UpdateEducationPage = () => {
 
         const { id } = useParams();
         const [educationDetails, setEducationDetails] = useState(null);
 
-        const navigate = useNavigate();
+        const dispatch = useDispatch();
 
         const fetchEducation = async (id) => {
                 try {
@@ -20,20 +22,24 @@ const UpdateEducationPage = () => {
                 } catch (error) {
                         //Unauthorized
                         if (error.response && error.response.status === 401) {
-                                navigate('/login');
+                                dispatch(logout());
+                                window.location.href = '/login';
+                        } else if (error.response && error.response.status === 500) {
+                                dispatch(logout());
+                                window.location.href = '/login';
                         }
                 }
 
         }
         useEffect(() => {
                 if (id) {
-                 fetchEducation(id);
+                        fetchEducation(id);
                 }
         }, [id]);
 
         return (
                 <UserLayout>
-                        <UpdateEducationProfile educationDetails = {educationDetails} />
+                        <UpdateEducationProfile educationDetails={educationDetails} />
                 </UserLayout>
         );
 };

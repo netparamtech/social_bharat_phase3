@@ -5,7 +5,6 @@ import MatrimonialInfo from '../../components/ProfilePage/MatrimonialInfo';
 import EducationInfo from '../../components/ProfilePage/EducationInfo';
 import ContactInfo from '../../components/ProfilePage/ContactInfo';
 import { getUserFullProfile } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
 import JobInfo from '../../components/ProfilePage/JobInfo';
 import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
 import { useDispatch } from 'react-redux';
@@ -15,21 +14,23 @@ import { logout } from '../../actions/userAction';
 const ProfilePage = () => {
 
     const [user, setUser] = useState();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const getUserProfile = async () => {
-        try{
+        try {
             const response = await getUserFullProfile();
-        if (response && response.status === 200) {
-            setUser(response.data);
-        }
+            if (response && response.status === 200) {
+                setUser(response.data);
+            }
         } catch (error) {
-              //Unauthorized
-              if (error.response && error.response.status === 401) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
-              }
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
         }
     }
 
@@ -39,12 +40,12 @@ const ProfilePage = () => {
 
     return (
         <UserLayout>
-            <BasicProfile user = {user} />
+            <BasicProfile user={user} />
             <MatrimonialInfo user={user} />
             <EducationInfo user={user} />
             <ContactInfo user={user} />
-            <BusinessInfo user = {user} />
-            <JobInfo user = {user} />
+            <BusinessInfo user={user} />
+            <JobInfo user={user} />
         </UserLayout>
     );
 };

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userAction';
+import { login, logout } from '../../actions/userAction';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [user,setUser] = useState({});
-    const [token,setToken] = useState('');
+    const [user, setUser] = useState({});
+    const [token, setToken] = useState('');
 
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
@@ -34,7 +34,7 @@ const SetPassword = () => {
         const updatedUser = {
             ...user, // Spread the original object to keep its other properties
             is_password_set: 1, // Update the specific field
-          };
+        };
 
 
         try {
@@ -60,12 +60,16 @@ const SetPassword = () => {
             }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                navigate('/login');
+                dispatch(logout());
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
             }
 
         }
     };
-    useEffect(()=>{
+    useEffect(() => {
         setUser(loggedUser?.user);
         setToken(loggedUser?.token);
     })

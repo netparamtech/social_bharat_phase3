@@ -21,7 +21,6 @@ const LoginWithPassword = (props) => {
         setPassword(event.target.value);
     }
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
@@ -45,14 +44,15 @@ const LoginWithPassword = (props) => {
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
             }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-
-            }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
+                window.location.href = '/login';
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
             }
 
         }
@@ -83,7 +83,7 @@ const LoginWithPassword = (props) => {
                                             className="form-control"
                                             onChange={handleMobileChange}
                                         />
-                                         {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <input
@@ -113,7 +113,7 @@ const LoginWithPassword = (props) => {
                                         </div>
                                     </div>
                                     <div className="row mt-3">
-                                        <button type = "button" className="btn btn-secondary" onClick={openLoginWithOtpForm}>
+                                        <button type="button" className="btn btn-secondary" onClick={openLoginWithOtpForm}>
                                             Login With OTP
                                         </button>
                                     </div>

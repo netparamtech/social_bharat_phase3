@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { createTempUser, fetchAllActiveCommunities } from '../../services/userService';
 import RegisterWithOtp from '../otp/RegisterWithOtp';
 import Select from 'react-select';
@@ -16,7 +15,6 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleNameChange = (e) => {
@@ -67,7 +65,10 @@ const RegisterForm = () => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
 
 
@@ -119,7 +120,7 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mb-3">
 
-                      <Select
+                        <Select
                           id="community_id"
                           className=""
                           defaultValue={community_id} // Provide a selected option state

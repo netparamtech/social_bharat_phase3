@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { updateBasicProfile } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../../actions/userAction';
 
@@ -11,11 +10,10 @@ const UpdateBasicProfile = () => {
   const [name, setName] = useState(user.user.name); // Initial name
   const [gender, setGender] = useState(user.user.gender); // Initial gender
   const [email, setEmail] = useState(user.user.email); // Initial email
-  const [token,setToken] = useState(''); 
+  const [token, setToken] = useState('');
 
   const [errors, setErrors] = useState('');
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleNameChange = (e) => {
@@ -45,7 +43,7 @@ const UpdateBasicProfile = () => {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
         setErrors('');
-        dispatch(login(response.data.data,token));
+        dispatch(login(response.data.data, token));
         window.location.href = '/profile';
       }
     } catch (error) {
@@ -57,15 +55,18 @@ const UpdateBasicProfile = () => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
       }
     }
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setToken(user.token || '');
-  },[user])
+  }, [user])
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">

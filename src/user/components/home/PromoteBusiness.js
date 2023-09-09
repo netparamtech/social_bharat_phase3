@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/userAction';
 
 const PromoteBusiness = () => {
     const [imageUrls, setImageUrls] = useState('');
+    const dispatch = useDispatch();
 
     const fetchBanners = async () => {
         try {
@@ -10,7 +13,14 @@ const PromoteBusiness = () => {
             const activeBanners = response.data.data.filter(banner => banner.status === "Active");
             setImageUrls(activeBanners[0].banner_urls);
         } catch (error) {
-
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
+              else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+              }
         }
     };
     useEffect(() => {

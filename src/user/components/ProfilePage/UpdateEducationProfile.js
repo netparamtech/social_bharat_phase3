@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { fetchAllDegrees, updateEducationalDetails } from '../../services/userService';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import Select from 'react-select';
@@ -19,7 +18,6 @@ const UpdateEducationProfile = (props) => {
 
   const [errors, setErrors] = useState('');
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Handle onChange for each input field
@@ -88,11 +86,10 @@ const UpdateEducationProfile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
-      }
-      else if (error.response && error.response.status === 500) {
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
       }
     }
   };
@@ -108,11 +105,10 @@ const UpdateEducationProfile = (props) => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        navigate('/login');
-      }
-      else if (error.response && error.response.status === 500) {
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        navigate('/login');
+        window.location.href = '/login';
       }
     }
   }

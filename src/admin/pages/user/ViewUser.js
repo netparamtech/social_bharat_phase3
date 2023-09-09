@@ -28,6 +28,9 @@ const ViewUser = () => {
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
                 navigate('/login');
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                navigate('/login');
             }
         }
     }

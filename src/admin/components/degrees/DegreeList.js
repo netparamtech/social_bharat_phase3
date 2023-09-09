@@ -60,6 +60,9 @@ const DegreeList = () => {
       if (error.response && error.response.status === 401) {
         dispatch(logout);
         navigate('/admin');
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout);
+        navigate('/admin');
       }
     }
   };

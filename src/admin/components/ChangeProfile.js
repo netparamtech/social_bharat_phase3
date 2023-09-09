@@ -99,8 +99,8 @@ const ChangeProfile = (props) => {
         dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        // dispatch(logout());
-        // navigate('/admin')
+        dispatch(logout());
+        navigate('/admin')
       }
     }
   };

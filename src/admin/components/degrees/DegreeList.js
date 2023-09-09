@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { fetchAllDegrees } from "../../services/AdminService";
+import { deleteDegree, fetchAllDegrees } from "../../services/AdminService";
 import { logout } from "../../actions/authActions";
 
 const DegreeList = () => {
@@ -46,6 +46,22 @@ const DegreeList = () => {
     //         navigate('/admin');
     //     }
     // }
+  };
+
+  const handleDelete = async (loggedUserid) => {
+    try {
+      const response = await deleteDegree(loggedUserid); // Replace with your actual delete API endpoint
+      if (response && response.status === 200) {
+        // Fetch communities again to update the list
+        fetchDegrees();
+      }
+    } catch (error) {
+      // Handle error cases
+      if (error.response && error.response.status === 401) {
+        dispatch(logout);
+        navigate('/admin');
+      }
+    }
   };
 
   useEffect(() => {
@@ -104,6 +120,12 @@ const DegreeList = () => {
                         href={`/admin/degree/update/${item.page}/${item.section}`}
                       >
                         <i className="fa fa-edit mr-4" title="Edit" />
+                      </a>
+                      <a className="collapse-item" href="#" onClick={(e) => {
+                        e.preventDefault(); // Prevent the default anchor tag behavior
+                        handleDelete(item.id);
+                      }}>
+                        <i className="fa fa-trash" title='Delete' />
                       </a>
                     </div>
                   </td>

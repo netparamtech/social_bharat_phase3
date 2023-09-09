@@ -146,8 +146,6 @@ const CommunitiesList = () => {
                       }}>
                         <i className="fa fa-trash" title='Delete' />
                       </a>
-
-
                     </div>
                   </td>
                 </tr>

@@ -119,9 +119,6 @@ const UpdateContact = (props) => {
       setSelectedCity({ value: contactDetails.city, label: contactDetails.city }); // Set the selected city as an object
     }
   }, [contactDetails]);
-  
-
-
 
   useEffect(() => {
     // Check if selectedCountry is already set

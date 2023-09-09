@@ -4,6 +4,7 @@ import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/authActions';
+import { searchPeopleWithSearchText } from '../../../user/services/userService';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -11,9 +12,30 @@ const UserList = () => {
   const [size, setSize] = useState('');
   const [totalRows, setTotalRows] = useState(0);
 
+  const [searchText, setSearchText] = useState('');
+
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleSearchText = async (searchText) => {
+    try {
+      setSearchText(searchText); // Update the state with the search text
+
+      // Make an API request to fetch search results
+      const response = await searchPeopleWithSearchText(searchText);
+      if (response && response.status === 200) {
+        setData(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        //dispatch(logout());
+        //window.location.href = '/login';
+      }
+    }
+  };
+
 
   useEffect(() => {
     fetchData();
@@ -72,7 +94,7 @@ const UserList = () => {
       name: 'Photo',
       selector: (row) => row.photo,
       cell: (row) => (
-        <a href={row.photo}>
+        <a href={row.photo} target="_blank">
           <img
             src={row.photo ? row.photo : defaultImage}
             alt={row.name}
@@ -169,6 +191,21 @@ const UserList = () => {
 
   return (
     <div>
+
+      <div className="input-group">
+        <input type="text" className="form-control bg-light border-1 small"
+          placeholder="Search for..." aria-label="Search"
+          aria-describedby="basic-addon2"
+          defaultValue={searchText}
+          onChange={e => handleSearchText(e.target.value)}
+        />
+        <div className="input-group-append">
+          <button className="btn btn-primary" type="button">
+            <i className="fas fa-search fa-sm"></i>
+          </button>
+        </div>
+      </div>
+
       <DataTable
         title="User List"
         columns={columns}

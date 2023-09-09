@@ -29,6 +29,7 @@ const apiWithHeaders = axios.create({
 // Interceptor to set headers before each request
 apiWithHeaders.interceptors.request.use((config) => {
  const token = adminStore.getState().userAuth.token?.token;
+ console.log(token)
   config.headers = setHeaders(token);
   return config;
 });

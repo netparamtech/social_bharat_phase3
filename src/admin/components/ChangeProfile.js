@@ -15,7 +15,7 @@ const ChangeProfile = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profilePreview, setProfilePreview] = useState(null);
-  const [profileTempUrl, setProfileTempUrl] = useState(null);
+  const [profileTempUrl, setProfileTempUrl] = useState('');
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   const [errors, setErrors] = useState("");
@@ -51,7 +51,15 @@ const ChangeProfile = (props) => {
         setProfileTempUrl(response.data.data.image);
       }
     } catch (error) {
-      // Handle error or show an error message
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
+      }
     }
 
     setProfilePhoto(selectedFile);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchCountries, updateContactDetail } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import Select from 'react-select';
 const UpdateContact = (props) => {
   const { contactDetails } = props;
 
@@ -28,26 +29,26 @@ const UpdateContact = (props) => {
   };
 
   const handleCountryChange = (selectedOption) => {
-    setSelectedCountry(selectedOption.target.value);
-    if (selectedOption.target.value === "India") {
+    setSelectedCountry(selectedOption); // Update the state with the selected option object
+    if (selectedOption.value === "India") {
       setCountryID(101);
     }
-    setSelectedState('');
+    setSelectedState(''); // Reset state when country changes
   };
 
   const handleStateChange = (selectedOption) => {
-    const selectedStateName = selectedOption.target.value;
-
-    const selectedStateObject = states.find((state) => state.name === selectedStateName);
-    if (selectedStateObject) {
-      getAllCities(selectedStateObject.id);
-      setSelectedState(selectedOption.target.value);
-      //setSelectedCity('');
-    } 
+    setSelectedState(selectedOption);
+  
+    if (selectedOption) {
+      const selectedStateObject = states.find((state) => state.name === selectedOption.value);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
   };
 
   const handleCityChange = (selectedOption) => {
-    setSelectedCity(selectedOption.target.value);
+    setSelectedCity(selectedOption); // Update the state with the selected option object
   };
 
   const handleSubmit = async (e) => {
@@ -58,9 +59,9 @@ const UpdateContact = (props) => {
     const updatedData = {
       address_type: addressType,
       address_line: addressLine,
-      city: selectedCity,
-      state: selectedState,
-      country: selectedCountry,
+      city: selectedCity.label,
+      state: selectedState.label,
+      country: selectedCountry.label,
     };
 
     try {
@@ -108,19 +109,17 @@ const UpdateContact = (props) => {
     }
   }
   useEffect(() => {
-    console.log(contactDetails)
     // Set default values from contactDetails prop when it changes
     if (contactDetails) {
       setAddressType(contactDetails.address_type || '');
       setAddressLine(contactDetails.address_line || '');
-      setSelectedCountry(contactDetails.country || '');
-      setSelectedState(contactDetails.state || '');
-      setSelectedCity(contactDetails.city||'');
-      if(contactDetails.country==="India"){
-        setCountryID(101);
-      }
+      setCountryID(contactDetails.country === 'India' ? 101 : ''); // Set the countryID accordingly
+      setSelectedCountry({ value: contactDetails.country, label: contactDetails.country }); // Set the selected country as an object
+      setSelectedState({ value: contactDetails.state, label: contactDetails.state }); // Set the selected state as an object
+      setSelectedCity({ value: contactDetails.city, label: contactDetails.city }); // Set the selected city as an object
     }
   }, [contactDetails]);
+  
 
 
 
@@ -182,16 +181,14 @@ const UpdateContact = (props) => {
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Country</label>
 
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control"
+                      <Select
+                        options={[
+                          { value: 'India', label: 'India' },
+                          // Add other country options here
+                        ]}
                         value={selectedCountry}
                         onChange={handleCountryChange}
-                      >
-                        <option value="">---Select Country---</option>
-                        <option value="India">India</option>
-                      </select>
+                      />
 
 
                       {errors.country && <span className='error'>{errors.country}</span>}
@@ -200,20 +197,11 @@ const UpdateContact = (props) => {
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">State</label>
 
-                      <select
-                        name="state"
-                        id="state"
-                        className="form-control"
+                      <Select
+                        options={states.map(state => ({ value: state.name, label: state.name }))}
                         value={selectedState}
                         onChange={handleStateChange}
-                      >
-                        <option value="">---Select State</option>
-                        {states && states.map((state) => (
-                          <option key={state.id} value={state.name}>
-                            {state.name}
-                          </option>
-                        ))}
-                      </select>
+                      />
 
                       {errors.state && <span className='error'>{errors.state}</span>}
                     </div>
@@ -222,20 +210,11 @@ const UpdateContact = (props) => {
                   <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label className="form-label">City</label>
 
-                    <select
-                      name="city"
-                      id="city"
-                      className="form-control"
+                    <Select
+                      options={cities.map(city => ({ value: city.name, label: city.name }))}
                       value={selectedCity}
                       onChange={handleCityChange}
-                    >
-                      <option value="">---Select City</option>
-                      {cities && cities.map((city) => (
-                        <option key={city.id} value={city.name}>
-                          {city.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     {errors.city && <span className='error'>{errors.city}</span>}
 
                   </div>

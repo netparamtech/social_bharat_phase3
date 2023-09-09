@@ -11,6 +11,7 @@ import Banners from "./pages/banners/Banners";
 import UpdateBannerPage from "./pages/banners/UpdateBannerPage";
 import Degrees from "./pages/degrees/Degrees";
 import ChangeProfilePage from "./pages/ChangeProfilePage";
+import CreateDegreePage from "./pages/degrees/CreateDegreePage";
 
 const adminRoutes = [
     {
@@ -83,6 +84,12 @@ const adminRoutes = [
     {
         path: '/admin/degrees',
         component: Degrees,
+        exact: true
+    },
+
+    {
+        path: '/admin/degree/create',
+        component: CreateDegreePage,
         exact: true
     },
 

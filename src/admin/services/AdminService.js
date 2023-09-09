@@ -214,3 +214,24 @@ export const fetchAllDegrees = async () => {
         throw error;
     }
 }
+
+
+//create Degree 
+export const createDegree = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/degrees', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete community
+export const deleteDegree = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/degrees/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

@@ -73,4 +73,8 @@
     height: 40px;
   }
 
+  .sidebar-brand-icon {
+    width: 100px;
+    border-radius: 10px;
+  }
  

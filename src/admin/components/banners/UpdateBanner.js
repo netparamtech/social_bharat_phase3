@@ -5,6 +5,8 @@ import {
   createBanner,
   uploadMultipleImages,
 } from "../../services/AdminService";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/authActions";
 
 const UpdateBanner = (props) => {
   const { banner } = props;
@@ -17,6 +19,8 @@ const UpdateBanner = (props) => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleBannerChange = async (e) => {
@@ -51,6 +55,13 @@ const UpdateBanner = (props) => {
       }
     } catch (error) {
       // Handle error or show an error message
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/admin");
+      }else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate("/admin");
+      }
     }
   };
 
@@ -116,7 +127,12 @@ const UpdateBanner = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate("/login");
+        dispatch(logout());
+        navigate("/admin");
+      }
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate("/admin");
       }
     }
   };

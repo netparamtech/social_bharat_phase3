@@ -41,7 +41,7 @@ const BannerList = () => {
     const handleStatusToggle = async (bannerId) => {
         try {
             const response = await updateBannerToggleStatus(bannerId);
-            if (response && response.status === 204) {
+            if (response && response.status === 200) {
                 fetchBanners();
             }
         } catch (error) {

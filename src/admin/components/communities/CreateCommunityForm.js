@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -8,9 +7,6 @@ import { logout } from "../../actions/authActions";
 const CreateCommunityForm = () => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
-  const [thumbnailImage, setThumbnailImage] = useState(null);
-  const [bannerImage, setBannerImage] = useState(null);
-
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
 
@@ -45,6 +41,11 @@ const CreateCommunityForm = () => {
         dispatch(logout());
         navigate("/admin");
       }
+       //handle internal server error
+       else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate("/admin");
+      }
     }
   };
 
@@ -64,6 +65,11 @@ const CreateCommunityForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/admin");
+      }
+      //handle internal server error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
         navigate("/admin");
       }
@@ -92,6 +98,7 @@ const CreateCommunityForm = () => {
         // Reset file inputs
         thumbnailImageRef.current.value = null;
         bannerImageRef.current.value = null;
+
         setTimeout(() => {
           window.location.href = "/admin/communities";
         }, 1000);
@@ -106,6 +113,7 @@ const CreateCommunityForm = () => {
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
         navigate("/admin");
+
       } else if (error.response && error.response.status === 500) {
         dispatch(logout());
         navigate("/admin");

@@ -40,6 +40,9 @@ const CommunitiesList = () => {
       if (error.response && error.response.status === 401) {
         dispatch(logout);
         navigate('/admin');
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout);
+        navigate('/admin');
       }
     }
   }
@@ -54,6 +57,9 @@ const CommunitiesList = () => {
     } catch (error) {
       // Handle error cases
       if (error.response && error.response.status === 401) {
+        dispatch(logout);
+        navigate('/admin');
+      }else if (error.response && error.response.status === 500) {
         dispatch(logout);
         navigate('/admin');
       }

@@ -51,6 +51,11 @@ const CommunityUpdateForm = () => {
         dispatch(logout());
         navigate("/admin");
       }
+       // Internal Server error
+       else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate("/admin");
+      }
     }
   };
 
@@ -71,6 +76,11 @@ const CommunityUpdateForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/admin");
+      }
+      //internal server error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
         navigate("/admin");
       }
@@ -130,6 +140,9 @@ const CommunityUpdateForm = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
         dispatch(logout());
         navigate("/admin");
       }

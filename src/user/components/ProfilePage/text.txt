@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const BusinessInfo = (props) => {
     const { user } = props;
     const [businessDetails, setBusinessDetails] = useState([]);
-    const [collapsedItems, setCollapsedItems] = useState([]);// State to control collapse/expand
+    const [isCollapsed, setIsCollapsed] = useState(true); // State to control collapse/expand
 
     const dispatch = useDispatch();
     const businessPhotos =
@@ -36,14 +36,10 @@ const BusinessInfo = (props) => {
 
     useEffect(() => {
         setBusinessDetails(user?.data?.businesses || []);
-        // Initialize the collapsedItems state with false for each item
-        setCollapsedItems(Array(user?.data?.businesses?.length).fill(true));
     }, [user]);
 
-    const toggleCollapse = (value) => {
-        const newCollapsedItems = [...collapsedItems];
-        newCollapsedItems[value] = !newCollapsedItems[value];
-        setCollapsedItems(newCollapsedItems);
+    const toggleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
     };
 
     return (
@@ -61,13 +57,12 @@ const BusinessInfo = (props) => {
 
                     <div className="card-body">
                         <h5 className="fw-3 mb-3">Business Info</h5>
-                        <div className="row">
-                            {businessDetails && businessDetails.length > 0 ? (
-                                <div>
-                                    {/* Render all fields inside a collapse div */}
-                                    {businessDetails.map((item, value) => (
-                                        <div className="col-md-6" key={value}>
-
+                        {businessDetails && businessDetails.length > 0 ? (
+                            <div>
+                                {/* Render all fields inside a collapse div */}
+                                {businessDetails.map((item, value) => (
+                                    <div className="row" key={value}>
+                                        <div className="col-md-6">
                                             <div className="card shadow">
 
                                                 <div className="edit-icon">
@@ -86,7 +81,7 @@ const BusinessInfo = (props) => {
                                                         ></i>
                                                     </a>
                                                 </div>
-                                                
+                                                <div className="table-container">
                                                     <div className="card-body">
                                                         <table className="table table-striped">
                                                             <tbody>
@@ -112,14 +107,14 @@ const BusinessInfo = (props) => {
                                                                     <td></td>
                                                                     <td>
                                                                         <button
-                                                                            onClick={() => toggleCollapse(value)}
+                                                                            onClick={toggleCollapse}
                                                                             className="btn-primary"
                                                                             type="button"
                                                                             data-toggle="collapse"
-                                                                            data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
-                                                                            aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
+                                                                            data-target=".collapse"
+                                                                            aria-expanded={isCollapsed ? "false" : "true"}
                                                                         >
-                                                                            {collapsedItems[value] ? "Show More" : "Show Less"}
+                                                                            {isCollapsed ? "Show More" : "Show Less"}
                                                                         </button>
                                                                     </td>
                                                                 </tr>
@@ -127,7 +122,7 @@ const BusinessInfo = (props) => {
                                                         </table>
 
                                                     </div>
-                                                    <div className={`card-body collapse${collapsedItems[value] ? "" : " show"}`} id={`collapse-${value}`}>
+                                                    <div className={`card-body collapse${isCollapsed ? "" : " show"}`}>
                                                         <table className="table table-striped">
                                                             <tbody>
                                                                 <tr>
@@ -204,21 +199,22 @@ const BusinessInfo = (props) => {
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="add-more-info ">
-                                    <a href="/user/update-business-profile" className="btn btn-secondary">
-                                        Add Business Info
-                                    </a>
-                                </div>
-                            )}
-                        </div>
+
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="add-more-info ">
+                                <a href="/user/update-business-profile" className="btn btn-secondary">
+                                    Add Business Info
+                                </a>
+                            </div>
+                        )}
 
                         {/* Conditional rendering for "Show More" button */}
 

@@ -1,3 +1,4 @@
+import Test from "./components/ProfilePage/Test";
 import LoginWithPassword from "./components/login/LoginWithPassword";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import SetPasswordPage from "./pages/SetPasswordPage";
@@ -114,7 +115,7 @@ const userRoutes = [
     },
 
     {
-        path: '/update-business-profile',
+        path: '/user/update-business-profile',
         component: UpdateBusinessPage,
         exact: true
     },
@@ -130,6 +131,12 @@ const userRoutes = [
         component: SearchPage,
         exact: true
     },
+
+    {
+        path: '/test',
+        component: Test,
+        expect: true
+    }
    
 ]
 

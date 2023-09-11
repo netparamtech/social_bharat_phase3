@@ -47,9 +47,9 @@ const MatrimonialInfo = (props) => {
       }
     }
   };
-  useEffect(()=>{
-    setMatrimonialDetails(user?.data?.matrimonial||'');
-  },[user]);
+  useEffect(() => {
+    setMatrimonialDetails(user?.data?.matrimonial || '');
+  }, [user]);
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
@@ -206,10 +206,10 @@ const MatrimonialInfo = (props) => {
                             <td>Proposal Photo</td>
                             <td className="proposal-Photo">
                               {proposalPhotos &&
-                              Array.isArray(proposalPhotos) ? (
+                                Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
                                   <a href={item} target="_blank">
-                                  <img className="m-1" src={item} />
+                                    <img className="m-1" src={item} />
                                   </a>
                                 ))
                               ) : (

@@ -248,6 +248,17 @@ export const updateMatrimonialInfo = async (data) => {
     }
 }
 
+//update business profile
+
+export const updateBusinessInfo = async (data) => {
+    try {
+        const response = await apiWithHeaders.put('/profile/update-business-details',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //delete matrimonial details
 export const deleteMatrimonial = async () => {
     try {

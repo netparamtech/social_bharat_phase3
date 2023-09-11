@@ -25,13 +25,13 @@ const SearchPeople = () => {
         } catch (error) {
 
             //Unauthorized
-      if (error.response && error.response.status === 401) {
-        dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        window.location.href = '/login';
-      }
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
         }
     }
     useEffect(() => {
@@ -84,7 +84,7 @@ const SearchPeople = () => {
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-4">
-                                                        <img src={item.photo?item.photo:defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
+                                                        <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
                                                     </div>
                                                     <div className="col-8 user-detail">
                                                         <p>{item.name}</p>

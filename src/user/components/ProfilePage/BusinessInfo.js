@@ -108,21 +108,7 @@ const BusinessInfo = (props) => {
                                                                     {item.street_address}
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td>
-                                                                    <button
-                                                                        onClick={() => toggleCollapse(value)}
-                                                                        className="btn-primary"
-                                                                        type="button"
-                                                                        data-toggle="collapse"
-                                                                        data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
-                                                                        aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
-                                                                    >
-                                                                        {collapsedItems[value] ? "Show More" : "Show Less"}
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
+                                                           
                                                         </tbody>
                                                     </table>
 
@@ -206,6 +192,16 @@ const BusinessInfo = (props) => {
                                                     </table>
 
                                                 </div>
+                                                <button
+                                                    onClick={() => toggleCollapse(value)}
+                                                    className="btn-primary"
+                                                    type="button"
+                                                    data-toggle="collapse"
+                                                    data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
+                                                    aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
+                                                >
+                                                    {collapsedItems[value] ? "Show More" : "Show Less"}
+                                                </button>
                                             </div>
                                         </div>
 

@@ -86,125 +86,125 @@ const BusinessInfo = (props) => {
                                                         ></i>
                                                     </a>
                                                 </div>
-                                                
-                                                    <div className="card-body">
-                                                        <table className="table table-striped">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Business Name</td>
-                                                                    <td className="text-muted">
-                                                                        {item.business_name}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Business Category</td>
-                                                                    <td className="text-muted">
-                                                                        {item.business_category}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Street Address</td>
-                                                                    <td className="text-muted">
-                                                                        {item.street_address}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td>
-                                                                        <button
-                                                                            onClick={() => toggleCollapse(value)}
-                                                                            className="btn-primary"
-                                                                            type="button"
-                                                                            data-toggle="collapse"
-                                                                            data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
-                                                                            aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
-                                                                        >
-                                                                            {collapsedItems[value] ? "Show More" : "Show Less"}
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
 
-                                                    </div>
-                                                    <div className={`card-body collapse${collapsedItems[value] ? "" : " show"}`} id={`collapse-${value}`}>
-                                                        <table className="table table-striped">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>City</td>
-                                                                    <td className="text-muted" >
-                                                                        {item.city}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>State</td>
-                                                                    <td className="text-muted">
-                                                                        {item.state}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Country</td>
-                                                                    <td className="text-muted">
-                                                                        {item.country}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contact 1</td>
-                                                                    <td className="text-muted">
-                                                                        {item.contact1}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contact 2</td>
-                                                                    <td className="text-muted">
-                                                                        {item.contact2}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Contact 3</td>
-                                                                    <td className="text-muted">
-                                                                        {item.contact3}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Email</td>
-                                                                    <td className="text-muted">
-                                                                        {item.business_email}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Website Link</td>
-                                                                    <td className="text-muted">
-                                                                        {item.business_website}
-                                                                    </td>
-                                                                </tr>
+                                                <div className="card-body">
+                                                    <table className="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Business Name</td>
+                                                                <td className="text-muted">
+                                                                    {item.business_name}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Business Category</td>
+                                                                <td className="text-muted">
+                                                                    {item.business_category}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Street Address</td>
+                                                                <td className="text-muted">
+                                                                    {item.street_address}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>
+                                                                    <button
+                                                                        onClick={() => toggleCollapse(value)}
+                                                                        className="btn-primary"
+                                                                        type="button"
+                                                                        data-toggle="collapse"
+                                                                        data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
+                                                                        aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
+                                                                    >
+                                                                        {collapsedItems[value] ? "Show More" : "Show Less"}
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
 
-                                                                <tr>
-                                                                    <td>Business Photo</td>
-                                                                    <td className="proposal-Photo">
-                                                                        {businessPhotos &&
-                                                                            Array.isArray(businessPhotos) ? (
-                                                                            businessPhotos.map((item, idx) => (
-                                                                                <a href={item} target="_blank">
-                                                                                    <img className="m-1" src={item} />
-                                                                                </a>
-                                                                            ))
-                                                                        ) : (
-                                                                            <a href={businessPhotos} target="_blank">
-                                                                                <img src={businessPhotos} />
+                                                </div>
+                                                <div className={`card-body collapse${collapsedItems[value] ? "" : " show"}`} id={`collapse-${value}`}>
+                                                    <table className="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>City</td>
+                                                                <td className="text-muted" >
+                                                                    {item.city}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>State</td>
+                                                                <td className="text-muted">
+                                                                    {item.state}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Country</td>
+                                                                <td className="text-muted">
+                                                                    {item.country}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Contact 1</td>
+                                                                <td className="text-muted">
+                                                                    {item.contact1}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Contact 2</td>
+                                                                <td className="text-muted">
+                                                                    {item.contact2}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Contact 3</td>
+                                                                <td className="text-muted">
+                                                                    {item.contact3}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Email</td>
+                                                                <td className="text-muted">
+                                                                    {item.business_email}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Website Link</td>
+                                                                <td className="text-muted">
+                                                                    {item.business_website}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Business Photo</td>
+                                                                <td className="proposal-Photo">
+                                                                    {businessPhotos &&
+                                                                        Array.isArray(businessPhotos) ? (
+                                                                        businessPhotos.map((item, idx) => (
+                                                                            <a href={item} target="_blank">
+                                                                                <img className="m-1" src={item} />
                                                                             </a>
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Status</td>
-                                                                    <td className="text-muted">
-                                                                        {item.status}
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    
+                                                                        ))
+                                                                    ) : (
+                                                                        <a href={businessPhotos} target="_blank">
+                                                                            <img src={businessPhotos} />
+                                                                        </a>
+                                                                    )}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Status</td>
+                                                                <td className="text-muted">
+                                                                    {item.status}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
                                                 </div>
                                             </div>
                                         </div>

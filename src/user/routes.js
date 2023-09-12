@@ -1,4 +1,3 @@
-import Test from "./components/ProfilePage/Test";
 import LoginWithPassword from "./components/login/LoginWithPassword";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import SetPasswordPage from "./pages/SetPasswordPage";
@@ -131,12 +130,6 @@ const userRoutes = [
         component: SearchPage,
         exact: true
     },
-
-    {
-        path: '/test',
-        component: Test,
-        expect: true
-    }
    
 ]
 

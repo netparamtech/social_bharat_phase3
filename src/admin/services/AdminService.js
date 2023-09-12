@@ -249,7 +249,7 @@ export const updateDegreeStatus = async (id) => {
 //fetch Degree with id given
 export const fetchDegreeWithId = async (id) => {
     try {
-        const response = await apiWithHeaders.get('/degrees');
+        const response = await apiWithHeaders.get(`/degrees/${id}`);
         return response;
     } catch (error) {
         throw error;
@@ -260,6 +260,56 @@ export const fetchDegreeWithId = async (id) => {
 export const updateDegree = async (id,data) => {
     try {
         const response = await apiWithHeaders.put(`/degrees/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch All Business Categories
+export const fetchAllCategories = async () => {
+    try {
+        const response = await apiWithHeaders.get('/business-categories');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//create Business Categories
+export const CreateBusinessCategorie = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/business-categories/', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete Business Categories
+export const deleteBusinessCategorie = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/business-categories/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update Business Categories
+export const updateBusinessCategorie = async (id,data) => {
+    try {
+        const response = await apiWithHeaders.put(`/business-categories/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch Business Categories with id given
+export const fetchBusinessCategorieWithId = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/business-categories/${id}`);
         return response;
     } catch (error) {
         throw error;

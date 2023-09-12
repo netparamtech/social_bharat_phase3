@@ -114,7 +114,24 @@ function Sidebar() {
         </div>
       </li>
 
+            {/* <!-- Nav Item - Business Categories Collapse Menu --> */}
+      <li className="nav-item">
+      <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBusiness"
+        aria-expanded="true" aria-controls="collapseBusiness">
 
+        <i className="fas fa-business-time" fill="currentColor"></i>
+
+        <span className='m-2'>Business Categorie</span>
+      </a>
+      <div id="collapseBusiness" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div className="bg-white py-2 collapse-inner rounded">
+
+          <a className="collapse-item" href="/admin/business-categories">List</a>
+          <a className="collapse-item" href="/admin/business-categories/create">Create</a>
+
+        </div>
+      </div>
+    </li>
 
 
       {/* Divider */}

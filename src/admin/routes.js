@@ -14,6 +14,9 @@ import ChangeProfilePage from "./pages/ChangeProfilePage";
 import CreateDegreePage from "./pages/degrees/CreateDegreePage";
 
 import UpdateDegreePage from "./pages/degrees/UpdateDegreePage";
+import BusinessCategoriesPage from "./pages/businessCategories/BusinessCategoriesPage";
+import CreateBusinessCategoriesPage from "./pages/businessCategories/CeateBusinessCategoriesPage";
+import UpdateBusinessCategoriePage from "./pages/businessCategories/UpdateBusinessCategoriesPage";
 
 const adminRoutes = [
     {
@@ -98,6 +101,24 @@ const adminRoutes = [
     {
         path: '/admin/degree/update/:id',
         component: UpdateDegreePage,
+        exact: true
+    },
+
+    {
+        path: '/admin/business-categories',
+        component: BusinessCategoriesPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/business-categories/create',
+        component: CreateBusinessCategoriesPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/business-categories/update/:id',
+        component: UpdateBusinessCategoriePage,
         exact: true
     },
 

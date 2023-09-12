@@ -4,13 +4,15 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
 import { logout } from "../../actions/authActions";
-import { fetchDegreeWithId, updateDegree } from "../../services/AdminService";
+import {
+  fetchBusinessCategorieWithId,
+  updateBusinessCategorie,
+} from "../../services/AdminService";
 
-const UpdateDegree = () => {
+const UpdateBusinessCategorie = () => {
   const { id } = useParams();
 
   const [name, setName] = useState("");
-  const [shortName, setShortName] = useState("");
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -19,16 +21,15 @@ const UpdateDegree = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchDegrees = async () => {
+  const fetchBusinessCategorie = async () => {
     try {
-      const response = await fetchDegreeWithId(id);
+      const response = await fetchBusinessCategorieWithId(id);
       if (response && response.status === 200) {
-        const degreeData = response.data.data[0];
+        const businessCategorieData = response.data.data[0];
         
-        setName(degreeData.title);
-        setShortName(degreeData.short_title);
-        setStatus(degreeData.status);
-        console.log(degreeData.status);  
+        setName(businessCategorieData.title);
+        
+        setStatus(businessCategorieData.status);
       }
       
     } catch (error) {
@@ -42,27 +43,23 @@ const UpdateDegree = () => {
     }
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(name);
     try {
-      
-      const degreeData = {
+      const businessCategorieData = {
         title: name,
-        short_title: shortName,
         status,
       };
 
-      console.log(degreeData);
-      const response = await updateDegree(id, degreeData);
+      const response = await updateBusinessCategorie(id, businessCategorieData);
 
       if (response && response.status === 200) {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
         setTimeout(() => {
-          window.location.href = "/admin/degrees";
+          window.location.href = "/admin/business-categories";
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -82,24 +79,23 @@ const UpdateDegree = () => {
     }
   };
 
-  
   useEffect(() => {
-    fetchDegrees();
+    fetchBusinessCategorie();
   }, []);
 
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Update Degree</h1>
+        <h1 className="h3 mb-0 text-gray-800">Update Business Categorie</h1>
         <a
           href="#"
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/degrees";
+            window.location.href = "/admin/business-categories";
           }}
         >
-          View All Degree
+          View All Business Categories
         </a>
       </div>
       <div className="card">
@@ -125,25 +121,13 @@ const UpdateDegree = () => {
                     className="form-control"
                     id="name"
                     defaultValue={name}
+                    
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter Degree Name"
+                    placeholder="Enter Business Categorie Name"
                   />
+                  
                   {errors.title && (
                     <span className="error">{errors.title}</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label>Short Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="shortName"
-                    defaultValue={shortName}
-                    onChange={(e) => setShortName(e.target.value)}
-                    placeholder="Enter Short Title Name"
-                  />
-                  {errors.short_title && (
-                    <span className="error">{errors.short_title}</span>
                   )}
                 </div>
               </div>
@@ -153,7 +137,7 @@ const UpdateDegree = () => {
                   <select
                     className="form-control"
                     id="status"
-                    value={status}
+                    defaultValue={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="">Select status</option>
@@ -177,4 +161,4 @@ const UpdateDegree = () => {
   );
 };
 
-export default UpdateDegree;
+export default UpdateBusinessCategorie;

@@ -1,9 +1,9 @@
 import LoginWithPassword from "./components/login/LoginWithPassword";
-import ChangePasswordPage from "./pages/ChangePasswordPage";
+import ChangePasswordPage from "./pages/profile/update/ChangePasswordPage";
 import SetPasswordPage from "./pages/SetPasswordPage";
-import DashboardPage from "./pages/dashboard/DashboardPage";
-import HomePage from "./pages/home/HomePage";
-import LoginPage from "./pages/login/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import UpdateBasicProfilePage from "./pages/profile/update/UpdateBasicProfilePage";
 import UpdateBusinessPage from "./pages/profile/update/UpdateBusinessPage";
@@ -12,8 +12,8 @@ import UpdateEducationPage from "./pages/profile/update/UpdateEducationPage";
 import UpdateJobPage from "./pages/profile/update/UpdateJobPage";
 import UpdateMatrimonialPage from "./pages/profile/update/UpdateMatrimonialPage";
 import UpdateMobilePage from "./pages/profile/update/UpdateMobilePage";
-import RegisterPage from "./pages/register/RegisterPage";
-import SearchPage from "./pages/search/SearchPage";
+import RegisterPage from "./pages/RegisterPage";
+import SearchPage from "./pages/SearchPage";
 
 const userRoutes = [
     {

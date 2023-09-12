@@ -1,6 +1,6 @@
 import React from 'react';
-import UserLayout from '../../layouts/UserLayout';
-import RegisterForm from '../../components/register/RegisterForm';
+import UserLayout from '../layouts/UserLayout';
+import RegisterForm from '../components/register/RegisterForm';
 
 const RegisterPage = () => {
     return (

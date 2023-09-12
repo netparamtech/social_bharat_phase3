@@ -1,5 +1,5 @@
-import SearchPeople from "../../components/search/SearchPeople";
-import UserLayout from "../../layouts/UserLayout";
+import SearchPeople from "../components/search/SearchPeople";
+import UserLayout from "../layouts/UserLayout";
 
 const SearchPage = () => {
     return(

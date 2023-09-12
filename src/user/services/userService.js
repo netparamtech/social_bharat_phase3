@@ -352,3 +352,13 @@ export const fetchAllDegrees = async () => {
     }
 };
 
+//fetch all active business categories
+export const fetchAllActiveBusinessCategories = async () => {
+    try {
+        const response = await apiWithHeaders.get('/business-categories/1');  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+

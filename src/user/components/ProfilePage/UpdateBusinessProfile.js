@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { updateBusinessInfo, updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
-import { getFeet, getInches } from '../../util/Conversion';
+import { fetchAllActiveBusinessCategories, fetchAllCitiesByStateID, fetchAllStatesByCountryID, updateBusinessInfo, updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
+import Select from 'react-select';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 
@@ -10,15 +10,21 @@ const UpdateBusinessProfile = (props) => {
   const [businessName, setBusinessName] = useState('');
   const [businessCategory, setBusinessCategory] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
   const [contact1, setContact1] = useState('');
   const [contact2, setContact2] = useState('');
   const [contact3, setContact3] = useState('');
   const [businessEmail, setBusinessEmail] = useState('');
   const [businessWebsite, setBusinessWebsite] = useState('');
   const [status, setStatus] = useState('');
+
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [countryID, setCountryID] = useState('');
+
+  const [businessCategories,setBusinessCategories] = useState([]);
 
   const [businessPhoto, setBusinessPhoto] = useState([]);
   const [tempBusinessPhotoUrl, setTempBusinessPhotoUrl] = useState([]);
@@ -79,6 +85,34 @@ const UpdateBusinessProfile = (props) => {
     }
   };
 
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption); // Update the state with the selected option object
+    if (selectedOption.value === "India") {
+      setCountryID(101);
+    }
+    setSelectedState(''); // Reset state when country changes
+  };
+
+  const handleStateChange = (selectedOption) => {
+    setSelectedState(selectedOption);
+
+    if (selectedOption) {
+      const selectedStateObject = states.find((state) => state.name === selectedOption.value);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption); // Update the state with the selected option object
+  };
+
+  const handleSelectCategoryChange = (selectedOption) => {
+    setBusinessCategory(selectedOption.value);
+  };
+
+
   const handleStatusChange = (e) => {
     setStatus(e.target.value === "Active" ? "Active" : "Inactive");
   };
@@ -90,23 +124,25 @@ const UpdateBusinessProfile = (props) => {
       business_name: businessName,
       business_category: businessCategory,
       street_address: streetAddress,
-      country: country,
-      state: state,
-      city: city,
+      country: selectedCountry.label,
+      state: selectedState.label,
+      city: selectedCity.label,
       contact1: contact1,
       contact2: contact2,
       contact3: contact3,
       business_email: businessEmail,
       business_website: businessWebsite,
-      business_photos: tempBusinessPhotoUrl, // Use the temporary URL
+      business_photos: "", // Use the temporary URL
       status: status,
     };
+
+    console.log(businessData,"Business Data")
 
     try {
       const response = await updateBusinessInfo(businessData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        //window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error
@@ -117,11 +153,11 @@ const UpdateBusinessProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
-        window.location.href = '/login';
+       // dispatch(logout());
+       // window.location.href = '/login';
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        window.location.href = '/login';
+        //dispatch(logout());
+       // window.location.href = '/login';
       }
     }
 
@@ -141,6 +177,53 @@ const UpdateBusinessProfile = (props) => {
     setTempBusinessPhotoUrl(updatedBusinessTempUrl);
   };
 
+  const getAllStates = async () => {
+    try {
+      const response = await fetchAllStatesByCountryID(countryID);
+      if (response && response.status === 200) {
+        setStates(response.data.data);
+      }
+    } catch (error) {
+
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
+
+    }
+  }
+
+  const getAllCities = async (stateID) => {
+    try {
+      const response = await fetchAllCitiesByStateID(stateID);
+      if (response && response.status === 200) {
+        setCities(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        window.location.href = '/login';
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        window.location.href = '/login';
+      }
+    }
+  }
+
+   //Fetch All Active Business Category
+
+   const fetchAllBusinesses = async () => {
+    const response = await fetchAllActiveBusinessCategories();
+    if (response && response.status === 200) {
+      setBusinessCategories(response.data.data);
+    }
+  }
+
 
   useEffect(() => {
     console.log(businessDetails, "checking")
@@ -149,9 +232,9 @@ const UpdateBusinessProfile = (props) => {
       setBusinessName(businessDetails.business_name || '');
       setBusinessCategory(businessDetails.business_category || '');
       setStreetAddress(businessDetails.street_address || '');
-      setCountry(getFeet(businessDetails.country) || '');
-      setState(getInches(businessDetails.state) || '');
-      setCity(businessDetails.city || '');
+      setSelectedCountry(businessDetails.country || '');
+      setSelectedState(businessDetails.state || '');
+      setSelectedCity(businessDetails.city || '');
       setContact1(businessDetails.contact1 || '');
       setContact2(businessDetails.contact2 || '');
       setContact3(businessDetails.contact3 || '');
@@ -173,6 +256,26 @@ const UpdateBusinessProfile = (props) => {
     }
   }, [businessDetails]);
 
+  useEffect(() => {
+    // Check if selectedCountry is already set
+    if (selectedCountry) {
+      getAllStates();
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (states && businessDetails) {
+      const selectedStateObject = states.find((state) => state.name === businessDetails.state);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+  }, [states]);
+
+  useEffect(() => {
+    fetchAllBusinesses();
+  }, []);
+
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -187,7 +290,7 @@ const UpdateBusinessProfile = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Name</label>
+                      <label className="form-label">*Business Name</label>
                       <input type="text"
                         name="businessName"
                         id="businessName"
@@ -200,22 +303,22 @@ const UpdateBusinessProfile = (props) => {
                       {errors.business_name && <span className='error'>{errors.business_name}</span>}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Category</label>
-                      <input type="text"
-                        name="businessCategory"
-                        id="businessCategory"
-                        placeholder="Enter Business Name"
-                        className="form-control"
-                        defaultValue={businessCategory}
-                        onChange={(e) => setBusinessCategory(e.target.value)}
-                      />
+                      <label className="form-label">*Business Category</label>
+                      <Select
+                          id="business_category"
+                          className=""
+                          defaultValue={businessCategory} // Provide a selected option state
+                          onChange={handleSelectCategoryChange} // Your change handler function
+                          options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.name }))}
+                          placeholder="---Select Business Category---"
+                        />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
                     </div>
                   </div>
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Street Address</label>
+                      <label className="form-label">*Street Address</label>
                       <input type="text"
                         name="stressAddress"
                         id="stressAddress"
@@ -229,14 +332,17 @@ const UpdateBusinessProfile = (props) => {
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Country</label>
-                      <input type="text"
-                        name="country"
-                        id="country"
-                        placeholder="Enter Country Name"
-                        className="form-control"
-                        defaultValue={country}
-                        onChange={(e) => setCountry(e.target.value)}
+
+                      <Select
+                        options={[
+                          { value: 'India', label: 'India' },
+                          // Add other country options here
+                        ]}
+                        value={selectedCountry}
+                        onChange={handleCountryChange}
                       />
+
+
                       {errors.country && <span className='error'>{errors.country}</span>}
                     </div>
                   </div>
@@ -244,32 +350,30 @@ const UpdateBusinessProfile = (props) => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">State</label>
-                      <input type="text"
-                        name="state"
-                        id="state"
-                        placeholder="Enter State Name"
-                        className="form-control"
-                        defaultValue={state}
-                        onChange={(e) => setState(e.target.value)}
+
+                      <Select
+                        options={states.map(state => ({ value: state.name, label: state.name }))}
+                        value={selectedState}
+                        onChange={handleStateChange}
                       />
+
                       {errors.state && <span className='error'>{errors.state}</span>}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">City</label>
-                      <input type="text"
-                        name="city"
-                        id="city"
-                        placeholder="Enter City Name"
-                        className="form-control"
-                        defaultValue={city}
-                        onChange={(e) => setCity(e.target.value)}
+
+                      <Select
+                        options={cities.map(city => ({ value: city.name, label: city.name }))}
+                        value={selectedCity}
+                        onChange={handleCityChange}
                       />
                       {errors.city && <span className='error'>{errors.city}</span>}
+
                     </div>
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Contact 1</label>
+                      <label className="form-label">*Contact 1</label>
                       <input type="text"
                         name="contact1"
                         id="contact1"
@@ -361,23 +465,23 @@ const UpdateBusinessProfile = (props) => {
                     </div>
                   </div>
                   <div className='row'>
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                  <label htmlFor="status">Status</label>
-                  <select
-                    className="form-control"
-                    id="status"
-                    name="status"
-                    value={status}
-                    onChange={handleStatusChange}
-                  >
-                    <option value="">Select Status</option>
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                  {errors.status && (
-                    <span className="error">{errors.status}</span>
-                  )}
-                </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label htmlFor="status">Status</label>
+                      <select
+                        className="form-control"
+                        id="status"
+                        name="status"
+                        value={status}
+                        onChange={handleStatusChange}
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                      </select>
+                      {errors.status && (
+                        <span className="error">{errors.status}</span>
+                      )}
+                    </div>
                   </div>
 
                   <div className="row mt-4">

@@ -51,8 +51,6 @@ const UpdateContact = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedCountry, selectedState, selectedCity)
-    e.preventDefault();
 
     const updatedData = {
       address_type: addressType,

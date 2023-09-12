@@ -142,7 +142,7 @@ const UpdateBusinessProfile = (props) => {
       const response = await updateBusinessInfo(businessData);
       if (response && response.status === 200) {
         setErrors('');
-        //window.location.href = '/profile';
+        window.location.href = '/profile';
       }
     } catch (error) {
       // Handle error

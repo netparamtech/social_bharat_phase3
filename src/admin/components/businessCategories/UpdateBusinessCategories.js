@@ -10,7 +10,7 @@ import {
 } from "../../services/AdminService";
 
 const UpdateBusinessCategorie = () => {
-  const { id } = useParams();
+  const { id } = useParams(); 
 
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
@@ -25,10 +25,9 @@ const UpdateBusinessCategorie = () => {
     try {
       const response = await fetchBusinessCategorieWithId(id);
       if (response && response.status === 200) {
-        const businessCategorieData = response.data.data[0];
+        const businessCategorieData = response.data.data;
         
         setName(businessCategorieData.title);
-        
         setStatus(businessCategorieData.status);
       }
       
@@ -137,7 +136,7 @@ const UpdateBusinessCategorie = () => {
                   <select
                     className="form-control"
                     id="status"
-                    defaultValue={status}
+                    value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="">Select status</option>

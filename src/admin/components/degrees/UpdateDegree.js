@@ -23,12 +23,11 @@ const UpdateDegree = () => {
     try {
       const response = await fetchDegreeWithId(id);
       if (response && response.status === 200) {
-        const degreeData = response.data.data[0];
+        const degreeData = response.data.data;
         
         setName(degreeData.title);
         setShortName(degreeData.short_title);
-        setStatus(degreeData.status);
-        console.log(degreeData.status);  
+        setStatus(degreeData.status); 
       }
       
     } catch (error) {

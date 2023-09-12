@@ -220,6 +220,7 @@ const UpdateBusinessProfile = (props) => {
    const fetchAllBusinesses = async () => {
     const response = await fetchAllActiveBusinessCategories();
     if (response && response.status === 200) {
+      console.log(response.data.data)
       setBusinessCategories(response.data.data);
     }
   }
@@ -309,7 +310,7 @@ const UpdateBusinessProfile = (props) => {
                           className=""
                           defaultValue={businessCategory} // Provide a selected option state
                           onChange={handleSelectCategoryChange} // Your change handler function
-                          options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.name }))}
+                          options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
                           placeholder="---Select Business Category---"
                         />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}

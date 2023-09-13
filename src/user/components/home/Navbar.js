@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { apiWithHeaders } from '../../axios/apiConfig';
 import { logout } from '../../actions/userAction';
 
+
 const Navbar = () => {
     const user = useSelector((state) => state.userAuth);
     const isAuthenticUser = user && user.isAuthenticated;
     const [id, setId] = useState(user && user.user && user.user.id);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -29,7 +31,7 @@ const Navbar = () => {
             const response = await apiWithHeaders.post('/logout', { id });
 
             if (response.status === 200) {
-                dispatch(logout())
+                dispatch(logout());
                 window.location.href = '/login';
             }
         } catch (error) {
@@ -51,7 +53,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">
-                    <img src="/user/images/logo.jpg"  alt="Logo" /> 
+                    <img src="/user/images/logo.jpg" alt="Logo" />
                 </a>
                 <button
                     className="navbar-toggler"
@@ -67,7 +69,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="/">
+                            <a className="nav-link active" aria-current="page" href="#" onClick={()=>navigate('/')}>
                                 Home
                             </a>
                         </li>
@@ -105,12 +107,14 @@ const Navbar = () => {
                                 ) : ''
                             }
                         </li>
+
+                       
                         {/* You can add more nav items here */}
                     </ul>
                     <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                         {isAuthenticUser && isAuthenticUser ? '' : (
                             <li className="nav-item">
-                                <a className="nav-link  btn-primary login-btn" href="/login">
+                                <a className="nav-link  btn-primary login-btn" href="#" onClick={() => navigate('/login')}>
                                     Login
                                 </a>
                             </li>
@@ -153,7 +157,7 @@ const Navbar = () => {
                                     </div>
                                 </h6>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="/profile">
+                                <a className="dropdown-item" href='/profile'>
                                     <div className="dropdown-item-icon"><i className="fas fa-user-alt"></i></div>
                                     <span className="ms-2">Profile</span>
                                 </a>

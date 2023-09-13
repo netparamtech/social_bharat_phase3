@@ -11,6 +11,7 @@ const Banner = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchBanners = async () => {
     try {
@@ -82,7 +83,7 @@ const Banner = () => {
                     <h2>Connect with <span ref={(el) => (typedRefs.current[index] = el)} className="typed"></span></h2>
                   </div>
                   <div className="banner-button">
-                    <a className="hero-btn" href='/register'>Get started</a>
+                    <a className="hero-btn" href='#' onClick={()=>navigate('/register')}>Get started</a>
                   </div>
                 </div>
               </div>

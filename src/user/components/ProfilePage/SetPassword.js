@@ -47,11 +47,8 @@ const SetPassword = () => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
                 dispatch(login(updatedUser, token));
-                setTimeout(() => {
-                    window.location.href = '/dashboard'
-                }, 1000)
-
-
+                window.location.href = '/dashboard';
+                window.scrollTo(0, 0);
             }
         } catch (error) {
             // Handle validation errors

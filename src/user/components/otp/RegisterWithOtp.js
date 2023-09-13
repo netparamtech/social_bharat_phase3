@@ -57,6 +57,9 @@ const RegisterWithOtp = (props) => {
                     window.location.href = '/set-password';
                 }
 
+                // Scroll to the top of the page to prevent scrolling
+                window.scrollTo(0, 0);
+
             }
         } catch (error) {
 

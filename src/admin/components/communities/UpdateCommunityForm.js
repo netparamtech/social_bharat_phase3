@@ -95,7 +95,7 @@ const CommunityUpdateForm = () => {
         name,
         status,
         thumbnail_image: thumbnailImageTempUrl,
-        banner_image: bannerImageTempUrl,
+        banner_image: (bannerImageTempUrl===null)?"":bannerImageTempUrl,
       };
       console.log(communityData);
       const response = await updateCommunity(id, communityData);

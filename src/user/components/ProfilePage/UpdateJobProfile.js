@@ -51,8 +51,8 @@ const UpdateJobProfile = (props) => {
         dispatch(logout());
         window.location.href = '/login';
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        window.location.href = '/login';
+       dispatch(logout());
+       window.location.href = '/login';
       }
     }
 

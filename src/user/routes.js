@@ -14,6 +14,9 @@ import UpdateMatrimonialPage from "./pages/profile/update/UpdateMatrimonialPage"
 import UpdateMobilePage from "./pages/profile/update/UpdateMobilePage";
 import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
+import SearchPartnerPage from "./pages/SearchPartnerPage";
+import SearchBusinessPage from "./pages/SearchBusinessPage";
+
 
 const userRoutes = [
     {
@@ -128,6 +131,18 @@ const userRoutes = [
     {
         path: '/user/search',
         component: SearchPage,
+        exact: true
+    },
+
+    {
+        path: '/user/search/partner',
+        component: SearchPartnerPage,
+        exact: true
+    },
+
+    {
+        path: '/user/search/business',
+        component: SearchBusinessPage,
         exact: true
     },
    

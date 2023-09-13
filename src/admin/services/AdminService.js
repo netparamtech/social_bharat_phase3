@@ -144,7 +144,6 @@ export const createBanner = async (data) => {
     }
 }
 
-
 export const fetchAllUsers = async (page, size) => {
     try {
         const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}`);
@@ -214,7 +213,6 @@ export const fetchAllDegrees = async () => {
         throw error;
     }
 }
-
 
 //create Degree 
 export const createDegree = async (data) => {

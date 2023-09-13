@@ -69,7 +69,7 @@ const BannerList = () => {
                     Create Banner
                 </a>
             </div>
-            <div className="card table-responsive">
+            <div className="card table-responsive p-3">
                 <table className="table table-striped table-bordered table-sm">
                     <thead>
                         <tr>

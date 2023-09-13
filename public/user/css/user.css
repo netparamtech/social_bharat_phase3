@@ -277,8 +277,8 @@ nav .nav-item .btn{
 /* Matrimonial */
 #matrimonial .matrimonial-section .matrimonial-img img {
   transition: 2s;
-  max-width: 100%;
-  height: auto;
+  width: 300%;
+  height: 300px;
   border-radius: 8px;
   overflow: hidden;
 }

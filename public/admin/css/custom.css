@@ -30,9 +30,9 @@
   
   .profile-image {
     position: relative;
-    width: 150px;
-    height: 150px;
-    margin-left: 10px;
+    width: 130px;
+    height: 130px;
+    /* margin-left: 10px; */
     cursor: pointer;
   }
   .image-container {

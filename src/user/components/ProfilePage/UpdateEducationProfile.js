@@ -3,6 +3,7 @@ import { fetchAllDegrees, updateEducationalDetails } from '../../services/userSe
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import Select from 'react-select';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
@@ -19,6 +20,7 @@ const UpdateEducationProfile = (props) => {
   const [errors, setErrors] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Handle onChange for each input field
   const handleDegreeIdChange = (selectedOption) => {
@@ -74,7 +76,7 @@ const UpdateEducationProfile = (props) => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
@@ -86,10 +88,12 @@ const UpdateEducationProfile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };
@@ -105,10 +109,12 @@ const UpdateEducationProfile = (props) => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   }

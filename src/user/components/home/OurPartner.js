@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { fetchAllActiveCommunities } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions/userAction";
+import { useNavigate } from "react-router-dom";
 
 function OurPartner() {
   const [casts, setCasts] = useState([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchCommunities = async () => {
     try {
@@ -15,13 +17,14 @@ function OurPartner() {
         setCasts(response.data.data);
       }
     } catch (error) {
+      //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
       else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };

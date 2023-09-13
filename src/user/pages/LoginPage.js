@@ -18,7 +18,6 @@ const LoginPage = () => {
             (<LoginWithPassword chnageFlag = {chnageFlag} />)
             }
         </UserLayout>
-        
         );
 };
 

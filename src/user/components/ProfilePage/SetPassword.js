@@ -58,10 +58,12 @@ const SetPassword = () => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-            } else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
 
         }

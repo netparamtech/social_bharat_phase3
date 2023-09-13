@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const Testimonials = () => {
     const [imageUrls, setImageUrls] = useState([]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchBanners = async () => {
         try {
@@ -23,15 +25,15 @@ const Testimonials = () => {
 
             setImageUrls(activeBanners);
         } catch (error) {
-            // Handle errors
+            //Unauthorized
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
-              else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
+                navigate('/login');
+            }
         }
     };
 

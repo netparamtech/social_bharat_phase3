@@ -12,6 +12,7 @@ const UpdateEducationPage = () => {
         const [educationDetails, setEducationDetails] = useState(null);
 
         const dispatch = useDispatch();
+        const navigate = useNavigate();
 
         const fetchEducation = async (id) => {
                 try {
@@ -23,10 +24,12 @@ const UpdateEducationPage = () => {
                         //Unauthorized
                         if (error.response && error.response.status === 401) {
                                 dispatch(logout());
-                                window.location.href = '/login';
-                        } else if (error.response && error.response.status === 500) {
+                                navigate('/login');
+                        }
+                        //Internal Server Error
+                        else if (error.response && error.response.status === 500) {
                                 dispatch(logout());
-                                window.location.href = '/login';
+                                navigate('/login');
                         }
                 }
 

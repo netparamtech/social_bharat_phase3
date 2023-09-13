@@ -67,6 +67,17 @@ export const loginWithPassword = async (mobile,password) => {
     }
 }
 
+//user logout
+
+export const userLogout = async (id) => {
+    try {
+        const response = await apiWithHeaders.post('/logout',{id});  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //upload image section
 export const uploadImage = async (formData) => {
     try {

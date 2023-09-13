@@ -8,6 +8,7 @@ const Matrimonial = () => {
     const [imageUrls, setImageUrls] = useState([]);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchBanners = async () => {
         try {
@@ -16,20 +17,21 @@ const Matrimonial = () => {
             if (!Array.isArray(activeBanners[0].banner_urls)) {
                 // Convert it into an array
                 const updatedBannerUrls = [activeBanners[0].banner_urls];
-        
+
                 // Update activeBanners with the updated banner URLs
                 activeBanners[0].banner_urls = updatedBannerUrls;
-              }
+            }
             setImageUrls(activeBanners);
         } catch (error) {
+            //Unauthorized
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
-              else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
+                navigate('/login');
+            }
         }
     };
 

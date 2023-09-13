@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const PromoteBusiness = () => {
     const [imageUrls, setImageUrls] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchBanners = async () => {
         try {
@@ -13,20 +15,21 @@ const PromoteBusiness = () => {
             const activeBanners = response.data.data.filter(banner => banner.status === "Active");
             setImageUrls(activeBanners[0].banner_urls);
         } catch (error) {
+            //Unauthorized
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
-              else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
+                navigate('/login');
+            }
         }
     };
     useEffect(() => {
         fetchBanners();
     }, []);
-    
+
     return (
         <div id="Promote-business" className="text-center stats mt-5">
             <div className="container">

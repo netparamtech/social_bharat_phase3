@@ -3,6 +3,7 @@ import { updateAttemptMobile } from '../../services/userService';
 import CheckOtpToUpdateMobile from '../otp/CheckOtpToUpdateMobile';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateMobile = () => {
 
@@ -12,6 +13,7 @@ const UpdateMobile = () => {
 
     const [isMobileValid, setIsMobileValid] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleMobileChange = (event) => {
         setMobile(event.target.value);
@@ -43,10 +45,12 @@ const UpdateMobile = () => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-            } else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     };

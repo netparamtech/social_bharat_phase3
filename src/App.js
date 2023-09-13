@@ -4,6 +4,7 @@ import userRoutes from './user/routes';
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";
 import UserProtectedRoute from "./user/util/UserProtectedRoute";
+import { useSelector } from "react-redux";
 
 function App() {
   return (
@@ -11,7 +12,6 @@ function App() {
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-
           {
             userRoutes.map((route, index) => (
               <Route key={index} path={route.path}
@@ -24,6 +24,7 @@ function App() {
                 } />
             ))
           }
+          
 
           {
             adminRoutes.map((route, index) => (
@@ -38,6 +39,7 @@ function App() {
             ))
           }
         </Routes>
+        
       </Suspense >
     </Router>
   );

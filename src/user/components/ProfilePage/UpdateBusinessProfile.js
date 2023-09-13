@@ -3,6 +3,7 @@ import { fetchAllActiveBusinessCategories, fetchAllCitiesByStateID, fetchAllStat
 import Select from 'react-select';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
@@ -24,7 +25,7 @@ const UpdateBusinessProfile = (props) => {
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState('');
 
-  const [businessCategories,setBusinessCategories] = useState([]);
+  const [businessCategories, setBusinessCategories] = useState([]);
 
   const [businessPhoto, setBusinessPhoto] = useState([]);
   const [tempBusinessPhotoUrl, setTempBusinessPhotoUrl] = useState([]);
@@ -32,6 +33,7 @@ const UpdateBusinessProfile = (props) => {
 
   const [errors, setErrors] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleBusinessPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -77,10 +79,12 @@ const UpdateBusinessProfile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };
@@ -136,7 +140,7 @@ const UpdateBusinessProfile = (props) => {
       status: status,
     };
 
-    console.log(businessData,"Business Data")
+    console.log(businessData, "Business Data")
 
     try {
       const response = await updateBusinessInfo(businessData);
@@ -153,11 +157,13 @@ const UpdateBusinessProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-       // dispatch(logout());
-       // window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
-        //dispatch(logout());
-       // window.location.href = '/login';
+        dispatch(logout());
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
       }
     }
 
@@ -188,10 +194,12 @@ const UpdateBusinessProfile = (props) => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
 
     }
@@ -207,21 +215,36 @@ const UpdateBusinessProfile = (props) => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   }
 
-   //Fetch All Active Business Category
+  //Fetch All Active Business Category
 
-   const fetchAllBusinesses = async () => {
-    const response = await fetchAllActiveBusinessCategories();
-    if (response && response.status === 200) {
-      console.log(response.data.data)
-      setBusinessCategories(response.data.data);
+  const fetchAllBusinesses = async () => {
+    try {
+      const response = await fetchAllActiveBusinessCategories();
+      if (response && response.status === 200) {
+        console.log(response.data.data)
+        setBusinessCategories(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
+      }
     }
   }
 
@@ -306,13 +329,13 @@ const UpdateBusinessProfile = (props) => {
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Category</label>
                       <Select
-                          id="business_category"
-                          className=""
-                          defaultValue={businessCategory} // Provide a selected option state
-                          onChange={handleSelectCategoryChange} // Your change handler function
-                          options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
-                          placeholder="---Select Business Category---"
-                        />
+                        id="business_category"
+                        className=""
+                        defaultValue={businessCategory} // Provide a selected option state
+                        onChange={handleSelectCategoryChange} // Your change handler function
+                        options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
+                        placeholder="---Select Business Category---"
+                      />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
                     </div>
                   </div>

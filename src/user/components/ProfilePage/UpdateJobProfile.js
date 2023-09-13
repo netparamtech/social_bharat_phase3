@@ -3,6 +3,7 @@ import { updateJobDetail } from '../../services/userService';
 import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateJobProfile = (props) => {
   const { jobDetails } = props;
@@ -16,6 +17,7 @@ const UpdateJobProfile = (props) => {
   const [errors, setErrors] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,22 +39,23 @@ const UpdateJobProfile = (props) => {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
-       dispatch(logout());
-       window.location.href = '/login';
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
       }
     }
 

@@ -52,9 +52,9 @@ const RegisterWithOtp = (props) => {
                 setOtp('');
 
                 if (response.data.data.is_password_set) {
-                    window.location.href = '/dashboard';
+                    navigate('/dashboard')
                 } else {
-                    window.location.href = '/set-password';
+                    navigate('/set-password')
                 }
 
                 // Scroll to the top of the page to prevent scrolling
@@ -71,8 +71,12 @@ const RegisterWithOtp = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                navigate('/login');
-
+                navigate('/login')
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                navigate('/login')
             }
         }
     }
@@ -96,12 +100,12 @@ const RegisterWithOtp = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     }

@@ -435,7 +435,7 @@ a.btn.dropdown-toggle.show:focus {
   border-radius: 100%;
 }
 
-.dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-name {
+.dropdown-user-details-name {
   color: #212832;
   font-weight: 500;
   font-size: 0.9rem;
@@ -445,7 +445,7 @@ a.btn.dropdown-toggle.show:focus {
   text-overflow: ellipsis;
 }
 
-.dropdown-user .dropdown-menu .dropdown-header .dropdown-user-details .dropdown-user-details-email {
+.dropdown-user-details-email {
   color: #69707a;
   font-size: 0.75rem;
   max-width: 10rem;

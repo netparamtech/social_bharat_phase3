@@ -3,6 +3,7 @@ import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../se
 import { getFeet, getInches } from '../../util/Conversion';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -27,7 +28,9 @@ const UpdateMatrimonial = (props) => {
   const [biodataPreview, setBiodataPreview] = useState('');
 
   const [errors, setErrors] = useState('');
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -73,10 +76,12 @@ const UpdateMatrimonial = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };
@@ -93,8 +98,6 @@ const UpdateMatrimonial = (props) => {
     try {
       const response = await uploadPdf(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
-        console.log("hello");
-        console.log(response.data.data.files)
         setTempBiodataFileUrl(response.data.data.file);
       }
     } catch (error) {
@@ -103,13 +106,15 @@ const UpdateMatrimonial = (props) => {
         setErrors(error.response.data.errors);
       }
 
-      //Unauthorized
-      else if (error.response && error.response.status === 401) {
+       //Unauthorized
+       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };
@@ -139,7 +144,7 @@ const UpdateMatrimonial = (props) => {
       const response = await updateMatrimonialInfo(matrimonialData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
@@ -151,10 +156,12 @@ const UpdateMatrimonial = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
 

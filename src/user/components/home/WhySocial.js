@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const WhySocial = () => {
     const [imageUrls, setImageUrls] = useState([]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchBanners = async () => {
         try {
@@ -14,21 +16,21 @@ const WhySocial = () => {
             if (!Array.isArray(activeBanners[0].banner_urls)) {
                 // Convert it into an array
                 const updatedBannerUrls = [activeBanners[0].banner_urls];
-        
+
                 // Update activeBanners with the updated banner URLs
                 activeBanners[0].banner_urls = updatedBannerUrls;
-              }
+            }
             setImageUrls(activeBanners);
         } catch (error) {
-            //handle errors
+            //Unauthorized
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
-              else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+            else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
-              }
+                navigate('/login');
+            }
         }
     };
     useEffect(() => {
@@ -57,11 +59,11 @@ const WhySocial = () => {
                         </ul>
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">
-                    {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((banner, index) => (
-                        <div key={index} className="image-zoom-containerm fade-in-image">
-                           {index === 0 && <img src={banner} className="img-fluid image-zoom" alt="..." />}
-                        </div>
-                    ))}
+                        {imageUrls.length > 0 && imageUrls[0]?.banner_urls?.map((banner, index) => (
+                            <div key={index} className="image-zoom-containerm fade-in-image">
+                                {index === 0 && <img src={banner} className="img-fluid image-zoom" alt="..." />}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

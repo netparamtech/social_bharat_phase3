@@ -15,6 +15,7 @@ const LoginWithOtp = (props) => {
     const [errors, setErrors] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
 
@@ -50,9 +51,9 @@ const LoginWithOtp = (props) => {
                 setOtp('');
 
                 if (response.data.data.is_password_set) {
-                    window.location.href = '/dashboard';
+                    navigate('/dashboard')
                 } else {
-                    window.location.href = '/set-password';
+                    navigate('/set-password')
                 }
 
             }
@@ -66,12 +67,12 @@ const LoginWithOtp = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login')
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login')
             }
         }
     }
@@ -94,12 +95,12 @@ const LoginWithOtp = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login'); 
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     }

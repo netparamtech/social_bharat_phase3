@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getSingleJobDetails } from '../../../services/userService';
 import UpdateJobProfile from '../../../components/ProfilePage/UpdateJobProfile';
@@ -12,6 +12,7 @@ const UpdateJobPage = () => {
   const [jobDetails, setJobDetails] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchJob = async (id) => {
     try {
@@ -23,10 +24,12 @@ const UpdateJobPage = () => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
 

@@ -3,6 +3,7 @@ import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchCountries, upd
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import Select from 'react-select';
+import { useNavigate } from 'react-router-dom';
 const UpdateContact = (props) => {
   const { contactDetails } = props;
 
@@ -16,7 +17,9 @@ const UpdateContact = (props) => {
   const [countryID, setCountryID] = useState('');
 
   const [errors, setErrors] = useState('');
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddressTypeChange = (e) => {
     setAddressType(e.target.value);
@@ -65,7 +68,7 @@ const UpdateContact = (props) => {
 
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
@@ -77,10 +80,12 @@ const UpdateContact = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   };
@@ -97,10 +102,12 @@ const UpdateContact = (props) => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
 
     }
@@ -113,13 +120,15 @@ const UpdateContact = (props) => {
         setCities(response.data.data);
       }
     } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
+       //Unauthorized
+       if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
-      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   }

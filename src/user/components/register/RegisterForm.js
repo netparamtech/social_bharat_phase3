@@ -94,6 +94,7 @@ const RegisterForm = () => {
                 <div className="card-title">
                   <h3 className="mb-3">Sign up</h3>
                 </div>
+                
                 {
                   !isTempUserCreated ? (
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>

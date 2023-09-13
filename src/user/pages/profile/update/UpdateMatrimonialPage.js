@@ -5,11 +5,13 @@ import { getUserFullProfile } from '../../../services/userService';
 import { logout } from '../../../actions/userAction';
 import UserLayout from '../../../layouts/UserLayout';
 import UpdateMatrimonial from '../../../components/ProfilePage/UpdateMatrimonial';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateMatrimonialPage = () => {
 
     const [userMatrimonial, setUserMatrimonial] = useState();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const getUserProfile = async () => {
         try {
@@ -19,13 +21,15 @@ const UpdateMatrimonialPage = () => {
             }
         } catch (error) {
             //Unauthorized
-            if (error.response && error.response.status === 401) {
-                dispatch(logout());
-                window.location.href = '/login';
-            } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
-                window.location.href = '/login';
-            }
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+        navigate('/login');
+      }
         }
     }
 

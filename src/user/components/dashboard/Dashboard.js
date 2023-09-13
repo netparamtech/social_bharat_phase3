@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   return (
     <div id="dashboard">
       <div className="container mt-5 mb-5">
@@ -17,7 +19,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a className="text-white stretched-link" href="/profile">View Report</a>
+                <a className="text-white stretched-link" href="#" onClick={()=>navigate('/profile')}>View Report</a>
                 <div className="text-white"><i className="fa-solid fa-arrow-right"></i></div>
               </div>
             </div>
@@ -68,7 +70,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a className="text-white stretched-link" href="/user/search">View Tasks</a>
+                <a className="text-white stretched-link" href="#" onClick={()=>navigate('/user/search')}>View Tasks</a>
                 <div className="text-white"><i className="fa-solid fa-arrow-right"></i></div>
               </div>
             </div>

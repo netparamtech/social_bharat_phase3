@@ -16,6 +16,7 @@ const CheckOtpToUpdateMobile = (props) => {
     const [errors, setErrors] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
 
@@ -51,7 +52,7 @@ const CheckOtpToUpdateMobile = (props) => {
                 window.location.href = '/profile';
             }
         } catch (error) {
-
+            //Unauthorized
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
 
@@ -60,12 +61,12 @@ const CheckOtpToUpdateMobile = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     }
@@ -80,19 +81,21 @@ const CheckOtpToUpdateMobile = (props) => {
                 handleResendOTP();
             }
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                dispatch(logout());
-                window.location.href = '/login';
+            //Unauthorized
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+
             }
+
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     }

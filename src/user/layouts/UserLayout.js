@@ -3,15 +3,10 @@ import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import Navbar from "../components/home/Navbar";
 import Footer from "../components/home/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoader } from "../actions/loaderAction";
 
 
 const UserLayout = ({ children }) => {
-  const isLoaderSet = useSelector((state) => state.loader.isLoaderSet); // Get the loader state from Redux
-  const dispatch = useDispatch();
     useEffect(() => {
-      dispatch(setLoader(true));
         // List of script sources
         const scriptSources = [
           'https://code.jquery.com/jquery-1.12.4.min.js','https://cdn.jsdelivr.net/npm/typed.js@2.0.12',
@@ -33,7 +28,6 @@ const UserLayout = ({ children }) => {
           document.body.appendChild(script);
           return script;
         });
-        dispatch(setLoader(false));
     
         // Clean up by removing the script elements when the component unmounts
         return () => {
@@ -41,59 +35,35 @@ const UserLayout = ({ children }) => {
             document.body.removeChild(script);
           });
         };
-        
-        
       }, []);
     
   return (
     <>
-      <Helmet>
-        <link rel="shortcut icon" href="/img/3.png" type="image/x-icon" />
+    <Helmet>
+        <link rel="shortcut icon" href="/img/3.png" type="image/x-icon"/>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+     {/* amimate Css CDN */}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+     {/* fontawsome  */}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    {/*  Slick  */}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    {/* Animate on scroll library CSS  */}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/user/css/user.css" />
+    
 
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-          crossorigin="anonymous"
-        />
-        {/* amimate Css CDN */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-        />
-        {/* fontawsome  */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        {/*  Slick  */}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-        />
-        {/* Animate on scroll library CSS  */}
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/aos@next/dist/aos.css"
-        />
-        <link rel="stylesheet" href="/user/css/user.css" />
-      </Helmet>
+    </Helmet>
 
-      <header>
+    <header>
         <Navbar />
-      </header>
-
-      {isLoaderSet ? ( // Conditionally render the loader based on the Redux state
-        <div className="loader">Loading...</div>
-      ) : (
-        // Your content when not loading
-        children
-      )}
-
-      <footer id="footer">
+    </header>
+    {children}
+    <footer id="footer">
         <Footer />
-      </footer>
+    </footer>
     </>
   );
 };

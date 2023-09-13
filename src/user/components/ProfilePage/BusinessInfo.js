@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 const BusinessInfo = (props) => {
   const { user } = props;
@@ -8,6 +9,7 @@ const BusinessInfo = (props) => {
   const [collapsedItems, setCollapsedItems] = useState([]); // State to control collapse/expand
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const businessPhotos =
     user &&
     user.data &&
@@ -51,7 +53,7 @@ const BusinessInfo = (props) => {
       <div className="container">
         <div className="card shadow ">
           <div className="edit-icon add-more-detail">
-            <a href="/user/update-business-profile" title="Add More Detail">
+            <a href="#" onClick={()=>navigate('/user/update-business-profile')} title="Add More Detail">
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
@@ -65,7 +67,7 @@ const BusinessInfo = (props) => {
                     <div className="col-md-6" key={value}>
                       <div className="card shadow">
                         <div className="edit-icon ">
-                          <a href="/user/update-business-profile" title="Edit">
+                          <a href="#" onClick={()=>navigate('/user/update-business-profile')} title="Edit">
                             <i className="fas fa-pencil-alt"></i>
                           </a>
                         </div>
@@ -192,8 +194,9 @@ const BusinessInfo = (props) => {
               ) : (
                 <div className="add-more-info ">
                   <a
-                    href="/user/update-business-profile"
+                    href="#"
                     className="btn btn-secondary"
+                    onClick={()=>navigate("/user/update-business-profile")}
                   >
                     Add Business Info
                   </a>

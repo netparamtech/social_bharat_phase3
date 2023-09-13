@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserLayout from '../layouts/UserLayout';
 import LoginWithMobile from '../components/login/LoginWithMobile';
 import LoginWithPassword from '../components/login/LoginWithPassword';
@@ -10,6 +10,10 @@ const LoginPage = () => {
     const chnageFlag = (value) => {
         setIsOtpLogin(value)
     }
+
+    useEffect(()=>{
+        
+    })
     return (
         <UserLayout>
             {

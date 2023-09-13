@@ -10,7 +10,7 @@ const MatrimonialInfo = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const proposalPhotos =
     user &&
     user.data &&
@@ -61,15 +61,16 @@ const MatrimonialInfo = (props) => {
         <div className="card shadow">
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
             <div className="edit-icon">
-              <a href="/user/update-matrimonial-profile" title="Edit">
+              <a href="#" onClick={()=>navigate("/user/update-matrimonial-profile")} title="Edit">
                 <i className="fas fa-pencil-alt"></i>
               </a>
             </div>
           ) : (
             <div className="edit-icon add-more-detail">
               <a
-                href="/user/update-matrimonial-profile"
+                href="#"
                 title="Add More Detail"
+                onClick={()=>navigate("/user/update-matrimonial-profile")}
               >
                 <i className="btn btn-outline-info fas fa-plus"></i>
               </a>
@@ -233,8 +234,9 @@ const MatrimonialInfo = (props) => {
             ) : (
               <div className="add-more-info ">
                 <a
-                  href="/user/update-matrimonial-profile"
+                  href="#"
                   className="btn btn-secondary"
+                  onClick={()=>navigate('/user/update-matrimonial-profile')}
                 >
                   Add Matrimonial Info
                 </a>

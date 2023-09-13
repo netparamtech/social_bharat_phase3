@@ -43,7 +43,7 @@ const ContactInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className={`edit-icon add-more-detail ${contactDetails && contactDetails.length > 1 ? 'd-none' : ''}`}>
-            <a href="/user/update-contact" title="Add More Detail">
+            <a href="#" onClick={()=>navigate('/user/update-contact')} title="Add More Detail">
               <i className="btn btn-outline-info fas fa-plus"></i></a>
           </div>
           <div className="card-body">
@@ -51,17 +51,17 @@ const ContactInfo = (props) => {
             <div className="row">
               {contactDetails && contactDetails.length > 0 ?
                 contactDetails.map((item, idx) => (
-                  <div className="col-md-6">
+                  <div className="col-md-6" key={idx}>
                     <div className="card shadow">
                       <div className="edit-icon">
-                        <a href={`/user/update-contact/${item.id}`} title="Edit">
+                        <a href="#" onClick={()=>navigate(`/user/update-contact/${item.id}`)} title="Edit">
                           <i className="fas fa-pencil-alt"></i>
                         </a>
                       </div>
                       <div className="delete-icon"><a href="" title="Delete" onClick={(e) => {
                         e.preventDefault();
                         deleteUserContact(item.id)
-                      }}><i class="fa-solid fa-trash" ></i></a></div>
+                      }}><i className="fa-solid fa-trash" ></i></a></div>
                       <div className="card-body">
                         <div className="w-100 w-lg-75">
                           <div className="mb-2 row">
@@ -77,7 +77,7 @@ const ContactInfo = (props) => {
                   </div>
                 )) : (
                   <div className="add-more-info ">
-                    <a href='/user/update-contact' className='btn btn-secondary'>Add Contact Info </a>
+                    <a href="#" onClick={()=>navigate('/user/update-contact')} className='btn btn-secondary'>Add Contact Info </a>
                   </div>
                 )}
 

@@ -43,7 +43,7 @@ const EducationInfo = (props) => {
     <div id="education-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="card shadow">
-        <div className="edit-icon add-more-detail"><a href="/user/update-education-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
+        <div className="edit-icon add-more-detail"><a href="#" onClick={()=>navigate('/user/update-education-profile')} title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
           <div className="card-body">
             <h5 className="fw-3 mb-3">Education Info</h5>
             <div className="row">
@@ -51,7 +51,7 @@ const EducationInfo = (props) => {
                 educationDetails.map((item, idx) => (
               <div className="col-md-6" key={idx}>
                 <div className="card shadow mt-2">
-                <div className="edit-icon"><a href={`/user/update-education-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                <div className="edit-icon"><a href="#" onClick={()=>navigate(`/user/update-education-profile/${item.id}`)} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                 <div className="delete-icon"><a href="" title="Delete"><i className="fa-solid fa-trash" onClick={()=>deleteUserEducationalDetails(item.id)}></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
@@ -88,7 +88,7 @@ const EducationInfo = (props) => {
 
             )) ) : (
               <div className="add-more-info ">
-                <a href='/user/update-education-profile' className='btn btn-secondary'>Add Education Info </a>
+                <a href="#" onClick={()=>navigate('/user/update-education-profile')} className='btn btn-secondary'>Add Education Info </a>
               </div>
             )}
               

@@ -34,7 +34,7 @@ const ChangePassword = () => {
             if (response && response.status === 200) {
 
                 setErrors('');
-                window.location.href = '/dashboard';
+                navigate('/dashboard');
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -42,15 +42,15 @@ const ChangePassword = () => {
             }
 
             //Unauthorized
-      else if (error.response && error.response.status === 401) {
-        dispatch(logout());
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        navigate('/login');
-      }
+            else if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                navigate('/login');
+            }
 
         }
     };

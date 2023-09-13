@@ -42,7 +42,7 @@ const JobInfo = (props) => {
     <div id="job-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
         <div className="card shadow">
-          <div className="edit-icon add-more-detail"><a href="/user/update-job-profile" title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
+          <div className="edit-icon add-more-detail"><a href="#" onClick={()=>navigate("/user/update-job-profile")} title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
           <div className="card-body">
             <h5 className="fw-3 mb-3">Job Info</h5>
             <div className="row">
@@ -50,7 +50,7 @@ const JobInfo = (props) => {
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow">
-                      <div className="edit-icon"><a href={`/user/update-job-profile/${item.id}`} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
+                      <div className="edit-icon"><a href="#" onClick={()=>navigate(`/user/update-job-profile/${item.id}`)} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                       <div className="delete-icon"><a href="" title="Delete" onClick={(e) => {
                         e.preventDefault();
                         deleteUserJobDetails(item.id)
@@ -90,7 +90,7 @@ const JobInfo = (props) => {
                 ))
               ) : (
                 <div className="add-more-info ">
-                <a href='/user/update-job-profile' className='btn btn-secondary'>Add Job Info </a>
+                <a href="#" onClick={()=>navigate('/user/update-job-profile')} className='btn btn-secondary'>Add Job Info </a>
               </div>
               )}
             </div>

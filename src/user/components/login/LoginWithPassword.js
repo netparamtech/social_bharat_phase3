@@ -36,9 +36,9 @@ const LoginWithPassword = (props) => {
                 dispatch(login(response.data.data, response.data.token));
 
                 if (response.data.data.is_password_set) {
-                    window.location.href = '/dashboard'
+                    navigate('/dashboard');
                 } else {
-                    window.location.href = '/setPassword'
+                    navigate('/setPassword');
                 }
             }
         } catch (error) {
@@ -48,12 +48,12 @@ const LoginWithPassword = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
                 dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
 
         }

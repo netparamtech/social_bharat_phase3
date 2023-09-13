@@ -37,7 +37,7 @@ const UserProfileDropdown = () => {
 
             if (response.status === 200) {
                 dispatch(logout());
-               window.location.href = "/login";
+                window.location.href = "/login";
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -50,71 +50,90 @@ const UserProfileDropdown = () => {
         }
     }
 
-    const menu = (
-        <Menu>
-            <Menu.ItemGroup title="">
-                <h6 className="dropdown-header d-flex align-items-center">
-                    <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
-                    <div className="dropdown-user-details">
-                        <div className="dropdown-user-details-name">{userName}</div>
-                        <div className="dropdown-user-details-email">{userEmail}</div>
-                    </div>
-                </h6>
-                <div className="dropdown-divider"></div>
-                <Menu.Item key="profile">
-                    <a href="#" onClick={() => navigate('/profile')}>
-                        <i className="fas fa-user-alt m-2"></i> Profile
-                    </a>
-                </Menu.Item>
-                <Menu.Item key="changePassword">
-                    <a href="#" onClick={() => navigate('/change-password')}>
-                        <i className="fas fa-key m-2"></i> Change Password
-                    </a>
-                </Menu.Item>
-                <Menu.Item key="settings">
-                    <a href="#!">
-                        <i className="fas fa-cog m-2"></i> Settings
-                    </a>
-                </Menu.Item>
-                <Menu.Item key="logout">
-                    <a href='#' onClick={(e) => {
-                        e.preventDefault();
-                        handleLogOutClick();
-                    }}>
-                        <i className="fas fa-sign-out m-2"></i> Logout
-                    </a>
-                </Menu.Item>
-            </Menu.ItemGroup>
-        </Menu>
-    );
+    const items = [
 
+        {
+            key: '1',
+            label: (
+                <>
+                    <h6 className="dropdown-header d-flex align-items-center">
+                        <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
+                        <div className="dropdown-user-details">
+                            <div className="dropdown-user-details-name">{userName}</div>
+                            <div className="dropdown-user-details-email">{userEmail}</div>
+                        </div>
+                    </h6>
+                    <div className="dropdown-divider"></div>
+                </>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <a href="#" onClick={() => navigate('/profile')}>
+                    <i className="fas fa-user-alt m-2"></i> Profile
+                </a>
+            ),
+        },
+
+        {
+            key: '3',
+            label: (
+                <a href="#" onClick={() => navigate('/change-password')}>
+                    <i className="fas fa-key m-2"></i> Change Password
+                </a>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <a href="#!">
+                    <i className="fas fa-cog m-2"></i> Settings
+                </a>
+            ),
+        },
+
+        {
+            key: '5',
+            label: (
+                <a href='#' onClick={(e) => {
+                    e.preventDefault();
+                    handleLogOutClick();
+                }}>
+                    <i className="fas fa-sign-out m-2"></i> Logout
+                </a>
+            ),
+        },
+    ]
 
     return (
-        <Dropdown
-            overlay={menu}
-            trigger={['hover']}
-            placement="bottomRight"
+    <Dropdown
+        menu={{
+            items,
+        }}
+        trigger={['hover']}
+        placement="bottomRight"
+    >
+        <a
+            className="btn btn-icon btn-transparent-dark"
+            onClick={(e) => e.preventDefault()}
         >
-            <a
-                className="btn btn-icon btn-transparent-dark"
-                onClick={(e) => e.preventDefault()}
-            >
-                {userName}
+            {userName}
 
-                {
-                    userProfile ? (
-                        <Avatar
-                            src={userProfile}
-                            alt={userName}
-                            size="large"
-                            className='m-2'
-                        />
-                    ) : (<button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>)
-                }
+            {
+                userProfile ? (
+                    <Avatar
+                        src={userProfile}
+                        alt={userName}
+                        size="large"
+                        className='m-2'
+                    />
+                ) : (<button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>)
+            }
 
-            </a>
-        </Dropdown>
-    );
+        </a>
+    </Dropdown>
+);
 };
 
 export default UserProfileDropdown;

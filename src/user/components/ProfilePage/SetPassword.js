@@ -47,8 +47,7 @@ const SetPassword = () => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
                 dispatch(login(updatedUser, token));
-                window.location.href = '/dashboard';
-                window.scrollTo(0, 0);
+                navigate('/dashboard');
             }
         } catch (error) {
             // Handle validation errors

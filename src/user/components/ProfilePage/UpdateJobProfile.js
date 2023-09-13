@@ -54,10 +54,10 @@ const UpdateJobProfile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       } else if (error.response && error.response.status === 500) {
        dispatch(logout());
-       window.location.href = '/login';
+       navigate('/login');
       }
     }
   };

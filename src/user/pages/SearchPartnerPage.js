@@ -1,4 +1,3 @@
-
 import SearchPartner from "../components/search/SearchPartner";
 import UserLayout from "../layouts/UserLayout";
 

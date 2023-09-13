@@ -570,7 +570,7 @@ a.btn.dropdown-toggle.show:focus {
   width: 38px;
   height: 36px;
   transition: 0.3s;
-  border: 1px solid #212529;
+  border: 1px solid #212529 ;
   color: #212529 !important;
 }
 
@@ -884,6 +884,7 @@ a.btn.dropdown-toggle.show:focus {
   height: 70px;
   background-position: center;
   background-size: cover;
+  object-fit: cover;
   background-image: url("/images/matrimonial-1.jpg");
   border-radius: 100%;
 }

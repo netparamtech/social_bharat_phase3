@@ -135,7 +135,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Mobile No</label>
                     <div className="col-sm-8"><span className="text-muted">{user && user.data && user.data.mobile}</span>
 
-                      <a href='/update-mobile'>
+                      <a href="#" onClick={()=>navigate('/update-mobile')}>
                         <button
                           className="btn btn-outline-info btn-sm ms-2"
                         >

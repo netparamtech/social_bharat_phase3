@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Suspense } from "react";
-
 import userRoutes from './user/routes';
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";

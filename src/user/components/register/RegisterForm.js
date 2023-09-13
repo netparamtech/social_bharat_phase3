@@ -4,6 +4,7 @@ import RegisterWithOtp from '../otp/RegisterWithOtp';
 import Select from 'react-select';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -16,6 +17,7 @@ const RegisterForm = () => {
   const [message, setMessage] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -65,10 +67,10 @@ const RegisterForm = () => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       } else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
 
 
@@ -138,7 +140,7 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mt-3">
                         <p className="fw-lighter fs-6">
-                          Already User? <a href="/login" className="text-primary text-decoration-none">Login</a>.
+                          Already User? <a href="#" className="text-primary text-decoration-none" onClick={()=>navigate('/login')}>Login</a>.
                         </p>
                       </div>
                     </form>

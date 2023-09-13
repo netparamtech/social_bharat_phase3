@@ -13,6 +13,7 @@ const LoginWithMobile = (props) => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -43,12 +44,12 @@ const LoginWithMobile = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        navigate('/login');
       }
     }
   }
@@ -70,44 +71,44 @@ const LoginWithMobile = (props) => {
                 {
                   !isLoginClicked && !isLoginClicked ? (
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
-                  <div className="row mb-3">
-                    <input
-                      type="text"
-                      name="mobile"
-                      id="mobile"
-                      placeholder="Enter your mobile number"
-                      className="form-control"
-                      onChange={handleMobileChange}
-                      autoFocus
+                      <div className="row mb-3">
+                        <input
+                          type="text"
+                          name="mobile"
+                          id="mobile"
+                          placeholder="Enter your mobile number"
+                          className="form-control"
+                          onChange={handleMobileChange}
+                          autoFocus
 
-                    />
-                    {errors.mobile && <span className='error'>{errors.mobile}</span>}
-                  </div>
-                  <div className="row mb-3">
-                    <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                      Login With OTP
-                    </button>
-                  </div>
-                  <div className="row">
-                    <div className="col-5 col-md-4">
-                      <hr />
-                    </div>
-                    <div className="col-2 col-md-4 text-center mt-1">OR</div>
-                    <div className="col-5 col-md-4">
-                      <hr />
-                    </div>
-                  </div>
-                  <div className="row mt-3">
-                    <a href="/login" className="btn btn-secondary">
-                      Login With PASSWORD
-                    </a>
-                  </div>
-                  <div className="row mt-3">
-                    <p className="fw-lighter fs-6">New User? <a href="/register" className="text-primary text-decoration-none">Signup</a>.</p>
-                  </div>
-                </form>
-                  ):(
-                    <LoginWithOtp mobile = {mobile} message = {message} />
+                        />
+                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                      </div>
+                      <div className="row mb-3">
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                          Login With OTP
+                        </button>
+                      </div>
+                      <div className="row">
+                        <div className="col-5 col-md-4">
+                          <hr />
+                        </div>
+                        <div className="col-2 col-md-4 text-center mt-1">OR</div>
+                        <div className="col-5 col-md-4">
+                          <hr />
+                        </div>
+                      </div>
+                      <div className="row mt-3">
+                        <a href="/login" className="btn btn-secondary">
+                          Login With PASSWORD
+                        </a>
+                      </div>
+                      <div className="row mt-3">
+                        <p className="fw-lighter fs-6">New User? <a href="#" className="text-primary text-decoration-none" onClick={() => navigate('/register')}>Signup</a>.</p>
+                      </div>
+                    </form>
+                  ) : (
+                    <LoginWithOtp mobile={mobile} message={message} />
                   )
                 }
 

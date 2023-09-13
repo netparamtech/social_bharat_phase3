@@ -54,8 +54,13 @@ const UpdateJobProfile = (props) => {
         dispatch(logout());
         window.location.href = "/login";
       } else if (error.response && error.response.status === 500) {
+<<<<<<< HEAD
         dispatch(logout());
         window.location.href = "/login";
+=======
+       dispatch(logout());
+       window.location.href = '/login';
+>>>>>>> 2fbc53ad3303fe40855ce26603ae53b2a94b11dc
       }
     }
   };

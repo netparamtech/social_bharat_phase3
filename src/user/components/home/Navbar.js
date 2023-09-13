@@ -4,17 +4,27 @@ import { useNavigate } from "react-router-dom";
 import { apiWithHeaders } from "../../axios/apiConfig";
 import { logout } from "../../actions/userAction";
 
+
 const Navbar = () => {
+<<<<<<< HEAD
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const [id, setId] = useState(user && user.user && user.user.id);
   const dispatch = useDispatch();
+=======
+    const user = useSelector((state) => state.userAuth);
+    const isAuthenticUser = user && user.isAuthenticated;
+    const [id, setId] = useState(user && user.user && user.user.id);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+>>>>>>> 2fbc53ad3303fe40855ce26603ae53b2a94b11dc
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userProfile, setUserProfile] = useState("");
   const [loggedButton, setLoggedButton] = useState("");
 
+<<<<<<< HEAD
   useEffect(() => {
     if (user && user.user) {
       setUserName(user.user.name || "");
@@ -23,9 +33,38 @@ const Navbar = () => {
       setLoggedButton(
         user.user.name ? user.user.name.charAt(0).toUpperCase() : ""
       );
+=======
+    useEffect(() => {
+        if (user && user.user) {
+            setUserName(user.user.name || '');
+            setUserEmail(user.user.email || '');
+            setUserProfile(user.user.photo || '');
+            setLoggedButton(user.user.name ? user.user.name.charAt(0).toUpperCase() : '');
+        }
+    }, [user]);
+
+    const handleLogOutClick = async () => {
+        try {
+            const response = await apiWithHeaders.post('/logout', { id });
+
+            if (response.status === 200) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                window.location.href = '/login';
+            } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
+                window.location.href = '/login';
+            }
+        }
+>>>>>>> 2fbc53ad3303fe40855ce26603ae53b2a94b11dc
     }
   }, [user]);
 
+<<<<<<< HEAD
   const handleLogOutClick = async () => {
     try {
       const response = await apiWithHeaders.post("/logout", { id });
@@ -101,6 +140,14 @@ const Navbar = () => {
               {isAuthenticUser && isAuthenticUser ? (
                 <a className="nav-link" href="/user/search">
                   Search
+=======
+    })
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="/">
+                    <img src="/user/images/logo.jpg" alt="Logo" />
+>>>>>>> 2fbc53ad3303fe40855ce26603ae53b2a94b11dc
                 </a>
               ) : (
                 ""
@@ -132,6 +179,7 @@ const Navbar = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
+<<<<<<< HEAD
                   {userProfile && userProfile ? (
                     <img
                       className="dropdown-user-img me-2"
@@ -206,5 +254,127 @@ const Navbar = () => {
     </nav>
   );
 };
+=======
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="#" onClick={()=>navigate('/')}>
+                                Home
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                About
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/dashboard">
+                                Services
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Promote Business
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Matrimonial
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Contact
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            {
+                                isAuthenticUser && isAuthenticUser ? (
+                                    <a className="nav-link" href="/user/search">
+                                        Search
+                                    </a>
+                                ) : ''
+                            }
+                        </li>
+
+                       
+                        {/* You can add more nav items here */}
+                    </ul>
+                    <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+                        {isAuthenticUser && isAuthenticUser ? '' : (
+                            <li className="nav-item">
+                                <a className="nav-link  btn-primary login-btn" href="#" onClick={() => navigate('/login')}>
+                                    Login
+                                </a>
+                            </li>
+                        )}
+                    </ul>
+
+                    <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+                            {
+                                isAuthenticUser && isAuthenticUser ? (
+                                    <a
+                                        className="btn btn-icon btn-transparent-dark dropdown-toggle"
+                                        id="navbarDropdownUserImage"
+                                        href="#"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >
+                                        {
+                                            userProfile && userProfile ? (<img className="dropdown-user-img me-2" src={userProfile} alt={userName} title={userName} />)
+                                                :
+                                                (<button type='button' className='dropdown-user-img-letter'>{loggedButton}</button>)
+                                        }
+
+
+                                    </a>
+                                ) : ''
+                            }
+                            <div
+                                className="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                                aria-labelledby="navbarDropdownUserImage"
+                                data-bs-popper="static"
+                            >
+                                <h6 className="dropdown-header d-flex align-items-center">
+                                    <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
+                                    <div className="dropdown-user-details">
+                                        <div className="dropdown-user-details-name">{userName}</div>
+                                        <div className="dropdown-user-details-email">{userEmail}</div>
+                                    </div>
+                                </h6>
+                                <div className="dropdown-divider"></div>
+                                <a className="dropdown-item" href='/profile'>
+                                    <div className="dropdown-item-icon"><i className="fas fa-user-alt"></i></div>
+                                    <span className="ms-2">Profile</span>
+                                </a>
+                                <a className="dropdown-item" href="/change-password">
+                                    <div className="dropdown-item-icon"><i className="fas fa-key"></i></div>
+                                    <span className="ms-2">Change Password</span>
+                                </a>
+                                <a className="dropdown-item" href="#!">
+                                    <div className="dropdown-item-icon"><i className="fas fa-cog"></i></div>
+                                    <span className="ms-2">Settings</span>
+                                </a>
+                                <a className="dropdown-item" href="#" onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLogOutClick();
+                                }}>
+                                    <div className="dropdown-item-icon"><i className="fas fa-sign-out"></i></div>
+                                    <span className="ms-2">Logout</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
+}
+>>>>>>> 2fbc53ad3303fe40855ce26603ae53b2a94b11dc
 
 export default Navbar;

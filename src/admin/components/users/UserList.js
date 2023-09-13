@@ -15,16 +15,12 @@ const UserList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-  useEffect(() => {
-    fetchData();
-  }, [page, size]);
-
   const fetchData = async () => {
     try {
       const response = await fetchAllUsers(page, size);
-
+      
       setData(response.data.data);
+      
       setTotalRows(response.data.totalRecords);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -203,6 +199,9 @@ const UserList = () => {
     )
   );
 
+  useEffect(() => {
+    fetchData();
+  }, [page, size]);
   return (
     <div>
       <DataTable

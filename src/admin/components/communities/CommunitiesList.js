@@ -35,6 +35,7 @@ const CommunitiesList = () => {
       const response = await updateCommunityStatus(communityId);
       if (response && response.status === 200) {
         fetchCommunities();
+        
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -53,6 +54,7 @@ const CommunitiesList = () => {
       if (response && response.status === 200) {
         // Fetch communities again to update the list
         fetchCommunities();
+        
       }
     } catch (error) {
       // Handle error cases
@@ -86,7 +88,7 @@ const CommunitiesList = () => {
             Create Community
           </a>
         </div>
-        <div className="card table-responsive">
+        <div className="card table-responsive p-3">
 
 
           <table id='community-list' className="table table-striped table-bordered">

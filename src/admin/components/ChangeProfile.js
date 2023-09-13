@@ -88,7 +88,7 @@ const ChangeProfile = (props) => {
       const response = await updateBasicProfile(data);
       if (response && response.status === 200) {
         dispatch(login(response.data.data, token));
-        window.location.href = "/admin/dashboard";
+       // window.location.href = "/admin/dashboard";
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

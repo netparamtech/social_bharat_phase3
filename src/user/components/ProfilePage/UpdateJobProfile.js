@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { updateJobDetail } from '../../services/userService';
-import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
+import React, { useEffect, useState } from "react";
+import { updateJobDetail } from "../../services/userService";
+import { ddmmyyyyFormat, yyyyMmDdFormat } from "../../util/DateConvertor";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/userAction";
 
 const UpdateJobProfile = (props) => {
   const { jobDetails } = props;
 
-  const [companyName, setCompanyName] = useState('');
-  const [designation, setDesignation] = useState('');
-  const [jobStartDate, setJobStartDate] = useState('');
-  const [jobEndDate, setJobEndDate] = useState('');
-  const [jobType, setJobType] = useState('');
+  const [companyName, setCompanyName] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [jobStartDate, setJobStartDate] = useState("");
+  const [jobEndDate, setJobEndDate] = useState("");
+  const [jobType, setJobType] = useState("");
 
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
 
   const dispatch = useDispatch();
 
@@ -21,8 +21,12 @@ const UpdateJobProfile = (props) => {
     e.preventDefault();
 
     // Map the selected job type back to "PART_TYPE" or "FULL_TYPE"
-    const mappedJobType = jobType === 'PART TIME' ? 'PART_TIME' : jobType === 'FULL TIME' ? 'FULL_TIME' : '';
-
+    const mappedJobType =
+      jobType === "PART TIME"
+        ? "PART_TIME"
+        : jobType === "FULL TIME"
+        ? "FULL_TIME"
+        : "";
 
     const jobProfileData = {
       company_name: companyName,
@@ -31,52 +35,49 @@ const UpdateJobProfile = (props) => {
       job_end_date: ddmmyyyyFormat(jobEndDate),
       job_type: mappedJobType,
     };
-    console.log(jobProfileData)
+    console.log(jobProfileData);
 
     try {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
-        setErrors('');
-        window.location.href = '/profile';
+        setErrors("");
+        window.location.href = "/profile";
       }
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         dispatch(logout());
-        window.location.href = '/login';
+        window.location.href = "/login";
       } else if (error.response && error.response.status === 500) {
         dispatch(logout());
-        window.location.href = '/login';
+        window.location.href = "/login";
       }
     }
-
   };
 
   useEffect(() => {
     // Set default values from jobDetails prop when it changes
     if (jobDetails) {
-      setCompanyName(jobDetails.company_name || '');
-      setDesignation(jobDetails.designation || '');
-      setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || '');
-      setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || '');
-      setJobType(jobDetails.job_type || '');
+      setCompanyName(jobDetails.company_name || "");
+      setDesignation(jobDetails.designation || "");
+      setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || "");
+      setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || "");
+      setJobType(jobDetails.job_type || "");
 
       // Set jobType based on job_type from jobDetails
-      if (jobDetails.job_type === 'PART_TIME') {
-        setJobType('PART TIME');
-      } else if (jobDetails.job_type === 'FULL_TIME') {
-        setJobType('FULL TIME');
+      if (jobDetails.job_type === "PART_TIME") {
+        setJobType("PART TIME");
+      } else if (jobDetails.job_type === "FULL_TIME") {
+        setJobType("FULL TIME");
       } else {
-        setJobType('');
+        setJobType("");
       }
     }
-
   }, [jobDetails]);
 
   return (
@@ -102,7 +103,9 @@ const UpdateJobProfile = (props) => {
                         defaultValue={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                       />
-                      {errors.company_name && <span className='error'>{errors.company_name}</span>}
+                      {errors.company_name && (
+                        <span className="error">{errors.company_name}</span>
+                      )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Designation</label>
@@ -115,7 +118,9 @@ const UpdateJobProfile = (props) => {
                         defaultValue={designation}
                         onChange={(e) => setDesignation(e.target.value)}
                       />
-                      {errors.designation && <span className='error'>{errors.designation}</span>}
+                      {errors.designation && (
+                        <span className="error">{errors.designation}</span>
+                      )}
                     </div>
                   </div>
 
@@ -131,7 +136,9 @@ const UpdateJobProfile = (props) => {
                         defaultValue={jobStartDate}
                         onChange={(e) => setJobStartDate(e.target.value)}
                       />
-                      {errors.job_start_date && <span className='error'>{errors.job_start_date}</span>}
+                      {errors.job_start_date && (
+                        <span className="error">{errors.job_start_date}</span>
+                      )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Job End Date</label>
@@ -144,7 +151,9 @@ const UpdateJobProfile = (props) => {
                         defaultValue={jobEndDate}
                         onChange={(e) => setJobEndDate(e.target.value)}
                       />
-                      {errors.job_end_date && <span className='error'>{errors.job_end_date}</span>}
+                      {errors.job_end_date && (
+                        <span className="error">{errors.job_end_date}</span>
+                      )}
                     </div>
                   </div>
 
@@ -161,7 +170,9 @@ const UpdateJobProfile = (props) => {
                         <option value="PART TIME">PART TIME</option>
                         <option value="FULL TIME">FULL TIME</option>
                       </select>
-                      {errors.job_type && <span className='error'>{errors.job_type}</span>}
+                      {errors.job_type && (
+                        <span className="error">{errors.job_type}</span>
+                      )}
                     </div>
                   </div>
                   <div className="row mt-4">

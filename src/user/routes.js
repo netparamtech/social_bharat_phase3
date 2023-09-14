@@ -16,6 +16,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
 import SearchPartnerPage from "./pages/SearchPartnerPage";
 import SearchBusinessPage from "./pages/SearchBusinessPage";
+import BlockUserPage from "./pages/BlockUserPage";
 
 
 const userRoutes = [
@@ -146,6 +147,11 @@ const userRoutes = [
         exact: true
     },
    
+    {
+        path: '/user/block',
+        component: BlockUserPage,
+        exact: true
+    },
 ]
 
 export default userRoutes;

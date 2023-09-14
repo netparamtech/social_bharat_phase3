@@ -65,3 +65,4 @@ $(window).scroll(function() {
       $('.navbar-transparent').removeClass('Sticky-top');
   }
 });
+

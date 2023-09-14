@@ -16,7 +16,6 @@ const UpdateDegree = () => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchDegrees = async () => {
@@ -32,10 +31,8 @@ const UpdateDegree = () => {
       
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -61,7 +58,7 @@ const UpdateDegree = () => {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         setTimeout(() => {
-          window.location.href = "/admin/degrees";
+          navigate('/admin/degrees')
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -72,10 +69,8 @@ const UpdateDegree = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -95,7 +90,7 @@ const UpdateDegree = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/degrees";
+            navigate('/admin/degrees')
           }}
         >
           View All Degree

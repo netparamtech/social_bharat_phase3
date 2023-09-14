@@ -4,7 +4,6 @@ import AdminLayout from "../../layouts/AdminLayout";
 import { fetchUserDetailsByClick } from "../../services/AdminService";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../actions/authActions";
 import MatrimonialInfo from "../../components/users/profile/MatrimonialInfo";
 import EducationInfo from "../../components/users/profile/EducationInfo";
 import ContactInfo from "../../components/users/profile/ContactInfo";
@@ -26,10 +25,8 @@ const ViewUser = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
         }

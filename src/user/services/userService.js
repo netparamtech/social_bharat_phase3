@@ -270,6 +270,28 @@ export const updateBusinessInfo = async (data) => {
     }
 }
 
+//fetch businessInfo by id
+export const fetchBusinessByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/businesses/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//delete business info
+export const deleteBusinessByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/businesses/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
+
 //delete matrimonial details
 export const deleteMatrimonial = async () => {
     try {
@@ -337,6 +359,16 @@ export const updateProfilePhoto = async(formData) => {
 export const searchPeopleWithSearchText = async(searchText) => {
     try{
         const response = await apiWithHeaders.get(`/users/search?q=${searchText}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//search business
+export const searchBusinessWithSearchText = async(searchText) => {
+    try{
+        const response = await apiWithHeaders.get(`/business/search?q=${searchText}`);
         return response;
     } catch(error) {
         throw error;

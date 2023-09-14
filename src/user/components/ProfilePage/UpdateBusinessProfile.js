@@ -113,7 +113,8 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const handleSelectCategoryChange = (selectedOption) => {
-    setBusinessCategory(selectedOption.value);
+    console.log(selectedOption)
+    setBusinessCategory(selectedOption.label);
   };
 
 
@@ -122,6 +123,7 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const handleSubmit = async (event) => {
+    console.log(businessCategory, "business");
 
     event.preventDefault();
     const businessData = {
@@ -134,10 +136,6 @@ const UpdateBusinessProfile = (props) => {
       contact1: contact1,
       contact2: contact2,
       contact3: contact3,
-      business_email: businessEmail,
-      business_website: businessWebsite,
-      business_photos: "", // Use the temporary URL
-      status: status,
     };
 
     console.log(businessData, "Business Data")
@@ -146,7 +144,7 @@ const UpdateBusinessProfile = (props) => {
       const response = await updateBusinessInfo(businessData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
@@ -157,12 +155,10 @@ const UpdateBusinessProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -237,12 +233,10 @@ const UpdateBusinessProfile = (props) => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -254,11 +248,13 @@ const UpdateBusinessProfile = (props) => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
       setBusinessName(businessDetails.business_name || '');
-      setBusinessCategory(businessDetails.business_category || '');
+      console.log(businessCategories,"gjhghj")
+      setBusinessCategory(businessCategories.find((category) => category.title === businessDetails.business_category) || '');
       setStreetAddress(businessDetails.street_address || '');
-      setSelectedCountry(businessDetails.country || '');
-      setSelectedState(businessDetails.state || '');
-      setSelectedCity(businessDetails.city || '');
+      setCountryID(businessDetails.country === 'India' ? 101 : ''); // Set the countryID accordingly
+      setSelectedCountry({ value: businessDetails.country, label: businessDetails.country }); // Set the selected country as an object
+      setSelectedState({ value: businessDetails.state, label: businessDetails.state }); // Set the selected state as an object
+      setSelectedCity({ value: businessDetails.city, label: businessDetails.city }); // Set the selected city as an object
       setContact1(businessDetails.contact1 || '');
       setContact2(businessDetails.contact2 || '');
       setContact3(businessDetails.contact3 || '');

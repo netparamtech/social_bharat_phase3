@@ -28,7 +28,6 @@ const CommunityUpdateForm = () => {
   const [bannerPreview, setBannerPreview] = useState(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
@@ -48,12 +47,10 @@ const CommunityUpdateForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }
        // Internal Server error
        else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -76,12 +73,10 @@ const CommunityUpdateForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }
       //internal server error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -105,7 +100,7 @@ const CommunityUpdateForm = () => {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         setTimeout(() => {
-          window.location.href = "/admin/communities";
+          navigate('/admin/communities')
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -116,10 +111,8 @@ const CommunityUpdateForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -140,10 +133,8 @@ const CommunityUpdateForm = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -162,7 +153,7 @@ const CommunityUpdateForm = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/communities";
+            navigate('/admin/communities');
           }}
         >
           View All Communities
@@ -220,17 +211,17 @@ const CommunityUpdateForm = () => {
                   <div className="col-sm-10">
                     <div className="form-group">
                       <label htmlFor="thumbnailImage">Thumbnail Image</label>
-                      <div class="input-group ">
-                        <div class="custom-file">
+                      <div className="input-group ">
+                        <div className="custom-file">
                           <input
                             type="file"
-                            class="custom-file-input"
+                            className="custom-file-input"
                             id="thumbnailImage"
                             onInput={handleThumbnailImageChange}
                           />
                           <label
-                            class="custom-file-label"
-                            for="inputGroupFile01"
+                            className="custom-file-label"
+                            htmlFor="inputGroupFile01"
                           >
                             Choose file
                           </label>
@@ -258,17 +249,17 @@ const CommunityUpdateForm = () => {
                   <div className="col-sm-10">
                     <div className="form-group">
                       <label htmlFor="bannerImage">Banner Image</label>
-                      <div class="input-group ">
-                        <div class="custom-file">
+                      <div className="input-group ">
+                        <div className="custom-file">
                           <input
                             type="file"
-                            class="custom-file-input"
+                            className="custom-file-input"
                             id="bannerImage"
                             onChange={handleBannerImageChange}
                           />
                           <label
-                            class="custom-file-label"
-                            for="inputGroupFile01"
+                            className="custom-file-label"
+                            htmlFor="inputGroupFile01"
                           >
                             Choose file
                           </label>

@@ -1,6 +1,5 @@
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import SettingPage from "./pages/SettingPage";
 import UsersIndex from "./pages/user/UsersIndex";
 import PasswordUpdatePage from "./pages/PasswordUpdatePage";
 import Community from "./pages/communities/create/Community";
@@ -32,7 +31,7 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/change-profile-picture',
+        path: '/admin/change-profile',
         component: ChangeProfilePage,
         exact: true
     },
@@ -53,12 +52,6 @@ const adminRoutes = [
     {
         path: '/admin/update-banner',
         component: UpdateBannerPage,
-        exact: true
-    },
-
-    {
-        path: '/admin/setting',
-        component: SettingPage,
         exact: true
     },
 

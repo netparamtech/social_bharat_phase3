@@ -10,7 +10,6 @@ const UpdateBannerPage = () => {
     const { bannerPage, bannerSection } = useParams();
     const [banner, setBanner] = useState({});
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const fetchBanner = async (page, section) => {
         try {
             const response = await fetchBannerWithPageAndSection(page, section);
@@ -21,10 +20,8 @@ const UpdateBannerPage = () => {
 
             //Unauthorized
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/admin');
             } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/admin');
             }
         }

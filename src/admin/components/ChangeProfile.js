@@ -8,7 +8,7 @@ import {
 } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../actions/authActions";
+import { login } from "../actions/authActions";
 
 const ChangeProfile = (props) => {
   const { user } = props;
@@ -53,11 +53,9 @@ const ChangeProfile = (props) => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -88,7 +86,7 @@ const ChangeProfile = (props) => {
       const response = await updateBasicProfile(data);
       if (response && response.status === 200) {
         dispatch(login(response.data.data, token));
-       // window.location.href = "/admin/dashboard";
+       navigate('/admin/dashboard');
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -96,10 +94,8 @@ const ChangeProfile = (props) => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/admin');
       }
     }

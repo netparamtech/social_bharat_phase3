@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { deleteBusinessByID } from "../../services/userService";
 
 const BusinessInfo = (props) => {
   const { user } = props;
@@ -16,24 +17,22 @@ const BusinessInfo = (props) => {
     user.data.businesses &&
     user.data.businesses.business_photos;
 
-  const deleteBusinessDetails = async () => {
-    // try {
-    //   const response = await deletebusinesses();
-    //   if (response && response.status === 200) {
-    //     setbusinessesDetails((prevDetails) =>
-    //       prevDetails.filter((detail) => detail.id !== user?.data?.businesses.id)
-    //     );
-    //   }
-    // } catch (error) {
-    //   //Unauthorized
-    //   if (error.response && error.response.status === 401) {
-    //     dispatch(logout());
-    //     window.location.href = '/login';
-    //   } else if (error.response && error.response.status === 500) {
-    //     dispatch(logout());
-    //     window.location.href = '/login';
-    //   }
-    // }
+  const deleteBusinessDetails = async (id) => {
+    try {
+      const response = await deleteBusinessByID(id);
+      if (response && response.status === 200) {
+        setBusinessDetails((prevDetails) =>
+          prevDetails.filter((detail) => detail.id !== id)
+        );
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
   };
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const BusinessInfo = (props) => {
                     <div className="col-md-6" key={value}>
                       <div className="card shadow">
                         <div className="edit-icon ">
-                          <a href="#" onClick={()=>navigate('/user/update-business-profile')} title="Edit">
+                          <a href="#" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">
                             <i className="fas fa-pencil-alt"></i>
                           </a>
                         </div>
@@ -77,7 +76,7 @@ const BusinessInfo = (props) => {
                               className="fa-solid fa-trash"
                               onClick={(e) => {
                                 e.preventDefault();
-                                deleteBusinessDetails();
+                                deleteBusinessDetails(item.id);
                               }}
                             ></i>
                           </a>

@@ -8,7 +8,6 @@ const DegreeList = () => {
   const [data, setData] = useState([]);
   const [errors, setErrors] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchDegrees = async () => {
@@ -25,10 +24,8 @@ const DegreeList = () => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -42,10 +39,8 @@ const DegreeList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -61,10 +56,8 @@ const DegreeList = () => {
     } catch (error) {
       // Handle error cases
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -79,8 +72,12 @@ const DegreeList = () => {
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Degree</h1>
         <a
-          href="/admin/degree/create"
+          href="#"
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/admin/degree/create');
+          }}
         >
           Create Degree
         </a>
@@ -119,7 +116,8 @@ const DegreeList = () => {
                     <div className="d-flex">
                       <a
                         className="collapse-item"
-                        href={`/admin/degree/update/${item.id}`}
+                        href="#"
+                        onClick={()=>navigate(`/admin/degree/update/${item.id}`)}
                       >
                         <i className="fa fa-edit mr-4" title="Edit" />
                       </a>

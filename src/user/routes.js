@@ -123,6 +123,12 @@ const userRoutes = [
     },
 
     {
+        path: '/user/update-business-profile/:id',
+        component: UpdateBusinessPage,
+        exact: true
+    },
+
+    {
         path: '/login-with-password',
         component: LoginWithPassword,
         exact: true

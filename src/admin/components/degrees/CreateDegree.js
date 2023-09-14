@@ -3,7 +3,6 @@ import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { createDegree } from "../../services/AdminService";
-import { logout } from "../../actions/authActions";
 
 const CreateDegree = () => {
   const [name, setName] = useState("");
@@ -14,7 +13,6 @@ const CreateDegree = () => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -37,10 +35,8 @@ const CreateDegree = () => {
         setStatus("");
         setShortName("");
 
-        // Reset file inputs
-
         setTimeout(() => {
-          window.location.href = "/admin/degrees";
+          navigate('/admin/degrees')
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -51,10 +47,8 @@ const CreateDegree = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -69,7 +63,7 @@ const CreateDegree = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/degrees";
+            navigate('/admin/degrees');
           }}
         >
           View All Degree

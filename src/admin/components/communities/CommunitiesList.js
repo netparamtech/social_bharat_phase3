@@ -19,11 +19,9 @@ const CommunitiesList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/admin');
       }
     }
@@ -39,10 +37,8 @@ const CommunitiesList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -59,10 +55,8 @@ const CommunitiesList = () => {
     } catch (error) {
       // Handle error cases
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       }else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -82,7 +76,7 @@ const CommunitiesList = () => {
           <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
             onClick={(e) => {
               e.preventDefault();
-              window.location.href = '/admin/create/community';
+              navigate('/admin/create/community')
             }}
           >
             Create Community
@@ -137,7 +131,7 @@ const CommunitiesList = () => {
                     <div className="d-flex">
                       <a className="collapse-item" href="#" onClick={(e) => {
                         e.preventDefault(); // Prevent the default anchor tag behavior
-                        window.location.href = `/admin/update/community/${item.id}`;
+                        navigate(`/admin/update/community/${item.id}`);
                       }}>
                         <i className="fa fa-edit mr-4" title='Edit' />
                       </a>

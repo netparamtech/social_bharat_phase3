@@ -13,7 +13,6 @@ const UserList = () => {
 
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
@@ -24,11 +23,9 @@ const UserList = () => {
       setTotalRows(response.data.totalRecords);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -50,11 +47,9 @@ const UserList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -113,7 +108,7 @@ const UserList = () => {
       name: 'Actions',
       cell: (row) => (
         <div>
-          <a className="collapse-item" href={`/users/view/${row.id}`}>
+          <a className="collapse-item" href="#" onClick={()=>navigate(`/users/view/${row.id}`)}>
             <i className="fas fa-eye"></i>
           </a>
           {row.status === 'Active' ? (

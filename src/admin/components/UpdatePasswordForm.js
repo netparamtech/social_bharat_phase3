@@ -44,10 +44,11 @@ const UpdatePasswordForm = () => {
         console.log(error.response.data.message);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
+        navigate('/admin');
       }
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate('/admin')
+        navigate('/admin');
       }
       //Conflict
       else if (error.response && error.response.status === 409) {
@@ -55,6 +56,7 @@ const UpdatePasswordForm = () => {
         setErrors(error.response.data.errors);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
+        navigate('/admin');
       }
     }
   };

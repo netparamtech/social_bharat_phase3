@@ -2,14 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate();
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
-      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/dashboard">
+      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/dashboard');
+            }}>
         <div className="sidebar-brand-icon ">
           <img src="/user/images/logo.jpg" width='100px' />
         </div>
-        <div className="sidebar-brand-text mx-3">SCOCIAL BHARAT </div>
       </a>
 
       {/* Divider */}
@@ -17,7 +20,10 @@ function Sidebar() {
 
       {/* Nav Item - Dashboard */}
       <li className="nav-item active">
-        <a className="nav-link" href="/admin/dashboard">
+        <a className="nav-link" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/dashboard');
+            }}>
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -44,8 +50,14 @@ function Sidebar() {
         <div id="collapseCommunity" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="/admin/communities">List</a>
-            <a className="collapse-item" href="/admin/create/community">Create</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/communities');
+            }}>List</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/create/community');
+            }}>Create</a>
 
           </div>
         </div>
@@ -65,7 +77,7 @@ function Sidebar() {
 
             <a className="collapse-item" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
-              window.location.href = '/admin/users';
+              navigate('/admin/users');
             }}>
               List
             </a>
@@ -88,8 +100,14 @@ function Sidebar() {
         <div id="collapseBanner" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="/admin/banners">List</a>
-            <a className="collapse-item" href="/admin/banner/create">Create</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/banners');
+            }}>List</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/banner/create');
+            }}>Create</a>
 
           </div>
         </div>
@@ -107,8 +125,14 @@ function Sidebar() {
         <div id="collapseDegree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
 
-            <a className="collapse-item" href="/admin/degrees">List</a>
-            <a className="collapse-item" href="/admin/degree/create">Create</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/degrees');
+            }}>List</a>
+            <a className="collapse-item" href="#" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/degree/create');
+            }}>Create</a>
 
           </div>
         </div>
@@ -126,27 +150,18 @@ function Sidebar() {
       <div id="collapseBusiness" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div className="bg-white py-2 collapse-inner rounded">
 
-          <a className="collapse-item" href="/admin/business-categories">List</a>
-          <a className="collapse-item" href="/admin/business-categories/create">Create</a>
+          <a className="collapse-item" href="" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/business-categories');
+            }} >List</a>
+          <a className="collapse-item" href="#"  onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/business-categories/create');
+            }}>Create</a>
 
         </div>
       </div>
     </li>
-
-
-      {/* Divider */}
-      <hr className="sidebar-divider" />
-
-
-      <li className="nav-item">
-        <a className="nav-link" href="/admin/setting">
-          <i className="fas fa-fw fa-cog"></i>
-          <span>Setting</span>
-        </a>
-      </li>
-
-      {/* Divider */}
-      <hr className="sidebar-divider d-none d-md-block" />
 
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">

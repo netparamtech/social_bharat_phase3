@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { login } from '../services/AdminService';
 import { useDispatch } from 'react-redux';
-import {login as adminlogin} from '../actions/authActions';
+import {login as adminlogin, logout} from '../actions/authActions';
 import { useNavigate } from 'react-router';
 
 const LoginForm = () => {
@@ -37,7 +37,7 @@ const LoginForm = () => {
         dispatch(adminlogin(response.data.user, response.data.token));
         
         setTimeout(() => {
-          window.location.href = '/admin/dashboard';
+          navigate('/admin/dashboard')
         }, 1000);
       }
     } catch(error) {
@@ -51,14 +51,20 @@ const LoginForm = () => {
       else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
+        navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
+        navigate('/admin');
       }
      
     }
   }
+
+  useEffect(()=>{
+    dispatch(logout());
+  },[]);
   return (
     <form className="user" onSubmit={handleSubmit}>
       {message && <div className={`alert ${alertClass}`}>

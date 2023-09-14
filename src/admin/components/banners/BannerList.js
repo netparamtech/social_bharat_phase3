@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchAllBanners, updateBannerToggleStatus } from '../../services/AdminService';
-import { logout } from '../../actions/authActions';
 
 const BannerList = () => {
     const [data, setData] = useState([]);
@@ -22,16 +21,13 @@ const BannerList = () => {
             if (error.response && error.response.status === 400) {
                 console.log(error.response.data.message);
                 setErrors(error.response.data.errors);
-
             }
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/admin');
             }
             else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/admin');
             }
 
@@ -46,10 +42,8 @@ const BannerList = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/admin');
             } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/admin');
             }
         }
@@ -65,7 +59,7 @@ const BannerList = () => {
         <div className="container-fluid">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Banners</h1>
-                <a href="/admin/banner/create" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onClick={()=>navigate('/admin/banner/create')}>
                     Create Banner
                 </a>
             </div>
@@ -118,7 +112,7 @@ const BannerList = () => {
                                     </td>
                                     <td key={item.id}>
                                         <div className="d-flex">
-                                            <a className="collapse-item" href={`/admin/banners/update/${item.page}/${item.section}`}>
+                                            <a className="collapse-item" href="#" onClick={()=>navigate(`/admin/banners/update/${item.page}/${item.section}`)}>
                                                 <i className="fa fa-edit mr-4" title="Edit" />
                                             </a>
 

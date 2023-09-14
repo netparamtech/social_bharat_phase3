@@ -82,4 +82,36 @@
     box-shadow: none;
     outline: none;
   }
+
+  .dropdown-admin-img {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 1rem;
+    border-radius: 100%;
+  }
+
+  .dropdown-user-details-name {
+    color: #212832;
+    font-weight: 500;
+    font-size: 0.9rem;
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .dropdown-user-details-email {
+    color: #69707a;
+    font-size: 0.75rem;
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dropdown-header {
+    color: #a7aeb8;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
  

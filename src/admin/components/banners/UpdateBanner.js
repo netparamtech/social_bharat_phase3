@@ -6,7 +6,6 @@ import {
   uploadMultipleImages,
 } from "../../services/AdminService";
 import { useDispatch } from "react-redux";
-import { logout } from "../../actions/authActions";
 
 const UpdateBanner = (props) => {
   const { banner } = props;
@@ -56,10 +55,8 @@ const UpdateBanner = (props) => {
     } catch (error) {
       // Handle error or show an error message
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -117,7 +114,7 @@ const UpdateBanner = (props) => {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         setTimeout(() => {
-          window.location.href = "/admin/banners";
+          navigate('/admin/banners');
         }, 1000);
       }
     } catch (error) {
@@ -127,11 +124,9 @@ const UpdateBanner = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -172,7 +167,7 @@ const UpdateBanner = (props) => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/banners";
+            navigate('/admin/banners');
           }}
         >
           View All Banners
@@ -195,17 +190,17 @@ const UpdateBanner = (props) => {
                 )}
                 <div className="form-group">
                   <label htmlFor="bannerUrl">Banner Url</label>
-                  <div class="input-group ">
-                    <div class="custom-file">
+                  <div className="input-group ">
+                    <div className="custom-file">
                       <input
                         type="file"
-                        class="custom-file-input"
+                        className="custom-file-input"
                         accept=".png, .jpg, .jpeg"
                         id="bannerUrl"
                         onChange={handleBannerChange}
                         multiple
                       />
-                      <label class="custom-file-label" for="inputGroupFile01">
+                      <label className="custom-file-label" htmlFor="inputGroupFile01">
                         Choose file
                       </label>
                     </div>

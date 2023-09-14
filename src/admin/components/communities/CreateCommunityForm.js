@@ -100,7 +100,7 @@ const CreateCommunityForm = () => {
         bannerImageRef.current.value = null;
 
         setTimeout(() => {
-          window.location.href = "/admin/communities";
+          navigate('/admin/communities')
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -111,11 +111,9 @@ const CreateCommunityForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
 
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -130,7 +128,7 @@ const CreateCommunityForm = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/communities";
+            navigate('/admin/communities')
           }}
         >
           View All Communities
@@ -184,17 +182,17 @@ const CreateCommunityForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="thumbnailImage">Thumbnail Image</label>
-                  <div class="input-group mb-3">
-                    <div class="custom-file">
+                  <div className="input-group mb-3">
+                    <div className="custom-file">
                       <input
                         type="file"
-                        class="custom-file-input community-images"
+                        className="custom-file-input community-images"
                         id="thumbnailImage"
                         ref={thumbnailImageRef}
                         accept="image/jpeg,image/jpg,image/png"
                         onChange={handleThumbnailImageChange}
                       />
-                      <label class="custom-file-label" for="inputGroupFile01">
+                      <label className="custom-file-label" htmlFor="inputGroupFile01">
                         Choose file
                       </label>
                     </div>
@@ -207,17 +205,17 @@ const CreateCommunityForm = () => {
 
                 <div className="form-group">
                   <label htmlFor="bannerImage">Banner Image</label>
-                  <div class="input-group mb-3">
-                    <div class="custom-file">
+                  <div className="input-group mb-3">
+                    <div className="custom-file">
                       <input
                         type="file"
-                        class="custom-file-input community-images"
+                        className="custom-file-input community-images"
                         id="bannerImage"
                         ref={bannerImageRef}
                     accept="image/jpeg,image/jpg,image/png"
                     onChange={handleBannerImageChange}
                       />
-                      <label class="custom-file-label" for="inputGroupFile01">
+                      <label className="custom-file-label" htmlFor="inputGroupFile01">
                         Choose file
                       </label>
                     </div>

@@ -131,14 +131,14 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
-                    <div className="text-white-75 small">Task Completion</div>
-                    <div className="text-lg fw-bold">24</div>
+                    <div className="text-white-75 small">Making Money</div>
+                    <div className="text-lg fw-bold">Search Business</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check-square feather-xl text-white-50"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a className="text-white stretched-link" href="#!">View Tasks</a>
+                <a className="text-white stretched-link" href="#!" onClick={()=>navigate('/user/search/business')}>View Tasks</a>
                 <div className="text-white"><i className="fa-solid fa-arrow-right"></i></div>
               </div>
             </div>

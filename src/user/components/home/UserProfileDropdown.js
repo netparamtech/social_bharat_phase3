@@ -87,7 +87,7 @@ const UserProfileDropdown = () => {
         {
             key: '2',
             label: (
-                <a href="#" onClick={handleProfileClick}>
+                <a href="#" className="text-decoration-none" onClick={handleProfileClick}>
                     <i className="fas fa-user-alt m-2"></i> Profile
                 </a>
             ),
@@ -96,7 +96,7 @@ const UserProfileDropdown = () => {
         {
             key: '3',
             label: (
-                <a href="#" onClick={handleChangePasswordClick}>
+                <a href="#" className="text-decoration-none" onClick={handleChangePasswordClick}>
                     <i className="fas fa-key m-2"></i> Change Password
                 </a>
             ),
@@ -104,7 +104,7 @@ const UserProfileDropdown = () => {
         {
             key: '4',
             label: (
-                <a href="#!">
+                <a href="#!" className="text-decoration-none">
                     <i className="fas fa-cog m-2"></i> Settings
                 </a>
             ),
@@ -113,7 +113,7 @@ const UserProfileDropdown = () => {
         {
             key: '5',
             label: (
-                <a href='#' onClick={(e) => {
+                <a href='#' className="text-decoration-none" onClick={(e) => {
                     e.preventDefault();
                     handleLogOutClick();
                 }}>
@@ -132,7 +132,7 @@ const UserProfileDropdown = () => {
             placement="bottomRight"
         >
             <a
-                className="btn btn-icon btn-transparent-dark"
+                className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary "
                 onClick={(e) => e.preventDefault()}
             >
                 {userName}

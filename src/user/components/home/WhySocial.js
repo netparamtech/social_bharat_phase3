@@ -42,20 +42,18 @@ const WhySocial = () => {
                 <div className="row">
                     <div className="col-lg-6 col-md-6 mt-5 what-social-bharat wow animate__animated animate__fadeInUp">
                         <h1>What social Bharat Do?</h1>
-                        <p>A community is a social group where people share
-                            things in common, like their geographic location,
-                            culture, heritage, government, religion, values,
-                            identity, work, or other common interests. Community
-                            is the thread that brings people together.</p>
+                        <p>Social Bharat: Connecting Communities with Privacy & Matrimonial Excellence</p>
                         <ul>
-                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>Allow
-                                you to respond to change</li>
-                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>Lead
-                                to a new viewpoint</li>
-                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>Make
-                                you a better communicator</li>
-                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>Lead
-                                to a new viewpoint</li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Bridging Communities: Uniting Diverse Individuals Online.    
+                            </li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Secure Connections: Private Sharing in Chosen Communities.
+                            </li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Matrimonial Excellence: Find Life Partners with Privacy.</li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Safety & Data Protection: Social Bharat's Top Priorities. </li>
                         </ul>
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">

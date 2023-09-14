@@ -6,6 +6,7 @@ function Sidebar() {
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
+<<<<<<< HEAD
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               navigate('/admin/dashboard');
@@ -13,6 +14,13 @@ function Sidebar() {
         <div className="sidebar-brand-icon ">
           <img src="/user/images/logo.jpg" width='100px' />
         </div>
+=======
+      <a className="sidebar-brand" href="/admin/dashboard">
+        <div className="sidebar-brand-icon img-fluid">
+          <img src="/user/images/logo.jpg"  />
+        </div>
+        
+>>>>>>> a26e6723a5cf0c7c508590b07c905ad9651af821
       </a>
 
       {/* Divider */}

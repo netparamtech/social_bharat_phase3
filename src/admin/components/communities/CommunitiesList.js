@@ -90,8 +90,8 @@ const CommunitiesList = () => {
               <tr>
                 <th scope="col">S.No</th>
                 <th scope="col">Title</th>
-                <th scope="col">Thumbnail_Image</th>
-                <th scope="col">Banner_Image</th>
+                <th scope="col">Thumbnail Image</th>
+                <th scope="col">Banner Image</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>

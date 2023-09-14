@@ -8,9 +8,7 @@ const Footer = () => {
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
             <p>
-              Cras fermentum odio eu feugiat lide par naso tierra. Justo eget
-              nada terra videa magna derita valies darta donna mare fermentum
-              iaculis eu non diam phasellus.
+            The platform prioritizes privacy, ensuring that personal information remains protected from strangers.
             </p>
             <div className="social-links">
               <a href="#" className="twitter">
@@ -72,21 +70,21 @@ const Footer = () => {
                 {" "}
                 <a href="#" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Cast
+                 Business Promotion
                 </a>{" "}
               </li>
               <li >
                 {" "}
                 <a href="#" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Functions
+                 Find Life Partner
                 </a>
               </li>
               <li>
                 {" "}
                 <a href="#" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  About
+                  Connect With Community
                 </a>
               </li>
             </ul>

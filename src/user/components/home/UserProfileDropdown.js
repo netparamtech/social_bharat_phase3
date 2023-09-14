@@ -15,6 +15,7 @@ const UserProfileDropdown = () => {
     const user = useSelector((state) => state.userAuth);
     const [id, setId] = useState(user && user.user && user.user.id);
     const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
+    const isPasswordSet = user && user.user && user.user.is_password_set;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -31,6 +32,22 @@ const UserProfileDropdown = () => {
             setLoggedUserFirstLatter(user.user.name.charAt(0).toUpperCase());
         }
     }, [user]);
+
+    const handleProfileClick = async () => {
+        if(isPasswordSet){
+            navigate('/profile');
+        }else {
+            navigate('/set-password');
+        }
+    }
+
+    const handleChangePasswordClick = async () => {
+        if(isPasswordSet){
+            navigate('/change-password');
+        }else {
+            navigate('/set-password');
+        }
+    }
     const handleLogOutClick = async () => {
         try {
             const response = await userLogout(id);
@@ -70,7 +87,7 @@ const UserProfileDropdown = () => {
         {
             key: '2',
             label: (
-                <a href="#" onClick={() => navigate('/profile')}>
+                <a href="#" onClick={handleProfileClick}>
                     <i className="fas fa-user-alt m-2"></i> Profile
                 </a>
             ),
@@ -79,7 +96,7 @@ const UserProfileDropdown = () => {
         {
             key: '3',
             label: (
-                <a href="#" onClick={() => navigate('/change-password')}>
+                <a href="#" onClick={handleChangePasswordClick}>
                     <i className="fas fa-key m-2"></i> Change Password
                 </a>
             ),

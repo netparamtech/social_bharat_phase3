@@ -347,6 +347,7 @@ export const fetchAllCitiesByStateID = async(stateID) => {
 //update profile image
 
 export const updateProfilePhoto = async(formData) => {
+
     try{
         const response = await apiWithFileHeaders.post('/profile/update-profile-picture',formData);
         return response;

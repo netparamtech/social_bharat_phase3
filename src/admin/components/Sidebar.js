@@ -6,21 +6,20 @@ function Sidebar() {
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       {/* Sidebar - Brand */}
-<<<<<<< HEAD
+
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#" onClick={(e) => {
-              e.preventDefault(); // Prevent the default anchor tag behavior
-              navigate('/admin/dashboard');
-            }}>
+        e.preventDefault(); // Prevent the default anchor tag behavior
+        navigate('/admin/dashboard');
+      }}>
         <div className="sidebar-brand-icon ">
           <img src="/user/images/logo.jpg" width='100px' />
         </div>
-=======
+      </a>
       <a className="sidebar-brand" href="/admin/dashboard">
         <div className="sidebar-brand-icon img-fluid">
-          <img src="/user/images/logo.jpg"  />
+          <img src="/user/images/logo.jpg" />
         </div>
-        
->>>>>>> a26e6723a5cf0c7c508590b07c905ad9651af821
+
       </a>
 
       {/* Divider */}
@@ -29,9 +28,9 @@ function Sidebar() {
       {/* Nav Item - Dashboard */}
       <li className="nav-item active">
         <a className="nav-link" href="#" onClick={(e) => {
-              e.preventDefault(); // Prevent the default anchor tag behavior
-              navigate('/admin/dashboard');
-            }}>
+          e.preventDefault(); // Prevent the default anchor tag behavior
+          navigate('/admin/dashboard');
+        }}>
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -146,30 +145,30 @@ function Sidebar() {
         </div>
       </li>
 
-            {/* <!-- Nav Item - Business Categories Collapse Menu --> */}
+      {/* <!-- Nav Item - Business Categories Collapse Menu --> */}
       <li className="nav-item">
-      <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBusiness"
-        aria-expanded="true" aria-controls="collapseBusiness">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBusiness"
+          aria-expanded="true" aria-controls="collapseBusiness">
 
-        <i className="fas fa-business-time" fill="currentColor"></i>
+          <i className="fas fa-business-time" fill="currentColor"></i>
 
-        <span className='m-2'>Business Categorie</span>
-      </a>
-      <div id="collapseBusiness" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div className="bg-white py-2 collapse-inner rounded">
+          <span className='m-2'>Business Categorie</span>
+        </a>
+        <div id="collapseBusiness" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
 
-          <a className="collapse-item" href="" onClick={(e) => {
+            <a className="collapse-item" href="" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               navigate('/admin/business-categories');
             }} >List</a>
-          <a className="collapse-item" href="#"  onClick={(e) => {
+            <a className="collapse-item" href="#" onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               navigate('/admin/business-categories/create');
             }}>Create</a>
 
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
 
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">

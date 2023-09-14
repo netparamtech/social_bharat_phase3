@@ -84,6 +84,7 @@ const BasicProfile = (props) => {
                   title=""
                   onClick={handleImageClick}
                 />
+                
 
                 <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">
                   <div className="text-profilepic text-success">
@@ -99,11 +100,23 @@ const BasicProfile = (props) => {
                     </div>
                   </div>
                 </div>
+                
               </div>
+              
               <div className="card-body ">
                 <p className="card-text text-center mb-0">{user && user.data && user.data.name}</p>
                 <p className="card-text text-center text-muted"></p>
               </div>
+              <div className='inline-block-flex'>
+                <img
+                className="img-fluid max-width-100 w-25 p-2"
+                src={imagePreview || profileImage}
+                alt=""
+                title=""
+                onClick={handleImageClick}
+              /> 
+              <span>Community Name</span>
+                </div>
             </div>
           </div>
           <div className="col-md-9">

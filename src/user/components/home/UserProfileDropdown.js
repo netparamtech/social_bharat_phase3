@@ -84,8 +84,25 @@ const UserProfileDropdown = () => {
                 </>
             ),
         },
+
         {
             key: '2',
+            label: (
+                <>
+                    <h6 className="dropdown-header d-flex align-items-center">
+                        <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
+                        <div className="dropdown-user-details">
+                            <div className="dropdown-user-details-name">Community Name</div>
+                            
+                        </div>
+                    </h6>
+                    <div className="dropdown-divider"></div>
+                </>
+            ),
+        },
+
+        {
+            key: '3',
             label: (
                 <a href="#" className="text-decoration-none" onClick={handleProfileClick}>
                     <i className="fas fa-user-alt m-2"></i> Profile
@@ -94,7 +111,7 @@ const UserProfileDropdown = () => {
         },
 
         {
-            key: '3',
+            key: '4',
             label: (
                 <a href="#" className="text-decoration-none" onClick={handleChangePasswordClick}>
                     <i className="fas fa-key m-2"></i> Change Password
@@ -102,7 +119,7 @@ const UserProfileDropdown = () => {
             ),
         },
         {
-            key: '4',
+            key: '5',
             label: (
                 <a href="#!" className="text-decoration-none">
                     <i className="fas fa-cog m-2"></i> Settings
@@ -111,7 +128,7 @@ const UserProfileDropdown = () => {
         },
 
         {
-            key: '5',
+            key: '6',
             label: (
                 <a href='#' className="text-decoration-none" onClick={(e) => {
                     e.preventDefault();

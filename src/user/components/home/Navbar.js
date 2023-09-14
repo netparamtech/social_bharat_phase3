@@ -6,12 +6,31 @@ import UserProfileDropdown from './UserProfileDropdown';
 const Navbar = () => {
     const user = useSelector((state) => state.userAuth);
     const isAuthenticUser = user && user.isAuthenticated; 
+    const isPasswordSet = user && user.user && user.user.is_password_set;
 
     const navigate = useNavigate();
 
-    const handleClick = ()=> {
+    const handleServiceClick = ()=> {
         if(isAuthenticUser){
-            navigate('/dashboard');
+            if(isPasswordSet){
+                navigate('/dashboard');
+            }else {
+                navigate('/set-password');
+            }
+            
+        }else{
+            alert("You are not authorized to access.")
+        }
+    }
+
+    const handleSearchClick = ()=> {
+        if(isAuthenticUser){
+            if(isPasswordSet){
+                navigate('/user/search');
+            }else {
+                navigate('/set-password');
+            }
+            
         }else{
             alert("You are not authorized to access.")
         }
@@ -47,7 +66,7 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#" onClick={handleClick} >
+                            <a className="nav-link" href="#" onClick={handleServiceClick} >
                                 Services
                             </a>
                         </li>
@@ -71,7 +90,7 @@ const Navbar = () => {
                         <li className="nav-item">
                             {
                                 isAuthenticUser && isAuthenticUser ? (
-                                    <a className="nav-link" href="#" onClick={()=>navigate('/user/search')}>
+                                    <a className="nav-link" href="#" onClick={handleSearchClick}>
                                         Search
                                     </a>
                                 ) : ''

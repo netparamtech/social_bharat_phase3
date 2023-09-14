@@ -36,8 +36,8 @@ const UserProfileDropdown = () => {
             const response = await userLogout(id);
 
             if (response.status === 200) {
-                dispatch(logout());
-                window.location.href = "/login";
+               
+                navigate('/login');
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -107,33 +107,33 @@ const UserProfileDropdown = () => {
     ]
 
     return (
-    <Dropdown
-        menu={{
-            items,
-        }}
-        trigger={['hover']}
-        placement="bottomRight"
-    >
-        <a
-            className="btn btn-icon btn-transparent-dark"
-            onClick={(e) => e.preventDefault()}
+        <Dropdown
+            menu={{
+                items,
+            }}
+            trigger={['hover']}
+            placement="bottomRight"
         >
-            {userName}
+            <a
+                className="btn btn-icon btn-transparent-dark"
+                onClick={(e) => e.preventDefault()}
+            >
+                {userName}
 
-            {
-                userProfile ? (
-                    <Avatar
-                        src={userProfile}
-                        alt={userName}
-                        size="large"
-                        className='m-2'
-                    />
-                ) : (<button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>)
-            }
+                {
+                    userProfile ? (
+                        <Avatar
+                            src={userProfile}
+                            alt={userName}
+                            size="large"
+                            className='m-2'
+                        />
+                    ) : (<button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>)
+                }
 
-        </a>
-    </Dropdown>
-);
+            </a>
+        </Dropdown>
+    );
 };
 
 export default UserProfileDropdown;

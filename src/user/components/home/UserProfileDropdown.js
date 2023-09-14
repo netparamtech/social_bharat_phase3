@@ -132,7 +132,7 @@ const UserProfileDropdown = () => {
             placement="bottomRight"
         >
             <a
-                className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-white "
+                className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary "
                 onClick={(e) => e.preventDefault()}
             >
                 {userName}

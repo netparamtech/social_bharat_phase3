@@ -55,8 +55,13 @@ duration: 1500,
 once: false,
 });
 
+// ----- OnScroll Navbar transparent -------
 
-
-
-
-// ................
+$(window).scroll(function() {
+  console.log('Scrolling');
+  if ($(this).scrollTop() > 50) {
+      $('.navbar-transparent').addClass('Sticky-top');
+  } else {
+      $('.navbar-transparent').removeClass('Sticky-top');
+  }
+});

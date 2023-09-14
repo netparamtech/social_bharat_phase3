@@ -69,17 +69,34 @@ nav .nav-item .btn{
 /* Transparent Navbar */
 .navbar-transparent {
   background-color: transparent !important;
+  background-color: #ffffff !important;
+
 }
 
+.navbar-transparent.Sticky-top {
+  /* background-color: #eae6de !important; */
+  background-color: #fff !important;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+  /* transition: background-color 0.3s ease, opacity 0.3s ease; */
+  opacity: 0.9;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+ 
+
+}
+
+
 .navbar-transparent .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.75);
+  
+  color: #008374;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .navbar-transparent .navbar-nav .nav-link:hover,
 .navbar-transparent .navbar-nav .nav-link:focus {
-  background-color: #ffffff;
-  color: #008374;
+  background-color: #008374;
+  color: #ffffff;
 }
 
 .navbar-transparent .navbar-brand {
@@ -107,6 +124,28 @@ nav .nav-item .btn{
   background-color: #006b5d !important;
   border-color: #006b5d !important;
 }
+/* banner on trans new */
+.jumbotron{
+  background-image: url("../images/bannerTrans.png");
+  height: 400px;
+  width: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  /* margin-top: 10px; */
+  border-top-left-radius: 40px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 40px;
+  object-fit: cover;
+}
+
+nav .container,
+#banners-section .container{
+  max-width: 1290px !important;
+}
+
 
 /*  */
 
@@ -804,6 +843,7 @@ a.btn.dropdown-toggle.show:focus {
   overflow: hidden;  
 }
 
+
 .banner-area::before {
   content: "";
   position: absolute;
@@ -836,6 +876,11 @@ a.btn.dropdown-toggle.show:focus {
   right: 0;
   top: 0;
   z-index: 0;
+}
+
+.hero-section{
+ padding-top: 150px;
+ margin-left: 70px;
 }
 
 .hero-btn {

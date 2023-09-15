@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../actions/userAction';
-import { userLogout } from '../../services/userService';
+import { useSelector } from 'react-redux';
+import { fetchOneCommunity, userLogout } from '../../services/userService';
 
 // ...
 
@@ -14,9 +13,9 @@ const UserProfileDropdown = () => {
     const [id, setId] = useState(user && user.user && user.user.id);
     const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
     const isPasswordSet = user && user.user && user.user.is_password_set;
+    const [community,setCommunity] = useState({});
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -46,6 +45,26 @@ const UserProfileDropdown = () => {
             navigate('/set-password');
         }
     }
+
+    const fetchLoggedUserCommunity = async ()=>{
+        try{
+            const response = await fetchOneCommunity();
+            if(response && response.status===200){
+                setCommunity(response.data.data);
+            }
+        } catch(error) {
+            if (error.response && error.response.status === 401) {
+                navigate('/login');
+            } else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+        }
+    }
+
+    useEffect(()=>{
+        fetchLoggedUserCommunity();
+    },[]);
+
     const handleLogOutClick = async () => {
         try {
             const response = await userLogout(id);
@@ -56,10 +75,8 @@ const UserProfileDropdown = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
         }
@@ -88,9 +105,9 @@ const UserProfileDropdown = () => {
             label: (
                 <>
                     <h6 className="dropdown-header d-flex align-items-center">
-                        <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
+                        <img className="dropdown-user-img me-2" src={community.thumbnail_image ? community.thumbnail_image : '/user/images/OIP.jpg'} alt="User" />
                         <div className="dropdown-user-details">
-                            <div className="dropdown-user-details-name">Community Name</div>
+                            <div className="dropdown-user-details-name">{community.name}</div>
                             
                         </div>
                     </h6>

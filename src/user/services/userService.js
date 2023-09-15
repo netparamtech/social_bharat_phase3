@@ -313,6 +313,16 @@ export const fetchAllActiveCommunities = async () => {
     }
 }
 
+//find one community
+export const fetchOneCommunity = async () => {
+    try {
+        const response = await apiWithHeaders.get('/community');  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //fetch all countries
 export const fetchCountries = async() => {
     try {

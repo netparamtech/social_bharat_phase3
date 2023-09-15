@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, logout } from '../../actions/userAction';
 import { resendOtp, updateMobile } from '../../services/userService';
 
 const CheckOtpToUpdateMobile = (props) => {
@@ -15,7 +13,6 @@ const CheckOtpToUpdateMobile = (props) => {
 
     const [errors, setErrors] = useState('');
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
@@ -49,7 +46,7 @@ const CheckOtpToUpdateMobile = (props) => {
 
             if (response && response.status === 200) {
                 setOtp('');
-                window.location.href = '/profile';
+                navigate('/profile');
             }
         } catch (error) {
             //Unauthorized
@@ -60,12 +57,10 @@ const CheckOtpToUpdateMobile = (props) => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
         }
@@ -89,12 +84,10 @@ const CheckOtpToUpdateMobile = (props) => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
         }

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchCountries, updateContactDetail } from '../../services/userService';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 const UpdateContact = (props) => {
@@ -18,7 +16,6 @@ const UpdateContact = (props) => {
 
   const [errors, setErrors] = useState('');
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleAddressTypeChange = (e) => {
@@ -79,12 +76,10 @@ const UpdateContact = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -101,12 +96,10 @@ const UpdateContact = (props) => {
 
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
 
@@ -122,12 +115,10 @@ const UpdateContact = (props) => {
     } catch (error) {
        //Unauthorized
        if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

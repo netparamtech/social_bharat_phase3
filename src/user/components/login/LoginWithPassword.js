@@ -11,6 +11,8 @@ const LoginWithPassword = (props) => {
     const [password, setPassword] = useState('');
 
     const [errors, setErrors] = useState('');
+    const [message, setMessage] = useState('');
+    const [alertClass, setAlertClass] = useState('');
 
     //onChange handler
     const handleMobileChange = (event) => {
@@ -44,16 +46,15 @@ const LoginWithPassword = (props) => {
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-            }
-            //Unauthorized
-            else if (error.response && error.response.status === 401) {
-                dispatch(logout());
-                navigate('/login');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                dispatch(logout());
-                navigate('/login');
+                setMessage(error.response.data.message);
+                setAlertClass('alert-danger');
+            } else if (error.response && error.response.status === 401) {
+                setMessage(error.response.data.message);
+                setAlertClass('alert-danger');
+            } else if (error.response && error.response.status === 500) {
+                console.log("hello")
+                setMessage(error.response.data.message);
+                setAlertClass('alert-danger');
             }
 
         }
@@ -75,6 +76,11 @@ const LoginWithPassword = (props) => {
                                     <h3 className="mb-3">Sign in</h3>
                                 </div>
                                 <form action='/dashboard' className="w-100 w-lg-75" onSubmit={handleSubmit}>
+                                    {message && <div className={`alert ${alertClass}`}>
+                                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                                        {" " + message}
+                                    </div>
+                                    }
                                     <div className="row mb-3">
                                         <input
                                             type="text"
@@ -84,7 +90,7 @@ const LoginWithPassword = (props) => {
                                             className="form-control"
                                             onChange={handleMobileChange}
                                         />
-                                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                                        {errors&&errors.mobile && <span className='error'>{errors.mobile}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <input
@@ -119,7 +125,7 @@ const LoginWithPassword = (props) => {
                                         </button>
                                     </div>
                                     <div className="row mt-3">
-                                        <p className="fw-lighter fs-6">New User? <a href="#" className="text-primary text-decoration-none" onClick={()=>navigate('/register')}>Signup</a>.</p>
+                                        <p className="fw-lighter fs-6">New User? <a href="#" className="text-primary text-decoration-none" onClick={() => navigate('/register')}>Signup</a>.</p>
                                     </div>
                                 </form>
                             </div>

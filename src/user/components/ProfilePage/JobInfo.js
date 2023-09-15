@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../actions/userAction';
 import { deleteSingleJobDetails } from '../../services/userService';
 
 const JobInfo = (props) => {
@@ -9,7 +7,6 @@ const JobInfo = (props) => {
   const initialJobDetails = user?.data?.jobs; // Store initial job details
   const [jobDetails, setJobDetails] = useState(initialJobDetails);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,12 +24,10 @@ const JobInfo = (props) => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { attemptLoginWithMobile } from '../../services/userService';
-import { logout } from '../../actions/userAction';
 import LoginWithOtp from '../otp/LoginWithOtp';
 
 const LoginWithMobile = (props) => {
@@ -12,7 +10,6 @@ const LoginWithMobile = (props) => {
   const [message, setMessage] = useState('');
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleMobileChange = (event) => {
@@ -43,12 +40,10 @@ const LoginWithMobile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

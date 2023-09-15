@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchAllActiveBusinessCategories, fetchAllCitiesByStateID, fetchAllStatesByCountryID, updateBusinessInfo, updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateBusinessProfile = (props) => {
@@ -32,7 +30,6 @@ const UpdateBusinessProfile = (props) => {
   const [businessPreview, setBusinessPreview] = useState([]);
 
   const [errors, setErrors] = useState('');
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleBusinessPhotoChange = async (e) => {
@@ -78,12 +75,10 @@ const UpdateBusinessProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -189,12 +184,10 @@ const UpdateBusinessProfile = (props) => {
 
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
 
@@ -210,12 +203,10 @@ const UpdateBusinessProfile = (props) => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

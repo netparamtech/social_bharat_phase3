@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { searchPeopleWithSearchText } from '../../services/userService';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
+import { searchBusinessWithSearchText } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBusiness = () => {
 
     const [data, setData] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const [defaultImage, setDefaultImage] = useState('/admin/img/de-default-1.jpeg');
+    const [defaultImage ] = useState('/admin/img/de-default-1.jpeg');
 
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSearchText = (e) => {
         setSearchText(e.target.value);
@@ -17,7 +16,7 @@ const SearchBusiness = () => {
 
     const search = async (searchText) => {
         try {
-            const response = await searchPeopleWithSearchText(searchText);
+            const response = await searchBusinessWithSearchText(searchText);
             if (response && response.status === 200) {
                 setData(response.data.data);
             }
@@ -26,11 +25,9 @@ const SearchBusiness = () => {
 
             //Unauthorized
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             } else if (error.response && error.response.status === 500) {
-                dispatch(logout());
-                window.location.href = '/login';
+                navigate('/login');
             }
         }
     }
@@ -87,10 +84,7 @@ const SearchBusiness = () => {
                                                         <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
                                                     </div>
                                                     <div className="col-8 user-detail">
-                                                        <p>{item.name}</p>
-                                                        <p>{item.mobile}</p>
-                                                        <p className="text-muted">designation</p>
-                                                        <p className="text-muted">D.O.B</p>
+                                                        <p>{item.business_name}</p>
                                                     </div>
                                                 </div>
                                             </div>

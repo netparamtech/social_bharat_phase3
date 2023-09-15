@@ -3,13 +3,11 @@ import Typed from "typed.js";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../actions/userAction";
 
 const Banner = () => {
   const typedRefs = useRef([]);
   const [imageUrls, setImageUrls] = useState([]);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +35,7 @@ const Banner = () => {
               </h2>
             </div>
             <div className="banner-button">
-              <a className="hero-btn">Get started</a>
+              <a className="hero-btn" href="#" onClick={()=>navigate('/register')}>Get started</a>
             </div>
           </div>
         </div>

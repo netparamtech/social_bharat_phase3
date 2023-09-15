@@ -3,8 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getSingleContactDetails } from '../../../services/userService';
 import UserLayout from '../../../layouts/UserLayout';
 import UpdateContact from '../../../components/ProfilePage/UpdateContact';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../../actions/userAction';
 
 
 
@@ -12,7 +10,6 @@ const UpdateContactPage = () => {
   const { id } = useParams();
   const [contactDetails, setContactDetails] = useState(null);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchJob = async (id) => {
@@ -24,12 +21,10 @@ const UpdateContactPage = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

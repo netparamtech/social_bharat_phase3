@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import { getFeet, getInches } from '../../util/Conversion';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateMatrimonial = (props) => {
@@ -29,7 +27,6 @@ const UpdateMatrimonial = (props) => {
 
   const [errors, setErrors] = useState('');
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleProposalPhotoChange = async (e) => {
@@ -75,12 +72,10 @@ const UpdateMatrimonial = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -108,12 +103,10 @@ const UpdateMatrimonial = (props) => {
 
        //Unauthorized
        else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }
@@ -155,12 +148,10 @@ const UpdateMatrimonial = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

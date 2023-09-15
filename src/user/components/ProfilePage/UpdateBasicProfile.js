@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import { updateBasicProfile } from '../../services/userService';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '../../actions/userAction';
+import { login } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateBasicProfile = () => {
@@ -56,12 +56,10 @@ const UpdateBasicProfile = () => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
     }

@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const Testimonials = () => {
     const [imageUrls, setImageUrls] = useState([]);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const fetchBanners = async () => {
@@ -27,11 +24,9 @@ const Testimonials = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             }
             else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
         }

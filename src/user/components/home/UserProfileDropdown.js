@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, Dropdown, Avatar } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiWithHeaders } from '../../axios/apiConfig';
 import { logout } from '../../actions/userAction';
 import { userLogout } from '../../services/userService';
 

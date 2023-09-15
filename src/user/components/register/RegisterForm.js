@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { createTempUser, fetchAllActiveCommunities } from '../../services/userService';
 import RegisterWithOtp from '../otp/RegisterWithOtp';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
@@ -16,7 +14,6 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -38,9 +35,18 @@ const RegisterForm = () => {
   //fetch all active communities
 
   const fetchCommunities = async () => {
-    const response = await fetchAllActiveCommunities();
-    if (response && response.status === 200) {
-      setCasts(response.data.data);
+    try {
+      const response = await fetchAllActiveCommunities();
+      if (response && response.status === 200) {
+        setCasts(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
     }
   }
 
@@ -66,10 +72,8 @@ const RegisterForm = () => {
       }
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate('/login');
       }
 
@@ -94,7 +98,7 @@ const RegisterForm = () => {
                 <div className="card-title">
                   <h3 className="mb-3">Sign up</h3>
                 </div>
-                
+
                 {
                   !isTempUserCreated ? (
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
@@ -141,7 +145,7 @@ const RegisterForm = () => {
                       </div>
                       <div className="row mt-3">
                         <p className="fw-lighter fs-6">
-                          Already User? <a href="#" className="text-primary text-decoration-none" onClick={()=>navigate('/login')}>Login</a>.
+                          Already User? <a href="#" className="text-primary text-decoration-none" onClick={() => navigate('/login')}>Login</a>.
                         </p>
                       </div>
                     </form>

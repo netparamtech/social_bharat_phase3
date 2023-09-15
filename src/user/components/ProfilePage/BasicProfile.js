@@ -40,21 +40,11 @@ const BasicProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-<<<<<<< HEAD
-        dispatch(logout());
         navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/login");
-=======
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        navigate('/login');
->>>>>>> 4060ac036c34d95f3c3ec2e66e3091bd7b7714e2
       }
     }
   };

@@ -8,7 +8,7 @@ const BasicProfile = (props) => {
     <div id="basic-profile-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-3 mb-sm-3 d-block">
             <div className="card shadow">
 
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
@@ -21,7 +21,7 @@ const BasicProfile = (props) => {
               </div>
             </div>
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 ">
             <div className="card shadow">
               <div className="card-body ">
                 <div className="w-100 w-lg-75">

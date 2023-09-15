@@ -116,3 +116,16 @@
     font-weight: 400;
   }
  
+  #basic-profile-section .container-profilepic img{
+    width: 150px;
+    height: 200px;
+  }
+
+  #basic-profile-section  p{
+    font-weight: bold;
+    letter-spacing: 0lh;
+  }
+
+  #basic-profile-section .container-profilepic {
+    margin-top: 20px;
+  }

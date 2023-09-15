@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllActiveCommunities, searchPeopleWithSearchText } from "../../services/userService";
-import { useDispatch } from "react-redux";
-import { logout } from "../../actions/userAction";
 import { Select } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const SearchPartner = () => {
   const [data, setData] = useState([]);
@@ -13,7 +12,8 @@ const SearchPartner = () => {
     "/admin/img/de-default-1.jpeg"
   );
 
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
@@ -32,12 +32,10 @@ const SearchPartner = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
-        window.location.href = "/login";
-      } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        window.location.href = "/login";
-      }
+        navigate('/login');
+    } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+    }
     }
   };
 

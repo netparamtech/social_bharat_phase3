@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { apiWithHeaders } from '../../axios/apiConfig';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
@@ -11,7 +9,6 @@ const ChangePassword = () => {
 
     const [errors, setErrors] = useState('');
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handlePasswordChange = (event) => {
@@ -43,12 +40,10 @@ const ChangePassword = () => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                dispatch(logout());
                 navigate('/login');
             }
 

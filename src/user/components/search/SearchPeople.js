@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { searchPeopleWithSearchText } from '../../services/userService';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const SearchPeople = () => {
@@ -10,7 +8,6 @@ const SearchPeople = () => {
     const [searchText, setSearchText] = useState('');
     const [defaultImage, setDefaultImage] = useState('/admin/img/de-default-1.jpeg');
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSearchText = (e) => {
@@ -28,12 +25,8 @@ const SearchPeople = () => {
 
             //Unauthorized
             if (error.response && error.response.status === 401) {
-                dispatch(logout());
                 navigate('/login');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                dispatch(logout());
+            } else if (error.response && error.response.status === 500) {
                 navigate('/login');
             }
         }

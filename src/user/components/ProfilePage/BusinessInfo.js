@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { deleteBusinessByID } from "../../services/userService";
@@ -9,7 +8,6 @@ const BusinessInfo = (props) => {
   const [businessDetails, setBusinessDetails] = useState([]);
   const [collapsedItems, setCollapsedItems] = useState([]); // State to control collapse/expand
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const businessPhotos =
     user &&

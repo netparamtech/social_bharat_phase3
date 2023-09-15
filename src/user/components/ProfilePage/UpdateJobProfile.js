@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { updateJobDetail } from '../../services/userService';
 import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateJobProfile = (props) => {
@@ -16,7 +14,6 @@ const UpdateJobProfile = (props) => {
 
   const [errors, setErrors] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -53,10 +50,8 @@ const UpdateJobProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-       dispatch(logout());
        navigate('/login');
       }
     }

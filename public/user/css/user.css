@@ -1029,6 +1029,9 @@ a.btn.dropdown-toggle.show:focus {
   }
 }
 
-
+#basic-profile-section .community-img{
+  width: 30px;
+  height: 30px;
+}
 
 

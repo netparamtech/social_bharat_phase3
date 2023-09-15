@@ -117,8 +117,12 @@
   }
  
   #basic-profile-section .container-profilepic img{
-    width: 150px;
-    height: 200px;
+    /* width: 150px; */
+    height: 150px;
+    background-position: center;
+    object-fit: cover;
+    background-size: cover;
+    margin: 1px;
   }
 
   #basic-profile-section  p{
@@ -127,5 +131,5 @@
   }
 
   #basic-profile-section .container-profilepic {
-    margin-top: 20px;
+    margin: 10px;
   }

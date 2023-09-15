@@ -66,7 +66,7 @@ function Contact() {
                           </div>
                         </div>
                       </div>
-                      <div className="user-auth-panel-info col-md-6 col-sm-12">
+                      <div className="mb-3 user-auth-panel-info col-md-6 col-sm-12">
                         <div className="card shadow ">
                           <div className="card-body">
                             <div className="d-inline-flex">
@@ -89,7 +89,7 @@ function Contact() {
                           </div>
                         </div>
                       </div>
-                      <div className="  user-auth-panel-info  col-md-6 col-sm-12">
+                      <div className="mb-3  user-auth-panel-info  col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
@@ -113,7 +113,7 @@ function Contact() {
                           </div>
                         </div>
                       </div>
-                      <div className=" user-auth-panel-info  col-md-6 col-sm-12">
+                      <div className="mb-3 user-auth-panel-info  col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">

@@ -11,10 +11,13 @@ const SearchPartner = () => {
     "/admin/img/de-default-1.jpeg"
   );
 
+  const [isSaveClicked, setIsSaveClicked] = useState(false);
+
+
   const [gender, setGender] = useState('');
   const [gotra, setGotra] = useState('');
   const [community_id, setCommunity_id] = useState('');
-  const [communityName,setCommunityName] = useState('');
+  const [communityName, setCommunityName] = useState('');
   const [skinTone, setSkinTone] = useState('');
   const [cast, setCast] = useState('');
 
@@ -133,6 +136,7 @@ const SearchPartner = () => {
   }
 
   const handleSaveClick = async () => {
+    setIsSaveClicked(true);
     const queryParams = {
       community_id: community_id,
       skintone: skinTone,
@@ -159,7 +163,7 @@ const SearchPartner = () => {
 
   }
 
-  const handleCancelClick = ()=>{
+  const handleCancelClick = () => {
     setCommunity_id('');
     setCast('');
     setGender('');
@@ -168,6 +172,7 @@ const SearchPartner = () => {
     setGotra('');
     setSkinTone('');
     setSearchText('');
+    setCommunityName('')
   }
 
   useEffect(() => {
@@ -203,14 +208,19 @@ const SearchPartner = () => {
               <h5 className="fw-3 mb-3 d-none d-sm-block">Search Partner</h5>
             </div>
             <div className="filter-content">
+             {
+              isSaveClicked && 
               <p>
-                {gender && `Gender-${gender}, `}
-                {communityName && `Community-${communityName}, `}
-                {gotra && `Gotra-${gotra}, `}
-                {cast && `Cast-${cast}, `}
-                {selectedState.label && `${selectedState.label}, `}
-                {selectedCity.label && `${selectedCity.label}`}
-              </p>
+              {isSaveClicked && 'Searching for '}
+              {gender && `Gender-${gender}, `}
+              {communityName && `Community-${communityName}, `}
+              {gotra && `Gotra-${gotra}, `}
+              {cast && `Cast-${cast}, `} {selectedCity && ('in')||selectedState && ('in')}
+              {selectedCity.label && ` ${selectedCity.label}`}
+              {selectedState.label && ` (${selectedState.label})`}
+              
+            </p>
+             }
             </div>
 
             <div className="filter-icon">

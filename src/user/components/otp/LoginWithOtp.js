@@ -50,11 +50,17 @@ const LoginWithOtp = (props) => {
                 dispatch(login(response.data.data, response.data.token));
                 setOtp('');
 
-                if (response.data.data.is_password_set) {
-                    navigate('/dashboard')
-                } else {
-                    navigate('/set-password')
+                if(response.data.data.status){
+                    if (response.data.data.is_password_set) {
+                        navigate('/dashboard')
+                    } else {
+                        navigate('/set-password')
+                    }
+                }else {
+                    navigate('/user/block');
                 }
+
+               
 
             }
         } catch (error) {

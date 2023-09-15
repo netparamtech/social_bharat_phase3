@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { searchBusinessWithSearchText } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const SearchBusiness = () => {
+
+    const user = useSelector((state) => state.userAuth);
 
     const [data, setData] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -49,7 +52,7 @@ const SearchBusiness = () => {
                             <h5 className="fw-3 mb-3 d-none d-sm-block">Search Business</h5>
                         </div>
                         <div className="filter-content">
-                            <p>Rajasthan, Jaipur</p>
+                            <p>{user&&user.user&&user.user.native_place_state}, {user&&user.user&&user.user.native_place_city}</p>
                         </div>
                         <div className="filter-icon">
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPeopleWithSearchText } from "../../services/userService";
+import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPartnerWithSearchText, searchPeopleWithSearchText } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 
@@ -14,7 +14,9 @@ const SearchPartner = () => {
   const [gender, setGender] = useState('');
   const [gotra, setGotra] = useState('');
   const [community_id, setCommunity_id] = useState('');
+  const [communityName,setCommunityName] = useState('');
   const [skinTone, setSkinTone] = useState('');
+  const [cast, setCast] = useState('');
 
   const [selectedCountry, setSelectedCountry] = useState('India');
   const [selectedState, setSelectedState] = useState('');
@@ -41,8 +43,13 @@ const SearchPartner = () => {
     setSkinTone(e.target.value);
   };
 
+  const handleCastChange = (e) => {
+    setCast(e.target.value);
+  };
+
   const handleSelectChange = (selectedOption) => {
     setCommunity_id(selectedOption.value);
+    setCommunityName(selectedOption.label);
   };
 
   const handleStateChange = (selectedOption) => {
@@ -125,8 +132,42 @@ const SearchPartner = () => {
     }
   }
 
-  const handleSubmitModelData = () => {
+  const handleSaveClick = async () => {
+    const queryParams = {
+      community_id: community_id,
+      skintone: skinTone,
+      gender: gender,
+      gotra: gotra,
+      cast: cast,
+      state: selectedState ? selectedState.label : '',
+      city: selectedCity ? selectedCity.label : ''
+      // Add other modal fields to the queryParams
+    };
 
+    // Construct the query string from the queryParams object
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    // Do something with the query string (e.g., redirect to a new URL)
+    console.log('Query String:', queryString);
+
+    try {
+      const response = await searchPartnerWithSearchText(queryString);
+      setData(response.data.data);
+    } catch (error) {
+
+    }
+
+  }
+
+  const handleCancelClick = ()=>{
+    setCommunity_id('');
+    setCast('');
+    setGender('');
+    setSelectedState('');
+    setSelectedCity('');
+    setGotra('');
+    setSkinTone('');
+    setSearchText('');
   }
 
   useEffect(() => {
@@ -162,7 +203,14 @@ const SearchPartner = () => {
               <h5 className="fw-3 mb-3 d-none d-sm-block">Search Partner</h5>
             </div>
             <div className="filter-content">
-              <p>Gender-Female, Community-Hindu, Gotra-aa, Cast-Agrwal, Rajasthan, Jaipur</p>
+              <p>
+                {gender && `Gender-${gender}, `}
+                {communityName && `Community-${communityName}, `}
+                {gotra && `Gotra-${gotra}, `}
+                {cast && `Cast-${cast}, `}
+                {selectedState.label && `${selectedState.label}, `}
+                {selectedCity.label && `${selectedCity.label}`}
+              </p>
             </div>
 
             <div className="filter-icon">
@@ -184,7 +232,7 @@ const SearchPartner = () => {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <div className="modal-dialog">
+              <div className="modal-dialog" id="modal-dialog">
                 <div className="modal-content">
                   <div className="modal-header">
                     <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -197,7 +245,7 @@ const SearchPartner = () => {
                       aria-label="Close"
                     ></button>
                   </div>
-                  <div className="modal-body">
+                  <div className="modal-body" id="modal-body">
                     <div className="container">
                       <div className="row">
                         <div className="col-md-6">
@@ -206,15 +254,17 @@ const SearchPartner = () => {
                             <select
                               className="form-select form-control"
                               aria-label="Default select example"
+                              value={gender}
+                              onChange={handleGenderChange}
                             >
                               <option value="">---Select Gender---</option>
-                              <option value="">Male</option>
-                              <option value="">Female</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
                             </select>
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Gotra</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" defaultValue={gotra} onChange={handleGotraChange} />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">State</label>
@@ -232,6 +282,8 @@ const SearchPartner = () => {
                             <select
                               className="form-select form-control"
                               aria-label="Default select example"
+                              value={skinTone}
+                              onChange={handleSkinToneChange}
                             >
                               <option value="">---Select Skin---</option>
                               <option value="FAIR">FAIR</option>
@@ -257,7 +309,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Cast</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" defaultValue={cast} onChange={handleCastChange} />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">City</label>
@@ -278,10 +330,11 @@ const SearchPartner = () => {
                       type="button"
                       class="btn btn-secondary"
                       data-bs-dismiss="modal"
+                      onClick={handleCancelClick}
                     >
                       Close
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" onClick={handleSaveClick} data-bs-dismiss="modal">
                       Save
                     </button>
                   </div>
@@ -321,8 +374,9 @@ const SearchPartner = () => {
                           <div className="col-8 user-detail">
                             <p>{item.name}</p>
                             <p>{item.mobile}</p>
-                            <p className="text-muted">designation</p>
-                            <p className="text-muted">D.O.B</p>
+                            <p className="text-muted">{item.father_name}</p>
+                            <p className="text-muted">{item.native_place_city}</p>
+                            <p className="text-muted">{item.native_place_state}</p>
                           </div>
                         </div>
                       </div>

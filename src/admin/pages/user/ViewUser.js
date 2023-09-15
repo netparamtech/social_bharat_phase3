@@ -15,7 +15,6 @@ const ViewUser = () => {
     const [userDetails, setUserDetails] = useState(null);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const fetchUserFullProfile = async () => {
         try {

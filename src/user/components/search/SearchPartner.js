@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPeopleWithSearchText } from "../../services/userService";
-import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
 
 const SearchPartner = () => {
   const [data, setData] = useState([]);
@@ -11,10 +11,10 @@ const SearchPartner = () => {
     "/admin/img/de-default-1.jpeg"
   );
 
-  const [gender,setGender] = useState('');
-  const [gotra,setGotra] = useState('');
+  const [gender, setGender] = useState('');
+  const [gotra, setGotra] = useState('');
   const [community_id, setCommunity_id] = useState('');
-  const [SkinTone,setSkinTone] = useState('');
+  const [skinTone, setSkinTone] = useState('');
 
   const [selectedCountry, setSelectedCountry] = useState('India');
   const [selectedState, setSelectedState] = useState('');
@@ -27,6 +27,18 @@ const SearchPartner = () => {
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
+  };
+
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
+
+  const handleGotraChange = (e) => {
+    setGotra(e.target.value);
+  };
+
+  const handleSkinToneChange = (e) => {
+    setSkinTone(e.target.value);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -67,6 +79,8 @@ const SearchPartner = () => {
 
     }
   }
+
+
 
   const getAllCities = async (stateID) => {
     try {
@@ -109,6 +123,10 @@ const SearchPartner = () => {
     if (response && response.status === 200) {
       setCommunities(response.data.data);
     }
+  }
+
+  const handleSubmitModelData = () => {
+
   }
 
   useEffect(() => {
@@ -234,7 +252,7 @@ const SearchPartner = () => {
                               defaultValue={community_id} // Provide a selected option state
                               onChange={handleSelectChange} // Your change handler function
                               options={communities && communities.map((data) => ({ value: data.id, label: data.name }))}
-                              placeholder="---Select Community---"
+                              placeholder="---Select---"
                             />
                           </div>
                           <div className="mb-3">

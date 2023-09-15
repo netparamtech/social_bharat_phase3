@@ -137,6 +137,7 @@ const UpdateBasicProfile = () => {
 
   useEffect(() => {
     setToken(user.token || '');
+    setCountryID(101);
     setSelectedState({ value: user.user.native_place_state, label: user.user.native_place_state }); // Set the selected state as an object
     setSelectedCity({ value: user.user.native_place_city, label: user.user.native_place_city }); // Set the selected city as an object
   }, [user])
@@ -192,6 +193,7 @@ const UpdateBasicProfile = () => {
                         options={states.map(state => ({ value: state.name, label: state.name }))}
                         value={selectedState}
                         onChange={handleStateChange}
+                        placeholder="---Select State---"
 
                       />
 
@@ -206,6 +208,7 @@ const UpdateBasicProfile = () => {
                         options={cities.map(city => ({ value: city.name, label: city.name }))}
                         value={selectedCity}
                         onChange={handleCityChange}
+                        placeholder="---Select City---"
                       />
                       {errors.native_place_city && <span className='error'>{errors.native_place_city}</span>}
 

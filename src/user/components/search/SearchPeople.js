@@ -8,6 +8,12 @@ const SearchPeople = () => {
     const [searchText, setSearchText] = useState('');
     const [defaultImage, setDefaultImage] = useState('/admin/img/de-default-1.jpeg');
 
+    const [isFilter, setIsFilter] = useState(false);
+
+    const handleFilterClicked = () => {
+        setIsFilter(!isFilter?true:false);
+    }
+
     const navigate = useNavigate();
 
     const handleSearchText = (e) => {
@@ -46,7 +52,7 @@ const SearchPeople = () => {
                             <p>Rajasthan, Jaipur</p>
                         </div>
                         <div className="filter-icon">
-                            <a href="#" title="Filter" className="btn btn-primary btn-sm me-2">
+                            <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
                                 <i className="fas fa-filter me-1"></i>Filter
                             </a>
                         </div>
@@ -54,7 +60,7 @@ const SearchPeople = () => {
                             <input type="text" placeholder="Search" name="text" className="input form-control" onChange={handleSearchText} />
                             <i className="fas fa-search"></i>
                         </div>
-                        <div className="row">
+                        <div className={`row ${isFilter?'':'d-none'}`}>
                             <div className="col-5 mb-3">
                                 <select name="state" id="state" className="form-control form-select">
                                     <option value="">State</option>

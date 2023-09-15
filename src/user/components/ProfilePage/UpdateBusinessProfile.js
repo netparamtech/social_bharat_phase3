@@ -108,8 +108,7 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const handleSelectCategoryChange = (selectedOption) => {
-    console.log(selectedOption)
-    setBusinessCategory(selectedOption.label);
+    setBusinessCategory(selectedOption);
   };
 
 
@@ -123,7 +122,7 @@ const UpdateBusinessProfile = (props) => {
     event.preventDefault();
     const businessData = {
       business_name: businessName,
-      business_category: businessCategory,
+      business_category: businessCategory.label,
       street_address: streetAddress,
       country: selectedCountry.label,
       state: selectedState.label,
@@ -239,8 +238,13 @@ const UpdateBusinessProfile = (props) => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
       setBusinessName(businessDetails.business_name || '');
-      console.log(businessCategories,"gjhghj")
-      setBusinessCategory(businessCategories.find((category) => category.title === businessDetails.business_category) || '');
+      console.log(businessDetails,"gjhghj")
+      if (businessDetails.business_category) {
+        const category = businessCategories.find(category => category.title === businessDetails.business_category);
+        if (category) {
+          setBusinessCategory({ value: category.id, label: category.title });
+        }
+      }
       setStreetAddress(businessDetails.street_address || '');
       setCountryID(businessDetails.country === 'India' ? 101 : ''); // Set the countryID accordingly
       setSelectedCountry({ value: businessDetails.country, label: businessDetails.country }); // Set the selected country as an object
@@ -318,7 +322,7 @@ const UpdateBusinessProfile = (props) => {
                       <Select
                         id="business_category"
                         className=""
-                        defaultValue={businessCategory} // Provide a selected option state
+                        value={businessCategory} // Provide a selected option state
                         onChange={handleSelectCategoryChange} // Your change handler function
                         options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
                         placeholder="---Select Business Category---"

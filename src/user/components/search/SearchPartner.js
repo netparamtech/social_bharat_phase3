@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { searchPeopleWithSearchText } from "../../services/userService";
+import { fetchAllActiveCommunities, searchPeopleWithSearchText } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions/userAction";
+import { Select } from "antd";
 
 const SearchPartner = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [communities, setCommunities] = useState([]);
+  const [community_id,setCommunity_id] = useState('');
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/de-default-1.jpeg"
   );
@@ -14,6 +17,10 @@ const SearchPartner = () => {
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setCommunity_id(selectedOption.value);
   };
 
   const search = async (searchText) => {
@@ -33,9 +40,23 @@ const SearchPartner = () => {
       }
     }
   };
+
+  //fetch all active communities
+
+  const fetchCommunities = async () => {
+    const response = await fetchAllActiveCommunities();
+    if (response && response.status === 200) {
+      setCommunities(response.data.data);
+    }
+  }
+
   useEffect(() => {
     search(searchText);
   }, [searchText]);
+
+  useEffect(() => {
+    fetchCommunities();
+  }, []);
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
@@ -121,20 +142,21 @@ const SearchPartner = () => {
                               <option value="WHEATISH">WHEATISH</option>
                             </select>
                           </div>
-                          
-                          
+
+
                         </div>
                         <div className="col-md-6">
                           <div className="mb-3">
                             <label className="form-label">Community</label>
-                            <select
-                              className="form-select form-control"
+                            <Select
+                              id="community_id"
+                              className="form-select"
                               aria-label="Default select example"
-                            >
-                              <option value="">---Select ---</option>
-                              <option value=""></option>
-                              <option value=""></option>
-                            </select>
+                              defaultValue={community_id} // Provide a selected option state
+                              onChange={handleSelectChange} // Your change handler function
+                              options={communities && communities.map((data) => ({ value: data.id, label: data.name }))}
+                              placeholder="---Select Community---"
+                            />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Cast</label>
@@ -164,14 +186,14 @@ const SearchPartner = () => {
                       Close
                     </button>
                     <button type="button" class="btn btn-primary">
-                      Save 
+                      Save
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            
+
             <div className="container-input mb-3">
               <input
                 type="text"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { searchPeopleWithSearchText } from '../../services/userService';
+import { searchBusinessWithSearchText } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../actions/userAction';
 
@@ -17,7 +17,7 @@ const SearchBusiness = () => {
 
     const search = async (searchText) => {
         try {
-            const response = await searchPeopleWithSearchText(searchText);
+            const response = await searchBusinessWithSearchText(searchText);
             if (response && response.status === 200) {
                 setData(response.data.data);
             }
@@ -87,10 +87,7 @@ const SearchBusiness = () => {
                                                         <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
                                                     </div>
                                                     <div className="col-8 user-detail">
-                                                        <p>{item.name}</p>
-                                                        <p>{item.mobile}</p>
-                                                        <p className="text-muted">designation</p>
-                                                        <p className="text-muted">D.O.B</p>
+                                                        <p>{item.business_name}</p>
                                                     </div>
                                                 </div>
                                             </div>

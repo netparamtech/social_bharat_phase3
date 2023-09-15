@@ -37,7 +37,7 @@ const Banner = () => {
               </h2>
             </div>
             <div className="banner-button">
-              <a className="hero-btn">Get started</a>
+              <a className="hero-btn" href="#" onClick={()=>navigate('/register')}>Get started</a>
             </div>
           </div>
         </div>

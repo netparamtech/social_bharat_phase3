@@ -73,9 +73,10 @@
     height: 40px;
   }
 
-  .sidebar-brand-icon {
-    width: 100px;
-    border-radius: 10px;
+  .sidebar-brand-icon img{
+    min-width: 80px;
+    padding: 2px;
+    border-top-left-radius: 10px;
   }
 
   .form-control:focus {

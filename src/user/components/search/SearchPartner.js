@@ -7,10 +7,14 @@ const SearchPartner = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
-  const [community_id, setCommunity_id] = useState('');
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/de-default-1.jpeg"
   );
+
+  const [gender,setGender] = useState('');
+  const [gotra,setGotra] = useState('');
+  const [community_id, setCommunity_id] = useState('');
+  const [SkinTone,setSkinTone] = useState('');
 
   const [selectedCountry, setSelectedCountry] = useState('India');
   const [selectedState, setSelectedState] = useState('');

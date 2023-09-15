@@ -12,7 +12,7 @@ const BasicProfile = (props) => {
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
   const [token, setToken] = useState("");
-  const [community,setCommunity] = useState({});
+  const [community, setCommunity] = useState({});
 
   const defaultPhoto = '/user/images/user.png';
 
@@ -33,9 +33,12 @@ const BasicProfile = (props) => {
 
     try {
       const response = await updateProfilePhoto(formData);
+
       setProfileImage(response.data.data.photo);
       setImagePreview(URL.createObjectURL(file));
+
       dispatch(login(response.data.data, token));
+
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -52,27 +55,27 @@ const BasicProfile = (props) => {
     }
   };
 
-  const fetchLoggedUserCommunity = async ()=>{
-    try{
-        const response = await fetchOneCommunity();
-        if(response && response.status===200){
-          console.log(response.data.data,"ghjhjhgj,hgjfdydh")
-            setCommunity(response.data.data);
-        }
-    } catch(error) {
-        if (error.response && error.response.status === 401) {
-            navigate('/login');
-        } else if (error.response && error.response.status === 500) {
-            navigate('/login');
-        }
+  const fetchLoggedUserCommunity = async () => {
+    try {
+      const response = await fetchOneCommunity();
+      if (response && response.status === 200) {
+        console.log(response.data.data, "ghjhjhgj,hgjfdydh")
+        setCommunity(response.data.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
     }
-}
+  }
 
   useEffect(() => {
-    setProfileImage(user?.data?.photo || "/user/images/OIP.jpg");
+    setProfileImage(user && user.data && user.data.photo || "/user/images/OIP.jpg");
     setToken(loggedUser.token);
     fetchLoggedUserCommunity();
-  },[]);
+  }, [user]);
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -91,7 +94,7 @@ const BasicProfile = (props) => {
 
                 <img
                   className="img-fluid max-width-100"
-                  src={imagePreview || profileImage}
+                  src={profileImage}
                   alt=""
                   title=""
                   onClick={handleImageClick}
@@ -123,7 +126,7 @@ const BasicProfile = (props) => {
 
                 <img
                   className="img-fluid max-width-100 me-2  rounded-circle community-img"
-                  src={community.thumbnail_image ? community.thumbnail_image:defaultPhoto}
+                  src={community.thumbnail_image ? community.thumbnail_image : defaultPhoto}
                   alt=""
                   title=""
                   onClick={handleImageClick}

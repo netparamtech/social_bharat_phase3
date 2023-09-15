@@ -40,21 +40,11 @@ const BasicProfile = (props) => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-<<<<<<< HEAD
-        dispatch(logout());
         navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/login");
-=======
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        navigate('/login');
->>>>>>> 4060ac036c34d95f3c3ec2e66e3091bd7b7714e2
       }
     }
   };
@@ -110,17 +100,16 @@ const BasicProfile = (props) => {
                 <p className="card-text text-center mb-0">
                   {user && user.data && user.data.name}
                 </p>
-               
-                <img 
-                  className="img-fluid max-width-100 me-2  rounded-circle community-img" 
+
+                <img
+                  className="img-fluid max-width-100 me-2  rounded-circle community-img"
                   src={imagePreview || profileImage}
                   alt=""
                   title=""
                   onClick={handleImageClick}
                 />
-                <span >Community Name</span>
+                <span>Community Name</span>
               </div>
-              
             </div>
           </div>
           <div className="col-md-9">

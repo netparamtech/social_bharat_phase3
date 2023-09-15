@@ -17,6 +17,7 @@ import SearchPage from "./pages/SearchPage";
 import SearchPartnerPage from "./pages/SearchPartnerPage";
 import SearchBusinessPage from "./pages/SearchBusinessPage";
 import BlockUserPage from "./pages/BlockUserPage";
+import ContactPage from "./pages/ContactPage";
 
 
 const userRoutes = [
@@ -36,6 +37,12 @@ const userRoutes = [
     {
         path: '/register',
         component: RegisterPage,
+        exact: true
+    },
+
+    {
+        path: '/contact',
+        component: ContactPage,
         exact: true
     },
 

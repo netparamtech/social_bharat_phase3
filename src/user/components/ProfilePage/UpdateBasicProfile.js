@@ -4,7 +4,7 @@ import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, updateBasicProfile 
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
-import { Select } from 'antd';
+import Select from 'react-select';
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
@@ -38,17 +38,9 @@ const UpdateBasicProfile = () => {
     setEmail(e.target.value);
   };
 
-  const handleCountryChange = (selectedOption) => {
-    setSelectedCountry(selectedOption); // Update the state with the selected option object
-    if (selectedOption.value === "India") {
-      setCountryID(101);
-    }
-    setSelectedState(''); // Reset state when country changes
-  };
-
+  
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
-    
 
     if (selectedOption) {
       const selectedStateObject = states.find((state) => state.name === selectedOption.value);
@@ -145,12 +137,16 @@ const UpdateBasicProfile = () => {
 
   useEffect(() => {
     setToken(user.token || '');
+    setSelectedState({ value: user.user.native_place_state, label: user.user.native_place_state }); // Set the selected state as an object
+    setSelectedCity({ value: user.user.native_place_city, label: user.user.native_place_city }); // Set the selected city as an object
   }, [user])
 
   useEffect(() => {
     // Check if selectedCountry is already set
     getAllStates();
   }, []);
+
+
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -192,10 +188,11 @@ const UpdateBasicProfile = () => {
                       <label className="form-label">State</label>
 
                       <Select
-                        className='form-control'
+                        className=''
                         options={states.map(state => ({ value: state.name, label: state.name }))}
                         value={selectedState}
-                        onChange={handleStateChange}    
+                        onChange={handleStateChange}
+
                       />
 
                       {errors.native_place_state && <span className='error'>{errors.native_place_state}</span>}
@@ -206,7 +203,6 @@ const UpdateBasicProfile = () => {
                       <label className="form-label">City</label>
 
                       <Select
-                        className='form-control'
                         options={cities.map(city => ({ value: city.name, label: city.name }))}
                         value={selectedCity}
                         onChange={handleCityChange}

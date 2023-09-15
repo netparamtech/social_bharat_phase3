@@ -152,8 +152,6 @@ const UpdateBasicProfile = () => {
     getAllStates();
   }, []);
 
- 
-
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
@@ -197,7 +195,7 @@ const UpdateBasicProfile = () => {
                         className='form-control'
                         options={states.map(state => ({ value: state.name, label: state.name }))}
                         value={selectedState}
-                        onChange={handleStateChange}
+                        onChange={handleStateChange}    
                       />
 
                       {errors.native_place_state && <span className='error'>{errors.native_place_state}</span>}

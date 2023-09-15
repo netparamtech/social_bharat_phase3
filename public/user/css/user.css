@@ -545,7 +545,8 @@ a.btn.dropdown-toggle.show:focus {
 .btn-secondary:focus {
   background-color: #e58c28;
   border-color: #e58c28;
-  color: #e7e4e4c9;
+  /* color: #e7e4e4c9; */
+  color: #fff;
 }
 
 .btn-secondary.disabled {

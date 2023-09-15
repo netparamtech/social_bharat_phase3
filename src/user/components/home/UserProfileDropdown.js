@@ -15,6 +15,8 @@ const UserProfileDropdown = () => {
     const isPasswordSet = user && user.user && user.user.is_password_set;
     const [community,setCommunity] = useState({});
 
+    const defaultPhoto = '/user/images/user.png';
+
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState('');
@@ -105,7 +107,7 @@ const UserProfileDropdown = () => {
             label: (
                 <>
                     <h6 className="dropdown-header d-flex align-items-center">
-                        <img className="dropdown-user-img me-2" src={community.thumbnail_image ? community.thumbnail_image : '/user/images/OIP.jpg'} alt="User" />
+                        <img className="dropdown-user-img me-2" src={community.thumbnail_image ? community.thumbnail_image : defaultPhoto} alt="User" />
                         <div className="dropdown-user-details">
                             <div className="dropdown-user-details-name">{community.name}</div>
                             

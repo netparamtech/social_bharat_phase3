@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllActiveCommunities, searchPeopleWithSearchText } from "../../services/userService";
+import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPeopleWithSearchText } from "../../services/userService";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -7,13 +7,19 @@ const SearchPartner = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
-  const [community_id,setCommunity_id] = useState('');
+  const [community_id, setCommunity_id] = useState('');
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/de-default-1.jpeg"
   );
 
-  const navigate = useNavigate();
+  const [selectedCountry, setSelectedCountry] = useState('India');
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [countryID, setCountryID] = useState(101);
 
+  const navigate = useNavigate();
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
@@ -22,6 +28,59 @@ const SearchPartner = () => {
   const handleSelectChange = (selectedOption) => {
     setCommunity_id(selectedOption.value);
   };
+
+  const handleStateChange = (selectedOption) => {
+    setSelectedState(selectedOption);
+
+    if (selectedOption) {
+      const selectedStateObject = states.find((state) => state.name === selectedOption.value);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption); // Update the state with the selected option object
+  };
+
+  const getAllStates = async () => {
+    try {
+      const response = await fetchAllStatesByCountryID(countryID);
+      if (response && response.status === 200) {
+        setStates(response.data.data);
+      }
+    } catch (error) {
+
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+
+    }
+  }
+
+  const getAllCities = async (stateID) => {
+    try {
+      const response = await fetchAllCitiesByStateID(stateID);
+      if (response && response.status === 200) {
+        setCities(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+  }
 
   const search = async (searchText) => {
     try {
@@ -33,9 +92,9 @@ const SearchPartner = () => {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');
-    } else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         navigate('/login');
-    }
+      }
     }
   };
 
@@ -47,6 +106,23 @@ const SearchPartner = () => {
       setCommunities(response.data.data);
     }
   }
+
+  useEffect(() => {
+    // Check if selectedCountry is already set
+    if (selectedCountry) {
+      getAllStates();
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (states) {
+      const selectedStateObject = states.find((state) => state.name === selectedState.label);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+  }, [states])
+
 
   useEffect(() => {
     search(searchText);
@@ -66,6 +142,7 @@ const SearchPartner = () => {
             <div className="filter-content">
               <p>Gender-Female, Community-Hindu, Gotra-aa, Cast-Agrwal, Rajasthan, Jaipur</p>
             </div>
+
             <div className="filter-icon">
               <a
                 href="#"
@@ -119,14 +196,14 @@ const SearchPartner = () => {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">State</label>
-                            <select
-                              className="form-select form-control"
+                            <Select
+                              className="form-select"
                               aria-label="Default select example"
-                            >
-                              <option value="">---Select State---</option>
-                              <option></option>
-                              <option></option>
-                            </select>
+                              options={states.map(state => ({ value: state.name, label: state.name }))}
+                              value={selectedState}
+                              onChange={handleStateChange}
+                            />
+
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Skin Tone</label>
@@ -162,14 +239,13 @@ const SearchPartner = () => {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">City</label>
-                            <select
-                              className="form-select form-control"
+                            <Select
+                              className="form-select"
                               aria-label="Default select example"
-                            >
-                              <option value="">---Select City---</option>
-                              <option></option>
-                              <option></option>
-                            </select>
+                              options={cities.map(city => ({ value: city.name, label: city.name }))}
+                              value={selectedCity}
+                              onChange={handleCityChange}
+                            />
                           </div>
                         </div>
                       </div>

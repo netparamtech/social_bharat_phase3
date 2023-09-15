@@ -386,6 +386,16 @@ export const searchBusinessWithSearchText = async(searchText) => {
     }
 }
 
+//search partner
+export const searchPartnerWithSearchText = async(queryString) => {
+    try{
+        const response = await apiWithHeaders.get(`/partner/search?${queryString}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //fetch banner according to page and section
 export const fetchBannerWithPageAndSection = async (page, section) => {
     try {

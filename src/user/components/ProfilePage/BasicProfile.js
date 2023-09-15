@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { updateProfilePhoto } from "../../services/userService";
+import { fetchOneCommunity, updateProfilePhoto } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,9 @@ const BasicProfile = (props) => {
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
   const [token, setToken] = useState("");
+  const [community,setCommunity] = useState({});
+
+  const defaultPhoto = '/user/images/user.png';
 
   const [errors, setErrors] = useState();
 
@@ -49,10 +52,27 @@ const BasicProfile = (props) => {
     }
   };
 
+  const fetchLoggedUserCommunity = async ()=>{
+    try{
+        const response = await fetchOneCommunity();
+        if(response && response.status===200){
+          console.log(response.data.data,"ghjhjhgj,hgjfdydh")
+            setCommunity(response.data.data);
+        }
+    } catch(error) {
+        if (error.response && error.response.status === 401) {
+            navigate('/login');
+        } else if (error.response && error.response.status === 500) {
+            navigate('/login');
+        }
+    }
+}
+
   useEffect(() => {
     setProfileImage(user?.data?.photo || "/user/images/OIP.jpg");
     setToken(loggedUser.token);
-  });
+    fetchLoggedUserCommunity();
+  },[]);
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -103,12 +123,12 @@ const BasicProfile = (props) => {
                
                 <img 
                   className="img-fluid max-width-100 me-2  rounded-circle community-img" 
-                  src={imagePreview || profileImage}
+                  src={community.thumbnail_image?community.thumbnail_image:defaultPhoto}
                   alt=""
                   title=""
                   onClick={handleImageClick}
                 />
-                <span >Community Name</span>
+                <span >{community.name}</span>
               </div>
               
             </div>

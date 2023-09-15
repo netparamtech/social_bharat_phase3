@@ -925,6 +925,7 @@ a.btn.dropdown-toggle.show:focus {
   object-fit: cover;
   background-image: url("/images/matrimonial-1.jpg");
   border-radius: 100%;
+  /* border: 1px solid rgb(185, 183, 183) ; */
 }
 
 #searchPeople-section .user-detail p {

@@ -120,17 +120,27 @@ const BasicProfile = (props) => {
                 <p className="card-text text-center mb-0">
                   {user && user.data && user.data.name}
                 </p>
+<<<<<<< HEAD
                
                 <img 
                   className="img-fluid max-width-100 me-2  rounded-circle community-img" 
                   src={community.thumbnail_image?community.thumbnail_image:defaultPhoto}
+=======
+
+                <img
+                  className="img-fluid max-width-100 me-2  rounded-circle community-img"
+                  src={imagePreview || profileImage}
+>>>>>>> e567ab8b9f27d87732020ca994c061e4e55d0c67
                   alt=""
                   title=""
                   onClick={handleImageClick}
                 />
+<<<<<<< HEAD
                 <span >{community.name}</span>
+=======
+                <span>Community Name</span>
+>>>>>>> e567ab8b9f27d87732020ca994c061e4e55d0c67
               </div>
-              
             </div>
           </div>
           <div className="col-md-9">

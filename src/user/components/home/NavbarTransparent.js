@@ -83,7 +83,7 @@ const NavbarTransparent = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="#"  onClick={() => navigate('/contact')}>
                 Contact
               </a>
             </li>

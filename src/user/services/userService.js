@@ -367,9 +367,9 @@ export const updateProfilePhoto = async(formData) => {
 }
 
 //search people with searchText
-export const searchPeopleWithSearchText = async(searchText) => {
+export const searchPeopleWithSearchText = async(queryString) => {
     try{
-        const response = await apiWithHeaders.get(`/users/search?q=${searchText}`);
+        const response = await apiWithHeaders.get(`/users/search?q=${queryString}`);
         return response;
     } catch(error) {
         throw error;
@@ -385,6 +385,7 @@ export const searchBusinessWithSearchText = async(searchText) => {
         throw error;
     }
 }
+
 
 //search partner
 export const searchPartnerWithSearchText = async(queryString) => {

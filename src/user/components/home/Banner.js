@@ -1,30 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Typed from "typed.js";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../actions/userAction";
 
 const Banner = () => {
-  const typedRefs = useRef([]);
-  const [imageUrls, setImageUrls] = useState([]);
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Initialize Typed instances for each carousel item
-    const typedInstances =
-      imageUrls.length > 0 &&
-      imageUrls[0]?.banner_urls?.map((imageUrl, index) => {
-        return new Typed(typedRefs.current[index], {
-          strings: ["Society", "Community", "Social Bharat"],
-          typeSpeed: 150,
-          backSpeed: 150,
-          loop: true,
-        });
-      });
-  }, [imageUrls]);
 
   return (
     <div id="banners-section" className="bg-white">
@@ -37,7 +16,13 @@ const Banner = () => {
               </h2>
             </div>
             <div className="banner-button">
-              <a className="hero-btn" href="#" onClick={()=>navigate('/register')}>Get started</a>
+              <a
+                className="hero-btn"
+                href="#"
+                onClick={() => navigate("/register")}
+              >
+                Get started
+              </a>
             </div>
           </div>
         </div>

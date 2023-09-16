@@ -39,18 +39,23 @@ const WhySocial = () => {
                 <div className="row">
                     <div className="col-lg-6 col-md-6 mt-5 what-social-bharat wow animate__animated animate__fadeInUp">
                         <h1>What social Bharat Do?</h1>
-                        <p>Social Bharat: Connecting Communities with Privacy & Matrimonial Excellence</p>
+                        <p>Connecting Communities with Privacy & Matrimonial Excellence.</p>
                         <ul>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
-                            Bridging Communities: Uniting Diverse Individuals Online.    
+                            Discover and participate in communities you love.    
                             </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
-                            Secure Connections: Private Sharing in Chosen Communities.
+                            Trustworthy profiles for a secure matrimonial experience.  
                             </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
-                            Matrimonial Excellence: Find Life Partners with Privacy.</li>
+                                Private Sharing in Chosen Communities.
+                            </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
-                            Safety & Data Protection: Social Bharat's Top Priorities. </li>
+                                Find Life Partners with Privacy.</li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Elevate your business to new heights. </li>
+                            <li><i className="fa-sharp fa-regular fa-circle-check me-3"></i>
+                            Plan and attend events with friends and like-minded individuals. </li>
                         </ul>
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">

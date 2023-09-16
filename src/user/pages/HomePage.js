@@ -16,7 +16,7 @@ const HomePage = () => {
                 <WhySocial />
                 <PromoteBusiness />
                 <Services />
-                <Matrimonial />
+                
                 <Testimonials />
             </UserLayout>
         </>

@@ -122,7 +122,7 @@ nav .nav-item .btn {
 
 /* banner on trans new */
 .jumbotron {
-  background-image: url("../images/bannerTrans.png");
+  background-image: url("../images/banner-1.jpg");
   height: 400px;
   width: auto;
   background-position: center;
@@ -130,10 +130,10 @@ nav .nav-item .btn {
   background-repeat: no-repeat;
   color: #ffffff;
   /* margin-top: 10px; */
-  border-top-left-radius: 40px;
+  border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 40px;
+  border-bottom-right-radius: 10px;
   object-fit: cover;
 }
 
@@ -142,6 +142,9 @@ nav .container,
   max-width: 1290px !important;
 }
 
+#partner .container {
+  max-width: 1278px !important;
+}
 /*  */
 
 .dropdown {
@@ -190,12 +193,12 @@ nav .container,
   background-color: #ffffff;
   box-shadow: 0px 3px 6px #f4f4f4;
   color: #212529;
-  padding: 30px;
+  padding: 10px;
 }
 
 #partner img {
-  width: 150px;
-  height: 80px;
+  width: 100px;
+  border-radius: 10px;
 }
 
 /* why-social-section */
@@ -397,10 +400,11 @@ nav .container,
 
 /* Testimonials Section */
 #testimonials {
-  background-image: url("../images/testimonials-bg2.jpg");
-  opacity: 0.8;
+  background-image: url("../images/testimonial-6.jpg");
+  /* opacity: 0.8; */
   padding: 40px 0;
   background-position: center;
+  object-fit: cover;
   background-size: cover;
   overflow: hidden;
 }
@@ -429,6 +433,15 @@ nav .container,
   color: #ffffff;
   font-family: sans-serif;
   font-style: italic;
+}
+
+#testimonials img{
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
 }
 
 /* User Image On Navbar  */
@@ -552,6 +565,20 @@ a.btn.dropdown-toggle.show:focus {
 .btn-secondary.disabled {
   background-color: #e58d285b;
   border-color: #e58d28a6;
+  color: #fff;
+}
+
+.btn-banner {
+  background-color: #50CC14;
+  border-color: #50CC14;
+  color: #fff;
+}
+
+.btn-banner:hover,
+.btn-banner:focus {
+  background-color: #51cc14c7;
+  border-color: #50CC14 ;
+  /* color: #e7e4e4c9; */
   color: #fff;
 }
 
@@ -794,6 +821,8 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
+
+
 /* User Photo Edit */
 .container-profilepic {
   width: 80px;
@@ -802,7 +831,6 @@ a.btn.dropdown-toggle.show:focus {
   margin-top: 10px;
   background-position: center;
   background-size: cover;
-
   /* background: linear-gradient(yellow, orange, pink, purple, blue); */
 }
 

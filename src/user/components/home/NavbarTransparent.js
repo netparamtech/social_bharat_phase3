@@ -37,7 +37,7 @@ const NavbarTransparent = () => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          <img src="/user/images/logo.jpg" alt="Logo" />
+          <img src="/user/images/sb-logo.png" alt="Logo" />
         </a>
         <button
           className="navbar-toggler"

@@ -1,12 +1,3 @@
-// Auto typing on banner image
-var typed = new Typed(".typed", {
-  strings: ["Society","Community","Social Bharat"],
-  typeSpeed: 150,
-  backSpeed: 150,
-  loop: true
-});
-// ---------------
-
 $(document).ready(function() {
   //Wow
   new WOW().init({
@@ -20,7 +11,7 @@ $(document).ready(function() {
     time: 2000
   });
   $('.costomer-logos').slick({
-    slidesToShow: 6,
+    slidesToShow: 12,
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
@@ -71,8 +62,5 @@ $(window).scroll(function() {
       $('.navbar-transparent').addClass('Sticky-top');
   } else {
       $('.navbar-transparent').removeClass('Sticky-top');
-  }
+  }
 });
-// .................
-
-

@@ -9,7 +9,7 @@ const UserLayout = ({ children }) => {
   useEffect(() => {
     // List of script sources
     const scriptSources = [
-      "https://code.jquery.com/jquery-3.6.0.min.js",
+      // "https://code.jquery.com/jquery-3.6.0.min.js",
       "https://code.jquery.com/jquery-1.12.4.min.js",
       "https://cdn.jsdelivr.net/npm/typed.js@2.0.12",
       "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
@@ -82,4 +82,4 @@ const UserLayout = ({ children }) => {
   );
 };
 
-export default UserLayout;
+export default UserLayout;

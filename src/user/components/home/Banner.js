@@ -8,9 +8,9 @@ const Banner = () => {
 
   useEffect(() => {
     const options = {
-      strings: ["Society", "Community", "Social Bharat"],
-      typeSpeed: 150,
-      backSpeed: 150,
+      strings: ["Growing Community ", "Business Growth ", "Search Partner"],
+      typeSpeed: 80,
+      backSpeed: 80,
       loop: true,
     };
 
@@ -29,11 +29,11 @@ const Banner = () => {
           <div className="hero-section">
             <div className="">
               <h2>
-                Connect with <span className="typed" ref={typedRef}></span>
+                Social Bharat Helps <br/> <span className="typed" ref={typedRef}></span>
               </h2>
             </div>
             <div className="banner-button">
-              <a className="hero-btn" href="#" onClick={() => navigate('/register')}>Get started</a>
+              <a className="btn btn-banner" href="#" onClick={() => navigate('/register')}> Become a member</a>
             </div>
           </div>
         </div>

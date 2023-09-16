@@ -207,6 +207,17 @@ const SearchPartner = () => {
             <div>
               <h5 className="fw-3 mb-3 d-none d-sm-block">Search Partner</h5>
             </div>
+            <div className="filter-icon ">
+              <a
+                href="#"
+                title="Filter"
+                className="btn btn-primary btn-sm me-2 "
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <i className="fas fa-filter me-1"></i>Preference
+              </a>
+            </div>
             <div className="filter-content">
              {
               isSaveClicked && 
@@ -223,17 +234,7 @@ const SearchPartner = () => {
              }
             </div>
 
-            <div className="filter-icon">
-              <a
-                href="#"
-                title="Filter"
-                className="btn btn-primary btn-sm me-2 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                <i className="fas fa-filter me-1"></i>Preference
-              </a>
-            </div>
+            
 
             <div
               className="modal fade"

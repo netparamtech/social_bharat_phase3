@@ -145,16 +145,14 @@ function Contact() {
 
               {/* Contact form */}
               <div className="col-md-6 user-auth-form-container">
-                <div className="card shadow">
-                  <div className="card-body">
-                    <h4 className="">Get in Touch</h4>
+               
                     <div className="card shadow">
-                      <div className="card-body">
+                      <div className="card-body p-5">
                         <form
                           className="user-auth-form-contact"
                           onSubmit={handleSubmit}
                         >
-                          <h5 className="mb-4 ">Quickly Send Your Enquiry</h5>
+                          <h4 className="mb-4 ">Send message for enquiry</h4>
                           <div className="form-group mb-4">
                             <input
                               type="text"
@@ -198,8 +196,8 @@ function Contact() {
                             </button>
                           </div>
                         </form>
-                      </div>
-                    </div>
+                      
+                    
                   </div>
                 </div>
               </div>

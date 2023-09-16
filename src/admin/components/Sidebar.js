@@ -12,7 +12,7 @@ function Sidebar() {
         navigate('/admin/dashboard');
       }}>
         <div className="sidebar-brand-icon">
-          <img src="/user/images/logo.jpg"  className='img-fluid'/>
+          <img src="/user/images/sb-logo.png"  className='img-fluid'/>
         </div>
       </a>
 

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
@@ -6,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../actions/authActions";
 import {
   fetchBusinessCategorieWithId,
-  updateBusinessCategorie,
+  updateBusinessCategorie,fetchAllCategories
 } from "../../services/AdminService";
+import Select from 'react-select';
 
 const UpdateBusinessCategorie = () => {
   const { id } = useParams(); 
@@ -17,6 +17,7 @@ const UpdateBusinessCategorie = () => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
+  const [businessCategories,setBusinessCategories] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,9 +28,17 @@ const UpdateBusinessCategorie = () => {
       if (response && response.status === 200) {
         const businessCategorieData = response.data.data;
         
-        setName(businessCategorieData.title);
-        setStatus(businessCategorieData.status);
+        if (businessCategorieData) {
+          const category = businessCategories.find(category => category.title === businessCategorieData.title);
+            console.log(category);
+            if (category) {
+              setName({ value: category.id, label: category.title });
+            }
+        
       }
+
+      setStatus(businessCategorieData.status);
+    }
       
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -42,12 +51,37 @@ const UpdateBusinessCategorie = () => {
     }
   };
 
+  const fetchAllBusinessCategories = async () => {
+    try {
+      const response = await fetchAllCategories();
+      if (response && response.status === 200) {
+        setBusinessCategories(response.data.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        navigate("/admin");
+      }
+    }
+  };
+
+  const handleSelectCategoryChange = (selectedOption) => {
+    setName(selectedOption);
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(name);
     try {
       const businessCategorieData = {
-        title: name,
+        title: name.label,
         status,
       };
 
@@ -57,9 +91,7 @@ const UpdateBusinessCategorie = () => {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
-        setTimeout(() => {
-          window.location.href = "/admin/business-categories";
-        }, 1000);
+        navigate('/admin/business-categories')
       }
       // Redirect to the admin dashboard or desired page
     } catch (error) {
@@ -69,10 +101,8 @@ const UpdateBusinessCategorie = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -80,6 +110,10 @@ const UpdateBusinessCategorie = () => {
 
   useEffect(() => {
     fetchBusinessCategorie();
+  }, [businessCategories]);
+
+  useEffect(() => {
+    fetchAllBusinessCategories();
   }, []);
 
   return (
@@ -115,19 +149,15 @@ const UpdateBusinessCategorie = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="name">Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    defaultValue={name}
-                    
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter Business Categorie Name"
-                  />
-                  
-                  {errors.title && (
-                    <span className="error">{errors.title}</span>
-                  )}
+                  <Select
+                        id="business_category"
+                        className=""
+                        value={name} // Provide a selected option state
+                        onChange={handleSelectCategoryChange} // Your change handler function
+                        options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
+                        placeholder="---Select Business Category---"
+                      />
+                      {errors.title && <span className='error'>{errors.title}</span>}
                 </div>
               </div>
               <div className="col-md-6">

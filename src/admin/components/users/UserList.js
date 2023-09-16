@@ -55,6 +55,11 @@ const UserList = () => {
     }
   }
 
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-GB', options);
+  };
+
   const columns = [
     {
       name: 'S.No',
@@ -96,12 +101,12 @@ const UserList = () => {
     },
     {
       name: 'Created',
-      selector: (row) => row.created_at,
+      selector: (row) => formatDate(row.created_at),
       sortable: true,
     },
     {
       name: 'Updated',
-      selector: (row) => row.updated_at,
+      selector: (row) => formatDate(row.updated_at),
       sortable: true,
     },
     {

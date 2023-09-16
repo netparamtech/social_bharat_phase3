@@ -237,7 +237,7 @@ export const deleteDegree = async (id) => {
 //update Degree Status
 export const updateDegreeStatus = async (id) => {
     try {
-        const response = await apiWithHeaders.patch(`/degree/${id}/toggle-status`);
+        const response = await apiWithHeaders.patch(`/degrees/${id}/toggle-status`);
         return response;
     } catch (error) {
         throw error;
@@ -298,6 +298,16 @@ export const deleteBusinessCategorie = async (id) => {
 export const updateBusinessCategorie = async (id,data) => {
     try {
         const response = await apiWithHeaders.put(`/business-categories/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update Degree Status
+export const updateBusinessStatus = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/business-categories/${id}/toggle-status`);
         return response;
     } catch (error) {
         throw error;

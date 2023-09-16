@@ -31,10 +31,10 @@ const DegreeList = () => {
     }
   };
 
-  const handleStatusToggle = async (communityId) => {
+  const handleStatusToggle = async (degreeId) => {
     try {
-      const response = await updateDegreeStatus(communityId);
-      if (response && response.status === 201) {
+      const response = await updateDegreeStatus(degreeId);
+      if (response && response.status === 200) {
         fetchDegrees();
       }
     } catch (error) {

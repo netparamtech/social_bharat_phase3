@@ -1,10 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
-
-import { logout } from "../../actions/authActions";
-import { fetchDegreeWithId, updateDegree } from "../../services/AdminService";
+import Select from 'react-select';
+import { fetchDegreeWithId, updateDegree, fetchAllDegrees } from "../../services/AdminService";
 
 const UpdateDegree = () => {
   const { id } = useParams();
@@ -15,20 +12,62 @@ const UpdateDegree = () => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
+  const [degrees, setDegrees] = useState([]);
 
   const navigate = useNavigate();
+
+  const handleSelectCategoryChange = (selectedOption) => {
+    // Find the degree object that matches the selected value
+    const selectedDegree = degrees.find((degree) => degree.id === selectedOption.value);
+
+    // Update the name and shortName based on the selected degree
+    if (selectedDegree) {
+      setName(selectedOption);
+      setShortName(selectedDegree.short_title);
+    }
+  };
+
+  const fetchAllActiveDegrees = async () => {
+    try {
+      const response = await fetchAllDegrees();
+      if (response && response.status === 200) {
+        setDegrees(response.data.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        navigate("/admin");
+      }
+    }
+  };
 
   const fetchDegrees = async () => {
     try {
       const response = await fetchDegreeWithId(id);
       if (response && response.status === 200) {
         const degreeData = response.data.data;
-        
-        setName(degreeData.title);
+
+        console.log(degreeData, "degree data", degrees);
+
+        if (degreeData) {
+          const category = degrees.find(category => category.title === degreeData.title);
+          console.log(category);
+          if (category) {
+            setName({ value: category.id, label: category.title });
+          }
+
+        }
+
         setShortName(degreeData.short_title);
-        setStatus(degreeData.status); 
+        setStatus(degreeData.status);
       }
-      
+
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
@@ -43,7 +82,7 @@ const UpdateDegree = () => {
     event.preventDefault();
     console.log(name);
     try {
-      
+
       const degreeData = {
         title: name,
         short_title: shortName,
@@ -76,9 +115,13 @@ const UpdateDegree = () => {
     }
   };
 
-  
+
   useEffect(() => {
     fetchDegrees();
+  }, [degrees]);
+
+  useEffect(() => {
+    fetchAllActiveDegrees();
   }, []);
 
   return (
@@ -114,17 +157,16 @@ const UpdateDegree = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="name">Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    defaultValue={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter Degree Name"
+                  <Select
+                    id="business_category"
+                    className=""
+                    value={name} // Provide a selected option state
+                    onChange={handleSelectCategoryChange} // Your change handler function
+                    options={degrees && degrees.map((category) => ({ value: category.id, label: category.title }))}
+                    placeholder="---Select Degree---"
                   />
-                  {errors.title && (
-                    <span className="error">{errors.title}</span>
-                  )}
+                  {errors.title && <span className='error'>{errors.title}</span>}
+
                 </div>
                 <div className="form-group">
                   <label>Short Title</label>

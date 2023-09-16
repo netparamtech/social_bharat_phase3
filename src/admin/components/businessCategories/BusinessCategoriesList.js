@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteBusinessCategorie, fetchAllCategories, updateDegreeStatus } from "../../services/AdminService";
+import { deleteBusinessCategorie, fetchAllCategories, updateBusinessStatus, updateDegreeStatus } from "../../services/AdminService";
 import { logout } from "../../actions/authActions";
 
 const BusinessCategoriesList = () => {
   const [data, setData] = useState([]);
   const [errors, setErrors] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchAllBusinessCategories = async () => {
@@ -19,16 +18,13 @@ const BusinessCategoriesList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        console.log(error.response.data.message);
         setErrors(error.response.data.errors);
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -36,16 +32,14 @@ const BusinessCategoriesList = () => {
 
   const handleStatusToggle = async (categorieId) => {
     try {
-      const response = await updateDegreeStatus(categorieId);
-      if (response && response.status === 201) {
+      const response = await updateBusinessStatus(categorieId);
+      if (response && response.status === 200) {
         fetchAllBusinessCategories();
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -61,10 +55,8 @@ const BusinessCategoriesList = () => {
     } catch (error) {
       // Handle error cases
       if (error.response && error.response.status === 401) {
-        dispatch(logout);
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout);
         navigate('/admin');
       }
     }
@@ -118,7 +110,11 @@ const BusinessCategoriesList = () => {
                     <div className="d-flex">
                       <a
                         className="collapse-item"
-                        href={`/admin/business-categories/update/${item.id}`}
+                        href="#"
+                        onClick={(e)=>{
+                          e.preventDefault();
+                          navigate(`/admin/business-categories/update/${item.id}`)
+                        }}
                       >
                         <i className="fa fa-edit mr-4" title="Edit" />
                       </a>

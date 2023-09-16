@@ -35,7 +35,7 @@ const NavbarTransparent = () => {
 
   return (
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
+      <div className="container">
         <a className="navbar-brand" href="/">
           <img src="/user/images/sb-logo.png" alt="Logo" />
         </a>
@@ -62,26 +62,14 @@ const NavbarTransparent = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                About
-              </a>
-            </li>
+            
             <li className="nav-item">
               <a className="nav-link" href="#" onClick={handleServiceClick}>
                 Services
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Promote Business
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Matrimonial
-              </a>
-            </li>
+            
+            
             <li className="nav-item">
               <a className="nav-link" href="#"  onClick={() => navigate('/contact')}>
                 Contact

@@ -107,8 +107,6 @@ const UpdateBasicProfile = () => {
       native_place_state: selectedState.label,
     };
 
-    console.log(updatedData, "checking");
-
     // Call the API to update the basic profile information
     try {
       const response = await updateBasicProfile(updatedData);

@@ -60,7 +60,7 @@ const LoginWithPassword = (props) => {
             }
 
             else if (error.response && error.response.status === 500) {
-                console.log("hello")
+                 
                 setMessage(error.response.data.message);
                 setAlertClass('alert-danger');
             }

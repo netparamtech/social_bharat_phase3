@@ -31,32 +31,27 @@ const UpdatePasswordForm = () => {
       }
       // Redirect to the admin dashboard or desired page
     } catch (error) {
-      console.log("error found")
       // Handle validation errors
       if (error.response && error.response.status === 400) {
-        console.log(error.response.data.message);
         setErrors(error.response.data.errors);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
       }
       //Internal Server Erro
       else if (error.response && error.response.status === 500) {
-        console.log(error.response.data.message);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
         navigate('/admin');
       }
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate('/admin');
+       navigate('/admin');
       }
       //Conflict
       else if (error.response && error.response.status === 409) {
-        console.log(error.response.data.message);
         setErrors(error.response.data.errors);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
-        navigate('/admin');
       }
     }
   };
@@ -85,7 +80,7 @@ const UpdatePasswordForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
 
               />
-              {errors.password && <span className='validation-error'>{errors.password}</span>}
+              {errors.password && <span className='error'>{errors.password}</span>}
             </div>
             <div className="mb-3">
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
@@ -97,7 +92,7 @@ const UpdatePasswordForm = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
 
               />
-              {errors.confirm_password && <span className='validation-error'>{errors.confirm_password}</span>}
+              {errors.confirm_password && <span className='error'>{errors.confirm_password}</span>}
             </div>
             <button type="submit" className="btn btn-primary">Change Password</button>
           </form>

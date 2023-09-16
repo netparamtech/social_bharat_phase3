@@ -17,7 +17,6 @@ const DegreeList = () => {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        console.log(error.response.data.message);
         setErrors(error.response.data.errors);
       }
 

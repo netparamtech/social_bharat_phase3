@@ -35,10 +35,6 @@ const UserList = () => {
     setPage(newPage);
   };
 
-  const handleDeleteClick = userDetails => {
-    console.log('Delete User:', userDetails);
-  };
-
   const handleUserToggleStatus = async (id) => {
     try {
       const response = await updateToggleStatus(id);
@@ -139,16 +135,7 @@ const UserList = () => {
               <i className="fa fa-thumbs-down" title="Inactive" />
             </a>
           )}
-          <a
-            className="collapse-item"
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              handleDeleteClick(row);
-            }}
-          >
-            <i className="fa fa-trash" title='Delete' />
-          </a>
+         
         </div>
       ),
     },

@@ -116,7 +116,6 @@ const UpdateMatrimonial = (props) => {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-    console.log(tempProposalPhotoUrl)
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,
@@ -130,8 +129,6 @@ const UpdateMatrimonial = (props) => {
       proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
     };
-
-    console.log(tempBiodataFileUrl)
 
     try {
       const response = await updateMatrimonialInfo(matrimonialData);
@@ -174,7 +171,6 @@ const UpdateMatrimonial = (props) => {
 
 
   useEffect(() => {
-    console.log(userMatrimonial, "checking")
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
       setFatherName(userMatrimonial.father_name || '');

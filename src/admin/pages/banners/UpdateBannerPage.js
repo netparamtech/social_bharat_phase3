@@ -3,8 +3,6 @@ import UpdateBanner from "../../components/banners/UpdateBanner";
 import AdminLayout from "../../layouts/AdminLayout";
 import { fetchBannerWithPageAndSection } from "../../services/AdminService";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../actions/authActions";
 
 const UpdateBannerPage = () => {
     const { bannerPage, bannerSection } = useParams();

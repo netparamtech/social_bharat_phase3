@@ -58,7 +58,6 @@ const UpdateEducationProfile = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(degree, "Checked")
 
     const requestData = {
       degree_id: degreeId,

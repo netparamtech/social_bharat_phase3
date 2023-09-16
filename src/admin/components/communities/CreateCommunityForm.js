@@ -23,7 +23,6 @@ const CreateCommunityForm = () => {
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
     const selectedFile = e.target.files[0];
-    console.log(selectedFile);
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -38,12 +37,10 @@ const CreateCommunityForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }
        //handle internal server error
        else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }
@@ -65,12 +62,10 @@ const CreateCommunityForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        dispatch(logout());
         navigate("/admin");
       }
     }

@@ -83,9 +83,6 @@ const UpdateBanner = (props) => {
     updatedBannerPreview.splice(indexToDelete, 1);
     updatedBannerTempUrl.splice(indexToDelete, 1);
 
-    console.log(updatedBannerPreview, "preview url");
-    console.log(updatedBannerTempUrl, "temp url");
-
     // Update the state variables with the updated arrays
     setBannerPreview(updatedBannerPreview);
     setBannerTempUrl(updatedBannerTempUrl);

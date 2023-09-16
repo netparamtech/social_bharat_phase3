@@ -53,7 +53,7 @@ function Contact() {
                                 className="mb-2"
                                 width="50px"
                                 alt=""
-                                srcset=""
+                                srcSet=""
                               />
                               <h4 className="ms-3 ">Address</h4>
                             </div>
@@ -75,7 +75,7 @@ function Contact() {
                                 width="50px"
                                 className="mb-2"
                                 alt=""
-                                srcset=""
+                                srcSet=""
                               />
                               <h4 className="ms-3">Call Us</h4>
                             </div>
@@ -98,7 +98,7 @@ function Contact() {
                                 className="mb-2"
                                 width="50px"
                                 alt=""
-                                srcset=""
+                                srcSet=""
                               />
                               <h4 className="ms-3">Email Us</h4>
                             </div>
@@ -122,7 +122,7 @@ function Contact() {
                                 className="mb-2"
                                 width="50px"
                                 alt=""
-                                srcset=""
+                                srcSet=""
                               />
                               <h4 className="ms-3">Open Hours</h4>
                             </div>

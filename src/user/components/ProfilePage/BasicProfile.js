@@ -59,7 +59,6 @@ const BasicProfile = (props) => {
     try {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
-        console.log(response.data.data, "ghjhjhgj,hgjfdydh")
         setCommunity(response.data.data);
       }
     } catch (error) {

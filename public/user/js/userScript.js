@@ -62,5 +62,5 @@ $(window).scroll(function() {
       $('.navbar-transparent').addClass('Sticky-top');
   } else {
       $('.navbar-transparent').removeClass('Sticky-top');
-  }
+  }
 });

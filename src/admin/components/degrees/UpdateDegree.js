@@ -53,11 +53,8 @@ const UpdateDegree = () => {
       if (response && response.status === 200) {
         const degreeData = response.data.data;
 
-        console.log(degreeData, "degree data", degrees);
-
         if (degreeData) {
           const category = degrees.find(category => category.title === degreeData.title);
-          console.log(category);
           if (category) {
             setName({ value: category.id, label: category.title });
           }
@@ -80,7 +77,6 @@ const UpdateDegree = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(name);
     try {
 
       const degreeData = {
@@ -89,7 +85,6 @@ const UpdateDegree = () => {
         status,
       };
 
-      console.log(degreeData);
       const response = await updateDegree(id, degreeData);
 
       if (response && response.status === 200) {

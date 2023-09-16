@@ -50,7 +50,7 @@ const setHeadersForFile = (token) => {
 
 // Create an axios instance with the set headers function
 const apiWithFileHeaders = axios.create({
-  baseURL: '/api', // Authentication-related API
+  baseURL: 'http://164.52.218.124/api', // Authentication-related API
 });
 
 // Interceptor to set headers before each request

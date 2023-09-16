@@ -14,7 +14,7 @@ const HomePage = () => {
                 <Banner />
                 <OurPartner />
                 <WhySocial />
-                <PromoteBusiness />
+                
                 <Services />
                 
                 <Testimonials />

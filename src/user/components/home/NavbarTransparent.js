@@ -62,9 +62,14 @@ const NavbarTransparent = () => {
                 Home
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#why-social-section" >
+                About
+              </a>
+            </li>
             
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={handleServiceClick}>
+              <a className="nav-link" href="#services" >
                 Services
               </a>
             </li>

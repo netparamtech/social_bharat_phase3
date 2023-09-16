@@ -51,16 +51,15 @@ const Testimonials = () => {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-          {imageUrls.length > 0 &&
-            imageUrls[0]?.banner_urls?.map((banner, index) => (
+         
               <div
-                key={index}
-                className={`carousel-item ${index === 0 ? "active" : ""}`}
+                
+                className="active"
               >
                 <img
                   className="rounded-circle shadow-1-strong mb-4"
-                  src={banner}
-                  alt={`avatar-${index}`}
+                  src="/user/images/user-1.jpg"
+                  
                   
                 />
                 <div className="row d-flex justify-content-center">
@@ -95,7 +94,7 @@ const Testimonials = () => {
                   </li>
                 </ul>
               </div>
-            ))}
+            
         </div>
         <button
           className="carousel-control-prev"

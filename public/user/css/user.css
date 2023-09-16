@@ -223,7 +223,10 @@ nav .container,
   background-position: center ;
   background-size: cover;
   object-fit: contain;
+
 }
+
+
 
 .image-zoom {
   transition: transform 0.9s ease;

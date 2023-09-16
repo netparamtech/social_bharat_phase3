@@ -117,7 +117,7 @@ const NavbarTransparent = () => {
           </ul>
 
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+            <li className="">
               {isAuthenticUser && isAuthenticUser ? (
                 <UserProfileDropdown />
               ) : (

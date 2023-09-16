@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { loginWithPassword } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login, logout } from '../../actions/userAction';
+import { login } from '../../actions/userAction';
 
 const LoginWithPassword = (props) => {
     const { chnageFlag } = props;
@@ -42,6 +42,8 @@ const LoginWithPassword = (props) => {
                 } else {
                     navigate('/setPassword');
                 }
+
+
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -51,7 +53,13 @@ const LoginWithPassword = (props) => {
             } else if (error.response && error.response.status === 401) {
                 setMessage(error.response.data.message);
                 setAlertClass('alert-danger');
-            } else if (error.response && error.response.status === 500) {
+            }
+            //User Bloked
+            else if (error.response && error.response.status === 451) {
+                navigate('/user/block')
+            }
+
+            else if (error.response && error.response.status === 500) {
                 console.log("hello")
                 setMessage(error.response.data.message);
                 setAlertClass('alert-danger');
@@ -90,7 +98,7 @@ const LoginWithPassword = (props) => {
                                             className="form-control"
                                             onChange={handleMobileChange}
                                         />
-                                        {errors&&errors.mobile && <span className='error'>{errors.mobile}</span>}
+                                        {errors && errors.mobile && <span className='error'>{errors.mobile}</span>}
                                     </div>
                                     <div className="row mb-3">
                                         <input

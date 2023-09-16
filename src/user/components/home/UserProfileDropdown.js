@@ -25,166 +25,149 @@ const UserProfileDropdown = () => {
 
     useEffect(() => {
         if (user && user.user) {
-            setUserName(user.user.name || '');
-            setUserEmail(user.user.email || '');
-            setUserProfile(user.user.photo || '');
-            setLoggedUserFirstLatter(user.user.name.charAt(0).toUpperCase());
+          const { id, name, email, photo, is_password_set } = user.user;
+          setId(id);
+          setUserName(name || '');
+          setUserEmail(email || '');
+          setUserProfile(photo || '');
+          setLoggedUserFirstLatter(name.charAt(0).toUpperCase());
         }
-    }, [user]);
-
-    const handleProfileClick = async () => {
-        if(isPasswordSet){
-            navigate('/profile');
-        }else {
-            navigate('/set-password');
-        }
-    }
-
-    const handleChangePasswordClick = async () => {
-        if(isPasswordSet){
-            navigate('/change-password');
-        }else {
-            navigate('/set-password');
-        }
-    }
-
-    const fetchLoggedUserCommunity = async ()=>{
-        try{
-            const response = await fetchOneCommunity();
-            if(response && response.status===200){
-                setCommunity(response.data.data);
-            }
-        } catch(error) {
-            if (error.response && error.response.status === 401) {
-                navigate('/login');
-            } else if (error.response && error.response.status === 500) {
-                navigate('/login');
-            }
-        }
-    }
-
-    useEffect(()=>{
-        fetchLoggedUserCommunity();
-    },[]);
-
-    const handleLogOutClick = async () => {
+      }, [user]);
+    
+      const handleProfileClick = async () => {
+        navigate(isPasswordSet ? '/profile' : '/set-password');
+      };
+    
+      const handleChangePasswordClick = async () => {
+        navigate(isPasswordSet ? '/change-password' : '/set-password');
+      };
+    
+      const fetchLoggedUserCommunity = async () => {
         try {
-            const response = await userLogout(id);
-
-            if (response.status === 200) {
-               
-                navigate('/login');
-            }
+          const response = await fetchOneCommunity();
+          if (response && response.status === 200) {
+            setCommunity(response.data.data);
+          }
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                navigate('/login');
-            } else if (error.response && error.response.status === 500) {
-                navigate('/login');
-            }
+          handleFetchError(error);
         }
-    }
-
-    const items = [
-
-        {
+      };
+    
+      useEffect(() => {
+        fetchLoggedUserCommunity();
+      }, []);
+    
+      const handleLogOutClick = async () => {
+        try {
+          const response = await userLogout(id);
+          if (response.status === 200) {
+            navigate('/login');
+          }
+        } catch (error) {
+          handleFetchError(error);
+        }
+      };
+    
+      const handleFetchError = (error) => {
+        if (error.response && (error.response.status === 401 || error.response.status === 500)) {
+          navigate('/login');
+        }
+      };
+    
+      const generateMenuItems = () => {
+        const items = [
+          {
             key: '1',
             label: (
-                <>
-                    <h6 className="dropdown-header d-flex align-items-center">
-                        <img className="dropdown-user-img me-2" src={userProfile ? userProfile : '/user/images/OIP.jpg'} alt="User" />
-                        <div className="dropdown-user-details">
-                            <div className="dropdown-user-details-name">{userName}</div>
-                            <div className="dropdown-user-details-email">{userEmail}</div>
-                        </div>
-                    </h6>
-                    <div className="dropdown-divider"></div>
-                </>
+              <>
+                <h6 className="dropdown-header d-flex align-items-center">
+                  <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
+                  <div className="dropdown-user-details">
+                    <div className="dropdown-user-details-name">{userName}</div>
+                    <div className="dropdown-user-details-email">{userEmail}</div>
+                  </div>
+                </h6>
+                <div className="dropdown-divider"></div>
+              </>
             ),
-        },
-
-        {
+          },
+          {
             key: '2',
             label: (
-                <>
-                    <h6 className="dropdown-header d-flex align-items-center">
-                        <img className="dropdown-user-img me-2" src={community.thumbnail_image ? community.thumbnail_image : defaultPhoto} alt="User" />
-                        <div className="dropdown-user-details">
-                            <div className="dropdown-user-details-name">{community.name}</div>
-                            
-                        </div>
-                    </h6>
-                    <div className="dropdown-divider"></div>
-                </>
+              <>
+                <h6 className="dropdown-header d-flex align-items-center">
+                  <img className="dropdown-user-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
+                  <div className="dropdown-user-details">
+                    <div className="dropdown-user-details-name">{community.name}</div>
+                  </div>
+                </h6>
+                <div className="dropdown-divider"></div>
+              </>
             ),
-        },
-
-        {
+          },
+          {
             key: '3',
             label: (
-                <a href="#" className="text-decoration-none" onClick={handleProfileClick}>
-                    <i className="fas fa-user-alt m-2"></i> Profile
-                </a>
+              <a href="#" className="text-decoration-none" onClick={handleProfileClick}>
+                <i className="fas fa-user-alt m-2"></i> Profile
+              </a>
             ),
-        },
-
-        {
+          },
+          {
             key: '4',
             label: (
-                <a href="#" className="text-decoration-none" onClick={handleChangePasswordClick}>
-                    <i className="fas fa-key m-2"></i> Change Password
-                </a>
+              <a href="#" className="text-decoration-none" onClick={handleChangePasswordClick}>
+                <i className="fas fa-key m-2"></i> Change Password
+              </a>
             ),
-        },
-        {
+          },
+          {
             key: '5',
             label: (
-                <a href="#!" className="text-decoration-none">
-                    <i className="fas fa-cog m-2"></i> Settings
-                </a>
+              <a href="#!" className="text-decoration-none">
+                <i className="fas fa-cog m-2"></i> Settings
+              </a>
             ),
-        },
-
-        {
+          },
+          {
             key: '6',
             label: (
-                <a href='#' className="text-decoration-none" onClick={(e) => {
-                    e.preventDefault();
-                    handleLogOutClick();
-                }}>
-                    <i className="fas fa-sign-out m-2"></i> Logout
-                </a>
+              <a href='#' className="text-decoration-none" onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
+                <i className="fas fa-sign-out m-2"></i> Logout
+              </a>
             ),
-        },
-    ]
-
-    return (
+          },
+        ];
+        return items;
+      };
+    
+      const items = generateMenuItems();
+    
+      return (
         <Dropdown
-            menu={{
-                items,
-            }}
-            trigger={['hover']}
-            placement="bottomRight"
+          menu={{
+            items,
+          }}
+          trigger={['hover']}
+          placement="bottomRight"
         >
-            <a
-                className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary "
-                onClick={(e) => e.preventDefault()}
-            >
-                {userName}
-
-                {
-                    userProfile ? (
-                        <Avatar
-                            src={userProfile}
-                            alt={userName}
-                            size="large"
-                            className='m-2'
-                        />
-                    ) : (<button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>)
-                }
-
-            </a>
-        </Dropdown>
-    );
+          <a
+            className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary "
+            onClick={(e) => e.preventDefault()}
+          >
+            {userName}
+            {userProfile ? (
+              <Avatar
+                src={userProfile}
+                alt={userName}
+                size="large"
+                className='m-2'
+              />
+            ) : (
+              <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
+            )}
+          </a>
+        </Dropdown>    );
 };
 
 export default UserProfileDropdown;

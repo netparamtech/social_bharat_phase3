@@ -50,17 +50,11 @@ const LoginWithOtp = (props) => {
                 dispatch(login(response.data.data, response.data.token));
                 setOtp('');
 
-                if(response.data.data.status){
-                    if (response.data.data.is_password_set) {
-                        navigate('/dashboard')
-                    } else {
-                        navigate('/set-password')
-                    }
-                }else {
-                    navigate('/user/block');
+                if (response.data.data.is_password_set) {
+                    navigate('/dashboard')
+                } else {
+                    navigate('/set-password')
                 }
-
-               
 
             }
         } catch (error) {
@@ -73,6 +67,11 @@ const LoginWithOtp = (props) => {
             //Unauthorized
             else if (error.response && error.response.status === 401) {
                 navigate('/login')
+            }
+
+             //User Bloked
+             else if (error.response && error.response.status === 451) {
+                navigate('/user/block')
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {

@@ -376,10 +376,30 @@ export const searchPeopleWithSearchText = async(queryString) => {
     }
 }
 
+//search people
+export const searchWithCityState = async(queryString) => {
+    try{
+        const response = await apiWithHeaders.get(`/partner/search?${queryString}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //search business
 export const searchBusinessWithSearchText = async(searchText) => {
     try{
         const response = await apiWithHeaders.get(`/business/search?q=${searchText}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//search business
+export const searchBusinessWithCityState = async(queryString) => {
+    try{
+        const response = await apiWithHeaders.get(`/business/search?${queryString}`);
         return response;
     } catch(error) {
         throw error;

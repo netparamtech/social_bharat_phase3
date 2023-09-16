@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPeopleWithSearchText } from '../../services/userService';
+import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPeopleWithSearchText, searchWithCityState } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
@@ -46,15 +46,37 @@ const SearchPeople = () => {
         setSearchText(e.target.value);
     }
 
-    const handleGoButtonClick = () => {
-        const searchQuery = {
-            searchText, // Include searchText in the query
-            native_place_state: selectedState.label,
-            native_place_city: selectedCity.label
+
+
+    const handleGoButtonClick = async () => {
+        const queryParams = {
+            q:'',
+            native_place_state: selectedState ? selectedState.label : '',
+            native_place_city: selectedCity ? selectedCity.label : ''
+            // Add other modal fields to the queryParams
         };
-        const queryString = new URLSearchParams(searchQuery).toString();
-        search(queryString);
-    };
+
+        // Construct the query string from the queryParams object
+        const queryString = new URLSearchParams(queryParams).toString();
+
+        // Do something with the query string (e.g., redirect to a new URL)
+        try {
+            const response = await searchWithCityState(queryString);
+            setData(response.data.data);
+        } catch (error) {
+             //Unauthorized
+             if (error.response && error.response.status === 401) {
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+
+        }
+
+    }
+
 
     const getAllStates = async () => {
         try {

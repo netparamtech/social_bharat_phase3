@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchBusinessWithSearchText } from '../../services/userService';
+import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchBusinessWithCityState, searchBusinessWithSearchText } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
@@ -62,6 +62,37 @@ const SearchBusiness = () => {
                 navigate('/login');
             }
         }
+    }
+
+    const handleGoButtonClick = async () => {
+        
+        const queryParams = {
+            q:'',
+            state: selectedState ? selectedState.label : '',
+            city: selectedCity ? selectedCity.label : ''
+            // Add other modal fields to the queryParams
+        };
+
+        // Construct the query string from the queryParams object
+        const queryString = new URLSearchParams(queryParams).toString();
+        console.log(queryString)
+
+        // Do something with the query string (e.g., redirect to a new URL)
+        try {
+            const response = await searchBusinessWithCityState(queryString);
+            setData(response.data.data);
+        } catch (error) {
+             //Unauthorized
+             if (error.response && error.response.status === 401) {
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                navigate('/login');
+            }
+
+        }
+
     }
 
     const getAllStates = async () => {
@@ -148,7 +179,7 @@ const SearchBusiness = () => {
                                 />
                             </div>
                             <div className="col-2 mb-3">
-                                <a href="#" className="btn btn-set btn-primary">Go</a>
+                                <a href="#" className="btn btn-set btn-primary" onClick={handleGoButtonClick}>Go</a>
                             </div>
                         </div>
                         <div className="row">
@@ -156,7 +187,7 @@ const SearchBusiness = () => {
 
                             {
                                 data && data.map((item, idx) => (
-                                    <div className="col-md-4">
+                                    <div className="col-md-4" key={idx}>
                                         <div className="card shadow mb-2">
                                             <div className="card-body">
                                                 <div className="row">

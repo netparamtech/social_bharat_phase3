@@ -194,8 +194,8 @@ nav .container,
 }
 
 #partner img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 80px;
 }
 
 /* why-social-section */
@@ -204,22 +204,22 @@ nav .container,
   font-size: 30px;
 }
 
-#why-social-section .what-social-bharat ul,
-#why-social-section .what-social-bharat p {
+#why-social-section .what-social-bharat ul  {
   list-style: none;
   line-height: 1cm;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 #why-social-section .what-social-bharat ul li i {
   color: #008577;
 }
 
-.image-zoom-container {
-  overflow: hidden;
-  position: relative;
+.image-zoom-containerm img{
   width: 100%;
-  height: 100%;
+  height: 400px;
+  background-position: center ;
+  background-size: cover;
+  object-fit: contain;
 }
 
 .image-zoom {

@@ -31,12 +31,12 @@ function OurPartner() {
   return (
     <div className="wow animate__animated animate__fadeIn">
       <section id="partner">
-        <div className="row costomer-logos justify-content-between">
+        <div className="row costomer-logos ">
 
           {casts.length > 0 && (
             casts.map((community) => (
               community.thumbnail_image && (
-                <div className="icon-box col-lg-2 col-md-4 col-sm-6 " key={community.id}>
+                <div className="icon-box col-lg-2 col-md-4 col-sm-4" key={community.id}>
                   <img src={community.thumbnail_image} alt={community.name} />
                 </div>
               )

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../actions/userAction";
 
 const Banner = () => {
   const typedRef = useRef(null); // Use a single ref for Typed instance

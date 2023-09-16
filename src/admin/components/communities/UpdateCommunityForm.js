@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
 import {
   fetchCommunityWithId,
   updateCommunity,
   uploadImage,
 } from "../../services/AdminService";
-import { logout } from "../../actions/authActions";
 
 const CommunityUpdateForm = () => {
   const { id } = useParams();
@@ -92,7 +90,6 @@ const CommunityUpdateForm = () => {
         thumbnail_image: thumbnailImageTempUrl,
         banner_image: (bannerImageTempUrl===null)?"":bannerImageTempUrl,
       };
-      console.log(communityData);
       const response = await updateCommunity(id, communityData);
 
       if (response && response.status === 200) {

@@ -117,7 +117,6 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    console.log(businessCategory, "business");
 
     event.preventDefault();
     const businessData = {
@@ -132,7 +131,6 @@ const UpdateBusinessProfile = (props) => {
       contact3: contact3,
     };
 
-    console.log(businessData, "Business Data")
 
     try {
       const response = await updateBusinessInfo(businessData);
@@ -217,7 +215,6 @@ const UpdateBusinessProfile = (props) => {
     try {
       const response = await fetchAllActiveBusinessCategories();
       if (response && response.status === 200) {
-        console.log(response.data.data)
         setBusinessCategories(response.data.data);
       }
     } catch (error) {
@@ -234,11 +231,9 @@ const UpdateBusinessProfile = (props) => {
 
 
   useEffect(() => {
-    console.log(businessDetails, "checking")
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
       setBusinessName(businessDetails.business_name || '');
-      console.log(businessDetails,"gjhghj")
       if (businessDetails.business_category) {
         const category = businessCategories.find(category => category.title === businessDetails.business_category);
         if (category) {

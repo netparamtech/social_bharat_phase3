@@ -30,7 +30,6 @@ const UpdateBusinessCategorie = () => {
         
         if (businessCategorieData) {
           const category = businessCategories.find(category => category.title === businessCategorieData.title);
-            console.log(category);
             if (category) {
               setName({ value: category.id, label: category.title });
             }
@@ -78,7 +77,6 @@ const UpdateBusinessCategorie = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(name);
     try {
       const businessCategorieData = {
         title: name.label,
@@ -125,7 +123,7 @@ const UpdateBusinessCategorie = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            window.location.href = "/admin/business-categories";
+            navigate('/admin/business-categories');
           }}
         >
           View All Business Categories

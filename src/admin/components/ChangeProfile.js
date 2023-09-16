@@ -47,7 +47,6 @@ const ChangeProfile = (props) => {
     try {
       const response = await uploadImage(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
-        console.log(response.data.data);
         setProfileTempUrl(response.data.data.image);
       }
     } catch (error) {
@@ -80,7 +79,6 @@ const ChangeProfile = (props) => {
       photo: profileTempUrl,
     };
 
-    console.log(data);
 
     try {
       const response = await updateBasicProfile(data);

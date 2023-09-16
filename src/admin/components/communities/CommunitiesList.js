@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { deleteCommunity, fetchAllCommunity, updateCommunityStatus } from '../../services/AdminService';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/authActions';
 
 const CommunitiesList = () => {
   const [data, setData] = useState([]);

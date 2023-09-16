@@ -29,14 +29,14 @@ const apiWithHeaders = axios.create({
 // Interceptor to set headers before each request
 apiWithHeaders.interceptors.request.use((config) => {
  const token = adminStore.getState().userAuth.token?.token;
- console.log(token)
+  
   config.headers = setHeaders(token);
   return config;
 });
 
 // Create a function to set headers, including optional authorization token
 const setHeadersForFile = (token) => {
-  console.log("checking token",token)
+  
   const headers = {
     'Content-Type': 'multipart/form-data',
   };

@@ -85,7 +85,7 @@ const SearchPeople = () => {
 
                             {
                                 data && data.map((item, idx) => (
-                                    <div className="col-md-4">
+                                    <div className="col-md-4" key={idx}>
                                         <div className="card shadow mb-2">
                                             <div className="card-body">
                                                 <div className="row">

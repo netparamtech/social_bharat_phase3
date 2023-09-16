@@ -34,7 +34,6 @@ const UpdateJobProfile = (props) => {
       job_end_date: ddmmyyyyFormat(jobEndDate),
       job_type: mappedJobType,
     };
-    console.log(jobProfileData);
 
     try {
       const response = await updateJobDetail(jobProfileData);

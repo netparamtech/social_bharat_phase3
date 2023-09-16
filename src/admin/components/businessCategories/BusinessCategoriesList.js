@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { deleteBusinessCategorie, fetchAllCategories, updateBusinessStatus, updateDegreeStatus } from "../../services/AdminService";
-import { logout } from "../../actions/authActions";
 
 const BusinessCategoriesList = () => {
   const [data, setData] = useState([]);

@@ -152,8 +152,6 @@ const SearchPartner = () => {
     const queryString = new URLSearchParams(queryParams).toString();
 
     // Do something with the query string (e.g., redirect to a new URL)
-    console.log('Query String:', queryString);
-
     try {
       const response = await searchPartnerWithSearchText(queryString);
       setData(response.data.data);
@@ -238,7 +236,7 @@ const SearchPartner = () => {
             <div
               className="modal fade"
               id="exampleModal"
-              tabindex="-1"
+              tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
@@ -250,7 +248,7 @@ const SearchPartner = () => {
                     </h1>
                     <button
                       type="button"
-                      class="btn-close"
+                      className="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                     ></button>
@@ -338,13 +336,13 @@ const SearchPartner = () => {
                   <div className="modal-footer">
                     <button
                       type="button"
-                      class="btn btn-secondary"
+                      className="btn btn-secondary"
                       data-bs-dismiss="modal"
                       onClick={handleCancelClick}
                     >
                       Close
                     </button>
-                    <button type="button" class="btn btn-primary" onClick={handleSaveClick} data-bs-dismiss="modal">
+                    <button type="button" className="btn btn-primary" onClick={handleSaveClick} data-bs-dismiss="modal">
                       Save
                     </button>
                   </div>
@@ -369,7 +367,7 @@ const SearchPartner = () => {
 
               {data &&
                 data.map((item, idx) => (
-                  <div className="col-md-4">
+                  <div className="col-md-4" key={idx}>
                     <div className="card shadow mb-2">
                       <div className="card-body">
                         <div className="row">

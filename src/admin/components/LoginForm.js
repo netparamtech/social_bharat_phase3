@@ -51,12 +51,10 @@ const LoginForm = () => {
       else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
-        navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
-        navigate('/admin');
       }
      
     }

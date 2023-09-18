@@ -125,33 +125,33 @@ const UserProfileDropdown = () => {
           {
             key: '3',
             label: (
-              <a href="#" className="text-decoration-none" onClick={handleProfileClick}>
+              <span onClick={handleProfileClick}>
                 <i className="fas fa-user-alt m-2"></i> Profile
-              </a>
+              </span>
             ),
           },
           {
             key: '4',
             label: (
-              <a href="#" className="text-decoration-none" onClick={handleChangePasswordClick}>
+              <span onClick={handleChangePasswordClick}>
                 <i className="fas fa-key m-2"></i> Change Password
-              </a>
+              </span>
             ),
           },
           {
             key: '5',
             label: (
-              <a href="#!" className="text-decoration-none">
+              <span>
                 <i className="fas fa-cog m-2"></i> Settings
-              </a>
+              </span>
             ),
           },
           {
             key: '6',
             label: (
-              <a href='#' className="text-decoration-none" onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
+              <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
                 <i className="fas fa-sign-out m-2"></i> Logout
-              </a>
+              </span>
             ),
           },
         ];
@@ -169,7 +169,7 @@ const UserProfileDropdown = () => {
           placement="bottomRight"
         
         >
-          <a
+          <span
             className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary"
             onClick={(e) => e.preventDefault()}
           >
@@ -184,7 +184,7 @@ const UserProfileDropdown = () => {
             ) : (
               <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
             )}
-          </a>
+          </span>
         </Dropdown>    );
 };
 

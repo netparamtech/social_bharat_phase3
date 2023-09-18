@@ -99,11 +99,11 @@ nav .nav-item .btn {
 }
 
 .navbar-transparent .navbar-toggler-icon {
-  background-color: rgba(31, 30, 30, 0.5);
+  background-color: #008374;
 }
 
 .navbar-transparent .navbar-toggler {
-  border-color: rgba(31, 30, 30, 0.5);
+  border-color: #008374;
 }
 
 .navbar-transparent .login-btn {
@@ -223,7 +223,10 @@ nav .container,
   background-position: center ;
   background-size: cover;
   object-fit: contain;
+
 }
+
+
 
 .image-zoom {
   transition: transform 0.9s ease;

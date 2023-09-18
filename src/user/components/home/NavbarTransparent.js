@@ -35,7 +35,7 @@ const NavbarTransparent = () => {
 
   return (
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
+      <div className="container">
         <a className="navbar-brand" href="/">
           <img src="/user/images/sb-logo.png" alt="Logo" />
         </a>
@@ -56,41 +56,34 @@ const NavbarTransparent = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="#"
+                href=""
                 onClick={() => navigate("/")}
               >
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="#why-social-section" >
                 About
               </a>
             </li>
+            
             <li className="nav-item">
-              <a className="nav-link" href="#" onClick={handleServiceClick}>
+              <a className="nav-link" href="#services" >
                 Services
               </a>
             </li>
+            
+            
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Promote Business
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Matrimonial
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#"  onClick={() => navigate('/contact')}>
+              <a className="nav-link" href=""  onClick={() => navigate('/contact')}>
                 Contact
               </a>
             </li>
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" href="#" onClick={handleSearchClick}>
+                <a className="nav-link" href="" onClick={handleSearchClick}>
                   Search
                 </a>
               ) : (
@@ -107,7 +100,7 @@ const NavbarTransparent = () => {
               <li className="nav-item">
                 <a
                   className="text-decoration-none btn-primary login-btn"
-                  href="#"
+                  href=""
                   onClick={() => navigate("/login")}
                 >
                   Login

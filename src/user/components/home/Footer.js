@@ -4,26 +4,26 @@ const Footer = () => {
   return (
     <div className="">
       <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
-        <div className="row pt-5 pb-5">
+        <div className="row pt-5 pb-3">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
-            <p>
+            <p className="ms-2">
             The platform prioritizes privacy, ensuring that personal information remains protected from strangers.
             </p>
-            <div className="social-links">
-              <a href="#" className="twitter">
+            <div className="social-links ms-2">
+              <a href="" className="twitter">
                 <i className="fa-brands fa-twitter"></i>
               </a>
-              <a href="#" className="facebook">
+              <a href="" className="facebook">
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
-              <a href="#" className="instagram">
+              <a href="" className="instagram">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="#" className="linkedin">
+              <a href="" className="linkedin">
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
-              <a href="#" className="skype">
+              <a href="" className="skype">
                 <i className="fa-brands fa-skype "></i>
               </a>
             </div>
@@ -31,22 +31,22 @@ const Footer = () => {
 
           <div className="col-lg-3 col-md-6 col-sm-12 useful-links mb-md-5 ps-sm-0 ps-xs-0 ps-lg-5 ps-md-5">
             <h4>Useful Links</h4>
-            <ul className="list-inline">
-              <li>
+            <ul className="list-inline ms-2">
+              <li >
                 {" "}
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   Home
                 </a>{" "}
               </li>
               <li>
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary  me-2"></i>
                   Events
                 </a>
               </li>
               <li>
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   About
                 </a>
@@ -65,24 +65,24 @@ const Footer = () => {
 
           <div className="our-services col-lg-3 col-md-6 col-sm-12 mb-md-5 ps-lg-5">
             <h4>Our Services</h4>
-            <ul className="list-inline">
+            <ul className="list-inline ms-2">
               <li>
                 {" "}
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                  Business Promotion
                 </a>{" "}
               </li>
               <li >
                 {" "}
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                  Find Life Partner
                 </a>
               </li>
               <li>
                 {" "}
-                <a href="#" className="text-decoration-none gray-color">
+                <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   Connect With Community
                 </a>
@@ -92,7 +92,8 @@ const Footer = () => {
 
           <div className="col-lg-3 col-md-6 col-sm-12">
             <h3>Contact Us</h3>
-            <p>
+            
+            <p className="ms-2">
               747, Janpath,Rani sathi nagar,
               <br /> Nirman nagar, jaipur-302019
               <br />
@@ -113,7 +114,7 @@ const Footer = () => {
       {/* Footer End */}
       <div id="footer-end">
         <div className="container">
-          <div className="row pt-4 pb-4">
+          <div className="row pt-2 pb-2">
             <div className="col text-center">
               <div className="copyright">
                 © Copyright{" "}
@@ -124,7 +125,7 @@ const Footer = () => {
               </div>
               <div className="credits">
                 Designed by{" "}
-                <a href="#" className="text-decoration-none text-primary">
+                <a href="https://netparam.in/" className="text-decoration-none text-primary">
                   NetParam
                 </a>
               </div>

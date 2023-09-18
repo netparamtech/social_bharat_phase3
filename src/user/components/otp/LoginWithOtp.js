@@ -70,10 +70,8 @@ const LoginWithOtp = (props) => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                setRemainingTime(0);
-                setOtp('');
                 setErrorMessage('Invalid Otp')
-                navigate('/login')
+                setErrors('');
             }
 
              //User Bloked
@@ -105,7 +103,6 @@ const LoginWithOtp = (props) => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                setRemainingTime(0);
                 navigate('/login'); 
             }
             //Internal Server Error
@@ -150,7 +147,7 @@ const LoginWithOtp = (props) => {
                 </div>
 
                 <div className="row mb-3">
-                    {message && <p className={`text-center mb-0 mt-1 mb-2 ${errorMessage?'d-none':''}`}><span className='error'>{message}</span></p>}
+                    {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
                     <div id="otp-form">
                         {otpBoxes.map((index) => (
                             <input

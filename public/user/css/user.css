@@ -16,6 +16,20 @@ body {
   border-radius: 5px;
 }
 
+/* Add custom styles if needed */
+@media (max-width: 767px) {
+  .navbar-brand img {
+    max-width: 100px; 
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-brand img {
+    max-width: 200px; 
+  }
+}
+
+
 .nav-item {
   margin: auto 10px;
 }
@@ -72,7 +86,7 @@ nav .nav-item .btn {
   background-color: #ffffff !important;
   position: fixed;
   opacity: 0.9;
-    z-index: 1690;
+    z-index: 1000;
     width: 100%;
     top: 0px;
     left: 0px;

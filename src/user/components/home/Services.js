@@ -67,9 +67,10 @@ const Services = () => {
                 </p>
               </div>
             </div>
+            
           </div>
           <div className="col-lg-6">
-            <div className="d-flex mb-4">
+            <div className=" d-flex mb-4">
               <div className="small-hr"></div>
               <div className="big-hr"></div>
             </div>
@@ -84,6 +85,10 @@ const Services = () => {
 
                 </p>
               </div>
+            </div>
+            <div className="d-lg-none d-flex  mb-4 ">
+              <div className="small-hr"></div>
+              <div className="big-hr"></div>
             </div>
           </div>
           

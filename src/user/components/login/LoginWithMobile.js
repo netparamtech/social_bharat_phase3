@@ -87,10 +87,10 @@ const LoginWithMobile = (props) => {
                         </button>
                       </div>
                       <div className="row">
-                        <div className="col-5 col-md-4">
+                        <div className="col-4 col-md-4">
                           <hr />
                         </div>
-                        <div className="col-2 col-md-4 text-center mt-1">OR</div>
+                        <div className="col-4 col-md-4 text-center mt-1">OR</div>
                         <div className="col-4 col-md-4">
                           <hr />
                         </div>

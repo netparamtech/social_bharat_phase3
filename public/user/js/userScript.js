@@ -55,5 +55,4 @@ duration: 1500,
 once: false,
 });
 
-// ----- OnScroll Navbar transparent -------
 

@@ -80,7 +80,7 @@ const UserProfileDropdown = () => {
             key: '1',
             label: (
               <>
-                <h6 className="dropdown-header d-flex align-items-center">
+                <h6 className="dropdown-header d-flex align-items-center ">
                   <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
                   <div className="dropdown-user-details">
                     <div className="dropdown-user-details-name">{userName}</div>
@@ -150,9 +150,10 @@ const UserProfileDropdown = () => {
           }}
           trigger={['hover']}
           placement="bottomRight"
+        
         >
           <a
-            className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary "
+            className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary"
             onClick={(e) => e.preventDefault()}
           >
             {userName}

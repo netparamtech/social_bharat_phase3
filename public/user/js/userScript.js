@@ -57,10 +57,3 @@ once: false,
 
 // ----- OnScroll Navbar transparent -------
 
-$(window).scroll(function() {
-  if ($(this).scrollTop() > 50) {
-      $('.navbar-transparent').addClass('Sticky-top');
-  } else {
-      $('.navbar-transparent').removeClass('Sticky-top');
-  }
-});

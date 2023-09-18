@@ -25,7 +25,7 @@ const Banner = () => {
   return (
     <div id="banners-section" className="bg-white">
       <div className="container">
-        <div className="jumbotron navbar-scroll">
+        <div className="jumbotron navbar-scroll ">
           <div className="hero-section">
             <div className="">
               <h2>

@@ -109,7 +109,7 @@ const BannerCarousel = () => {
                     <div className="banner-button">
                       <a
                         className="hero-btn"
-                        href="#"
+                        href=""
                         onClick={() => navigate("/register")}
                       >
                         Get started

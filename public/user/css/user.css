@@ -70,18 +70,25 @@ nav .nav-item .btn {
 .navbar-transparent {
   background-color: transparent !important;
   background-color: #ffffff !important;
+  position: fixed;
+  opacity: 0.9;
+    z-index: 1690;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
-.navbar-transparent.Sticky-top {
-  /* background-color: #eae6de !important; */
+/* .navbar-transparent.Sticky-top {
   background-color: #fff !important;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  /* transition: background-color 0.3s ease, opacity 0.3s ease; */
   opacity: 0.9;
   position: fixed;
-  z-index: 1000;
-  width: 100%;
-}
+    z-index: 1690;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+} */
 
 .navbar-transparent .navbar-nav .nav-link {
   color: #008374;
@@ -135,6 +142,7 @@ nav .nav-item .btn {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   object-fit: cover;
+  margin-top: 94px;
 }
 
 nav .container,
@@ -1058,4 +1066,12 @@ a.btn.dropdown-toggle.show:focus {
 #basic-profile-section .community-img {
   width: 30px;
   height: 30px;
+}
+
+#auth-wrapper,
+#contact-banner,
+#dashboard,
+#basic-profile-section,
+#searchPeople-section{
+  margin-top: 90px;
 }

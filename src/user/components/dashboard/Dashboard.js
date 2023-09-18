@@ -7,7 +7,7 @@ const Dashboard = () => {
     <div id="dashboard">
       <div className="container pt-5 mb-5">
         <div className="row">
-        
+
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-peal text-white h-100">
               <div className="card-body">
@@ -137,16 +137,7 @@ const Dashboard = () => {
               <div className="text-white"><i className="fa-solid fa-arrow-right"></i></div>
             </div>
           </div>
-        </div> 
-
-          
-
-          
-
-        
-
-         
-          
+        </div>  
         </div>
       </div>
     </div>);

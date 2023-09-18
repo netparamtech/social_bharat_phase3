@@ -58,8 +58,7 @@ const WhySocial = () => {
                             Plan and attend events with friends and like-minded individuals. </li>
                         </ul>
                     </div>
-                    <div className="col-lg-6 col-md-6 float-end mt-5 wow animate__animated animate__zoomIn">
-                    
+                    <div className="col-lg-6 col-md-6 float-end mt-2 wow animate__animated animate__zoomIn">
                             <div  className="image-zoom-containerm fade-in-image">
                                  <img src="/user/images/banner-3.jpg" className="img-fluid image-zoom" alt="..." />
                             </div>

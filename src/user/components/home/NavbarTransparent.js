@@ -56,7 +56,7 @@ const NavbarTransparent = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="#"
+                href=""
                 onClick={() => navigate("/")}
               >
                 Home
@@ -76,14 +76,14 @@ const NavbarTransparent = () => {
             
             
             <li className="nav-item">
-              <a className="nav-link" href="#"  onClick={() => navigate('/contact')}>
+              <a className="nav-link" href=""  onClick={() => navigate('/contact')}>
                 Contact
               </a>
             </li>
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" href="#" onClick={handleSearchClick}>
+                <a className="nav-link" href="" onClick={handleSearchClick}>
                   Search
                 </a>
               ) : (
@@ -100,7 +100,7 @@ const NavbarTransparent = () => {
               <li className="nav-item">
                 <a
                   className="text-decoration-none btn-primary login-btn"
-                  href="#"
+                  href=""
                   onClick={() => navigate("/login")}
                 >
                   Login

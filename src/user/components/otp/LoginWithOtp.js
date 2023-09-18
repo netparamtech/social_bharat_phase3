@@ -13,6 +13,10 @@ const LoginWithOtp = (props) => {
     const [isTimeExpired, setIsTimeExpired] = useState(false);
 
     const [errors, setErrors] = useState('');
+    const [errorMessage,setErrorMessage] = useState('');
+
+    const buttonClassName = isTimeExpired ? 'btn btn-secondary' : 'btn btn-primary';
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -61,11 +65,14 @@ const LoginWithOtp = (props) => {
 
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-
+                setErrorMessage(error.response.data.errorMessage)
             }
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
+                setRemainingTime(0);
+                setOtp('');
+                setErrorMessage('Invalid Otp')
                 navigate('/login')
             }
 
@@ -87,6 +94,7 @@ const LoginWithOtp = (props) => {
             const response = await resendOtp(mobile);
 
             if (response && response.status === 200) {
+                setErrorMessage('');
                 handleResendOTP();
             }
         } catch (error) {
@@ -97,6 +105,7 @@ const LoginWithOtp = (props) => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
+                setRemainingTime(0);
                 navigate('/login'); 
             }
             //Internal Server Error
@@ -141,7 +150,7 @@ const LoginWithOtp = (props) => {
                 </div>
 
                 <div className="row mb-3">
-                    {message && <p className='text-center mb-0 mt-1 mb-2'><span className='error'>{message}</span></p>}
+                    {message && <p className={`text-center mb-0 mt-1 mb-2 ${errorMessage?'d-none':''}`}><span className='error'>{message}</span></p>}
                     <div id="otp-form">
                         {otpBoxes.map((index) => (
                             <input
@@ -155,7 +164,9 @@ const LoginWithOtp = (props) => {
                                 autoFocus={index === 0}
                             />
                         ))}
+                         
                     </div>
+                    {errorMessage && <p className='text-center mb-0 mt-1'><span className='error'>{errorMessage}</span></p>}
                     {errors.otp && <p className='text-center mb-0 mt-1'><span className='error'>{errors.otp}</span></p>}
                 </div>
 
@@ -166,7 +177,7 @@ const LoginWithOtp = (props) => {
                 <div className="row mb-3">
 
                     <button type="submit"
-                        className="btn btn-primary"
+                        className={buttonClassName}
                         disabled={isTimeExpired}
                     >
                         Verify OTP

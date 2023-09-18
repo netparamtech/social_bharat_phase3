@@ -97,6 +97,7 @@ const LoginWithPassword = (props) => {
                                             placeholder="Enter your mobile number"
                                             className="form-control"
                                             onChange={handleMobileChange}
+                                            autoFocus
                                         />
                                         {errors && errors.mobile && <span className='error'>{errors.mobile}</span>}
                                     </div>
@@ -108,7 +109,7 @@ const LoginWithPassword = (props) => {
                                             placeholder="Enter Password"
                                             className="form-control"
                                             onChange={handlePasswordChange}
-                                            autoFocus
+                                            
                                         />
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>

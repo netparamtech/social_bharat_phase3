@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import userStore from '../store';
 import { logout } from '../actions/userAction';
 import adminStore from '../../admin/store';
 // Create a base axios instance without default headers
@@ -50,7 +49,7 @@ const setHeadersForFile = (token) => {
 
 // Create an axios instance with the set headers function
 const apiWithFileHeaders = axios.create({
-  baseURL: '/api', // Authentication-related API
+  baseURL: 'http://164.52.218.124/api', // Authentication-related API
 });
 
 // Interceptor to set headers before each request

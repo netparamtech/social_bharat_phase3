@@ -5,6 +5,8 @@ import LoginWithOtp from '../otp/LoginWithOtp';
 
 const LoginWithMobile = (props) => {
 
+  const {chnageFlag} = props;
+
   const [mobile, setMobile] = useState('');
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
@@ -94,7 +96,7 @@ const LoginWithMobile = (props) => {
                         </div>
                       </div>
                       <div className="row mt-3">
-                        <a href="/login" className="btn btn-secondary">
+                        <a className="btn btn-secondary" onClick={()=>chnageFlag(false)}>
                           Login With PASSWORD
                         </a>
                       </div>

@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
@@ -34,27 +36,28 @@ const Footer = () => {
             <ul className="list-inline ms-2">
               <li >
                 {" "}
-                <a href="" className="text-decoration-none gray-color">
+                <a  className="text-decoration-none gray-color" onClick={() => navigate("/")}>
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Home
-                </a>{" "}
+                  <span >Home</span>
+                </a>
               </li>
               <li>
-                <a href="" className="text-decoration-none gray-color">
+                <a  className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary  me-2"></i>
                   Events
                 </a>
               </li>
               <li>
-                <a href="" className="text-decoration-none gray-color">
+                <a href="#why-social-section" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   About
                 </a>
               </li>
               <li>
                 <a
-                  href="contact.html"
+                
                   className="text-decoration-none gray-color"
+                  onClick={() => navigate("/contact")}
                 >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   Contact

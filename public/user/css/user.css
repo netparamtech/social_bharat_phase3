@@ -636,6 +636,7 @@ a.btn.dropdown-toggle.show:focus {
 #footer .useful-links a,
 #footer .our-services a {
   color: #212529 !important;
+  cursor: pointer;
 }
 
 #footer-end {

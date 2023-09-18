@@ -21,12 +21,12 @@ const SearchBusiness = () => {
 
     //to show state and city according to user search
 
-    const [city,setCity] = useState('');
-    const [state,setState] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
 
     //to show message on top of page
 
-    const [message,setMessage] = useState('');
+    const [message, setMessage] = useState('');
 
     const [isFilter, setIsFilter] = useState(false);
 
@@ -74,9 +74,9 @@ const SearchBusiness = () => {
     }
 
     const handleGoButtonClick = async () => {
-        
+
         const queryParams = {
-            q:'',
+            q: '',
             state: selectedState ? selectedState.label : '',
             city: selectedCity ? selectedCity.label : ''
             // Add other modal fields to the queryParams
@@ -87,12 +87,12 @@ const SearchBusiness = () => {
         try {
             const response = await searchBusinessWithCityState(queryString);
             setData(response.data.data);
-            setCity(selectedCity.label);
-            setState(selectedState.label);
+            setCity(selectedCity.label?selectedCity.label:city);
+            setState(selectedState.label?selectedState.label:state);
 
         } catch (error) {
-             //Unauthorized
-             if (error.response && error.response.status === 401) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
                 navigate('/login');
             }
             //Internal Server Error
@@ -142,10 +142,10 @@ const SearchBusiness = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setState(user && user.user && user.user.native_place_state);
         setCity(user && user.user && user.user.native_place_city);
-    },[user]);
+    }, [user]);
     useEffect(() => {
         search(searchText);
     }, [searchText]);
@@ -165,7 +165,10 @@ const SearchBusiness = () => {
                             <h5 className="fw-3 mb-3 d-none d-sm-block">Search Business</h5>
                         </div>
                         <div className="filter-content">
-                            <p>{city}, ({state})</p>
+                            <p>
+                                {city}
+                                {state && `(${state})`}
+                            </p>
                         </div>
                         <div className="filter-icon">
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>

@@ -73,8 +73,8 @@ const SearchPeople = () => {
     try {
       const response = await searchWithCityState(queryString);
       setData(response.data.data);
-      setCity(selectedCity.label);
-      setState(selectedState.label);
+      setCity(selectedCity.label?selectedCity.label:city);
+      setState(selectedState.label?selectedState.label:state);
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -164,7 +164,8 @@ const SearchPeople = () => {
             </div>
             <div className="filter-content">
               <p>
-                {city}({state})
+                {city}
+                {state && `(${state})`}
               </p>
             </div>
             <div className="filter-icon">

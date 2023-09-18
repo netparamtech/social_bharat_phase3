@@ -19,6 +19,15 @@ const SearchBusiness = () => {
     const [states, setStates] = useState([]);
     const [countryID, setCountryID] = useState(101);
 
+    //to show state and city according to user search
+
+    const [city,setCity] = useState('');
+    const [state,setState] = useState('');
+
+    //to show message on top of page
+
+    const [message,setMessage] = useState('');
+
     const [isFilter, setIsFilter] = useState(false);
 
     const navigate = useNavigate();
@@ -75,12 +84,12 @@ const SearchBusiness = () => {
 
         // Construct the query string from the queryParams object
         const queryString = new URLSearchParams(queryParams).toString();
-        console.log(queryString)
-
-        // Do something with the query string (e.g., redirect to a new URL)
         try {
             const response = await searchBusinessWithCityState(queryString);
             setData(response.data.data);
+            setCity(selectedCity.label);
+            setState(selectedState.label);
+
         } catch (error) {
              //Unauthorized
              if (error.response && error.response.status === 401) {
@@ -132,6 +141,11 @@ const SearchBusiness = () => {
             }
         }
     }
+
+    useEffect(()=>{
+        setState(user && user.user && user.user.native_place_state);
+        setCity(user && user.user && user.user.native_place_city);
+    },[user]);
     useEffect(() => {
         search(searchText);
     }, [searchText]);
@@ -151,7 +165,7 @@ const SearchBusiness = () => {
                             <h5 className="fw-3 mb-3 d-none d-sm-block">Search Business</h5>
                         </div>
                         <div className="filter-content">
-                            <p>{user && user.user && user.user.native_place_state}, {user && user.user && user.user.native_place_city}</p>
+                            <p>{city}, ({state})</p>
                         </div>
                         <div className="filter-icon">
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
@@ -196,6 +210,8 @@ const SearchBusiness = () => {
                                                     </div>
                                                     <div className="col-8 user-detail">
                                                         <p>{item.business_name}</p>
+                                                        <p>{item.city}</p>
+                                                        <p>{item.state ? `(${item.state})` : ""}</p>
                                                     </div>
                                                 </div>
                                             </div>

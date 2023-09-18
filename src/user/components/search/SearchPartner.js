@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPartnerWithSearchText, searchPeopleWithSearchText } from "../../services/userService";
+import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPartner, searchPartnerWithSearchText, searchPeopleWithSearchText } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
+import { useSelector } from "react-redux";
 
 const SearchPartner = () => {
+
+  const user = useSelector((state) => state.userAuth);
+
+  const [loggedUserID,setLoggedUserID] = useState('');
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
@@ -110,9 +115,9 @@ const SearchPartner = () => {
     }
   }
 
-  const search = async (searchText) => {
+  const search = async (id) => {
     try {
-      const response = await searchPeopleWithSearchText(searchText);
+      const response = await searchPartner(id);
       if (response && response.status === 200) {
         setData(response.data.data);
       }
@@ -187,12 +192,16 @@ const SearchPartner = () => {
         getAllCities(selectedStateObject.id);
       }
     }
-  }, [states])
+  }, [states]);
+
+  useEffect(()=>{
+    setLoggedUserID(user && user.user && user.user.community_id);
+},[user]);
 
 
   useEffect(() => {
-    search(searchText);
-  }, [searchText]);
+    search(loggedUserID);
+  }, [loggedUserID]);
 
   useEffect(() => {
     fetchCommunities();

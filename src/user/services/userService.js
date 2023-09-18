@@ -379,7 +379,7 @@ export const searchPeopleWithSearchText = async(queryString) => {
 //search people
 export const searchWithCityState = async(queryString) => {
     try{
-        const response = await apiWithHeaders.get(`/partner/search?${queryString}`);
+        const response = await apiWithHeaders.get(`/users/search?${queryString}`);
         return response;
     } catch(error) {
         throw error;
@@ -405,6 +405,18 @@ export const searchBusinessWithCityState = async(queryString) => {
         throw error;
     }
 }
+
+//search partner
+export const searchPartner = async(id) => {
+    try{
+        const response = await apiWithHeaders.get(`/partner/search?community_id=${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
 
 
 //search partner

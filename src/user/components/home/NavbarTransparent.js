@@ -9,7 +9,7 @@ const NavbarTransparent = () => {
 
   const navigate = useNavigate();
 
-  const handleServiceClick = () => {
+  const handleDashboardClick = () => {
     if (isAuthenticUser) {
       if (isPasswordSet) {
         navigate("/dashboard");
@@ -76,15 +76,25 @@ const NavbarTransparent = () => {
             
             
             <li className="nav-item">
-              <a className="nav-link" href=""  onClick={() => navigate('/contact')}>
+              <a className="nav-link"  onClick={() => navigate('/contact')}>
                 Contact
               </a>
             </li>
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" href="" onClick={handleSearchClick}>
+                <a className="nav-link" onClick={handleSearchClick}>
                   Search
+                </a>
+              ) : (
+                ""
+              )}
+            </li>
+
+            <li className="nav-item">
+              {isAuthenticUser && isAuthenticUser ? (
+                <a className="nav-link" onClick={handleDashboardClick}>
+                  Dashboard
                 </a>
               ) : (
                 ""
@@ -100,7 +110,6 @@ const NavbarTransparent = () => {
               <li className="nav-item">
                 <a
                   className="text-decoration-none btn-primary login-btn"
-                  href=""
                   onClick={() => navigate("/login")}
                 >
                   Login

@@ -19,6 +19,11 @@ const SearchPeople = () => {
     const [states, setStates] = useState([]);
     const [countryID, setCountryID] = useState(101);
 
+     //to show state and city according to user search
+
+     const [city,setCity] = useState('');
+     const [state,setState] = useState('');
+
     const [isFilter, setIsFilter] = useState(false);
     const navigate = useNavigate();
 
@@ -51,8 +56,8 @@ const SearchPeople = () => {
     const handleGoButtonClick = async () => {
         const queryParams = {
             q:'',
-            native_place_state: selectedState ? selectedState.label : '',
-            native_place_city: selectedCity ? selectedCity.label : ''
+            state: selectedState ? selectedState.label : '',
+            city: selectedCity ? selectedCity.label : ''
             // Add other modal fields to the queryParams
         };
 
@@ -63,6 +68,9 @@ const SearchPeople = () => {
         try {
             const response = await searchWithCityState(queryString);
             setData(response.data.data);
+            setCity(selectedCity.label);
+            setState(selectedState.label);
+
         } catch (error) {
              //Unauthorized
              if (error.response && error.response.status === 401) {
@@ -133,6 +141,11 @@ const SearchPeople = () => {
             }
         }
     }
+
+    useEffect(()=>{
+        setState(user && user.user && user.user.native_place_state);
+        setCity(user && user.user && user.user.native_place_city);
+    },[user]);
     useEffect(() => {
         search(searchText);
     }, [searchText]);
@@ -154,7 +167,7 @@ const SearchPeople = () => {
                             <h5 className="fw-3 mb-3 d-none d-sm-block">Search People</h5>
                         </div>
                         <div className="filter-content">
-                            <p>{user && user.user && user.user.native_place_state}, {user && user.user && user.user.native_place_city}</p>
+                            <p>{city}({state})</p>
                         </div>
                         <div className="filter-icon">
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
@@ -199,9 +212,9 @@ const SearchPeople = () => {
                                                     </div>
                                                     <div className="col-8 user-detail">
                                                         <p>{item.name}</p>
-                                                        <p>{item.mobile}</p>
-                                                        <p className="text-muted">designation</p>
-                                                        <p className="text-muted">D.O.B</p>
+                                                        <p>{item.native_place_city}</p>
+                                                        <p>{item.native_place_state ? `(${item.native_place_state})` : ""}</p>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>

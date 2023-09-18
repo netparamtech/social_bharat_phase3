@@ -1089,3 +1089,7 @@ a.btn.dropdown-toggle.show:focus {
 #searchPeople-section{
   margin-top: 90px;
 }
+
+nav .nav-item {
+  cursor: pointer;
+}

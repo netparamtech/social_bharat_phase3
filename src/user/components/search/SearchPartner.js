@@ -212,11 +212,11 @@ const SearchPartner = () => {
         <div className="card shadow">
           <div className="card-body">
             <div>
-              <h5 className="fw-3 mb-3 d-none d-sm-block">Search Partner</h5>
+              <h5 className="fw-3 mb-3  d-sm-block">Search Partner</h5>
             </div>
             <div className="filter-icon ">
               <a
-                href="#"
+                href=""
                 title="Filter"
                 className="btn btn-primary btn-sm me-2 "
                 data-bs-toggle="modal"
@@ -240,8 +240,6 @@ const SearchPartner = () => {
             </p>
              }
             </div>
-
-            
 
             <div
               className="modal fade"

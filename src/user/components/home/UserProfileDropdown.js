@@ -23,6 +23,8 @@ const UserProfileDropdown = () => {
     const [userEmail, setUserEmail] = useState('');
     const [userProfile, setUserProfile] = useState('');
 
+    const [isAndroidUsed,setIsAndroidUsed] = useState(false);
+
     useEffect(() => {
         if (user && user.user) {
           const { id, name, email, photo, is_password_set } = user.user;
@@ -33,6 +35,21 @@ const UserProfileDropdown = () => {
           setLoggedUserFirstLatter(name.charAt(0).toUpperCase());
         }
       }, [user]);
+
+      useEffect(() => {
+        const handleResize = () => {
+          setIsAndroidUsed(window.innerWidth < 768); // Adjust the threshold based on your design considerations
+        };
+    
+        // Listen for window resize events
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Call initially to set the correct value
+    
+        // Cleanup the event listener when component is unmounted
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []);
     
       const handleProfileClick = async () => {
         navigate(isPasswordSet ? '/profile' : '/set-password');
@@ -156,7 +173,7 @@ const UserProfileDropdown = () => {
             className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary"
             onClick={(e) => e.preventDefault()}
           >
-            {userName}
+            {!isAndroidUsed&&userName}
             {userProfile ? (
               <Avatar
                 src={userProfile}

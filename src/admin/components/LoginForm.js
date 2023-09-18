@@ -35,8 +35,7 @@ const LoginForm = () => {
         setMessage(response.data.message);
         setAlertClass('alert-success');
         dispatch(adminlogin(response.data.user, response.data.token));
-        console.log("Hello")
-        
+                
         setTimeout(() => {
           navigate('/admin/dashboard')
         }, 1000);

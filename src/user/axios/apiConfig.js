@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import userStore from '../store';
 import { logout } from '../actions/userAction';
 import adminStore from '../../admin/store';
 // Create a base axios instance without default headers

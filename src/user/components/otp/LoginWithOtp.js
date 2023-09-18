@@ -13,6 +13,10 @@ const LoginWithOtp = (props) => {
     const [isTimeExpired, setIsTimeExpired] = useState(false);
 
     const [errors, setErrors] = useState('');
+    const [errorMessage,setErrorMessage] = useState('');
+
+    const buttonClassName = isTimeExpired ? 'btn btn-secondary' : 'btn btn-primary';
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -61,12 +65,13 @@ const LoginWithOtp = (props) => {
 
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-
+                setErrorMessage(error.response.data.errorMessage)
             }
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                navigate('/login')
+                setErrorMessage('Invalid Otp')
+                setErrors('');
             }
 
              //User Bloked
@@ -87,6 +92,7 @@ const LoginWithOtp = (props) => {
             const response = await resendOtp(mobile);
 
             if (response && response.status === 200) {
+                setErrorMessage('');
                 handleResendOTP();
             }
         } catch (error) {
@@ -155,7 +161,9 @@ const LoginWithOtp = (props) => {
                                 autoFocus={index === 0}
                             />
                         ))}
+                         
                     </div>
+                    {errorMessage && <p className='text-center mb-0 mt-1'><span className='error'>{errorMessage}</span></p>}
                     {errors.otp && <p className='text-center mb-0 mt-1'><span className='error'>{errors.otp}</span></p>}
                 </div>
 
@@ -166,7 +174,7 @@ const LoginWithOtp = (props) => {
                 <div className="row mb-3">
 
                     <button type="submit"
-                        className="btn btn-primary"
+                        className={buttonClassName}
                         disabled={isTimeExpired}
                     >
                         Verify OTP

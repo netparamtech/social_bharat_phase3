@@ -20,7 +20,7 @@ const NavbarTransparent = () => {
         navigate("/set-password");
       }
     } else {
-      alert("You are not authorized to access.");
+      window.location.href = '/#services';
     }
   };
 
@@ -83,7 +83,7 @@ const NavbarTransparent = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href=""
+                
                 onClick={() => navigate("/")}
               >
                 Home
@@ -94,34 +94,24 @@ const NavbarTransparent = () => {
                 About
               </a>
             </li>
-            
+
             <li className="nav-item">
-              <a className="nav-link" href="#services" >
-                Services
-              </a>
+            <a className="nav-link" onClick={handleDashboardClick}>
+                  Services
+                </a>
             </li>
             
             
             <li className="nav-item">
-              <a className="nav-link" href=""  onClick={() => navigate('/contact')}>
+              <a className="nav-link"  onClick={() => navigate('/contact')}>
                 Contact
               </a>
             </li>
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" href="" onClick={handleSearchClick}>
+                <a className="nav-link" onClick={handleSearchClick}>
                   Search
-                </a>
-              ) : (
-                ""
-              )}
-            </li>
-
-            <li className="nav-item">
-              {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" onClick={handleDashboardClick}>
-                  Dashboard
                 </a>
               ) : (
                 ""
@@ -137,7 +127,6 @@ const NavbarTransparent = () => {
               <li className="nav-item">
                 <a
                   className="text-decoration-none btn-primary login-btn"
-                  href=""
                   onClick={() => navigate("/login")}
                 >
                   Login

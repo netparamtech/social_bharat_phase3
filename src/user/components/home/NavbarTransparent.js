@@ -12,6 +12,18 @@ const NavbarTransparent = () => {
 
   const navigate = useNavigate();
 
+  const handleDashboardClick = () => {
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/dashboard");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      alert("You are not authorized to access.");
+    }
+  };
+
 
   const handleSearchClick = () => {
     if (isAuthenticUser) {
@@ -100,6 +112,16 @@ const NavbarTransparent = () => {
               {isAuthenticUser && isAuthenticUser ? (
                 <a className="nav-link" href="" onClick={handleSearchClick}>
                   Search
+                </a>
+              ) : (
+                ""
+              )}
+            </li>
+
+            <li className="nav-item">
+              {isAuthenticUser && isAuthenticUser ? (
+                <a className="nav-link" onClick={handleDashboardClick}>
+                  Dashboard
                 </a>
               ) : (
                 ""

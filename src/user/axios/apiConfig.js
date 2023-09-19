@@ -4,7 +4,7 @@ import { logout } from '../actions/userAction';
 import adminStore from '../../admin/store';
 // Create a base axios instance without default headers
 const apiConfig = axios.create({
-  baseURL: 'http://localhost:3000/api', // Authentication-related API
+  baseURL: 'http://164.52.218.124/api', // Authentication-related API
 });
 
 // Create a function to set headers, including optional authorization token

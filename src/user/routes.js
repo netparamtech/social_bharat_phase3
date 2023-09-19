@@ -18,6 +18,7 @@ import SearchPartnerPage from "./pages/SearchPartnerPage";
 import SearchBusinessPage from "./pages/SearchBusinessPage";
 import BlockUserPage from "./pages/BlockUserPage";
 import ContactPage from "./pages/ContactPage";
+import UserRatingPage from "./pages/UserRatingPage";
 
 
 const userRoutes = [
@@ -163,6 +164,12 @@ const userRoutes = [
     {
         path: '/user/block',
         component: BlockUserPage,
+        exact: true
+    },
+
+    {
+        path: '/user/rating',
+        component: UserRatingPage,
         exact: true
     },
 ]

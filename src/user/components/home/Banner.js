@@ -33,7 +33,11 @@ const Banner = () => {
               </h2>
             </div>
             <div className="banner-button">
+<<<<<<< HEAD
               <a className="btn btn-banner" onClick={() => navigate('/register')}> Become a member</a>
+=======
+              <a className="btn btn-banner" href="" onClick={() => navigate('/register')}> Become a member</a>
+>>>>>>> 164d5d5ba799491b0aca4bf28ffbfe6eb47b8d42
             </div>
           </div>
         </div>

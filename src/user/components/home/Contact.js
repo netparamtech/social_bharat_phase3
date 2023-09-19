@@ -31,6 +31,7 @@ function Contact() {
       }
     } catch (error) {
        if (error.response && error.response.status === 400) {
+        setMessage('')
         setErrors(error.response.data.errors);
         setAlertClass('alert-danger');
       }

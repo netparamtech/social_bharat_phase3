@@ -148,14 +148,8 @@ const BusinessInfo = (props) => {
                 </>
 
               ) : (
-                <div className="add-more-info ">
-                  <a
-                    href="#"
-                    className="btn btn-secondary"
-                    onClick={() => navigate("/userDetails/update-business-profile")}
-                  >
-                    Add Business Info
-                  </a>
+                <div className="col-md-12">
+                  <p className="text-muted">No business details available.</p>
                 </div>
               )}
             </div>

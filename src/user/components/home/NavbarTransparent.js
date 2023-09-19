@@ -48,7 +48,7 @@ const NavbarTransparent = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsAndroidUsed(window.innerWidth < 768); // Adjust the threshold based on your design considerations
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
     };
 
     // Listen for window resize events

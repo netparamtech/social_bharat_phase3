@@ -171,10 +171,11 @@ const UserList = () => {
     );
 
     // If the user is not found on the current page and there are more pages, increment the page and search again
-    if (!userExistsOnCurrentPage && page < Math.ceil(totalRows / size)) {
+     // If the user is not found on the current page and there are more pages, increment the page and search again
+     if (!userExistsOnCurrentPage && size && page < Math.ceil(totalRows / size)) {
       setPage(page + 1);
       await fetchData();
-    }
+    } 
   };
 
   // Function to filter data based on the search query

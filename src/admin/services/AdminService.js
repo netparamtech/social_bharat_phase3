@@ -144,6 +144,7 @@ export const createBanner = async (data) => {
     }
 }
 
+//fetch all registered users
 export const fetchAllUsers = async (page, size) => {
     try {
         const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}`);
@@ -325,9 +326,29 @@ export const fetchBusinessCategorieWithId = async (id) => {
 }
 
 //fetch All Degrees
-export const fetchAllEnquiry = async () => {
+export const fetchAllEnquiries = async (page, size) => {
     try {
-        const response = await apiWithHeaders.get('/enquiries');
+        const response = await apiConfig.get(`/enquiries?page=${page}&size=${size}`);
+        return response; // Assuming your API response contains the data directly
+    } catch (error) {
+        throw error;
+    }
+};
+
+//delete enquiry
+export const deleteEnquiry = async (id) => {
+    try {
+        const response = await apiConfig.delete(`/enquiries/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of enquiry by admin
+export const updateToggleStatusForEnquiry = async (clickedUserId) => {
+    try {
+        const response = await apiConfig.patch(`/enquiries/${clickedUserId}/toggle-status`);
         return response;
     } catch (error) {
         throw error;

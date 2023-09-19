@@ -174,7 +174,7 @@ function Sidebar() {
           <i className="	
           fa fa-search" fill="currentColor"></i>
 
-          <span className='m-2'>Enquiry Categorie</span>
+          <span className='m-2'>Enquiry</span>
         </a>
         <div id="collapseEnquiry" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">

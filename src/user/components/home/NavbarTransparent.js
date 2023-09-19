@@ -89,7 +89,7 @@ const NavbarTransparent = () => {
       </button>
        
         
-      <div className={`navbar-collapse ${isCollapsed ? '' : 'show'}`} id="navbarSupportedContent">
+      <div className={`navbar-collapse ${isCollapsed&&isAndroidUsed ? '' : 'show'}`} id="navbarSupportedContent">
       <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a

@@ -82,4 +82,4 @@ const UserLayout = ({ children }) => {
   );
 };
 
-export default UserLayout;
+export default UserLayout;

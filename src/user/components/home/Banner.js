@@ -33,7 +33,7 @@ const Banner = () => {
               </h2>
             </div>
             <div className="banner-button">
-              <a className="btn btn-banner" href="#" onClick={() => navigate('/register')}> Become a member</a>
+              <a className="btn btn-banner" href="" onClick={() => navigate('/register')}> Become a member</a>
             </div>
           </div>
         </div>

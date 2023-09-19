@@ -459,3 +459,13 @@ export const fetchAllActiveBusinessCategories = async () => {
     }
 }
 
+//enquiry
+export const enquiry = async (data) => {
+    try {
+        const response = await apiConfig.post('/enquiry',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+

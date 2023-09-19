@@ -16,6 +16,7 @@ import UpdateDegreePage from "./pages/degrees/UpdateDegreePage";
 import BusinessCategoriesPage from "./pages/businessCategories/BusinessCategoriesPage";
 import CreateBusinessCategoriesPage from "./pages/businessCategories/CeateBusinessCategoriesPage";
 import UpdateBusinessCategoriePage from "./pages/businessCategories/UpdateBusinessCategoriesPage";
+import EnquiryPage from "./pages/enquiry/EnquiryPage";
 
 const adminRoutes = [
     {
@@ -131,6 +132,12 @@ const adminRoutes = [
         path: '/users/view/:id',
         component: ViewUser,
         exact:true
+    },
+
+    {
+        path: '/admin/enquiries',
+        component: EnquiryPage,
+        exact: true
     }
 ]
 

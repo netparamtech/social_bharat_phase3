@@ -323,3 +323,13 @@ export const fetchBusinessCategorieWithId = async (id) => {
         throw error;
     }
 }
+
+//fetch All Degrees
+export const fetchAllEnquiry = async () => {
+    try {
+        const response = await apiWithHeaders.get('/enquiries');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

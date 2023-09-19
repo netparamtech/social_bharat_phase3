@@ -166,6 +166,29 @@ function Sidebar() {
         </div>
       </li>
 
+      {/* <!-- Nav Item - Contact Enquiry Categories Collapse Menu --> */}
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEnquiry"
+          aria-expanded="true" aria-controls="collapseEnquiry">
+
+          <i className="	
+          fa fa-search" fill="currentColor"></i>
+
+          <span className='m-2'>Enquiry Categorie</span>
+        </a>
+        <div id="collapseEnquiry" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div className="bg-white py-2 collapse-inner rounded">
+
+            <a className="collapse-item" href="" onClick={(e) => {
+              e.preventDefault(); // Prevent the default anchor tag behavior
+              navigate('/admin/enquiries');
+            }} >List</a>
+            
+
+          </div>
+        </div>
+      </li>
+
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">
         <button className="rounded-circle border-0" id="sidebarToggle"></button>

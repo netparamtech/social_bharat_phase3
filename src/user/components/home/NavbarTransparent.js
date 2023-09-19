@@ -7,10 +7,19 @@ const NavbarTransparent = () => {
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const isPasswordSet = user && user.user && user.user.is_password_set;
+  const [isToggleClicked,setIsToggleClicked] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const [isAndroidUsed,setIsAndroidUsed] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleToggleClicked = () => {
+    setIsToggleClicked(prevToggleState => {
+      setIsCollapsed(!prevToggleState);
+      return !prevToggleState;
+    });
+  }
 
   const handleDashboardClick = () => {
     if (isAuthenticUser) {
@@ -67,20 +76,21 @@ const NavbarTransparent = () => {
               )}
         </a>
         <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded={!isCollapsed} // Adjusted aria-expanded based on isCollapsed state
+        aria-label="Toggle navigation"
+        onClick={handleToggleClicked} // Added onClick to call handleToggleClicked
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
        
         
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+      <div className={`navbar-collapse ${isCollapsed ? '' : 'show'}`} id="navbarSupportedContent">
+      <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
                 className="nav-link active"

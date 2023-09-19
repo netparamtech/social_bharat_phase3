@@ -1094,3 +1094,14 @@ a.btn.dropdown-toggle.show:focus {
 nav .nav-item {
   cursor: pointer;
 }
+
+
+.navbar-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out; /* Adjust duration and easing as needed */
+}
+
+.navbar-collapse.show {
+  max-height: 500px; /* Adjust the max-height to a suitable value */
+}

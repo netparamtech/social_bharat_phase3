@@ -91,7 +91,7 @@ const LoginWithPassword = (props) => {
                                     }
                                     <div className="row mb-3">
                                         <input
-                                            type="text"
+                                            type="mobile"
                                             name="mobile"
                                             id="mobile"
                                             placeholder="Enter your mobile number"

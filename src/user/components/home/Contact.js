@@ -1,37 +1,69 @@
 import React, { useState } from "react";
+import { enquiry } from "../../services/userService";
 
 function Contact() {
   // State variables to store form input values
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [message, setMessage] = useState("");
+  const [userQuery, setUserQuery] = useState("");
+
+  const [errors, setErrors] = useState('');
+  const [message, setMessage] = useState('');
+  const [alertClass, setAlertClass] = useState('');
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your logic to handle the form submission here
-    // You can send a request to your backend or perform any other action
+    const data = {
+      name,
+      email,
+      mobile,
+      message:userQuery
+    }
+
+    try {
+      const response = await enquiry(data);
+      if (response && response.status === 200) {
+        setErrors('');
+        setMessage(response.data.message);
+        setAlertClass('alert-success');
+      }
+    } catch (error) {
+       if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+        setAlertClass('alert-danger');
+      }
+      
+      else if (error.response && error.response.status === 401) {
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+      }
+      else if (error.response && error.response.status === 500) {
+        setMessage(error.response.data.message);
+        setAlertClass('alert-danger');
+      }
+    }
   };
 
   return (
     <div>
       {/* Address Banner */}
       <div id="contact-banner">
-      <div className="container-fluid">
-       {/* Replace the iframe with your Google Maps integration */}
-       <iframe
-       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.564711619239!2d75.73843147233465!3d26.885567509702245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dc9787b6e8159%3A0x7162ee3f35dc8f5a!2sNetparam%20Technologies%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin "
-       width="100%"
-       height="300"
-       className="mt-2"
-       style={{ border: 0 }}
-       allowFullScreen
-       loading="lazy"
-       referrerPolicy="no-referrer-when-downgrade"
-     ></iframe>
-      </div>
-       
+        <div className="container-fluid">
+          {/* Replace the iframe with your Google Maps integration */}
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.564711619239!2d75.73843147233465!3d26.885567509702245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dc9787b6e8159%3A0x7162ee3f35dc8f5a!2sNetparam%20Technologies%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin "
+            width="100%"
+            height="300"
+            className="mt-2"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
       </div>
 
       {/* Contact */}
@@ -145,59 +177,72 @@ function Contact() {
 
               {/* Contact form */}
               <div className="col-md-6 user-auth-form-container">
-               
-                    <div className="card shadow">
-                      <div className="card-body p-5">
-                        <form
-                          className="user-auth-form-contact"
-                          onSubmit={handleSubmit}
+
+                <div className="card shadow">
+                  <div className="card-body p-5">
+                    <form
+                      className="user-auth-form-contact"
+                      onSubmit={handleSubmit}
+                    >
+
+                      {message && <div className={`alert ${alertClass}`}>
+                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
+                        {" " + message}
+                      </div>
+                      }
+                      <h4 className="mb-4 ">Send message for enquiry</h4>
+                      <div className="form-group mb-4">
+                        <input
+                          type="text"
+                          placeholder="Enter Name"
+                          className="form-control col-lg-6 col-md-6 col-xs-12"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                        {errors.name && <span className='error'>{errors.name}</span>}
+                      </div>
+                      <div className="form-group mb-4">
+                        <input
+                          type="email"
+                          placeholder="Enter Email"
+                          className="form-control col-lg-6 col-md-6 col-xs-12"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                        {errors.email && <span className='error'>{errors.email}</span>}
+                      </div>
+                      <div className="form-group mb-4">
+                        <input
+                          type="mobile"
+                          className="form-control"
+                          placeholder="Enter Mobile"
+                          value={mobile}
+                          onChange={(e) => setMobile(e.target.value)}
+                        />
+                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                      </div>
+                      <div className="form-group mb-4 ">
+                        <textarea
+                          className="form-control"
+                          placeholder="Leave a comment here"
+                          id="floatingTextarea"
+                          value={userQuery}
+                          onChange={(e) => setUserQuery(e.target.value)}
                         >
-                          <h4 className="mb-4 ">Send message for enquiry</h4>
-                          <div className="form-group mb-4">
-                            <input
-                              type="text"
-                              placeholder="Enter Name"
-                              className="form-control col-lg-6 col-md-6 col-xs-12"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group mb-4">
-                            <input
-                              type="email"
-                              placeholder="Enter Email"
-                              className="form-control col-lg-6 col-md-6 col-xs-12"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group mb-4">
-                            <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Enter Mobile"
-                              value={mobile}
-                              onChange={(e) => setMobile(e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group mb-4 ">
-                            <textarea
-                              className="form-control"
-                              placeholder="Leave a comment here"
-                              id="floatingTextarea"
-                            ></textarea>
-                          </div>
-                          <div className="form-group">
-                            <button
-                              className="form-control w-100 btn-primary"
-                              type="submit"
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </form>
-                      
-                    
+                        </textarea>
+                        {errors.message && <span className='error'>{errors.message}</span>}
+                      </div>
+                      <div className="form-group">
+                        <button
+                          className="form-control w-100 btn-primary"
+                          type="submit"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+
+
                   </div>
                 </div>
               </div>

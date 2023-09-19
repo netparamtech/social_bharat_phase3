@@ -70,7 +70,7 @@ const LoginWithMobile = (props) => {
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       <div className="row mb-3">
                         <input
-                          type="text"
+                          type="mobile"
                           name="mobile"
                           id="mobile"
                           placeholder="Enter your mobile number"

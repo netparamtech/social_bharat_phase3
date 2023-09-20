@@ -1101,16 +1101,8 @@ nav .nav-item {
   cursor: pointer;
 }
 
-.navbar-collapse {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out; /* Adjust duration and easing as needed */
-}
 
-.navbar-collapse.show {
-  max-height: 500px; /* Adjust the max-height to a suitable value */
-}
-
+  
 /* Rating Page */
 .rating {
   display: inline-block;
@@ -1126,7 +1118,6 @@ nav .nav-item {
   cursor: pointer;
   color: #ccc;
   transition: color 0.3s;
-
 }
 
 .rating label:before {
@@ -1140,7 +1131,6 @@ nav .nav-item {
   color: #dfc909;
   transition: color 0.3s;
   transform: scale(1.1);
- 
 }
 
 @media screen and (min-width: 768px) {

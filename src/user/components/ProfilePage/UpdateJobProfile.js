@@ -86,7 +86,7 @@ const UpdateJobProfile = (props) => {
                 <div className="card-title">
                   <h3 className="mb-3">Job Info</h3>
                 </div>
-                <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                <form className="w-100 w-lg-75">
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Company Name</label>
@@ -173,7 +173,7 @@ const UpdateJobProfile = (props) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="btn btn-primary" onClick={()=>navigate('/profile')}>
                         Update
                       </button>
                     </div>

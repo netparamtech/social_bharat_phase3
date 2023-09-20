@@ -146,6 +146,15 @@ const UpdateBasicProfile = () => {
   }, []);
 
 
+  useEffect(() => {
+    if (states && user) {
+      const selectedStateObject = states.find((state) => state.name === user.user.native_place_state);
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+  }, [states])
+
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">

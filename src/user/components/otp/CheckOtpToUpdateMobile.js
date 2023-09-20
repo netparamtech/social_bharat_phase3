@@ -12,6 +12,8 @@ const CheckOtpToUpdateMobile = (props) => {
     const [isTimeExpired, setIsTimeExpired] = useState(false);
 
     const [errors, setErrors] = useState('');
+    const [errorMessage,setErrorMessage] = useState('');
+
 
     const navigate = useNavigate();
 
@@ -49,19 +51,24 @@ const CheckOtpToUpdateMobile = (props) => {
                 navigate('/profile');
             }
         } catch (error) {
-            //Unauthorized
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
-
+                setErrorMessage(error.response.data.errorMessage)
             }
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
-                navigate('/login');
+                setErrorMessage('Invalid Otp')
+                setErrors('');
+            }
+
+             //User Bloked
+             else if (error.response && error.response.status === 451) {
+                navigate('/user/block')
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                navigate('/login')
             }
         }
     }
@@ -73,6 +80,7 @@ const CheckOtpToUpdateMobile = (props) => {
             const response = await resendOtp(mobile);
 
             if (response && response.status === 200) {
+                setErrorMessage('');
                 handleResendOTP();
             }
         } catch (error) {
@@ -143,6 +151,7 @@ const CheckOtpToUpdateMobile = (props) => {
                             />
                         ))}
                     </div>
+                    {errorMessage && <p className='text-center mb-0 mt-1'><span className='error'>{errorMessage}</span></p>}
                     {errors.otp && <p className='text-center mb-0 mt-1'><span className='error'>{errors.otp}</span></p>}
                 </div>
 

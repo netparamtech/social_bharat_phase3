@@ -1,27 +1,30 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { useEffect, useState } from "react";
 
 const NavbarTransparent = () => {
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const isPasswordSet = user && user.user && user.user.is_password_set;
-  const [isToggleClicked,setIsToggleClicked] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(true);
-
-  const [isAndroidUsed,setIsAndroidUsed] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleToggleClicked = () => {
-    setIsToggleClicked(prevToggleState => {
-      setIsCollapsed(!prevToggleState);
-      return !prevToggleState;
-    });
+  const handleLoginClicked = (e)=>{
+    e.preventDefault();
+    navigate('/login');
   }
 
-  const handleDashboardClick = () => {
+  const handleHomeClicked = (e)=>{
+    e.preventDefault();
+    navigate('/');
+  }
+
+  const handleContactClicked = (e)=>{
+    e.preventDefault();
+    navigate('/contact');
+  }
+
+  const handleServiceClick = (e) => {
     if (isAuthenticUser) {
       if (isPasswordSet) {
         navigate("/dashboard");
@@ -29,74 +32,47 @@ const NavbarTransparent = () => {
         navigate("/set-password");
       }
     } else {
-      window.location.href = '/#services';
+      e.preventDefault();
+      navigate('/#services');
     }
   };
 
-
-  const handleSearchClick = () => {
+  const handleSearchClick = (e) => {
+    e.preventDefault();
     if (isAuthenticUser) {
       if (isPasswordSet) {
         navigate("/user/search");
       } else {
         navigate("/set-password");
       }
-    } else {
-      alert("You are not authorized to access.");
-    }
+    } 
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
-    };
-
-    // Listen for window resize events
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Call initially to set the correct value
-
-    // Cleanup the event listener when component is unmounted
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
-      <div className="container ">
+      <div className="container">
         <a className="navbar-brand" href="/">
           <img src="/user/images/sb-logo.png" alt="Logo" />
         </a>
-
-        <a>
-        {isAndroidUsed&&isAuthenticUser && isAuthenticUser ? (
-                <UserProfileDropdown />
-              ) : (
-                ""
-              )}
-        </a>
         <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded={!isCollapsed} // Adjusted aria-expanded based on isCollapsed state
-        aria-label="Toggle navigation"
-        onClick={handleToggleClicked} // Added onClick to call handleToggleClicked
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-       
-        
-      <div className={`navbar-collapse ${isCollapsed&&isAndroidUsed ? '' : 'show'}`} id="navbarSupportedContent">
-      <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
                 className="nav-link active"
                 aria-current="page"
-                
-                onClick={() => navigate("/")}
+                href=""
+                onClick={handleHomeClicked}
               >
                 Home
               </a>
@@ -106,16 +82,16 @@ const NavbarTransparent = () => {
                 About
               </a>
             </li>
-
+            
             <li className="nav-item">
-            <a className="nav-link" onClick={handleDashboardClick}>
-                  Services
-                </a>
+              <a className="nav-link" onClick={handleServiceClick} >
+                Services
+              </a>
             </li>
             
             
             <li className="nav-item">
-              <a className="nav-link"  onClick={() => navigate('/contact')}>
+              <a className="nav-link" onClick={handleContactClicked}>
                 Contact
               </a>
             </li>
@@ -139,7 +115,8 @@ const NavbarTransparent = () => {
               <li className="nav-item">
                 <a
                   className="text-decoration-none btn-primary login-btn"
-                  onClick={() => navigate("/login")}
+                  href=""
+                  onClick={handleLoginClicked}
                 >
                   Login
                 </a>
@@ -149,7 +126,7 @@ const NavbarTransparent = () => {
 
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             <li className="">
-              {!isAndroidUsed&&isAuthenticUser && isAuthenticUser ? (
+              {isAuthenticUser && isAuthenticUser ? (
                 <UserProfileDropdown />
               ) : (
                 ""

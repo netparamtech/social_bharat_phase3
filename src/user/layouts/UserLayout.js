@@ -1,7 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useEffect } from "react";
-import Navbar from "../components/home/Navbar";
 import Footer from "../components/home/Footer";
 import NavbarTransparent from "../components/home/NavbarTransparent";
 
@@ -82,4 +81,4 @@ const UserLayout = ({ children }) => {
   );
 };
 
-export default UserLayout;
+export default UserLayout;

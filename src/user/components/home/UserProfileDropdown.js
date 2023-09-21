@@ -97,11 +97,11 @@ const UserProfileDropdown = () => {
             key: '1',
             label: (
               <>
-                <h6 className="dropdown-header d-flex align-items-center ">
+                <h6 className="dropdown-header d-flex align-items-center menu-font ">
                   <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
                   <div className="dropdown-user-details">
-                    <div className="dropdown-user-details-name">{userName}</div>
-                    <div className="dropdown-user-details-email">{userEmail}</div>
+                    <div className="dropdown-user-details-name menu-font">{userName}</div>
+                    <div className="dropdown-user-details-email menu-font">{userEmail}</div>
                   </div>
                 </h6>
                 <div className="dropdown-divider"></div>
@@ -115,7 +115,7 @@ const UserProfileDropdown = () => {
                 <h6 className="dropdown-header d-flex align-items-center">
                   <img className="dropdown-user-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
                   <div className="dropdown-user-details">
-                    <div className="dropdown-user-details-name">{community.name}</div>
+                    <div className="dropdown-user-details-name menu-font">{community.name}</div>
                   </div>
                 </h6>
                 <div className="dropdown-divider"></div>
@@ -125,7 +125,7 @@ const UserProfileDropdown = () => {
           {
             key: '3',
             label: (
-              <span onClick={handleProfileClick}>
+              <span onClick={handleProfileClick} className='menu-font'>
                 <i className="fas fa-user-alt m-2"></i> Profile
               </span>
             ),
@@ -133,7 +133,7 @@ const UserProfileDropdown = () => {
           {
             key: '4',
             label: (
-              <span onClick={handleChangePasswordClick}>
+              <span onClick={handleChangePasswordClick} className='menu-font'>
                 <i className="fas fa-key m-2"></i> Change Password
               </span>
             ),
@@ -141,7 +141,7 @@ const UserProfileDropdown = () => {
           {
             key: '5',
             label: (
-              <span>
+              <span className='menu-font'>
                 <i className="fas fa-cog m-2"></i> Settings
               </span>
             ),
@@ -149,7 +149,7 @@ const UserProfileDropdown = () => {
           {
             key: '6',
             label: (
-              <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
+              <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }} className='menu-font'>
                 <i className="fas fa-sign-out m-2"></i> Logout
               </span>
             ),
@@ -170,16 +170,16 @@ const UserProfileDropdown = () => {
         
         >
           <span
-            className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary"
+            className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary custom-font"
             onClick={(e) => e.preventDefault()}
           >
-            {!isAndroidUsed&&userName}
+            <span className='custom-font'>{!isAndroidUsed&&userName}</span>
             {userProfile ? (
               <Avatar
                 src={userProfile}
                 alt={userName}
                 size="large"
-                className='m-2'
+                className='m-2 custom-font'
               />
             ) : (
               <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>

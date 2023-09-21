@@ -128,7 +128,6 @@ const BasicProfile = (props) => {
                   src={community.thumbnail_image ? community.thumbnail_image : defaultPhoto}
                   alt=""
                   title=""
-                  onClick={handleImageClick}
                 />
                 <span>{community.name}</span>
               </div>

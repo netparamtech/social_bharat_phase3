@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { MenuOutlined } from "@ant-design/icons";
-import { Layout, Button, Drawer } from "antd";
+import { MenuOutlined } from '@ant-design/icons';
+import { Button, Drawer } from "antd";
 import { useEffect, useState } from "react";
+import UserSearchDropdown from "./UserSearchDropdown";
+
 
 const NavbarTransparent = () => {
   const user = useSelector((state) => state.userAuth);
@@ -11,21 +13,21 @@ const NavbarTransparent = () => {
   const isPasswordSet = user && user.user && user.user.is_password_set;
 
   const [visible, setVisible] = useState(false);
-  const [isAndroidUsed,setIsAndroidUsed] = useState(false);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLoginClicked = (e)=>{
+  const handleLoginClicked = (e) => {
     e.preventDefault();
     navigate('/login');
   }
 
-  const handleHomeClicked = (e)=>{
+  const handleHomeClicked = (e) => {
     e.preventDefault();
     navigate('/');
   }
 
-  const handleContactClicked = (e)=>{
+  const handleContactClicked = (e) => {
     e.preventDefault();
     navigate('/contact');
   }
@@ -51,7 +53,7 @@ const NavbarTransparent = () => {
       } else {
         navigate("/set-password");
       }
-    } 
+    }
   };
 
   const showDrawer = () => {
@@ -81,16 +83,22 @@ const NavbarTransparent = () => {
         </a>
 
         <a>
-        {isAndroidUsed&&isAuthenticUser && isAuthenticUser ? (
-                <UserProfileDropdown />
-              ) : (
-                ""
-              )}
+          {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
+            <UserProfileDropdown />
+          ) : (
+            ""
+          )}
         </a>
-        <Button className={`menuButton ${isAndroidUsed ? '':'d-none'}`} type="text" onClick={showDrawer} style={{ float: "right" }}>
-            <MenuOutlined />
-          </Button>
+
+        <button
+         className={`navbar-toggler ${isAndroidUsed ? '' : 'd-none'}`}
+          type="button"
+         onClick={showDrawer}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
@@ -107,14 +115,14 @@ const NavbarTransparent = () => {
                 About
               </a>
             </li>
-            
+
             <li className="nav-item">
               <a className="nav-link" onClick={handleServiceClick} >
                 Services
               </a>
             </li>
-            
-            
+
+
             <li className="nav-item">
               <a className="nav-link" onClick={handleContactClicked}>
                 Contact
@@ -123,14 +131,13 @@ const NavbarTransparent = () => {
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" onClick={handleSearchClick}>
-                  Search
-                </a>
+               <UserSearchDropdown />
               ) : (
                 ""
               )}
             </li>
 
+           
             {/* You can add more nav items here */}
           </ul>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -151,7 +158,7 @@ const NavbarTransparent = () => {
 
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             <li className="">
-              {!isAndroidUsed&&isAuthenticUser && isAuthenticUser ? (
+              {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
                 <UserProfileDropdown />
               ) : (
                 ""
@@ -161,69 +168,83 @@ const NavbarTransparent = () => {
 
           <Drawer
             title={"Menu"}
-            placement="right"
+            placement="left"
             closable={true}
             onClose={showDrawer}
-            visible={visible}
-            style={{ zIndex: 99999,width: "70%",background:'green' }}
+            open={visible}
+            style={{
+              zIndex: 99999,
+              width: "70%",
+              background: "rgba(255, 255, 255, 0.8)",
+              borderRadius: "3%"
+
+            }}
           >
-            <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li className="nav-item mt-2">
-              <a
-                className="nav-link active"
-                aria-current="page"
-                href=""
-                onClick={handleHomeClicked}
-              >
-                Home
-              </a>
-            </li>
-            <li className="nav-item mt-2">
-              <a className="nav-link" href="#why-social-section" >
-                About
-              </a>
-            </li>
-            <li className="nav-item mt-2">
-              <a className="nav-link" onClick={handleServiceClick} >
-                Services
-              </a>
-            </li>
-            <li className="nav-item mt-2">
-              <a className="nav-link" onClick={handleContactClicked}>
-                Contact
-              </a>
-            </li>
-            
-            <li className="nav-item mt-2">
-              {isAuthenticUser && isAuthenticUser ? (
-                <a className="nav-link" onClick={handleSearchClick}>
-                  Search
-                </a>
-              ) : (
-                ""
-              )}
-            </li>
-           
-            {isAuthenticUser && isAuthenticUser ? (
-               <li className="nav-item mt-2">
-               <a
-                 onClick={() => navigate("/login")}
-               >
-                 Log out
-               </a>
-             </li>
-            ) : (
+            <div className="customDrawerBody">
+            <ul className="customUl">
               <li className="nav-item mt-2">
                 <a
-                  onClick={() => navigate("/login")}
+                  className="nav-link active"
+                  aria-current="page"
+                  href=""
+                  onClick={handleHomeClicked}
                 >
-                  Login
+                  <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                 </a>
               </li>
-            )}
-            
-           
+              <li className="nav-item mt-2">
+                <a className="nav-link" href="#why-social-section" >
+                  <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
+                </a>
+              </li>
+              <li className="nav-item mt-2">
+                <a className="nav-link" onClick={handleServiceClick} >
+                  <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
+                </a>
+              </li>
+              <li className="nav-item mt-2">
+                <a className="nav-link" onClick={handleContactClicked}>
+                  <i className='fas fa-address-book m-2'></i>Contact
+                </a>
+              </li>
+              
+              <span className="customUl">
+              <li className="nav-item mt-2">
+                {isAuthenticUser && isAuthenticUser ? (
+                  <a className="nav-link">
+                    <i className="fa fa-search m-2" aria-hidden="true"></i> <UserSearchDropdown />
+                  </a>
+                ) : (
+                  ""
+                )}
+              </li>
+              </span>
+
+              
+
+              
+
+              {isAuthenticUser && isAuthenticUser ? (
+                <li className="nav-item mt-2">
+                  <a
+                    onClick={() => navigate("/login")}
+                  >
+                    <i className="fa fa-sign-out m-2" aria-hidden="true"></i>Log out
+                  </a>
+                </li>
+              ) : (
+                <li className="nav-item mt-2">
+                  <a
+                    onClick={() => navigate("/login")}
+                  >
+                    <i className="fa fa-sign-in m-2" aria-hidden="true"></i> Login
+                  </a>
+                </li>
+              )}
+
+
             </ul>
+            </div>
           </Drawer>
         </div>
       </div>

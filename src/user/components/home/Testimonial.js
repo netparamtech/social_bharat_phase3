@@ -51,50 +51,43 @@ const Testimonials = () => {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-         
-              <div
-                
-                className="active"
-              >
-                <img
-                  className="rounded-circle shadow-1-strong mb-4"
-                  src="/user/images/user-1.jpg"
-                  
-                  
-                />
-                <div className="row d-flex justify-content-center">
-                  <div className="col-lg-8">
-                    <h3 className="mb-3">Maria Kate</h3>
-                    <h4>Photographer</h4>
-                    <p>
-                      <i className="fa fa-quote-left pe-2"></i>
-                      I'm looking forward to seeing platforms that not only help
-                      people find love but also foster a supportive community
-                      where users can learn from each other's experiences and
-                      share valuable advice.
-                      <i className="fa fa-quote-right ps-2"></i>
-                    </p>
-                  </div>
-                </div>
-                <ul className="list-unstyled d-flex justify-content-center text-warning mb-0">
-                  <li>
-                    <i className="fas fa-star fa-sm"></i>
-                  </li>
-                  <li>
-                    <i className="fas fa-star fa-sm"></i>
-                  </li>
-                  <li>
-                    <i className="fas fa-star fa-sm"></i>
-                  </li>
-                  <li>
-                    <i className="fas fa-star fa-sm"></i>
-                  </li>
-                  <li>
-                    <i className="far fa-star fa-sm"></i>
-                  </li>
-                </ul>
+          <div className="active">
+            <img
+              className="rounded-circle shadow-1-strong mb-4"
+              src="/user/images/user-1.jpg"
+            />
+            <div className="row d-flex justify-content-center">
+              <div className="col-lg-8">
+                <h3 className="mb-3">Maria Kate</h3>
+                <h4>Photographer</h4>
+                <p>
+                  <i className="fa fa-quote-left pe-2"></i>
+                  I'm looking forward to seeing platforms that not only help
+                  people find love but also foster a supportive community where
+                  users can learn from each other's experiences and share
+                  valuable advice.
+                  <i className="fa fa-quote-right ps-2"></i>
+                </p>
               </div>
-            
+            </div>
+            <ul className="list-unstyled d-flex justify-content-center text-warning mb-0">
+              <li>
+                <i className="fas fa-star fa-sm"></i>
+              </li>
+              <li>
+                <i className="fas fa-star fa-sm"></i>
+              </li>
+              <li>
+                <i className="fas fa-star fa-sm"></i>
+              </li>
+              <li>
+                <i className="fas fa-star fa-sm"></i>
+              </li>
+              <li>
+                <i className="far fa-star fa-sm"></i>
+              </li>
+            </ul>
+          </div>
         </div>
         <button
           className="carousel-control-prev"

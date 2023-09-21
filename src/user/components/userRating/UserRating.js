@@ -8,7 +8,13 @@ const UserRating = () => {
           <div className="card-body mx-auto">
             <div className="row">
               <div className="col-12">
-                <div class="rating">
+              <textarea
+              className="form-control mb-3"
+              placeholder="Comment"
+              id="Textarea"
+            ></textarea>
+                <div class="rating mb-3">
+                 
                   <input value="5" name="rating" id="star5" type="radio" />
                   <label for="star5"></label>
                   <input value="4" name="rating" id="star4" type="radio" />

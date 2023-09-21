@@ -45,6 +45,16 @@ $(document).ready(function() {
         dots: false
         
       }
+    },
+    {
+      breakpoint: 375,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false
+        
+      }
     }
   ]
   });

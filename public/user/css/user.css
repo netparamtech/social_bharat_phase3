@@ -1106,10 +1106,9 @@ nav .nav-item {
 
   
 /* Rating Page */
-
 .rating {
   display: inline-block;
-  margin-left: 60px;
+  margin-left: 50px;
 }
 
 .rating input {
@@ -1125,7 +1124,7 @@ nav .nav-item {
 
 .rating label:before {
   content: '\2605';
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .rating input:checked ~ label,
@@ -1133,13 +1132,12 @@ nav .nav-item {
 .rating label:hover ~ label {
   color: #dfc909;
   transition: color 0.3s;
+  transform: scale(1.1);
 }
 
-/* Media query for screens with a minimum width of 768px (adjust as needed for large screens) */
 @media screen and (min-width: 768px) {
   .rating label {
-    margin: 40px;
-  
+    margin-right: 40px;
   }
 }
 

@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, Menu, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
 const UserSearchDropdown = () => {
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleSearchPeopleClick = (e) => {
-        e.preventDefault();
-        navigate('/user/search');
-    }
+  const handleSearchPeopleClick = (e) => {
+    e.preventDefault();
+    navigate('/user/search');
+  }
 
-    const handleSearchBusinessClick = (e) => {
-        e.preventDefault();
-        navigate('/user/search/business');
-    }
+  const handleSearchBusinessClick = (e) => {
+    e.preventDefault();
+    navigate('/user/search/business');
+  }
 
-    const handleSearchPartnerClick = (e) => {
-        e.preventDefault();
-        navigate('/user/search/partner');
-    }
+  const handleSearchPartnerClick = (e) => {
+    e.preventDefault();
+    navigate('/user/search/partner');
+  }
 
   const generateMenuItems = () => {
     const items = [
@@ -65,9 +66,29 @@ const UserSearchDropdown = () => {
     </Menu>
   );
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Dropdown overlay={menu} trigger={['hover']} placement="bottomRight">
-      <span className='btn btn-icon btn-transparent-dark text-capitalize text-primary custom-font'>Search</span>
+      {
+        isAndroidUsed?(<span className='customDrawerBody customUl'>
+        Search
+        </span>):(<span className='btn btn-icon btn-transparent-dark text-capitalize text-primary custom-font'>Search</span>)
+      }
+      
     </Dropdown>
   );
 };

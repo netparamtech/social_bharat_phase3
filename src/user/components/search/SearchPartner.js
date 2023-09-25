@@ -389,7 +389,6 @@ const SearchPartner = () => {
                           </div>
                           <div className="col-8 user-detail">
                             <p>{item.name}</p>
-                            <p>{item.mobile}</p>
                             <p className="text-muted">{item.father_name}</p>
                             <p className="text-muted">{item.native_place_city}</p>
                             <p className="text-muted">{item.native_place_state}</p>

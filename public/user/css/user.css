@@ -1172,3 +1172,14 @@ nav .nav-item {
   font-family: "Poppins", sans-serif;
   font-size: 16px; /* Adjust the font size as needed */
 }
+
+.fixed-button-container {
+  position: fixed;
+  bottom: 20px; /* Adjust the positioning as needed */
+  right: 20px; /* Adjust the positioning as needed */
+}
+
+.content-container {
+  max-height: calc(100vh - 10px); /* Adjust the max height as needed */
+  overflow-y: auto;
+}

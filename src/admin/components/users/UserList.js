@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/authActions';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -17,9 +15,9 @@ const UserList = () => {
   const fetchData = async () => {
     try {
       const response = await fetchAllUsers(page, size);
-      
+
       setData(response.data.data);
-      
+
       setTotalRows(response.data.totalRecords);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -30,6 +28,10 @@ const UserList = () => {
       }
     }
   };
+
+  const handleSearchClick = () => {
+    fetchData();
+  }
 
   const handlePageChange = newPage => {
     setPage(newPage);
@@ -109,7 +111,7 @@ const UserList = () => {
       name: 'Actions',
       cell: (row) => (
         <div>
-          <a className="collapse-item" href="#" onClick={()=>navigate(`/users/view/${row.id}`)}>
+          <a className="collapse-item" href="#" onClick={() => navigate(`/users/view/${row.id}`)}>
             <i className="fas fa-eye"></i>
           </a>
           {row.status === 'Active' ? (
@@ -135,7 +137,7 @@ const UserList = () => {
               <i className="fa fa-thumbs-down" title="Inactive" />
             </a>
           )}
-         
+
         </div>
       ),
     },
@@ -167,16 +169,28 @@ const UserList = () => {
         (value) =>
           typeof value === 'string' &&
           value.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      ) || (row.community?.name.toLowerCase().includes(searchQuery.toLowerCase())) // Include community in the search
     );
 
     // If the user is not found on the current page and there are more pages, increment the page and search again
-     // If the user is not found on the current page and there are more pages, increment the page and search again
-     if (!userExistsOnCurrentPage && size && page < Math.ceil(totalRows / size)) {
+    if (!userExistsOnCurrentPage && page < Math.ceil(totalRows / size)) {
       setPage(page + 1);
-      await fetchData();
-    } 
+      await fetchData(); // Fetch data for the next page
+
+      // Filter the newly fetched data for the next page
+      const newFilteredData = data.filter((row) =>
+        Object.values(row).some(
+          (value) =>
+            typeof value === 'string' &&
+            value.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+
+      setData([...filteredData, ...newFilteredData]); // Update filteredData
+    }
   };
+
+
 
   // Function to filter data based on the search query
   const filteredData = data.filter((row) =>
@@ -184,12 +198,15 @@ const UserList = () => {
       (value) =>
         typeof value === 'string' &&
         value.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    ) || (row.community?.name.toLowerCase().includes(searchQuery.toLowerCase())) // Include community in the search
   );
+  
 
   useEffect(() => {
     fetchData();
   }, [page, size]);
+
+
   return (
     <div>
       <DataTable
@@ -211,10 +228,10 @@ const UserList = () => {
                 placeholder="Search for..." aria-label="Search"
                 aria-describedby="basic-addon2"
                 onChange={(e) => handleSearch(e.target.value)}
-               
+
               />
               <div className="input-group-append">
-                <button className="btn btn-primary" type="button">
+                <button className="btn btn-primary" type="button" onClick={() => handleSearchClick()}>
                   <i className="fas fa-search fa-sm"></i>
                 </button>
               </div>

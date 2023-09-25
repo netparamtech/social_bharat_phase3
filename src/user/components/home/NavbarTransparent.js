@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { MenuOutlined } from '@ant-design/icons';
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
+import { Modal } from 'antd';
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 
@@ -24,7 +24,9 @@ const NavbarTransparent = () => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     navigate('/');
+
   }
 
   const handleContactClicked = (e) => {
@@ -40,21 +42,37 @@ const NavbarTransparent = () => {
         navigate("/set-password");
       }
     } else {
-      e.preventDefault();
-      navigate('/#services');
-    }
-  };
-
-  const handleSearchClick = (e) => {
-    e.preventDefault();
-    if (isAuthenticUser) {
-      if (isPasswordSet) {
-        navigate("/user/search");
-      } else {
-        navigate("/set-password");
+      // Check if the current page is the home page
+      const isHomePage = window.location.pathname === '/';
+      
+      if (!isHomePage) {
+        e.preventDefault();
+        Modal.error({
+          content: 'The "Services" are only accessible from the home page.',
+        });
+        return;
+      }
+  
+      // Scroll to the "Services" section on the home page
+      const servicesSection = document.getElementById('services');
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
+  
+  
+
+  // const handleSearchClick = (e) => {
+  //   e.preventDefault();
+  //   if (isAuthenticUser) {
+  //     if (isPasswordSet) {
+  //       navigate("/user/search");
+  //     } else {
+  //       navigate("/set-password");
+  //     }
+  //   }
+  // };
 
   const showDrawer = () => {
     setVisible(!visible);
@@ -208,21 +226,15 @@ const NavbarTransparent = () => {
                 </a>
               </li>
               
-              <span className="customUl">
               <li className="nav-item mt-2">
                 {isAuthenticUser && isAuthenticUser ? (
                   <a className="nav-link">
-                    <i className="fa fa-search m-2" aria-hidden="true"></i> <UserSearchDropdown />
+                    <i className="fa fa-search m-2" aria-hidden="true"></i><UserSearchDropdown />
                   </a>
                 ) : (
                   ""
                 )}
               </li>
-              </span>
-
-              
-
-              
 
               {isAuthenticUser && isAuthenticUser ? (
                 <li className="nav-item mt-2">

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { enquiry } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Contact() {
+
+  const user = useSelector((state) => state.userAuth);
+  const isAuthenticUser = user && user.isAuthenticated;
   // State variables to store form input values
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +17,13 @@ function Contact() {
   const [message, setMessage] = useState('');
   const [alertClass, setAlertClass] = useState('');
 
+  const navigate = useNavigate();
+
+  const handleBecomeMemberClick = () => {
+    navigate('/register');
+  };
+
+
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +31,7 @@ function Contact() {
       name,
       email,
       mobile,
-      message:userQuery
+      message: userQuery
     }
 
     try {
@@ -30,12 +42,12 @@ function Contact() {
         setAlertClass('alert-success');
       }
     } catch (error) {
-       if (error.response && error.response.status === 400) {
+      if (error.response && error.response.status === 400) {
         setMessage('')
         setErrors(error.response.data.errors);
         setAlertClass('alert-danger');
       }
-      
+
       else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
@@ -251,6 +263,15 @@ function Contact() {
           </div>
         </div>
       </div>
+      {
+        isAuthenticUser ? '' : (
+          <div className="fixed-button-container">
+            <a className="btn btn-banner" href="#" onClick={handleBecomeMemberClick}>
+              Become a member
+            </a>
+          </div>
+        )
+      }
     </div>
   );
 }

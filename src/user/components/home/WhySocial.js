@@ -8,6 +8,8 @@ const WhySocial = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const defaultImage = '/user/images/banner-3.jpg';
+
     const fetchBanners = async () => {
         try {
             const response = await fetchBannerWithPageAndSection("Home", "Why Social Bharat");
@@ -42,10 +44,10 @@ const WhySocial = () => {
                         <p>Connecting Communities with Privacy & Matrimonial Excellence.</p>
                         <ul>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                            Discover and participate in communities you love.    
+                                Discover and participate in communities you love.
                             </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                            Trustworthy profiles for a secure matrimonial experience.  
+                                Trustworthy profiles for a secure matrimonial experience.
                             </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
                                 Private Sharing in Chosen Communities.
@@ -53,16 +55,23 @@ const WhySocial = () => {
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
                                 Find Life Partners with Privacy.</li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                            Elevate your business to new heights. </li>
+                                Elevate your business to new heights. </li>
                             <li><i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                            Plan and attend events with friends and like-minded individuals. </li>
+                                Plan and attend events with friends and like-minded individuals. </li>
                         </ul>
                     </div>
                     <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 wow animate__animated animate__zoomIn">
-                            <div  className="image-zoom-containerm fade-in-image">
-                                 <img src="/user/images/banner-3.jpg" className="img-fluid image-zoom" alt="..." />
-                            </div>
-                    
+                        <div className="image-zoom-containerm fade-in-image">
+                            {
+                                imageUrls && imageUrls[0] ? (
+                                    <img src={imageUrls[0]} className="img-fluid image-zoom" alt="..." />
+                                ) : (
+                                    <img src={defaultImage} className="img-fluid image-zoom m-2" alt="..." />
+                                )
+                            }
+
+                        </div>
+
                     </div>
                 </div>
             </div>

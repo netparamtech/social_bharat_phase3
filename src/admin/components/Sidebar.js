@@ -137,7 +137,7 @@ function Sidebar() {
           aria-expanded="true"
           aria-controls="collapseUser"
         >
-          <i class="fas fa-cog"></i>
+          <i className="fas fa-cog"></i>
           <span className="m-2">Master Setting </span>
         </a>
         <div
@@ -202,7 +202,7 @@ function Sidebar() {
           aria-expanded="true"
           aria-controls="collapseUser"
         >
-          <i class="fas fa-cog"></i>
+          <i className="fas fa-cog"></i>
           <span className="m-2">Side Setting </span>
         </a>
         <div

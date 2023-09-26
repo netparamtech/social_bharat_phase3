@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { MenuOutlined } from "@ant-design/icons";
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
+import { Modal } from 'antd';
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 
@@ -23,8 +23,10 @@ const NavbarTransparent = () => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
-    navigate("/");
-  };
+    window.scrollTo(0, 0);
+    navigate('/');
+
+  }
 
   const handleContactClicked = (e) => {
     e.preventDefault();
@@ -39,21 +41,37 @@ const NavbarTransparent = () => {
         navigate("/set-password");
       }
     } else {
-      e.preventDefault();
-      navigate("/#services");
-    }
-  };
-
-  const handleSearchClick = (e) => {
-    e.preventDefault();
-    if (isAuthenticUser) {
-      if (isPasswordSet) {
-        navigate("/user/search");
-      } else {
-        navigate("/set-password");
+      // Check if the current page is the home page
+      const isHomePage = window.location.pathname === '/';
+      
+      if (!isHomePage) {
+        e.preventDefault();
+        Modal.error({
+          content: 'The "Services" are only accessible from the home page.',
+        });
+        return;
+      }
+  
+      // Scroll to the "Services" section on the home page
+      const servicesSection = document.getElementById('services');
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
+  
+  
+
+  // const handleSearchClick = (e) => {
+  //   e.preventDefault();
+  //   if (isAuthenticUser) {
+  //     if (isPasswordSet) {
+  //       navigate("/user/search");
+  //     } else {
+  //       navigate("/set-password");
+  //     }
+  //   }
+  // };
 
   const showDrawer = () => {
     setVisible(!visible);
@@ -174,55 +192,38 @@ const NavbarTransparent = () => {
             }}
           >
             <div className="customDrawerBody">
-              <ul className="customUl">
-                <li className="nav-item mt-2">
-                  <a
-                    className="nav-link active"
-                    aria-current="page"
-                    href=""
-                    onClick={handleHomeClicked}
-                  >
-                    <i className="fa fa-home m-2" aria-hidden="true"></i> Home
-                  </a>
-                </li>
-                    <li className="nav-item mt-2">
-                  <a className="nav-link" href="#why-social-section">
-                    <i className="fa fa-exchange m-2" aria-hidden="true"></i>
-                    About
-                  </a>
-                </li>
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleServiceClick}>
-                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                    Services
-                  </a>
-                </li>
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleContactClicked}>
-                    <i className="fas fa-address-book m-2"></i>Contact
-                  </a>
-                </li>
-
-                <span className="customUl">
-                  <li className="nav-item mt-2">
-                    {isAuthenticUser && isAuthenticUser ? (
-                      <a className="nav-link">
-                        <i className="fa fa-search m-2" aria-hidden="true"></i>{" "}
-                        <UserSearchDropdown />
-                      </a>
-                    ) : (
-                      ""
-                    )}
-                  </li>
-                </span>
-
+            <ul className="customUl">
+              <li className="nav-item mt-2">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href=""
+                  onClick={handleHomeClicked}
+                >
+                  <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+                </a>
+              </li>
+              <li className="nav-item mt-2">
+                <a className="nav-link" href="#why-social-section" >
+                  <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
+                </a>
+              </li>
+              <li className="nav-item mt-2">
+                <a className="nav-link" onClick={handleServiceClick} >
+                  <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
+                </a>
+              </li>
+              <li className="nav-item mt-2">
+                <a className="nav-link" onClick={handleContactClicked}>
+                  <i className='fas fa-address-book m-2'></i>Contact
+                </a>
+              </li>
+              
+              <li className="nav-item mt-2">
                 {isAuthenticUser && isAuthenticUser ? (
-                  <li className="nav-item mt-2">
-                    <a onClick={() => navigate("/login")}>
-                      <i className="fa fa-sign-out m-2" aria-hidden="true"></i>
-                      Log out
-                    </a>
-                  </li>
+                  <a className="nav-link">
+                    <i className="fa fa-search m-2" aria-hidden="true"></i><UserSearchDropdown />
+                  </a>
                 ) : (
                   <li className="nav-item mt-2">
                     <a onClick={() => navigate("/login")}>
@@ -231,7 +232,28 @@ const NavbarTransparent = () => {
                     </a>
                   </li>
                 )}
-              </ul>
+              </li>
+
+              {isAuthenticUser && isAuthenticUser ? (
+                <li className="nav-item mt-2">
+                  <a
+                    onClick={() => navigate("/login")}
+                  >
+                    <i className="fa fa-sign-out m-2" aria-hidden="true"></i>Log out
+                  </a>
+                </li>
+              ) : (
+                <li className="nav-item mt-2">
+                  <a
+                    onClick={() => navigate("/login")}
+                  >
+                    <i className="fa fa-sign-in m-2" aria-hidden="true"></i> Login
+                  </a>
+                </li>
+              )}
+
+
+            </ul>
             </div>
           </Drawer>
         </div>

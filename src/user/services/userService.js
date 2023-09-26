@@ -409,7 +409,7 @@ export const searchBusinessWithCityState = async(queryString) => {
 //search partner
 export const searchPartner = async(id) => {
     try{
-        const response = await apiWithHeaders.get(`/partner/search?community_id=${id}`);
+        const response = await apiWithHeaders.get(`/users/search?community_id=${id}`);
         return response;
     } catch(error) {
         throw error;

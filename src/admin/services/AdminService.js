@@ -354,3 +354,43 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
         throw error;
     }
 }
+
+//fetch all testimonials
+export const fetchTestimonials = async () => {
+    try {
+        const response = await apiWithHeaders.get('/testimonials');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch testimonial by id
+export const fetchTestimonialByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/testimonials/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete testimonial by id
+export const deleteTestimonialByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/testimonials/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of testimonial by admin
+export const updateToggleStatusForTestimonial = async (clickedId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/testimonials/${clickedId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

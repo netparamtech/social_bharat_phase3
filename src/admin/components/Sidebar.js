@@ -189,6 +189,7 @@ function Sidebar() {
               Degree
             </a>
           </div>
+
         </div>
       </li>
 
@@ -235,6 +236,30 @@ function Sidebar() {
             </a>
           </div>
         </div>
+      </li>
+
+      <li className="nav-item">
+        <a
+          className="nav-link collapsed"
+          href="#"
+          data-toggle="collapse"
+          data-target="#collapseEnquiry"
+          aria-expanded="true"
+          aria-controls="collapseEnquiry"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate("/admin/testimonials/index");
+          }}
+        >
+          <i
+            className="	
+          fa fa-search"
+            fill="currentColor"
+          ></i>
+
+          <span className="m-2">Testimonial</span>
+        </a>
+       
       </li>
 
       {/* Sidebar Toggler (Sidebar) */}

@@ -469,3 +469,23 @@ export const enquiry = async (data) => {
     }
 }
 
+
+//testimonial(feedback)
+export const userFeedback = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/testimonials',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all active users feedback
+export const fetchOldTestimonials = async () => {
+    try {
+        const response = await apiConfig.get('/testimonials');
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

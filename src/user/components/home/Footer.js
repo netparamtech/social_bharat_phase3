@@ -119,9 +119,11 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        {/* Footer End */}
+        
+      </div>
+      {/* Footer End */}
       <div id="footer-end">
-      <div className="container">
+      <div className="container wow animate__animated animate__fadeInUp">
         <div className="row pt-2 pb-2">
           <div className="col text-center">
             <div className="copyright">
@@ -144,8 +146,6 @@ const Footer = () => {
         </div>
       </div>
     </div>
-      </div>
-      
       {/* arrow */}
       {/* <button onClick={topFunction} id="scrollToTopBtn" title="Go to top">
                 <i className="fa-solid fa-arrow-up-long justify-content-center"></i>

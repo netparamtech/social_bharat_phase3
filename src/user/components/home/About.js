@@ -10,7 +10,7 @@ const About = () => {
       </div>
 
       <div className="accordion container mt-3" id="accordionExample">
-        <div className="accordion-item mb-3">
+        <div className="accordion-item mb-3 form-control">
           <h2 className="accordion-header" id="headingOne">
             <button
               className="accordion-button"
@@ -25,7 +25,7 @@ const About = () => {
           </h2>
           <div
             id="collapseOne"
-            className="accordion-collapse collapse show"
+            className="accordion-collapse collapse show "
             aria-labelledby="headingOne"
             data-bs-parent="#accordionExample"
           >
@@ -78,7 +78,7 @@ const About = () => {
               aria-expanded="false"
               aria-controls="collapseThree"
             >
-              Search Partner
+              Job
             </button>
           </h2>
           <div
@@ -88,8 +88,7 @@ const About = () => {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body">
-              <strong></strong> Search Your Partner <code></code>
-              .
+              <strong></strong> Search Job <code></code>.
             </div>
           </div>
         </div>
@@ -113,7 +112,7 @@ const About = () => {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body">
-              <strong></strong> Event Organizer 
+              <strong></strong> Event Organizer
               <code></code>
             </div>
           </div>

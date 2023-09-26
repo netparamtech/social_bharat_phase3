@@ -83,7 +83,7 @@ const UserSearchDropdown = () => {
 
   return (
     
-    <Dropdown overlay={menu} trigger={['hover']} placement="bottomRight" className='nav-link-search'>
+    <Dropdown overlay={menu} trigger={['hover']} placement="bottomRight" className='nav-link-search nav-link'>
       {
         isAndroidUsed?(<span className='customDrawerBody customUl'>
         Search

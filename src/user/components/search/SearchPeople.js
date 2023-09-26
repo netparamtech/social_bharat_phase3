@@ -160,7 +160,7 @@ const SearchPeople = () => {
         <div className="card shadow">
           <div className="card-body">
             <div>
-              <h5 className="fw-3 mb-3 d-none d-sm-block">Search People</h5>
+              <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
             <div className="filter-content">
               <p>

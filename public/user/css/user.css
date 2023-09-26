@@ -117,16 +117,8 @@ nav .nav-item .btn {
 .navbar-transparent .navbar-nav .nav-link:focus
  {
   background-color: #008374;
-  color: #ffffff;
-}
-
- .nav-link-search:focus,
- .nav-link-search:hover
- {
-  background-color: #008374;
   color: #ffffff !important;
 }
-
 
 .navbar-transparent .navbar-brand {
   color: rgba(255, 255, 255, 1);

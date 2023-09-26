@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllActiveCommunities, fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchPartner, searchPartnerWithSearchText, searchPeopleWithSearchText } from "../../services/userService";
+import {
+  fetchAllActiveCommunities,
+  fetchAllCitiesByStateID,
+  fetchAllStatesByCountryID,
+  searchPartner,
+  searchPartnerWithSearchText,
+  searchPeopleWithSearchText,
+} from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import Select from 'react-select';
+import Select from "react-select";
 import { useSelector } from "react-redux";
 
 const SearchPartner = () => {
+  const handlePartnerClick = (e) => {
+    e.preventDefault();
+    navigate("/user/update-matrimonial-profile");
+  };
 
   const user = useSelector((state) => state.userAuth);
 
-  const [loggedUserID,setLoggedUserID] = useState('');
+  const [loggedUserID, setLoggedUserID] = useState("");
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
@@ -18,17 +29,16 @@ const SearchPartner = () => {
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);
 
+  const [gender, setGender] = useState("");
+  const [gotra, setGotra] = useState("");
+  const [community_id, setCommunity_id] = useState("");
+  const [communityName, setCommunityName] = useState("");
+  const [skinTone, setSkinTone] = useState("");
+  const [cast, setCast] = useState("");
 
-  const [gender, setGender] = useState('');
-  const [gotra, setGotra] = useState('');
-  const [community_id, setCommunity_id] = useState('');
-  const [communityName, setCommunityName] = useState('');
-  const [skinTone, setSkinTone] = useState('');
-  const [cast, setCast] = useState('');
-
-  const [selectedCountry, setSelectedCountry] = useState('India');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("India");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
@@ -64,7 +74,9 @@ const SearchPartner = () => {
     setSelectedState(selectedOption);
 
     if (selectedOption) {
-      const selectedStateObject = states.find((state) => state.name === selectedOption.value);
+      const selectedStateObject = states.find(
+        (state) => state.name === selectedOption.value
+      );
       if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
@@ -82,20 +94,16 @@ const SearchPartner = () => {
         setStates(response.data.data);
       }
     } catch (error) {
-
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
-
     }
-  }
-
-
+  };
 
   const getAllCities = async (stateID) => {
     try {
@@ -106,14 +114,14 @@ const SearchPartner = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
-  }
+  };
 
   const search = async (id) => {
     try {
@@ -124,9 +132,9 @@ const SearchPartner = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
   };
@@ -138,7 +146,7 @@ const SearchPartner = () => {
     if (response && response.status === 200) {
       setCommunities(response.data.data);
     }
-  }
+  };
 
   const handleSaveClick = async () => {
     setIsSaveClicked(true);
@@ -148,8 +156,8 @@ const SearchPartner = () => {
       gender: gender,
       gotra: gotra,
       cast: cast,
-      state: selectedState ? selectedState.label : '',
-      city: selectedCity ? selectedCity.label : ''
+      state: selectedState ? selectedState.label : "",
+      city: selectedCity ? selectedCity.label : "",
       // Add other modal fields to the queryParams
     };
 
@@ -160,23 +168,20 @@ const SearchPartner = () => {
     try {
       const response = await searchPartnerWithSearchText(queryString);
       setData(response.data.data);
-    } catch (error) {
-
-    }
-
-  }
+    } catch (error) {}
+  };
 
   const handleCancelClick = () => {
-    setCommunity_id('');
-    setCast('');
-    setGender('');
-    setSelectedState('');
-    setSelectedCity('');
-    setGotra('');
-    setSkinTone('');
-    setSearchText('');
-    setCommunityName('')
-  }
+    setCommunity_id("");
+    setCast("");
+    setGender("");
+    setSelectedState("");
+    setSelectedCity("");
+    setGotra("");
+    setSkinTone("");
+    setSearchText("");
+    setCommunityName("");
+  };
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -187,17 +192,18 @@ const SearchPartner = () => {
 
   useEffect(() => {
     if (states) {
-      const selectedStateObject = states.find((state) => state.name === selectedState.label);
+      const selectedStateObject = states.find(
+        (state) => state.name === selectedState.label
+      );
       if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
     }
   }, [states]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setLoggedUserID(user && user.user && user.user.community_id);
-},[user]);
-
+  }, [user]);
 
   useEffect(() => {
     search(loggedUserID);
@@ -212,33 +218,39 @@ const SearchPartner = () => {
         <div className="card shadow">
           <div className="card-body">
             <div>
-              <h5 className="fw-3 mb-3  d-sm-block">Search Partner</h5>
+              <h5 className="fw-3 mb-2 d-none d-sm-block">Search Partner</h5>
             </div>
             <div className="filter-icon ">
               <a
                 href=""
                 title="Filter"
-                className="btn btn-primary btn-sm me-2 "
-                data-bs-toggle="modal"
+                className="btn btn-primary btn-sm ms-2 mb-2"
+                data-bs-toggle="modal"  
                 data-bs-target="#exampleModal"
               >
-                <i className="fas fa-filter me-1"></i>Preference
+                <i className="fas fa-filter me-1 "></i>Preference
+              </a>
+              <a
+                title="Add Business"
+                className="btn btn-primary btn-sm ms-2 mb-2"
+                onClick={handlePartnerClick}
+              >
+                Submit Your Matrimonial Profile{" "}
               </a>
             </div>
-            <div className="filter-content">
-             {
-              isSaveClicked && 
-              <p>
-              {isSaveClicked && 'Searching for '}
-              {gender && `Gender-${gender}, `}
-              {communityName && `Community-${communityName}, `}
-              {gotra && `Gotra-${gotra}, `}
-              {cast && `Cast-${cast}, `} {selectedCity && ('in')||selectedState && ('in')}
-              {selectedCity.label && ` ${selectedCity.label}`}
-              {selectedState.label && ` (${selectedState.label})`}
-              
-            </p>
-             }
+            <div className="filter-content pt-5 d-md-block">
+              {isSaveClicked && (
+                <p>
+                  {isSaveClicked && "Searching for "}
+                  {gender && `Gender-${gender}, `}
+                  {communityName && `Community-${communityName}, `}
+                  {gotra && `Gotra-${gotra}, `}
+                  {cast && `Cast-${cast}, `}{" "}
+                  {(selectedCity && "in") || (selectedState && "in")}
+                  {selectedCity.label && ` ${selectedCity.label}`}
+                  {selectedState.label && ` (${selectedState.label})`}
+                </p>
+              )}
             </div>
 
             <div
@@ -280,18 +292,25 @@ const SearchPartner = () => {
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Gotra</label>
-                            <input type="text" className="form-control" defaultValue={gotra} onChange={handleGotraChange} />
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={gotra}
+                              onChange={handleGotraChange}
+                            />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">State</label>
                             <Select
                               className="form-select"
                               aria-label="Default select example"
-                              options={states.map(state => ({ value: state.name, label: state.name }))}
+                              options={states.map((state) => ({
+                                value: state.name,
+                                label: state.name,
+                              }))}
                               value={selectedState}
                               onChange={handleStateChange}
                             />
-
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Skin Tone</label>
@@ -307,8 +326,6 @@ const SearchPartner = () => {
                               <option value="WHEATISH">WHEATISH</option>
                             </select>
                           </div>
-
-
                         </div>
                         <div className="col-md-6">
                           <div className="mb-3">
@@ -319,20 +336,34 @@ const SearchPartner = () => {
                               aria-label="Default select example"
                               defaultValue={community_id} // Provide a selected option state
                               onChange={handleSelectChange} // Your change handler function
-                              options={communities && communities.map((data) => ({ value: data.id, label: data.name }))}
+                              options={
+                                communities &&
+                                communities.map((data) => ({
+                                  value: data.id,
+                                  label: data.name,
+                                }))
+                              }
                               placeholder="---Select---"
                             />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">Cast</label>
-                            <input type="text" className="form-control" defaultValue={cast} onChange={handleCastChange} />
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={cast}
+                              onChange={handleCastChange}
+                            />
                           </div>
                           <div className="mb-3">
                             <label className="form-label">City</label>
                             <Select
                               className="form-select"
                               aria-label="Default select example"
-                              options={cities.map(city => ({ value: city.name, label: city.name }))}
+                              options={cities.map((city) => ({
+                                value: city.name,
+                                label: city.name,
+                              }))}
                               value={selectedCity}
                               onChange={handleCityChange}
                             />
@@ -350,7 +381,12 @@ const SearchPartner = () => {
                     >
                       Close
                     </button>
-                    <button type="button" className="btn btn-primary" onClick={handleSaveClick} data-bs-dismiss="modal">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleSaveClick}
+                      data-bs-dismiss="modal"
+                    >
                       Save
                     </button>
                   </div>
@@ -358,8 +394,7 @@ const SearchPartner = () => {
               </div>
             </div>
 
-
-            <div className="container-input mb-3">
+            <div className="container-input mb-3 mt-5">
               <input
                 type="text"
                 placeholder="Search"
@@ -391,8 +426,12 @@ const SearchPartner = () => {
                             <p>{item.name}</p>
                             <p>{item.mobile}</p>
                             <p className="text-muted">{item.father_name}</p>
-                            <p className="text-muted">{item.native_place_city}</p>
-                            <p className="text-muted">{item.native_place_state}</p>
+                            <p className="text-muted">
+                              {item.native_place_city}
+                            </p>
+                            <p className="text-muted">
+                              {item.native_place_state}
+                            </p>
                           </div>
                         </div>
                       </div>

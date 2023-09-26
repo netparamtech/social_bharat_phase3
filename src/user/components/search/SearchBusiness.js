@@ -32,6 +32,11 @@ const SearchBusiness = () => {
 
     const navigate = useNavigate();
 
+    const handlePromoteBusinessClick = (e) => {
+        e.preventDefault();
+        navigate("/user/update-business-profile");
+    };
+
     const handleStateChange = (selectedOption) => {
         setSelectedState(selectedOption);
 
@@ -54,6 +59,8 @@ const SearchBusiness = () => {
     const handleSearchText = (e) => {
         setSearchText(e.target.value);
     }
+
+    
 
     const search = async (searchText) => {
         try {
@@ -162,10 +169,10 @@ const SearchBusiness = () => {
                 <div className="card shadow">
                     <div className="card-body">
                         <div>
-                            <h5 className="fw-3 mb-3 d-none d-sm-block">Search Business</h5>
+                            <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
                         </div>
-                        <div className="filter-content">
-                            <p>
+                        <div className="filter-content pt-5 d-md-block">
+                            <p >
                                 {city}
                                 {state && `(${state})`}
                             </p>
@@ -174,7 +181,9 @@ const SearchBusiness = () => {
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
                                 <i className="fas fa-filter me-1"></i>Filter
                             </a>
+                            <a title='Add Business' className='btn btn-primary' onClick={handlePromoteBusinessClick}>Promote Your Business </a>
                         </div>
+                        
                         <div className="container-input mb-3">
                             <input type="text" placeholder="Search" name="text" className="input form-control" onChange={handleSearchText} />
                             <i className="fas fa-search"></i>

@@ -28,7 +28,7 @@ const UserSearchDropdown = () => {
       {
         key: '1',
         label: (
-          <span onClick={handleSearchPeopleClick} className='menu-font'>
+          <span onClick={handleSearchPeopleClick} className='menu-font '>
             <i class="fa-solid fa-users m-2"></i> Search People
           </span>
         ),
@@ -67,7 +67,7 @@ const UserSearchDropdown = () => {
 
   return (
     <Dropdown overlay={menu} trigger={['hover']} placement="bottomRight">
-      <span className='btn btn-icon btn-transparent-dark text-capitalize text-primary custom-font'>Search</span>
+      <span className='d-inline nav-link'>Search</span>
     </Dropdown>
   );
 };

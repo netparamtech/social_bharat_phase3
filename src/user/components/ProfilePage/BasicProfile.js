@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { fetchOneCommunity, updateProfilePhoto } from "../../services/userService";
+import {
+  fetchOneCommunity,
+  updateProfilePhoto,
+} from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +17,7 @@ const BasicProfile = (props) => {
   const [token, setToken] = useState("");
   const [community, setCommunity] = useState({});
 
-  const defaultPhoto = '/user/images/user.png';
+  const defaultPhoto = "/user/images/user.png";
 
   const [errors, setErrors] = useState();
 
@@ -38,7 +41,6 @@ const BasicProfile = (props) => {
       setImagePreview(URL.createObjectURL(file));
 
       dispatch(login(response.data.data, token));
-
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -63,15 +65,17 @@ const BasicProfile = (props) => {
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
-  }
+  };
 
   useEffect(() => {
-    setProfileImage(user && user.data && user.data.photo || "/user/images/OIP.jpg");
+    setProfileImage(
+      (user && user.data && user.data.photo) || "/user/images/OIP.jpg"
+    );
     setToken(loggedUser.token);
     fetchLoggedUserCommunity();
   }, [user]);
@@ -125,7 +129,11 @@ const BasicProfile = (props) => {
 
                 <img
                   className="img-fluid max-width-100 me-2  rounded-circle community-img"
-                  src={community.thumbnail_image ? community.thumbnail_image : defaultPhoto}
+                  src={
+                    community.thumbnail_image
+                      ? community.thumbnail_image
+                      : defaultPhoto
+                  }
                   alt=""
                   title=""
                 />
@@ -187,18 +195,25 @@ const BasicProfile = (props) => {
                     </div>
                   </div>
 
-                  <div className="mb-2 row">
-                    <label className="col-sm-3">Mobile No</label>
-                    <div className="col-sm-8">
-                      <span className="text-muted">
-                        {user && user.data && user.data.mobile}
-                      </span>
+                  <div className="card shadow">
+                    <div className="p-2">
+                      <div className="mb-2 row">
+                        <label className="col-sm-3">Mobile No</label>
+                        <div className="col-sm-8">
+                          <span className="text-muted">
+                            {user && user.data && user.data.mobile}
+                          </span>
 
-                      <a href="#" onClick={() => navigate("/update-mobile")}>
-                        <button className="btn btn-outline-info btn-sm ms-2">
-                          Update
-                        </button>
-                      </a>
+                          <a
+                            href="#"
+                            onClick={() => navigate("/update-mobile")}
+                          >
+                            <button className="btn btn-outline-info btn-sm ms-2">
+                              Update
+                            </button>
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

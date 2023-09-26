@@ -1,8 +1,9 @@
+import { Card, Image } from "antd";
 import { useEffect, useState } from "react";
 
 const BasicProfile = (props) => {
-  const {userDetails} = props;
-  const [userProfile,setUserProfile] = useState('');
+  const { userDetails } = props;
+  const [userProfile, setUserProfile] = useState('');
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -12,8 +13,12 @@ const BasicProfile = (props) => {
             <div className="card shadow">
 
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
-                <img src={userDetails?.data?.photo ? userDetails.data.photo : "/user/images/OIP.jpg"} className="img-fluid max-width-100" alt="Profile Picture" />
-               
+                <Image
+                  width={200}
+                  src={userDetails?.data?.photo ? userDetails.data.photo : "/user/images/OIP.jpg"}
+                  title={userDetails?.data?.name}
+                />
+
               </div>
               <div className="card-body ">
                 <p className="card-text text-center mb-0">{userDetails?.data?.name}</p>
@@ -21,7 +26,7 @@ const BasicProfile = (props) => {
               </div>
             </div>
           </div>
-          <div className="col-md-9 ">
+          {/* <div className="col-md-9 ">
             <div className="card shadow">
               <div className="card-body ">
                 <div className="w-100 w-lg-75">
@@ -52,7 +57,15 @@ const BasicProfile = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+          <Card className="col-md-9 w-100 w-lg-75">
+            <p>Name - {userDetails?.data?.name}</p>
+            <p>Email - {userDetails?.data?.email}</p>
+            <p>Gender - {userDetails?.data?.gender}</p>
+            <p>Community - {userDetails?.data?.community?.name}</p>
+            <p>Mobile - {userDetails?.data?.mobile}</p>
+            
+          </Card>
         </div>
       </div>
     </div>

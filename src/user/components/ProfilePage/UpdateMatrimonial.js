@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import { getFeet, getInches } from '../../util/Conversion';
 import { useNavigate } from 'react-router-dom';
+import { Slider } from 'antd';
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -101,8 +102,8 @@ const UpdateMatrimonial = (props) => {
         setErrors(error.response.data.errors);
       }
 
-       //Unauthorized
-       else if (error.response && error.response.status === 401) {
+      //Unauthorized
+      else if (error.response && error.response.status === 401) {
         navigate('/login');
       }
       //Internal Server Error

@@ -83,7 +83,7 @@ const BodyContent = () => {
                                     </div>
                                 </div>
                                 <div className="col-auto">
-                               <h1> <i class="fa fa-heart"></i></h1>
+                               <h1> <i className="fa fa-heart"></i></h1>
                                 </div>
                             </div>
                         </div>

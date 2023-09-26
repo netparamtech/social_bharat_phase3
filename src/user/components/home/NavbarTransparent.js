@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { Drawer } from "antd";
+import { Divider, Drawer } from "antd";
 import { Modal } from 'antd';
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
@@ -44,7 +44,7 @@ const NavbarTransparent = () => {
     } else {
       // Check if the current page is the home page
       const isHomePage = window.location.pathname === '/';
-      
+
       if (!isHomePage) {
         e.preventDefault();
         Modal.error({
@@ -52,7 +52,7 @@ const NavbarTransparent = () => {
         });
         return;
       }
-  
+
       // Scroll to the "Services" section on the home page
       const servicesSection = document.getElementById('services');
       if (servicesSection) {
@@ -60,8 +60,8 @@ const NavbarTransparent = () => {
       }
     }
   };
-  
-  
+
+
 
   // const handleSearchClick = (e) => {
   //   e.preventDefault();
@@ -109,9 +109,9 @@ const NavbarTransparent = () => {
         </a>
 
         <button
-         className={`navbar-toggler ${isAndroidUsed ? '' : 'd-none'}`}
+          className={`navbar-toggler ${isAndroidUsed ? '' : 'd-none'}`}
           type="button"
-         onClick={showDrawer}
+          onClick={showDrawer}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -149,13 +149,13 @@ const NavbarTransparent = () => {
 
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? (
-               <UserSearchDropdown />
+                <UserSearchDropdown />
               ) : (
                 ""
               )}
             </li>
 
-           
+
             {/* You can add more nav items here */}
           </ul>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -194,68 +194,71 @@ const NavbarTransparent = () => {
               zIndex: 99999,
               width: "70%",
               background: "rgba(255, 255, 255, 0.8)",
-              borderRadius: "3%"
+              borderRadius: "3%",
+              padding: "0"
 
             }}
           >
             <div className="customDrawerBody">
-            <ul className="customUl">
-              <li className="nav-item mt-2">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href=""
-                  onClick={handleHomeClicked}
-                >
-                  <i className="fa fa-home m-2" aria-hidden="true"></i> Home
-                </a>
-              </li>
-              <li className="nav-item mt-2">
-                <a className="nav-link" href="#why-social-section" >
-                  <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
-                </a>
-              </li>
-              <li className="nav-item mt-2">
-                <a className="nav-link" onClick={handleServiceClick} >
-                  <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
-                </a>
-              </li>
-              <li className="nav-item mt-2">
-                <a className="nav-link" onClick={handleContactClicked}>
-                  <i className='fas fa-address-book m-2'></i>Contact
-                </a>
-              </li>
-              
-              <li className="nav-item mt-2">
+              <ul className="customUl">
+                <li className="nav-item mt-2">
+                  <a
+                    className="nav-link active"
+                    aria-current="page"
+                    href=""
+                    onClick={handleHomeClicked}
+                  >
+                    <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+                  </a>
+                </li>
+                <li className="nav-item mt-2">
+                  <a className="nav-link" href="#why-social-section" >
+                    <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
+                  </a>
+                </li>
+                <li className="nav-item mt-2">
+                  <a className="nav-link" onClick={handleServiceClick} >
+                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
+                  </a>
+                </li>
+                <li className="nav-item mt-2">
+                  <a className="nav-link" onClick={handleContactClicked}>
+                    <i className='fas fa-address-book m-2'></i>Contact
+                  </a>
+                </li>
+
+                <li className="nav-item mt-2">
+                  {isAuthenticUser && isAuthenticUser ? (
+                    <a className="nav-link">
+                      <i className="fa fa-search m-2" aria-hidden="true"></i><UserSearchDropdown />
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </li>
+
+                <Divider />
+
                 {isAuthenticUser && isAuthenticUser ? (
-                  <a className="nav-link">
-                    <i className="fa fa-search m-2" aria-hidden="true"></i><UserSearchDropdown />
-                  </a>
+                  <li className="nav-item mt-2">
+                    <a
+                      onClick={() => navigate("/login")}
+                    >
+                      <i className="fa fa-sign-out m-2" aria-hidden="true"></i>Log out
+                    </a>
+                  </li>
                 ) : (
-                  ""
+                  <li className="nav-item mt-2">
+                    <a
+                      onClick={() => navigate("/login")}
+                    >
+                      <i className="fa fa-sign-in m-2" aria-hidden="true"></i> Login
+                    </a>
+                  </li>
                 )}
-              </li>
-
-              {isAuthenticUser && isAuthenticUser ? (
-                <li className="nav-item mt-2">
-                  <a
-                    onClick={() => navigate("/login")}
-                  >
-                    <i className="fa fa-sign-out m-2" aria-hidden="true"></i>Log out
-                  </a>
-                </li>
-              ) : (
-                <li className="nav-item mt-2">
-                  <a
-                    onClick={() => navigate("/login")}
-                  >
-                    <i className="fa fa-sign-in m-2" aria-hidden="true"></i> Login
-                  </a>
-                </li>
-              )}
 
 
-            </ul>
+              </ul>
             </div>
           </Drawer>
         </div>

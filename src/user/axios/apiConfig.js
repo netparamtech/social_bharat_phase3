@@ -2,9 +2,20 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../actions/userAction';
 import adminStore from '../../admin/store';
+
+
+const ENV = process.env.REACT_APP_ENV;
+// Function to determine the base URL based on the environment
+const getBaseUrl = () => {
+  if (ENV === 'PROD') {
+    return 'http://164.52.218.124/api';
+  } else if (ENV === 'DEV') {
+    return 'http://localhost:3000/api';
+  }
+};
 // Create a base axios instance without default headers
 const apiConfig = axios.create({
-  baseURL: 'http://164.52.218.124/api', // Authentication-related API
+  baseURL: getBaseUrl(), // Authentication-related API
 });
 
 // Create a function to set headers, including optional authorization token
@@ -22,7 +33,7 @@ const setHeaders = (token) => {
 
 // Create an axios instance with the set headers function
 const apiWithHeaders = axios.create({
-  baseURL: 'http://164.52.218.124/api', // Authentication-related API
+  baseURL: getBaseUrl(), // Authentication-related API
 });
 
 // Interceptor to set headers before each request
@@ -49,7 +60,7 @@ const setHeadersForFile = (token) => {
 
 // Create an axios instance with the set headers function
 const apiWithFileHeaders = axios.create({
-  baseURL: 'http://164.52.218.124/api', // Authentication-related API
+  baseURL: getBaseUrl(), // Authentication-related API
 });
 
 // Interceptor to set headers before each request

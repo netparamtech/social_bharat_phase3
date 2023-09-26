@@ -10,11 +10,7 @@ const items = [
 ]
 
 const EducationInfo = () => {
- 
-    const onChange = (key) => {
-      console.log(key);
-    };
-    return <Collapse items={items} defaultActiveKey={[]} onChange={onChange} className='container bg-success col-md-9 w-100 w-lg-75 mt-3' />;
+    return <Collapse items={items} defaultActiveKey={[]} className='container bg-success col-md-9 w-100 w-lg-75 mt-3' />;
  };
 
 export default EducationInfo;

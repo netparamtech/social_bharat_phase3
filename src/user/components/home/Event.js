@@ -8,9 +8,9 @@ const EventForm =  () => {
       <div class="card shadow">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 p-5">
+            <div class="col-md-12 col-sm-12 col-xs-12 p-4">
               <div class="card-title">
-                <h3 class="mb-3">Event</h3>
+                <h3 class="mb-3">Event Info</h3>
               </div>
               <form class="w-100 w-lg-75">
                 <div class="row">

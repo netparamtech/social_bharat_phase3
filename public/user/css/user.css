@@ -1123,8 +1123,6 @@ nav .nav-item {
   cursor: pointer;
 }
 
-
-  
 /* Rating Page */
 .rating {
   display: inline-block;
@@ -1182,9 +1180,6 @@ nav .nav-item {
   object-fit: cover;
   margin-top: 94px;
 }
-
-
-
 
 .menu-font {
   font-family: "Poppins", sans-serif;

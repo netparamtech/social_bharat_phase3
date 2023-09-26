@@ -4,13 +4,14 @@ import { useNavigate } from "react-router";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className="">
+    <div id="footer">
       <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
         <div className="row pt-5 pb-3">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
             <p className="ms-2">
-            The platform prioritizes privacy, ensuring that personal information remains protected from strangers.
+              The platform prioritizes privacy, ensuring that personal
+              information remains protected from strangers.
             </p>
             <div className="social-links ms-2">
               <a href="" className="twitter">
@@ -34,28 +35,33 @@ const Footer = () => {
           <div className="col-lg-3 col-md-6 col-sm-12 useful-links mb-md-5 ps-sm-0 ps-xs-0 ps-lg-5 ps-md-5">
             <h4>Useful Links</h4>
             <ul className="list-inline ms-2">
-              <li >
+              <li>
                 {" "}
-                <a  className="text-decoration-none gray-color" onClick={() => navigate("/")}>
+                <a
+                  className="text-decoration-none gray-color"
+                  onClick={() => navigate("/")}
+                >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  <span >Home</span>
+                  <span>Home</span>
                 </a>
               </li>
               <li>
-                <a  className="text-decoration-none gray-color">
+                <a className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary  me-2"></i>
                   Events
                 </a>
               </li>
               <li>
-                <a href="#why-social-section" className="text-decoration-none gray-color">
+                <a
+                  href="#why-social-section"
+                  className="text-decoration-none gray-color"
+                >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   About
                 </a>
               </li>
               <li>
                 <a
-                
                   className="text-decoration-none gray-color"
                   onClick={() => navigate("/contact")}
                 >
@@ -73,14 +79,14 @@ const Footer = () => {
                 {" "}
                 <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                 Business Promotion
+                  Business Promotion
                 </a>{" "}
               </li>
-              <li >
+              <li>
                 {" "}
                 <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                 Find Life Partner
+                  Find Life Partner
                 </a>
               </li>
               <li>
@@ -95,7 +101,7 @@ const Footer = () => {
 
           <div className="col-lg-3 col-md-6 col-sm-12">
             <h3>Contact Us</h3>
-            
+
             <p className="ms-2">
               747, Janpath,Rani sathi nagar,
               <br /> Nirman nagar, jaipur-302019
@@ -113,29 +119,33 @@ const Footer = () => {
             </p>
           </div>
         </div>
-      </div>
-      {/* Footer End */}
+        {/* Footer End */}
       <div id="footer-end">
-        <div className="container">
-          <div className="row pt-2 pb-2">
-            <div className="col text-center">
-              <div className="copyright">
-                © Copyright{" "}
-                <strong>
-                  <span>Social Bharat</span>
-                </strong>
-                . All Rights Reserved
-              </div>
-              <div className="credits">
-                Designed by{" "}
-                <a href="https://netparam.in/" className="text-decoration-none text-primary">
-                  NetParam
-                </a>
-              </div>
+      <div className="container">
+        <div className="row pt-2 pb-2">
+          <div className="col text-center">
+            <div className="copyright">
+              © Copyright{" "}
+              <strong>
+                <span>Social Bharat</span>
+              </strong>
+              . All Rights Reserved
+            </div>
+            <div className="credits">
+              Designed by{" "}
+              <a
+                href="https://netparam.in/"
+                className="text-decoration-none text-primary"
+              >
+                NetParam
+              </a>
             </div>
           </div>
         </div>
       </div>
+    </div>
+      </div>
+      
       {/* arrow */}
       {/* <button onClick={topFunction} id="scrollToTopBtn" title="Go to top">
                 <i className="fa-solid fa-arrow-up-long justify-content-center"></i>

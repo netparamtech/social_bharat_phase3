@@ -222,7 +222,7 @@ const NavbarTransparent = () => {
                 <li className="nav-item mt-2">
                   {isAuthenticUser && isAuthenticUser ? (
                     <a className="nav-link">
-                      <i className="fa fa-search m-2" aria-hidden="true"></i><UserSearchDropdown />
+                      <i className="fa fa-search m-2 " aria-hidden="true"></i><UserSearchDropdown />
                     </a>
                   ) : (
                     ""

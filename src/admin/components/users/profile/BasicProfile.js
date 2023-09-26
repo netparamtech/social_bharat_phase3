@@ -63,15 +63,16 @@ const BasicProfile = (props) => {
             <p>Name - {userDetails?.data?.name}</p>
             <p>Email - {userDetails?.data?.email}</p>
             <p>Gender - {userDetails?.data?.gender}</p>
-            <p>Community - {userDetails?.data?.community?.name}</p>
             <p>Mobile - {userDetails?.data?.mobile}</p>
 
             <div className="container-profilepic mx-auto card-block-md overflow-hidden ">
                 <Image
-                  width={200}
+                  width={100}
+                  height={50}
                   src={userDetails?.data?.community?.thumbnail_image ? userDetails?.data?.community?.thumbnail_image : defaultPhoto}
                   title={userDetails?.data?.name}
                 />
+                 <p>Community - {userDetails?.data?.community?.name}</p>
 
               </div>
             

@@ -20,16 +20,15 @@ body {
 /* Add custom styles if needed */
 @media (max-width: 767px) {
   .navbar-brand img {
-    max-width: 100px; 
+    max-width: 100px;
   }
 }
 
 @media (min-width: 768px) {
   .navbar-brand img {
-    max-width: 200px; 
+    max-width: 200px;
   }
 }
-
 
 .nav-item {
   margin: auto 10px;
@@ -42,6 +41,10 @@ nav .nav-item .btn {
 /* Dark Navbar */
 .navbar-dark {
   background-color: #008374 !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 131, 116, 0.99%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e ");
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -87,11 +90,11 @@ nav .nav-item .btn {
   background-color: #ffffff !important;
   position: fixed;
   opacity: 0.9;
-    z-index: 1000;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  z-index: 1000;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
 /* .navbar-transparent.Sticky-top {
@@ -249,7 +252,7 @@ nav .container,
   font-size: 30px;
 }
 
-#why-social-section .what-social-bharat ul  {
+#why-social-section .what-social-bharat ul {
   list-style: none;
   line-height: 1cm;
   font-size: 16px;
@@ -259,16 +262,13 @@ nav .container,
   color: #008577;
 }
 
-.image-zoom-containerm img{
+.image-zoom-containerm img {
   width: 100%;
   height: 400px;
-  background-position: center ;
+  background-position: center;
   background-size: cover;
   object-fit: contain;
-
 }
-
-
 
 .image-zoom {
   transition: transform 0.9s ease;
@@ -481,7 +481,7 @@ nav .container,
   font-style: italic;
 }
 
-#testimonials img{
+#testimonials img {
   width: 90px;
   height: 90px;
   border-radius: 100%;
@@ -615,15 +615,15 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 .btn-banner {
-  background-color: #50CC14;
-  border-color: #50CC14;
+  background-color: #50cc14;
+  border-color: #50cc14;
   color: #fff;
 }
 
 .btn-banner:hover,
 .btn-banner:focus {
   background-color: #51cc14c7;
-  border-color: #50CC14 ;
+  border-color: #50cc14;
   /* color: #e7e4e4c9; */
   color: #fff;
 }
@@ -868,8 +868,6 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
-
-
 /* User Photo Edit */
 .container-profilepic {
   width: 80px;
@@ -1108,15 +1106,13 @@ a.btn.dropdown-toggle.show:focus {
 #contact-banner,
 #dashboard,
 #basic-profile-section,
-#searchPeople-section
-{
+#searchPeople-section {
   margin-top: 90px;
 }
 
 #rating-authpage,
-#event-form{
+#event-form {
   margin-top: 140px;
- 
 }
 
 nav .nav-item {
@@ -1141,7 +1137,7 @@ nav .nav-item {
 }
 
 .rating label:before {
-  content: '\2605';
+  content: "\2605";
   font-size: 40px;
 }
 
@@ -1196,3 +1192,6 @@ nav .nav-item {
   max-height: calc(100vh - 10px); /* Adjust the max height as needed */
   overflow-y: auto;
 }
+
+/*------------------ */
+

@@ -192,7 +192,7 @@ function Contact() {
               <div className="col-md-6 user-auth-form-container">
 
                 <div className="card shadow">
-                  <div className="card-body p-5">
+                  <div className="card-body p-4">
                     <form
                       className="user-auth-form-contact"
                       onSubmit={handleSubmit}

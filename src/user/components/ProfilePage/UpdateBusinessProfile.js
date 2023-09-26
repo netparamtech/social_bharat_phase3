@@ -293,7 +293,7 @@ const UpdateBusinessProfile = (props) => {
         <div className="card shadow">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12 p-5">
+              <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                 <div className="card-title">
                   <h3 className="mb-3">Business Info</h3>
                 </div>

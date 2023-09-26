@@ -132,9 +132,9 @@ nav .nav-item .btn {
   color: rgba(255, 255, 255, 1);
 }
 
-.navbar-transparent .navbar-toggler-icon {
+/* .navbar-transparent .navbar-toggler-icon {
   background-color: #008374;
-}
+} */
 
 .navbar-transparent .navbar-toggler {
   border-color: #008374;

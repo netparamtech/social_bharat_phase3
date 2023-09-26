@@ -17,6 +17,7 @@ import BusinessCategoriesPage from "./pages/businessCategories/BusinessCategorie
 import CreateBusinessCategoriesPage from "./pages/businessCategories/CeateBusinessCategoriesPage";
 import UpdateBusinessCategoriePage from "./pages/businessCategories/UpdateBusinessCategoriesPage";
 import EnquiryPage from "./pages/enquiry/EnquiryPage";
+import TestimonialIndex from "./pages/TestimonialIndex";
 
 const adminRoutes = [
     {
@@ -137,6 +138,12 @@ const adminRoutes = [
     {
         path: '/admin/enquiries',
         component: EnquiryPage,
+        exact: true
+    },
+
+    {
+        path: '/admin/testimonials/index',
+        component: TestimonialIndex,
         exact: true
     }
 ]

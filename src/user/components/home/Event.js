@@ -94,7 +94,7 @@ const EventForm =  () => {
                   </div>
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label class="form-label">Venue Date </label>
-                    <input type="text"
+                    <input type="date"
                       name="businessWebsite"
                       id="businessWebsite"
                       placeholder="Enter Event Date"
@@ -113,8 +113,9 @@ const EventForm =  () => {
                   </div>
 
                 </div>
-                <div>
-                  <input type="checkbox" />
+                <div className="fw-light fs-6">
+                  <input type="checkbox" /> Ticket charges if any    
+                                
                 </div>
   
                 <div class="row mt-4">

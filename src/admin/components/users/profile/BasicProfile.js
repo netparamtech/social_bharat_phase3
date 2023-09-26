@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const BasicProfile = (props) => {
   const { userDetails } = props;
   const [userProfile, setUserProfile] = useState('');
+  const defaultPhoto = '/user/images/user.png';
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -64,6 +65,15 @@ const BasicProfile = (props) => {
             <p>Gender - {userDetails?.data?.gender}</p>
             <p>Community - {userDetails?.data?.community?.name}</p>
             <p>Mobile - {userDetails?.data?.mobile}</p>
+
+            <div className="container-profilepic mx-auto card-block-md overflow-hidden ">
+                <Image
+                  width={200}
+                  src={userDetails?.data?.community?.thumbnail_image ? userDetails?.data?.community?.thumbnail_image : defaultPhoto}
+                  title={userDetails?.data?.name}
+                />
+
+              </div>
             
           </Card>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, Avatar, Divider } from 'antd';
+import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -146,14 +146,9 @@ const UserProfileDropdown = () => {
               </span>
             ),
           },
+        
           {
             key: '6',
-            label: (
-              <Divider />
-            ),
-          },
-          {
-            key: '7',
             label: (
               <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }} className='menu-font'>
                 <i className="fas fa-sign-out m-2"></i> Logout

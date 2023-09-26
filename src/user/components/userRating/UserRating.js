@@ -165,7 +165,7 @@ const UserRating = () => {
           </div>
 
           <div className="col-md-4">
-          <div className="card shadow mb-2">
+          <div className="card mb-2">
             <div className="">
               <div className="row">
                 <div className="col-4">

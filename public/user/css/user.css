@@ -1113,7 +1113,8 @@ a.btn.dropdown-toggle.show:focus {
   margin-top: 90px;
 }
 
-#rating-authpage{
+#rating-authpage,
+#event-form{
   margin-top: 140px;
  
 }

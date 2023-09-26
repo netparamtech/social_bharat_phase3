@@ -20,6 +20,7 @@ import BlockUserPage from "./pages/BlockUserPage";
 import ContactPage from "./pages/ContactPage";
 import UserRatingPage from "./pages/UserRatingPage";
 import AboutPage from "./pages/AboutPage";
+import EventPage from "./pages/EventPage";
 
 
 const userRoutes = [
@@ -177,6 +178,12 @@ const userRoutes = [
     {
         path: '/about',
         component: AboutPage,
+        exact: true
+    },
+
+    {
+        path: '/event',
+        component: EventPage,
         exact: true
     },
 ]

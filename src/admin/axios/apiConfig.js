@@ -3,7 +3,7 @@ import adminStore from '../store';
 import { logout } from '../actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
-const ENV = process.env.ENV;
+const ENV = process.env.REACT_APP_ENV;
 
 // Function to determine the base URL based on the environment
 const getBaseUrl = () => {

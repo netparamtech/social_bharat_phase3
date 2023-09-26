@@ -229,8 +229,6 @@ const NavbarTransparent = () => {
                   )}
                 </li>
 
-                <Divider />
-
                 {isAuthenticUser && isAuthenticUser ? (
                   <li className="nav-item mt-2">
                     <a

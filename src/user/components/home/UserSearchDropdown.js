@@ -29,7 +29,7 @@ const UserSearchDropdown = () => {
       {
         key: '1',
         label: (
-          <span onClick={handleSearchPeopleClick} className='menu-font'>
+          <span onClick={handleSearchPeopleClick} className='menu-font '>
             <i class="fa-solid fa-users m-2"></i> Search People
           </span>
         ),

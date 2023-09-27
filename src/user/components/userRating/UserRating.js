@@ -6,14 +6,9 @@ const UserRating = () => {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
 
-  const [data, setData] = useState('');
-
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
   const [alertClass, setAlertClass] = useState('');
-
-  const [defaultImage, setDefaultImage] = useState('https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg');
-
 
   const navigate = useNavigate();
 
@@ -25,21 +20,7 @@ const UserRating = () => {
     setRating(e.target.value);
   }
 
-  const fetchData = async () => {
-    try {
-      const response = await fetchOldTestimonials();
 
-      setData(response.data.data);
-
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        navigate('/admin');
-      }
-      else if (error.response && error.response.status === 500) {
-        navigate('/admin');
-      }
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +35,10 @@ const UserRating = () => {
         setErrors('');
         setMessage(response.data.message);
         setAlertClass('alert-success');
+
+        setTimeout(()=>{
+          navigate('/dashboard');
+        },1000);
 
       }
     } catch (error) {
@@ -74,20 +59,12 @@ const UserRating = () => {
     }
   }
 
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-GB', options);
-  };
-
   useEffect(() => {
     if (message) {
       setComment('');
     }
   }, [message]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
   return (
     <>
       <div id="rating-authpage">
@@ -163,30 +140,7 @@ const UserRating = () => {
 
             </div> */}
           </div>
-
-          <div className="col-md-4">
-          <div className="card mb-2">
-            <div className="">
-              <div className="row">
-                <div className="col-4">
-                  <img src={data.photo ? data.photo : defaultImage} alt={data.name} title={data.name} className="avatar img-fluid img-circle " />
-                </div>
-                <div className="col-8 user-detail">
-                  <p>{data.name}</p>
-                  <p>{data.message}</p>
-                  <p>Rating-{data.rating}</p>
-                  <p>Create-{formatDate(data.created_at)}</p>
-                  <p>Update-{formatDate(data.created_at)}</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-
-        </div>
-
-        
-
       </div>
     </>
   );

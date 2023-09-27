@@ -2,6 +2,8 @@ const Education = (props) => {
   const {userDetails} = props;
   const educationDetails = userDetails&&userDetails.data&&userDetails.data.education;
 
+  console.log("Hello",educationDetails)
+
   return (
     <div id="education-section" className="content-wrapper pt-4">
       <div className="container">

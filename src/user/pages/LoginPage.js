@@ -16,7 +16,9 @@ const LoginPage = () => {
 
     useEffect(()=>{
         dispatch(logout());
+        window.scrollTo(0, 0);
     },[]);
+  
     return (
         <UserLayout>
             {

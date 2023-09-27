@@ -11,7 +11,7 @@ const UserRatingPage = () => {
     return (
         <UserLayout>
             <UserRating />
-            <FetchAllFeedback />
+            
         </UserLayout>
         
         );

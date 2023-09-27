@@ -26,7 +26,7 @@ const EventForm =  () => {
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label class="form-label">*Event Category</label>
                     <select id="event_category" class="form-control">
-                      <option value="">---Select Business Category---</option>
+                      <option value="">---Select Event Category---</option>
                     </select>
                   </div>
                 </div>

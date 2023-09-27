@@ -33,6 +33,17 @@ const NavbarTransparent = () => {
     navigate("/contact");
   };
 
+  const handleAboutClick = (e) => {
+    e.preventDefault();
+    navigate("/about");
+  }
+
+  const handleEventClick = (e) => {
+    e.preventDefault();
+    navigate("/event");
+  }
+
+
   const handleServiceClick = (e) => {
     if (isAuthenticUser) {
       if (isPasswordSet) {
@@ -115,7 +126,7 @@ const NavbarTransparent = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+          <ol className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
                 className="nav-link active"
@@ -126,9 +137,16 @@ const NavbarTransparent = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#why-social-section">
+            
+            <li className="nav-item ">
+              <a className="nav-link" onClick={handleAboutClick}>
                 About
+              </a>
+            </li>
+
+            <li className="nav-item ">
+              <a className="nav-link" onClick={handleEventClick}>
+                Event
               </a>
             </li>
 
@@ -149,7 +167,7 @@ const NavbarTransparent = () => {
             </li>
 
             {/* You can add more nav items here */}
-          </ul>
+          </ol>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             {isAuthenticUser && isAuthenticUser ? (
               ""
@@ -192,7 +210,7 @@ const NavbarTransparent = () => {
             }}
           >
             <div className="customDrawerBody">
-              <ul className="customUl">
+              <ul className="customUl breadcrumb">
                 <li className="nav-item mt-2">
                   <a
                     className="nav-link active"
@@ -203,8 +221,8 @@ const NavbarTransparent = () => {
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                   </a>
                 </li>
-                <li className="nav-item mt-2">
-                  <a className="nav-link" href="#why-social-section" >
+                <li className="nav-item mt-2 breadcrumb-item">
+                  <a className="nav-link" onClick={handleAboutClick} >
                     <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
                   </a>
                 </li>

@@ -17,9 +17,9 @@ const FetchAllFeedback = () => {
       setRating(response.data.data.rating);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate('/admin');
+        navigate('/login');
       } else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        navigate('/login');
       }
     }
   };

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import UserLayout from '../layouts/UserLayout';
 import UserRating from '../components/userRating/UserRating';
-import FetchAllFeedback from '../components/userRating/FetchAllFeedback';
-
 
 const UserRatingPage = () => {
     useEffect(()=>{
@@ -11,7 +9,6 @@ const UserRatingPage = () => {
     return (
         <UserLayout>
             <UserRating />
-            <FetchAllFeedback />
         </UserLayout>
         
         );

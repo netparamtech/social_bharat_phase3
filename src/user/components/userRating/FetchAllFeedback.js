@@ -68,24 +68,24 @@ const FetchAllFeedback = () => {
         <Card className="w-75 mb-5 mx-auto" style={{ textAlign: 'left',lineHeight:"0.1" }}>
           <div className="card-body text-secondary row">
             <Col span={3}>
-              <img src={data && data.photo ? data.photo : defaultImage} alt={data.name} title={data.name} width={50} className="avatar img-fluid img-circle " />
+              <img src={data && data.photo ? data.photo : defaultImage} alt={data&&data.name&&data.name} title={data&&data.name&&data.name} width={50} className="avatar img-fluid img-circle " />
             </Col>
             <Col span={6}>
               <Row>
-                <p>{data&&data.name}</p>
+                <p>{data&&data.name&&data.name}</p>
               </Row>
               <Row style={{fontSize:'55%'}}>
-              <p>{generateRatingStars(data.rating)}</p>
+              <p>{generateRatingStars(data&&data.rating&&data.rating)}</p>
               </Row>
 
               <Row>
                 <p style={{ fontFamily: 'Arial', fontStyle: 'italic' }}>
-                  &ldquo;{data&&data.message}&rdquo;
+                  &ldquo;{data&&data.message&&data.message}&rdquo;
                 </p>
               </Row>
             </Col>
             <Col span={3}>
-            <p>{calculateTimeDifference(data&&data.updated_at)}</p>
+            <p>{calculateTimeDifference(data&&data.updated_at&&data.updated_at)}</p>
             </Col>
           </div>
         </Card>

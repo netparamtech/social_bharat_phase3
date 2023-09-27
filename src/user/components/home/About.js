@@ -1,6 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate('/');
+
+  }
+
   return (
     <>
       <div id="banners-section" className="bg-white">
@@ -8,6 +18,18 @@ const About = () => {
           <div className="about-img navbar-scroll "></div>
         </div>
       </div>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container pt-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="" onClick={handleHomeClick}>Home</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">About</li>
+          </ol>
+        </nav>
+      </div>
+    </nav>
 
       <div className="accordion container mt-3" id="accordionExample">
         <div className="accordion-item mb-3 form-control">

@@ -77,7 +77,7 @@ const UserRating = () => {
                         />
                         <div class="w-100">
                           <h5>Add a comment</h5>
-                          <div class="rating mb-3" >
+                          <div class="rating mb-3">
                             <input
                               value="5"
                               name="rating"
@@ -183,13 +183,14 @@ const UserRating = () => {
                       <div class="w-100">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                           <h6 class="text-primary fw-bold mb-0">
-                            lara_stewart
-                            <span class="text-dark ms-2">
-                              Hmm, This poster looks cool
-                            </span>
+                            Name
+                            <p class="text-dark ms-2">
+                              Comment nfasd ofj dfdsjoijf fjs a jfj sdaf sf s
+                              fjsf dsfsd f f sdf sd f sd fsjf s fs f sd
+                            </p>
                           </h6>
-                          <p class="mb-0">2 days ago</p>
                         </div>
+                        <p>2 day ago</p>
                         <div class="d-flex justify-content-between align-items-center">
                           <p class="small mb-0" style={{ color: "#aaa" }}>
                             <a href="#!" class="link-grey">

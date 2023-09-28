@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
-import React from 'react';
-import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, updateBasicProfile } from '../../services/userService';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions/userAction';
-import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
+import { useEffect, useState } from "react";
+import React from "react";
+import {
+  fetchAllCitiesByStateID,
+  fetchAllStatesByCountryID,
+  updateBasicProfile,
+} from "../../services/userService";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userAction";
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
@@ -12,16 +16,16 @@ const UpdateBasicProfile = () => {
   const [name, setName] = useState(user.user.name); // Initial name
   const [gender, setGender] = useState(user.user.gender); // Initial gender
   const [email, setEmail] = useState(user.user.email); // Initial email
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
-  const [selectedCountry, setSelectedCountry] = useState('India');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("India");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
 
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,12 +42,13 @@ const UpdateBasicProfile = () => {
     setEmail(e.target.value);
   };
 
-  
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
 
     if (selectedOption) {
-      const selectedStateObject = states.find((state) => state.name === selectedOption.value);
+      const selectedStateObject = states.find(
+        (state) => state.name === selectedOption.value
+      );
       if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
@@ -64,18 +69,16 @@ const UpdateBasicProfile = () => {
         setStates(response.data.data);
       }
     } catch (error) {
-
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
-
     }
-  }
+  };
 
   const getAllCities = async (stateID) => {
     try {
@@ -86,14 +89,14 @@ const UpdateBasicProfile = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,9 +114,9 @@ const UpdateBasicProfile = () => {
     try {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
-        setErrors('');
+        setErrors("");
         dispatch(login(response.data.data, token));
-        navigate('/profile');
+        navigate("/profile");
       }
     } catch (error) {
       // Handle error
@@ -123,38 +126,43 @@ const UpdateBasicProfile = () => {
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
-
-  }
+  };
 
   useEffect(() => {
-    setToken(user.token || '');
+    setToken(user.token || "");
     setCountryID(101);
-    setSelectedState({ value: user.user.native_place_state, label: user.user.native_place_state }); // Set the selected state as an object
-    setSelectedCity({ value: user.user.native_place_city, label: user.user.native_place_city }); // Set the selected city as an object
-  }, [user])
+    setSelectedState({
+      value: user.user.native_place_state,
+      label: user.user.native_place_state,
+    }); // Set the selected state as an object
+    setSelectedCity({
+      value: user.user.native_place_city,
+      label: user.user.native_place_city,
+    }); // Set the selected city as an object
+  }, [user]);
 
   useEffect(() => {
     // Check if selectedCountry is already set
     getAllStates();
   }, []);
 
-
   useEffect(() => {
     if (states && user) {
-      const selectedStateObject = states.find((state) => state.name === user.user.native_place_state);
+      const selectedStateObject = states.find(
+        (state) => state.name === user.user.native_place_state
+      );
       if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
     }
-  }, [states])
-
+  }, [states]);
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -170,60 +178,102 @@ const UpdateBasicProfile = () => {
                   <div className="row ">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
                       <label className="form-label">Name</label>
-                      <input type="text" name="name" id="name" placeholder="Enter your name" className="form-control" defaultValue={name} onChange={handleNameChange} autoFocus />
-                      {errors.name && <span className='error'>{errors.name}</span>}
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Enter your name"
+                        className="form-control"
+                        defaultValue={name}
+                        onChange={handleNameChange}
+                        autoFocus
+                      />
+                      {errors.name && (
+                        <span className="error">{errors.name}</span>
+                      )}
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Email </label>
-                      <input type="text" name="email" id="email" placeholder="Enter Email" className="form-control" defaultValue={email} onChange={handleEmailChange} />
-                      {errors.email && <span className='error'>{errors.email}</span>}
+                      <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        placeholder="Enter Email"
+                        className="form-control"
+                        defaultValue={email}
+                        onChange={handleEmailChange}
+                      />
+                      {errors.email && (
+                        <span className="error">{errors.email}</span>
+                      )}
                     </div>
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Gender</label>
-                      <select className="form-select form-control" aria-label="Default select example" defaultValue={gender} onChange={handleGenderChange}>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Default select example"
+                        defaultValue={gender}
+                        onChange={handleGenderChange}
+                      >
                         <option value="">---Select Gender---</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                       </select>
-                      {errors.gender && <span className='error'>{errors.gender}</span>}
+                      {errors.gender && (
+                        <span className="error">{errors.gender}</span>
+                      )}
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">State</label>
 
                       <Select
-                        className=''
-                        options={states.map(state => ({ value: state.name, label: state.name }))}
+                        className=""
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
                         value={selectedState}
                         onChange={handleStateChange}
                         placeholder="---Select State---"
-
                       />
 
-                      {errors.native_place_state && <span className='error'>{errors.native_place_state}</span>}
+                      {errors.native_place_state && (
+                        <span className="error">
+                          {errors.native_place_state}
+                        </span>
+                      )}
                     </div>
                   </div>
-                  <div className='row'>
+                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">City</label>
 
                       <Select
-                        options={cities.map(city => ({ value: city.name, label: city.name }))}
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
                         value={selectedCity}
                         onChange={handleCityChange}
                         placeholder="---Select City---"
                       />
-                      {errors.native_place_city && <span className='error'>{errors.native_place_city}</span>}
-
+                      {errors.native_place_city && (
+                        <span className="error">
+                          {errors.native_place_city}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="row mt-4">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">Update</button>
+                      <button type="submit" className="btn btn-primary">
+                        Update
+                      </button>
                     </div>
                   </div>
                 </form>

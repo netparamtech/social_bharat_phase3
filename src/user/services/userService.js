@@ -489,3 +489,13 @@ export const fetchOldTestimonials = async () => {
         throw error;
     }
 }
+
+//Event
+export const event = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/events');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

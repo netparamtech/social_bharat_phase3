@@ -8,7 +8,6 @@ const About = () => {
     e.preventDefault();
     window.scrollTo(0, 0);
     navigate('/');
-
   }
 
   return (

@@ -140,14 +140,14 @@ const Dashboard = () => {
           </div>
 
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-lightvoilet text-white h-100">
+            <div className="card shadow bg-classicblue text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Feedback</div>
                     <div className="text-lg fw-bold">Add Feedback</div>
                   </div>
-                  <img src='/user/images/account.png' width='40px' />
+                  <img src='/user/images/review.png' width='40px' />
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">

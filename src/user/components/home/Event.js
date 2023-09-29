@@ -5,11 +5,10 @@ import {
   fetchAllStatesByCountryID,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Select from "react-dropdown-select";
 
 const EventForm = () => {
-  const user = useSelector((state) => state.userAuth);
+  
 
 
   // State variables to store form input values
@@ -23,8 +22,8 @@ const EventForm = () => {
   const [thumbImage, setThumbImage] = useState("");
 
   const [selectedCountry, setSelectedCountry] = useState("India");
-  const [selectedState, setSelectedState] = useState("[]"); // Change state to selectedState
-  const [selectedCity, setSelectedCity] = useState("[]");
+  const [selectedState, setSelectedState] = useState(''); // Change state to selectedState
+  const [selectedCity, setSelectedCity] = useState('');
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
@@ -37,13 +36,14 @@ const EventForm = () => {
 
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
+   
 
     if (selectedOption) {
       const selectedStateObject = states.find(
-        (state) => state.name === selectedOption.value
+        (state) => state.name === selectedOption[0].value
       );
+     
       if (selectedStateObject) {
-        console.log(selectedStateObject);
         getAllCities(selectedStateObject.id);
       }
     }
@@ -95,15 +95,18 @@ const EventForm = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(selectedState,selectedCity)
     const data = {
       title,
-      city,
-      state: selectedState, // Update to selectedState
+      city: selectedCity&&selectedCity[0].label,
+      state: selectedState[0].label, // Update to selectedState
       country,
       venue,
       start_datetime: startDateTime,
       end_datetime: endDateTime,
     };
+
+    console.log(data)
 
     try {
       const response = await event(data);
@@ -128,33 +131,14 @@ const EventForm = () => {
     }
   };
 
-  useEffect(() => {
-    setCountryID(101);
-    setSelectedState({
-      value: user.user.state,
-      label: user.user.state,
-    }); // Set the selected state as an object
-    setSelectedCity({
-      value: user.user.city,
-      label: user.user.city,
-    }); // Set the selected city as an object
-  }, [user]);
+ 
 
   useEffect(() => {
     // Check if selectedCountry is already set
     getAllStates();
   }, []);
 
-  useEffect(() => {
-    if (states && user) {
-      const selectedStateObject = states.find(
-        (state) => state.name === user.user.state
-      );
-      if (selectedStateObject) {
-        getAllCities(selectedStateObject.id);
-      }
-    }
-  }, [states]);
+  
 
   return (
     <>
@@ -186,9 +170,12 @@ const EventForm = () => {
                           name="eventName"
                           placeholder="Enter Event Name"
                           className="form-control"
-                          value={title}
+                          defaultValue={title}
+                          
                           onChange={(e) => setTitle(e.target.value)}
+                          
                         />
+                      
                         {errors.title && (
                           <span className="error">{errors.title}</span>
                         )}
@@ -251,9 +238,9 @@ const EventForm = () => {
                         <input
                           type="datetime-local"
                           name="dateTime"
-                          id="exampleInput3"
+                          id="startDateTime"
                           className="form-control"
-                          value={startDateTime}
+                          defaultValue={startDateTime}
                           onChange={(e) => setStartDateTime(e.target.value)}
                         />
                         {errors.start_datetime && (
@@ -267,10 +254,10 @@ const EventForm = () => {
                         <input
                           type="datetime-local"
                           name="dateTime"
-                          id="exampleInput3"
+                          id="endDateTime"
                           placeholder="Enter Event Date"
                           className="form-control"
-                          value={endDateTime}
+                          defaultValue={endDateTime}
                           onChange={(e) => setEndDateTime(e.target.value)}
                         />
                         {errors.end_datetime && (

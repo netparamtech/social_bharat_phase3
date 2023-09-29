@@ -493,7 +493,7 @@ export const fetchOldTestimonials = async () => {
 //Event
 export const event = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/events');
+        const response = await apiWithHeaders.post('/events',data);
         return response;
     } catch (error) {
         throw error;

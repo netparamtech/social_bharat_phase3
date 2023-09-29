@@ -30,6 +30,10 @@ const EventForm = () => {
 
   const navigate = useNavigate();
 
+  const handleTitleChange = (e) =>{
+    setTitle(e.target.value);
+  }
+
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
 
@@ -108,7 +112,7 @@ const EventForm = () => {
     }
 
     const data = {
-      title: title,
+      title,
       city: selectedCity && selectedCity[0].label,
       state: selectedState && selectedState[0].label, // Update to selectedState
       country,
@@ -119,13 +123,13 @@ const EventForm = () => {
       thumb_image: thumbImage,
     };
 
-    console.log(data);
+   
 
     try {
       const response = await event(data);
 
       if (response && response.status === 200) {
-        setErrors();
+        setErrors('');
         setMessage(response.data.message);
         setAlertClass("alert-success");
       }
@@ -179,8 +183,7 @@ const EventForm = () => {
                           name="eventName"
                           placeholder="Enter Event Name"
                           className="form-control"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
+                          onChange={handleTitleChange}
                         />
 
                         {errors.title && (

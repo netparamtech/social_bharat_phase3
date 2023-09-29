@@ -108,7 +108,7 @@ const EventForm = () => {
     }
 
     const data = {
-      title,
+      title: title,
       city: selectedCity && selectedCity[0].label,
       state: selectedState && selectedState[0].label, // Update to selectedState
       country,

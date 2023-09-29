@@ -13,9 +13,7 @@ const Event = () => {
   const [size, setSize] = useState("");
   const [totalRows, setTotalRows] = useState(0);
 
-  const [defaultImage, setDefaultImage] = useState(
-    "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg"
-  );
+ 
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -156,7 +154,7 @@ const Event = () => {
           <a
             className="collapse-item"
             href=""
-            onClick={() => navigate(`/users/view/${row.id}`)}
+            onClick={() => navigate(`/events/view/${row.id}`)}
           >
             <i className="fas fa-eye"></i>
           </a>

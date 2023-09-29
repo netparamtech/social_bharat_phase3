@@ -19,6 +19,7 @@ import UpdateBusinessCategoriePage from "./pages/businessCategories/UpdateBusine
 import EnquiryPage from "./pages/enquiry/EnquiryPage";
 import TestimonialIndex from "./pages/TestimonialIndex";
 import EventPage from "./pages/event/EventPage";
+import ViewEvent from "./pages/event/ViewEvent";
 
 const adminRoutes = [
     {
@@ -152,6 +153,12 @@ const adminRoutes = [
         path: '/admin/event/index',
         component: EventPage,
         exact: true
+    },
+
+    {
+        path: '/events/view/:id',
+        component: ViewEvent,
+        exact:true
     },
 ]
 

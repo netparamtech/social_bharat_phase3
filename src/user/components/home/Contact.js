@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Contact() {
-
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   // State variables to store form input values
@@ -13,16 +12,15 @@ function Contact() {
   const [mobile, setMobile] = useState("");
   const [userQuery, setUserQuery] = useState("");
 
-  const [errors, setErrors] = useState('');
-  const [message, setMessage] = useState('');
-  const [alertClass, setAlertClass] = useState('');
+  const [errors, setErrors] = useState("");
+  const [message, setMessage] = useState("");
+  const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
 
   const handleBecomeMemberClick = () => {
-    navigate('/register');
+    navigate("/register");
   };
-
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -31,30 +29,31 @@ function Contact() {
       name,
       email,
       mobile,
-      message: userQuery
-    }
+      message: userQuery,
+    };
 
     try {
       const response = await enquiry(data);
       if (response && response.status === 200) {
-        setErrors('');
+        setErrors("");
         setMessage(response.data.message);
-        setAlertClass('alert-success');
+        setAlertClass("alert-success");
+        setName('');
+        setEmail('');
+        setMobile('');
+        setUserQuery('');
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setMessage('')
+        setMessage("");
         setErrors(error.response.data.errors);
-        setAlertClass('alert-danger');
-      }
-
-      else if (error.response && error.response.status === 401) {
+        setAlertClass("alert-danger");
+      } else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
-        setAlertClass('alert-danger');
-      }
-      else if (error.response && error.response.status === 500) {
+        setAlertClass("alert-danger");
+      } else if (error.response && error.response.status === 500) {
         setMessage(error.response.data.message);
-        setAlertClass('alert-danger');
+        setAlertClass("alert-danger");
       }
     }
   };
@@ -76,7 +75,6 @@ function Contact() {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-
       </div>
 
       {/* Contact */}
@@ -190,19 +188,22 @@ function Contact() {
 
               {/* Contact form */}
               <div className="col-md-6 user-auth-form-container">
-
                 <div className="card shadow">
                   <div className="card-body p-4">
                     <form
                       className="user-auth-form-contact"
                       onSubmit={handleSubmit}
                     >
-
-                      {message && <div className={`alert ${alertClass}`}>
-                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                        {" " + message}
-                      </div>
-                      }
+                      {message && (
+                        <div className={`alert ${alertClass}`}>
+                          {alertClass === "alert-success" ? (
+                            <i className="fas fa-check-circle"></i>
+                          ) : (
+                            <i className="fas fa-exclamation-triangle"></i>
+                          )}
+                          {" " + message}
+                        </div>
+                      )}
                       <h4 className="mb-4 ">Send message for enquiry</h4>
                       <div className="form-group mb-4">
                         <input
@@ -212,7 +213,9 @@ function Contact() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                         />
-                        {errors.name && <span className='error'>{errors.name}</span>}
+                        {errors.name && (
+                          <span className="error">{errors.name}</span>
+                        )}
                       </div>
                       <div className="form-group mb-4">
                         <input
@@ -222,7 +225,9 @@ function Contact() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
-                        {errors.email && <span className='error'>{errors.email}</span>}
+                        {errors.email && (
+                          <span className="error">{errors.email}</span>
+                        )}
                       </div>
                       <div className="form-group mb-4">
                         <input
@@ -232,7 +237,9 @@ function Contact() {
                           value={mobile}
                           onChange={(e) => setMobile(e.target.value)}
                         />
-                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                        {errors.mobile && (
+                          <span className="error">{errors.mobile}</span>
+                        )}
                       </div>
                       <div className="form-group mb-4 ">
                         <textarea
@@ -241,9 +248,10 @@ function Contact() {
                           id="floatingTextarea"
                           value={userQuery}
                           onChange={(e) => setUserQuery(e.target.value)}
-                        >
-                        </textarea>
-                        {errors.message && <span className='error'>{errors.message}</span>}
+                        ></textarea>
+                        {errors.message && (
+                          <span className="error">{errors.message}</span>
+                        )}
                       </div>
                       <div className="form-group">
                         <button
@@ -254,8 +262,6 @@ function Contact() {
                         </button>
                       </div>
                     </form>
-
-
                   </div>
                 </div>
               </div>
@@ -263,15 +269,19 @@ function Contact() {
           </div>
         </div>
       </div>
-      {
-        isAuthenticUser ? '' : (
-          <div className="fixed-button-container">
-            <a className="btn btn-banner" href="#" onClick={handleBecomeMemberClick}>
-              Become a member
-            </a>
-          </div>
-        )
-      }
+      {isAuthenticUser ? (
+        ""
+      ) : (
+        <div className="fixed-button-container">
+          <a
+            className="btn btn-banner"
+            href="#"
+            onClick={handleBecomeMemberClick}
+          >
+            Become a member
+          </a>
+        </div>
+      )}
     </div>
   );
 }

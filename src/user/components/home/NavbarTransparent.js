@@ -55,6 +55,7 @@ const NavbarTransparent = () => {
     navigate("/contact");
   };
 
+
   const handleServiceClick = (e) => {
     if (isAuthenticUser) {
       if (isPasswordSet) {
@@ -154,6 +155,12 @@ const NavbarTransparent = () => {
               </a>
             </li>
 
+            <li className="nav-item ">
+              <a className="nav-link" onClick={handleEventClick}>
+                Event
+              </a>
+            </li>
+
             <li className="nav-item">
               <a className="nav-link" onClick={handleEventClick}>
                 Event
@@ -220,7 +227,7 @@ const NavbarTransparent = () => {
             }}
           >
             <div className="customDrawerBody">
-              <ul className="customUl">
+              <ul className="customUl breadcrumb">
                 <li className="nav-item mt-2">
                   <a
                     className="nav-link active"

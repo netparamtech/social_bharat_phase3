@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import {
-  deleteTestimonialByID,
-  fetchAllUsers,
-  fetchTestimonials,
-  updateToggleStatus,
-  updateToggleStatusForTestimonial,
+  deleteEventByID,
+  fetchEvents,
+  updateToggleStatusForEvent,
 } from "../../services/AdminService";
 import { useNavigate } from "react-router-dom";
 
-const Testimonial = () => {
+const Event = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState("");
@@ -22,7 +20,7 @@ const Testimonial = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetchTestimonials(page, size);
+      const response = await fetchEvents(page, size);
 
       setData(response.data.data);
 
@@ -44,9 +42,9 @@ const Testimonial = () => {
     setPage(newPage);
   };
 
-  const handleTestimonialToggleStatus = async (id) => {
+  const handleEventToggleStatus = async (id) => {
     try {
-      const response = await updateToggleStatusForTestimonial(id);
+      const response = await updateToggleStatusForEvent(id);
       if (response && response.status === 200) {
         fetchData();
       }
@@ -69,19 +67,61 @@ const Testimonial = () => {
       name: "S.No",
       selector: (row, index) => index + 1 + (page - 1) * size,
     },
+   
     {
-      name: "Photo",
-      selector: (row) => row.photo,
-      cell: (row) => (
-        <a href={row.photo} target="_blank">
-          <img
-            src={row.photo ? row.photo : defaultImage}
-            alt={row.name}
-            title={row.name}
-            className="small-img-user-list"
-          />
-        </a>
-      ),
+      name: "Title",
+      selector: (row) => row.title,
+      sortable: true,
+    },
+    {
+      name: "Venue",
+      selector: (row) => row.venue,
+      sortable: true,
+    },
+    {
+      name: "City",
+      selector: (row) => row.city,
+      sortable: true,
+    },
+    {
+      name: "State",
+      selector: (row) => row.state || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Country",
+      selector: (row) => row.country || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Thumb Image",
+      selector: (row) => row.thumb_image || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Banner Image",
+      selector: (row) => row.banner_image || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Start Datetime",
+      selector: (row) => row.start_datetime || "N/A",
+      sortable: true,
+    },
+    {
+      name: "End Datetime",
+      selector: (row) => row.end_datetime || "N/A",
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => row.status ,
+      sortable: true,
+    },
+    {
+      name: "User Id",
+      selector: (row) => row.user_id,
+      sortable: true,
     },
     {
       name: "Name",
@@ -90,32 +130,12 @@ const Testimonial = () => {
     },
     {
       name: "Email",
-      selector: (row) => row.email,
+      selector: (row) => row.email || "N/A",
       sortable: true,
     },
     {
-      name: "Message",
-      selector: (row) => row.message,
-      sortable: true,
-    },
-    {
-      name: "Rating",
-      selector: (row) => row.rating || "N/A",
-      sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row) => row.status,
-      sortable: true,
-    },
-    {
-      name: "Created",
-      selector: (row) => formatDate(row.created_at),
-      sortable: true,
-    },
-    {
-      name: "Updated",
-      selector: (row) => formatDate(row.updated_at),
+      name: "Photo",
+      selector: (row) => row.photo || "N/A",
       sortable: true,
     },
     {
@@ -135,7 +155,7 @@ const Testimonial = () => {
               href=""
               onClick={(e) => {
                 e.preventDefault();
-                handleTestimonialToggleStatus(row.id);
+                handleEventToggleStatus(row.id);
               }}
             >
               <i className="fa fa-thumbs-up text-primary" title="Active" />
@@ -146,7 +166,7 @@ const Testimonial = () => {
               href=""
               onClick={(e) => {
                 e.preventDefault();
-                handleTestimonialToggleStatus(row.id);
+                handleEventToggleStatus(row.id);
               }}
             >
               <i className="fa fa-thumbs-down" title="Inactive" />
@@ -156,7 +176,7 @@ const Testimonial = () => {
           <a
             className="collapse-item"
             href=""
-            onClick={() => handleDeleteTestimonial(row.id)}
+            onClick={() => handleDeleteEvent(row.id)}
           >
             <i className="fas fa-trash"></i>
           </a>
@@ -223,9 +243,9 @@ const Testimonial = () => {
       ) || row.message.toLowerCase().includes(searchQuery.toLowerCase()) // Include community in the search
   );
 
-  const handleDeleteTestimonial = async (id) => {
+  const handleDeleteEvent = async (id) => {
     try {
-      const response = await deleteTestimonialByID(id);
+      const response = await deleteEventByID(id);
       if (response && response.status === 200) {
         fetchData();
       }
@@ -245,7 +265,7 @@ const Testimonial = () => {
   return (
     <div>
       <DataTable
-        title="Testimonial List"
+        title="Event List"
         columns={columns}
         data={filteredData} // Use filteredData instead of data
         pagination
@@ -284,4 +304,4 @@ const Testimonial = () => {
   );
 };
 
-export default Testimonial;
+export default Event;

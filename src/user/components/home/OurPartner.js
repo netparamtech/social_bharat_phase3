@@ -44,6 +44,9 @@ function OurPartner() {
         ))
       )}
 
+            
+      <img src="/user/images/logo/anavil.png" />
+
     </div>
       </div>
         

@@ -394,3 +394,43 @@ export const updateToggleStatusForTestimonial = async (clickedId) => {
         throw error;
     }
 }
+
+//fetch all Event
+export const fetchEvents = async () => {
+    try {
+        const response = await apiWithHeaders.get('/events');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch Event by id
+export const fetchEventByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/events/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete Event by id
+export const deleteEventByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/events/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of Event by admin
+export const updateToggleStatusForEvent = async (clickedId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/events/${clickedId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

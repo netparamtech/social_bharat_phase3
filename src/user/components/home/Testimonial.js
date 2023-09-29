@@ -6,6 +6,12 @@ const Testimonials = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
 
+  const handleReviewClick = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate('/user/rating');
+  }
+
   const fetchBanners = async () => {
     try {
       const response = await fetchBannerWithPageAndSection("Home", "Testimonial");
@@ -43,6 +49,7 @@ const Testimonials = () => {
               />
               {/* Include other content for each carousel item here */}
             </div>
+            
           ))}
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -53,6 +60,8 @@ const Testimonials = () => {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
+        <a className="btn btn-primary" href="" onClick={handleReviewClick}>Share Your Review</a>
+
       </div>
     </section>
   );

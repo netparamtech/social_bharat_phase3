@@ -18,6 +18,7 @@ import CreateBusinessCategoriesPage from "./pages/businessCategories/CeateBusine
 import UpdateBusinessCategoriePage from "./pages/businessCategories/UpdateBusinessCategoriesPage";
 import EnquiryPage from "./pages/enquiry/EnquiryPage";
 import TestimonialIndex from "./pages/TestimonialIndex";
+import EventPage from "./pages/event/EventPage";
 
 const adminRoutes = [
     {
@@ -145,7 +146,13 @@ const adminRoutes = [
         path: '/admin/testimonials/index',
         component: TestimonialIndex,
         exact: true
-    }
+    },
+
+    {
+        path: '/admin/event/index',
+        component: EventPage,
+        exact: true
+    },
 ]
 
 export default adminRoutes;

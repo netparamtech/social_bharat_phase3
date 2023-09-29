@@ -328,7 +328,7 @@ export const fetchBusinessCategorieWithId = async (id) => {
 //fetch All Degrees
 export const fetchAllEnquiries = async (page, size) => {
     try {
-        const response = await apiConfig.get(`/enquiries?page=${page}&size=${size}`);
+        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;
@@ -338,7 +338,7 @@ export const fetchAllEnquiries = async (page, size) => {
 //delete enquiry
 export const deleteEnquiry = async (id) => {
     try {
-        const response = await apiConfig.delete(`/enquiries/${id}`);
+        const response = await apiWithHeaders.delete(`/enquiries/${id}`);
         return response;
     } catch (error) {
         throw error;
@@ -348,7 +348,7 @@ export const deleteEnquiry = async (id) => {
 //change toggle-status of enquiry by admin
 export const updateToggleStatusForEnquiry = async (clickedUserId) => {
     try {
-        const response = await apiConfig.patch(`/enquiries/${clickedUserId}/toggle-status`);
+        const response = await apiWithHeaders.patch(`/enquiries/${clickedUserId}/toggle-status`);
         return response;
     } catch (error) {
         throw error;

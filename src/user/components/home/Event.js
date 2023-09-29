@@ -24,15 +24,6 @@ const EventForm =  () => {
                     />
                   </div>
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label class="form-label">*Event Category</label>
-                    <select id="event_category" class="form-control">
-                      <option value="">---Select Business Category---</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <div class="row">
-                  <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label class="form-label">*Street Address</label>
                     <input type="text"
                       name="stressAddress"
@@ -41,26 +32,29 @@ const EventForm =  () => {
                       class="form-control"
                     />
                   </div>
+                </div>
   
-                  <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                <div class="row">
+                 
+  
+                  <div class="mb-3 col-lg-4 col-sm-12 col-xs-12">
                     <label class="form-label">Country</label>
-                    <select id="country" class="form-control">
+                    <select id="country" class="form-control" placeholder="select india">
                       <option value="India">India</option>
                       
                     </select>
                   </div>
+                  <div class="mb-3 col-lg-4 col-sm-12 col-xs-12">
+                    <label class="form-label">State</label>
+                    <select id="state" class="form-control" placeholder="select state"></select>
+                  </div>
+
+                  <div class="mb-3 col-lg-4 col-sm-12 col-xs-12">
+                    <label class="form-label">City</label>
+                    <select id="city" class="form-control" placeholder="select city"></select>
+                  </div>
                 </div>
   
-                <div class="row">
-                  <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label class="form-label">State</label>
-                    <select id="state" class="form-control"></select>
-                  </div>
-                  <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label class="form-label">City</label>
-                    <select id="city" class="form-control"></select>
-                  </div>
-                </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label class="form-label">*Contact 1</label>
@@ -83,17 +77,19 @@ const EventForm =  () => {
                 </div>
                 
                 <div class="row">
+                  
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label class="form-label">Venue Time </label>
-                    <input type="time"
-                      name="email"
-                      id="email"
-                      placeholder="Enter Contact 1"
+                    <label class="form-label">Event Start Date </label>
+                    <input type="date"
+                      name="businessWebsite"
+                      id="businessWebsite"
+                      placeholder="Enter Event Date"
                       class="form-control"
                     />
                   </div>
+
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label class="form-label">Venue Date </label>
+                    <label class="form-label">Event End Date </label>
                     <input type="date"
                       name="businessWebsite"
                       id="businessWebsite"
@@ -103,6 +99,17 @@ const EventForm =  () => {
                   </div>
                 </div>
                 <div class='row'>
+
+                <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <label class="form-label">Venue Time </label>
+                    <input type="time"
+                      name="email"
+                      id="email"
+                      placeholder="Enter Contact 1"
+                      class="form-control"
+                    />
+                  </div>
+
                   <div class="mb-3 col-lg-6 col-sm-12 col-xs-12">
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="status">

@@ -28,6 +28,28 @@ const NavbarTransparent = () => {
 
   }
 
+  const handleAboutClick = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate('/about');
+
+  }
+
+  const handleEventClick = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/event");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      navigate('/login')
+    }
+
+  }
+
   const handleContactClicked = (e) => {
     e.preventDefault();
     navigate("/contact");
@@ -127,8 +149,14 @@ const NavbarTransparent = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#why-social-section">
+              <a className="nav-link" onClick={handleAboutClick}>
                 About
+              </a>
+            </li>
+
+            <li className="nav-item">
+              <a className="nav-link" onClick={handleEventClick}>
+                Event
               </a>
             </li>
 
@@ -203,9 +231,15 @@ const NavbarTransparent = () => {
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                   </a>
                 </li>
-                <li className="nav-item mt-2">
-                  <a className="nav-link" href="#why-social-section" >
-                    <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
+                <li className="nav-item">
+                  <a className="nav-link" onClick={handleAboutClick}>
+                    About
+                  </a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" onClick={handleEventClick}>
+                    Event
                   </a>
                 </li>
                 <li className="nav-item mt-2">

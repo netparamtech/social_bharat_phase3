@@ -16,6 +16,11 @@ const UserList = () => {
     try {
       const response = await fetchAllUsers(page, size);
 
+      if(response.data.data.length===0){
+        setPage(page-1);
+        handleSearch(searchQuery)
+      }
+
       setData(response.data.data);
 
       setTotalRows(response.data.totalRecords);
@@ -157,11 +162,14 @@ const UserList = () => {
 
   // Function to handle search input changes
   const handleSearch = async (query) => {
-    setSearchQuery(query);
+    console.log(query)
     setPage(1); // Reset to the first page when searching
 
     // Fetch data for the first page with the new search query
     await fetchData();
+    if(!searchQuery){
+      setPage(1);
+    }
 
     // Check if the searched user exists on the current page
     const userExistsOnCurrentPage = filteredData.some((row) =>
@@ -186,6 +194,11 @@ const UserList = () => {
         )
       );
 
+      
+      if(newFilteredData.length===0){
+        setPage(page + 1);
+      }
+
       setData([...filteredData, ...newFilteredData]); // Update filteredData
     }
   };
@@ -205,6 +218,10 @@ const UserList = () => {
   useEffect(() => {
     fetchData();
   }, [page, size]);
+
+  useEffect(() => {
+    handleSearch(searchQuery)
+  }, [searchQuery]); 
 
 
   return (
@@ -227,7 +244,7 @@ const UserList = () => {
               <input type="text" className="form-control bg-light border-0 small"
                 placeholder="Search for..." aria-label="Search"
                 aria-describedby="basic-addon2"
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}
 
               />
               <div className="input-group-append">

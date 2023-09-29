@@ -54,6 +54,9 @@ const FetchAllFeedback = () => {
       return `${hours} hour ago`;
     } else {
       const days = Math.floor(differenceInSeconds / 86400);
+      if (!days) {
+        return '';
+      }
       return `${days} day ago`;
     }
   };
@@ -64,32 +67,37 @@ const FetchAllFeedback = () => {
 
   return (
     <>
-      <div id="rating-authpage" className='mt-1'>
-        <Card className="w-75 mb-5 mx-auto" style={{ textAlign: 'left',lineHeight:"0.1" }}>
-          <div className="card-body text-secondary row">
-            <Col span={3}>
-              <img src={data && data.photo ? data.photo : defaultImage} alt={data&&data.name&&data.name} title={data&&data.name&&data.name} width={50} className="avatar img-fluid img-circle " />
-            </Col>
-            <Col span={6}>
-              <Row>
-                <p>{data&&data.name&&data.name}</p>
-              </Row>
-              <Row style={{fontSize:'55%'}}>
-              <p>{generateRatingStars(data&&data.rating&&data.rating)}</p>
-              </Row>
+      {
+        data ? (
+          <div id="rating-authpage" className='mt-1'>
+            <Card className="w-75 mb-5 mx-auto" style={{ textAlign: 'left', lineHeight: "0.1" }}>
+              <div className="card-body text-secondary row">
+                <Col span={3}>
+                  <img src={data && data.photo ? data.photo : defaultImage} alt={data && data.name && data.name} title={data && data.name && data.name} width={50} className="avatar img-fluid img-circle " />
+                </Col>
+                <Col span={6}>
+                  <Row>
+                    <p>{data && data.name && data.name}</p>
+                  </Row>
+                  <Row style={{ fontSize: '55%' }}>
+                    <p>{generateRatingStars(data && data.rating && data.rating)}</p>
+                  </Row>
 
-              <Row>
-                <p style={{ fontFamily: 'Arial', fontStyle: 'italic' }}>
-                  &ldquo;{data&&data.message&&data.message}&rdquo;
-                </p>
-              </Row>
-            </Col>
-            <Col span={3}>
-            <p>{calculateTimeDifference(data&&data.updated_at&&data.updated_at)}</p>
-            </Col>
+                  <Row>
+                    <p style={{ fontFamily: 'Arial', fontStyle: 'italic' }}>
+                      &ldquo;{data && data.message && data.message}&rdquo;
+                    </p>
+                  </Row>
+                </Col>
+                <Col span={3}>
+                  <p>{calculateTimeDifference(data && data.updated_at && data.updated_at)}</p>
+                </Col>
+              </div>
+            </Card>
           </div>
-        </Card>
-      </div>
+        ) : ''
+      }
+
     </>
   );
 };

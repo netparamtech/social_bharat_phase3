@@ -8,12 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-dropdown-select";
 
 const EventForm = () => {
-  
-
-
   // State variables to store form input values
   const [title, setTitle] = useState("");
-  const [city, setCity] = useState("");
   const [country, setCountry] = useState("India");
   const [venue, setVenue] = useState("");
   const [startDateTime, setStartDateTime] = useState("");
@@ -22,8 +18,8 @@ const EventForm = () => {
   const [thumbImage, setThumbImage] = useState("");
 
   const [selectedCountry, setSelectedCountry] = useState("India");
-  const [selectedState, setSelectedState] = useState(''); // Change state to selectedState
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedState, setSelectedState] = useState(""); // Change state to selectedState
+  const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
@@ -36,13 +32,12 @@ const EventForm = () => {
 
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
-   
 
     if (selectedOption) {
       const selectedStateObject = states.find(
         (state) => state.name === selectedOption[0].value
       );
-     
+
       if (selectedStateObject) {
         getAllCities(selectedStateObject.id);
       }
@@ -95,18 +90,36 @@ const EventForm = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedState,selectedCity)
+    console.log(selectedState, selectedCity);
+
+    const formattedStartDateTime = formatDateTime(startDateTime);
+    const formattedEndDateTime = formatDateTime(endDateTime);
+   
+    //Date/ Time Format
+    function formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = "00"; // You can set seconds to '00' if not provided in your input
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
     const data = {
       title,
-      city: selectedCity&&selectedCity[0].label,
-      state: selectedState[0].label, // Update to selectedState
+      city: selectedCity && selectedCity[0].label,
+      state: selectedState && selectedState[0].label, // Update to selectedState
       country,
       venue,
-      start_datetime: startDateTime,
-      end_datetime: endDateTime,
+      start_datetime: formattedStartDateTime,
+      end_datetime: formattedEndDateTime,
+      banner_image: bannerImage,
+      thumb_image: thumbImage,
     };
 
-    console.log(data)
+    console.log(data);
 
     try {
       const response = await event(data);
@@ -131,14 +144,10 @@ const EventForm = () => {
     }
   };
 
- 
-
   useEffect(() => {
     // Check if selectedCountry is already set
     getAllStates();
   }, []);
-
-  
 
   return (
     <>
@@ -170,12 +179,10 @@ const EventForm = () => {
                           name="eventName"
                           placeholder="Enter Event Name"
                           className="form-control"
-                          defaultValue={title}
-                          
+                          value={title}
                           onChange={(e) => setTitle(e.target.value)}
-                          
                         />
-                      
+
                         {errors.title && (
                           <span className="error">{errors.title}</span>
                         )}
@@ -287,7 +294,8 @@ const EventForm = () => {
                         <input
                           type="file"
                           className="form-control"
-                          // Add file input handling here
+                          defaultValue={bannerImage}
+                          onChange={(e) => setBannerImage(e.target.value)}
                         />
                         {errors.bannerImage && (
                           <span className="error">{errors.bannerImage}</span>
@@ -301,7 +309,9 @@ const EventForm = () => {
                         <input
                           type="file"
                           className="form-control"
+                          defaultValue={thumbImage}
                           // Add file input handling here
+                          onChange={(e) => setThumbImage(e.target.value)}
                         />
                         {errors.thumbImage && (
                           <span className="error">{errors.thumbImage}</span>

@@ -57,10 +57,21 @@ const Event = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return new Date(dateString).toLocaleDateString("en-GB", options);
+  const formatDateTime = (dateTimeString) => {
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+    };
+    const dateTime = new Date(dateTimeString);
+    return dateTime.toLocaleString(undefined, options);
   };
+
+
 
   const columns = [
     {
@@ -105,12 +116,12 @@ const Event = () => {
     },
     {
       name: "Start Datetime",
-      selector: (row) => row.start_datetime || "N/A",
+      selector: (row) => formatDateTime(row.start_datetime) || "N/A",
       sortable: true,
     },
     {
       name: "End Datetime",
-      selector: (row) => row.end_datetime || "N/A",
+      selector: (row) =>  formatDateTime(row.end_datetime) || "N/A",
       sortable: true,
     },
     {

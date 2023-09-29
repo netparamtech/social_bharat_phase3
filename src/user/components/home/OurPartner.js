@@ -16,10 +16,9 @@ function OurPartner() {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
-      else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        navigate("/login");
       }
     }
   };
@@ -31,25 +30,25 @@ function OurPartner() {
   return (
     <div className="wow animate__animated animate__fadeIn">
       <section id="partner">
-      <div className="container">
-      <div className="row costomer-logos ">
-
-      {casts.length > 0 && (
-        casts.map((community) => (
-          community.thumbnail_image && (
-            <div className="icon-box col-lg-2 col-md-4 col-sm-4" key={community.id}>
-              <img src={community.thumbnail_image} alt={community.name} />
-            </div>
-          )
-        ))
-      )}
-
-            
-      <img src="/user/images/logo/anavil.png" />
-
-    </div>
-      </div>
-        
+        <div className="container">
+          <div className="row costomer-logos ">
+            {casts.length > 0 &&
+              casts.map(
+                (community) =>
+                  community.thumbnail_image && (
+                    <div
+                      className="icon-box col-lg-2 col-md-4 col-sm-4"
+                      key={community.id}
+                    >
+                      <img
+                        src={community.thumbnail_image}
+                        alt={community.name}
+                      />
+                    </div>
+                  )
+              )}
+          </div>
+        </div>
       </section>
     </div>
   );

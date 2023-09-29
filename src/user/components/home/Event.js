@@ -10,7 +10,7 @@ import Select from "react-dropdown-select";
 
 const EventForm = () => {
   const user = useSelector((state) => state.userAuth);
-  const isAuthenticUser = user && user.isAuthenticated;
+
 
   // State variables to store form input values
   const [title, setTitle] = useState("");
@@ -43,6 +43,7 @@ const EventForm = () => {
         (state) => state.name === selectedOption.value
       );
       if (selectedStateObject) {
+        console.log(selectedStateObject);
         getAllCities(selectedStateObject.id);
       }
     }
@@ -108,7 +109,7 @@ const EventForm = () => {
       const response = await event(data);
 
       if (response && response.status === 200) {
-        setErrors({});
+        setErrors();
         setMessage(response.data.message);
         setAlertClass("alert-success");
       }
@@ -183,7 +184,6 @@ const EventForm = () => {
                         <input
                           type="text"
                           name="eventName"
-                          id="businessName"
                           placeholder="Enter Event Name"
                           className="form-control"
                           value={title}

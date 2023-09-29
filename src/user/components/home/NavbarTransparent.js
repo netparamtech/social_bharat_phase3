@@ -155,12 +155,6 @@ const NavbarTransparent = () => {
               </a>
             </li>
 
-            <li className="nav-item ">
-              <a className="nav-link" onClick={handleEventClick}>
-                Event
-              </a>
-            </li>
-
             <li className="nav-item">
               <a className="nav-link" onClick={handleEventClick}>
                 Event
@@ -238,14 +232,16 @@ const NavbarTransparent = () => {
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleAboutClick}>
-                    About
+                  <i class="fa-solid fa-greater-than m-2"></i>  
+                  About
                   </a>
                 </li>
 
-                <li className="nav-item">
+                <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleEventClick}>
+                  <i class="fa-regular fa-calendar-days m-2"></i>
                     Event
                   </a>
                 </li>

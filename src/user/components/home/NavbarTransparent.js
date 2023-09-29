@@ -55,7 +55,6 @@ const NavbarTransparent = () => {
     navigate("/contact");
   };
 
-
   const handleServiceClick = (e) => {
     if (isAuthenticUser) {
       if (isPasswordSet) {
@@ -149,17 +148,20 @@ const NavbarTransparent = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
+            
+            <li className="nav-item ">
               <a className="nav-link" onClick={handleAboutClick}>
                 About
               </a>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item ">
               <a className="nav-link" onClick={handleEventClick}>
                 Event
               </a>
             </li>
+
+           
 
             <li className="nav-item">
               <a className="nav-link" onClick={handleServiceClick}>
@@ -221,7 +223,7 @@ const NavbarTransparent = () => {
             }}
           >
             <div className="customDrawerBody">
-              <ul className="customUl">
+              <ul className="customUl breadcrumb">
                 <li className="nav-item mt-2">
                   <a
                     className="nav-link active"
@@ -232,17 +234,9 @@ const NavbarTransparent = () => {
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                   </a>
                 </li>
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleAboutClick}>
-                  <i class="fa-solid fa-greater-than m-2"></i>  
-                  About
-                  </a>
-                </li>
-
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleEventClick}>
-                  <i class="fa-regular fa-calendar-days m-2"></i>
-                    Event
+                <li className="nav-item mt-2 breadcrumb-item">
+                  <a className="nav-link" onClick={handleAboutClick} >
+                    <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
                   </a>
                 </li>
                 <li className="nav-item mt-2">

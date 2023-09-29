@@ -106,8 +106,8 @@ const UpdateBasicProfile = () => {
       name,
       gender,
       email,
-      native_place_city: selectedCity.label,
-      native_place_state: selectedState.label,
+      native_place_city: selectedCity?selectedCity.label:'',
+      native_place_state: selectedState?selectedState.label:'',
     };
 
     // Call the API to update the basic profile information
@@ -239,7 +239,6 @@ const UpdateBasicProfile = () => {
                         }))}
                         value={selectedState}
                         onChange={handleStateChange}
-                        placeholder="---Select State---"
                       />
 
                       {errors.native_place_state && (
@@ -260,7 +259,6 @@ const UpdateBasicProfile = () => {
                         }))}
                         value={selectedCity}
                         onChange={handleCityChange}
-                        placeholder="---Select City---"
                       />
                       {errors.native_place_city && (
                         <span className="error">

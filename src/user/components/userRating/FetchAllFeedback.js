@@ -4,14 +4,17 @@ import { fetchOldTestimonials } from '../../services/userService';
 import { Card, Row, Col } from 'antd'; // Importing Card, Row, and Col components from Ant Design
 
 const FetchAllFeedback = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState([]);
   const [rating, setRating] = useState('');
+  const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
   const navigate = useNavigate();
   const [defaultImage, setDefaultImage] = useState('https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg');
 
   const fetchData = async () => {
     try {
       const response = await fetchOldTestimonials();
+
+      console.log(response.data.data)
 
       setData(response.data.data);
       setRating(response.data.data.rating);
@@ -27,7 +30,7 @@ const FetchAllFeedback = () => {
   const generateRatingStars = (rating) => {
     const stars = [];
     for (let i = 0; i < rating; i++) {
-      stars.push(<span key={i} className="fa fa-star checked"></span>);
+      stars.push(<span key={i} className="fas fa-star text-warning me-2"></span>);
     }
     return stars;
   };
@@ -66,39 +69,74 @@ const FetchAllFeedback = () => {
   }, []);
 
   return (
-    <>
-      {
-        data ? (
-          <div id="rating-authpage" className='mt-1'>
-            <Card className="w-75 mb-5 mx-auto" style={{ textAlign: 'left', lineHeight: "0.1" }}>
-              <div className="card-body text-secondary row">
-                <Col span={3}>
-                  <img src={data && data.photo ? data.photo : defaultImage} alt={data && data.name && data.name} title={data && data.name && data.name} width={50} className="avatar img-fluid img-circle " />
-                </Col>
-                <Col span={6}>
-                  <Row>
-                    <p>{data && data.name && data.name}</p>
-                  </Row>
-                  <Row style={{ fontSize: '55%' }}>
-                    <p>{generateRatingStars(data && data.rating && data.rating)}</p>
-                  </Row>
+    <div id="rating-authpage">
+      <section>
+        <div className="container my-5 py-5 text-dark">
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-10 col-lg-8 col-xl-6">
+              {
+                data && data.map((item, index) => (
+                  <div className="card mb-3" key={index}>
+                    <div className="card-body">
+                      <div class="d-flex flex-start">
+                       {
+                        item&&item.photo?(
+                          <img
+                          class="rounded-circle shadow-1-strong me-3"
+                          src={item.photo&&item.photo}
+                          alt="avatar"
+                          width="40"
+                          height="40"
+                        />
+                        ):
+                        (
+                          <button type='button' className='dropdown-user-img-letter m-2'>{item.name.charAt(0).toUpperCase()}</button>
+                        )
+                       }
+                        <div class="w-100">
+                          <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="text-primary fw-bold mb-0">
+                              {item.name && item.name}
+                              <p class="text-dark ">
+                                {item.message && item.message}
+                              </p>
+                            </h6>
+                          </div>
+                          <p>{calculateTimeDifference(item.updated_at)}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <p class="small mb-0" style={{ color: "#aaa" }}>
+                              <a href="#!" class="link-grey">
+                                Remove
+                              </a>{" "}
+                              •
+                              <a href="#!" class="link-grey">
+                                Reply
+                              </a>{" "}
+                              •
+                              <a href="#!" class="link-grey">
+                                Translate
+                              </a>
+                            </p>
+                            <div class="d-flex flex-row">
+                              {generateRatingStars(item.rating)}
+                              <i
+                                class="far fa-check-circle"
+                                style={{ color: "#aaa" }}
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                  <Row>
-                    <p style={{ fontFamily: 'Arial', fontStyle: 'italic' }}>
-                      &ldquo;{data && data.message && data.message}&rdquo;
-                    </p>
-                  </Row>
-                </Col>
-                <Col span={3}>
-                  <p>{calculateTimeDifference(data && data.updated_at && data.updated_at)}</p>
-                </Col>
-              </div>
-            </Card>
+                ))
+              }
+            </div>
           </div>
-        ) : ''
-      }
-
-    </>
+        </div>
+      </section>
+    </div>
   );
 };
 

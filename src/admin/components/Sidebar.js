@@ -49,6 +49,10 @@ function Sidebar() {
           data-target="#collapseUser"
           aria-expanded="true"
           aria-controls="collapseUser"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate("/admin/users");
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -62,25 +66,7 @@ function Sidebar() {
           </svg>
           <span className="m-2">Users</span>
         </a>
-        <div
-          id="collapseUser"
-          className="collapse"
-          aria-labelledby="headingTwo"
-          data-parent="#accordionSidebar"
-        >
-          <div className="bg-white py-2 collapse-inner rounded">
-            <a
-              className="collapse-item"
-              href=""
-              onClick={(e) => {
-                e.preventDefault(); // Prevent the default anchor tag behavior
-                navigate("/admin/users");
-              }}
-            >
-              List
-            </a>
-          </div>
-        </div>
+
       </li>
 
       {/* <!-- Nav Item - Contact Enquiry Categories Collapse Menu --> */}
@@ -92,6 +78,10 @@ function Sidebar() {
           data-target="#collapseEnquiry"
           aria-expanded="true"
           aria-controls="collapseEnquiry"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate("/admin/enquiries");
+          }}
         >
           <i
             className="	
@@ -101,25 +91,7 @@ function Sidebar() {
 
           <span className="m-2">Enquiry</span>
         </a>
-        <div
-          id="collapseEnquiry"
-          className="collapse"
-          aria-labelledby="headingTwo"
-          data-parent="#accordionSidebar"
-        >
-          <div className="bg-white py-2 collapse-inner rounded">
-            <a
-              className="collapse-item"
-              href=""
-              onClick={(e) => {
-                e.preventDefault(); // Prevent the default anchor tag behavior
-                navigate("/admin/enquiries");
-              }}
-            >
-              List
-            </a>
-          </div>
-        </div>
+
       </li>
 
       {/* <!-- Nav Item - Master Setting Collapse Menu --> */}

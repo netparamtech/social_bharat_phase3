@@ -37,7 +37,7 @@ const EnquiryList = () => {
   const navigate = useNavigate();
 
   const handlePageChange = newPage => {
-    setPage(newPage+1);
+    setPage(newPage + 1);
   };
 
   const handlePageSizeChange = (pageSize) => {
@@ -47,15 +47,11 @@ const EnquiryList = () => {
   const handleSearchChange = (query) => {
     setPage(1); // Reset page to 1 when search query changes
     setSearchQuery(query);
-
-    if (query.length > 3) {
-      fetchData();
-    }
   }
 
   const fetchData = async () => {
     try {
-      const response = await fetchAllEnquiries(page, size,searchQuery);
+      const response = await fetchAllEnquiries(page, size, searchQuery);
 
       setData(response.data.data);
 
@@ -198,26 +194,26 @@ const EnquiryList = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, size]);
+  }, [page, size, searchQuery]);
 
   return (
     <ThemeProvider theme={theme}>
-    <MaterialTable
-     icons={tableIcons}
-      title="Enquiry List"
-      data={data}
-      columns={columns}
-      options={{
-        paging: true,
-        pageSize: size,
-        pageSizeOptions: [5, 10, 20, 50],
-        actionsColumnIndex: -1,
-        emptyRowsWhenPaging: false, // Disable empty rows when paging
-      }}
-      onChangePage={handlePageChange} // Pass the updated handler
-      onChangeRowsPerPage={handlePageSizeChange}
-      onSearchChange={handleSearchChange}
-    />
+      <MaterialTable
+        icons={tableIcons}
+        title="Enquiries"
+        data={data}
+        columns={columns}
+        options={{
+          paging: true,
+          pageSize: size,
+          pageSizeOptions: [5, 10, 20, 50],
+          actionsColumnIndex: -1,
+          emptyRowsWhenPaging: false, // Disable empty rows when paging
+        }}
+        onChangePage={handlePageChange} // Pass the updated handler
+        onChangeRowsPerPage={handlePageSizeChange}
+        onSearchChange={handleSearchChange}
+      />
     </ThemeProvider>
   );
 };

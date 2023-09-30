@@ -145,9 +145,9 @@ export const createBanner = async (data) => {
 }
 
 //fetch all registered users
-export const fetchAllUsers = async (page, size) => {
+export const fetchAllUsers = async (page, size, searchQuery) => {
     try {
-        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}`);
+        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;
@@ -328,7 +328,7 @@ export const fetchBusinessCategorieWithId = async (id) => {
 //fetch All Degrees
 export const fetchAllEnquiries = async (page, size,searchQuery) => {
     try {
-        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}&searchQuery=${searchQuery}`);
+        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}&q=${searchQuery}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;
@@ -356,9 +356,9 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
 }
 
 //fetch all testimonials
-export const fetchTestimonials = async () => {
+export const fetchTestimonials = async (page, size,searchQuery) => {
     try {
-        const response = await apiWithHeaders.get('/testimonials');
+        const response = await apiWithHeaders.get(`/testimonials?page=${page}&size=${size}&q=${searchQuery}`);
         return response;
     } catch (error) {
         throw error;

@@ -1,25 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import DataTable from 'react-data-table-component';
+import React, { forwardRef, useEffect, useState } from 'react';
+import MaterialTable from 'material-table';
 import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
+
+const theme = createTheme({
+  // Your theme configuration
+  direction: 'ltr', // Set the direction to left-to-right (ltr) or right-to-left (rtl)
+});
 
 const UserList = () => {
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState(5);
   const [totalRows, setTotalRows] = useState(0);
 
+  const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
+
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
+
   const navigate = useNavigate();
 
-  const fetchData = async () => {
-    try {
-      const response = await fetchAllUsers(page, size);
+  const handlePageChange = newPage => {
+    setPage(newPage+1);
+  };
 
-      if(response.data.data.length===0){
-        setPage(page-1);
-        handleSearch(searchQuery)
-      }
+  const handlePageSizeChange = (pageSize) => {
+    setSize(pageSize);
+  };
+
+  const handleSearchChange = (query) => {
+    setPage(1); // Reset page to 1 when search query changes
+    setSearchQuery(query);
+  }
+
+  const fetchData = async () => {
+    console.log(searchQuery)
+    try {
+      const response = await fetchAllUsers(page, size,searchQuery);
 
       setData(response.data.data);
 
@@ -34,13 +69,6 @@ const UserList = () => {
     }
   };
 
-  const handleSearchClick = () => {
-    fetchData();
-  }
-
-  const handlePageChange = newPage => {
-    setPage(newPage);
-  };
 
   const handleUserToggleStatus = async (id) => {
     try {
@@ -63,69 +91,75 @@ const UserList = () => {
     return new Date(dateString).toLocaleDateString('en-GB', options);
   };
 
+  const tableIcons = {
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+  };
+
   const columns = [
     {
-      name: 'S.No',
-      selector: (row, index) => index + 1 + (page - 1) * size,
+      title: 'S.No',
+      field: 'sno',
+      render: (rowData) => rowData.tableData.id + 1, // Add 1 to start from 1
+    },
+    { title: 'Photo', field: 'photo',
+  render: (rowData) => (
+    <a href={rowData.photo} target='_blank'>
+    <img
+      src={rowData.photo ? rowData.photo : defaultImage}
+      alt={rowData.name}
+      title={rowData.name}
+      className='small-img-user-list'
+    />
+  </a>
+  )
+  },
+    { title: 'Name', field: 'name' },
+    { title: 'Email', field: 'email' },
+    { title: 'Mobile', field: 'mobile' },
+    { title: 'Community', field: 'message' },
+    {title: 'Status', field: 'status'},
+    {
+      title: 'Updated at',
+      field: 'updated_at',
+      render: (rowData) => formatDate(rowData.updated_at),
     },
     {
-      name: 'Photo',
-      selector: (row) => row.photo,
-      cell: (row) => (
-        <a href={row.photo} target='_blank'>
-          <img
-            src={row.photo ? row.photo : defaultImage}
-            alt={row.name}
-            title={row.name}
-            className='small-img-user-list'
-          />
-        </a>
-      ),
+      title: 'Created at',
+      field: 'created_at',
+      render: (rowData) => formatDate(rowData.created_at),
     },
     {
-      name: 'Name',
-      selector: (row) => row.name,
-      sortable: true,
-    },
-    {
-      name: 'Mobile',
-      selector: (row) => row.mobile,
-      sortable: true,
-    },
-    {
-      name: 'Community',
-      selector: (row) => row.community?.name || 'N/A',
-      sortable: true,
-    },
-    {
-      name: 'Status',
-      selector: (row) => row.status,
-      sortable: true,
-    },
-    {
-      name: 'Created',
-      selector: (row) => formatDate(row.created_at),
-      sortable: true,
-    },
-    {
-      name: 'Updated',
-      selector: (row) => formatDate(row.updated_at),
-      sortable: true,
-    },
-    {
-      name: 'Actions',
-      cell: (row) => (
+      title: 'Action',
+      field: 'action',
+      render: (rowData) => (
         <div>
-          <a className="collapse-item" href="#" onClick={() => navigate(`/users/view/${row.id}`)}>
+          <a className="collapse-item" href="#" onClick={() => navigate(`/users/view/${rowData.id}`)}>
             <i className="fas fa-eye"></i>
           </a>
-          {row.status === 'Active' ? (
+
+          {rowData.status === 'Active' ? (
             <a
               className="collapse-item m-2"
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                handleUserToggleStatus(row.id);
+                handleUserToggleStatus(rowData.id);
               }}
             >
               <i className="fa fa-thumbs-up text-primary" title="Active" />
@@ -136,7 +170,7 @@ const UserList = () => {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                handleUserToggleStatus(row.id);
+                handleUserToggleStatus(rowData.id);
               }}
             >
               <i className="fa fa-thumbs-down" title="Inactive" />
@@ -145,119 +179,34 @@ const UserList = () => {
 
         </div>
       ),
-    },
-    // ... other column definitions
+    }
+    // Add more columns as needed
   ];
 
-  const customStyles = {
-    headCells: {
-      style: {
-        fontWeight: 'bold',
-        fontSize: '16px',
-      },
-    },
-  };
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Function to handle search input changes
-  const handleSearch = async (query) => {
-    console.log(query)
-    setPage(1); // Reset to the first page when searching
-
-    // Fetch data for the first page with the new search query
-    await fetchData();
-    if(!searchQuery){
-      setPage(1);
-    }
-
-    // Check if the searched user exists on the current page
-    const userExistsOnCurrentPage = filteredData.some((row) =>
-      Object.values(row).some(
-        (value) =>
-          typeof value === 'string' &&
-          value.toLowerCase().includes(searchQuery.toLowerCase())
-      ) || (row.community?.name.toLowerCase().includes(searchQuery.toLowerCase())) // Include community in the search
-    );
-
-    // If the user is not found on the current page and there are more pages, increment the page and search again
-    if (!userExistsOnCurrentPage && page < Math.ceil(totalRows / size)) {
-      setPage(page + 1);
-      await fetchData(); // Fetch data for the next page
-
-      // Filter the newly fetched data for the next page
-      const newFilteredData = data.filter((row) =>
-        Object.values(row).some(
-          (value) =>
-            typeof value === 'string' &&
-            value.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-
-      
-      if(newFilteredData.length===0){
-        setPage(page + 1);
-      }
-
-      setData([...filteredData, ...newFilteredData]); // Update filteredData
-    }
-  };
-
-
-
-  // Function to filter data based on the search query
-  const filteredData = data.filter((row) =>
-    Object.values(row).some(
-      (value) =>
-        typeof value === 'string' &&
-        value.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || (row.community?.name.toLowerCase().includes(searchQuery.toLowerCase())) // Include community in the search
-  );
-  
 
   useEffect(() => {
     fetchData();
-  }, [page, size]);
-
-  useEffect(() => {
-    handleSearch(searchQuery)
-  }, [searchQuery]); 
-
+  }, [page, size,searchQuery]);
 
   return (
-    <div>
-      <DataTable
-        title="User List"
-        columns={columns}
-        data={filteredData} // Use filteredData instead of data
-        pagination
-        paginationServer
-        paginationTotalRows={totalRows}
-        onChangePage={(newPage) => handlePageChange(newPage)}
-        onChangeRowsPerPage={(newSize) => setSize(newSize)}
-        customStyles={customStyles}
-        subHeader // Enable the subHeader
-        subHeaderComponent={
-          // Add a search input for the entire table
-          <form className="form-inline mr-auto w-100 navbar-search">
-            <div className="input-group">
-              <input type="text" className="form-control bg-light border-0 small"
-                placeholder="Search for..." aria-label="Search"
-                aria-describedby="basic-addon2"
-                onChange={(e) => setSearchQuery(e.target.value)}
-
-              />
-              <div className="input-group-append">
-                <button className="btn btn-primary" type="button" onClick={() => handleSearchClick()}>
-                  <i className="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
-        }
-      />
-    </div>
+    <ThemeProvider theme={theme}>
+    <MaterialTable
+     icons={tableIcons}
+      title="Users"
+      data={data}
+      columns={columns}
+      options={{
+        paging: true,
+        pageSize: size,
+        pageSizeOptions: [5, 10, 20, 50],
+        actionsColumnIndex: -1,
+        emptyRowsWhenPaging: false, // Disable empty rows when paging
+      }}
+      onChangePage={handlePageChange} // Pass the updated handler
+      onChangeRowsPerPage={handlePageSizeChange}
+      onSearchChange={handleSearchChange}
+    />
+    </ThemeProvider>
   );
 };
 

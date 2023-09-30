@@ -88,7 +88,7 @@ function Sidebar() {
               }}
             >
               <i className="fas fa-business-time me-1" fill="currentColor"></i>
-              Business
+              Business Catagories
             </a>
             <a
               className="collapse-item"
@@ -99,7 +99,7 @@ function Sidebar() {
               }}
             >
               <i className="fas fa-graduation-cap me-1" fill="currentColor"></i>
-              Degree
+              Degrees
             </a>
           </div>
         </div>

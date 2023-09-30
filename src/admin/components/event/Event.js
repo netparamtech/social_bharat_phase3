@@ -31,12 +31,6 @@ const theme = createTheme({
   direction: "ltr", // Set the direction to left-to-right (ltr) or right-to-left (rtl)
 });
 
-const useStyles = makeStyles({
-  alternateRow: {
-    backgroundColor: '#f9f9f9',  // Specify the background color for alternating rows
-  },
-});
-
 const Event = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -209,9 +203,18 @@ const Event = () => {
         </a>
       ),
     },
-    { title: "Name", field: "name" },
-    { title: "Email", field: "email" },
-    { title: "Title", field: "title" },
+    { title: "Name", field: "name",cellStyle: {
+      minWidth: 200,
+      maxWidth: 200
+    } },
+    { title: "Email", field: "email",cellStyle: {
+      minWidth: 200,
+      maxWidth: 200
+    } },
+    { title: "Title", field: "title",cellStyle: {
+      minWidth: 200,
+      maxWidth: 200
+    } },
     { title: "Venue", field: "venue" },
     { title: "City", field: "city" },
     { title: "State", field: "state" },
@@ -229,6 +232,10 @@ const Event = () => {
           />
         </a>
       ),
+      cellStyle: {
+        minWidth: 200,
+        maxWidth: 200
+      }
     },
 
     {
@@ -244,18 +251,58 @@ const Event = () => {
           />
         </a>
       ),
+      cellStyle: {
+        minWidth: 200,
+        maxWidth: 200
+      }
     },
     {
       title: "Start Date Time",
       field: "start_datetime",
       render: (rowData) => formatDate(rowData.start_datetime),
+      cellStyle: {
+        minWidth: 200,
+        maxWidth: 200
+      }
     },
     {
       title: "End Date Time",
       field: "end_datetime",
       render: (rowData) => formatDate(rowData.end_datetime),
+      cellStyle: {
+        minWidth: 200,
+        maxWidth: 200
+      }
     },
-    { title: "Status", field: "status" },
+    { title: "Status", field: "status",
+    render: (rowData) => (
+<>
+      {rowData.status === "Active" ? (
+        <a
+          className="collapse-item m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleEventToggleStatus(rowData.id);
+          }}
+        >
+          <i className="fa fa-thumbs-up text-primary" title="Active" />
+        </a>
+      ) : (
+        <a
+          className="collapse-item text-secondary m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleEventToggleStatus(rowData.id);
+          }}
+        >
+          <i className="fa fa-thumbs-down" title="Inactive" />
+        </a>
+      )}
+      </>
+    )
+  },
     {
       title: "Action",
       field: "action",
@@ -269,32 +316,8 @@ const Event = () => {
             <i className="fas fa-eye"></i>
           </a>
 
-          {rowData.status === "Active" ? (
-            <a
-              className="collapse-item m-2"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleEventToggleStatus(rowData.id);
-              }}
-            >
-              <i className="fa fa-thumbs-up text-primary" title="Active" />
-            </a>
-          ) : (
-            <a
-              className="collapse-item text-secondary m-2"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleEventToggleStatus(rowData.id);
-              }}
-            >
-              <i className="fa fa-thumbs-down" title="Inactive" />
-            </a>
-          )}
-
           <a
-            className="collapse-item"
+            className="collapse-item m-2"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -305,6 +328,10 @@ const Event = () => {
           </a>
         </div>
       ),
+      cellStyle: {
+        minWidth: 200,
+        maxWidth: 200
+      }
     },
     // Add more columns as needed
   ];
@@ -316,7 +343,6 @@ const Event = () => {
   return (
     <ThemeProvider theme={theme}>
       <MaterialTable
-       tableRef={tableRef}
         icons={tableIcons}
         title="Events"
         data={data}
@@ -337,7 +363,8 @@ const Event = () => {
           },
           rowStyle:{
             fontSize:'12px'
-          }
+          },
+          
           
         }}
         

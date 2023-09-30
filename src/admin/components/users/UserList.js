@@ -135,15 +135,16 @@ const UserList = () => {
     { title: 'Community', field: 'message' },
     {title: 'Status', field: 'status'},
     {
-      title: 'Updated at',
-      field: 'updated_at',
-      render: (rowData) => formatDate(rowData.updated_at),
-    },
-    {
-      title: 'Created at',
+      title: 'Created At',
       field: 'created_at',
       render: (rowData) => formatDate(rowData.created_at),
     },
+    {
+      title: 'Last Modified At',
+      field: 'updated_at',
+      render: (rowData) => formatDate(rowData.updated_at),
+    },
+   
     {
       title: 'Action',
       field: 'action',

@@ -135,12 +135,12 @@ const EnquiryList = () => {
     { title: 'Mobile', field: 'mobile' },
     { title: 'Message', field: 'message' },
     {
-      title: 'Updated at',
+      title: 'Last Modified At',
       field: 'updated_at',
       render: (rowData) => formatDate(rowData.updated_at),
     },
     {
-      title: 'Created at',
+      title: 'Created At',
       field: 'created_at',
       render: (rowData) => formatDate(rowData.created_at),
     },

@@ -19,13 +19,23 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { makeStyles } from '@material-ui/core';
 
 const theme = createTheme({
   // Your theme configuration
   direction: 'ltr', // Set the direction to left-to-right (ltr) or right-to-left (rtl)
 });
 
+const useStyles = makeStyles({
+  alternateRow: {
+    backgroundColor: '#f9f9f9',  // Specify the background color for alternating rows
+  },
+});
+
 const Event = () => {
+
+  const tableRef = React.createRef();
+  const classes = useStyles('');
 
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -130,7 +140,7 @@ const Event = () => {
     Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
     SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
 
   const formatDateTime = (dateTimeString) => {
@@ -292,7 +302,6 @@ const Event = () => {
     // Add more columns as needed
   ];
 
-
   useEffect(() => {
     fetchData();
   }, [page, size, searchQuery]);
@@ -300,6 +309,7 @@ const Event = () => {
   return (
     <ThemeProvider theme={theme}>
       <MaterialTable
+       tableRef={tableRef}
         icons={tableIcons}
         title="Events"
         data={data}
@@ -311,6 +321,19 @@ const Event = () => {
           actionsColumnIndex: -1,
           emptyRowsWhenPaging: false, // Disable empty rows when paging
         }}
+        options={{
+          headerStyle: {
+            backgroundColor: '#ffff',
+            color: 'blaclk',
+            fontWeight: 'bold',
+            fontSize:'12px'
+          },
+          rowStyle:{
+            fontSize:'12px'
+          }
+          
+        }}
+        
         onChangePage={handlePageChange} // Pass the updated handler
         onChangeRowsPerPage={handlePageSizeChange}
         onSearchChange={handleSearchChange}

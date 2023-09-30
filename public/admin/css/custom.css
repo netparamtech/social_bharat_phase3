@@ -1,14 +1,13 @@
 /* Error */
 .error {
-    font-size: 12px !important;
-    color: #dc3545 !important;
-  }
+  font-size: 12px !important;
+  color: #dc3545 !important;
+}
 
 .small-img-thumbnail {
   height: 50px !important;
   width: 80px !important;
   border-radius: 4px;
-  
 }
 
 .small-img-user-list {
@@ -17,119 +16,128 @@
 }
 
 .profile-card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* height: 90vh; */
-  }
-  
-  .profile-card-image {
-    width: 500px;
-    text-align: center;
-  }
-  
-  .profile-image {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    /* margin-left: 10px; */
-    cursor: pointer;
-  }
-  .image-container {
-    border-radius: 100%;
-    background-size: cover; /* Use 'contain' to maintain aspect ratio */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #f0f0f0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .plus-icon {
-    font-size: 58px;
-  }
-  
-  .profile-details {
-    margin-top: 20px;
-  }
-  
-  .ant-input {
-    margin-bottom: 10px;
-  }
-  
-  .ant-btn {
-    width: 100%;
-  }
-  
-  .custom-table th {
-    font-weight: bold;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 90vh; */
+}
 
-  .proposal-Photo img{
-    width: 40px;
-    height: 40px;
-  }
+.profile-card-image {
+  width: 500px;
+  text-align: center;
+}
 
-  .sidebar-brand-icon img{
-    min-width: 80px;
-    padding: 2px;
-    border-top-left-radius: 10px;
-  }
+.profile-image {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  /* margin-left: 10px; */
+  cursor: pointer;
+}
+.image-container {
+  border-radius: 100%;
+  background-size: cover; /* Use 'contain' to maintain aspect ratio */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .form-control:focus {
-    box-shadow: none;
-    outline: none;
-  }
+.plus-icon {
+  font-size: 58px;
+}
 
-  .dropdown-admin-img {
-    height: 2.5rem;
-    width: 2.5rem;
-    margin-right: 1rem;
-    border-radius: 100%;
-  }
+.profile-details {
+  margin-top: 20px;
+}
 
-  .dropdown-user-details-name {
-    color: #212832;
-    font-weight: 500;
-    font-size: 0.9rem;
-    max-width: 10rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .dropdown-user-details-email {
-    color: #69707a;
-    font-size: 0.75rem;
-    max-width: 10rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.ant-input {
+  margin-bottom: 10px;
+}
 
-  .dropdown-header {
-    color: #a7aeb8;
-    font-size: 0.75rem;
-    font-weight: 400;
-  }
- 
-  #basic-profile-section .container-profilepic img{
-    /* width: 150px; */
-    height: 150px;
-    background-position: center;
-    object-fit: cover;
-    background-size: cover;
-    margin: 1px;
-  }
+.ant-btn {
+  width: 100%;
+}
 
-  #basic-profile-section  p{
-    font-weight: bold;
-    letter-spacing: 0lh;
-  }
+.custom-table th {
+  font-weight: bold;
+}
 
-  #basic-profile-section .container-profilepic {
-    margin: 10px;
-  }
+.proposal-Photo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar-brand-icon img {
+  min-width: 80px;
+  padding: 2px;
+  border-top-left-radius: 10px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.dropdown-admin-img {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 1rem;
+  border-radius: 100%;
+}
+
+.dropdown-user-details-name {
+  color: #212832;
+  font-weight: 500;
+  font-size: 0.9rem;
+  max-width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-user-details-email {
+  color: #69707a;
+  font-size: 0.75rem;
+  max-width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-header {
+  color: #a7aeb8;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+#basic-profile-section .container-profilepic img {
+  /* width: 150px; */
+  height: 150px;
+  background-position: center;
+  object-fit: cover;
+  background-size: cover;
+  margin: 1px;
+}
+
+#basic-profile-section p {
+  font-weight: bold;
+  letter-spacing: 0lh;
+}
+
+#basic-profile-section .container-profilepic {
+  margin: 10px;
+}
+
+/* MuiTable */
+.css-1ygcj2i-MuiTableCell-root {
+  font-weight: 700;
+}
+
+.css-2ulfj5-MuiTypography-root{
+  font-size: 30px !important;
+}

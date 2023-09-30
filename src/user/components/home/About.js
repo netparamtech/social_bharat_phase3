@@ -7,8 +7,8 @@ const About = () => {
   const handleHomeClick = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <>
@@ -19,126 +19,22 @@ const About = () => {
       </div>
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container pt-2">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="" onClick={handleHomeClick}>Home</a></li>
-            
-            <li class="breadcrumb-item active" aria-current="page">About</li>
-          </ol>
-        </nav>
-      </div>
-    </nav>
+        <div class="container pt-2">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="" onClick={handleHomeClick}>
+                  Home
+                </a>
+              </li>
 
-      <div className="accordion container mt-3" id="accordionExample">
-        <div className="accordion-item mb-3 form-control">
-          <h2 className="accordion-header" id="headingOne">
-            <button
-              className="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-            >
-              Social Bharat
-            </button>
-          </h2>
-          <div
-            id="collapseOne"
-            className="accordion-collapse collapse show "
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample"
-          >
-            <div className="accordion-body">
-              Everyone dreams about the best place to live in. It is our planet
-              inhabited by many people. Just think for a minute of the current
-              world population – 7+ billions of people. There must be those who
-              are in need of help, be it financial, moral or medical. For that
-              reason, there is a community <strong>Social Bharat</strong> which
-              you can join to help others. Many centers rely entirely on
-              voluntary help. <code></code>
-            </div>
-          </div>
+              <li class="breadcrumb-item active" aria-current="page">
+                About
+              </li>
+            </ol>
+          </nav>
         </div>
-        <div className="accordion-item mb-3">
-          <h2 className="accordion-header" id="headingTwo">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo"
-            >
-              Matrimonial
-            </button>
-          </h2>
-          <div
-            id="collapseTwo"
-            className="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample"
-          >
-            <div className="accordion-body">
-              <strong></strong> Social Bharat's matrimonial feature simplifies
-              the search for a life partner by allowing users to create detailed
-              profiles, express their preferences, and find compatible matches
-              within a secure and private environment, making the journey to
-              finding a life partner efficient and personalized. <code></code>
-            </div>
-          </div>
-        </div>
-        <div className="accordion-item mb-3">
-          <h2 className="accordion-header" id="headingThree">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
-              aria-expanded="false"
-              aria-controls="collapseThree"
-            >
-              Job
-            </button>
-          </h2>
-          <div
-            id="collapseThree"
-            className="accordion-collapse collapse"
-            aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample"
-          >
-            <div className="accordion-body">
-              <strong></strong> Search Job <code></code>.
-            </div>
-          </div>
-        </div>
-        <div className="accordion-item">
-          <h2 className="accordion-header" id="headingFour">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseFour"
-              aria-expanded="false"
-              aria-controls="collapseThree"
-            >
-              Event
-            </button>
-          </h2>
-          <div
-            id="collapseFour"
-            className="accordion-collapse collapse"
-            aria-labelledby="headingFour"
-            data-bs-parent="#accordionExample"
-          >
-            <div className="accordion-body">
-              <strong></strong> Event Organizer
-              <code></code>
-            </div>
-          </div>
-        </div>
-      </div>
+      </nav>
 
       <div id="why-social-section">
         <div className="container">

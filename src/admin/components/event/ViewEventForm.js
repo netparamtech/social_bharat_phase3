@@ -50,11 +50,11 @@ const ViewEventForm = () => {
           <div className="card shadow">
             <div className="card-body">
               <div className="row">
-                <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+                <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
                     <h3 className="mb-3">Event Info</h3>
                   </div>
-                  <form className="w-100 w-lg-75">
+                  <form className="">
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Event Title</label>
@@ -152,8 +152,14 @@ const ViewEventForm = () => {
                       </div>
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status" className="me-2">Banner Image</label>
-                        <img src={data.banner_image} className="mb-1" height={70}/>
+                        <label htmlFor="status" className="me-2">
+                          Banner Image
+                        </label>
+                        <img
+                          src={data.banner_image}
+                          className="mb-1"
+                          height={70}
+                        />
                         <input
                           type="text"
                           readOnly
@@ -161,13 +167,18 @@ const ViewEventForm = () => {
                           defaultValue={data.banner_image}
                         />
                       </div>
-                      
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status" className="me-2">Thumb Image</label>
-                        <img src={data.thumb_image} className="mb-1" height={70}/>
+                        <label htmlFor="status" className="me-2">
+                          Thumb Image
+                        </label>
+                        <img
+                          src={data.thumb_image}
+                          className="mb-1"
+                          height={70}
+                        />
                         <input
                           type="text"
                           readOnly

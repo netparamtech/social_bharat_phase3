@@ -10,12 +10,12 @@ const BasicProfile = (props) => {
     <div id="basic-profile-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="row">
-          <div className="col-md-3 mb-sm-3 d-block">
+          <div className="col-md-3 mb-sm-3 ">
             <div className="card shadow">
 
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
                 <Image
-                  width={200}
+                  
                   src={userDetails?.data?.photo ? userDetails.data.photo : "/user/images/OIP.jpg"}
                   title={userDetails?.data?.name}
                 />

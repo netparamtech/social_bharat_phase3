@@ -39,7 +39,7 @@ const EnquiryList = () => {
 
   const navigate = useNavigate();
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setPage(newPage + 1);
   };
 
@@ -50,11 +50,7 @@ const EnquiryList = () => {
   const handleSearchChange = (query) => {
     setPage(1); // Reset page to 1 when search query changes
     setSearchQuery(query);
-
-    if (query.length > 3) {
-      fetchData();
-    }
-  };
+  }
 
   const fetchData = async () => {
     try {
@@ -202,13 +198,13 @@ const EnquiryList = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, size]);
+  }, [page, size, searchQuery]);
 
   return (
     <ThemeProvider theme={theme}>
       <MaterialTable
         icons={tableIcons}
-        title="Enquiry List"
+        title="Enquiries"
         data={data}
         columns={columns}
         options={{

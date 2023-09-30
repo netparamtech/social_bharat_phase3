@@ -13,7 +13,6 @@ const Event = () => {
   const [size, setSize] = useState("");
   const [totalRows, setTotalRows] = useState(0);
 
- 
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -31,8 +30,6 @@ const Event = () => {
       }
     }
   };
-
-  
 
   const handleSearchClick = () => {
     fetchData();
@@ -59,56 +56,60 @@ const Event = () => {
 
   const formatDateTime = (dateTimeString) => {
     const options = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZoneName: 'short',
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZoneName: "short",
     };
     const dateTime = new Date(dateTimeString);
     return dateTime.toLocaleString(undefined, options);
   };
-
-
 
   const columns = [
     {
       name: "S.No",
       selector: (row, index) => index + 1 + (page - 1) * size,
     },
-   
+
     {
       name: "Title",
       selector: (row) => row.title,
       sortable: true,
     },
+
     {
       name: "Venue",
       selector: (row) => row.venue,
       sortable: true,
     },
+
     {
       name: "City",
       selector: (row) => row.city,
       sortable: true,
     },
+
     {
       name: "State",
       selector: (row) => row.state || "N/A",
       sortable: true,
     },
+
     {
       name: "Country",
       selector: (row) => row.country || "N/A",
       sortable: true,
     },
+
     {
       name: "Thumb Image",
       selector: (row) => row.thumb_image || "N/A",
       sortable: true,
     },
+    
     {
       name: "Banner Image",
       selector: (row) => row.banner_image || "N/A",
@@ -121,12 +122,12 @@ const Event = () => {
     },
     {
       name: "End Datetime",
-      selector: (row) =>  formatDateTime(row.end_datetime) || "N/A",
+      selector: (row) => formatDateTime(row.end_datetime) || "N/A",
       sortable: true,
     },
     {
       name: "Status",
-      selector: (row) => row.status ,
+      selector: (row) => row.status,
       sortable: true,
     },
     {

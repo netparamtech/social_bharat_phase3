@@ -223,7 +223,7 @@ const NavbarTransparent = () => {
             }}
           >
             <div className="customDrawerBody">
-              <ul className="customUl breadcrumb">
+              <ul className="customUl">
                 <li className="nav-item mt-2">
                   <a
                     className="nav-link active"

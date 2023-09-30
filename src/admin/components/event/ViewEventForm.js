@@ -98,7 +98,7 @@ const ViewEventForm = () => {
                         <label className="form-label">City</label>
                         <input
                           type="text"
-                          readOnly
+                           readOnly
                           placeholder="NaN"
                           className="form-control"
                           defaultValue={selectedCity}

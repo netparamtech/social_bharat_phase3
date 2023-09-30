@@ -32,6 +32,8 @@ const Event = () => {
     }
   };
 
+  
+
   const handleSearchClick = () => {
     fetchData();
   };

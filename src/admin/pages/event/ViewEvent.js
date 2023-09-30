@@ -3,7 +3,6 @@ import BasicProfile from "../../components/users/profile/BasicProfile";
 import AdminLayout from "../../layouts/AdminLayout";
 import { fetchUserDetailsByClick } from "../../services/AdminService";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import ViewEventForm from "../../components/event/ViewEventForm";
 
 

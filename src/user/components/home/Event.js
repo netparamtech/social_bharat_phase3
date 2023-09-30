@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   event,
   fetchAllCitiesByStateID,
@@ -6,6 +6,7 @@ import {
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-dropdown-select";
+import { uploadImage } from "../../../admin/services/AdminService";
 
 const EventForm = () => {
   // State variables to store form input values
@@ -14,8 +15,9 @@ const EventForm = () => {
   const [venue, setVenue] = useState("");
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
-  const [bannerImage, setBannerImage] = useState("");
-  const [thumbImage, setThumbImage] = useState("");
+
+  const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
+  const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
 
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState(""); // Change state to selectedState
@@ -24,15 +26,18 @@ const EventForm = () => {
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
 
+  const thumbnailImageRef = useRef(null);
+  const bannerImageRef = useRef(null);
+
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
 
-  const handleTitleChange = (e) =>{
+  const handleTitleChange = (e) => {
     setTitle(e.target.value);
-  }
+  };
 
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
@@ -91,6 +96,57 @@ const EventForm = () => {
     }
   };
 
+  const handleThumbnailImageChange = async (e) => {
+    //setThumbnailImage(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      const response = await uploadImage(formData);
+      if (response && response.status === 200) {
+        setThumbnailImageTempUrl(response.data.data.image);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+      // Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      }
+      //handle internal server error
+      else if (error.response && error.response.status === 500) {
+        navigate("/admin");
+      }
+    }
+  };
+
+  const handleBannerImageChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      const response = await uploadImage(formData);
+      if (response && response.status === 200) {
+        setBannerImageTempUrl(response.data.data.image);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+      // Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate("/user");
+      }
+      //handle internal server error
+      else if (error.response && error.response.status === 500) {
+        navigate("/user");
+      }
+    }
+  };
+
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +154,7 @@ const EventForm = () => {
 
     const formattedStartDateTime = formatDateTime(startDateTime);
     const formattedEndDateTime = formatDateTime(endDateTime);
-   
+
     //Date/ Time Format
     function formatDateTime(dateTime) {
       const date = new Date(dateTime);
@@ -119,19 +175,25 @@ const EventForm = () => {
       venue,
       start_datetime: formattedStartDateTime,
       end_datetime: formattedEndDateTime,
-      banner_image: bannerImage,
-      thumb_image: thumbImage,
+      banner_image: bannerImageTempUrl,
+      thumb_image: thumbnailImageTempUrl,
     };
-
-   
 
     try {
       const response = await event(data);
 
       if (response && response.status === 200) {
-        setErrors('');
+        setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
+
+        // Reset file inputs
+        thumbnailImageRef.current.value = null;
+        bannerImageRef.current.value = null;
+
+        setTimeout(() => {
+          navigate("/user/event");
+        }, 1000);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -297,8 +359,9 @@ const EventForm = () => {
                         <input
                           type="file"
                           className="form-control"
-                          defaultValue={bannerImage}
-                          onChange={(e) => setBannerImage(e.target.value)}
+                          accept="image/jpeg,image/jpg,image/png"
+                          ref={bannerImageRef}
+                          onChange={handleBannerImageChange}
                         />
                         {errors.bannerImage && (
                           <span className="error">{errors.bannerImage}</span>
@@ -312,9 +375,10 @@ const EventForm = () => {
                         <input
                           type="file"
                           className="form-control"
-                          defaultValue={thumbImage}
+                          accept="image/jpeg,image/jpg,image/png"
+                          ref={bannerImageRef}
                           // Add file input handling here
-                          onChange={(e) => setThumbImage(e.target.value)}
+                          onChange={handleThumbnailImageChange}
                         />
                         {errors.thumbImage && (
                           <span className="error">{errors.thumbImage}</span>

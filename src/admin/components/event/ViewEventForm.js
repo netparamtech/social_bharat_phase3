@@ -98,7 +98,7 @@ const ViewEventForm = () => {
                         <label className="form-label">City</label>
                         <input
                           type="text"
-                           readOnly
+                          readOnly
                           placeholder="NaN"
                           className="form-control"
                           defaultValue={selectedCity}
@@ -152,7 +152,8 @@ const ViewEventForm = () => {
                       </div>
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status">Banner Image</label>
+                        <label htmlFor="status" className="me-2">Banner Image</label>
+                        <img src={data.banner_image} width={100}/>
                         <input
                           type="text"
                           readOnly
@@ -160,11 +161,13 @@ const ViewEventForm = () => {
                           defaultValue={data.banner_image}
                         />
                       </div>
+                      
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status">Thumb Image</label>
+                        <label htmlFor="status" className="me-2">Thumb Image</label>
+                        <img src={data.thumb_image} width={100}/>
                         <input
                           type="text"
                           readOnly

@@ -13,10 +13,9 @@ const UserRating = () => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
-  const [userProfile, setUserProfile] = useState('');
+  const [userProfile, setUserProfile] = useState("");
 
   const defaultPhoto = "/user/images/OIP.jpg";
-
 
   const navigate = useNavigate();
 
@@ -76,17 +75,22 @@ const UserRating = () => {
     <>
       <div id="rating-authpage">
         <section>
-          <div className="container my-5 py-5 text-dark">
+          <div className="container text-dark">
             <div className="row d-flex justify-content-center">
               <div className="col-md-10 col-lg-8 col-xl-6">
                 <div className="card">
                   <div className="card-body p-4">
                     <form onSubmit={handleSubmit}>
-                      {message && <div className={`alert ${alertClass}`}>
-                        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-                        {" " + message}
-                      </div>
-                      }
+                      {message && (
+                        <div className={`alert ${alertClass}`}>
+                          {alertClass === "alert-success" ? (
+                            <i className="fas fa-check-circle"></i>
+                          ) : (
+                            <i className="fas fa-exclamation-triangle"></i>
+                          )}
+                          {" " + message}
+                        </div>
+                      )}
                       <div className="d-flex flex-start w-100">
                         <img
                           className="rounded-circle shadow-1-strong me-3"
@@ -148,7 +152,9 @@ const UserRating = () => {
                               value={comment}
                               onChange={handleMessageChange}
                             ></textarea>
-                            {errors.message && <span className='error'>{errors.message}</span>}
+                            {errors.message && (
+                              <span className="error">{errors.message}</span>
+                            )}
                           </div>
                           <div className="d-flex justify-content-between mt-3">
                             <button type="submit" className="btn btn-primary">
@@ -167,7 +173,6 @@ const UserRating = () => {
         </section>
 
         <FetchAllFeedback />
-
       </div>
     </>
   );

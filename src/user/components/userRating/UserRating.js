@@ -95,9 +95,9 @@ const UserRating = () => {
                           width="65"
                           height="65"
                         />
-                        <div class="w-100">
+                        <div className="w-100">
                           <h5>Add a comment</h5>
-                          <div class="rating mb-3">
+                          <div className="rating mb-3">
                             <input
                               value="5"
                               name="rating"
@@ -105,7 +105,7 @@ const UserRating = () => {
                               type="radio"
                               onChange={handleRatingChange}
                             />
-                            <label for="star5"></label>
+                            <label htmlFor="star5"></label>
                             <input
                               value="4"
                               name="rating"
@@ -113,7 +113,7 @@ const UserRating = () => {
                               type="radio"
                               onChange={handleRatingChange}
                             />
-                            <label for="star4"></label>
+                            <label htmlFor="star4"></label>
                             <input
                               value="3"
                               name="rating"
@@ -121,7 +121,7 @@ const UserRating = () => {
                               type="radio"
                               onChange={handleRatingChange}
                             />
-                            <label for="star3"></label>
+                            <label htmlFor="star3"></label>
                             <input
                               value="2"
                               name="rating"
@@ -129,7 +129,7 @@ const UserRating = () => {
                               type="radio"
                               onChange={handleRatingChange}
                             />
-                            <label for="star2"></label>
+                            <label htmlFor="star2"></label>
                             <input
                               value="1"
                               name="rating"
@@ -137,7 +137,7 @@ const UserRating = () => {
                               type="radio"
                               onChange={handleRatingChange}
                             />
-                            <label for="star1"></label>
+                            <label htmlFor="star1"></label>
                           </div>
                           <div className="form-outline">
                             <textarea
@@ -151,7 +151,7 @@ const UserRating = () => {
                             {errors.message && <span className='error'>{errors.message}</span>}
                           </div>
                           <div className="d-flex justify-content-between mt-3">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" className="btn btn-primary">
                               Send{" "}
                               <i className="fas fa-long-arrow-alt-right ms-1"></i>
                             </button>

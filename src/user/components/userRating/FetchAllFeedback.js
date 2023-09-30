@@ -6,15 +6,11 @@ import { Card, Row, Col } from 'antd'; // Importing Card, Row, and Col component
 const FetchAllFeedback = () => {
   const [data, setData] = useState([]);
   const [rating, setRating] = useState('');
-  const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
   const navigate = useNavigate();
-  const [defaultImage, setDefaultImage] = useState('https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg');
 
   const fetchData = async () => {
     try {
       const response = await fetchOldTestimonials();
-
-      console.log(response.data.data)
 
       setData(response.data.data);
       setRating(response.data.data.rating);
@@ -78,11 +74,11 @@ const FetchAllFeedback = () => {
                 data && data.map((item, index) => (
                   <div className="card mb-3" key={index}>
                     <div className="card-body">
-                      <div class="d-flex flex-start">
+                      <div className="d-flex flex-start">
                        {
                         item&&item.photo?(
                           <img
-                          class="rounded-circle shadow-1-strong me-3"
+                          className="rounded-circle shadow-1-strong me-3"
                           src={item.photo&&item.photo}
                           alt="avatar"
                           width="40"
@@ -93,34 +89,34 @@ const FetchAllFeedback = () => {
                           <button type='button' className='dropdown-user-img-letter m-2'>{item.name.charAt(0).toUpperCase()}</button>
                         )
                        }
-                        <div class="w-100">
-                          <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="text-primary fw-bold mb-0">
+                        <div className="w-100">
+                          <div className="d-flex justify-content-between align-items-center mb-3">
+                            <h6 className="text-primary fw-bold mb-0">
                               {item.name && item.name}
-                              <p class="text-dark ">
+                              <p className="text-dark ">
                                 {item.message && item.message}
                               </p>
                             </h6>
                           </div>
                           <p>{calculateTimeDifference(item.updated_at)}</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <p class="small mb-0" style={{ color: "#aaa" }}>
-                              <a href="#!" class="link-grey">
+                          <div className="d-flex justify-content-between align-items-center">
+                            <p className="small mb-0" style={{ color: "#aaa" }}>
+                              <a href="#!" className="link-grey">
                                 Remove
                               </a>{" "}
                               •
-                              <a href="#!" class="link-grey">
+                              <a href="#!" className="link-grey">
                                 Reply
                               </a>{" "}
                               •
-                              <a href="#!" class="link-grey">
+                              <a href="#!" className="link-grey">
                                 Translate
                               </a>
                             </p>
-                            <div class="d-flex flex-row">
+                            <div className="d-flex flex-row">
                               {generateRatingStars(item.rating)}
                               <i
-                                class="far fa-check-circle"
+                                className="far fa-check-circle"
                                 style={{ color: "#aaa" }}
                               ></i>
                             </div>

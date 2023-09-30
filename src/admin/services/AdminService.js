@@ -326,9 +326,9 @@ export const fetchBusinessCategorieWithId = async (id) => {
 }
 
 //fetch All Degrees
-export const fetchAllEnquiries = async (page, size) => {
+export const fetchAllEnquiries = async (page, size,searchQuery) => {
     try {
-        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}`);
+        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}&searchQuery=${searchQuery}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;

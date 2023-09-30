@@ -50,7 +50,7 @@ function Sidebar() {
           aria-expanded="true"
           aria-controls="collapseUser"
         >
-          <i className="fas fa-cog"></i>
+          <i className="fas fa-cog" fill="currentColor"></i>
           <span className="m-2">Master Setting </span>
         </a>
         <div
@@ -200,8 +200,7 @@ function Sidebar() {
           }}
         >
           <i
-            className="	
-          fa fa-search"
+            className="fa fa-search"
             fill="currentColor"
           ></i>
 

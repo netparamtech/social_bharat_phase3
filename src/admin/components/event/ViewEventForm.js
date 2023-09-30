@@ -153,7 +153,7 @@ const ViewEventForm = () => {
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label htmlFor="status" className="me-2">Banner Image</label>
-                        <img src={data.banner_image} width={100}/>
+                        <img src={data.banner_image} className="mb-1" height={70}/>
                         <input
                           type="text"
                           readOnly
@@ -167,7 +167,7 @@ const ViewEventForm = () => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label htmlFor="status" className="me-2">Thumb Image</label>
-                        <img src={data.thumb_image} width={100}/>
+                        <img src={data.thumb_image} className="mb-1" height={70}/>
                         <input
                           type="text"
                           readOnly

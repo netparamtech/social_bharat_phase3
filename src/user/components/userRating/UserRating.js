@@ -74,10 +74,10 @@ const UserRating = () => {
   return (
     <>
       <div id="rating-authpage">
-        <section>
+        
           <div className="container text-dark">
             <div className="row d-flex justify-content-center">
-              <div className="col-md-10 col-lg-8 col-xl-6">
+              <div className="col-md-6 col-lg-12 col-xl-12">
                 <div className="card">
                   <div className="card-body p-4">
                     <form onSubmit={handleSubmit}>
@@ -170,7 +170,7 @@ const UserRating = () => {
               </div>
             </div>
           </div>
-        </section>
+      
 
         <FetchAllFeedback />
       </div>

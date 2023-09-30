@@ -71,9 +71,9 @@ const FetchAllFeedback = () => {
   return (
     <div id="rating-Comments">
       <section>
-        <div className="container my-3 py-5 text-dark">
+        <div className="container my-1 py-5 text-dark">
           <div className="row d-flex justify-content-center">
-            <div className="col-md-10 col-lg-8 col-xl-6">
+            <div className="col-md-6 col-lg-12 col-xl-12">
               {data &&
                 data.map((item, index) => (
                   <div className="card mb-3" key={index}>
@@ -114,9 +114,7 @@ const FetchAllFeedback = () => {
                               <a href="" className="link-grey me-2">
                                 Remove
                               </a>{" "}
-                              <a href="" className="link-grey me-2">
-                                Reply
-                              </a>{" "}
+                              
                               <a href="" className="link-grey">
                                 Edit
                               </a>

@@ -145,9 +145,9 @@ export const createBanner = async (data) => {
 }
 
 //fetch all registered users
-export const fetchAllUsers = async (page, size, searchQuery) => {
+export const fetchAllUsers = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
-        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}`);
+        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;
@@ -326,9 +326,9 @@ export const fetchBusinessCategorieWithId = async (id) => {
 }
 
 //fetch All Degrees
-export const fetchAllEnquiries = async (page, size,searchQuery) => {
+export const fetchAllEnquiries = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
-        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}&q=${searchQuery}`);
+        const response = await apiWithHeaders.get(`/enquiries?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;

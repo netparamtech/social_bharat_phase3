@@ -3,10 +3,12 @@ import {
   event,
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
+  uploadImage,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-dropdown-select";
-import { uploadImage } from "../../../admin/services/AdminService";
+import { DatePicker, TimePicker, Button } from 'antd';
+import moment from 'moment';
 
 const EventForm = () => {
   // State variables to store form input values
@@ -34,6 +36,14 @@ const EventForm = () => {
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
+
+  const handleStartDateTimeChange = (date, dateString) => {
+    setStartDateTime(dateString); // Update startDateTime with the selected date and time
+  };
+
+  const handleEndDateTimeChange = (date, dateString) => {
+    setEndDateTime(dateString); // Update endDateTime with the selected date and time
+  };
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -138,11 +148,11 @@ const EventForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate("/user");
+       // navigate("/login");
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        navigate("/user");
+      //  navigate("/login");
       }
     }
   };
@@ -303,40 +313,34 @@ const EventForm = () => {
                     </div>
 
                     <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">
-                          Start Event Date/Time
-                        </label>
-                        <input
-                          type="datetime-local"
-                          name="dateTime"
-                          id="startDateTime"
-                          className="form-control"
-                          defaultValue={startDateTime}
-                          onChange={(e) => setStartDateTime(e.target.value)}
-                        />
-                        {errors.start_datetime && (
-                          <span className="error">{errors.start_datetime}</span>
-                        )}
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">
-                          End Event Date/Time
-                        </label>
-                        <input
-                          type="datetime-local"
-                          name="dateTime"
-                          id="endDateTime"
-                          placeholder="Enter Event Date"
-                          className="form-control"
-                          defaultValue={endDateTime}
-                          onChange={(e) => setEndDateTime(e.target.value)}
-                        />
-                        {errors.end_datetime && (
-                          <span className="error">{errors.end_datetime}</span>
-                        )}
-                      </div>
-                    </div>
+        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+          <label className="form-label">Start Event Date/Time</label>
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD h:mm a"
+            onChange={handleStartDateTimeChange}
+            value={startDateTime ? moment(startDateTime, 'YYYY-MM-DD h:mm a') : null}
+            className="form-control"
+          />
+          {errors.start_datetime && (
+            <span className="error">{errors.start_datetime}</span>
+          )}
+        </div>
+        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+          <label className="form-label">End Event Date/Time</label>
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD h:mm a"
+            onChange={handleEndDateTimeChange}
+            value={endDateTime ? moment(endDateTime, 'YYYY-MM-DD h:mm a') : null}
+            className="form-control"
+          />
+          {errors.end_datetime && (
+            <span className="error">{errors.end_datetime}</span>
+          )}
+        </div>
+      </div>
+
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

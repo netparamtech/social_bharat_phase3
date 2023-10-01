@@ -103,17 +103,16 @@ const Event = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    const options = {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZoneName: "short",
-    };
-    return new Date(dateString).toLocaleDateString("en-GB", options);
+ const formatDate = (dateString) => {
+  const options = {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   };
+  return new Date(dateString).toLocaleDateString("en-US", options);
+};
 
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),

@@ -64,5 +64,3 @@ offset: 1000,
 duration: 1500,
 once: false,
 });
-
-

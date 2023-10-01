@@ -129,6 +129,16 @@ const Testimonial = () => {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
+  const generateRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(
+        <span key={i} className="fas fa-star text-warning me-2"></span>
+      );
+    }
+    return stars;
+  };
+
   const columns = [
     {
       title: 'S.No',
@@ -150,7 +160,10 @@ const Testimonial = () => {
     { title: 'Name', field: 'name' },
     { title: 'Email', field: 'email' },
     { title: 'Message', field: 'message' },
-    { title: 'Rating', field: 'rating' },
+    { title: 'Rating', field: 'rating', render:(rowData)=>(generateRatingStars(rowData.rating)) , cellStyle: {
+      minWidth: 200,
+      maxWidth: 200
+    }},
     { title: 'Status', field: 'status' },
     {
       title: 'Last Modified At',

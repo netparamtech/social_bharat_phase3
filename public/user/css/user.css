@@ -1185,6 +1185,7 @@ nav .nav-item {
   position: fixed;
   bottom: 20px; /* Adjust the positioning as needed */
   right: 20px; /* Adjust the positioning as needed */
+  z-index: 1000;
 }
 
 .content-container {

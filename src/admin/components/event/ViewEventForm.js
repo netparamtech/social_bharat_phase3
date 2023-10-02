@@ -7,7 +7,7 @@ import { Card, Image } from "antd";
 const ViewEventForm = () => {
   const { id } = useParams();
 
-  const defaultPhoto = '/user/images/user.png';
+  const defaultPhoto = "/user/images/user.png";
 
   const [data, setData] = useState({
     title: "",
@@ -63,17 +63,16 @@ const ViewEventForm = () => {
           <div className="row">
             <div className="col-md-3 mb-sm-3 ">
               <div className="card shadow">
-
                 <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
                   <Image
-
                     src={data.photo ? data.photo : "/user/images/OIP.jpg"}
                     title={data.name && data.name}
                   />
-
                 </div>
                 <div className="card-body ">
-                  <p className="card-text text-center mb-0">{data.name && data.name}</p>
+                  <p className="card-text text-center mb-0">
+                    {data.name && data.name}
+                  </p>
                   <p className="card-text text-center text-muted"></p>
                 </div>
               </div>
@@ -93,9 +92,7 @@ const ViewEventForm = () => {
                   title={data.community && data.community}
                 />
                 <p>Community - {data.community && data.community}</p>
-
               </div>
-
             </Card>
           </div>
         </div>
@@ -128,11 +125,12 @@ const ViewEventForm = () => {
                             <label className="fw-bold">Venue :</label>
                           </div>
                           <div className="col-md-8">
-                            <label className="">{data.venue},{selectedCity}({selectedState})</label>
+                            <label className="">
+                              {data.venue},{selectedCity}({selectedState})
+                            </label>
                           </div>
                         </div>
                       </div>
-
                     </div>
 
                     <div className="row">
@@ -144,7 +142,9 @@ const ViewEventForm = () => {
                             </label>
                           </div>
                           <div className="col-md-8">
-                            <label className="">{formatDate(data.start_datetime)}</label>
+                            <label className="">
+                              {formatDate(data.start_datetime)}
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -155,7 +155,9 @@ const ViewEventForm = () => {
                             <label className="fw-bold">End Date / Time :</label>
                           </div>
                           <div className="col-md-8">
-                            <label className="">{formatDate(data.end_datetime)}</label>
+                            <label className="">
+                              {formatDate(data.end_datetime)}
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -171,9 +173,12 @@ const ViewEventForm = () => {
                           </div>
                           <div className="col-md-8">
                             <Image
-                              width={70}
                               height={70}
-                              src={data.thumb_image ? data.thumb_image : defaultPhoto}
+                              src={
+                                data.thumb_image
+                                  ? data.thumb_image
+                                  : defaultPhoto
+                              }
                               title={data.community && data.community}
                             />
                           </div>
@@ -188,19 +193,19 @@ const ViewEventForm = () => {
                             </label>
                           </div>
                           <div className="col-md-8">
-                            
                             <Image
-                              width={70}
                               height={70}
-                              src={data.banner_image ? data.banner_image : defaultPhoto}
+                              src={
+                                data.banner_image
+                                  ? data.banner_image
+                                  : defaultPhoto
+                              }
                               title={data.community && data.community}
                             />
                           </div>
                         </div>
                       </div>
                     </div>
-
-                   
                   </form>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 const Footer = () => {
   const navigate = useNavigate();
   return (
+  
     <div id="footer">
       <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
         <div className="row pt-5 pb-3">

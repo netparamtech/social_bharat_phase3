@@ -21,7 +21,7 @@ const CommunitiesList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        //navigate('/admin');
       }
     }
 

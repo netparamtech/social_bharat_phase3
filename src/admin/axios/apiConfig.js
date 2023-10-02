@@ -8,9 +8,19 @@ const ENV = process.env.REACT_APP_ENV;
 // Function to determine the base URL based on the environment
 const getBaseUrl = () => {
   if (ENV === 'PROD') {
+<<<<<<< HEAD
     return 'http://164.52.218.124/api/admin';
   } else if (ENV === 'DEV') {
     return 'http://localhost:5000/api/admin';
+=======
+    return 'http://api.socialbharat.org/admin';
+  } 
+  else if (ENV === 'QAT') {
+    return 'http://uat-api.socialbharat.org/admin';
+  }
+  else if (ENV === 'DEV') {
+    return 'http://localhost:3000/api/admin';
+>>>>>>> aa18637f9d18983518432a523acd11d1b9d588df
   } 
 };
 // Create a base axios instance without default headers

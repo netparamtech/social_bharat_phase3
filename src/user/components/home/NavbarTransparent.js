@@ -243,6 +243,7 @@ const NavbarTransparent = () => {
 
                 <li className="nav-item ">
                   <a className="nav-link" onClick={handleEventClick}>
+                  <i class="fa fa-calendar m-2" aria-hidden="true"></i>
                     Event
                   </a>
                 </li>
@@ -252,7 +253,7 @@ const NavbarTransparent = () => {
                     <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
                   </a>
                 </li>
-                
+
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleContactClicked}>
                     <i className='fas fa-address-book m-2'></i>Contact

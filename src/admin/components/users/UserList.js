@@ -11,8 +11,8 @@ const UserList = () => {
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
 
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
@@ -36,7 +36,7 @@ const UserList = () => {
   };
 
   const fetchData = async () => {
-    console.log(searchQuery)
+    
     try {
       const response = await fetchAllUsers(page, size, searchQuery, sortField, sortOrder);
 

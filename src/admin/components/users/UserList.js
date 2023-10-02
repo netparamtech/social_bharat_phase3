@@ -31,8 +31,16 @@ const UserList = () => {
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
-    setSortField(sorter.field);
-    setSortOrder(sorter.order);
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+  
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+  
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
   };
 
   const fetchData = async () => {
@@ -104,24 +112,24 @@ const UserList = () => {
       title: 'Name',
       dataIndex: 'name',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
     },
     { title: 'Email', dataIndex: 'email',width:200 ,
     sorter: true,
-    sortDirections: ['ascend', 'descend'],
+    sortDirections: ['asc', 'desc'],
   },
     {
       title: 'Mobile',
       dataIndex: 'mobile',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
     },
     {
       title: 'Community',
       dataIndex: 'community',
       render: (text, record) => record.community?.name || 'N/A',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
     },
     { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (
       <a
@@ -146,14 +154,14 @@ const UserList = () => {
         <i className="fa fa-thumbs-down" title="Inactive" />
       </a>
     )), sorter: true,
-    sortDirections: ['ascend', 'descend'],},
+    sortDirections: ['asc', 'desc'],},
   
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => calculateTimeDifference(record.updated_at),
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
     },
     {
       title: 'Actions',
@@ -168,7 +176,7 @@ const UserList = () => {
       ),
       fixed: 'right',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
     },
     // Rest of the columns definition
   ];

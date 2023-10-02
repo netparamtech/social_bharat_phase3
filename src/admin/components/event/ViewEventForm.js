@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchEventByID } from "../../services/AdminService";
+import { Card, Image } from "antd";
 
 const ViewEventForm = () => {
   const { id } = useParams();
+
+  const defaultPhoto = '/user/images/user.png';
 
   const [data, setData] = useState({
     title: "",
@@ -27,7 +30,6 @@ const ViewEventForm = () => {
   const fetchData = async () => {
     try {
       const response = await fetchEventByID(id);
-      console.log(response);
       if (response && response.status === 200) {
         setData(response.data.data);
         setSelectedCountry(response.data.data.country);
@@ -56,6 +58,48 @@ const ViewEventForm = () => {
 
   return (
     <>
+      <div id="basic-profile-section" className="content-wrapper pt-4">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3 mb-sm-3 ">
+              <div className="card shadow">
+
+                <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
+                  <Image
+
+                    src={data.photo ? data.photo : "/user/images/OIP.jpg"}
+                    title={data.name && data.name}
+                  />
+
+                </div>
+                <div className="card-body ">
+                  <p className="card-text text-center mb-0">{data.name && data.name}</p>
+                  <p className="card-text text-center text-muted"></p>
+                </div>
+              </div>
+            </div>
+
+            <Card className="col-md-9 w-100 w-lg-75">
+              <p>Name - {data.name && data.name}</p>
+              <p>Email - {data.name && data.email}</p>
+              <p>Gender - {data.name && data.gender}</p>
+              <p>Mobile - {data.name && data.mobile}</p>
+
+              <div className="container-profilepic mx-auto card-block-md overflow-hidden ">
+                <Image
+                  width={100}
+                  height={50}
+                  src={data.thumb_image ? data.thumb_image : defaultPhoto}
+                  title={data.community && data.community}
+                />
+                <p>Community - {data.community && data.community}</p>
+
+              </div>
+
+            </Card>
+          </div>
+        </div>
+      </div>
       <div id="auth-wrapper" className="pt-5 pb-5">
         <div id="event-info" className="container">
           <div className="card shadow">
@@ -80,38 +124,15 @@ const ViewEventForm = () => {
 
                       <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-4">
-                            <label className="fw-bold">Country :</label>
+                          <div className="col-md-6">
+                            <label className="fw-bold">Venue :</label>
                           </div>
-                          <div className="col-md-8">
-                            <label className="">{selectedCountry}</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="fw-bold">State :</label>
-                          </div>
-                          <div className="col-md-8">
-                            <label className="">{selectedState}</label>
+                          <div className="col-md-6">
+                            <label className="">{data.venue},{selectedCity}({selectedState})</label>
                           </div>
                         </div>
                       </div>
 
-                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="fw-bold">City :</label>
-                          </div>
-                          <div className="col-md-8">
-                            <label className="">{selectedCity}</label>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
                     <div className="row">
@@ -122,7 +143,7 @@ const ViewEventForm = () => {
                               Start Date / Time :
                             </label>
                           </div>
-                          <div className="col-md-8">
+                          <div className="col-md-6">
                             <label className="">{formatDate(data.start_datetime)}</label>
                           </div>
                         </div>
@@ -133,38 +154,8 @@ const ViewEventForm = () => {
                           <div className="col-md-4">
                             <label className="fw-bold">End Date / Time :</label>
                           </div>
-                          <div className="col-md-8">
+                          <div className="col-md-6">
                             <label className="">{formatDate(data.end_datetime)}</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="fw-bold">Venue :</label>
-                          </div>
-                          <div className="col-md-8">
-                            <label className="">{data.venue}</label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label htmlFor="status" className="fw-bold">
-                              Banner Image
-                            </label>
-                          </div>
-                          <div className="col-md-8">
-                            <img
-                              src={data.banner_image}
-                              className="mb-1"
-                              height={70}
-                            />
                           </div>
                         </div>
                       </div>
@@ -178,15 +169,39 @@ const ViewEventForm = () => {
                               Thumb Image
                             </label>
                           </div>
-                          <div className="col-md-8">
-                            <img
-                              src={data.thumb_image}
-                              className="mb-1"
+                          <div className="col-md-6">
+                            <Image
+                              width={70}
                               height={70}
+                              src={data.thumb_image ? data.thumb_image : defaultPhoto}
+                              title={data.community && data.community}
                             />
                           </div>
                         </div>
                       </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label htmlFor="status" className="fw-bold">
+                              Banner Image
+                            </label>
+                          </div>
+                          <div className="col-md-6">
+                            
+                            <Image
+                              width={70}
+                              height={70}
+                              src={data.banner_image ? data.banner_image : defaultPhoto}
+                              title={data.community && data.community}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row">
+
                     </div>
                   </form>
                 </div>

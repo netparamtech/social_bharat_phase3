@@ -252,7 +252,7 @@ const NavbarTransparent = () => {
                     <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
                   </a>
                 </li>
-                
+
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleContactClicked}>
                     <i className='fas fa-address-book m-2'></i>Contact

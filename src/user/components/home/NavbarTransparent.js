@@ -237,14 +237,13 @@ const NavbarTransparent = () => {
 
                 <li className="nav-item mt-2 breadcrumb-item">
                   <a className="nav-link" onClick={handleAboutClick} >
-                    <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
+                    <i class="fa fa-info-circle m-2" aria-hidden="true"></i>About
                   </a>
                 </li>
 
                 <li className="nav-item ">
                   <a className="nav-link" onClick={handleEventClick}>
-                  <i class="fa fa-calendar m-2" aria-hidden="true"></i>
-                    Event
+                  <i class="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
                   </a>
                 </li>
 

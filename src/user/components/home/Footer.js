@@ -109,10 +109,10 @@ const Footer = () => {
               Rajasthan
               <br />
               <strong>phone:</strong>
-              +91-96492-72709
+                +91-96492-72709
               <br />
               <strong>phone:</strong>
-              +91-76650-10205
+                +91-76650-10205
               <br />
               <strong>Email:</strong>
               placement@netparam.in

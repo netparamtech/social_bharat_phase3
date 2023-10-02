@@ -113,10 +113,10 @@ const ViewEventForm = () => {
                     <div className="row">
                       <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <label className="fw-bold">Event Title :</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <label className="">{data.title}</label>
                           </div>
                         </div>
@@ -133,15 +133,14 @@ const ViewEventForm = () => {
                         </div>
                       </div>
 
-
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <label className="fw-bold">
-                              Start Event Date / Time :
+                              Start Date / Time :
                             </label>
                           </div>
                           <div className="col-md-6">
@@ -152,8 +151,8 @@ const ViewEventForm = () => {
 
                       <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
-                            <label className="fw-bold">End Event Date / Time :</label>
+                          <div className="col-md-4">
+                            <label className="fw-bold">End Date / Time :</label>
                           </div>
                           <div className="col-md-6">
                             <label className="">{formatDate(data.end_datetime)}</label>
@@ -165,7 +164,7 @@ const ViewEventForm = () => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <label htmlFor="status" className="fw-bold">
                               Thumb Image
                             </label>

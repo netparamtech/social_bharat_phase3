@@ -14,8 +14,8 @@ const Event = () => {
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
 
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
@@ -34,8 +34,16 @@ const Event = () => {
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
-    setSortField(sorter.field);
-    setSortOrder(sorter.order);
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
   };
 
   const fetchData = async () => {
@@ -121,16 +129,20 @@ const Event = () => {
       title: 'Name',
       dataIndex: 'name',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
       width: 150,
     },
     {
-      title: 'Email', dataIndex: 'email', width: 200,
+      title: 'Email', dataIndex: 'email',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
       width: 150,
     },
-    { title: "Event", dataIndex: "title", width: 150, },
+    {
+      title: "Event", dataIndex: "title", width: 150,
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
     {
       title: "Location",
       dataIndex: "venue",
@@ -138,39 +150,9 @@ const Event = () => {
         const { venue, city, state } = record;
         return `${venue}, ${city} (${state})`;
       },
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
       width: 150,
-    },
-    {
-      title: "Thumb Image",
-      dataIndex: "thumb_image",
-      render: (text, record) => (
-        <a href={record.thumb_image} target="_blank">
-          <img
-            src={record.thumb_image ? record.thumb_image : defaultImage}
-            alt="Thumb Image"
-            title="Thumb Image"
-            className="small-img-user-list"
-          />
-        </a>
-      ),
-      width: 150,
-    },
-
-    {
-      title: "Banner Image",
-      field: "banner_image",
-      render: (text, record) => (
-        <a href={record.banner_image} target="_blank">
-          <img
-            src={record.banner_image ? record.banner_image : defaultImage}
-            alt="Thumb Image"
-            title="Thumb Image"
-            className="small-img-user-list"
-          />
-        </a>
-      ),
-      width: 150,
-
     },
     {
       title: 'Status', dataIndex: 'status', render: (text, record) => (record.status === 'Active' ? (
@@ -196,9 +178,9 @@ const Event = () => {
           <i className="fa fa-thumbs-down" title="Inactive" />
         </a>
       )), sorter: true,
-      sortDirections: ['ascend', 'descend'],
+      sortDirections: ['asc', 'desc'],
       fixed: 'right',
-      width:100,
+      width: 100,
     },
 
     {
@@ -245,8 +227,8 @@ const Event = () => {
       ),
       fixed: 'right',
       sorter: true,
-      sortDirections: ['ascend', 'descend'],
-      with:200,
+      sortDirections: ['asc', 'desc'],
+      with: 200,
     },
     // Rest of the columns definition
   ];

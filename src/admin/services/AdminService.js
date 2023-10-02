@@ -356,9 +356,9 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
 }
 
 //fetch all testimonials
-export const fetchTestimonials = async (page, size,searchQuery) => {
+export const fetchTestimonials = async (page, size,searchQuery,sortField,sortOrder) => {
     try {
-        const response = await apiWithHeaders.get(`/testimonials?page=${page}&size=${size}&q=${searchQuery}`);
+        const response = await apiWithHeaders.get(`/testimonials?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
     } catch (error) {
         throw error;

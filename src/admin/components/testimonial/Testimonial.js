@@ -15,8 +15,8 @@ const Testimonial = () => {
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
 
   const handlePageChange = (page) => {
@@ -33,8 +33,16 @@ const Testimonial = () => {
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
-    setSortField(sorter.field);
-    setSortOrder(sorter.order);
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+  
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+  
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
   };
 
 
@@ -140,11 +148,22 @@ const Testimonial = () => {
       render: (text, record, index) => index + 1,
       width:100,
     },
-    { title: 'Name', dataIndex: 'name',sorter: true },
-    { title: 'Email', dataIndex: 'email' },
-    { title: 'Message', dataIndex: 'message' },
+    { title: 'Name', dataIndex: 'name',sorter: true,
+    sorter: true,
+    sortDirections: ['asc', 'desc'],
+  },
+    { title: 'Email', dataIndex: 'email',
+    sorter: true,
+    sortDirections: ['asc', 'desc'],
+   },
+    { title: 'Message', dataIndex: 'message',
+    sorter: true,
+    sortDirections: ['asc', 'desc'], },
 
-    { title: 'Rating', dataIndex: 'rating', render:(text,record)=>(generateRatingStars(record.rating)),width:180,},
+    { title: 'Rating', dataIndex: 'rating', render:(text,record)=>(generateRatingStars(record.rating)),width:180,
+    sorter: true,
+    sortDirections: ['asc', 'desc'],
+  },
    
     {
       title: "Last Modified At",

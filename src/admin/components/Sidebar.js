@@ -172,7 +172,7 @@ function Sidebar() {
           }}
         >
         
-          <i class="fa fa-users" fill="currentColor"></i>
+          <i className="fa fa-users" fill="currentColor"></i>
           <span className="m-2">Users</span>
         </a>
       </li>
@@ -192,7 +192,7 @@ function Sidebar() {
           }}
         >
          
-          <i class="fa fa-comments" fill="currentColor"></i>
+          <i className="fa fa-comments" fill="currentColor"></i>
 
           <span className="m-2">Enquiry</span>
         </a>
@@ -240,7 +240,7 @@ function Sidebar() {
           }}
         >
           
-          <i class="fa fa-comment" fill="currentColor"></i>
+          <i className="fa fa-comment" fill="currentColor"></i>
           <span className="m-2">Testimonial</span>
         </a>
       </li>

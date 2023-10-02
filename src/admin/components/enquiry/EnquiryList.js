@@ -14,8 +14,8 @@ const EnquiryList = () => {
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
 
   const handlePageChange = (page) => {
@@ -32,8 +32,16 @@ const EnquiryList = () => {
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
-    setSortField(sorter.field);
-    setSortOrder(sorter.order);
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
   };
 
   const fetchData = async () => {
@@ -96,51 +104,68 @@ const EnquiryList = () => {
       title: 'S.No',
       dataIndex: 'sno',
       render: (text, record, index) => index + 1,
-      width:100,
+      width: 100,
     },
-    { title: 'Name', dataIndex: 'name',sorter: true },
-    { title: 'Email', dataIndex: 'email' },
-    { title: 'Mobile', dataIndex: 'mobile',sorter: true },
-    { title: 'Message', dataIndex: 'message' },
+    {
+      title: 'Name', dataIndex: 'name', sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+    { title: 'Email', dataIndex: 'email',sorter: true,
+    sortDirections: ['asc', 'desc'], },
+    { title: 'Mobile', dataIndex: 'mobile', sorter: true,
+    sortDirections: ['asc', 'desc'], },
+    { title: 'Message', dataIndex: 'message',sorter: true,
+    sortDirections: ['asc', 'desc'], },
     {
       title: "Created at",
       dataIndex: "created_at",
-      render: (text,record) => formatDate(record.created_at),
+      render: (text, record) => formatDate(record.created_at),
     },
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => formatDate(record.updated_at),
     },
+  {
+    title:"Status",
+    dataIndex:'status',
+    render: (text, record) => (
+      <div>
+         {record.status === 'Active' ? (
+            <a
+              className="collapse-item m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleEnquiryToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-up text-primary" title="Active" />
+            </a>
+          ) : (
+            <a
+              className="collapse-item text-secondary m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleEnquiryToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-down" title="Inactive" />
+            </a>
+          )}
+      </div>
+    ),
+    sorter: true,
+    sortDirections: ['asc', 'desc'],
+  },
     {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-          {record.status === 'Active' ? (
-           <a
-           className="collapse-item m-2"
-           href="#"
-           onClick={(e) => {
-             e.preventDefault();
-             handleEnquiryToggleStatus(record.id);
-           }}
-         >
-           <i className="fa fa-thumbs-up text-primary" title="Active" />
-         </a>
-       ) : (
-         <a
-           className="collapse-item text-secondary m-2"
-           href="#"
-           onClick={(e) => {
-             e.preventDefault();
-             handleEnquiryToggleStatus(record.id);
-           }}
-         >
-           <i className="fa fa-thumbs-down" title="Inactive" />
-         </a>
-          )}
-         <a
+         
+          <a
             className="collapse-item"
             href="#"
             onClick={(e) => {
@@ -159,14 +184,14 @@ const EnquiryList = () => {
 
   return (
     <div>
-       <Search
+      <Search
         placeholder="Search"
         allowClear
         onSearch={handleSearchChange}
-        style={{ marginBottom: 20,width:200 }}
+        style={{ marginBottom: 20, width: 200 }}
       />
       <Table
-      title={() => 'Enquiries'}  // Set the title to 'Enquiries'
+        title={() => 'Enquiries'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{
@@ -180,7 +205,7 @@ const EnquiryList = () => {
         scroll={{
           x: 1300,
         }}
-        // onChange={handleSearchChange}
+      // onChange={handleSearchChange}
       />
     </div>
   );

@@ -131,10 +131,15 @@ const Event = () => {
       width: 150,
     },
     { title: "Event", dataIndex: "title", width: 150, },
-    { title: "Venue", dataIndex: "venue", width: 150, },
-    { title: "City", dataIndex: "city", width: 150, },
-    { title: "State", dataIndex: "state", width: 150, },
-    { title: "Country", dataIndex: "country", width: 150, },
+    {
+      title: "Location",
+      dataIndex: "venue",
+      render: (text, record) => {
+        const { venue, city, state } = record;
+        return `${venue}, ${city} (${state})`;
+      },
+      width: 150,
+    },
     {
       title: "Thumb Image",
       dataIndex: "thumb_image",
@@ -193,6 +198,7 @@ const Event = () => {
       )), sorter: true,
       sortDirections: ['ascend', 'descend'],
       fixed: 'right',
+      width:100,
     },
 
     {
@@ -216,13 +222,23 @@ const Event = () => {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
-        <div>
+        <div className='d-flex'>
           <a
             className="collapse-item"
-            href=""
             onClick={() => navigate(`/events/view/${record.id}`)}
           >
             <i className="fas fa-eye"></i>
+          </a>
+
+          <a
+            className="collapse-item m-2"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDeleteEvent(record.id);
+            }}
+          >
+            <i className="fas fa-trash"></i>
           </a>
 
         </div>
@@ -230,6 +246,7 @@ const Event = () => {
       fixed: 'right',
       sorter: true,
       sortDirections: ['ascend', 'descend'],
+      with:200,
     },
     // Rest of the columns definition
   ];

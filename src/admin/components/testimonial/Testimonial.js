@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import {
-  deleteEnquiry,
-  fetchAllEnquiries,
-  updateToggleStatusForEnquiry,
-} from '../../services/AdminService';
+  deleteTestimonialByID,
+  fetchTestimonials,
+  updateToggleStatus,
+  updateToggleStatusForTestimonial,
+} from "../../services/AdminService";
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 
@@ -36,55 +37,96 @@ const Testimonial = () => {
     setSortOrder(sorter.order);
   };
 
+
   const fetchData = async () => {
     try {
-      const response = await fetchAllEnquiries(page, size, searchQuery, sortField, sortOrder);
+      const response = await fetchTestimonials(page, size, searchQuery, sortField, sortOrder);
+
       setData(response.data.data);
+
       setTotalRows(response.data.totalRecords);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/admin');
-      } else if (error.response && error.response.status === 500) {
+      }
+      else if (error.response && error.response.status === 500) {
         navigate('/admin');
       }
     }
   };
 
-  const handleEnquiryToggleStatus = async (id) => {
+  const handleTestimonialToggleStatus = async (id) => {
     try {
-      const response = await updateToggleStatusForEnquiry(id);
+      const response = await updateToggleStatusForTestimonial(id);
       if (response && response.status === 200) {
         fetchData();
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        navigate('/admin');
       }
     }
-  };
+  }
 
-  const handleDeleteEnquiry = async (id) => {
+  const handleDeleteTestimonial = async (id) => {
     try {
-      const response = await deleteEnquiry(id);
+      const response = await deleteTestimonialByID(id);
       if (response && response.status === 200) {
         fetchData();
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        navigate('/admin');
       }
+      else if (error.response && error.response.status === 500) {
+        navigate('/admin');
+      }
+    }
+  }
+
+  const calculateTimeDifference = (updatedDate) => {
+    const currentDate = new Date();
+    const updatedDateObj = new Date(updatedDate);
+    const differenceInSeconds = Math.floor(
+      (currentDate - updatedDateObj) / 1000
+    );
+
+    if (differenceInSeconds < 1) {
+      return "now";
+    } else if (differenceInSeconds < 60) {
+      return `${differenceInSeconds} sec ago`;
+    } else if (differenceInSeconds < 3600) {
+      const minutes = Math.floor(differenceInSeconds / 60);
+      return `${minutes} min ago`;
+    } else if (differenceInSeconds < 86400) {
+      const hours = Math.floor(differenceInSeconds / 3600);
+      return `${hours} hour ago`;
+    } else {
+      const days = Math.floor(differenceInSeconds / 86400);
+      if (!days) {
+        return "";
+      }
+      return `${days} day ago`;
     }
   };
 
   const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return new Date(dateString).toLocaleDateString("en-GB", options);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-GB', options);
   };
 
+  const generateRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(
+        <span key={i} className="fas fa-star text-warning me-2"></span>
+      );
+    }
+    return stars;
+  };
   // Rest of the code for handleUserToggleStatus, handleDeleteEnquiry, formatDate, and columns remains the same
 
   useEffect(() => {
@@ -100,17 +142,14 @@ const Testimonial = () => {
     },
     { title: 'Name', dataIndex: 'name',sorter: true },
     { title: 'Email', dataIndex: 'email' },
-    { title: 'Mobile', dataIndex: 'mobile',sorter: true },
     { title: 'Message', dataIndex: 'message' },
-    {
-      title: "Created at",
-      dataIndex: "created_at",
-      render: (text,record) => formatDate(record.created_at),
-    },
+
+    { title: 'Rating', dataIndex: 'rating', render:(text,record)=>(generateRatingStars(record.rating)),width:180,},
+   
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
-      render: (text, record) => formatDate(record.updated_at),
+      render: (text, record) => calculateTimeDifference(record.updated_at),
     },
     {
       title: 'Actions',
@@ -123,7 +162,7 @@ const Testimonial = () => {
            href="#"
            onClick={(e) => {
              e.preventDefault();
-             handleEnquiryToggleStatus(record.id);
+             handleTestimonialToggleStatus(record.id);
            }}
          >
            <i className="fa fa-thumbs-up text-primary" title="Active" />
@@ -134,7 +173,7 @@ const Testimonial = () => {
            href="#"
            onClick={(e) => {
              e.preventDefault();
-             handleEnquiryToggleStatus(record.id);
+             handleTestimonialToggleStatus(record.id);
            }}
          >
            <i className="fa fa-thumbs-down" title="Inactive" />
@@ -145,7 +184,7 @@ const Testimonial = () => {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              handleDeleteEnquiry(record.id);
+              handleDeleteTestimonial(record.id);
             }}
           >
             <i className="fas fa-trash"></i>

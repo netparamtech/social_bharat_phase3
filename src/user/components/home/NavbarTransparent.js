@@ -148,7 +148,7 @@ const NavbarTransparent = () => {
                 Home
               </a>
             </li>
-            
+
             <li className="nav-item ">
               <a className="nav-link" onClick={handleAboutClick}>
                 About
@@ -161,7 +161,7 @@ const NavbarTransparent = () => {
               </a>
             </li>
 
-           
+
 
             <li className="nav-item">
               <a className="nav-link" onClick={handleServiceClick}>
@@ -234,16 +234,25 @@ const NavbarTransparent = () => {
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
                   </a>
                 </li>
+
                 <li className="nav-item mt-2 breadcrumb-item">
                   <a className="nav-link" onClick={handleAboutClick} >
                     <i className="fa fa-exchange m-2" aria-hidden="true"></i>About
                   </a>
                 </li>
+
+                <li className="nav-item ">
+                  <a className="nav-link" onClick={handleEventClick}>
+                    Event
+                  </a>
+                </li>
+
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleServiceClick} >
                     <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
                   </a>
                 </li>
+                
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleContactClicked}>
                     <i className='fas fa-address-book m-2'></i>Contact

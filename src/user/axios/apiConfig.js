@@ -10,7 +10,7 @@ const getBaseUrl = () => {
   if (ENV === 'PROD') {
     return 'http://164.52.218.124/api';
   } else if (ENV === 'DEV') {
-    return 'http://localhost:3000/api';
+    return 'http://localhost:5000/api';
   }
 };
 // Create a base axios instance without default headers

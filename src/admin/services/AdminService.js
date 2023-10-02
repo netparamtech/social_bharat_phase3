@@ -396,9 +396,9 @@ export const updateToggleStatusForTestimonial = async (clickedId) => {
 }
 
 //fetch all Event
-export const fetchEvents = async () => {
+export const fetchEvents = async (page, size, searchQuery,sortField,sortOrder) => {
     try {
-        const response = await apiWithHeaders.get('/events');
+        const response = await apiWithHeaders.get(`/events?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
     } catch (error) {
         throw error;

@@ -266,9 +266,9 @@ export const updateDegree = async (id,data) => {
 }
 
 //fetch All Business Categories
-export const fetchAllCategories = async () => {
+export const fetchAllCategories = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
-        const response = await apiWithHeaders.get('/business-categories');
+        const response = await apiWithHeaders.get(`/business-categories?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
     } catch (error) {
         throw error;

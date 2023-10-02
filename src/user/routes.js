@@ -21,8 +21,6 @@ import ContactPage from "./pages/ContactPage";
 import UserRatingPage from "./pages/UserRatingPage";
 import AboutPage from "./pages/AboutPage";
 import EventPage from "./pages/EventPage";
-import TestPage from "./test/TestPage";
-
 
 const userRoutes = [
     {
@@ -187,12 +185,6 @@ const userRoutes = [
         component: EventPage,
         exact: true
     },
-
-    {
-        path: '/test',
-        component: TestPage,
-        exact: true
-    }
 ]
 
 export default userRoutes;

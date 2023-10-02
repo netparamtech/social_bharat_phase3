@@ -1,44 +1,44 @@
-import { useEffect, useState } from "react";
-import { fetchBannerWithPageAndSection } from "../../services/userService";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { fetchBannerWithPageAndSection } from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
+import { Carousel } from 'antd';
 
 const WhySocial = () => {
   const [imageUrls, setImageUrls] = useState([]);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const defaultImage = "/user/images/banner-3.jpg";
+  const defaultImage = '/user/images/banner-3.jpg';
 
   const fetchBanners = async () => {
     try {
-      const response = await fetchBannerWithPageAndSection(
-        "Home",
-        "Why Social Bharat"
-      );
-      const activeBanners = response.data.data.filter(
-        (banner) => banner.status === "Active"
-      );
-      if (!Array.isArray(activeBanners[0].banner_urls)) {
-        // Convert it into an array
-        const updatedBannerUrls = [activeBanners[0].banner_urls];
+      const response = await fetchBannerWithPageAndSection('Home', 'Why Social Bharat');
 
-        // Update activeBanners with the updated banner URLs
+      const activeBanners = response.data.data.filter((banner) => banner.status === 'Active');
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
         activeBanners[0].banner_urls = updatedBannerUrls;
       }
-      setImageUrls(activeBanners);
+      setImageUrls(activeBanners[0].banner_urls);
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate("/login");
+        navigate('/login');
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        navigate('/login');
       }
     }
   };
+
+  const contentStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
+
   useEffect(() => {
     fetchBanners();
   }, []);
+
   return (
     <div id="why-social-section">
       <div className="container">
@@ -65,29 +65,23 @@ const WhySocial = () => {
               </li>
               <li>
                 <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Elevate your business to new heights.{" "}
+                Elevate your business to new heights.{' '}
               </li>
               <li>
                 <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Plan and attend events with friends and like-minded individuals.{" "}
+                Plan and attend events with friends and like-minded individuals.{' '}
               </li>
             </ul>
           </div>
           <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 wow animate__animated animate__zoomIn">
             <div className="image-zoom-containerm fade-in-image">
-              {imageUrls && imageUrls[0] ? (
-                <img
-                  src={imageUrls[0]}
-                  className="img-fluid image-zoom"
-                  alt="..."
-                />
-              ) : (
-                <img
-                  src={defaultImage}
-                  className="img-fluid image-zoom m-2"
-                  alt="..."
-                />
-              )}
+              <Carousel effect="fade" autoplay>
+                {imageUrls.map((item, index) => (
+                  <div key={index} style={contentStyle}>
+                    <img src={item} className="img-fluid image-zoom" alt={`Banner ${index}`} />
+                  </div>
+                ))}
+              </Carousel>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ const getBaseUrl = () => {
     return 'http://uat-api.socialbharat.org/admin';
   }
   else if (ENV === 'DEV') {
-    return 'http://localhost:3000/api/admin';
+    return 'http://localhost:5000/api/admin';
   } 
 };
 // Create a base axios instance without default headers

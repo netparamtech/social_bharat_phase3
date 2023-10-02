@@ -4,15 +4,23 @@ import { deleteBusinessCategorie, fetchAllCategories, updateBusinessStatus, upda
 
 const BusinessCategoriesList = () => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+
   const [errors, setErrors] = useState("");
+
 
   const navigate = useNavigate();
 
   const fetchAllBusinessCategories = async () => {
     try {
-      const response = await fetchAllCategories();
+      const response = await fetchAllCategories(page, size, searchQuery, sortField, sortOrder);
       if (response && response.status === 200) {
-        setData(response.data.data);
+        setData(response.data.data.businessCategories);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -80,7 +88,7 @@ const BusinessCategoriesList = () => {
           <thead>
             <tr>
               <th scope="col">S.No</th>
-              <th scope="col">Title</th> 
+              <th scope="col">Title</th>
               <th scope="col">Status</th>
               <th scope="col">Action</th>
             </tr>
@@ -91,25 +99,25 @@ const BusinessCategoriesList = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.title}</td>
-                  
+
 
                   <td>
-                  {item.status === 'Active' ? (
-                    <a href = "#" onClick={() => handleStatusToggle(item.id)}>
-                      <i className="fa fa-thumbs-up text-primary" title="Active" />
-                    </a>
-                  ) : (
-                   <a href='#' onClick={() => handleStatusToggle(item.id)}>
-                     <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
-                   </a>
-                  )}
+                    {item.status === 'Active' ? (
+                      <a href="#" onClick={() => handleStatusToggle(item.id)}>
+                        <i className="fa fa-thumbs-up text-primary" title="Active" />
+                      </a>
+                    ) : (
+                      <a href='#' onClick={() => handleStatusToggle(item.id)}>
+                        <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
+                      </a>
+                    )}
                   </td>
                   <td key={item.id}>
                     <div className="d-flex">
                       <a
                         className="collapse-item"
                         href="#"
-                        onClick={(e)=>{
+                        onClick={(e) => {
                           e.preventDefault();
                           navigate(`/admin/business-categories/update/${item.id}`)
                         }}
@@ -117,7 +125,7 @@ const BusinessCategoriesList = () => {
                         <i className="fa fa-edit mr-4" title="Edit" />
                       </a>
                       <a className="collapse-item" href="#" onClick={(e) => {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         handleDelete(item.id);
                       }}>
                         <i className="fa fa-trash" title='Delete' />

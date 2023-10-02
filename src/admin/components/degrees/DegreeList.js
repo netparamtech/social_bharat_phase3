@@ -5,15 +5,22 @@ import { deleteDegree, fetchAllDegrees, updateDegreeStatus } from "../../service
 
 const DegreeList = () => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const [errors, setErrors] = useState("");
+
 
   const navigate = useNavigate();
 
   const fetchDegrees = async () => {
     try {
-      const response = await fetchAllDegrees();
+      const response = await fetchAllDegrees(page, size, searchQuery, sortField, sortOrder);
       if (response && response.status === 200) {
-        setData(response.data.data);
+        setData(response.data.data.degrees);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -100,27 +107,27 @@ const DegreeList = () => {
                   <td>{item.short_title}</td>
 
                   <td>
-                  {item.status === 'Active' ? (
-                    <a href = "#" onClick={() => handleStatusToggle(item.id)}>
-                      <i className="fa fa-thumbs-up text-primary" title="Active" />
-                    </a>
-                  ) : (
-                   <a href='#' onClick={() => handleStatusToggle(item.id)}>
-                     <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
-                   </a>
-                  )}
+                    {item.status === 'Active' ? (
+                      <a href="#" onClick={() => handleStatusToggle(item.id)}>
+                        <i className="fa fa-thumbs-up text-primary" title="Active" />
+                      </a>
+                    ) : (
+                      <a href='#' onClick={() => handleStatusToggle(item.id)}>
+                        <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
+                      </a>
+                    )}
                   </td>
                   <td key={item.id}>
                     <div className="d-flex">
                       <a
                         className="collapse-item"
                         href="#"
-                        onClick={()=>navigate(`/admin/degree/update/${item.id}`)}
+                        onClick={() => navigate(`/admin/degree/update/${item.id}`)}
                       >
                         <i className="fa fa-edit mr-4" title="Edit" />
                       </a>
                       <a className="collapse-item" href="#" onClick={(e) => {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         handleDelete(item.id);
                       }}>
                         <i className="fa fa-trash" title='Delete' />

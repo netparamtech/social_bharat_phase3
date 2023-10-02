@@ -206,9 +206,9 @@ export const updatePassword = async (password, confirm_password) => {
 }
 
 //fetch All Degrees
-export const fetchAllDegrees = async () => {
+export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
-        const response = await apiWithHeaders.get('/degrees');
+        const response = await apiWithHeaders.get(`/degrees?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
     } catch (error) {
         throw error;

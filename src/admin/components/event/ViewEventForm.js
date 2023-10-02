@@ -46,145 +46,135 @@ const ViewEventForm = () => {
   return (
     <>
       <div id="auth-wrapper" className="pt-5 pb-5">
-        <div className="container">
+        <div id="event-info" className="container">
           <div className="card shadow">
             <div className="card-body">
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
-                    <h3 className="mb-3">Event Info</h3>
+                    <h3 className="mb-3 fw-bold">Event Info</h3>
                   </div>
-                  <form className="">
+                  <form className="p-3">
                     <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Event Title</label>
-                        <input
-                          type="text"
-                          name="eventName"
-                          placeholder="NaN"
-                          className="form-control"
-                          defaultValue={data.title}
-                          readOnly
-                        />
+                      <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">Event Title :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{data.title}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">Country :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{selectedCountry}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">State :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{selectedState}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">City :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{selectedCity}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">
+                              Start Event Date / Time :
+                            </label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{data.start_datetime}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">End Event Date / Time :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{data.end_datetime}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label className="fw-bold">Venue :</label>
+                          </div>
+                          <div className="col-md-6">
+                            <label className="">{data.venue}</label>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Country</label>
-
-                        <input
-                          type="text"
-                          readOnly
-                          placeholder="NaN"
-                          className="form-control"
-                          defaultValue={selectedCountry}
-                        />
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label htmlFor="status" className="fw-bold">
+                              Banner Image
+                            </label>
+                          </div>
+                          <div className="col-md-6">
+                            <img
+                              src={data.banner_image}
+                              className="mb-1"
+                              height={70}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">State</label>
-
-                        <input
-                          type="text"
-                          readOnly
-                          placeholder="NaN"
-                          className="form-control"
-                          defaultValue={selectedState}
-                        />
-                      </div>
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">City</label>
-                        <input
-                          type="text"
-                          readOnly
-                          placeholder="NaN"
-                          className="form-control"
-                          defaultValue={selectedCity}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">
-                          Start Event Date / Time
-                        </label>
-                        <input
-                          type="text"
-                          name="dateTime"
-                          id="startDateTime"
-                          className="form-control"
-                          defaultValue={data.start_datetime}
-                          placeholder="NaN"
-                          readOnly
-                        />
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">
-                          End Event Date / Time
-                        </label>
-                        <input
-                          type="text"
-                          readOnly
-                          name="dateTime"
-                          id="endDateTime"
-                          placeholder="NaN"
-                          className="form-control"
-                          defaultValue={data.end_datetime}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Venue</label>
-                        <input
-                          type="text"
-                          readOnly
-                          name="venue"
-                          id="exampleInput3"
-                          placeholder="Enter Venue"
-                          className="form-control"
-                          defaultValue={data.venue}
-                        />
-                      </div>
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status" className="me-2">
-                          Banner Image
-                        </label>
-                        <img
-                          src={data.banner_image}
-                          className="mb-1"
-                          height={70}
-                        />
-                        <input
-                          type="text"
-                          readOnly
-                          className="form-control"
-                          defaultValue={data.banner_image}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="status" className="me-2">
-                          Thumb Image
-                        </label>
-                        <img
-                          src={data.thumb_image}
-                          className="mb-1"
-                          height={70}
-                        />
-                        <input
-                          type="text"
-                          readOnly
-                          className="form-control"
-                          defaultValue={data.thumb_image}
-                        />
+                        <div className="row">
+                          <div className="col-md-6">
+                            <label htmlFor="status" className="fw-bold">
+                              Thumb Image
+                            </label>
+                          </div>
+                          <div className="col-md-6">
+                            <img
+                              src={data.thumb_image}
+                              className="mb-1"
+                              height={70}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </form>

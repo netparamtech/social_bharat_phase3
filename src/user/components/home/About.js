@@ -18,23 +18,6 @@ const About = () => {
         </div>
       </div>
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container pt-2">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="" onClick={handleHomeClick}>
-                  Home
-                </a>
-              </li>
-
-              <li class="breadcrumb-item active" aria-current="page">
-                About
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </nav>
 
       <div id="why-social-section">
         <div className="container">

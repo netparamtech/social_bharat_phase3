@@ -174,13 +174,15 @@ nav .nav-item .btn {
   background-size: cover;
   background-repeat: no-repeat;
   color: #ffffff;
-  /* margin-top: 10px; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   object-fit: cover;
-  margin-top: 94px;
+  margin-top: 70px;
+  @media (max-width: 767px) {
+    margin-top: 37px; 
+  }
 }
 
 nav .container,

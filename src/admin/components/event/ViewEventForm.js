@@ -124,10 +124,10 @@ const ViewEventForm = () => {
 
                       <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <label className="fw-bold">Venue :</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <label className="">{data.venue},{selectedCity}({selectedState})</label>
                           </div>
                         </div>
@@ -143,7 +143,7 @@ const ViewEventForm = () => {
                               Start Date / Time :
                             </label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <label className="">{formatDate(data.start_datetime)}</label>
                           </div>
                         </div>
@@ -154,7 +154,7 @@ const ViewEventForm = () => {
                           <div className="col-md-4">
                             <label className="fw-bold">End Date / Time :</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <label className="">{formatDate(data.end_datetime)}</label>
                           </div>
                         </div>
@@ -169,7 +169,7 @@ const ViewEventForm = () => {
                               Thumb Image
                             </label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <Image
                               width={70}
                               height={70}
@@ -182,12 +182,12 @@ const ViewEventForm = () => {
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-4">
                             <label htmlFor="status" className="fw-bold">
                               Banner Image
                             </label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             
                             <Image
                               width={70}
@@ -200,9 +200,7 @@ const ViewEventForm = () => {
                       </div>
                     </div>
 
-                    <div className="row">
-
-                    </div>
+                   
                   </form>
                 </div>
               </div>

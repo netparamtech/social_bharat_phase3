@@ -1,20 +1,51 @@
-import React from 'react';
-import { Collapse } from 'antd';
-import Contact from './subComponents/Contact';
+import { useEffect, useState } from "react";
 
 const ContactInfo = (props) => {
-  const {userDetails} = props;
 
-  const items = [
-    {
-      key: '1',
-      label: 'See Contact Info',
-      children: <p><Contact userDetails={userDetails} /></p>,
-    },
-  ]
-  
- 
-  return <Collapse items={items} defaultActiveKey={[]}  className='container bg-success col-md-9 w-100 w-lg-75 mt-3' />;
- };
+  const { userDetails } = props;
+  const [contactDetails, setContactDetails] = useState([]);
+
+
+  useEffect(() => {
+    setContactDetails(userDetails?.data?.contacts);
+  }, [userDetails]);
+  return (
+    <div id="contact-section" className="content-wrapper pt-4">
+      <div className="container">
+        <div className="card shadow">
+          
+          <div className="card-body">
+            <div className="row">
+              {contactDetails && contactDetails.length > 0 ?
+                contactDetails.map((item, idx) => (
+                  <div className="col-md-6">
+                    <div className="card shadow">
+                     
+                      <div className="card-body">
+                        <div className="w-100 w-lg-75">
+                          <div className="mb-2 row">
+                            <u> {item.address_type}</u>
+                            <label className="text-muted">
+                              {item.address_line},
+                              {item.city}, {item.state}, {item.country}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )) : (
+                  <div className="col-md-12">
+                    <p className="text-muted">No contact details available.</p>
+                  </div>
+                )}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default ContactInfo;

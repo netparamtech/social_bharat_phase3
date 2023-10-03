@@ -13,7 +13,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Profile</div>
-                    <div className="text-lg fw-bold">Manage Profile प्रोफ़ाइल प्रबंधित करें </div>
+                    <div className="text-lg fw-bold">Manage Profile <br/>प्रोफ़ाइल प्रबंधित करें </div>
                   </div>
                   <img src="/user/images/activities.png" width="40px" />
                 </div>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                   className="text-white stretched-link"
                   onClick={() => navigate("/user/search/partner")}
                 >
-                  View Tasks
+                  View
                 </a>
                 <div className="text-white">
                   <i className="fa-solid fa-arrow-right"></i>

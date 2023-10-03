@@ -56,7 +56,7 @@ const UserList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        navigate('/server/error');
       }
     }
   };
@@ -114,16 +114,7 @@ const UserList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
-    { title: 'Email', dataIndex: 'email',width:200 ,
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-  },
-    {
-      title: 'Mobile',
-      dataIndex: 'mobile',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-    },
+   
     {
       title: 'Community',
       dataIndex: 'community',
@@ -175,8 +166,6 @@ const UserList = () => {
         </div>
       ),
       fixed: 'right',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
     },
     // Rest of the columns definition
   ];

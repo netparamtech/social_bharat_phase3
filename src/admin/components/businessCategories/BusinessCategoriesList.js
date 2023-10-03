@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { deleteBusinessCategorie, fetchAllCategories, updateBusinessStatus, updateDegreeStatus } from "../../services/AdminService";
+import React, { useEffect, useState } from 'react';
+import { Table } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import Search from 'antd/es/input/Search';
+import { deleteBusinessCategorie, fetchAllCategories, updateBusinessStatus } from "../../services/AdminService";
 
 const BusinessCategoriesList = () => {
   const [data, setData] = useState([]);
@@ -11,132 +13,187 @@ const BusinessCategoriesList = () => {
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
 
-  const [errors, setErrors] = useState("");
-
-
   const navigate = useNavigate();
 
-  const fetchAllBusinessCategories = async () => {
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const handlePageSizeChange = (current, pageSize) => {
+    setSize(pageSize);
+  };
+
+  const handleSearchChange = (query) => {
+    setPage(1);
+    setSearchQuery(query);
+  };
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
+  };
+
+  const fetchData = async () => {
     try {
       const response = await fetchAllCategories(page, size, searchQuery, sortField, sortOrder);
-      if (response && response.status === 200) {
-        setData(response.data.data.businessCategories);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
-      }
 
-      //Unauthorized
-      else if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        //navigate("/admin");
+      setData(response.data.data.businessCategories);
+
+      setTotalRows(response.data.data.totalRecords);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        navigate('/admin');
       }
     }
   };
 
-  const handleStatusToggle = async (categorieId) => {
+  const handleStatusToggle = async (id) => {
     try {
-      const response = await updateBusinessStatus(categorieId);
+      const response = await updateBusinessStatus(id);
       if (response && response.status === 200) {
-        fetchAllBusinessCategories();
+        fetchData();
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/admin');
-      } else if (error.response && error.response.status === 500) {
+      }
+      else if (error.response && error.response.status === 500) {
         navigate('/admin');
       }
     }
   }
 
-  const handleDelete = async (loggedUserid) => {
+  const handleDelete = async (id) => {
     try {
-      const response = await deleteBusinessCategorie(loggedUserid); // Replace with your actual delete API endpoint
+      const response = await deleteBusinessCategorie(id);
       if (response && response.status === 200) {
-        // Fetch communities again to update the list
-        fetchAllBusinessCategories();
+        fetchData();
       }
     } catch (error) {
-      // Handle error cases
       if (error.response && error.response.status === 401) {
         navigate('/admin');
-      } else if (error.response && error.response.status === 500) {
+      }
+      else if (error.response && error.response.status === 500) {
         navigate('/admin');
       }
     }
-  };
+  }
 
   useEffect(() => {
-    fetchAllBusinessCategories();
-  }, []);
+    fetchData();
+  }, [page, size, searchQuery, sortField, sortOrder]);
+
+  const columns = [
+    {
+      title: 'S.No',
+      dataIndex: 'sno',
+      render: (text, record, index) => index + 1,
+      width: 100,
+    },
+    {
+      title: 'Title', dataIndex: 'title',
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+    {
+      title: 'Status', dataIndex: 'status',
+      render: (text, record) => (
+        <div>
+          {record.status === 'Active' ? (
+            <a
+              className="collapse-item m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleStatusToggle(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-up text-primary" title="Active" />
+            </a>
+          ) : (
+            <a
+              className="collapse-item text-secondary m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleStatusToggle(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-down" title="Inactive" />
+            </a>
+          )}
+        </div>
+      ),
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (text, record) => (
+        <div>
+          <a
+            className="collapse-item"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/admin/business-categories/update/${record.id}`)
+            }}
+          >
+            <i className="fa fa-edit mr-4" title="Edit" />
+          </a>
+
+          <a
+            className="collapse-item"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDelete(record.id);
+            }}
+          >
+            <i className="fas fa-trash"></i>
+          </a>
+        </div>
+      ),
+      fixed: 'right',
+    },
+    // Rest of the columns definition
+  ];
+
 
   return (
-    <div className="container-fluid">
-      <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Business Categories</h1>
-        <a
-          href="/admin/business-categories/create"
-          className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-        >
-          Create Business Categorie
-        </a>
-      </div>
-      <div className="card table-responsive p-3">
-        <table className="table table-striped table-bordered table-sm">
-          <thead>
-            <tr>
-              <th scope="col">S.No</th>
-              <th scope="col">Title</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.title}</td>
-
-
-                  <td>
-                    {item.status === 'Active' ? (
-                      <a href="#" onClick={() => handleStatusToggle(item.id)}>
-                        <i className="fa fa-thumbs-up text-primary" title="Active" />
-                      </a>
-                    ) : (
-                      <a href='#' onClick={() => handleStatusToggle(item.id)}>
-                        <i className="fa fa-thumbs-down text-secondary" title="Inactive" />
-                      </a>
-                    )}
-                  </td>
-                  <td key={item.id}>
-                    <div className="d-flex">
-                      <a
-                        className="collapse-item"
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate(`/admin/business-categories/update/${item.id}`)
-                        }}
-                      >
-                        <i className="fa fa-edit mr-4" title="Edit" />
-                      </a>
-                      <a className="collapse-item" href="#" onClick={(e) => {
-                        e.preventDefault();
-                        handleDelete(item.id);
-                      }}>
-                        <i className="fa fa-trash" title='Delete' />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+    <div>
+      <Search
+        placeholder="Search"
+        allowClear
+        onSearch={handleSearchChange}
+        style={{ marginBottom: 20, width: 200 }}
+      />
+      <Table
+        title={() => 'Business Catagories'}  // Set the title to 'Catagories'
+        dataSource={data}
+        columns={columns}
+        pagination={{
+          current: page,
+          pageSize: size,
+          total: totalRows,
+          onChange: handlePageChange,
+          onShowSizeChange: handlePageSizeChange,
+        }}
+        onChange={handleTableChange}
+      // onChange={handleSearchChange}
+      />
     </div>
   );
 };

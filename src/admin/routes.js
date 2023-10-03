@@ -20,6 +20,7 @@ import EnquiryPage from "./pages/enquiry/EnquiryPage";
 import TestimonialIndex from "./pages/TestimonialIndex";
 import EventPage from "./pages/event/EventPage";
 import ViewEvent from "./pages/event/ViewEvent";
+import ServerError from "./components/ServerError";
 
 const adminRoutes = [
     {
@@ -158,6 +159,12 @@ const adminRoutes = [
     {
         path: '/events/view/:id',
         component: ViewEvent,
+        exact:true
+    },
+
+    {
+        path: '/server/error',
+        component: ServerError,
         exact:true
     },
 ]

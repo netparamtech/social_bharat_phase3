@@ -25,7 +25,6 @@ const NavbarTransparent = () => {
     e.preventDefault();
     window.scrollTo(0, 0);
     navigate('/');
-
   }
 
   const handleAboutClick = (e) => {
@@ -241,9 +240,9 @@ const NavbarTransparent = () => {
                   </a>
                 </li>
 
-                <li className="nav-item ">
+                <li className="nav-item m-2 ">
                   <a className="nav-link" onClick={handleEventClick}>
-                  <i class="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
+                    <i class="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
                   </a>
                 </li>
 

@@ -179,6 +179,9 @@ nav .nav-item .btn {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   object-fit: cover;
+}
+
+#banners-section{
   margin-top: 94px;
   @media (max-width: 767px) {
     margin-top: 60px; 
@@ -807,6 +810,10 @@ a.btn.dropdown-toggle.show:focus {
 
 #dashboard .card {
   box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 10px;
 }
 
 #dashboard a {

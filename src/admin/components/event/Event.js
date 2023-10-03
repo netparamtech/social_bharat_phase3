@@ -216,8 +216,9 @@ const Event = () => {
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
+     
       <Table
-        title={() => 'Events'}  // Set the title to 'Enquiries'
+        title ={() => 'Events'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{

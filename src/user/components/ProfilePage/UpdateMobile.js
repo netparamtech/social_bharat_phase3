@@ -64,7 +64,7 @@ const UpdateMobile = () => {
                   >
                     <div className="row mb-3">
                       <input
-                        type="mobile"
+                        type="number"
                         name="mobile"
                         id="mobile"
                         placeholder="Enter New Mobile"

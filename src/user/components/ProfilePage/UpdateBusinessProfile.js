@@ -451,7 +451,7 @@ const UpdateBusinessProfile = (props) => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Business Email</label>
-                      <input type="text"
+                      <input type="email"
                         name="email"
                         id="email"
                         placeholder="Enter Contact 1"

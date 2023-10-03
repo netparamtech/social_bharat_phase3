@@ -53,7 +53,7 @@ const BusinessCategoriesList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        navigate('/server/error');
       }
     }
   };
@@ -69,7 +69,7 @@ const BusinessCategoriesList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        navigate('/server/error');
       }
     }
   }
@@ -85,7 +85,7 @@ const BusinessCategoriesList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        navigate('/server/error');
       }
     }
   }

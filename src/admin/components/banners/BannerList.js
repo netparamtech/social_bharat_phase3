@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchAllBanners, updateBannerToggleStatus } from '../../services/AdminService';
 
 const BannerList = () => {
     const [data, setData] = useState([]);
-    const [errors, setErrors] = useState('');
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const fetchBanners = async () => {
@@ -19,7 +16,6 @@ const BannerList = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
             }
 
             //Unauthorized
@@ -27,7 +23,7 @@ const BannerList = () => {
                 navigate('/admin');
             }
             else if (error.response && error.response.status === 500) {
-                navigate('/admin');
+                navigate('/server/error');
             }
 
         }
@@ -43,7 +39,7 @@ const BannerList = () => {
             if (error.response && error.response.status === 401) {
                 navigate('/admin');
             } else if (error.response && error.response.status === 500) {
-                navigate('/admin');
+                navigate('/server/error');
             }
         }
     }

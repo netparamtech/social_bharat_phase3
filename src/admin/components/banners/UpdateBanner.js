@@ -5,7 +5,6 @@ import {
   createBanner,
   uploadMultipleImages,
 } from "../../services/AdminService";
-import { useDispatch } from "react-redux";
 
 const UpdateBanner = (props) => {
   const { banner } = props;
@@ -19,7 +18,6 @@ const UpdateBanner = (props) => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleBannerChange = async (e) => {
@@ -57,7 +55,7 @@ const UpdateBanner = (props) => {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       }else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        navigate('/server/error');
       }
     }
   };
@@ -124,7 +122,7 @@ const UpdateBanner = (props) => {
         navigate("/admin");
       }
       else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        navigate('/server/error');
       }
     }
   };

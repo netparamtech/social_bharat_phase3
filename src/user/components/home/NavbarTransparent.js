@@ -23,6 +23,11 @@ const NavbarTransparent = () => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
+    const isHomePage = window.location.pathname === '/';
+    if(!isHomePage){
+      window.location.href='/';
+      return;
+    }
     window.scrollTo(0, 0);
     navigate('/');
   }
@@ -67,9 +72,7 @@ const NavbarTransparent = () => {
 
       if (!isHomePage) {
         e.preventDefault();
-        Modal.error({
-          content: 'The "Services" are only accessible from the home page.',
-        });
+        navigate('/login');
         return;
       }
 

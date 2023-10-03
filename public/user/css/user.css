@@ -179,9 +179,9 @@ nav .nav-item .btn {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   object-fit: cover;
-  margin-top: 70px;
+  margin-top: 94px;
   @media (max-width: 767px) {
-    margin-top: 37px; 
+    margin-top: 90px; 
   }
 }
 

@@ -128,7 +128,7 @@ const BasicProfile = (props) => {
                 </p>
 
                 <img
-                  className="img-fluid max-width-100 me-2  rounded-circle community-img"
+                  className="img-fluid max-width-100 me-2  community-img"
                   src={
                     community.thumbnail_image
                       ? community.thumbnail_image

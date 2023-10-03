@@ -113,7 +113,7 @@ const UserProfileDropdown = () => {
             label: (
               <>
                 <h6 className="dropdown-header d-flex align-items-center">
-                  <img className="dropdown-user-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
+                  <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
                   <div className="dropdown-user-details">
                     <div className="dropdown-user-details-name menu-font">{community.name}</div>
                   </div>

@@ -540,6 +540,12 @@ a.btn.dropdown-toggle.show:focus {
   border-radius: 100%;
 }
 
+.dropdown-thubnail-img{
+  height: 2rem;
+  width: 3rem;
+  /* margin-right: 1rem; */
+}
+
 .dropdown-user-details-name {
   color: #212832;
   font-weight: 500;
@@ -1112,7 +1118,7 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 #basic-profile-section .community-img {
-  width: 30px;
+  width: 50px;
   height: 30px;
 }
 

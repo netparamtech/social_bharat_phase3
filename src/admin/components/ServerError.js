@@ -9,7 +9,8 @@ const ServerError = ({ errorMessage }) => {
 
   const navigate = useNavigate();
 
-  const handleGoBack = () => {
+  const handleGoBack = (e) => {
+    e.preventDefault();
     if (isAuthenticUser) {
       navigate('/admin/dashboard');
     } else {

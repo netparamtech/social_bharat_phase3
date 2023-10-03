@@ -11,6 +11,7 @@ const LoginWithMobile = (props) => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
   const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const [serverError,setServerError] = useState('');
 
   const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ const LoginWithMobile = (props) => {
       if (response && response.status === 200) {
         setErrors('');
         setMessage(response.data.message);
+        setServerError('');
         handleLoginClicked();
       }
 
@@ -38,6 +40,7 @@ const LoginWithMobile = (props) => {
 
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setServerError('');
       }
 
       //Unauthorized
@@ -46,7 +49,7 @@ const LoginWithMobile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -68,6 +71,7 @@ const LoginWithMobile = (props) => {
                 {
                   !isLoginClicked && !isLoginClicked ? (
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
+                      {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
                         <input
                           type="mobile"

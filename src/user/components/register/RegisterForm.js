@@ -168,8 +168,7 @@ const RegisterForm = () => {
                       <p className="fw-lighter fs-6">
                         Already User?{" "}
                         <a
-                          href=""
-                          className="text-primary text-decoration-none"
+                          className="text-primary text-decoration-none hover-pointer"
                           onClick={() => navigate("/login")}
                         >
                           Login

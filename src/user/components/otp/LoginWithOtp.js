@@ -135,7 +135,7 @@ const LoginWithOtp = (props) => {
             <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
 
                 <div className="row mb-3">
-                    <input type="text"
+                    <input type="number"
                         name="mobile"
                         id="mobile"
                         placeholder="Enter your mobile number"
@@ -152,7 +152,7 @@ const LoginWithOtp = (props) => {
                         {otpBoxes.map((index) => (
                             <input
                                 key={index}
-                                type="text"
+                                type="number"
                                 className="form-control otp-input"
                                 id={`otp-${index}`}
                                 value={otp[index] || ''}

@@ -147,3 +147,8 @@ div.ant-table-title {
   font-weight: 500 !important;
 }
 
+div.Table{
+ 
+  justify-content: space-evenly;
+  justify-items: auto;
+}

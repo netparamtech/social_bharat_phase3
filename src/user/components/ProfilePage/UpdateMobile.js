@@ -67,7 +67,7 @@ const UpdateMobile = () => {
                         type="number"
                         name="mobile"
                         id="mobile"
-                        placeholder="Enter New Mobile"
+                        placeholder="Enter New Mobile No."
                         className="form-control"
                         onChange={handleMobileChange}
                         autoFocus

@@ -110,8 +110,7 @@ const ViewEventForm = () => {
             </div>
             <div className="col-md-6">
             <Image
-            width={100}
-            height={50}
+            height={70}
             src={data.thumb_image ? data.thumb_image : defaultPhoto}
             title={data.community && data.community}
           />

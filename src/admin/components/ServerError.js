@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../../admin/css/style.css'; 
-const ServerError = () => {
+const ServerError = ({ errorMessage }) => {
   const user = useSelector((state) => state.auth);
   const isAuthenticUser = user && user.isAuthenticated;
 
@@ -21,7 +21,7 @@ const ServerError = () => {
     <div className="containerServerError">
       <div className="cardContainerServerError">
         <Card title="500 Internal Server Error">
-          <p>Oops! Something went wrong on our server.</p>
+        <p>Error Message: {errorMessage || "Oops! Something went wrong on our server."}</p>
           <Button className="errorButtonServerError" type="primary" onClick={handleGoBack}>
             Go Back
           </Button>

@@ -1,9 +1,6 @@
-import axios from "axios";
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { CreateBusinessCategorie,  } from "../../services/AdminService";
-import { logout } from "../../actions/authActions";
 
 const CreateBusinessCategories = () => {
   const [name, setName] = useState("");
@@ -13,7 +10,6 @@ const CreateBusinessCategories = () => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -48,11 +44,10 @@ const CreateBusinessCategories = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        navigate('/server/error');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };

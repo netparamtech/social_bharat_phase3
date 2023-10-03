@@ -49,7 +49,8 @@ const CreateDegree = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };

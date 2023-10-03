@@ -37,7 +37,12 @@ const ViewEventForm = () => {
         setSelectedCity(response.data.data.city);
       }
     } catch (error) {
-      // Handle errors
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
+      }
     }
   };
 

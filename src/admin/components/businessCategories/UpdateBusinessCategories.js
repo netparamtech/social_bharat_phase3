@@ -39,7 +39,8 @@ const UpdateBusinessCategorie = () => {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate('/server/error');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -59,7 +60,8 @@ const UpdateBusinessCategorie = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate('/server/error');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -95,7 +97,8 @@ const UpdateBusinessCategorie = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate('/server/error');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };

@@ -54,7 +54,8 @@ const DegreeList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -70,7 +71,8 @@ const DegreeList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   }
@@ -86,7 +88,8 @@ const DegreeList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   }

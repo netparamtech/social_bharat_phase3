@@ -231,7 +231,7 @@ function Contact() {
                       </div>
                       <div className="form-group mb-4">
                         <input
-                          type="mobile"
+                          type="number"
                           className="form-control"
                           placeholder="Enter Mobile"
                           value={mobile}

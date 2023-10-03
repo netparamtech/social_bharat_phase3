@@ -240,7 +240,7 @@ const NavbarTransparent = () => {
                   </a>
                 </li>
 
-                <li className="nav-item m-2 ">
+                <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleEventClick}>
                     <i class="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
                   </a>

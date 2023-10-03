@@ -210,6 +210,32 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-soil text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Event</div>
+                    <div className="text-lg fw-bold">Add Event</div>
+                  </div>
+                  <img src="/user/images/placard.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white stretched-link"
+                  onClick={() => navigate("/user/rating")}
+                >
+                  View
+                </a>
+                <div className="text-white">
+                  <i className="fa-solid fa-arrow-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

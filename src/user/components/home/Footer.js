@@ -94,7 +94,7 @@ const Footer = () => {
                 {" "}
                 <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Connect With Community
+                  Connect To Cmmunity
                 </a>
               </li>
             </ul>

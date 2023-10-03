@@ -79,20 +79,47 @@ const ViewEventForm = () => {
             </div>
 
             <Card className="col-md-9 w-100 w-lg-75">
-              <p>Name - {data.name && data.name}</p>
-              <p>Email - {data.name && data.email}</p>
-              <p>Gender - {data.name && data.gender}</p>
-              <p>Mobile - {data.name && data.mobile}</p>
-
-              <div className="container-profilepic mx-auto card-block-md overflow-hidden ">
-                <Image
-                  width={100}
-                  height={50}
-                  src={data.thumb_image ? data.thumb_image : defaultPhoto}
-                  title={data.community && data.community}
-                />
-                <p>Community - {data.community && data.community}</p>
+            <div className="row w-50">
+              <div className="col-md-6">
+              <label className="fw-bold">Name - </label>
               </div>
+              <div className="col-md-6">
+              <label>{data.name && data.name}</label>
+              </div>
+              <div className="col-md-6">
+              <label className="fw-bold">Email - </label>
+              </div>
+              <div className="col-md-6">
+              <label>{data.name && data.email}</label>
+              </div>
+              <div className="col-md-6">
+              <label className="fw-bold">Gender - </label>
+              </div>
+              <div className="col-md-6">
+              <label>{data.name && data.gender}</label>
+              </div>
+              <div className="col-md-6">
+              <label className="fw-bold">Mobile - </label>
+              </div>
+              <div className="col-md-6">
+              <label>{data.name && data.mobile}</label>
+              </div>
+              <div className="col-md-6 container-profilepic mx-auto card-block-md overflow-hidden ">
+               
+              <label className="fw-bold">Community - {data.community && data.community}</label>
+            </div>
+            <div className="col-md-6">
+            <Image
+            width={100}
+            height={50}
+            src={data.thumb_image ? data.thumb_image : defaultPhoto}
+            title={data.community && data.community}
+          />
+            </div>
+            </div>
+              
+
+             
             </Card>
           </div>
         </div>
@@ -104,7 +131,7 @@ const ViewEventForm = () => {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
-                    <h3 className="mb-3 fw-bold">Event Info</h3>
+                    <h3 className="mb-3 fw-bold fs-5">Event Info</h3>
                   </div>
                   <form className="p-3">
                     <div className="row">

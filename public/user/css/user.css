@@ -457,12 +457,20 @@ nav .container,
   object-fit: cover;
   background-size: cover;
   overflow: hidden;
+  
 }
 
 #testimonials::before {
-  content: "";
+  content: " ";
   position: absolute;
   inset: 0;
+}
+
+#testimonials .comment-text{
+  text-align: center;
+  width: 50%;
+  text-justify: auto;
+  margin: 0px 25%;
 }
 
 #testimonials h3 {

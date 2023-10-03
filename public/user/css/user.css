@@ -181,7 +181,7 @@ nav .nav-item .btn {
   object-fit: cover;
   margin-top: 94px;
   @media (max-width: 767px) {
-    margin-top: 90px; 
+    margin-top: 60px; 
   }
 }
 
@@ -468,9 +468,11 @@ nav .container,
 
 #testimonials .comment-text{
   text-align: center;
-  width: 50%;
-  text-justify: auto;
-  margin: 0px 25%;
+  width: 68%;
+  /* text-justify: distribute-all-lines; */
+  /* text-align:justify; */
+  margin: 0px 20%;
+
 }
 
 #testimonials h3 {

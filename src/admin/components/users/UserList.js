@@ -204,7 +204,7 @@ const UserList = () => {
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
-      <Table
+      <Table className='table-striped table-hover '
         title={() => 'Users'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}

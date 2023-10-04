@@ -232,6 +232,7 @@ const Event = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
+        rowKey={(record) => record.id}
       // onChange={handleSearchChange}
       />
     </div>

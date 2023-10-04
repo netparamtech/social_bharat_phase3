@@ -223,6 +223,7 @@ width:100,},
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
+        rowKey={(record) => record.id}
        
       // onChange={handleSearchChange}
       />

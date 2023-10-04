@@ -8,7 +8,6 @@ const Testimonials = () => {
 
   const handleReviewClick = (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0);
     navigate('/user/rating');
   }
 
@@ -69,7 +68,7 @@ const Testimonials = () => {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
-        <a className="btn btn-primary" href="" onClick={handleReviewClick}>Share Your Review</a>
+        <a className="btn btn-primary hover-pointer" onClick={handleReviewClick}>Share Your Review</a>
 
       </div>
     </section>

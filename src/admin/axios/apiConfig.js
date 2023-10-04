@@ -11,7 +11,7 @@ const getBaseUrl = () => {
     return 'http://api.socialbharat.org/admin';
   } 
   else if (ENV === 'QAT') {
-    return 'http://uat-api.socialbharat.org/admin';
+    return 'http://uat-api.socialbharat.org/api/admin';
   }
   else if (ENV === 'DEV') {
     return 'http://localhost:3000/api/admin';

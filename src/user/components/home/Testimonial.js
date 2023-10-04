@@ -48,7 +48,7 @@ const Testimonials = () => {
             <div key={index} className={index === 0 ? "carousel-item active" : "carousel-item"}>
               <img
                 className="rounded-circle shadow-1-strong mb-3"
-                src={item.photo || "/user/images/user-1.jpg"} // Use default image if imageUrl is not available
+                src={item.photo || "/user/images/OIP.jpg"} // Use default image if imageUrl is not available
                 alt={`User ${index + 1}`}
               />
               {/* Include other content for each carousel item here */}

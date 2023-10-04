@@ -47,7 +47,6 @@ const Event = () => {
   };
 
   const fetchData = async () => {
-    console.log(searchQuery);
     try {
       const response = await fetchEvents(page, size, searchQuery, sortField, sortOrder);
 

@@ -240,6 +240,7 @@ const Testimonial = () => {
         scroll={{
           x: 1300,
         }}
+        rowKey={(record) => record.id}
         // onChange={handleSearchChange}
       />
     </div>

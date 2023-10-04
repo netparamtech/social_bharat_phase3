@@ -10,7 +10,7 @@ const getBaseUrl = () => {
   if (ENV === 'PROD') {
     return 'http://api.socialbharat.org';
   }
-  else if (ENV === 'QAT') {
+  else if (ENV === 'UAT') {
     return 'http://uat-api.socialbharat.org/api';
   } 
   else if (ENV === 'DEV') {

@@ -41,7 +41,7 @@ const UpdateJobProfile = (props) => {
       if (response && response.status === 200) {
         setErrors('');
         setServerError('');
-        window.location.href = '/profile';
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error

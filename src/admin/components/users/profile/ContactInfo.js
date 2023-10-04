@@ -15,6 +15,7 @@ const ContactInfo = (props) => {
         <div className="card shadow">
           
           <div className="card-body">
+          <h5 className="fw-3 mb-3">Contact Info</h5>
             <div className="row">
               {contactDetails && contactDetails.length > 0 ?
                 contactDetails.map((item, idx) => (

@@ -35,6 +35,10 @@ const UpdateEducationPage = () => {
                 }
         }, [id]);
 
+        useEffect(()=>{
+                window.scrollTo(0, 0);
+            },[]);
+
         return (
                 <UserLayout>
                         <UpdateEducationProfile educationDetails={educationDetails} />

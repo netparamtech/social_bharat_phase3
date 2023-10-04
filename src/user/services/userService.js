@@ -483,6 +483,16 @@ export const userFeedback = async (data) => {
 //fetch all active users feedback
 export const fetchOldTestimonials = async () => {
     try {
+        const response = await apiWithHeaders.get('/user/testimonials');
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch all active users feedback on home page
+export const fetchTestimonialsOnHomePage = async () => {
+    try {
         const response = await apiConfig.get('/testimonials');
         return response;
     } catch(error) {

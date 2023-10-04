@@ -63,7 +63,7 @@ const AdminProfileDropdown = () => {
         {
             key: '2',
             label: (
-                <a href="#" onClick={() => navigate('/admin/change-profile')}>
+                <a className='hover-pointer-admin' onClick={() => navigate('/admin/change-profile')}>
                     <i className="fas fa-user-alt m-2"></i> Change Profile
                 </a>
             ),
@@ -72,7 +72,7 @@ const AdminProfileDropdown = () => {
         {
             key: '3',
             label: (
-                <a href="#" onClick={() => navigate('/admin/change-password')}>
+                <a className='hover-pointer-admin' onClick={() => navigate('/admin/change-password')}>
                     <i className="fas fa-key m-2"></i> Change Password
                 </a>
             ),
@@ -89,7 +89,7 @@ const AdminProfileDropdown = () => {
         {
             key: '5',
             label: (
-                <a href='#' onClick={(e) => {
+                <a className='hover-pointer-admin' onClick={(e) => {
                     e.preventDefault();
                     handleLogOutClick();
                 }}>

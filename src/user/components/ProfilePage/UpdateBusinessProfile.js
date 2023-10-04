@@ -220,7 +220,7 @@ const UpdateBusinessProfile = (props) => {
     try {
       const response = await fetchAllActiveBusinessCategories();
       if (response && response.status === 200) {
-        setBusinessCategories(response.data.data);
+        setBusinessCategories(response.data.data.businessCategories);
         setServerError('');
       }
     } catch (error) {

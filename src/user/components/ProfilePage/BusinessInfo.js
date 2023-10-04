@@ -50,7 +50,7 @@ const BusinessInfo = (props) => {
       <div className="container">
         <div className="card shadow ">
           <div className="edit-icon add-more-detail">
-            <a href="#" onClick={()=>navigate('/user/update-business-profile')} title="Add More Detail">
+            <a className="hover-pointer" onClick={()=>navigate('/user/update-business-profile')} title="Add More Detail">
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
@@ -64,12 +64,12 @@ const BusinessInfo = (props) => {
                     <div className="col-md-6" key={value}>
                       <div className="card shadow">
                         <div className="edit-icon ">
-                          <a href="#" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">
+                          <a className="hover-pointer" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">
                             <i className="fas fa-pencil-alt"></i>
                           </a>
                         </div>
                         <div className="delete-icon">
-                          <a href="#" title="Delete">
+                          <a className="hover-pointer" title="Delete">
                             <i
                               className="fa-solid fa-trash"
                               onClick={(e) => {
@@ -191,8 +191,7 @@ const BusinessInfo = (props) => {
               ) : (
                 <div className="add-more-info ">
                   <a
-                    href="#"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary hover-pointer"
                     onClick={()=>navigate("/user/update-business-profile")}
                   >
                     Add Business Info

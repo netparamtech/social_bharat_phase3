@@ -6,6 +6,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
+import { Image } from "antd";
 
 const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
@@ -111,8 +112,7 @@ const BasicProfile = (props) => {
                     ></i>
                     <div className="text-profilepic fs-6">
                       <a
-                        href="#"
-                        className="text-decoration-none text-success"
+                        className="text-decoration-none text-success hover-pointer"
                         onClick={handleImageClick}
                       >
                         Edit
@@ -127,7 +127,7 @@ const BasicProfile = (props) => {
                   {user && user.data && user.data.name}
                 </p>
 
-                <img
+                <Image
                   className="img-fluid max-width-100 me-2  community-img"
                   src={
                     community.thumbnail_image
@@ -144,8 +144,7 @@ const BasicProfile = (props) => {
           <div className="col-md-9">
             <div className="card shadow">
               <div className="edit-icon">
-                <a
-                  href="#"
+                <a className="hover-pointer"
                   onClick={() => navigate("/user/update-basic-profile")}
                   title="Edit"
                 >

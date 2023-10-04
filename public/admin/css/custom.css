@@ -153,6 +153,10 @@ div.Table{
   justify-items: auto;
 }
 
+.hover-pointer-admin {
+  cursor: pointer;
+}
+
 .hover-pointer {
   cursor: pointer;
   color: blue; /* Default color is blue */

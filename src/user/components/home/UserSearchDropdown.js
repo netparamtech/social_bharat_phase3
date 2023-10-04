@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, Menu, Select } from 'antd';
+import { Dropdown, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
@@ -30,7 +30,7 @@ const UserSearchDropdown = () => {
         key: '1',
         label: (
           <span onClick={handleSearchPeopleClick} className='menu-font '>
-            <i class="fa-solid fa-users m-2"></i> Search People
+            <i className="fa-solid fa-users m-2"></i> Search People
           </span>
         ),
       },
@@ -38,7 +38,7 @@ const UserSearchDropdown = () => {
         key: '2',
         label: (
           <span onClick={handleSearchBusinessClick} className='menu-font'>
-            <i class="fa-solid fa-briefcase m-2"></i> Search Business
+            <i className="fa-solid fa-briefcase m-2"></i> Search Business
           </span>
         ),
       },
@@ -46,7 +46,7 @@ const UserSearchDropdown = () => {
         key: '3',
         label: (
           <span onClick={handleSearchPartnerClick} className='menu-font'>
-            <i class="fa-solid fa-ring m-2"></i> Search Partner
+            <i className="fa-solid fa-ring m-2"></i> Search Partner
           </span>
         ),
       },
@@ -55,16 +55,6 @@ const UserSearchDropdown = () => {
   };
 
   const items = generateMenuItems();
-
-  const menu = (
-    <Menu>
-      {items.map(item => (
-        <Menu.Item key={item.key}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,7 +73,9 @@ const UserSearchDropdown = () => {
 
   return (
     
-    <Dropdown overlay={menu} trigger={['hover']} placement="bottomRight" className='d-inline nav-link'>
+    <Dropdown menu={{
+      items,
+    }} trigger={['hover']} placement="bottomRight" className='d-inline nav-link'>
       {
         isAndroidUsed?(<span className='customDrawerBody customUl'>
         Search

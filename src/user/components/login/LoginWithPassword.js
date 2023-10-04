@@ -134,7 +134,7 @@ const LoginWithPassword = (props) => {
                                         </button>
                                     </div>
                                     <div className="row mt-3">
-                                        <p className="fw-lighter fs-6">New User? <a href="#" className="text-primary text-decoration-none" onClick={() => navigate('/register')}>Signup</a>.</p>
+                                        <p className="fw-lighter fs-6">New User? <a className="text-primary text-decoration-none hover-pointer" onClick={() => navigate('/register')}>Signup</a>.</p>
                                     </div>
                                 </form>
                             </div>

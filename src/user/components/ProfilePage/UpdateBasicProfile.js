@@ -26,6 +26,7 @@ const UpdateBasicProfile = () => {
   const [countryID, setCountryID] = useState(101);
 
   const [errors, setErrors] = useState("");
+  const [serverError,setServerError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const UpdateBasicProfile = () => {
       const response = await fetchAllStatesByCountryID(101);
       if (response && response.status === 200) {
         setStates(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -75,7 +77,7 @@ const UpdateBasicProfile = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -85,6 +87,7 @@ const UpdateBasicProfile = () => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -93,7 +96,7 @@ const UpdateBasicProfile = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -115,6 +118,7 @@ const UpdateBasicProfile = () => {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
         setErrors("");
+        setServerError('');
         dispatch(login(response.data.data, token));
         navigate("/profile");
       }
@@ -130,7 +134,7 @@ const UpdateBasicProfile = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };

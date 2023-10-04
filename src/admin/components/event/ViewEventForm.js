@@ -89,7 +89,8 @@ const ViewEventForm = () => {
               <label className="fw-bold">Name - </label>
               </div>
               <div className="col-md-6">
-              <label>{data.name && data.name}</label>
+              <label className="hover-pointer" onClick={(e)=>{ e.preventDefault();navigate(`/users/view/${data.user_id}`)}
+              }  title="Click to know more about the user">{data.name && data.name}</label>
               </div>
               <div className="col-md-6">
               <label className="fw-bold">Email - </label>

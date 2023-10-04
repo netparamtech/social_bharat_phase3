@@ -108,7 +108,8 @@ const UserList = () => {
             className='small-img-user-list'
           />
         </a>
-      )
+      ),
+      width:100,
     },
     {
       title: 'Name',
@@ -124,6 +125,15 @@ const UserList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
+  
+    {
+      title: "Last Modified At",
+      dataIndex: "updated_at",
+      render: (text, record) => calculateTimeDifference(record.updated_at),
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+
     { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (
       <a
         className="collapse-item m-2"
@@ -147,15 +157,9 @@ const UserList = () => {
         <i className="fa fa-thumbs-down" title="Inactive" />
       </a>
     )), sorter: true,
-    sortDirections: ['asc', 'desc'],},
-  
-    {
-      title: "Last Modified At",
-      dataIndex: "updated_at",
-      render: (text, record) => calculateTimeDifference(record.updated_at),
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-    },
+    sortDirections: ['asc', 'desc'],
+  fixed: 'right',
+width:100,},
     {
       title: 'Actions',
       dataIndex: 'actions',
@@ -168,6 +172,7 @@ const UserList = () => {
         </div>
       ),
       fixed: 'right',
+      width:100
     },
     // Rest of the columns definition
   ];
@@ -206,7 +211,7 @@ const UserList = () => {
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
-      <Table className='table-striped table-hover '
+      <Table
         title={() => 'Users'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
@@ -218,9 +223,7 @@ const UserList = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-        scroll={{
-          x: 1300,
-        }}
+       
       // onChange={handleSearchChange}
       />
     </div>

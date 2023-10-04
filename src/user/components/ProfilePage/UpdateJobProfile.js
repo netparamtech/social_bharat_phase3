@@ -13,6 +13,7 @@ const UpdateJobProfile = (props) => {
   const [jobType, setJobType] = useState("");
 
   const [errors, setErrors] = useState("");
+  const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -39,6 +40,7 @@ const UpdateJobProfile = (props) => {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
         setErrors('');
+        setServerError('');
         window.location.href = '/profile';
       }
     } catch (error) {
@@ -51,7 +53,7 @@ const UpdateJobProfile = (props) => {
       else if (error.response && error.response.status === 401) {
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-       navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -83,6 +85,7 @@ const UpdateJobProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+              {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Job Info</h3>
                 </div>

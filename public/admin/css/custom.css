@@ -152,3 +152,12 @@ div.Table{
   justify-content: space-evenly;
   justify-items: auto;
 }
+
+.hover-pointer {
+  cursor: pointer;
+  color: blue; /* Default color is blue */
+}
+
+.hover-pointer:hover {
+  color: black; /* Color changes to black on hover */
+}

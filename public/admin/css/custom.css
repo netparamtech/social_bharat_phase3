@@ -159,5 +159,5 @@ div.Table{
 }
 
 .hover-pointer:hover {
-  color: black; /* Color changes to black on hover */
+  color: green; /* Color changes to black on hover */
 }

@@ -33,6 +33,7 @@ const BusinessInfo = (props) => {
 
 
           <div className="card-body">
+          <h5 className="fw-3 mb-3">Business Info</h5>
             <div className="row">
               {businessDetails && businessDetails.length > 0 ? (
                 <>                  {/* Render all fields inside a collapse div */}

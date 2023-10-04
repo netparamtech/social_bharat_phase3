@@ -41,7 +41,7 @@ const ViewEventForm = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -84,47 +84,22 @@ const ViewEventForm = () => {
             </div>
 
             <Card className="col-md-9 w-100 w-lg-75">
-            <div className="row w-50">
-              <div className="col-md-6">
-              <label className="fw-bold">Name - </label>
+              <div className="row w-50">
+                <div className="col-md-6">
+                  <label className="fw-bold">Name - </label>
+                </div>
+                <div className="col-md-6">
+                  <label className="hover-pointer" onClick={(e) => { e.preventDefault(); navigate(`/users/view/${data.user_id}`) }
+                  } title="Click to know more about the user">{data.name && data.name}</label>
+                </div>
+                <div className="col-md-6">
+                  <label className="fw-bold">Email - </label>
+                </div>
+                <div className="col-md-6">
+                  <label>{data.name && data.email}</label>
+                </div>
               </div>
-              <div className="col-md-6">
-              <label className="hover-pointer" onClick={(e)=>{ e.preventDefault();navigate(`/users/view/${data.user_id}`)}
-              }  title="Click to know more about the user">{data.name && data.name}</label>
-              </div>
-              <div className="col-md-6">
-              <label className="fw-bold">Email - </label>
-              </div>
-              <div className="col-md-6">
-              <label>{data.name && data.email}</label>
-              </div>
-              <div className="col-md-6">
-              <label className="fw-bold">Gender - </label>
-              </div>
-              <div className="col-md-6">
-              <label>{data.name && data.gender}</label>
-              </div>
-              <div className="col-md-6">
-              <label className="fw-bold">Mobile - </label>
-              </div>
-              <div className="col-md-6">
-              <label>{data.name && data.mobile}</label>
-              </div>
-              <div className="col-md-6 container-profilepic mx-auto card-block-md overflow-hidden ">
-               
-              <label className="fw-bold">Community - {data.community && data.community}</label>
-            </div>
-            <div className="col-md-6">
-            <Image
-            height={70}
-            src={data.thumb_image ? data.thumb_image : defaultPhoto}
-            title={data.community && data.community}
-          />
-            </div>
-            </div>
-              
 
-             
             </Card>
           </div>
         </div>

@@ -82,8 +82,8 @@ const EducationInfo = (props) => {
               </div>
 
             )) ) : (
-              <div className="add-more-info ">
-                <a href="#" onClick={()=>navigate('/user/update-education-profile')} className='btn btn-secondary'>Add Education Info </a>
+              <div className="add-more-info hover-pointer ">
+                <a onClick={()=>navigate('/user/update-education-profile')} className='btn btn-secondary'>Add Education Info </a>
               </div>
             )}
               

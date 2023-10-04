@@ -4,7 +4,15 @@ const JobInfo = (props) => {
   const { userDetails } = props;
   const jobDetails = userDetails?.data?.jobs;
 
-  
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const [month, day, year] = new Date(dateString)
+      .toLocaleDateString('en-GB', options)
+      .split('/');
+    return `${day}/${month}/${year}`;
+  };
+
+
   return (
     <div id="job-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
@@ -28,15 +36,17 @@ const JobInfo = (props) => {
                             </tr>
                             <tr>
                               <td>Job Start Date</td>
-                              <td className="text-muted">{item.job_start_date || 'NA'}</td>
+                              <td className="text-muted">{formatDate(item.job_start_date) || 'NA'}</td>
                             </tr>
                             <tr>
                               <td>Job End Date</td>
-                              <td className="text-muted">{item.job_end_date || 'NA'}</td>
+                              <td className="text-muted">{formatDate(item.job_end_date) || 'NA'}</td>
                             </tr>
                             <tr>
                               <td>Job Type</td>
-                              <td className="text-muted">{item.job_type || 'NA'}</td>
+                              <td className="text-muted">
+                                {item.job_type === 'PART_TIME' ? 'PART TIME' : 'FULL TIME'}
+                              </td>
                             </tr>
                           </tbody>
                         </table>

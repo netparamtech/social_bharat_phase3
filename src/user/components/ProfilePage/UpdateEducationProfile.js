@@ -98,7 +98,7 @@ const UpdateEducationProfile = (props) => {
     try {
       const response = await fetchAllDegrees();
       if (response && response.status === 200) {
-        setDegrees(response.data.data);
+        setDegrees(response.data.data.degrees);
         setServerError('');
       }
     } catch (error) {

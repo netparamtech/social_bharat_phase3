@@ -8,7 +8,6 @@ const Testimonials = () => {
 
   const handleReviewClick = (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0);
     navigate('/user/rating');
   }
 
@@ -49,7 +48,7 @@ const Testimonials = () => {
             <div key={index} className={index === 0 ? "carousel-item active" : "carousel-item"}>
               <img
                 className="rounded-circle shadow-1-strong mb-3"
-                src={item.photo || "/user/images/user-1.jpg"} // Use default image if imageUrl is not available
+                src={item.photo || "/user/images/OIP.jpg"} // Use default image if imageUrl is not available
                 alt={`User ${index + 1}`}
               />
               {/* Include other content for each carousel item here */}
@@ -67,7 +66,7 @@ const Testimonials = () => {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
-        <a className="btn btn-primary" href="" onClick={handleReviewClick}>Share Your Review</a>
+        <a className="btn btn-primary hover-pointer" onClick={handleReviewClick}>Share Your Review</a>
 
       </div>
     </section>

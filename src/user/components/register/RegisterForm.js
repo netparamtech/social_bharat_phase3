@@ -128,7 +128,7 @@ const RegisterForm = () => {
                     </div>
                     <div className="row mb-3">
                       <input
-                        type="text"
+                        type="number"
                         name="mobile"
                         id="mobile"
                         placeholder="Enter your mobile number"
@@ -168,8 +168,7 @@ const RegisterForm = () => {
                       <p className="fw-lighter fs-6">
                         Already User?{" "}
                         <a
-                          href=""
-                          className="text-primary text-decoration-none"
+                          className="text-primary text-decoration-none hover-pointer"
                           onClick={() => navigate("/login")}
                         >
                           Login

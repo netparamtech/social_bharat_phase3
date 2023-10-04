@@ -23,9 +23,13 @@ const NavbarTransparent = () => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
+    const isHomePage = window.location.pathname === '/';
+    if(!isHomePage){
+      window.location.href='/';
+      return;
+    }
     window.scrollTo(0, 0);
     navigate('/');
-
   }
 
   const handleAboutClick = (e) => {
@@ -68,9 +72,7 @@ const NavbarTransparent = () => {
 
       if (!isHomePage) {
         e.preventDefault();
-        Modal.error({
-          content: 'The "Services" are only accessible from the home page.',
-        });
+        navigate('/login');
         return;
       }
 
@@ -81,19 +83,6 @@ const NavbarTransparent = () => {
       }
     }
   };
-
-
-
-  // const handleSearchClick = (e) => {
-  //   e.preventDefault();
-  //   if (isAuthenticUser) {
-  //     if (isPasswordSet) {
-  //       navigate("/user/search");
-  //     } else {
-  //       navigate("/set-password");
-  //     }
-  //   }
-  // };
 
   const showDrawer = () => {
     setVisible(!visible);
@@ -237,13 +226,13 @@ const NavbarTransparent = () => {
 
                 <li className="nav-item mt-2 breadcrumb-item">
                   <a className="nav-link" onClick={handleAboutClick} >
-                    <i class="fa fa-info-circle m-2" aria-hidden="true"></i>About
+                    <i className="fa fa-info-circle m-2" aria-hidden="true"></i>About
                   </a>
                 </li>
 
-                <li className="nav-item ">
+                <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleEventClick}>
-                  <i class="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
+                    <i className="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
                   </a>
                 </li>
 

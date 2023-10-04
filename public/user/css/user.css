@@ -179,9 +179,12 @@ nav .nav-item .btn {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   object-fit: cover;
-  margin-top: 70px;
+}
+
+#banners-section{
+  margin-top: 94px;
   @media (max-width: 767px) {
-    margin-top: 37px; 
+    margin-top: 90px; 
   }
 }
 
@@ -457,12 +460,22 @@ nav .container,
   object-fit: cover;
   background-size: cover;
   overflow: hidden;
+  
 }
 
 #testimonials::before {
-  content: "";
+  content: " ";
   position: absolute;
   inset: 0;
+}
+
+#testimonials .comment-text{
+  text-align: center;
+  width: 68%;
+  /* text-justify: distribute-all-lines; */
+  /* text-align:justify; */
+  margin: 0px 20%;
+
 }
 
 #testimonials h3 {
@@ -528,6 +541,12 @@ a.btn.dropdown-toggle.show:focus {
   width: 2.5rem;
   margin-right: 1rem;
   border-radius: 100%;
+}
+
+.dropdown-thubnail-img{
+  height: 2rem;
+  width: 3rem;
+  /* margin-right: 1rem; */
 }
 
 .dropdown-user-details-name {
@@ -791,6 +810,10 @@ a.btn.dropdown-toggle.show:focus {
 
 #dashboard .card {
   box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 10px;
 }
 
 #dashboard a {
@@ -1102,7 +1125,7 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 #basic-profile-section .community-img {
-  width: 30px;
+  width: 50px;
   height: 30px;
 }
 
@@ -1197,3 +1220,20 @@ nav .nav-item {
 
 /*------------------ */
 
+/* input type number Arrow none */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.hover-pointer {
+  cursor: pointer;
+}
+/* ---------------------------- */

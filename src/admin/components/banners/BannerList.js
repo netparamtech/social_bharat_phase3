@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { fetchAllBanners, updateBannerToggleStatus } from '../../services/AdminService';
 
 const BannerList = () => {
     const [data, setData] = useState([]);
-    const [errors, setErrors] = useState('');
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const fetchBanners = async () => {
@@ -19,7 +16,6 @@ const BannerList = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
             }
 
             //Unauthorized
@@ -27,7 +23,8 @@ const BannerList = () => {
                 navigate('/admin');
             }
             else if (error.response && error.response.status === 500) {
-                navigate('/admin');
+                let errorMessage = error.response.data.message;
+                navigate('/server/error', { state: { errorMessage } });
             }
 
         }
@@ -43,7 +40,8 @@ const BannerList = () => {
             if (error.response && error.response.status === 401) {
                 navigate('/admin');
             } else if (error.response && error.response.status === 500) {
-                navigate('/admin');
+                let errorMessage = error.response.data.message;
+                navigate('/server/error', { state: { errorMessage } });
             }
         }
     }
@@ -58,7 +56,7 @@ const BannerList = () => {
         <div className="container-fluid">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Banners</h1>
-                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onClick={()=>navigate('/admin/banner/create')}>
+                <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onClick={() => navigate('/admin/banner/create')}>
                     Create Banner
                 </a>
             </div>
@@ -111,7 +109,7 @@ const BannerList = () => {
                                     </td>
                                     <td key={item.id}>
                                         <div className="d-flex">
-                                            <a className="collapse-item" href="#" onClick={()=>navigate(`/admin/banners/update/${item.page}/${item.section}`)}>
+                                            <a className="collapse-item" href="#" onClick={() => navigate(`/admin/banners/update/${item.page}/${item.section}`)}>
                                                 <i className="fa fa-edit mr-4" title="Edit" />
                                             </a>
 

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
-
-import { logout } from "../../actions/authActions";
 import {
   fetchBusinessCategorieWithId,
   updateBusinessCategorie,fetchAllCategories
@@ -19,7 +16,6 @@ const UpdateBusinessCategorie = () => {
   const [alertClass, setAlertClass] = useState("");
   const [businessCategories,setBusinessCategories] = useState('');
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchBusinessCategorie = async () => {
@@ -41,11 +37,10 @@ const UpdateBusinessCategorie = () => {
       
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        dispatch(logout());
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -65,7 +60,8 @@ const UpdateBusinessCategorie = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -101,7 +97,8 @@ const UpdateBusinessCategorie = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };

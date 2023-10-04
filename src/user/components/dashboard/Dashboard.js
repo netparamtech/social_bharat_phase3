@@ -13,7 +13,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Profile</div>
-                    <div className="text-lg fw-bold">Manage Profile</div>
+                    <div className="text-lg fw-bold">Manage Profile <br/>प्रोफ़ाइल प्रबंधित करें </div>
                   </div>
                   <img src="/user/images/activities.png" width="40px" />
                 </div>
@@ -38,7 +38,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Connection</div>
-                    <div className="text-lg fw-bold">Search People</div>
+                    <div className="text-lg fw-bold">Search People <br />लोग खोजें</div>
                   </div>
                   <img src="/user/images/searchPeople.png" width="40px" />
                 </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg fw-bold">Search Partner</div>
+                    <div className="text-lg fw-bold">Search Partner <br/>शादी हेतु साथी खोजें</div>
                   </div>
                   <img src="/user/images/wedding.png" width="40px" />
                 </div>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                   className="text-white stretched-link"
                   onClick={() => navigate("/user/search/partner")}
                 >
-                  View Tasks
+                  View
                 </a>
                 <div className="text-white">
                   <i className="fa-solid fa-arrow-right"></i>
@@ -88,7 +88,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Making Money</div>
-                    <div className="text-lg fw-bold">Search Business</div>
+                    <div className="text-lg fw-bold">Search Business  <br/> व्यवसाय खोजें</div>
                   </div>
                   <img src="/user/images/financial-profit.png" width="40px" />
                 </div>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Matrimonial</div>
                     <div className="text-lg fw-bold">
-                      Create Matrimonial Profile
+                      Create Matrimonial Profile < br/>वैवाहिक प्रोफ़ाइल बनाएं
                     </div>
                   </div>
                   <img src="/user/images/diamond-ring.png" width="40px" />
@@ -141,7 +141,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Events</div>
                     <div className="text-lg fw-bold">
-                      Update Contact Information
+                      Update Contact Information <br/>पता अपडेट करें
                     </div>
                   </div>
                   <img src="/user/images/contactUpdate.png" width="40px" />
@@ -167,7 +167,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Business</div>
-                    <div className="text-lg fw-bold">Add Your Business</div>
+                    <div className="text-lg fw-bold">Add Your Business<br/>बिजनेस जोडे </div>
                   </div>
                   <img src="/user/images/account.png" width="40px" />
                 </div>
@@ -192,7 +192,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Feedback</div>
-                    <div className="text-lg fw-bold">Add Feedback</div>
+                    <div className="text-lg fw-bold">Add Feedback <br/>प्रतिक्रिया जोड़ें</div>
                   </div>
                   <img src="/user/images/review.png" width="40px" />
                 </div>
@@ -210,6 +210,32 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-soil text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Event</div>
+                    <div className="text-lg fw-bold">Add Event <br/>कार्यक्रम जोड़ें</div>
+                  </div>
+                  <img src="/user/images/placard.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white stretched-link"
+                  onClick={() => navigate("/event")}
+                >
+                  View
+                </a>
+                <div className="text-white">
+                  <i className="fa-solid fa-arrow-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

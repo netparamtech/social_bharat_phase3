@@ -38,7 +38,7 @@ const ContactInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className={`edit-icon add-more-detail ${contactDetails && contactDetails.length > 1 ? 'd-none' : ''}`}>
-            <a href="#" onClick={()=>navigate('/user/update-contact')} title="Add More Detail">
+            <a className='hover-pointer' onClick={()=>navigate('/user/update-contact')} title="Add More Detail">
               <i className="btn btn-outline-info fas fa-plus"></i></a>
           </div>
           <div className="card-body">
@@ -49,7 +49,7 @@ const ContactInfo = (props) => {
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow">
                       <div className="edit-icon">
-                        <a href="#" onClick={()=>navigate(`/user/update-contact/${item.id}`)} title="Edit">
+                        <a className='hover-pointer' onClick={()=>navigate(`/user/update-contact/${item.id}`)} title="Edit">
                           <i className="fas fa-pencil-alt"></i>
                         </a>
                       </div>
@@ -72,7 +72,7 @@ const ContactInfo = (props) => {
                   </div>
                 )) : (
                   <div className="add-more-info ">
-                    <a href="#" onClick={()=>navigate('/user/update-contact')} className='btn btn-secondary'>Add Contact Info </a>
+                    <a onClick={()=>navigate('/user/update-contact')} className='btn btn-secondary hover-pointer'>Add Contact Info </a>
                   </div>
                 )}
 

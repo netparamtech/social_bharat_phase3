@@ -30,6 +30,7 @@ const UpdateBusinessProfile = (props) => {
   const [businessPreview, setBusinessPreview] = useState([]);
 
   const [errors, setErrors] = useState('');
+  const [serverError,setServerError] = useState('');
   const navigate = useNavigate();
 
   const handleBusinessPhotoChange = async (e) => {
@@ -66,6 +67,7 @@ const UpdateBusinessProfile = (props) => {
       if (response.status === 200) {
         const combineTempUrls = [...tempBusinessPhotoUrl, ...response.data.data.files];
         setTempBusinessPhotoUrl(combineTempUrls);
+        setServerError('');
       }
     } catch (error) {
       // Handle error
@@ -79,7 +81,7 @@ const UpdateBusinessProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -136,6 +138,7 @@ const UpdateBusinessProfile = (props) => {
       const response = await updateBusinessInfo(businessData);
       if (response && response.status === 200) {
         setErrors('');
+        setServerError('');
         navigate('/profile');
       }
     } catch (error) {
@@ -151,7 +154,7 @@ const UpdateBusinessProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
 
@@ -176,6 +179,7 @@ const UpdateBusinessProfile = (props) => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
+        setServerError('');
       }
     } catch (error) {
 
@@ -185,7 +189,7 @@ const UpdateBusinessProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
 
     }
@@ -196,6 +200,7 @@ const UpdateBusinessProfile = (props) => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -204,7 +209,7 @@ const UpdateBusinessProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -215,7 +220,8 @@ const UpdateBusinessProfile = (props) => {
     try {
       const response = await fetchAllActiveBusinessCategories();
       if (response && response.status === 200) {
-        setBusinessCategories(response.data.data);
+        setBusinessCategories(response.data.data.businessCategories);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -224,7 +230,7 @@ const UpdateBusinessProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -294,10 +300,12 @@ const UpdateBusinessProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+              {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Business Info</h3>
                 </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+               
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Name</label>
@@ -451,7 +459,7 @@ const UpdateBusinessProfile = (props) => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Business Email</label>
-                      <input type="text"
+                      <input type="email"
                         name="email"
                         id="email"
                         placeholder="Enter Contact 1"

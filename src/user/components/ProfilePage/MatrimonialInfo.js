@@ -56,14 +56,14 @@ const MatrimonialInfo = (props) => {
         <div className="card shadow">
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
             <div className="edit-icon">
-              <a href="#" onClick={()=>navigate("/user/update-matrimonial-profile")} title="Edit">
+              <a className="hover-pointer" onClick={()=>navigate("/user/update-matrimonial-profile")} title="Edit">
                 <i className="fas fa-pencil-alt"></i>
               </a>
             </div>
           ) : (
             <div className="edit-icon add-more-detail">
               <a
-                href="#"
+                className="hover-pointer"
                 title="Add More Detail"
                 onClick={()=>navigate("/user/update-matrimonial-profile")}
               >
@@ -73,9 +73,9 @@ const MatrimonialInfo = (props) => {
           )}
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
             <div className="delete-icon">
-              <a href="#" title="Delete">
+              <a title="Delete" className="hover-pointer">
                 <i
-                  className="fa-solid fa-trash"
+                  className="fa-solid fa-trash "
                   onClick={(e) => {
                     e.preventDefault();
                     deleteMatrimonialDetails();
@@ -229,8 +229,7 @@ const MatrimonialInfo = (props) => {
             ) : (
               <div className="add-more-info ">
                 <a
-                  href="#"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary hover-pointer"
                   onClick={()=>navigate('/user/update-matrimonial-profile')}
                 >
                   Add Matrimonial Info

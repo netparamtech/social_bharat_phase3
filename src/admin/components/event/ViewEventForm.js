@@ -37,7 +37,12 @@ const ViewEventForm = () => {
         setSelectedCity(response.data.data.city);
       }
     } catch (error) {
-      // Handle errors
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
     }
   };
 
@@ -79,20 +84,22 @@ const ViewEventForm = () => {
             </div>
 
             <Card className="col-md-9 w-100 w-lg-75">
-              <p>Name - {data.name && data.name}</p>
-              <p>Email - {data.name && data.email}</p>
-              <p>Gender - {data.name && data.gender}</p>
-              <p>Mobile - {data.name && data.mobile}</p>
-
-              <div className="container-profilepic mx-auto card-block-md overflow-hidden ">
-                <Image
-                  width={100}
-                  height={50}
-                  src={data.thumb_image ? data.thumb_image : defaultPhoto}
-                  title={data.community && data.community}
-                />
-                <p>Community - {data.community && data.community}</p>
+              <div className="row w-50">
+                <div className="col-md-6">
+                  <label className="fw-bold">Name - </label>
+                </div>
+                <div className="col-md-6">
+                  <label className="hover-pointer" onClick={(e) => { e.preventDefault(); navigate(`/users/view/${data.user_id}`) }
+                  } title="Click to know more about the user">{data.name && data.name}</label>
+                </div>
+                <div className="col-md-6">
+                  <label className="fw-bold">Email - </label>
+                </div>
+                <div className="col-md-6">
+                  <label>{data.name && data.email}</label>
+                </div>
               </div>
+
             </Card>
           </div>
         </div>
@@ -104,7 +111,7 @@ const ViewEventForm = () => {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
-                    <h3 className="mb-3 fw-bold">Event Info</h3>
+                    <h3 className="mb-3 fw-bold fs-5">Event Info</h3>
                   </div>
                   <form className="p-3">
                     <div className="row">

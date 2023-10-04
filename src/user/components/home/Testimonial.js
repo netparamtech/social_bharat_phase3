@@ -48,9 +48,11 @@ const Testimonials = () => {
                 alt={`User ${index + 1}`}
               />
               {/* Include other content for each carousel item here */}
+              <div className="mb-3 comment-text"> Lorem aliasry ipsum dolor sits ametans, consectetur adipisicing elitits. Expedita reiciendis itaque placeat thuratu, quasi yiuos repellendus repudiandae deleniti ideas fuga molestiae, alias. </div>
             </div>
             
           ))}
+
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>

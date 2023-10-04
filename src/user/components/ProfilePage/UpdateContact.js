@@ -15,6 +15,7 @@ const UpdateContact = (props) => {
   const [countryID, setCountryID] = useState('');
 
   const [errors, setErrors] = useState('');
+  const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -65,6 +66,7 @@ const UpdateContact = (props) => {
 
       if (response && response.status === 200) {
         setErrors('');
+        setServerError('');
         navigate('/profile');
       }
     } catch (error) {
@@ -80,7 +82,7 @@ const UpdateContact = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -91,6 +93,7 @@ const UpdateContact = (props) => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
+        setServerError('');
       }
     } catch (error) {
 
@@ -100,7 +103,7 @@ const UpdateContact = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
 
     }
@@ -111,6 +114,7 @@ const UpdateContact = (props) => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
+        setServerError('');
       }
     } catch (error) {
        //Unauthorized
@@ -119,7 +123,7 @@ const UpdateContact = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }

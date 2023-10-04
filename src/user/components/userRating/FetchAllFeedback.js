@@ -106,11 +106,9 @@ const FetchAllFeedback = () => {
                               </p>
                             </h6>
                           </div>
-                          <p className="link-grey">
-                            {calculateTimeDifference(item.updated_at)}
-                          </p>
+                          
                           <div className="d-flex justify-content-between align-items-center">
-                            <p className="small mb-0" style={{ color: "#aaa" }}>
+                            {/* <p className="small mb-0" style={{ color: "#aaa" }}>
                               <a href="" className="link-grey me-2">
                                 Remove
                               </a>{" "}
@@ -118,7 +116,7 @@ const FetchAllFeedback = () => {
                               <a href="" className="link-grey">
                                 Edit
                               </a>
-                            </p>
+                            </p> */}
                             <div className="d-flex flex-row">
                               {generateRatingStars(item.rating)}
                               <i
@@ -126,6 +124,9 @@ const FetchAllFeedback = () => {
                                 style={{ color: "#aaa" }}
                               ></i>
                             </div>
+                            <p className="link-grey mt-3">
+                            {calculateTimeDifference(item.updated_at)}
+                          </p>
                           </div>
                         </div>
                       </div>

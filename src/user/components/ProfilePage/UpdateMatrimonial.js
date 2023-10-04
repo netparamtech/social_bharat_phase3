@@ -6,7 +6,6 @@ import {
 } from "../../services/userService";
 import { getFeet, getInches } from "../../util/Conversion";
 import { useNavigate } from "react-router-dom";
-import { Slider } from "antd";
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -31,6 +30,7 @@ const UpdateMatrimonial = (props) => {
   const [biodataPreview, setBiodataPreview] = useState("");
 
   const [errors, setErrors] = useState("");
+  const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -71,6 +71,7 @@ const UpdateMatrimonial = (props) => {
           ...response.data.data.files,
         ];
         setTempProposalPhotoUrl(combineTempUrls);
+        setServerError('');
       }
     } catch (error) {
       // Handle error
@@ -84,7 +85,7 @@ const UpdateMatrimonial = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -101,6 +102,7 @@ const UpdateMatrimonial = (props) => {
       const response = await uploadPdf(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
         setTempBiodataFileUrl(response.data.data.file);
+        setServerError('');
       }
     } catch (error) {
       // Handle error
@@ -114,7 +116,7 @@ const UpdateMatrimonial = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -139,6 +141,7 @@ const UpdateMatrimonial = (props) => {
       const response = await updateMatrimonialInfo(matrimonialData);
       if (response && response.status === 200) {
         setErrors("");
+        setServerError('');
         navigate("/profile");
       }
     } catch (error) {
@@ -153,7 +156,7 @@ const UpdateMatrimonial = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -210,6 +213,10 @@ const UpdateMatrimonial = (props) => {
     }
   }, [userMatrimonial]);
 
+  useEffect(()=>{
+    setServerError('');
+  },[]);
+
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
@@ -217,6 +224,7 @@ const UpdateMatrimonial = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+              {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Matrimonial Info</h3>
                 </div>

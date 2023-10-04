@@ -16,6 +16,7 @@ const UpdateEducationProfile = (props) => {
   const [passingYear, setPassingYear] = useState('');
 
   const [errors, setErrors] = useState('');
+  const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -72,6 +73,7 @@ const UpdateEducationProfile = (props) => {
       const response = await updateEducationalDetails(requestData);
       if (response && response.status === 200) {
         setErrors('');
+        setServerError('');
         navigate('/profile');
       }
     } catch (error) {
@@ -87,7 +89,7 @@ const UpdateEducationProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -96,7 +98,8 @@ const UpdateEducationProfile = (props) => {
     try {
       const response = await fetchAllDegrees();
       if (response && response.status === 200) {
-        setDegrees(response.data.data);
+        setDegrees(response.data.data.degrees);
+        setServerError('');
       }
     } catch (error) {
 
@@ -106,7 +109,7 @@ const UpdateEducationProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -136,8 +139,10 @@ const UpdateEducationProfile = (props) => {
     }
   }, [educationDetails, degrees]);
 
-
-
+  useEffect(()=>{
+    setServerError('');
+    setErrors('');
+  },[]);
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -146,6 +151,7 @@ const UpdateEducationProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+              {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Education Info</h3>
                 </div>

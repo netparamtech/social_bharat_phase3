@@ -3,7 +3,6 @@ import { Table } from 'antd';
 import {
   deleteTestimonialByID,
   fetchTestimonials,
-  updateToggleStatus,
   updateToggleStatusForTestimonial,
 } from "../../services/AdminService";
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +57,8 @@ const Testimonial = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -74,7 +74,8 @@ const Testimonial = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   }
@@ -90,7 +91,8 @@ const Testimonial = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   }

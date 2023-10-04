@@ -58,7 +58,8 @@ const Event = () => {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -73,7 +74,8 @@ const Event = () => {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -88,7 +90,8 @@ const Event = () => {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -111,35 +114,9 @@ const Event = () => {
       render: (text, record, index) => index + 1,
       width: 100,
     },
+   
     {
-      title: 'Photo', dataIndex: 'photo',
-      render: (text, record) => (
-        <a href={record.photo} target='_blank'>
-          <img
-            src={record.photo ? record.photo : defaultImage}
-            alt={record.name}
-            title={record.name}
-            className='small-img-user-list'
-          />
-        </a>
-      ),
-      width: 150,
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-      width: 150,
-    },
-    {
-      title: 'Email', dataIndex: 'email',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-      width: 150,
-    },
-    {
-      title: "Event", dataIndex: "title", width: 150,
+      title: "Event", dataIndex: "title", width: 300,
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
@@ -154,6 +131,22 @@ const Event = () => {
       sortDirections: ['asc', 'desc'],
       width: 150,
     },
+
+    {
+      title: "Event Start At",
+      dataIndex: "start_datetime",
+      render: (text, record) => formatDate(record.start_datetime),
+      width: 150,
+
+    },
+    {
+      title: "Event End At",
+      dataIndex: "end_datetime",
+      render: (text, record) => formatDate(record.end_datetime),
+      width: 150,
+
+    },
+
     {
       title: 'Status', dataIndex: 'status', render: (text, record) => (record.status === 'Active' ? (
         <a
@@ -184,27 +177,10 @@ const Event = () => {
     },
 
     {
-      title: "Event Start At",
-      dataIndex: "start_datetime",
-      render: (text, record) => formatDate(record.start_datetime),
-      fixed: 'right',
-      width: 150,
-
-    },
-    {
-      title: "Event End At",
-      dataIndex: "end_datetime",
-      render: (text, record) => formatDate(record.end_datetime),
-      fixed: 'right',
-      width: 150,
-
-    },
-
-    {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
-        <div className='d-flex'>
+        <div className=''>
           <a
             className="collapse-item"
             onClick={() => navigate(`/events/view/${record.id}`)}
@@ -226,8 +202,6 @@ const Event = () => {
         </div>
       ),
       fixed: 'right',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
       with: 200,
     },
     // Rest of the columns definition
@@ -245,8 +219,9 @@ const Event = () => {
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
+     
       <Table
-        title={() => 'Events'}  // Set the title to 'Enquiries'
+        title ={() => 'Events'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{
@@ -257,9 +232,6 @@ const Event = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-        scroll={{
-          x: 1300,
-        }}
       // onChange={handleSearchChange}
       />
     </div>

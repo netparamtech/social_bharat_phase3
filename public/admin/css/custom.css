@@ -142,3 +142,26 @@
   font-size: 30px !important;
 }
 
+div.ant-table-title {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+}
+
+div.Table{
+ 
+  justify-content: space-evenly;
+  justify-items: auto;
+}
+
+.hover-pointer-admin {
+  cursor: pointer;
+}
+
+.hover-pointer {
+  cursor: pointer;
+  color: blue; /* Default color is blue */
+}
+
+.hover-pointer:hover {
+  color: green; /* Color changes to black on hover */
+}

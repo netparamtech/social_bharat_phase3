@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-  
+  <>
     <div id="footer">
       <div className="container text-start lh-lg wow animate__animated animate__fadeInUp">
         <div className="row pt-5 pb-3">
@@ -94,7 +94,7 @@ const Footer = () => {
                 {" "}
                 <a href="" className="text-decoration-none gray-color">
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Connect With Community
+                  Connect To Cmmunity
                 </a>
               </li>
             </ul>
@@ -124,7 +124,7 @@ const Footer = () => {
       </div>
       {/* Footer End */}
       <div id="footer-end">
-      <div className="container wow animate__animated animate__fadeInUp">
+      <div className="container">
         <div className="row pt-2 pb-2">
           <div className="col text-center">
             <div className="copyright">
@@ -152,6 +152,7 @@ const Footer = () => {
                 <i className="fa-solid fa-arrow-up-long justify-content-center"></i>
             </button> */}
     </div>
+    </>
   );
 };
 

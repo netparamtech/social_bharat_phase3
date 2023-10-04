@@ -56,7 +56,8 @@ const UserList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   };
@@ -73,7 +74,8 @@ const UserList = () => {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
-        navigate('/admin');
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
       }
     }
   }
@@ -106,7 +108,8 @@ const UserList = () => {
             className='small-img-user-list'
           />
         </a>
-      )
+      ),
+      width:100,
     },
     {
       title: 'Name',
@@ -114,16 +117,7 @@ const UserList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
-    { title: 'Email', dataIndex: 'email',width:200 ,
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-  },
-    {
-      title: 'Mobile',
-      dataIndex: 'mobile',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-    },
+   
     {
       title: 'Community',
       dataIndex: 'community',
@@ -131,6 +125,15 @@ const UserList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
+  
+    {
+      title: "Last Modified At",
+      dataIndex: "updated_at",
+      render: (text, record) => calculateTimeDifference(record.updated_at),
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+
     { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (
       <a
         className="collapse-item m-2"
@@ -154,15 +157,9 @@ const UserList = () => {
         <i className="fa fa-thumbs-down" title="Inactive" />
       </a>
     )), sorter: true,
-    sortDirections: ['asc', 'desc'],},
-  
-    {
-      title: "Last Modified At",
-      dataIndex: "updated_at",
-      render: (text, record) => calculateTimeDifference(record.updated_at),
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-    },
+    sortDirections: ['asc', 'desc'],
+  fixed: 'right',
+width:100,},
     {
       title: 'Actions',
       dataIndex: 'actions',
@@ -175,8 +172,7 @@ const UserList = () => {
         </div>
       ),
       fixed: 'right',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
+      width:100
     },
     // Rest of the columns definition
   ];
@@ -227,9 +223,7 @@ const UserList = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-        scroll={{
-          x: 1300,
-        }}
+       
       // onChange={handleSearchChange}
       />
     </div>

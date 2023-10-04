@@ -13,6 +13,7 @@ const UpdateJobProfile = (props) => {
   const [jobType, setJobType] = useState("");
 
   const [errors, setErrors] = useState("");
+  const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -39,7 +40,8 @@ const UpdateJobProfile = (props) => {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
         setErrors('');
-        window.location.href = '/profile';
+        setServerError('');
+        navigate('/profile');
       }
     } catch (error) {
       // Handle error
@@ -51,7 +53,7 @@ const UpdateJobProfile = (props) => {
       else if (error.response && error.response.status === 401) {
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-       navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -83,10 +85,11 @@ const UpdateJobProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+              {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Job Info</h3>
                 </div>
-                <form className="w-100 w-lg-75">
+                <form className="w-100 w-lg-75" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Company Name</label>
@@ -173,7 +176,7 @@ const UpdateJobProfile = (props) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary" onClick={()=>navigate('/profile')}>
+                      <button type="submit" className="btn btn-primary">
                         Update
                       </button>
                     </div>

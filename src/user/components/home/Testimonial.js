@@ -48,14 +48,14 @@ const Testimonials = () => {
           {data.map((item, index) => (
             <div key={index} className={index === 0 ? "carousel-item active" : "carousel-item"}>
               <img
-                className="rounded-circle shadow-1-strong mb-4"
+                className="rounded-circle shadow-1-strong mb-3"
                 src={item.photo || "/user/images/user-1.jpg"} // Use default image if imageUrl is not available
                 alt={`User ${index + 1}`}
               />
               {/* Include other content for each carousel item here */}
-              <div className="mb-3 comment-text">{item.name}</div>
-              <div className="mb-3 comment-text">{item.message}</div>
-              <div className="">{generateRatingStars(item.rating)}</div>
+              <div className="mb-2 comment-text mx-auto">{item.name}</div>
+              <div className="mb-2 comment-text mx-auto">{item.message}</div>
+              <div className="mb-3 mx-auto">{generateRatingStars(item.rating)}</div>
             </div>
             
           ))}

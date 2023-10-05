@@ -7,7 +7,7 @@ const EducationInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-          <h5 className="fw-3 mb-3">Education Info</h5>
+          <h5 className="mb-3 fw-bold fs-5">Education Info</h5>
             <div className="row">
             {educationDetails && educationDetails.length > 0 ? (
                 educationDetails.map((item, idx) => (

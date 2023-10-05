@@ -18,7 +18,7 @@ const JobInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-          <h5 className="fw-3 mb-3">Job Info</h5>
+          <h5 className="mb-3 fw-bold fs-5">Job Info</h5>
             <div className="row">
               {jobDetails && jobDetails.length > 0 ? (
                 jobDetails.map((item, idx) => (

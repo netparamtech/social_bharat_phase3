@@ -24,9 +24,9 @@ const ViewUser = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                navigate('/login');
+                navigate('/admin');
             } else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                navigate('/admin');
             }
         }
     }

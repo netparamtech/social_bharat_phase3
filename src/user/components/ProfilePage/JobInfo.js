@@ -38,7 +38,7 @@ const JobInfo = (props) => {
     const [month, day, year] = new Date(dateString)
       .toLocaleDateString('en-GB', options)
       .split('/');
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   return (

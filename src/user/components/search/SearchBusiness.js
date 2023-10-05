@@ -166,8 +166,9 @@ const SearchBusiness = () => {
     return (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
             <div className="container">
-                <div className="card shadow">
+                <div className="card shadow">  
                     <div className="card-body">
+                  
                         <div>
                             <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
                         </div>
@@ -185,7 +186,7 @@ const SearchBusiness = () => {
                         </div>
                         
                         <div className="container-input mb-3">
-                            <input type="text" placeholder="Search" name="text" className="input form-control" onChange={handleSearchText} />
+                            <input type="text" placeholder="Search Business" name="text" className="input form-control" onChange={handleSearchText} />
                             <i className="fas fa-search"></i>
                         </div>
                         <div className={`row ${isFilter ? '' : 'd-none'}`}>

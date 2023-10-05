@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchEventByID } from "../../services/AdminService";
+import { fetchTestimonialByID } from "../../services/AdminService";
 import { Card, Image } from "antd";
 
-const ViewEventForm = () => {
+const ViewTestimonial = () => {
   const { id } = useParams();
 
   const defaultPhoto = "/user/images/user.png";
@@ -29,7 +29,7 @@ const ViewEventForm = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetchEventByID(id);
+      const response = await fetchTestimonialByID(id);
       if (response && response.status === 200) {
         setData(response.data.data);
         setSelectedCountry(response.data.data.country);
@@ -57,6 +57,16 @@ const ViewEventForm = () => {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const generateRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(
+        <span key={i} className="fas fa-star text-warning me-2"></span>
+      );
+    }
+    return stars;
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -74,7 +84,7 @@ const ViewEventForm = () => {
                     title={data.name && data.name}
                   />
                 </div>
-                <div className="card-body">
+                <div className="card-body ">
                   <p className="card-text text-center mb-0">
                     {data.name && data.name}
                   </p>
@@ -83,14 +93,13 @@ const ViewEventForm = () => {
               </div>
             </div>
 
-            <Card className="col-md-9 w-100 w-lg-75">
-              <div className="row w-50">
+            <Card className="col-md-9 w-100 w-lg-75 mt-2">
+              <div className="row w-50 mt-5">
                 <div className="col-md-6">
                   <label className="fw-bold">Name - </label>
                 </div>
                 <div className="col-md-6">
-                  <label className="hover-pointer" onClick={(e) => { e.preventDefault(); navigate(`/users/view/${data.user_id}`) }
-                  } title="Click to know more about the user">{data.name && data.name}</label>
+                <label>{data.name && data.name}</label>
                 </div>
                 <div className="col-md-6">
                   <label className="fw-bold">Email - </label>
@@ -111,33 +120,21 @@ const ViewEventForm = () => {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
-                    <h3 className="mb-3 fw-bold fs-5">Event Info</h3>
+                    <h3 className="mb-3 fw-bold fs-5">Testimonial</h3>
                   </div>
                   <form className="p-3">
                     <div className="row">
                       <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                         <div className="row">
                           <div className="col-md-4">
-                            <label className="fw-bold">Event Title :</label>
+                            <label className="fw-bold">Message :</label>
                           </div>
                           <div className="col-md-8">
-                            <label className="">{data.title}</label>
+                            <label className="">{data.message}</label>
                           </div>
                         </div>
                       </div>
 
-                      <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="fw-bold">Venue :</label>
-                          </div>
-                          <div className="col-md-8">
-                            <label className="">
-                              {data.venue},{selectedCity}({selectedState})
-                            </label>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
                     <div className="row">
@@ -145,12 +142,12 @@ const ViewEventForm = () => {
                         <div className="row">
                           <div className="col-md-4">
                             <label className="fw-bold">
-                              Start Date / Time :
+                              Created Date :
                             </label>
                           </div>
                           <div className="col-md-8">
                             <label className="">
-                              {formatDate(data.start_datetime)}
+                              {formatDate(data.created_at)}
                             </label>
                           </div>
                         </div>
@@ -159,11 +156,11 @@ const ViewEventForm = () => {
                       <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="row">
                           <div className="col-md-4">
-                            <label className="fw-bold">End Date / Time :</label>
+                            <label className="fw-bold">Active/Inactive Date:</label>
                           </div>
                           <div className="col-md-8">
-                            <label className="">
-                              {formatDate(data.end_datetime)}
+                          <label className="">
+                              {formatDate(data.updated_at)}
                             </label>
                           </div>
                         </div>
@@ -175,19 +172,13 @@ const ViewEventForm = () => {
                         <div className="row">
                           <div className="col-md-4">
                             <label htmlFor="status" className="fw-bold">
-                              Thumb Image
+                             Rating :
                             </label>
                           </div>
                           <div className="col-md-8">
-                            <Image
-                              height={70}
-                              src={
-                                data.thumb_image
-                                  ? data.thumb_image
-                                  : defaultPhoto
-                              }
-                              title={data.community && data.community}
-                            />
+                          <label className="">
+                              {generateRatingStars(data.rating)}
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -196,19 +187,13 @@ const ViewEventForm = () => {
                         <div className="row">
                           <div className="col-md-4">
                             <label htmlFor="status" className="fw-bold">
-                              Banner Image
+                              Status :
                             </label>
                           </div>
                           <div className="col-md-8">
-                            <Image
-                              height={70}
-                              src={
-                                data.banner_image
-                                  ? data.banner_image
-                                  : defaultPhoto
-                              }
-                              title={data.community && data.community}
-                            />
+                          <label className="">
+                              {data.status}
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -224,4 +209,4 @@ const ViewEventForm = () => {
   );
 };
 
-export default ViewEventForm;
+export default ViewTestimonial;

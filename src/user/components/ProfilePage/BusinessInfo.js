@@ -62,7 +62,7 @@ const BusinessInfo = (props) => {
                 <>                  {/* Render all fields inside a collapse div */}
                   {businessDetails.map((item, value) => (
                     <div className="col-md-6" key={value}>
-                      <div className="card shadow">
+                      <div className="card shadow mb-3">
                         <div className="edit-icon ">
                           <a className="hover-pointer" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">
                             <i className="fas fa-pencil-alt"></i>

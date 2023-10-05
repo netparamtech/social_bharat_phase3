@@ -80,7 +80,7 @@ const BusinessInfo = (props) => {
                           </a>
                         </div>
 
-                        <div className="card-body mt-4 pb-0">
+                        
                           <table className="table table-striped">
                             <tbody>
                               <tr>
@@ -103,9 +103,9 @@ const BusinessInfo = (props) => {
                               </tr>
                             </tbody>
                           </table>
-                        </div>
+                        
                         <div
-                          className={`card-body pt-0 collapse${
+                          className={`pt-0 collapse${
                             collapsedItems[value] ? "" : " show"
                           }`}
                           id={`collapse-${value}`}

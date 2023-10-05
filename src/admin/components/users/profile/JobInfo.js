@@ -19,7 +19,7 @@ const JobInfo = (props) => {
         <div className="card shadow">
           <div className="card-body">
           <h5 className="mb-3 fw-bold fs-5">Job Info</h5>
-            <div className="row">
+            <div className="row mb-3 fw fs-5">
               {jobDetails && jobDetails.length > 0 ? (
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
@@ -57,7 +57,7 @@ const JobInfo = (props) => {
                 ))
               ) : (
                 <div className="col-md-12">
-                  <p className="text-muted">No job details available.</p>
+                  <p className="mb-3 fw fs-5">No job details available.</p>
                 </div>
               )}
             </div>

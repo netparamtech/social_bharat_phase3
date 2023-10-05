@@ -92,6 +92,9 @@ const UpdateMatrimonial = (props) => {
 
   const handleBiodataFileChange = async (e) => {
     const selectedFiles = e.target.files[0];
+    if (!(selectedFiles instanceof File)) {
+      return;
+    }
     setBiodataFile(selectedFiles);
     setBiodataPreview(URL.createObjectURL(selectedFiles));
 

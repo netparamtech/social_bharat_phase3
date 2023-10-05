@@ -31,7 +31,8 @@ const MatrimonialInfo = (props) => {
                   <div className="card-title">
                     <h3 className="mb-3 fw-bold fs-5">Matrimonial Info</h3>
                   </div>
-                  <form className="p-3">
+                  {userDetails && userDetails.data && userDetails.data.matrimonial[0] ? (
+                  <form className="p-3 mb-3 fw fs-5">
                     <div className="row">
                       <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                         <div className="row">
@@ -184,13 +185,16 @@ const MatrimonialInfo = (props) => {
                           </div>
                         </div>
                       </div>
-
-
-
-
-
                     </div>
+                  
                   </form>
+                   ):(
+                    <div className="col-md-12">
+                    <p className="mb-3 fw fs-5">No Matrimonial Details available.</p>
+                  </div>
+                    )
+                   }
+  
                 </div>
               </div>
             </div>

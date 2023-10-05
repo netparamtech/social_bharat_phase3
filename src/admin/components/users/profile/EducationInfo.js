@@ -11,7 +11,7 @@ const EducationInfo = (props) => {
             <div className="row">
             {educationDetails && educationDetails.length > 0 ? (
                 educationDetails.map((item, idx) => (
-              <div className="col-md-6">
+              <div className="col-md-6 mb-3 fw fs-5">
                 <div className="card shadow mt-2">
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
@@ -46,7 +46,7 @@ const EducationInfo = (props) => {
 
             )) ) : (
               <div className="col-md-12">
-                <p className="text-muted">No education details available.</p>
+                <p className="mb-3 fw fs-5">No education details available.</p>
               </div>
             )}
             

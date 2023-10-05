@@ -16,7 +16,7 @@ const ContactInfo = (props) => {
           
           <div className="card-body">
           <h5 className="mb-3 fw-bold fs-5">Contact Info</h5>
-            <div className="row">
+            <div className="row mb-3 fw fs-5">
               {contactDetails && contactDetails.length > 0 ?
                 contactDetails.map((item, idx) => (
                   <div className="col-md-6">
@@ -25,7 +25,7 @@ const ContactInfo = (props) => {
                       <div className="card-body">
                         <div className="w-100 w-lg-75">
                           <div className="mb-2 row">
-                            <u> {item.address_type}</u>
+                            <label className="mb-3 fw fs-5">{item.address_type}</label>
                             <label className="text-muted">
                               {item.address_line},
                               {item.city}, {item.state}, {item.country}
@@ -37,7 +37,7 @@ const ContactInfo = (props) => {
                   </div>
                 )) : (
                   <div className="col-md-12">
-                    <p className="text-muted">No contact details available.</p>
+                    <p className="mb-3 fw fs-5">No contact details available.</p>
                   </div>
                 )}
 

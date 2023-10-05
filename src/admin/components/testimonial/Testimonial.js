@@ -150,14 +150,7 @@ const Testimonial = () => {
       render: (text, record, index) => index + 1,
       width:100,
     },
-    { title: 'Name', dataIndex: 'name',sorter: true,
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-  },
-    { title: 'Email', dataIndex: 'email',
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-   },
+   
     { title: 'Message', dataIndex: 'message',
     sorter: true,
     sortDirections: ['asc', 'desc'], },
@@ -171,37 +164,57 @@ const Testimonial = () => {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => calculateTimeDifference(record.updated_at),
+      width:150,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (text, record) => (
+        <div>
+        {record.status === 'Active' ? (
+          <a
+          className="collapse-item m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleTestimonialToggleStatus(record.id);
+          }}
+        >
+          <i className="fa fa-thumbs-up text-primary" title="Active" />
+        </a>
+      ) : (
+        <a
+          className="collapse-item text-secondary m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleTestimonialToggleStatus(record.id);
+          }}
+        >
+          <i className="fa fa-thumbs-down" title="Inactive" />
+        </a>
+         )}
+         </div>
+      ),
+      fixed: 'right',
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+      width:100,
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-          {record.status === 'Active' ? (
            <a
-           className="collapse-item m-2"
-           href="#"
-           onClick={(e) => {
-             e.preventDefault();
-             handleTestimonialToggleStatus(record.id);
-           }}
-         >
-           <i className="fa fa-thumbs-up text-primary" title="Active" />
-         </a>
-       ) : (
-         <a
-           className="collapse-item text-secondary m-2"
-           href="#"
-           onClick={(e) => {
-             e.preventDefault();
-             handleTestimonialToggleStatus(record.id);
-           }}
-         >
-           <i className="fa fa-thumbs-down" title="Inactive" />
-         </a>
-          )}
-         <a
             className="collapse-item"
+            onClick={() => navigate(`/testimonials/view/${record.id}`)}
+          >
+            <i className="fas fa-eye"></i>
+          </a>
+         
+         <a
+            className="collapse-item m-2"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -213,6 +226,7 @@ const Testimonial = () => {
         </div>
       ),
       fixed: 'right',
+      width:100,
     },
     // Rest of the columns definition
   ];
@@ -226,7 +240,7 @@ const Testimonial = () => {
         style={{ marginBottom: 20,width:200 }}
       />
       <Table
-      title={() => 'Enquiries'}  // Set the title to 'Enquiries'
+      title={() => 'Testimonials'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{
@@ -237,9 +251,7 @@ const Testimonial = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-        scroll={{
-          x: 1300,
-        }}
+      
         rowKey={(record) => record.id}
         // onChange={handleSearchChange}
       />

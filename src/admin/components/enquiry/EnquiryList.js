@@ -91,6 +91,32 @@ const EnquiryList = () => {
     }
   };
 
+  const calculateTimeDifference = (updatedDate) => {
+    const currentDate = new Date();
+    const updatedDateObj = new Date(updatedDate);
+    const differenceInSeconds = Math.floor(
+      (currentDate - updatedDateObj) / 1000
+    );
+
+    if (differenceInSeconds < 1) {
+      return "now";
+    } else if (differenceInSeconds < 60) {
+      return `${differenceInSeconds} sec ago`;
+    } else if (differenceInSeconds < 3600) {
+      const minutes = Math.floor(differenceInSeconds / 60);
+      return `${minutes} min ago`;
+    } else if (differenceInSeconds < 86400) {
+      const hours = Math.floor(differenceInSeconds / 3600);
+      return `${hours} hour ago`;
+    } else {
+      const days = Math.floor(differenceInSeconds / 86400);
+      if (!days) {
+        return "";
+      }
+      return `${days} day ago`;
+    }
+  };
+
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
@@ -119,15 +145,11 @@ const EnquiryList = () => {
     sortDirections: ['asc', 'desc'], },
     { title: 'Message', dataIndex: 'message',sorter: true,
     sortDirections: ['asc', 'desc'], },
-    {
-      title: "Created at",
-      dataIndex: "created_at",
-      render: (text, record) => formatDate(record.created_at),
-    },
+   
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
-      render: (text, record) => formatDate(record.updated_at),
+      render: (text, record) => calculateTimeDifference(record.updated_at),
     },
   {
     title:"Status",
@@ -161,6 +183,7 @@ const EnquiryList = () => {
     ),
     sorter: true,
     sortDirections: ['asc', 'desc'],
+    width:100,
   },
     {
       title: 'Actions',
@@ -181,6 +204,7 @@ const EnquiryList = () => {
         </div>
       ),
       fixed: 'right',
+      width:100,
     },
     // Rest of the columns definition
   ];
@@ -205,9 +229,6 @@ const EnquiryList = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-        scroll={{
-          x: 1300,
-        }}
         rowKey={(record) => record.id}
       // onChange={handleSearchChange}
       />

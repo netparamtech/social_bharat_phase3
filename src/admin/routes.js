@@ -22,6 +22,7 @@ import EventPage from "./pages/event/EventPage";
 import ViewEvent from "./pages/event/ViewEvent";
 import ServerError from "./components/ServerError";
 import ServerErrorTransfer from "./components/ServerErrorTransfer";
+import ViewTestimonialPage from "./pages/ViewTestimonialPage";
 
 const adminRoutes = [
     {
@@ -166,6 +167,12 @@ const adminRoutes = [
     {
         path: '/server/error',
         component: ServerErrorTransfer,
+        exact:true
+    },
+
+    {
+        path: '/testimonials/view/:id',
+        component: ViewTestimonialPage,
         exact:true
     },
 ]

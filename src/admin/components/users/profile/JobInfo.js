@@ -19,7 +19,7 @@ const JobInfo = (props) => {
         <div className="card shadow">
           <div className="card-body">
           <h5 className="mb-3 fw-bold fs-5">Job Info</h5>
-            <div className="row mb-3 fw fs-5">
+            <div className="row mb-3">
               {jobDetails && jobDetails.length > 0 ? (
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
@@ -28,23 +28,23 @@ const JobInfo = (props) => {
                         <table className="table table-striped">
                           <tbody>
                             <tr>
-                              <td>Company Name</td>
+                              <td className='fw-bold'>Company Name</td>
                               <td className="text-muted">{item.company_name || 'NA'}</td>
                             </tr>
                             <tr>
-                              <td>Designation</td>
+                              <td className='fw-bold'>Designation</td>
                               <td className="text-muted">{item.designation || 'NA'}</td>
                             </tr>
                             <tr>
-                              <td>Job Start Date</td>
+                              <td className='fw-bold'>Job Start Date</td>
                               <td className="text-muted">{formatDate(item.job_start_date) || 'NA'}</td>
                             </tr>
                             <tr>
-                              <td>Job End Date</td>
+                              <td className='fw-bold'>Job End Date</td>
                               <td className="text-muted">{formatDate(item.job_end_date) || 'NA'}</td>
                             </tr>
                             <tr>
-                              <td>Job Type</td>
+                              <td className='fw-bold'>Job Type</td>
                               <td className="text-muted">
                                 {item.job_type === 'PART_TIME' ? 'PART TIME' : 'FULL TIME'}
                               </td>

@@ -9,10 +9,10 @@ const BusinessInfo = (props) => {
   const { userDetails } = props;
   const [businessDetails, setBusinessDetails] = useState([]);
   const businessPhotos =
-  userDetails &&
-  userDetails.data &&
-  userDetails.data.businesses &&
-  userDetails.data.businesses.business_photos;
+    userDetails &&
+    userDetails.data &&
+    userDetails.data.businesses &&
+    userDetails.data.businesses.business_photos;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,52 +26,82 @@ const BusinessInfo = (props) => {
           <div className="card-body">
             <h5 className="mb-3 fw-bold fs-5">Business Info</h5>
             <div className="row">
-            
+
               {businessDetails && businessDetails.length > 0 ? (
                 <Collapse accordion>
                   {businessDetails.map((item, value) => (
-                    <Panel header={`Business ${value + 1}`} key={value} className="mb-3 fw fs-5">
+                     <Panel
+                     header={<span className="mb-3 fw fs-5">{`Business ${value + 1}`}</span>}
+                     key={value}
+                   >
                       <table className="table table-striped">
-                      <tbody>
+                        <tbody>
+                          <tr>
+                            <td className='fw-bold'>City</td>
+                            <td className="text-muted">{item.city}</td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bold'>State</td>
+                            <td className="text-muted">{item.state}</td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bold'>Country</td>
+                            <td className="text-muted">{item.country}</td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bold'>Contact 1</td>
+                            <td className="text-muted">{item.contact1}</td>
+                          </tr>
+
+                          {
+                            item.contact2 && (
                               <tr>
-                                <td>City</td>
-                                <td className="text-muted">{item.city}</td>
+                                <td className='fw-bold'>Contact 2</td>
+                                <td className="text-muted">
+                                  {item.contact2}
+                                </td>
                               </tr>
+                            )
+                          }
+
+
+                          {
+                            item.contact3 && (
                               <tr>
-                                <td>State</td>
-                                <td className="text-muted">{item.state}</td>
+                                <td className='fw-bold'>Contact 3</td>
+                                <td className="text-muted">
+                                  {item.contact3}
+                                </td>
                               </tr>
+                            )
+                          }
+
+                          {
+                            item.business_email && (
                               <tr>
-                                <td>Country</td>
-                                <td className="text-muted">{item.country}</td>
-                              </tr>
-                              <tr>
-                                <td>Contact 1</td>
-                                <td className="text-muted">{item.contact1}</td>
-                              </tr>
-                              <tr>
-                                <td>Contact 2</td>
-                                <td className="text-muted">{item.contact2}</td>
-                              </tr>
-                              <tr>
-                                <td>Contact 3</td>
-                                <td className="text-muted">{item.contact3}</td>
-                              </tr>
-                              <tr>
-                                <td>Email</td>
+                                <td className='fw-bold'>Website Email</td>
                                 <td className="text-muted">
                                   {item.business_email}
                                 </td>
                               </tr>
+                            )
+                          }
+
+                          {
+                            item.business_website && (
                               <tr>
-                                <td>Website Link</td>
+                                <td className='fw-bold'>Website Link</td>
                                 <td className="text-muted">
                                   {item.business_website}
                                 </td>
                               </tr>
+                            )
+                          }
 
+                          {
+                            businessPhotos && (
                               <tr>
-                                <td>Business Photo</td>
+                                <td className='fw-bold'>Business Photos</td>
                                 <td className="proposal-Photo">
                                   {businessPhotos &&
                                     Array.isArray(businessPhotos) ? (
@@ -87,11 +117,14 @@ const BusinessInfo = (props) => {
                                   )}
                                 </td>
                               </tr>
-                              <tr>
-                                <td>Status</td>
-                                <td className="text-muted">{item.status}</td>
-                              </tr>
-                            </tbody>
+                            )
+                          }
+
+                          <tr>
+                            <td className='fw-bold'>Status</td>
+                            <td className="text-muted">{item.status}</td>
+                          </tr>
+                        </tbody>
                       </table>
                     </Panel>
                   ))}

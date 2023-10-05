@@ -32,7 +32,7 @@ const MatrimonialInfo = (props) => {
                     <h3 className="mb-3 fw-bold fs-5">Matrimonial Info</h3>
                   </div>
                   {userDetails && userDetails.data && userDetails.data.matrimonial[0] ? (
-                  <form className="p-3 mb-3 fw fs-5">
+                  <form className="p-3 mb-3 ">
                     <div className="row">
                       <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                         <div className="row">

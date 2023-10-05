@@ -28,7 +28,6 @@ const CommunitiesList = () => {
   };
 
   const handleSearchChange = (query) => {
-    setPage(1);
     setSearchQuery(query);
   };
 
@@ -49,10 +48,15 @@ const CommunitiesList = () => {
   const fetchData = async () => {
     try {
       const response = await fetchAllCommunity();
+      const fetchedData = response.data.data;
+      
+      // Filter the data based on the search query
+      const filteredData = fetchedData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
 
-      setData(response.data.data);
-
-      setTotalRows(response.data.data.length);
+      setData(filteredData);
+      setTotalRows(filteredData.length);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/admin');
@@ -102,7 +106,7 @@ const CommunitiesList = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchQuery]);
 
   const columns = [
     {

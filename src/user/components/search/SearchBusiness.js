@@ -39,6 +39,8 @@ const SearchBusiness = () => {
 
     const handleStateChange = (selectedOption) => {
         setSelectedState(selectedOption);
+        setCity('');
+        setSelectedCity('');
 
         if (selectedOption) {
             const selectedStateObject = states.find((state) => state.name === selectedOption.value);
@@ -60,7 +62,7 @@ const SearchBusiness = () => {
         setSearchText(e.target.value);
     }
 
-    
+
 
     const search = async (searchText) => {
         try {
@@ -94,8 +96,8 @@ const SearchBusiness = () => {
         try {
             const response = await searchBusinessWithCityState(queryString);
             setData(response.data.data);
-            setCity(selectedCity.label?selectedCity.label:city);
-            setState(selectedState.label?selectedState.label:state);
+            setCity(selectedCity.label ? selectedCity.label : city);
+            setState(selectedState.label ? selectedState.label : state);
 
         } catch (error) {
             //Unauthorized
@@ -163,20 +165,31 @@ const SearchBusiness = () => {
             getAllStates();
         }
     }, [selectedCountry]);
+    useEffect(() => {
+        setState(selectedState.label)
+    }, [city]);
     return (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
             <div className="container">
-                <div className="card shadow">  
+                <div className="card shadow">
                     <div className="card-body">
-                  
+
                         <div>
                             <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
                         </div>
                         <div className="filter-content pt-5 d-md-block">
-                            <p >
-                                {city}
-                                {state && `(${state})`}
-                            </p>
+                            {
+                                city ? (
+                                    <p >
+                                        {city}
+                                        {state && `(${state})`}
+                                    </p>
+                                ) : (
+                                    <p >
+                                        {state && `state - ${state}`}
+                                    </p>
+                                )
+                            }
                         </div>
                         <div className="filter-icon">
                             <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
@@ -184,7 +197,7 @@ const SearchBusiness = () => {
                             </a>
                             <a title='Add Business' className='btn btn-primary' onClick={handlePromoteBusinessClick}>Promote Your Business </a>
                         </div>
-                        
+
                         <div className="container-input mb-3">
                             <input type="text" placeholder="Search Business" name="text" className="input form-control" onChange={handleSearchText} />
                             <i className="fas fa-search"></i>

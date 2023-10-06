@@ -7,36 +7,8 @@ const Dashboard = () => {
     <div id="dashboard">
       <div className="container pt-5 mb-5">
         <div className="row">
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-peal text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Profile</div>
-                    <div className="text-lg fw-bold">Manage Profile <br/>प्रोफ़ाइल प्रबंधित करें </div>
-                  </div>
-                  <img src="/user/images/activities.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/profile")}
-                >
-                  View{" "}
-                </a>
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/profile")}
-                >
-                  Edit{" "}
-                </a>
-                
-              </div>
-            </div>
-          </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+        <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card bg-lightgreen text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -52,7 +24,7 @@ const Dashboard = () => {
                   className="text-white "
                   onClick={() => navigate("/user/search")}
                 >
-                  View{" "}
+                  Search{" "}
                 </a>
                 <a
                   className="text-white "
@@ -120,6 +92,92 @@ const Dashboard = () => {
             </div>
           </div>
 
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-soil text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Event</div>
+                    <div className="text-lg fw-bold">Add Event <br/>कार्यक्रम जोड़ें</div>
+                  </div>
+                  <img src="/user/images/placard.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/event")}
+                >
+                  View
+                </a>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-soil text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Job</div>
+                    <div className="text-lg fw-bold">Add Job <br/>कार्य जोड़ें</div>
+                  </div>
+                  <img src="/user/images/placard.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/event")}
+                >
+                  View
+                </a>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-peal text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Profile</div>
+                    <div className="text-lg fw-bold">Manage Profile <br/>प्रोफ़ाइल प्रबंधित करें </div>
+                  </div>
+                  <img src="/user/images/activities.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/profile")}
+                >
+                  View{" "}
+                </a>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/profile")}
+                >
+                  Edit{" "}
+                </a>
+                
+              </div>
+            </div>
+          </div>
+
+      
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card bg-darkyellow text-white h-100">
               <div className="card-body">
@@ -236,33 +294,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-soil text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Event</div>
-                    <div className="text-lg fw-bold">Add Event <br/>कार्यक्रम जोड़ें</div>
-                  </div>
-                  <img src="/user/images/placard.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/event")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/user/search")}
-                >
-                  Edit{" "}
-                </a>
-              </div>
-            </div>
-          </div>
+          
 
         </div>
       </div>

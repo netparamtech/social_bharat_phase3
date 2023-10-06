@@ -28,9 +28,10 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
+                  title="Add/Edit Basic Profile"
                   onClick={() => navigate("/user/update-basic-profile")}
                 >
-                  Edit{" "}
+                  Add{" "}
                 </a>
               </div>
             </div>
@@ -52,13 +53,14 @@ const Dashboard = () => {
                   className="text-white"
                   onClick={() => navigate("/user/search/partner")}
                 >
-                  View
+                  Search
                 </a>
                 <a
                   className="text-white "
+                  title="Add/Edit Matrimonial Detail"
                   onClick={() => navigate("/user/update-matrimonial-profile")}
                 >
-                  Edit{" "}
+                  Add{" "}
                 </a>
               </div>
             </div>
@@ -80,13 +82,13 @@ const Dashboard = () => {
                   className="text-white"
                   onClick={() => navigate("/user/search/business")}
                 >
-                  View{" "}
+                  Search{" "}
                 </a>
                 <a
                   className="text-white "
                   onClick={() => navigate("/user/search")}
                 >
-                  Edit{" "}
+                  Add{" "}
                 </a>
               </div>
             </div>
@@ -114,14 +116,14 @@ const Dashboard = () => {
                   className="text-white "
                   onClick={() => navigate("/user/search")}
                 >
-                  Edit{" "}
+                 Add{" "}
                 </a>
               </div>
             </div>
           </div>
 
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-soil text-white h-100">
+            <div className="card shadow bg-darkyellow text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
@@ -142,7 +144,35 @@ const Dashboard = () => {
                   className="text-white "
                   onClick={() => navigate("/user/search")}
                 >
-                  Edit{" "}
+                  Add{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-lightvoilet text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Feedback</div>
+                    <div className="text-lg fw-bold">Add Feedback <br/>प्रतिक्रिया जोड़ें</div>
+                  </div>
+                  <img src="/user/images/review.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white"
+                  onClick={() => navigate("/user/rating")}
+                >
+                  View
+                </a>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Add{" "}
                 </a>
               </div>
             </div>
@@ -178,36 +208,7 @@ const Dashboard = () => {
           </div>
 
       
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-darkyellow text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg fw-bold">
-                      Create Matrimonial Profile < br/>वैवाहिक प्रोफ़ाइल बनाएं
-                    </div>
-                  </div>
-                  <img src="/user/images/diamond-ring.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white"
-                  onClick={() => navigate("/user/update-matrimonial-profile")}
-                >
-                  View{" "}
-                </a>
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/user/search")}
-                >
-                  Edit{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
+         
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-bluegray text-white h-100">
               <div className="card-body">
@@ -238,61 +239,9 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-lightvoilet text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Business</div>
-                    <div className="text-lg fw-bold">Add Your Business<br/>बिजनेस जोडे </div>
-                  </div>
-                  <img src="/user/images/account.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white"
-                  onClick={() => navigate("/user/update-business-profile")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/user/search")}
-                >
-                  Edit{" "}
-                </a>
-              </div>
-            </div>
-          </div>
+          
 
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-classicblue text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Feedback</div>
-                    <div className="text-lg fw-bold">Add Feedback <br/>प्रतिक्रिया जोड़ें</div>
-                  </div>
-                  <img src="/user/images/review.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white"
-                  onClick={() => navigate("/user/rating")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white "
-                  onClick={() => navigate("/user/search")}
-                >
-                  Edit{" "}
-                </a>
-              </div>
-            </div>
-          </div>
+          
 
           
 

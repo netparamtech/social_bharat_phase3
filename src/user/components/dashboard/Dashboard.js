@@ -86,7 +86,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/businesses/view")}
                 >
                   Add{" "}
                 </a>

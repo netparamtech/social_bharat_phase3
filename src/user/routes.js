@@ -21,6 +21,7 @@ import ContactPage from "./pages/ContactPage";
 import UserRatingPage from "./pages/UserRatingPage";
 import AboutPage from "./pages/AboutPage";
 import EventPage from "./pages/EventPage";
+import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
 
 const userRoutes = [
     {
@@ -135,6 +136,12 @@ const userRoutes = [
     {
         path: '/user/update-business-profile/:id',
         component: UpdateBusinessPage,
+        exact: true
+    },
+
+    {
+        path: '/user/businesses/view',
+        component: BusinessInfoPage,
         exact: true
     },
 

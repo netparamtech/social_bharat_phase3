@@ -161,7 +161,7 @@ const CommunitiesList = () => {
           {record.status === 'Active' ? (
             <a
               className="collapse-item m-2"
-              href="#"
+              href=""
               onClick={(e) => {
                 e.preventDefault();
                 handleCommunityToggleStatus(record.id);
@@ -172,7 +172,7 @@ const CommunitiesList = () => {
           ) : (
             <a
               className="collapse-item text-secondary m-2"
-              href="#"
+              href=""
               onClick={(e) => {
                 e.preventDefault();
                 handleCommunityToggleStatus(record.id);

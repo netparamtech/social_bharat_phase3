@@ -20,14 +20,18 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white "
                   onClick={() => navigate("/profile")}
                 >
                   View{" "}
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/profile")}
+                >
+                  Edit{" "}
+                </a>
+                
               </div>
             </div>
           </div>
@@ -45,14 +49,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white "
                   onClick={() => navigate("/user/search")}
                 >
                   View{" "}
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -70,14 +77,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/search/partner")}
                 >
                   View
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -95,14 +105,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/search/business")}
                 >
                   View{" "}
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -122,14 +135,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/update-matrimonial-profile")}
                 >
                   View{" "}
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -149,14 +165,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/update-contact")}
                 >
                   View
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -174,14 +193,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/update-business-profile")}
                 >
                   View
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -199,14 +221,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white"
                   onClick={() => navigate("/user/rating")}
                 >
                   View
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>
@@ -224,14 +249,17 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white stretched-link"
+                  className="text-white "
                   onClick={() => navigate("/event")}
                 >
                   View
                 </a>
-                <div className="text-white">
-                  <i className="fa-solid fa-arrow-right"></i>
-                </div>
+                <a
+                  className="text-white "
+                  onClick={() => navigate("/user/search")}
+                >
+                  Edit{" "}
+                </a>
               </div>
             </div>
           </div>

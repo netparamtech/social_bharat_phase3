@@ -138,20 +138,6 @@ const NavbarTransparent = () => {
               </a>
             </li>
 
-            <li className="nav-item ">
-              <a className="nav-link" onClick={handleAboutClick}>
-                About
-              </a>
-            </li>
-
-            <li className="nav-item ">
-              <a className="nav-link" onClick={handleEventClick}>
-                Event
-              </a>
-            </li>
-
-
-
             <li className="nav-item">
               <a className="nav-link" onClick={handleServiceClick}>
                 Services
@@ -221,18 +207,6 @@ const NavbarTransparent = () => {
                     onClick={handleHomeClicked}
                   >
                     <i className="fa fa-home m-2" aria-hidden="true"></i> Home
-                  </a>
-                </li>
-
-                <li className="nav-item mt-2 breadcrumb-item">
-                  <a className="nav-link" onClick={handleAboutClick} >
-                    <i className="fa fa-info-circle m-2" aria-hidden="true"></i>About
-                  </a>
-                </li>
-
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleEventClick}>
-                    <i className="fa fa-calendar-days m-2" aria-hidden="true"></i> Event
                   </a>
                 </li>
 

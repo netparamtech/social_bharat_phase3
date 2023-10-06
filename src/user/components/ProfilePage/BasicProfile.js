@@ -174,6 +174,24 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
+                    <label className="col-sm-3">Date Of Birth </label>
+                    <div className="col-sm-8">
+                      <span className="text-muted">
+                        NA
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-3">Marital Status </label>
+                    <div className="col-sm-8">
+                      <span className="text-muted">
+                        NA
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
                     <label className="col-sm-3 ">Gender</label>
                     <div className="col-sm-8">
                       <span className="text-muted">

@@ -23,6 +23,7 @@ import ViewEvent from "./pages/event/ViewEvent";
 import ServerError from "./components/ServerError";
 import ServerErrorTransfer from "./components/ServerErrorTransfer";
 import ViewTestimonialPage from "./pages/ViewTestimonialPage";
+import TestScroll from "./components/Test/TestScroll";
 
 const adminRoutes = [
     {
@@ -173,6 +174,12 @@ const adminRoutes = [
     {
         path: '/testimonials/view/:id',
         component: ViewTestimonialPage,
+        exact:true
+    },
+
+    {
+        path: '/test',
+        component: TestScroll,
         exact:true
     },
 ]

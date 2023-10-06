@@ -27,7 +27,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/user/update-basic-profile")}
                 >
                   Edit{" "}
                 </a>
@@ -56,7 +56,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/update-basic-profile")}
                 >
                   Edit{" "}
                 </a>
@@ -84,7 +84,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/update-matrimonial-profile")}
                 >
                   Edit{" "}
                 </a>

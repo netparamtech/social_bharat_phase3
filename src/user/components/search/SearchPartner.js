@@ -5,7 +5,6 @@ import {
   fetchAllStatesByCountryID,
   searchPartner,
   searchPartnerWithSearchText,
-  searchPeopleWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";

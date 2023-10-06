@@ -39,6 +39,8 @@ const SearchPeople = () => {
 
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
+    setCity('');
+    setSelectedCity('');
 
     if (selectedOption) {
       const selectedStateObject = states.find(
@@ -73,8 +75,8 @@ const SearchPeople = () => {
     try {
       const response = await searchWithCityState(queryString);
       setData(response.data.data);
-      setCity(selectedCity.label?selectedCity.label:city);
-      setState(selectedState.label?selectedState.label:state);
+      setCity(selectedCity.label ? selectedCity.label : city);
+      setState(selectedState.label ? selectedState.label : state);
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -154,6 +156,10 @@ const SearchPeople = () => {
     }
   }, [selectedCountry]);
 
+  useEffect(() => {
+    setState(selectedState.label)
+}, [city]);
+
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
@@ -163,10 +169,18 @@ const SearchPeople = () => {
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
             <div className="filter-content">
-              <p>
-                {city}
-                {state && `(${state})`}
-              </p>
+              {
+                city ? (
+                  <p >
+                    {city}
+                    {state && `(${state})`}
+                  </p>
+                ) : (
+                  <p >
+                    {state && `state - ${state}`}
+                  </p>
+                )
+              }
             </div>
             <div className="filter-icon">
               <a

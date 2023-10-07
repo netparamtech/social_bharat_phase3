@@ -9,176 +9,6 @@ const Dashboard = () => {
         <div className="row">
 
         <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-lightgreen text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Connection</div>
-                    <div className="text-lg fw-bold">Search People <br />लोग खोजें</div>
-                  </div>
-                  <img src="/user/images/searchPeople.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/search")}
-                >
-                  Search{" "}
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  title="Add/Edit Basic Profile"
-                  onClick={() => navigate("/user/update-basic-profile")}
-                >
-                  Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-lightorange text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg fw-bold">Search Partner <br/>शादी हेतु साथी खोजें</div>
-                  </div>
-                  <img src="/user/images/wedding.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/search/partner")}
-                >
-                  Search
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  title="Add/Edit Matrimonial Detail"
-                  onClick={() => navigate("/user/update-matrimonial-profile")}
-                >
-                  Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classicbrown text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Making Money</div>
-                    <div className="text-lg fw-bold">Search Business  <br/> व्यवसाय खोजें</div>
-                  </div>
-                  <img src="/user/images/financial-profit.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/search/business")}
-                >
-                  Search{" "}
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/businesses/view")}
-                >
-                  Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-soil text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Event</div>
-                    <div className="text-lg fw-bold">Add Event <br/>कार्यक्रम जोड़ें</div>
-                  </div>
-                  <img src="/user/images/placard.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/event")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/event")}
-                >
-                 Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-darkyellow text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Job</div>
-                    <div className="text-lg fw-bold">Add Job <br/>कार्य जोड़ें</div>
-                  </div>
-                  <img src="/user/images/job-offer.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/jobs/view")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/update-job-profile")}
-                >
-                  Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-lightvoilet text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Feedback</div>
-                    <div className="text-lg fw-bold">Add Feedback <br/>प्रतिक्रिया जोड़ें</div>
-                  </div>
-                  <img src="/user/images/review.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/rating")}
-                >
-                  View
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/rating")}
-                >
-                  Add{" "}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-peal text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -198,7 +28,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white hover-pointer"
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/user/update-basic-profile")}
                 >
                   Edit{" "}
                 </a>
@@ -207,33 +37,135 @@ const Dashboard = () => {
             </div>
           </div>
 
-      
-         
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-bluegray text-white h-100">
+        <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-lightgreen text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
-                    <div className="text-white-75 small">Events</div>
-                    <div className="text-lg fw-bold">
-                      Update Contact Information <br/>पता अपडेट करें
-                    </div>
+                    <div className="text-white-75 small">Become Social</div>
+                    <div className="text-lg fw-bold">Find People <br />लोग खोजें</div>
                   </div>
-                  <img src="/user/images/contactUpdate.png" width="40px" />
+                  <img src="/user/images/searchPeople.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small " >
+                <a
+                  className="text-white hover-pointer stretched-link" 
+                  onClick={() => navigate("/user/search")}
+                >
+                  Search{" "}
+                </a>
+                <i class="fa-solid fa-arrow-right "></i>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-lightorange text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Matrimonial</div>
+                    <div className="text-lg fw-bold">Search Life Partner <br/>जीवन साथी खोजें</div>
+                  </div>
+                  <img src="/user/images/wedding.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer stretched-link"
+                  onClick={() => navigate("/user/search/partner")}
+                >
+                  Search
+                </a>
+                
+                <i class="fa-solid fa-arrow-right"></i>
+                
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-classicbrown text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Business</div>
+                    <div className="text-lg fw-bold">Promote Business  <br/> व्यवसाय खोजें</div>
+                  </div>
+                  <img src="/user/images/financial-profit.png" width="40px" />
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
                   className="text-white hover-pointer"
-                  onClick={() => navigate("/user/update-contact")}
+                  onClick={() => navigate("/user/search/business")}
                 >
-                  View
+                  Search{" "}
                 </a>
                 <a
                   className="text-white hover-pointer"
-                  onClick={() => navigate("/user/contacts/view")}
+                  onClick={() => navigate("/user/businesses/view")}
                 >
-                  Edit{" "}
+                  Post Your Ad{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-soil text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Event</div>
+                    <div className="text-lg fw-bold">Manage Event(s) <br/>कार्यक्रम जोड़ें  </div>
+                  </div>
+                  <img src="/user/images/placard.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                
+              <a
+                className="text-white hover-pointer"
+                onClick={() => navigate("/event")}
+              >
+             Search Events{" "}
+             </a>
+
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/event")}
+                >
+                 Create Event{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-darkyellow text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Job Hiring</div>
+                    <div className="text-lg fw-bold">Manage Jobs <br/>कार्य जोड़ें</div>
+                  </div>
+                  <img src="/user/images/job-offer.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/jobs/view")}
+                >
+                  Search Jobs
+                </a>
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/update-job-profile")}
+                >
+                  Post New Job
                 </a>
               </div>
             </div>
@@ -243,7 +175,8 @@ const Dashboard = () => {
 
           
 
-          
+      
+         
 
         </div>
       </div>

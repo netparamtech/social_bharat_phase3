@@ -15,8 +15,25 @@ const UpdateEducationProfile = (props) => {
   const [scoreType, setScoreType] = useState('');
   const [passingYear, setPassingYear] = useState('');
 
+  const [qualification, setQualification] = useState('');
+  const qualificationsOptions = [
+    { value: "10th", label: "10th" },
+    { value: "Under 10th", label: "Under 10th" },
+    { value: "12th", label: "12th" },
+    { value: "Under 12th", label: "Under 12th" },
+    { value: "Diploma", label: "Diploma" },
+    { value: "Under Diploma", label: "Under Diploma" },
+    { value: "Graduate", label: "Graduate" },
+    { value: "Under Graduate", label: "Under Graduate" },
+    { value: "Post Graduate", label: "Post Graduate" },
+    { value: "Under Post Graduate", label: "Under Post Graduate" },
+    { value: "Phd", label: "Phd" },
+    { value: "Under Phd", label: "Under Phd" },
+
+  ];
+
   const [errors, setErrors] = useState('');
-  const [serverError,setServerError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,6 +72,10 @@ const UpdateEducationProfile = (props) => {
       </option>
     );
   }
+
+  const handleQualificationChange = (selectedOption) => {
+    setQualification(selectedOption);
+  };
 
 
   const handleSubmit = async (e) => {
@@ -139,10 +160,10 @@ const UpdateEducationProfile = (props) => {
     }
   }, [educationDetails, degrees]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setServerError('');
     setErrors('');
-  },[]);
+  }, []);
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -151,14 +172,14 @@ const UpdateEducationProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-              {serverError && <span className='error'>{serverError}</span>}
+                {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Education Info</h3>
                 </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="card p-3">
                     <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
                         <Select
                           id="degree"
@@ -175,7 +196,19 @@ const UpdateEducationProfile = (props) => {
                           placeholder="---Select Degree---"
                         />
                         {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
+                      </div> */}
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Qualifications Highest</label>
+                        <Select
+                          options={qualificationsOptions}
+                          value={qualification}
+                          onChange={handleQualificationChange}
+                        />
+                        {errors.qualification && <span className='error'>{errors.qualification}</span>}
                       </div>
+
+
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Study Field</label>
                         <input

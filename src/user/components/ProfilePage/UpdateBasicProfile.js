@@ -29,6 +29,7 @@ const UpdateBasicProfile = () => {
   const [serverError, setServerError] = useState("");
 
   const [dob, setDOB] = useState(""); // Initial DOB
+  const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const maritalStatusOptions = [
     { value: "Unmarried", label: "Unmarried" },
@@ -38,6 +39,9 @@ const UpdateBasicProfile = () => {
     { value: "Widow", label: "Widow" },
   ];
   const [isAvailableForMarriage, setIsAvailableForMarriage] = useState(false);
+  const [showMarriageStatus,setShowMarriageStatus] = useState(false);
+  const [showAvailableForMarriage,setShowAvailableForMarriage] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -191,6 +195,40 @@ const UpdateBasicProfile = () => {
     }
   }, [states]);
 
+  useEffect(() => {
+    if (dob) {
+      const dobDate = new Date(dob);
+      const currentDate = new Date();
+  
+      // Calculate the age in years
+      const ageInMilliseconds = currentDate - dobDate;
+      const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
+  
+      setAge(ageInYears);
+    }
+  }, [dob]);
+
+  useEffect(()=> {
+    if(age>=21 && gender==='Male') {
+      setShowMarriageStatus(true);
+    } else if (age>=18 && gender==='Female') {
+      setShowMarriageStatus(true);
+    } else {
+      setShowMarriageStatus(false);
+    }
+  },[age,gender]);
+
+  useEffect(() => {
+    if(maritalStatus){
+      if (maritalStatus.label !== 'Married' && maritalStatus.label !== 'Engaged') {
+        setShowAvailableForMarriage(true);
+      } else {
+        setShowAvailableForMarriage(false);
+      }
+    }
+  }, [maritalStatus]);
+  
+
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
@@ -310,7 +348,7 @@ const UpdateBasicProfile = () => {
                   <div className="row">
 
 
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus?'':'d-none'}`}>
                       <label className="form-label">Marital Status</label>
                       <Select
                         options={maritalStatusOptions}
@@ -321,7 +359,7 @@ const UpdateBasicProfile = () => {
                     </div>
                   </div>
 
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                  <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage?'':'d-none'}`}>
                     <div className="form-check">
                       <input
                         className="form-check-input"

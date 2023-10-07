@@ -37,7 +37,7 @@ const JobInfoPage = () => {
 
     return (
         <UserLayout>
-            <div>
+            <div id="auth-wrapper">
                 <JobInfo user={user} />
             </div>
         </UserLayout>

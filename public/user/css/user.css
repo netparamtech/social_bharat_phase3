@@ -1135,7 +1135,8 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 #rating-authpage,
-#event-form {
+#event-form,
+#auth-wrapper-cont {
   margin-top: 140px;
 }
 

@@ -25,6 +25,12 @@ const UpdateMatrimonial = (props) => {
   const [dob, setDOB] = useState(""); // Initial DOB
   const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
 
+  const [numBrothers, setNumBrothers] = useState(0); // Number of brothers
+  const [numSisters, setNumSisters] = useState(0); // Number of sisters
+  const [brothersDetails, setBrothersDetails] = useState([]); // Details of brothers
+  const [sistersDetails, setSistersDetails] = useState([]);
+  const [salary,setSalary] = useState('');
+
 
   const [proposalPhoto, setProposalPhoto] = useState([]);
   const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
@@ -129,12 +135,40 @@ const UpdateMatrimonial = (props) => {
     }
   };
 
+  // Function to handle adding brother's details
+  const handleAddBrother = () => {
+    setBrothersDetails([...brothersDetails, ""]);
+    setNumBrothers(numBrothers + 1);
+  };
+
+  // Function to handle updating brother's details
+  const handleBrotherDetailsChange = (index, value) => {
+    const updatedBrothersDetails = [...brothersDetails];
+    updatedBrothersDetails[index] = value;
+    setBrothersDetails(updatedBrothersDetails);
+  };
+
+  // Function to handle adding sister's details
+  const handleAddSister = () => {
+    setSistersDetails([...sistersDetails, ""]);
+    setNumSisters(numSisters + 1);
+  };
+
+  // Function to handle updating sister's details
+  const handleSisterDetailsChange = (index, value) => {
+    const updatedSistersDetails = [...sistersDetails];
+    updatedSistersDetails[index] = value;
+    setSistersDetails(updatedSistersDetails);
+  };
+
   const handleDOBChange = (dob) => {
     setDOB(dob);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    console.log(brothersDetails,sistersDetails)
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,
@@ -458,11 +492,68 @@ const UpdateMatrimonial = (props) => {
                       </select>
                       {/* Add error handling if needed */}
                     </div>
-                   
+
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Brothers Details</label>
+                      <button type="button" className="btn-secondary m-2" onClick={handleAddBrother}>
+                        Add Brother
+                      </button>
+                      {brothersDetails.map((brother, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          placeholder={`Brother ${index + 1} details`}
+                          className="form-control mt-2"
+                          value={brother}
+                          onChange={(e) => handleBrotherDetailsChange(index, e.target.value)}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Sisters Details</label>
+                      <button type="button" className="btn-secondary m-2" onClick={handleAddSister}>
+                        Add Sister
+                      </button>
+                      {sistersDetails.map((sister, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          placeholder={`Sister ${index + 1} details`}
+                          className="form-control mt-2"
+                          value={sister}
+                          onChange={(e) => handleSisterDetailsChange(index, e.target.value)}
+                        />
+                      ))}
+                    </div>
+
                   </div>
 
                   <div className="row">
                   <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Package</label>
+                      <input
+                        type="text"
+                        name="fatherName"
+                        id="fatherName"
+                        placeholder="Enter Your Package"
+                        className="form-control"
+                        autoFocus
+                        defaultValue={salary}
+                        onChange={(e) => setSalary(e.target.value)}
+                      />
+                      {errors.salary && (
+                        <span className="error">{errors.salary}</span>
+                      )}
+                    </div>
+
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Proposal Photo </label>
                       <input
                         type="file"
@@ -492,7 +583,7 @@ const UpdateMatrimonial = (props) => {
                           ))}
                       </div>
                     </div>
-                    
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Biodata </label>
                       <input

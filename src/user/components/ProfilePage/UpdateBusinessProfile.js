@@ -8,6 +8,7 @@ const UpdateBusinessProfile = (props) => {
 
   const [businessName, setBusinessName] = useState('');
   const [businessCategory, setBusinessCategory] = useState('');
+  const [businessType,SetBusinessType] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedState, setSelectedState] = useState('');
@@ -320,7 +321,7 @@ const UpdateBusinessProfile = (props) => {
                       />
                       {errors.business_name && <span className='error'>{errors.business_name}</span>}
                     </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Category</label>
                       <Select
                         id="business_category"
@@ -331,6 +332,19 @@ const UpdateBusinessProfile = (props) => {
                         placeholder="---Select Business Category---"
                       />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
+                    </div> */}
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">*Business Type</label>
+                      <input type="text"
+                        name="businessName"
+                        id="businessName"
+                        placeholder="Enter Business Name"
+                        className="form-control"
+                        autoFocus
+                        defaultValue={businessType}
+                        onChange={(e) => SetBusinessType(e.target.value)}
+                      />
+                      {errors.business_type && <span className='error'>{errors.business_type}</span>}
                     </div>
                   </div>
 

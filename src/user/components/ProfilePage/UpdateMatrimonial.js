@@ -21,6 +21,11 @@ const UpdateMatrimonial = (props) => {
   const [paternalGotra, setPaternalGotra] = useState("");
   const [maternalGotra, setMaternalGotra] = useState("");
 
+  const [gender, setGender] = useState('');
+  const [dob, setDOB] = useState(""); // Initial DOB
+  const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
+
+
   const [proposalPhoto, setProposalPhoto] = useState([]);
   const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
   const [proposalPreview, setProposalPreview] = useState([]);
@@ -30,7 +35,7 @@ const UpdateMatrimonial = (props) => {
   const [biodataPreview, setBiodataPreview] = useState("");
 
   const [errors, setErrors] = useState("");
-  const [serverError,setServerError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -124,6 +129,10 @@ const UpdateMatrimonial = (props) => {
     }
   };
 
+  const handleDOBChange = (dob) => {
+    setDOB(dob);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const matrimonialData = {
@@ -194,16 +203,16 @@ const UpdateMatrimonial = (props) => {
       setProposalPhoto(userMatrimonial.proposal_photos || "");
       {
         userMatrimonial &&
-        userMatrimonial.proposal_photos &&
-        Array.isArray(userMatrimonial.proposal_photos)
+          userMatrimonial.proposal_photos &&
+          Array.isArray(userMatrimonial.proposal_photos)
           ? setTempProposalPhotoUrl(userMatrimonial.proposal_photos || "")
           : setTempProposalPhotoUrl([userMatrimonial.proposal_photos] || "");
       }
 
       {
         userMatrimonial &&
-        userMatrimonial.proposal_photos &&
-        Array.isArray(userMatrimonial.proposal_photos)
+          userMatrimonial.proposal_photos &&
+          Array.isArray(userMatrimonial.proposal_photos)
           ? setProposalPreview(userMatrimonial.proposal_photos || "")
           : setProposalPreview([userMatrimonial.proposal_photos] || "");
       }
@@ -216,9 +225,9 @@ const UpdateMatrimonial = (props) => {
     }
   }, [userMatrimonial]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setServerError('');
-  },[]);
+  }, []);
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -227,7 +236,7 @@ const UpdateMatrimonial = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-              {serverError && <span className='error'>{serverError}</span>}
+                {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Matrimonial Info</h3>
                 </div>
@@ -267,7 +276,7 @@ const UpdateMatrimonial = (props) => {
                   </div>
 
                   <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Skin Tone</label>
                       <select
                         className="form-select form-control"
@@ -283,7 +292,39 @@ const UpdateMatrimonial = (props) => {
                       {errors.skin_tone && (
                         <span className="error">{errors.skin_tone}</span>
                       )}
+                    </div> */}
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Gender</label>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Default select example"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
+                        <option value="">---Select Gender---</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                      {errors.gender && (
+                        <span className="error">{errors.gender}</span>
+                      )}
                     </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Date of Birth</label>
+                      <input
+                        type="date"
+                        name="dob"
+                        id="dob"
+                        className="form-control"
+                        value={dob}
+                        onChange={(e) => handleDOBChange(e.target.value)}
+                      />
+                      {/* Add error handling if needed */}
+                    </div>
+
+                  </div>
+
+                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Height</label>
                       <div className="d-flex">
@@ -335,9 +376,6 @@ const UpdateMatrimonial = (props) => {
                         )}
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Weight</label>
                       <input
@@ -353,6 +391,10 @@ const UpdateMatrimonial = (props) => {
                         <span className="error">{errors.weight_in_kg}</span>
                       )}
                     </div>
+
+                  </div>
+
+                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Cast</label>
                       <input
@@ -368,9 +410,6 @@ const UpdateMatrimonial = (props) => {
                         <span className="error">{errors.cast}</span>
                       )}
                     </div>
-                  </div>
-
-                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Gotra Self </label>
                       <input
@@ -386,21 +425,7 @@ const UpdateMatrimonial = (props) => {
                         <span className="error">{errors.gotra}</span>
                       )}
                     </div>
-                    <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Paternal Gotra</label>
-                      <input
-                        type="text"
-                        name="paternal"
-                        id="paternal"
-                        placeholder="Enter Paternal Gotra"
-                        className="form-control"
-                        defaultValue={paternalGotra}
-                        onChange={(e) => setPaternalGotra(e.target.value)}
-                      />
-                      {errors.paternal_gotra && (
-                        <span className="error">{errors.paternal_gotra}</span>
-                      )}
-                    </div>
+
                   </div>
 
                   <div className="row">
@@ -420,6 +445,24 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Manglic</label>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Manglic select"
+                        value={manglicStatus}
+                        onChange={(e) => setManglicStatus(e.target.value)}
+                      >
+                        <option value="">---Select Manglic Status---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                      {/* Add error handling if needed */}
+                    </div>
+                   
+                  </div>
+
+                  <div className="row">
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Proposal Photo </label>
                       <input
                         type="file"
@@ -449,9 +492,7 @@ const UpdateMatrimonial = (props) => {
                           ))}
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
+                    
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Biodata </label>
                       <input

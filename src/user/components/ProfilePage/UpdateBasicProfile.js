@@ -31,12 +31,21 @@ const UpdateBasicProfile = () => {
   const [dob, setDOB] = useState(""); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
+  const [occupation, setOccupation] = useState(null); 
   const maritalStatusOptions = [
     { value: "Unmarried", label: "Unmarried" },
     { value: "Engaged", label: "Engaged" },
     { value: "Married", label: "Married" },
     { value: "Divorced", label: "Divorced" },
     { value: "Widow", label: "Widow" },
+  ];
+  const occupationOptions = [
+    { value: "Govt", label: "Government Sector" },
+    { value: "Private Job", label: "Private Sector" },
+    { value: "Businesses ", label: "Businesses" },
+    { value: "Farmer", label: "Farmer" },
+    { value: "Service", label: "Service" },
+    { value: "Other", label: "Other" },
   ];
   const [isAvailableForMarriage, setIsAvailableForMarriage] = useState(false);
   const [showMarriageStatus,setShowMarriageStatus] = useState(false);
@@ -64,6 +73,10 @@ const UpdateBasicProfile = () => {
   const handleMaritalStatusChange = (selectedOption) => {
     setMaritalStatus(selectedOption);
   };
+
+  const handleOccuptionChange = (selectedOption) => {
+    setMaritalStatus(selectedOption);
+  };  
 
   const handleAvailableMarriageCheckboxChange = (e) => {
     setIsAvailableForMarriage(e.target.checked);
@@ -345,9 +358,8 @@ const UpdateBasicProfile = () => {
                       )}
                     </div>
                   </div>
+
                   <div className="row">
-
-
                     <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus?'':'d-none'}`}>
                       <label className="form-label">Marital Status</label>
                       <Select
@@ -357,7 +369,19 @@ const UpdateBasicProfile = () => {
                       />
                       {/* Add error handling if needed */}
                     </div>
+
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Occupation</label>
+                      <Select
+                        options={occupationOptions}
+                        value={occupation}
+                        onChange={handleOccuptionChange}
+                      />
+                      {/* Add error handling if needed */}
+                    </div>
                   </div>
+
+                  
 
                   <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage?'':'d-none'}`}>
                     <div className="form-check">
@@ -373,6 +397,19 @@ const UpdateBasicProfile = () => {
                       </label>
                     </div>
                   </div>
+
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="contactCheckbox"
+                    />
+                    <label className="form-check-label">
+                    Contact Details Show
+                    </label>
+                  </div>
+                </div>
 
                   <div className="row mt-4">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

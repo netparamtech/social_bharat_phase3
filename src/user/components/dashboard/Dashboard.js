@@ -21,13 +21,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/search")}
                 >
                   Search{" "}
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   title="Add/Edit Basic Profile"
                   onClick={() => navigate("/user/update-basic-profile")}
                 >
@@ -50,13 +50,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white"
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/search/partner")}
                 >
                   Search
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   title="Add/Edit Matrimonial Detail"
                   onClick={() => navigate("/user/update-matrimonial-profile")}
                 >
@@ -79,13 +79,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white"
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/search/business")}
                 >
                   Search{" "}
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/businesses/view")}
                 >
                   Add{" "}
@@ -107,13 +107,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/event")}
                 >
                   View
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/event")}
                 >
                  Add{" "}
@@ -135,13 +135,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/jobs/view")}
                 >
                   View
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/update-job-profile")}
                 >
                   Add{" "}
@@ -163,13 +163,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white"
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/rating")}
                 >
                   View
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/rating")}
                 >
                   Add{" "}
@@ -191,14 +191,14 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/profile")}
                 >
                   View{" "}
                 </a>
                 <a
-                  className="text-white "
-                  onClick={() => navigate("/user/update-basic-profile")}
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/profile")}
                 >
                   Edit{" "}
                 </a>
@@ -224,13 +224,13 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white"
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/update-contact")}
                 >
                   View
                 </a>
                 <a
-                  className="text-white "
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/contacts/view")}
                 >
                   Edit{" "}

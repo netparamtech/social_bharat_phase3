@@ -130,7 +130,7 @@ const Dashboard = () => {
                     <div className="text-white-75 small">Job</div>
                     <div className="text-lg fw-bold">Add Job <br/>कार्य जोड़ें</div>
                   </div>
-                  <img src="/user/images/placard.png" width="40px" />
+                  <img src="/user/images/job-offer.png" width="40px" />
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">

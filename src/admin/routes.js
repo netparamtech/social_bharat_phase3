@@ -24,6 +24,7 @@ import ServerError from "./components/ServerError";
 import ServerErrorTransfer from "./components/ServerErrorTransfer";
 import ViewTestimonialPage from "./pages/ViewTestimonialPage";
 import TestScroll from "./components/Test/TestScroll";
+import QualificationsPage from "./pages/qualifications/QualificationsPage";
 
 const adminRoutes = [
     {
@@ -181,6 +182,12 @@ const adminRoutes = [
         path: '/test',
         component: TestScroll,
         exact:true
+    },
+
+    {
+        path: '/admin/qualifications',
+        component: QualificationsPage,
+        exact: true
     },
 ]
 

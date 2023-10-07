@@ -95,12 +95,24 @@ function Sidebar() {
               href=""
               onClick={(e) => {
                 e.preventDefault(); // Prevent the default anchor tag behavior
+                navigate("/admin/qualifications");
+              }}
+            >
+            <i class="fa fa-school me-1" fill="currentColor"></i>
+              Qualifications
+            </a>
+            <a
+              className="collapse-item"
+              href=""
+              onClick={(e) => {
+                e.preventDefault(); // Prevent the default anchor tag behavior
                 navigate("/admin/degrees");
               }}
             >
               <i className="fas fa-graduation-cap me-1" fill="currentColor"></i>
               Degrees
             </a>
+
           </div>
         </div>
       </li>

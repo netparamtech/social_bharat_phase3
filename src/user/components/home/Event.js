@@ -233,8 +233,9 @@ const EventForm = () => {
             <div className="card-body">
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-                  <div className="card-title">
-                    <h3 className="mb-3">Event Info</h3>
+                  <div className="card-title mb-5">
+                    <h3 className="mb-1">Create Event </h3>
+                    <p className="text-muted m-0 p-0">Fill the details below to post events.</p>
                   </div>
                   <form className="w-100 w-lg-75" onSubmit={handleSubmit}>
                     {message && (

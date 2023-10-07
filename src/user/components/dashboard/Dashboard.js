@@ -114,7 +114,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/event")}
                 >
                  Add{" "}
                 </a>
@@ -136,13 +136,13 @@ const Dashboard = () => {
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
                   className="text-white "
-                  onClick={() => navigate("/event")}
+                  onClick={() => navigate("/user/jobs/view")}
                 >
                   View
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/update-job-profile")}
                 >
                   Add{" "}
                 </a>
@@ -170,7 +170,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/rating")}
                 >
                   Add{" "}
                 </a>
@@ -198,7 +198,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/user/update-basic-profile")}
                 >
                   Edit{" "}
                 </a>
@@ -231,7 +231,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="text-white "
-                  onClick={() => navigate("/user/search")}
+                  onClick={() => navigate("/user/contacts/view")}
                 >
                   Edit{" "}
                 </a>

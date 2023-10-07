@@ -26,8 +26,18 @@ const UpdateBasicProfile = () => {
   const [countryID, setCountryID] = useState(101);
 
   const [errors, setErrors] = useState("");
-  const [serverError,setServerError] = useState("");
+  const [serverError, setServerError] = useState("");
 
+  const [dob, setDOB] = useState(""); // Initial DOB
+  const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
+  const maritalStatusOptions = [
+    { value: "Unmarried", label: "Unmarried" },
+    { value: "Engaged", label: "Engaged" },
+    { value: "Married", label: "Married" },
+    { value: "Divorced", label: "Divorced" },
+    { value: "Widow", label: "Widow" },
+  ];
+  const [isAvailableForMarriage, setIsAvailableForMarriage] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,6 +51,18 @@ const UpdateBasicProfile = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleDOBChange = (dob) => {
+    setDOB(dob);
+  };
+
+  const handleMaritalStatusChange = (selectedOption) => {
+    setMaritalStatus(selectedOption);
+  };
+
+  const handleAvailableMarriageCheckboxChange = (e) => {
+    setIsAvailableForMarriage(e.target.checked);
   };
 
   const handleStateChange = (selectedOption) => {
@@ -109,8 +131,9 @@ const UpdateBasicProfile = () => {
       name,
       gender,
       email,
-      native_place_city: selectedCity?selectedCity.label:'',
-      native_place_state: selectedState?selectedState.label:'',
+      native_place_city: selectedCity ? selectedCity.label : '',
+      native_place_state: selectedState ? selectedState.label : '',
+      is_available_married: isAvailableForMarriage,
     };
 
     // Call the API to update the basic profile information
@@ -233,6 +256,20 @@ const UpdateBasicProfile = () => {
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Date of Birth</label>
+                      <input
+                        type="date"
+                        name="dob"
+                        id="dob"
+                        className="form-control"
+                        value={dob}
+                        onChange={(e) => handleDOBChange(e.target.value)}
+                      />
+                      {/* Add error handling if needed */}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">State</label>
 
                       <Select
@@ -251,8 +288,7 @@ const UpdateBasicProfile = () => {
                         </span>
                       )}
                     </div>
-                  </div>
-                  <div className="row">
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">City</label>
 
@@ -271,6 +307,35 @@ const UpdateBasicProfile = () => {
                       )}
                     </div>
                   </div>
+                  <div className="row">
+
+
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Marital Status</label>
+                      <Select
+                        options={maritalStatusOptions}
+                        value={maritalStatus}
+                        onChange={handleMaritalStatusChange}
+                      />
+                      {/* Add error handling if needed */}
+                    </div>
+                  </div>
+
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="marriageCheckbox"
+                        checked={isAvailableForMarriage}
+                        onChange={handleAvailableMarriageCheckboxChange}
+                      />
+                      <label className="form-check-label" htmlFor="marriageCheckbox">
+                        Is Available For Marriage
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="row mt-4">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <button type="submit" className="btn btn-primary">

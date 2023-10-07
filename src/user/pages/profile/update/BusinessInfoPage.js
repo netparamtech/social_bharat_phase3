@@ -37,7 +37,10 @@ const BusinessInfoPage = () => {
 
     return (
         <UserLayout>
-            <BusinessInfo user={user} />
+        <div id="auth-wrapper-cont" className="mb-5">
+        <BusinessInfo user={user} />
+        </div>
+            
         </UserLayout>
     );
 }

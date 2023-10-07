@@ -22,6 +22,8 @@ import UserRatingPage from "./pages/UserRatingPage";
 import AboutPage from "./pages/AboutPage";
 import EventPage from "./pages/EventPage";
 import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
+import JobInfoPage from "./pages/profile/update/JobInfoPage";
+import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
 
 const userRoutes = [
     {
@@ -98,6 +100,12 @@ const userRoutes = [
     },
 
     {
+        path: '/user/jobs/view',
+        component: JobInfoPage,
+        exact: true
+    },
+
+    {
         path: '/user/update-job-profile/:id',
         component: UpdateJobPage,
         exact: true
@@ -112,6 +120,12 @@ const userRoutes = [
     {
         path: '/user/update-contact/:id',
         component: UpdateContactPage,
+        exact: true
+    },
+
+    {
+        path: '/user/contacts/view',
+        component: ContactInfoPage,
         exact: true
     },
 

@@ -62,8 +62,7 @@ const ContactInfo = (props) => {
                           <div className="mb-2 row">
                             <u> {item.address_type}</u>
                             <label className="text-muted">
-                              {item.address_line},
-                              {item.city}, {item.state}, {item.country}
+                              {item.address_line} {item.city}, {item.state}, {item.country}
                             </label>
                           </div>
                         </div>

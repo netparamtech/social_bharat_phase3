@@ -37,7 +37,7 @@ const ContactInfoPage = () => {
 
     return (
         <UserLayout>
-            <div>
+            <div id="auth-wrapper-cont" className="mb-5">
                 <ContactInfo user={user} />
             </div>
         </UserLayout>

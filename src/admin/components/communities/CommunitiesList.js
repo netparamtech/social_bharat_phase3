@@ -16,7 +16,7 @@ const CommunitiesList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
-  const [defaultImage, setDefaultImage] = useState('img/no-photo.png');
+  const [defaultImage, setDefaultImage] = useState('img/en.jpg');
   const navigate = useNavigate();
 
   const handlePageChange = (page) => {

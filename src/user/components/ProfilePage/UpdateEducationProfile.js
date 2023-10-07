@@ -179,7 +179,20 @@ const UpdateEducationProfile = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="card p-3">
                     <div className="row">
-                      {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Qualifications Highest</label>
+                        <Select
+                          options={qualificationsOptions}
+                          value={qualification}
+                          onChange={handleQualificationChange}
+                        />
+                        {errors.qualification && <span className='error'>{errors.qualification}</span>}
+                      </div>
+
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
                         <Select
                           id="degree"
@@ -196,31 +209,6 @@ const UpdateEducationProfile = (props) => {
                           placeholder="---Select Degree---"
                         />
                         {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
-                      </div> */}
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Qualifications Highest</label>
-                        <Select
-                          options={qualificationsOptions}
-                          value={qualification}
-                          onChange={handleQualificationChange}
-                        />
-                        {errors.qualification && <span className='error'>{errors.qualification}</span>}
-                      </div>
-
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Study Field</label>
-                        <input
-                          type="text"
-                          name="studyField"
-                          id="studyField"
-                          placeholder="Enter Study Field"
-                          className="form-control"
-                          defaultValue={studyField}
-                          onChange={handleStudyFieldChange}
-                        />
-                        {errors.field_of_study && <span className='error'>{errors.field_of_study}</span>}
                       </div>
                     </div>
 

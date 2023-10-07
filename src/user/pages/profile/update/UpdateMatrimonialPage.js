@@ -29,8 +29,9 @@ const UpdateMatrimonialPage = () => {
     }
 
     useEffect(() => {
-        getUserProfile();
-    }, [])
+        window.scrollTo(0, 0);
+        getUserProfile(); // Call getUserProfile as well
+    }, []);
     return (
         <UserLayout>
             <UpdateMatrimonial userMatrimonial={userMatrimonial} />

@@ -174,7 +174,7 @@ const UserProfileDropdown = () => {
             className="btn btn-icon btn-transparent-dark text-capitalize fs-6 text-primary custom-font"
             onClick={(e) => e.preventDefault()}
           >
-            <span className='custom-font'>{!isAndroidUsed&&userName}</span>
+            
             {userProfile ? (
               <Avatar
                 src={userProfile}
@@ -185,6 +185,7 @@ const UserProfileDropdown = () => {
             ) : (
               <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
             )}
+            <span className='custom-font'><span className={isAndroidUsed?'d-none':''}>Hi</span> {!isAndroidUsed&&userName}</span>
           </span>
         </Dropdown>    );
 };

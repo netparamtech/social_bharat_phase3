@@ -23,11 +23,6 @@ const NavbarTransparent = () => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
-    const isHomePage = window.location.pathname === '/';
-    if(!isHomePage){
-      window.location.href='/';
-      return;
-    }
     window.scrollTo(0, 0);
     navigate('/');
   }

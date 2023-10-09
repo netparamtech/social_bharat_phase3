@@ -1,101 +1,65 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Table } from "antd";
-import reqwest from "reqwest";
+import React, { useState, useEffect } from "react";
+import { navigate } from "react-router-dom"; // Adjust based on your routing mechanism
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchAllCategories, fetchAllDegrees } from '../../services/AdminService';
 
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    render: (name) => `${name.first} ${name.last}`
-  }
-];
-
-const getRandomuserParams = (params) => ({
-  results: params.pagination.pageSize,
-  page: params.pagination.current,
-  ...params
-});
-
+const style = {
+  height: 100,
+  border: "1px solid green",
+  margin: 6,
+  padding: 8,
+  width:700
+};
 const TestScroll = () => {
-  const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10
-  });
-  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetch = useCallback(async (params = {}) => {
-    setLoading(true);
+  const fetchData = async (page, size) => {
     try {
-      const response = await reqwest({
-        url: "https://randomuser.me/api",
-        method: "get",
-        type: "json",
-        data: getRandomuserParams(params)
-      });
-      const newData = response.results ?? [];
-      return newData;
+      setIsLoading(true);  // Set loading to true when fetching
+      const response = await fetchAllCategories(page, size, '', '', '');
+      setItems([...items, ...response.data.data.businessCategories]);
+      setTotalRows(response.data.data.totalRecords);
+      setIsLoading(false);  // Reset loading when data is loaded
     } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
-    } finally {
-      setLoading(false);
+      // Error handling logic
+      setIsLoading(false);  // Reset loading in case of an error
     }
+  };
+
+  const fetchMoreData = () => {
+    if (!isLoading && items.length < totalRows) {
+      fetchData(page + 1, 20);
+      setPage(page + 1);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(page, 20);
   }, []);
 
-  useEffect(() => {
-    if (!data.length) {
-      fetch({ pagination })
-        .then(newData => {
-          setData(newData);
-          setPagination({ ...pagination, total: 200 });
-        })
-        .catch(error => console.error("Error fetching data:", error));
-    }
-  }, [data, fetch, pagination]);
-  
-
-  useEffect(() => {
-    const handleScroll = async () => {
-      console.log("Hello")
-      const isEnd = window.innerHeight + window.scrollY >= document.body.offsetHeight;
-      if (isEnd && data.length < 200) {
-        try {
-          setLoading(true);
-          const newData = await fetch({
-            pagination: { current: pagination.current + 1, pageSize: 10 }
-          });
-          setData((prevData) => [...prevData, ...newData]);
-          setPagination((prevPagination) => ({ ...prevPagination, current: prevPagination.current + 1 }));
-        } catch (error) {
-          console.error("Error fetching more data:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [data, fetch, pagination]);
-
-  useEffect(() => {
-    console.log("Data updated:", data);
-  }, [data]);
-
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      pagination={false}
-      loading={loading}
-      scroll={{
-        scrollToFirstRowOnChange: false,
-        y: 300
-      }}
-    />
+    <div>
+      <h1>demo: react-infinite-scroll-component</h1>
+      <hr />
+      <InfiniteScroll
+        dataLength={items.length}
+        next={fetchMoreData}
+        hasMore={items.length < totalRows}
+        loader={isLoading && <h4>Loading...</h4>}  // Display loader when loading
+      >
+        {items.map((item, index) => (
+          <div className="card" style={style} key={index}>
+           <div>
+           <img src="https://th.bing.com/th/id/OIP.2bJ9_f9aKoGCME7ZIff-ZwHaJ4?pid=ImgDet&rs=1" width={50}></img>
+           </div>
+            Name - {item.title}
+          </div>
+        ))}
+      </InfiniteScroll>
+    </div>
   );
 };
 

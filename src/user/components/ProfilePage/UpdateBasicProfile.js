@@ -9,9 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import dayjs from 'dayjs';
+import { DatePicker, Space } from 'antd';
+import { ddmmyyyyFormat } from "../../util/DateConvertor";
+
+const { RangePicker } = DatePicker;
+const dateFormat = 'YYYY/MM/DD';
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
+  console.log(user)
 
   const [name, setName] = useState(user.user.name); // Initial name
   const [gender, setGender] = useState(user.user.gender); // Initial gender
@@ -28,7 +35,7 @@ const UpdateBasicProfile = () => {
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [dob, setDOB] = useState(""); // Initial DOB
+  const [dob, setDOB] = useState(dayjs(user.user.dob).add(0, 'day')); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null); 
@@ -66,8 +73,8 @@ const UpdateBasicProfile = () => {
     setEmail(e.target.value);
   };
 
-  const handleDOBChange = (dob) => {
-    setDOB(dob);
+  const handleDOBChange = (date, dateString) => {
+    setDOB(dateString); // Update the DOB with the selected date
   };
 
   const handleMaritalStatusChange = (selectedOption) => {
@@ -140,6 +147,16 @@ const UpdateBasicProfile = () => {
     }
   };
 
+  const convertToCustomDateFormat = (inputDate) => {
+    // Parse the input date using Day.js
+    const parsedDate = dayjs(inputDate);
+  
+    // Format the date as per the custom format (yyyy-mm-dd)
+    const formattedDate = parsedDate.format('YYYY-MM-DD');
+  
+    return formattedDate;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -150,8 +167,10 @@ const UpdateBasicProfile = () => {
       email,
       native_place_city: selectedCity ? selectedCity.label : '',
       native_place_state: selectedState ? selectedState.label : '',
-      is_available_married: isAvailableForMarriage,
+      dob:convertToCustomDateFormat(dob),
+      is_available_for_marriage: isAvailableForMarriage,
     };
+    console.log(updatedData,"check")
 
     // Call the API to update the basic profile information
     try {
@@ -190,7 +209,12 @@ const UpdateBasicProfile = () => {
       value: user.user.native_place_city,
       label: user.user.native_place_city,
     }); // Set the selected city as an object
+
   }, [user]);
+
+  useEffect(()=>{
+    console.log(dob)
+  },[dob])
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -223,11 +247,11 @@ const UpdateBasicProfile = () => {
 
   useEffect(()=> {
     if(age>=21 && gender==='Male') {
-      setShowMarriageStatus(true);
+      setShowAvailableForMarriage(true);
     } else if (age>=18 && gender==='Female') {
-      setShowMarriageStatus(true);
+      setShowAvailableForMarriage(true);
     } else {
-      setShowMarriageStatus(false);
+      setShowAvailableForMarriage(false);
     }
   },[age,gender]);
 
@@ -308,14 +332,7 @@ const UpdateBasicProfile = () => {
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Date of Birth</label>
-                      <input
-                        type="date"
-                        name="dob"
-                        id="dob"
-                        className="form-control"
-                        value={dob}
-                        onChange={(e) => handleDOBChange(e.target.value)}
-                      />
+                      <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
                       {/* Add error handling if needed */}
                     </div>
                   </div>
@@ -397,19 +414,6 @@ const UpdateBasicProfile = () => {
                       </label>
                     </div>
                   </div>
-
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="contactCheckbox"
-                    />
-                    <label className="form-check-label">
-                    Contact Details Show
-                    </label>
-                  </div>
-                </div>
 
                   <div className="row mt-4">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

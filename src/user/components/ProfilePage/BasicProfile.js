@@ -73,6 +73,14 @@ const BasicProfile = (props) => {
     }
   };
 
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const [month, day, year] = new Date(dateString)
+      .toLocaleDateString('en-GB', options)
+      .split('/');
+    return `${month}-${day}-${year}`;
+  };
+
   useEffect(() => {
     setProfileImage(
       (user && user.data && user.data.photo) || "/user/images/OIP.jpg"
@@ -177,7 +185,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Date Of Birth </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        NA
+                      {formatDate(user && user.data && user.data.dob)}
                       </span>
                     </div>
                   </div>

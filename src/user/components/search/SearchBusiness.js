@@ -3,6 +3,8 @@ import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, searchBusinessWithC
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
+import { fetchAllCategories } from '../../../admin/services/AdminService';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const SearchBusiness = () => {
 
@@ -31,6 +33,36 @@ const SearchBusiness = () => {
     const [isFilter, setIsFilter] = useState(false);
 
     const navigate = useNavigate();
+
+    const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalRows, setTotalRows] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+  
+    const fetchData = async (page, size) => {
+      try {
+        setIsLoading(true);  // Set loading to true when fetching
+        const response = await fetchAllCategories(page, size, '', '', '');
+        setItems([...items, ...response.data.data.businessCategories]);
+        setTotalRows(response.data.data.totalRecords);
+        setIsLoading(false);  // Reset loading when data is loaded
+      } catch (error) {
+        // Error handling logic
+        setIsLoading(false);  // Reset loading in case of an error
+      }
+    };
+  
+    const fetchMoreData = () => {
+      if (!isLoading && items.length < totalRows) {
+        fetchData(page + 1, 20);
+        setPage(page + 1);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData(page, 20);
+    }, []);
+  
 
     const handlePromoteBusinessClick = (e) => {
         e.preventDefault();
@@ -68,7 +100,7 @@ const SearchBusiness = () => {
         try {
             const response = await searchBusinessWithSearchText(searchText);
             if (response && response.status === 200) {
-                setData(response.data.data);
+                setItems(response.data.data);
             }
 
         } catch (error) {
@@ -151,6 +183,12 @@ const SearchBusiness = () => {
         }
     }
 
+    const groupedItems = [];
+  for (let i = 0; i < items.length; i += 2) {
+    const pair = items.slice(i, i + 2);
+    groupedItems.push(pair);
+  }
+
     useEffect(() => {
         setState(user && user.user && user.user.native_place_state);
         setCity(user && user.user && user.user.native_place_city);
@@ -225,27 +263,38 @@ const SearchBusiness = () => {
                         <div className="row">
                             {/* User Cards */}
 
-                            {
-                                data && data.map((item, idx) => (
-                                    <div className="col-md-4" key={idx}>
-                                        <div className="card shadow mb-2">
-                                            <div className="card-body">
-                                                <div className="row">
-                                                    <div className="col-4">
-                                                        <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
-                                                    </div>
-                                                    <div className="col-8 user-detail">
-                                                        <p>{item.business_name}</p>
-                                                        <p>{item.city}</p>
-                                                        <p>{item.state ? `(${item.state})` : ""}</p>
+                            <InfiniteScroll
+                                dataLength={items.length}
+                                next={fetchMoreData}
+                                hasMore={items.length < totalRows}
+                                loader={isLoading && <h4>Loading...</h4>}
+                            >
+                                {groupedItems.map((pair, index) => (
+                                    <div className="row" key={index}>
+                                        {pair.map((item, innerIndex) => (
+                                            <div className="col-md-6" key={innerIndex}>
+                                                <div className="card shadow mb-2">
+                                                    <div className="card-body">
+                                                        <div className="row">
+                                                            <div className="col-4">
+                                                                <img
+                                                                    src="https://th.bing.com/th/id/OIP.2bJ9_f9aKoGCME7ZIff-ZwHaJ4?pid=ImgDet&rs=1"
+                                                                    alt={item.title}
+                                                                    title={item.title}
+                                                                    className="avatar img-fluid img-circle"
+                                                                />
+                                                            </div>
+                                                            <div className="col-8 user-detail">
+                                                                <p>{item.title}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        ))}
                                     </div>
-                                ))
-                            }
-
+                                ))}
+                            </InfiniteScroll>
 
 
                             {/* Repeat the user card structure as needed */}

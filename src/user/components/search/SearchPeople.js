@@ -227,7 +227,7 @@ const SearchPeople = () => {
                   onChange={handleStateChange}
                 />
               </div>
-              <div className="col-5 mb-3">
+              <div className="col-4 mb-3">
                 <Select
                   options={cities.map((city) => ({
                     value: city.name,

@@ -42,7 +42,7 @@ const UpdateBasicProfile = () => {
   const occupationOptions = [
     { value: "Govt", label: "Government Sector" },
     { value: "Private Job", label: "Private Sector" },
-    { value: "Businesses ", label: "Businesses" },
+    { value: "Business ", label: "Business" },
     { value: "Farmer", label: "Farmer" },
     { value: "Service", label: "Service" },
     { value: "Other", label: "Other" },

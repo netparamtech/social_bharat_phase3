@@ -205,17 +205,18 @@ const SearchBusiness = () => {
 
             <div className={`row ${isFilter ? "" : "d-none"}`}>
               <div className="col-5 mb-3">
-                <Select
+                <Select placeholder="State"
                   options={states.map((state) => ({
                     value: state.name,
                     label: state.name,
+                    
                   }))}
                   value={selectedState}
                   onChange={handleStateChange}
                 />
               </div>
-              <div className="col-5 mb-3">
-                <Select
+              <div className="col-4 mb-3">
+                <Select placeholder="City"
                   options={cities.map((city) => ({
                     value: city.name,
                     label: city.name,
@@ -224,9 +225,9 @@ const SearchBusiness = () => {
                   onChange={handleCityChange}
                 />
               </div>
-              <div className="col-2 mb-3">
+              <div className="col-2    mb-3">
                 <a
-                  href="#"
+                  href=""
                   className="btn btn-set btn-primary"
                   onClick={handleGoButtonClick}
                 >
@@ -262,7 +263,7 @@ const SearchBusiness = () => {
                   </div>
                 ))}
 
-              {/* Repeat the user card structure as needed */}
+        
             </div>
           </div>
         </div>

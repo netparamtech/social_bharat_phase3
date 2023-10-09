@@ -46,7 +46,7 @@ const UserSearchDropdown = () => {
         key: '3',
         label: (
           <span onClick={handleSearchPartnerClick} className='menu-font'>
-            <i className="fa-solid fa-ring m-2"></i> Search Partner
+            <i class="fa-solid fa-heart-pulse m-2"></i>Search Partner
           </span>
         ),
       },

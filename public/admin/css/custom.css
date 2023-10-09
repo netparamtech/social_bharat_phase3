@@ -165,3 +165,7 @@ div.Table{
 .hover-pointer:hover {
   color: green; /* Color changes to black on hover */
 }
+
+.fw-bold {
+  font-size: 500 !important;
+}

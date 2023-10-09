@@ -107,11 +107,7 @@ const QualificationList = () => {
       sortDirections: ['asc', 'desc'],
     },
 
-    {
-      title: 'Short Title', dataIndex: 'short_title',
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
-    },
+  
     {
       title: 'Status', dataIndex: 'status',
       render: (text, record) => (

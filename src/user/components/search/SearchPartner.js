@@ -217,29 +217,28 @@ const SearchPartner = () => {
         <div className="card shadow">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-7">
                 <h5 className="fw-3 mb-3 ">Search Partner</h5>
               </div>
-              <div className=" col-md-2">
+              <div className=" col-md-5">
                 <a
                   href=""
                   title="Filter"
-                  className="btn btn-primary btn-sm ms-2 mb-2"
+                  className="btn btn-primary btn-sm me-1  mb-2"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                 >
                   <i className="fas fa-filter me-1 "></i>Preference
                 </a>
-              </div>
-              <div className="col-md-4">
                 <a
-                  title="Add Business"
-                  className="btn btn-primary btn-sm ms-2 mb-2"
-                  onClick={handlePartnerClick}
-                >
-                  Submit Your Matrimonial Profile
-                </a>
+                title="Add Business"
+                className="btn btn-primary btn-sm  mb-2"
+                onClick={handlePartnerClick}
+              >
+                Submit Your Matrimonial Profile
+              </a>
               </div>
+             
             </div>
 
             <div className="filter-content pt-3 d-md-block ">

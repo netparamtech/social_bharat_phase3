@@ -212,8 +212,8 @@ const BasicProfile = (props) => {
                     </div>
                   </div>
 
-                  <div className="card shadow">
-                    <div className="p-2">
+                  <div className="card  p-0 m-0">
+                    <div className="p-1">
                       <div className="mb-2 row">
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">

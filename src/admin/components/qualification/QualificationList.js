@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteDegree, fetchAllDegrees, updateDegreeStatus } from "../../services/AdminService";
+import { deleteQualificationsByID,  fetchAllQualifications, updateToggleStatusForQualifications } from "../../services/AdminService";
 import Search from "antd/es/input/Search";
 import { Table } from "antd";
 
@@ -44,9 +44,9 @@ const QualificationList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetchAllDegrees(page, size, searchQuery, sortField, sortOrder);
+      const response = await fetchAllQualifications(page, size, searchQuery, sortField, sortOrder);
 
-      setData(response.data.data.degrees);
+      setData(response.data.data.qualifications);
 
       setTotalRows(response.data.data.totalRecords);
     } catch (error) {
@@ -62,7 +62,7 @@ const QualificationList = () => {
 
   const handleStatusToggle = async (id) => {
     try {
-      const response = await updateDegreeStatus(id);
+      const response = await updateToggleStatusForQualifications(id);
       if (response && response.status === 200) {
         fetchData();
       }
@@ -79,7 +79,7 @@ const QualificationList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await deleteDegree(id);
+      const response = await deleteQualificationsByID(id);
       if (response && response.status === 200) {
         fetchData();
       }
@@ -147,10 +147,10 @@ const QualificationList = () => {
         <div>
           <a
             className="collapse-item"
-            href="#"
+            href=""
             onClick={(e) => {
               e.preventDefault();
-              navigate(`/admin/degree/update/${record.id}`)
+              navigate(`/admin/qualifications/update/${record.id}`)
             }}
           >
             <i className="fa fa-edit mr-4" title="Edit" />
@@ -158,7 +158,7 @@ const QualificationList = () => {
 
           <a
             className="collapse-item"
-            href="#"
+            href=""
             onClick={(e) => {
               e.preventDefault();
               handleDelete(record.id);

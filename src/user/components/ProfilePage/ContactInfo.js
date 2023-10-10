@@ -47,7 +47,7 @@ const ContactInfo = (props) => {
               {contactDetails && contactDetails.length > 0 ?
                 contactDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
-                    <div className="card shadow">
+                    <div className="card shadow mb-2">
                       <div className="edit-icon">
                         <a className='hover-pointer' onClick={()=>navigate(`/user/update-contact/${item.id}`)} title="Edit">
                           <i className="fas fa-pencil-alt"></i>

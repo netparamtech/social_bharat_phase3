@@ -192,7 +192,7 @@ const SearchBusiness = () => {
                             }
                         </div>
                         <div className="filter-icon">
-                            <a href="#" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
+                            <a href="" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
                                 <i className="fas fa-filter me-1"></i>Filter
                             </a>
                             <a title='Add Business' className='btn btn-primary' onClick={handlePromoteBusinessClick}>Promote Your Business </a>
@@ -208,6 +208,7 @@ const SearchBusiness = () => {
                                     options={states.map(state => ({ value: state.name, label: state.name }))}
                                     value={selectedState}
                                     onChange={handleStateChange}
+                                    placeholder="State"
                                 />
 
                             </div>
@@ -216,10 +217,11 @@ const SearchBusiness = () => {
                                     options={cities.map(city => ({ value: city.name, label: city.name }))}
                                     value={selectedCity}
                                     onChange={handleCityChange}
+                                    placeholder="City"
                                 />
                             </div>
                             <div className="col-2 mb-3">
-                                <a href="#" className="btn btn-set btn-primary" onClick={handleGoButtonClick}>Go</a>
+                                <a href="" className="btn btn-set btn-primary" onClick={handleGoButtonClick}>Go</a>
                             </div>
                         </div>
                         <div className="row">

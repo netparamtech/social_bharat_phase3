@@ -52,7 +52,7 @@ const JobInfo = (props) => {
               {jobDetails && jobDetails.length > 0 ? (
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
-                    <div className="card shadow mb-2">
+                    <div className="card shadow mb-2 ">
                       <div className="edit-icon"><a className='hover-pointer' onClick={() => navigate(`/user/update-job-profile/${item.id}`)} title="Edit"><i className="fas fa-pencil-alt"></i></a></div>
                       <div className="delete-icon"><a className='hover-pointer' title="Delete" onClick={(e) => {
                         e.preventDefault();

@@ -26,6 +26,8 @@ import ViewTestimonialPage from "./pages/ViewTestimonialPage";
 import TestScroll from "./components/Test/TestScroll";
 import QualificationsPage from "./pages/qualifications/QualificationsPage";
 import UpdateQualification from "./components/qualification/UpdateQualification";
+import UpdateQualificationPage from "./pages/qualifications/UpdateQualificationPage";
+import CreateQualificationPage from "./pages/qualifications/CreateQualificationPage";
 
 const adminRoutes = [
     {
@@ -193,7 +195,13 @@ const adminRoutes = [
 
     {
         path: '/admin/qualifications/update/:id',
-        component: UpdateQualification,
+        component: UpdateQualificationPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/qualifications/create',
+        component: CreateQualificationPage,
         exact:true
     },
 ]

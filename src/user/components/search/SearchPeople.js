@@ -240,7 +240,7 @@ const SearchPeople = () => {
               </div>
               <div className="col-2 mb-3">
                 <a
-                  href="#"
+                  href=""
                   className="btn btn-set btn-primary"
                   onClick={handleGoButtonClick}
                 >

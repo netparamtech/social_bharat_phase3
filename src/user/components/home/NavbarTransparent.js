@@ -167,7 +167,7 @@ const NavbarTransparent = () => {
             )}
           </ul>
 
-          <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav ml-auto  mb-2 mb-lg-0">
             <li className="">
               {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
                 <UserProfileDropdown />

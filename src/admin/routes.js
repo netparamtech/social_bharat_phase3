@@ -25,6 +25,7 @@ import ServerErrorTransfer from "./components/ServerErrorTransfer";
 import ViewTestimonialPage from "./pages/ViewTestimonialPage";
 import TestScroll from "./components/Test/TestScroll";
 import QualificationsPage from "./pages/qualifications/QualificationsPage";
+import UpdateQualification from "./components/qualification/UpdateQualification";
 
 const adminRoutes = [
     {
@@ -188,6 +189,12 @@ const adminRoutes = [
         path: '/admin/qualifications',
         component: QualificationsPage,
         exact: true
+    },
+
+    {
+        path: '/admin/qualifications/update/:id',
+        component: UpdateQualification,
+        exact:true
     },
 ]
 

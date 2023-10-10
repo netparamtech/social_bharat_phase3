@@ -97,7 +97,7 @@ const UserProfileDropdown = () => {
             key: '1',
             label: (
               <>
-                <h6 className="dropdown-header d-flex align-items-center menu-font ">
+                <h6 className="dropdown-header d-flex align-items-center menu-font">
                   <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
                   <div className="dropdown-user-details">
                     <div className="dropdown-user-details-name menu-font">{userName}</div>

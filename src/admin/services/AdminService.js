@@ -438,3 +438,53 @@ export const updateToggleStatusForEvent = async (clickedId) => {
         throw error;
     }
 }
+
+//fetch All Qualification Categories
+export const fetchAllQualifications = async (page, size, searchQuery, sortField, sortOrder) => {
+    try {
+        const response = await apiWithHeaders.get(`/qualifications?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch qualifications by id
+export const fetchQualificationsByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/qualifications/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of qualifications by admin
+export const updateToggleStatusForQualifications = async (clickedId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/qualifications/${clickedId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete qualifications by id
+export const deleteQualificationsByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/qualifications/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update qualifications Categories
+export const updateQualifications = async (id,data) => {
+    try {
+        const response = await apiWithHeaders.put(`/qualifications/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

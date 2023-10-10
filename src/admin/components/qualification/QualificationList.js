@@ -179,6 +179,7 @@ const QualificationList = () => {
 
   return (
     <div>
+      
       <Search
         placeholder="Search"
         allowClear

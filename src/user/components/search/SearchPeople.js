@@ -165,31 +165,9 @@ const SearchPeople = () => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-          <div className="row">
-          <div className="col-md-9">
+            <div>
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
-            <div className=" col-md-3 mb-2 ">
-              <a
-                href=""
-                title="Filter"
-                className="btn btn-primary btn-sm me-1"
-                onClick={() => navigate("/user/update-basic-profile")}
-              >
-                Edit Your Profile
-              </a>
-              <a
-              href=""
-              title="Filter"
-              className="btn btn-primary btn-sm "
-              onClick={handleFilterClicked}
-            >
-              <i className="fas fa-filter me-1"></i>Filter
-            </a>
-            </div>
-           
-          </div>
-            
             <div className="filter-content">
               {
                 city ? (
@@ -204,7 +182,16 @@ const SearchPeople = () => {
                 )
               }
             </div>
-            
+            <div className="filter-icon">
+              <a
+                href="#"
+                title="Filter"
+                className="btn btn-primary btn-sm me-2"
+                onClick={handleFilterClicked}
+              >
+                <i className="fas fa-filter me-1"></i>Filter
+              </a>
+            </div>
             <div className="container-input mb-3">
               <input
                 type="text"
@@ -227,7 +214,7 @@ const SearchPeople = () => {
                   onChange={handleStateChange}
                 />
               </div>
-              <div className="col-4 mb-3">
+              <div className="col-5 mb-3">
                 <Select
                   options={cities.map((city) => ({
                     value: city.name,

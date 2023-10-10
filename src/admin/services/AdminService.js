@@ -206,7 +206,11 @@ export const updatePassword = async (password, confirm_password) => {
 }
 
 //fetch All Degrees
-export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder) => {
+export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder,isEditClicked) => {
+    console.log("inside search logic",isEditClicked);
+    if(isEditClicked){
+        return;
+    }
     try {
         const response = await apiWithHeaders.get(`/degrees?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;

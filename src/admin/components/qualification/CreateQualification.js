@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Select from 'react-select';
-import {  updateQualifications, fetchAllQualifications, fetchQualificationsByID } from "../../services/AdminService";
+import {  updateQualifications, fetchAllQualifications, fetchQualificationsByID, createQualification } from "../../services/AdminService";
 
-const UpdateQualification = () => {
+const CreateQualification = () => {
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
@@ -19,29 +19,6 @@ const UpdateQualification = () => {
    setTitle(e.target.value);
   };
 
-  const fetchQualifications = async () => {
-    try {
-      const response = await fetchQualificationsByID(id);
-      if (response && response.status === 200) {
-        const qualificationData = response.data.data;
-
-        if (qualificationData) {
-          setTitle(qualificationData.title)
-        }
-      
-        setStatus(qualificationData.status);
-      }
-
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
-      }
-    }
-  };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,9 +29,9 @@ const UpdateQualification = () => {
         status,
       };
 
-      const response = await updateQualifications(id, data);
+      const response = await createQualification(data);
 
-      if (response && response.status === 200) {
+      if (response && response.status === 201) {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
@@ -78,14 +55,10 @@ const UpdateQualification = () => {
     }
   };
 
-  useEffect(() => {
-    fetchQualifications();
-  }, [qualifications]);
-
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Update Qualification</h1>
+        <h1 className="h3 mb-0 text-gray-800">Create Qualification</h1>
         <a
           href="#"
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
@@ -159,4 +132,4 @@ const UpdateQualification = () => {
   );
 };
 
-export default UpdateQualification;
+export default CreateQualification;

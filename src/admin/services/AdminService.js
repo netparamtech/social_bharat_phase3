@@ -488,3 +488,13 @@ export const updateQualifications = async (id,data) => {
         throw error;
     }
 }
+
+//create qualifications Categories
+export const createQualification = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/qualifications',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

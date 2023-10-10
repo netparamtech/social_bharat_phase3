@@ -230,7 +230,7 @@ const BasicProfile = (props) => {
                           </span>
 
                           <a
-                            href="#"
+                            href=""
                             onClick={() => navigate("/update-mobile")}
                           >
                             <button className="btn btn-outline-info btn-sm ms-2">

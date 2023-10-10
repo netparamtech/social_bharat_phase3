@@ -181,6 +181,12 @@ const UpdateMatrimonial = (props) => {
       cast: cast,
       proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
+      brothers_details:brothersDetails,
+      sisters_details:sistersDetails,
+      package:salary,
+      gender:gender,
+      dob:dob,
+      manglic:manglicStatus,
     };
 
     try {
@@ -445,18 +451,18 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Gotra Self </label>
+                      <label className="form-label">Paternal Gotra </label>
                       <input
                         type="text"
                         name="gotra"
                         id="gotra"
                         placeholder="Enter Gotra"
                         className="form-control"
-                        defaultValue={gotraSelf}
-                        onChange={(e) => setGotraSelf(e.target.value)}
+                        defaultValue={paternalGotra}
+                        onChange={(e) => setPaternalGotra(e.target.value)}
                       />
                       {errors.gotra && (
-                        <span className="error">{errors.gotra}</span>
+                        <span className="error">{errors.paternal_gotra}</span>
                       )}
                     </div>
 

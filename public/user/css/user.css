@@ -1242,6 +1242,20 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.drawer-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white; /* Adjust the background color as needed */
+  padding: 0px;
+  z-index: 1;
+}
+
+.drawer-content {
+  margin-top: 70px; /* Adjust the margin-top value to accommodate the fixed header */
+}
+
+
 
 
 /* ---------------------------- */

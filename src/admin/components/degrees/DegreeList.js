@@ -13,6 +13,7 @@ const DegreeList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
+  const [isEditClicked,setIsEditClicked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,6 +30,10 @@ const DegreeList = () => {
     setSearchQuery(query);
   };
 
+  const handleEditClicked = (id) => {
+    navigate(`/admin/degree/update/${id}`);
+  }
+
   const handleTableChange = (pagination, filters, sorter) => {
     const newSortField = sorter.field || '';
     let newSortOrder = sorter.order || '';
@@ -43,22 +48,23 @@ const DegreeList = () => {
   };
 
   const fetchData = async () => {
+    console.log('Fetching data with parameters:', { page, size, searchQuery, sortField, sortOrder });
+  
     try {
       const response = await fetchAllDegrees(page, size, searchQuery, sortField, sortOrder);
-
+  
       setData(response.data.data.degrees);
-
       setTotalRows(response.data.data.totalRecords);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/admin');
-      }
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
+  
 
   const handleStatusToggle = async (id) => {
     try {
@@ -72,7 +78,7 @@ const DegreeList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -89,7 +95,7 @@ const DegreeList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -149,15 +155,9 @@ const DegreeList = () => {
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-          <a
-            className="collapse-item"
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(`/admin/degree/update/${record.id}`)
-            }}
-          >
-            <i className="fa fa-edit mr-4" title="Edit" />
+
+          <a className="collapse-item" onClick={()=>handleEditClicked(record.id)}>
+            <i className="fa fa-edit mr-4" title='Edit' />
           </a>
 
           <a
@@ -183,12 +183,24 @@ const DegreeList = () => {
 
   return (
     <div>
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 className="h3 mb-0 text-gray-800">Degrees</h1>
+        <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/admin/degree/create')
+          }}
+        >
+          Create Degree
+        </a>
+      </div>
       <Search
         placeholder="Search"
         allowClear
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
+
       <Table
         title={() => 'Degrees'}  // Set the title to 'Catagories'
         dataSource={data}

@@ -8,8 +8,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchAllCategories } from "../../../admin/services/AdminService";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -34,36 +32,6 @@ const SearchPeople = () => {
 
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
-
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchData = async (page, size) => {
-    try {
-      setIsLoading(true);  // Set loading to true when fetching
-      const response = await fetchAllCategories(page, size, '', '', '');
-      setItems([...items, ...response.data.data.businessCategories]);
-      setTotalRows(response.data.data.totalRecords);
-      setIsLoading(false);  // Reset loading when data is loaded
-    } catch (error) {
-      // Error handling logic
-      setIsLoading(false);  // Reset loading in case of an error
-    }
-  };
-
-  const fetchMoreData = () => {
-    if (!isLoading && items.length < totalRows) {
-      fetchData(page + 1, 20);
-      setPage(page + 1);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(page, 20);
-  }, []);
-
 
   const handleFilterClicked = () => {
     setIsFilter(!isFilter ? true : false);
@@ -190,44 +158,16 @@ const SearchPeople = () => {
 
   useEffect(() => {
     setState(selectedState.label)
-  }, [city]);
-
-  const groupedItems = [];
-  for (let i = 0; i < items.length; i += 2) {
-    const pair = items.slice(i, i + 2);
-    groupedItems.push(pair);
-  }
+}, [city]);
 
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-          <div className="row">
-          <div className="col-md-9">
+            <div>
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
-            <div className=" col-md-3 mb-2 ">
-              <a
-                href=""
-                title="Filter"
-                className="btn btn-primary btn-sm me-1"
-                onClick={() => navigate("/user/update-basic-profile")}
-              >
-                Edit Your Profile
-              </a>
-              <a
-              href=""
-              title="Filter"
-              className="btn btn-primary btn-sm "
-              onClick={handleFilterClicked}
-            >
-              <i className="fas fa-filter me-1"></i>Filter
-            </a>
-            </div>
-           
-          </div>
-            
             <div className="filter-content">
               {
                 city ? (
@@ -242,7 +182,16 @@ const SearchPeople = () => {
                 )
               }
             </div>
-            
+            <div className="filter-icon">
+              <a
+                href="#"
+                title="Filter"
+                className="btn btn-primary btn-sm me-2"
+                onClick={handleFilterClicked}
+              >
+                <i className="fas fa-filter me-1"></i>Filter
+              </a>
+            </div>
             <div className="container-input mb-3">
               <input
                 type="text"
@@ -265,7 +214,7 @@ const SearchPeople = () => {
                   onChange={handleStateChange}
                 />
               </div>
-              <div className="col-4 mb-3">
+              <div className="col-5 mb-3">
                 <Select
                   options={cities.map((city) => ({
                     value: city.name,
@@ -289,7 +238,7 @@ const SearchPeople = () => {
             <div className="row">
               {/* User Cards */}
 
-              {/* {data &&
+              {data &&
                 data.map((item, idx) => (
                   <div className="col-md-4" key={idx}>
                     <div className="card shadow mb-2">
@@ -316,41 +265,9 @@ const SearchPeople = () => {
                       </div>
                     </div>
                   </div>
-                ))} */}
+                ))}
 
               {/* Repeat the user card structure as needed */}
-              <InfiniteScroll
-                dataLength={items.length}
-                next={fetchMoreData}
-                hasMore={items.length < totalRows}
-                loader={isLoading && <h4>Loading...</h4>}
-              >
-                {groupedItems.map((pair, index) => (
-                  <div className="row" key={index}>
-                    {pair.map((item, innerIndex) => (
-                      <div className="col-md-6" key={innerIndex}>
-                        <div className="card shadow mb-2">
-                          <div className="card-body">
-                            <div className="row">
-                              <div className="col-4">
-                                <img
-                                  src="https://th.bing.com/th/id/OIP.2bJ9_f9aKoGCME7ZIff-ZwHaJ4?pid=ImgDet&rs=1"
-                                  alt={item.title}
-                                  title={item.title}
-                                  className="avatar img-fluid img-circle"
-                                />
-                              </div>
-                              <div className="col-8 user-detail">
-                                <p>{item.title}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </InfiniteScroll>
             </div>
           </div>
         </div>

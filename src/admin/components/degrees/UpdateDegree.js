@@ -16,36 +16,8 @@ const UpdateDegree = () => {
 
   const navigate = useNavigate();
 
-  const handleSelectCategoryChange = (selectedOption) => {
-    // Find the degree object that matches the selected value
-    const selectedDegree = degrees.find((degree) => degree.id === selectedOption.value);
-
-    // Update the name and shortName based on the selected degree
-    if (selectedDegree) {
-      setName(selectedOption);
-      setShortName(selectedDegree.short_title);
-    }
-  };
-
-  const fetchAllActiveDegrees = async () => {
-    try {
-      const response = await fetchAllDegrees();
-      if (response && response.status === 200) {
-        setDegrees(response.data.data);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
-      }
-
-      //Unauthorized
-      else if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
-      }
-    }
+  const handleSelectCategoryChange = (e) => {
+    setName(e.target.value);
   };
 
   const fetchDegrees = async () => {
@@ -55,11 +27,7 @@ const UpdateDegree = () => {
         const degreeData = response.data.data;
 
         if (degreeData) {
-          const category = degrees.find(category => category.title === degreeData.title);
-          if (category) {
-            setName({ value: category.id, label: category.title });
-          }
-
+          setName(degreeData.title);
         }
 
         setShortName(degreeData.short_title);
@@ -118,10 +86,6 @@ const UpdateDegree = () => {
     fetchDegrees();
   }, [degrees]);
 
-  useEffect(() => {
-    fetchAllActiveDegrees();
-  }, []);
-
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -155,15 +119,9 @@ const UpdateDegree = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="name">Title</label>
-                  <Select
-                    id="business_category"
-                    className=""
-                    value={name} // Provide a selected option state
-                    onChange={handleSelectCategoryChange} // Your change handler function
-                    options={degrees && degrees.map((category) => ({ value: category.id, label: category.title }))}
-                    placeholder="---Select Degree---"
-                  />
-                  {errors.title && <span className='error'>{errors.title}</span>}
+                  <input type="text" className="form-control" defaultValue={name} onChange={handleSelectCategoryChange} />
+                 
+                      {errors.title && <span className='error'>{errors.title}</span>}
 
                 </div>
                 <div className="form-group">

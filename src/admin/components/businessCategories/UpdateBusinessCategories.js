@@ -25,11 +25,7 @@ const UpdateBusinessCategorie = () => {
         const businessCategorieData = response.data.data;
         
         if (businessCategorieData) {
-          const category = businessCategories.find(category => category.title === businessCategorieData.title);
-            if (category) {
-              setName({ value: category.id, label: category.title });
-            }
-        
+          setName(businessCategorieData.title);
       }
 
       setStatus(businessCategorieData.status);
@@ -45,29 +41,10 @@ const UpdateBusinessCategorie = () => {
     }
   };
 
-  const fetchAllBusinessCategories = async () => {
-    try {
-      const response = await fetchAllCategories();
-      if (response && response.status === 200) {
-        setBusinessCategories(response.data.data);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
-      }
+  
 
-      //Unauthorized
-      else if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
-      }
-    }
-  };
-
-  const handleSelectCategoryChange = (selectedOption) => {
-    setName(selectedOption);
+  const handleSelectCategoryChange = (e) => {
+    setName(e.target.value);
   };
 
 
@@ -75,7 +52,7 @@ const UpdateBusinessCategorie = () => {
     event.preventDefault();
     try {
       const businessCategorieData = {
-        title: name.label,
+        title: name,
         status,
       };
 
@@ -106,10 +83,6 @@ const UpdateBusinessCategorie = () => {
   useEffect(() => {
     fetchBusinessCategorie();
   }, [businessCategories]);
-
-  useEffect(() => {
-    fetchAllBusinessCategories();
-  }, []);
 
   return (
     <div className="container-fluid">
@@ -144,14 +117,8 @@ const UpdateBusinessCategorie = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="name">Title</label>
-                  <Select
-                        id="business_category"
-                        className=""
-                        value={name} // Provide a selected option state
-                        onChange={handleSelectCategoryChange} // Your change handler function
-                        options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
-                        placeholder="---Select Business Category---"
-                      />
+                  <input type="text" className="form-control" defaultValue={name} onChange={handleSelectCategoryChange} />
+                 
                       {errors.title && <span className='error'>{errors.title}</span>}
                 </div>
               </div>

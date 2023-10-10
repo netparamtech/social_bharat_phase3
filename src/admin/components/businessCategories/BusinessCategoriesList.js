@@ -177,6 +177,17 @@ const BusinessCategoriesList = () => {
 
   return (
     <div>
+       <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 className="h3 mb-0 text-gray-800">Businesses</h1>
+        <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/admin/business-categories/create')
+          }}
+        >
+          Create Business
+        </a>
+      </div>
       <Search
         placeholder="Search"
         allowClear

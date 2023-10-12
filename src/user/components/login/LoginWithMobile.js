@@ -5,13 +5,13 @@ import LoginWithOtp from '../otp/LoginWithOtp';
 
 const LoginWithMobile = (props) => {
 
-  const {chnageFlag} = props;
+  const { chnageFlag } = props;
 
   const [mobile, setMobile] = useState('');
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
   const [isLoginClicked, setIsLoginClicked] = useState(false);
-  const [serverError,setServerError] = useState('');
+  const [serverError, setServerError] = useState('');
 
   const navigate = useNavigate();
 
@@ -79,9 +79,13 @@ const LoginWithMobile = (props) => {
                           id="mobile"
                           placeholder="Enter your mobile number"
                           className="form-control"
+                          maxLength="10" // Limit to 10 characters
+                          onInput={(e) => {
+                            // Trim the input to 10 characters
+                            e.target.value = e.target.value.slice(0, 10);
+                          }}
                           onChange={handleMobileChange}
                           autoFocus
-
                         />
                         {errors.mobile && <span className='error'>{errors.mobile}</span>}
                       </div>
@@ -100,7 +104,7 @@ const LoginWithMobile = (props) => {
                         </div>
                       </div>
                       <div className="row mt-3">
-                        <a className="btn btn-secondary" onClick={()=>chnageFlag(false)}>
+                        <a className="btn btn-secondary" onClick={() => chnageFlag(false)}>
                           Login With PASSWORD
                         </a>
                       </div>

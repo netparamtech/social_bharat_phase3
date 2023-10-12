@@ -3,6 +3,7 @@ import React from "react";
 import {
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
+  fetchOneCommunity,
   updateBasicProfile,
 } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +19,7 @@ const dateFormat = 'YYYY/MM/DD';
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
+  const [community, setCommunity] = useState('');
   console.log(user)
 
   const [name, setName] = useState(user.user.name); // Initial name
@@ -38,7 +40,7 @@ const UpdateBasicProfile = () => {
   const [dob, setDOB] = useState(dayjs(user.user.dob).add(0, 'day')); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
-  const [occupation, setOccupation] = useState(null); 
+  const [occupation, setOccupation] = useState(null);
   const maritalStatusOptions = [
     { value: "Unmarried", label: "Unmarried" },
     { value: "Engaged", label: "Engaged" },
@@ -55,8 +57,8 @@ const UpdateBasicProfile = () => {
     { value: "Other", label: "Other" },
   ];
   const [isAvailableForMarriage, setIsAvailableForMarriage] = useState(false);
-  const [showMarriageStatus,setShowMarriageStatus] = useState(false);
-  const [showAvailableForMarriage,setShowAvailableForMarriage] = useState(false);
+  const [showMarriageStatus, setShowMarriageStatus] = useState(false);
+  const [showAvailableForMarriage, setShowAvailableForMarriage] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,10 +85,28 @@ const UpdateBasicProfile = () => {
 
   const handleOccuptionChange = (selectedOption) => {
     setMaritalStatus(selectedOption);
-  };  
+  };
 
   const handleAvailableMarriageCheckboxChange = (e) => {
     setIsAvailableForMarriage(e.target.checked);
+  };
+
+  const fetchLoggedUserCommunity = async () => {
+    try {
+      const response = await fetchOneCommunity();
+      if (response && response.status === 200) {
+        setCommunity(response.data.data);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    }
   };
 
   const handleStateChange = (selectedOption) => {
@@ -150,10 +170,10 @@ const UpdateBasicProfile = () => {
   const convertToCustomDateFormat = (inputDate) => {
     // Parse the input date using Day.js
     const parsedDate = dayjs(inputDate);
-  
+
     // Format the date as per the custom format (yyyy-mm-dd)
     const formattedDate = parsedDate.format('YYYY-MM-DD');
-  
+
     return formattedDate;
   };
 
@@ -167,10 +187,10 @@ const UpdateBasicProfile = () => {
       email,
       native_place_city: selectedCity ? selectedCity.label : '',
       native_place_state: selectedState ? selectedState.label : '',
-      dob:convertToCustomDateFormat(dob),
+      dob: convertToCustomDateFormat(dob),
       is_available_for_marriage: isAvailableForMarriage,
     };
-    console.log(updatedData,"check")
+    console.log(updatedData, "check")
 
     // Call the API to update the basic profile information
     try {
@@ -212,9 +232,9 @@ const UpdateBasicProfile = () => {
 
   }, [user]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(dob)
-  },[dob])
+  }, [dob])
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -236,27 +256,27 @@ const UpdateBasicProfile = () => {
     if (dob) {
       const dobDate = new Date(dob);
       const currentDate = new Date();
-  
+
       // Calculate the age in years
       const ageInMilliseconds = currentDate - dobDate;
       const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
-  
+
       setAge(ageInYears);
     }
   }, [dob]);
 
-  useEffect(()=> {
-    if(age>=21 && gender==='Male') {
+  useEffect(() => {
+    if (age >= 21 && gender === 'Male') {
       setShowAvailableForMarriage(true);
-    } else if (age>=18 && gender==='Female') {
+    } else if (age >= 18 && gender === 'Female') {
       setShowAvailableForMarriage(true);
     } else {
       setShowAvailableForMarriage(false);
     }
-  },[age,gender]);
+  }, [age, gender]);
 
   useEffect(() => {
-    if(maritalStatus){
+    if (maritalStatus) {
       if (maritalStatus.label !== 'Married' && maritalStatus.label !== 'Engaged') {
         setShowAvailableForMarriage(true);
       } else {
@@ -264,7 +284,11 @@ const UpdateBasicProfile = () => {
       }
     }
   }, [maritalStatus]);
-  
+
+  useEffect(() => {
+    fetchLoggedUserCommunity();
+  }, []);
+
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -377,15 +401,14 @@ const UpdateBasicProfile = () => {
                   </div>
 
                   <div className="row">
-                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus?'':'d-none'}`}>
+                    {/* <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
                       <label className="form-label">Marital Status</label>
                       <Select
                         options={maritalStatusOptions}
                         value={maritalStatus}
                         onChange={handleMaritalStatusChange}
                       />
-                      {/* Add error handling if needed */}
-                    </div>
+                    </div> */}
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Occupation</label>
@@ -396,11 +419,26 @@ const UpdateBasicProfile = () => {
                       />
                       {/* Add error handling if needed */}
                     </div>
+
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                      <label className="form-label">Community</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Enter your name"
+                        className="form-control"
+                        defaultValue={community.name}
+                        disabled
+                      />
+
+                    </div>
+
                   </div>
 
-                  
 
-                  <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage?'':'d-none'}`}>
+
+                  <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage ? '' : 'd-none'}`}>
                     <div className="form-check">
                       <input
                         className="form-check-input"
@@ -414,6 +452,8 @@ const UpdateBasicProfile = () => {
                       </label>
                     </div>
                   </div>
+
+
 
                   <div className="row mt-4">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

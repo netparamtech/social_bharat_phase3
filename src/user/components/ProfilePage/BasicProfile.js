@@ -220,8 +220,8 @@ const BasicProfile = (props) => {
                     </div>
                   </div>
 
-                  <div className="card  p-0 m-0">
-                    <div className="p-1">
+                  <div className="p-0 m-0">
+                    <div className="">
                       <div className="py-1 row">
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
@@ -230,7 +230,6 @@ const BasicProfile = (props) => {
                           </span>
 
                           <a
-                            href=""
                             onClick={() => navigate("/update-mobile")}
                           >
                             <button className="btn btn-outline-info btn-sm ms-2">

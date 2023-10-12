@@ -90,6 +90,7 @@ const SetPassword = () => {
                                             onChange={handlePasswordChange}
                                             autoFocus
                                         />
+                                       
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>
                                     <div className="row mb-3">

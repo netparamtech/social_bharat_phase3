@@ -321,7 +321,7 @@ const UpdateBusinessProfile = (props) => {
                       />
                       {errors.business_name && <span className='error'>{errors.business_name}</span>}
                     </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Category</label>
                       <Select
                         id="business_category"
@@ -332,8 +332,8 @@ const UpdateBusinessProfile = (props) => {
                         placeholder="---Select Business Category---"
                       />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
-                    </div>
-                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    </div> */}
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Type</label>
                       <input type="text"
                         name="businessName"
@@ -345,7 +345,7 @@ const UpdateBusinessProfile = (props) => {
                         onChange={(e) => SetBusinessType(e.target.value)}
                       />
                       {errors.business_type && <span className='error'>{errors.business_type}</span>}
-                    </div> */}
+                    </div>
                   </div>
 
                   <div className="row">

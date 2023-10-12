@@ -103,6 +103,11 @@ const LoginWithPassword = (props) => {
                       id="mobile"
                       placeholder="Enter your mobile number"
                       className="form-control"
+                      maxLength="10" // Limit to 10 characters
+                      onInput={(e) => {
+                        // Trim the input to 10 characters
+                        e.target.value = e.target.value.slice(0, 10);
+                      }}
                       onChange={handleMobileChange}
                       autoFocus
                     />

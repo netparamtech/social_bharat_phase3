@@ -224,7 +224,7 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="p-0 m-0">
-                    <div className="">
+                    <div className="card-footer p-0 m-0">
                       <div className="py-1 row">
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
@@ -232,10 +232,12 @@ const BasicProfile = (props) => {
                             {user && user.data && user.data.mobile||"N/A"}
                           </span>
 
+
+
                           <a
                             onClick={() => navigate("/update-mobile")}
                           >
-                            <a className="update-mobile btn btn-outline-info  ms-2" title="Update Mobile No.">
+                            <a className="update-mobile btn ms-2" title="Update Mobile No.">
                             <i class="fas fa-edit text-success"></i>
                             </a>
                           </a>

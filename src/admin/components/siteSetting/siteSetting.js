@@ -30,7 +30,7 @@ const SiteSetting = () => {
                     <label className="fw-bold">Description</label>
                   </div>
                   <div className="col-md-12">
-                    <textarea className="form-control" rows="3" cols="50" />
+                    <textarea className="form-control" rows="2" cols="50" />
                   </div>
                 </div>
                 <div className="row ps-3 mb-3">
@@ -47,7 +47,7 @@ const SiteSetting = () => {
                 <div className="card shawdo m-3">
                   <div className="card-body">
                     <div className="text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="300px" />
+                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
                       <p className="text-center m-2">
                       <a href="">Change Picture</a>
                       </p>

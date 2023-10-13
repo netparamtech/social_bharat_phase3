@@ -28,7 +28,7 @@ const ProfilePage = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+               // navigate('/login');
             }
         }
     }

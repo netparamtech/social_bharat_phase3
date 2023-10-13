@@ -37,6 +37,7 @@ const CheckOtpToUpdateMobile = (props) => {
 
   const handleVarifiedClicked = async (event) => {
     event.preventDefault();
+    const truncatedOtp = otp.slice(0, 6);
 
     try {
       const response = await updateMobile(mobile, otp);

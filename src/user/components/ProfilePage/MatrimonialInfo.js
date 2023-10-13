@@ -46,22 +46,24 @@ const MatrimonialInfo = (props) => {
       const response = await deleteMatrimonial();
       if (response && response.status === 200) {
         setMatrimonialDetails((prevDetails) =>
-          prevDetails.filter((detail) => detail.id !== user?.data?.matrimonial[0].id)
+          prevDetails.filter(
+            (detail) => detail.id !== user?.data?.matrimonial[0].id
+          )
         );
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        navigate("/login");
       }
     }
   };
   useEffect(() => {
-    setMatrimonialDetails(user?.data?.matrimonial || '');
+    setMatrimonialDetails(user?.data?.matrimonial || "");
   }, [user]);
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
@@ -69,7 +71,11 @@ const MatrimonialInfo = (props) => {
         <div className="card shadow">
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
             <div className="edit-icon">
-              <a className="hover-pointer" onClick={() => navigate("/user/update-matrimonial-profile")} title="Edit">
+              <a
+                className="hover-pointer"
+                onClick={() => navigate("/user/update-matrimonial-profile")}
+                title="Edit"
+              >
                 <i className="fas fa-pencil-alt"></i>
               </a>
             </div>
@@ -112,28 +118,31 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Father Name</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].father_name||"N/A"}
+                                user.data.matrimonial[0].father_name) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Mother Name</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].mother_name||"N/A"}
+                                user.data.matrimonial[0].mother_name) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Manglic</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].manglic||"N/A"}
+                                user.data.matrimonial[0].manglic) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -142,47 +151,46 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].height_in_feet}{" "}ft
+                                user.data.matrimonial[0].height_in_feet}{" "}
+                              ft
                             </td>
                           </tr>
                           <tr>
                             <td>Package/Salary</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].salary_package||"N/A"}
+                                user.data.matrimonial[0].salary_package) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Date Of Birth</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].dob||"N/A"}
+                                user.data.matrimonial[0].dob) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Brother Count</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].brother_count||"N/A"}
+                                user.data.matrimonial[0].brother_count) ||
+                                "N/A"}
                             </td>
                           </tr>
-                          {
-                            brothersDetails && (
-                              <tr>
-                                <td>Brothers Details</td>
-                                <td className="text-muted">
-                                  {brothersDetails}
-                                </td>
-                              </tr>
-                            )
-                          }
-
+                          {brothersDetails && (
+                            <tr>
+                              <td>Brothers Details</td>
+                              <td className="text-muted">{brothersDetails}</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -196,47 +204,47 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Sister Count</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].sister_count||"N/A"}
+                                user.data.matrimonial[0].sister_count) ||
+                                "N/A"}
                             </td>
                           </tr>
-                          {
-                            sistersDetails && (
-                              <tr>
-                                <td>Sisters Details</td>
-                                <td className="text-muted">
-                                  {sistersDetails}
-                                </td>
-                              </tr>
-                            )
-                          }
+                          {sistersDetails && (
+                            <tr>
+                              <td>Sisters Details</td>
+                              <td className="text-muted">{sistersDetails}</td>
+                            </tr>
+                          )}
                           <tr>
                             <td>Gender</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].gender||"N/A"}
+                                user.data.matrimonial[0].gender) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Paternal Gotra</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].paternal_gotra||"N/A"}
+                                user.data.matrimonial[0].paternal_gotra) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Maternal Gotra</td>
                             <td className="text-muted">
-                              {user &&
+                              {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].maternal_gotra||"N/A"}
+                                user.data.matrimonial[0].maternal_gotra) ||
+                                "N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -268,7 +276,7 @@ const MatrimonialInfo = (props) => {
                             <td>Proposal Photo</td>
                             <td className="proposal-Photo">
                               {proposalPhotos &&
-                                Array.isArray(proposalPhotos) ? (
+                              Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
                                   <a href={item} target="_blank">
                                     <img className="m-1" src={item} />
@@ -281,7 +289,6 @@ const MatrimonialInfo = (props) => {
                               )}
                             </td>
                           </tr>
-
                         </tbody>
                       </table>
                     </div>
@@ -292,7 +299,7 @@ const MatrimonialInfo = (props) => {
               <div className="add-more-info ">
                 <a
                   className="btn btn-secondary hover-pointer"
-                  onClick={() => navigate('/user/update-matrimonial-profile')}
+                  onClick={() => navigate("/user/update-matrimonial-profile")}
                 >
                   Add Matrimonial Info
                 </a>

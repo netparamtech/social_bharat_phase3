@@ -28,6 +28,7 @@ import QualificationsPage from "./pages/qualifications/QualificationsPage";
 import UpdateQualification from "./components/qualification/UpdateQualification";
 import UpdateQualificationPage from "./pages/qualifications/UpdateQualificationPage";
 import CreateQualificationPage from "./pages/qualifications/CreateQualificationPage";
+import SiteSettingPage from "./pages/siteSetting/SiteSettingPage";
 
 const adminRoutes = [
     {
@@ -202,6 +203,12 @@ const adminRoutes = [
     {
         path: '/admin/qualifications/create',
         component: CreateQualificationPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/site-setting',
+        component: SiteSettingPage,
         exact:true
     },
 ]

@@ -12,6 +12,7 @@ const HomePage = () => {
     },[]);
     return (
         <>
+        <div id="home">
             <UserLayout>
                 <Banner />
                 <OurPartner />
@@ -21,6 +22,7 @@ const HomePage = () => {
                 </section>
                 <Testimonials />
             </UserLayout>
+            </div>
         </>
     );
 }

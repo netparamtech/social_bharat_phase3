@@ -82,7 +82,7 @@ const Banner = () => {
             </div>
            {
             isAuthenticUser?'':(
-              <div className="fixed-button-container">
+              <div className="">
               <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
                 Become a member
               </a>

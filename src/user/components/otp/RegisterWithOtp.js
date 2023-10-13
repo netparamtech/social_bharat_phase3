@@ -71,6 +71,7 @@ const RegisterWithOtp = (props) => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setErrorMessage('');
       }
 
       //Unauthorized

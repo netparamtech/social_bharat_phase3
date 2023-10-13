@@ -8,7 +8,7 @@ const UpdateBusinessProfile = (props) => {
 
   const [businessName, setBusinessName] = useState('');
   const [businessCategory, setBusinessCategory] = useState('');
-  const [businessType,SetBusinessType] = useState('');
+  const [businessType, SetBusinessType] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedState, setSelectedState] = useState('');
@@ -31,7 +31,7 @@ const UpdateBusinessProfile = (props) => {
   const [businessPreview, setBusinessPreview] = useState([]);
 
   const [errors, setErrors] = useState('');
-  const [serverError,setServerError] = useState('');
+  const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
 
   const handleBusinessPhotoChange = async (e) => {
@@ -124,7 +124,7 @@ const UpdateBusinessProfile = (props) => {
     event.preventDefault();
     const businessData = {
       business_name: businessName,
-      business_category: businessCategory.label,
+      business_category: businessType,
       street_address: streetAddress,
       country: selectedCountry.label,
       state: selectedState.label,
@@ -215,38 +215,12 @@ const UpdateBusinessProfile = (props) => {
     }
   }
 
-  //Fetch All Active Business Category
-
-  const fetchAllBusinesses = async () => {
-    try {
-      const response = await fetchAllActiveBusinessCategories();
-      if (response && response.status === 200) {
-        setBusinessCategories(response.data.data.businessCategories);
-        setServerError('');
-      }
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    }
-  }
-
 
   useEffect(() => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
       setBusinessName(businessDetails.business_name || '');
-      if (businessDetails.business_category) {
-        const category = businessCategories.find(category => category.title === businessDetails.business_category);
-        if (category) {
-          setBusinessCategory({ value: category.id, label: category.title });
-        }
-      }
+      SetBusinessType(businessDetails.business_category || '')
       setStreetAddress(businessDetails.street_address || '');
       setCountryID(businessDetails.country === 'India' ? 101 : ''); // Set the countryID accordingly
       setSelectedCountry({ value: businessDetails.country, label: businessDetails.country }); // Set the selected country as an object
@@ -289,10 +263,6 @@ const UpdateBusinessProfile = (props) => {
     }
   }, [states]);
 
-  useEffect(() => {
-    fetchAllBusinesses();
-  }, []);
-
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -301,12 +271,12 @@ const UpdateBusinessProfile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-              {serverError && <span className='error'>{serverError}</span>}
+                {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Business Info</h3>
                 </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-               
+
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Name</label>

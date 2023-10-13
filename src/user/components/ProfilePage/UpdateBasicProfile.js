@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import dayjs from 'dayjs';
 import { DatePicker, Space } from 'antd';
-import { ddmmyyyyFormat } from "../../util/DateConvertor";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
@@ -196,6 +195,7 @@ const UpdateBasicProfile = () => {
 
     return formattedDate;
   };
+  
 
   useEffect(()=>{
     console.log(dob)
@@ -312,6 +312,9 @@ const UpdateBasicProfile = () => {
       setShowMarriageStatus(true);
     } else {
       setShowMarriageStatus(false);
+      if(maritalStatus&&gender===null||maritalStatus&&age===null){
+        setShowMarriageStatus(true);
+      }
     }
   }, [age, gender]);
 

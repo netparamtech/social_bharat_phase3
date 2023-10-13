@@ -7,9 +7,26 @@ import {
 import { getFeet, getInches } from "../../util/Conversion";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
+import { useSelector } from "react-redux";
+import { DatePicker } from "antd";
+import dayjs from 'dayjs';
+import { yyyyMmDdFormat } from "../../util/DateConvertor";
 
+const { RangePicker } = DatePicker;
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
+
+  const user = useSelector((state) => state.userAuth);
+
+  const [updateFor, setUpdateFor] = useState(null);
+  const updateForOptions = [
+    { value: 'Self', label: 'Self' },
+    { value: 'Brother', label: 'Brother' },
+    { value: 'Sister', label: 'Sister' },
+    { value: 'Son', label: 'Son' },
+    { value: 'Daughter', label: 'Daughter' },
+  ];
 
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
@@ -23,8 +40,8 @@ const UpdateMatrimonial = (props) => {
   const [maternalGotra, setMaternalGotra] = useState("");
 
   const [gender, setGender] = useState('');
-  const [dob, setDOB] = useState(""); // Initial DOB
-  const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
+  const [dob, setDOB] = useState(null);
+    const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
 
   const [numBrothers, setNumBrothers] = useState(0); // Number of brothers
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
@@ -59,6 +76,22 @@ const UpdateMatrimonial = (props) => {
   const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
+
+  const handleUpdateForChange = (selectedOption) => {
+    setUpdateFor(selectedOption);
+  
+    if (selectedOption.label === 'Self') {
+      setGender(user.user.gender);
+  
+      console.log(yyyyMmDdFormat(user.user.dob))
+      setDOB(yyyyMmDdFormat(user.user.dob));
+    } else {
+      setGender('');
+      setDOB(dayjs().add(0, 'day'));
+    }
+  };
+  
+
 
   const handlePackageChange = (selectedOption) => {
     setPackageValue(selectedOption);
@@ -178,34 +211,8 @@ const UpdateMatrimonial = (props) => {
     }
   };
 
-  // Function to handle adding brother's details
-  const handleAddBrother = () => {
-    setBrothersDetails([...brothersDetails, ""]);
-    setNumBrothers(numBrothers + 1);
-  };
-
-  // Function to handle updating brother's details
-  const handleBrotherDetailsChange = (index, value) => {
-    const updatedBrothersDetails = [...brothersDetails];
-    updatedBrothersDetails[index] = value;
-    setBrothersDetails(updatedBrothersDetails);
-  };
-
-  // Function to handle adding sister's details
-  const handleAddSister = () => {
-    setSistersDetails([...sistersDetails, ""]);
-    setNumSisters(numSisters + 1);
-  };
-
-  // Function to handle updating sister's details
-  const handleSisterDetailsChange = (index, value) => {
-    const updatedSistersDetails = [...sistersDetails];
-    updatedSistersDetails[index] = value;
-    setSistersDetails(updatedSistersDetails);
-  };
-
-  const handleDOBChange = (dob) => {
-    setDOB(dob);
+  const handleDOBChange = (isoDateString) => {
+   setDOB(isoDateString);
   };
 
   const handleSubmit = async (event) => {
@@ -225,9 +232,10 @@ const UpdateMatrimonial = (props) => {
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
       salary_package: packageValue ? packageValue.label : '',
-      gender: gender,
-      dob: dob,
-      manglic: manglicStatus,
+      matrimonial_profile_gender: gender,
+      matrimonial_profile_dob: dob,
+      is_manglik: manglicStatus,
+      profile_created_for:updateFor&&updateFor.label,
       skin_tone: 'DARK',
     };
 
@@ -343,6 +351,18 @@ const UpdateMatrimonial = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Update Matrimonial For</label>
+                      <Select
+                        value={updateFor}
+                        onChange={handleUpdateForChange}
+                        options={updateForOptions}
+                        placeholder="Select Update For"
+                      />
+                      {/* Add error handling if needed */}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Father Name</label>
                       <input
                         type="text"
@@ -394,23 +414,26 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth(जन्म तिथि)</label>
+                      <label className="form-label">Date of Birth</label>
                       <input
                         type="date"
-                        name="dob"
-                        id="dob"
+                        name="jobStartDate"
+                        id="jobStartDate"
+                        placeholder=""
                         className="form-control"
-                        value={dob}
-                        onChange={(e) => handleDOBChange(e.target.value)}
+                        defaultValue={dob}
+                        onChange={(e) => setDOB(e.target.value)}
                       />
+                      {errors.dob && (
+                        <span className="error">{errors.dob}</span>
+                      )}
                       {/* Add error handling if needed */}
                     </div>
-
                   </div>
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label"></label>
+                      <label className="form-label">Cast</label>
                       <input
                         type="text"
                         name="cast"
@@ -517,11 +540,7 @@ const UpdateMatrimonial = (props) => {
                         )}
                         {/* Display the current value */}
                       </div>
-
-
                     </div>
-
-
 
                     <div className="row">
                       <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
@@ -678,7 +697,7 @@ const UpdateMatrimonial = (props) => {
                       <button type="submit" className="btn btn-primary">
                         Update
                       </button>
-                      <button type="button" className="btn btn-primary m-2" onClick={(e)=>{
+                      <button type="button" className="btn btn-primary m-2" onClick={(e) => {
                         e.preventDefault();
                         navigate('/profile');
                       }}>

@@ -12,6 +12,7 @@ const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
 
   const { user } = props;
+  
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);

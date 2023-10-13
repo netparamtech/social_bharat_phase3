@@ -164,7 +164,7 @@ const UpdateContact = (props) => {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                 <div className="card-title">
-                  <h3 className="mb-3">Contact</h3>
+                  <h3 className="mb-3">Address</h3>
                 </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">

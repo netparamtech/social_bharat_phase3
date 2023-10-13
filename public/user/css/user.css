@@ -185,7 +185,7 @@ nav .nav-item .btn {
 #banners-section {
   margin-top: 94px;
   @media (max-width: 767px) {
-    margin-top: 90px;
+    margin-top: 90px !important;
   }
 }
 

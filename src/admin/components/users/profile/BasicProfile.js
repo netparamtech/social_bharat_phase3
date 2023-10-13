@@ -6,6 +6,24 @@ const BasicProfile = (props) => {
   const [userProfile, setUserProfile] = useState("");
   const defaultPhoto = "/user/images/user.png";
 
+  const [availableForMarriage,setAvailableForMarriage] = useState('');
+
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const [month, day, year] = new Date(dateString)
+      .toLocaleDateString('en-GB', options)
+      .split('/');
+    return `${month}-${day}-${year}`;
+  };
+
+  useEffect(()=>{
+    if(userDetails?.data?.name.is_available_for_marriage){
+      setAvailableForMarriage("YES")
+    } else {
+      setAvailableForMarriage("NO");
+    }
+  },[userDetails])
+
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
       <div className="container">
@@ -26,6 +44,18 @@ const BasicProfile = (props) => {
                 <p className="card-text text-center mb-0">
                   {userDetails?.data?.name}
                 </p>
+                <Image
+                  className="img-fluid max-width-100 community-img"
+                  src={
+                    userDetails?.data?.community?.thumbnail_image
+                      ? userDetails?.data?.community?.thumbnail_image
+                      : defaultPhoto
+                  }
+                  width={50}
+                  alt=""
+                  title=""
+                />
+                <span className="" id="communityName">{userDetails?.data?.community?.name || "N/A"}</span>
                 <p className="card-text text-center text-muted"></p>
               </div>
             </div>
@@ -66,6 +96,26 @@ const BasicProfile = (props) => {
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
+                    <label className="fw-bold">Date Of Birth :</label>
+                  </div>
+                  <div className="col-md-8">
+                    <label className="">{formatDate(userDetails?.data?.dob)}</label>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+                <div className="row">
+                  <div className="col-md-4">
+                    <label className="fw-bold">Marital Status :</label>
+                  </div>
+                  <div className="col-md-8">
+                    <label className="">{userDetails?.data?.marital_status}</label>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+                <div className="row">
+                  <div className="col-md-4">
                     <label className="fw-bold">Mobile :</label>
                   </div>
                   <div className="col-md-8">
@@ -73,32 +123,15 @@ const BasicProfile = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+            </div>
+            <div className="row">
+            <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
-                    <label className="fw-bold">Community:</label>
+                    <label className="fw-bold">Is Available For Marriage :</label>
                   </div>
                   <div className="col-md-8">
-                  <div className="row">
-                    <div className="col-md-6">
-                    <label className="">
-                    {userDetails?.data?.community?.name}
-                  </label>
-                    </div>
-                    <div className="col-md-6">
-                    <Image
-                      height={70}
-                      src={
-                        userDetails?.data?.community?.thumbnail_image
-                          ? userDetails?.data?.community?.thumbnail_image
-                          : defaultPhoto
-                      }
-                      title={userDetails?.data?.name}
-                    />
-                    </div>
-                  </div>
-                    
-                    
+                    <label className="">{availableForMarriage}</label>
                   </div>
                 </div>
               </div>

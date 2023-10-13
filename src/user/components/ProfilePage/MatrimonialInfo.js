@@ -115,7 +115,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].father_name}
+                                user.data.matrimonial[0].father_name||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -124,7 +124,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].mother_name}
+                                user.data.matrimonial[0].mother_name||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -133,7 +133,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].manglic}
+                                user.data.matrimonial[0].manglic||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -151,7 +151,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].salary_package}
+                                user.data.matrimonial[0].salary_package||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -160,24 +160,28 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].dob}
+                                user.data.matrimonial[0].dob||"N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Brother Count</td>
                             <td className="text-muted">
-                            {user &&
+                              {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].brother_count}
+                                user.data.matrimonial[0].brother_count||"N/A"}
                             </td>
                           </tr>
-                          <tr>
-                            <td>Brothers Details</td>
-                            <td className="text-muted">
-                              {brothersDetails}
-                            </td>
-                          </tr>
+                          {
+                            brothersDetails && (
+                              <tr>
+                                <td>Brothers Details</td>
+                                <td className="text-muted">
+                                  {brothersDetails}
+                                </td>
+                              </tr>
+                            )
+                          }
 
                         </tbody>
                       </table>
@@ -189,28 +193,32 @@ const MatrimonialInfo = (props) => {
                     <div className="card-body ">
                       <table className="table table-striped">
                         <tbody>
-                        <tr>
+                          <tr>
                             <td>Sister Count</td>
                             <td className="text-muted">
-                            {user &&
+                              {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].sister_count}
+                                user.data.matrimonial[0].sister_count||"N/A"}
                             </td>
                           </tr>
-                        <tr>
-                            <td>Sisters Details</td>
-                            <td className="text-muted">
-                             {sistersDetails}
-                            </td>
-                          </tr>
+                          {
+                            sistersDetails && (
+                              <tr>
+                                <td>Sisters Details</td>
+                                <td className="text-muted">
+                                  {sistersDetails}
+                                </td>
+                              </tr>
+                            )
+                          }
                           <tr>
                             <td>Gender</td>
                             <td className="text-muted">
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].gender}
+                                user.data.matrimonial[0].gender||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -219,7 +227,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].paternal_gotra}
+                                user.data.matrimonial[0].paternal_gotra||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -228,7 +236,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].maternal_gotra}
+                                user.data.matrimonial[0].maternal_gotra||"N/A"}
                             </td>
                           </tr>
                           <tr>

@@ -65,18 +65,23 @@ const UpdateMatrimonial = (props) => {
   };
 
   const handleBrotherCount = (e) => {
+    const value = parseInt(e.target.value, 10);  // Parse the value as an integer
     setBrotherCount(e.target.value);
-    if (brotherCount === 0) {
+    if (value === 0) {
       setShowBrotherDetail(false);
+      setBrothersDetails('');
     } else {
       setShowBrotherDetail(true);
     }
   }
 
   const handleSisterCount = (e) => {
+    const value = parseInt(e.target.value, 10);  // Parse the value as an integer
     setSisterCount(e.target.value);
-    if (sisterCount === 0) {
+    if (value === 0) {
+      console.log("inside");
       setShowSisterDetail(false);
+      setSistersDetails('');
     } else {
       setShowSisterDetail(true);
     }
@@ -269,17 +274,17 @@ const UpdateMatrimonial = (props) => {
   useEffect(() => {
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
-      setFatherName(userMatrimonial.father_name || "");
-      setMotherName(userMatrimonial.mother_name || "");
+      setFatherName(userMatrimonial.father_name || "NA");
+      setMotherName(userMatrimonial.mother_name || "NA");
       setSkinTone(userMatrimonial.skin_tone || "");
-      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || "");
-      setHeightInch(getInches(userMatrimonial.height_in_feet) || "");
-      setWeight(userMatrimonial.weight_in_kg || "");
-      setCast(userMatrimonial.cast || "");
-      setGotraSelf(userMatrimonial.gotra || "");
-      setMaternalGotra(userMatrimonial.maternal_gotra || "");
-      setPaternalGotra(userMatrimonial.paternal_gotra || "");
-      setProposalPhoto(userMatrimonial.proposal_photos || "");
+      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || "NA");
+      setHeightInch(getInches(userMatrimonial.height_in_feet) || "NA");
+      setWeight(userMatrimonial.weight_in_kg || "NA");
+      setCast(userMatrimonial.cast || "NA");
+      setGotraSelf(userMatrimonial.gotra || "NA");
+      setMaternalGotra(userMatrimonial.maternal_gotra || "NA");
+      setPaternalGotra(userMatrimonial.paternal_gotra || "NA");
+      setProposalPhoto(userMatrimonial.proposal_photos || "NA");
       setBrotherCount(userMatrimonial.brother_count);
       setSisterCount(userMatrimonial.sister_count);
       setPackageValue({
@@ -672,6 +677,12 @@ const UpdateMatrimonial = (props) => {
                     <div className="col-lg-6 col-sm-12 col-xs-12">
                       <button type="submit" className="btn btn-primary">
                         Update
+                      </button>
+                      <button type="button" className="btn btn-primary m-2" onClick={(e)=>{
+                        e.preventDefault();
+                        navigate('/profile');
+                      }}>
+                        Cancel
                       </button>
                     </div>
                   </div>

@@ -136,8 +136,7 @@ const UserList = () => {
 
     { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (
       <a
-        className="collapse-item m-2"
-        href=""
+        className="collapse-item m-2 hover-pointer-admin"
         onClick={(e) => {
           e.preventDefault();
           handleUserToggleStatus(record.id);
@@ -147,8 +146,7 @@ const UserList = () => {
       </a>
     ) : (
       <a
-        className="collapse-item text-secondary m-2"
-        href=""
+        className="collapse-item text-secondary m-2 hover-pointer-admin"
         onClick={(e) => {
           e.preventDefault();
           handleUserToggleStatus(record.id);
@@ -165,7 +163,7 @@ width:100,},
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-          <a className="collapse-item" href="" onClick={() => navigate(`/users/view/${record.id}`)}>
+          <a className="collapse-item hover-pointer-admin" onClick={() => navigate(`/users/view/${record.id}`)}>
             <i className="fas fa-eye"></i>
           </a>
 

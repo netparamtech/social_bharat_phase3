@@ -232,9 +232,9 @@ const BasicProfile = (props) => {
                           <a
                             onClick={() => navigate("/update-mobile")}
                           >
-                            <button className="btn btn-outline-info btn-sm ms-2">
+                            <a className="update-mobile btn btn-outline-info  ms-2" title="Update Mobile No.">
                             <i class="fas fa-edit"></i>
-                            </button>
+                            </a>
                           </a>
                         </div>
                       </div>

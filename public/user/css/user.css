@@ -1128,6 +1128,14 @@ a.btn.dropdown-toggle.show:focus {
   height: 30px;
 }
 
+.update-mobile {
+ font-size: 8px;
+}
+
+.fa-edit{
+  font-size: 6px;
+}
+
 #auth-wrapper,
 #contact-banner,
 #dashboard,

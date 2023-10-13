@@ -76,7 +76,7 @@ const BasicProfile = (props) => {
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
-                    <label className="fw-bold">Community :</label>
+                    <label className="fw-bold">Community:</label>
                   </div>
                   <div className="col-md-8">
                   <div className="row">

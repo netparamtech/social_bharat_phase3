@@ -132,7 +132,7 @@ const BasicProfile = (props) => {
 
               <div className="card-body mx-auto">
                 <p className="card-text text-center mb-0">
-                  {user && user.data && user.data.name||"NA"}
+                  {user && user.data && user.data.name||"N/A"}
                 </p>
 
                 <Image
@@ -145,7 +145,7 @@ const BasicProfile = (props) => {
                   alt=""
                   title=""
                 />
-                <span>{community.name||"NA"}</span>
+                <span>{community.name||"N/A"}</span>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@ const BasicProfile = (props) => {
                     </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.name||"NA"}
+                        {user && user.data && user.data.name||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Email </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.email||"NA"}
+                        {user && user.data && user.data.email||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -185,7 +185,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Date Of Birth </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                      {formatDate(user && user.data && user.data.dob)||"NA"}
+                      {formatDate(user && user.data && user.data.dob)||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Marital Status </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                      {user && user.data && user.data.marital_status||"NA"}
+                      {user && user.data && user.data.marital_status||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -203,7 +203,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3 ">Gender</label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.gender||"NA"}
+                        {user && user.data && user.data.gender||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -215,7 +215,7 @@ const BasicProfile = (props) => {
                         {user &&
                           user.data &&
                           user.data.community &&
-                          user.data.community.name||"NA"}
+                          user.data.community.name||"N/A"}
                       </span>
                     </div>
                   </div>
@@ -226,7 +226,7 @@ const BasicProfile = (props) => {
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
                           <span className="text-muted">
-                            {user && user.data && user.data.mobile||"NA"}
+                            {user && user.data && user.data.mobile||"N/A"}
                           </span>
 
                           <a

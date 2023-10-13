@@ -169,3 +169,12 @@ div.Table{
 .fw-bold {
   font-size: 500 !important;
 }
+
+#communityName {
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
+  display: block; /* Display as a block element */
+  max-width: 100%; /* Set maximum width */
+  word-wrap: break-word; /* Allow word wrapping within the element */
+}

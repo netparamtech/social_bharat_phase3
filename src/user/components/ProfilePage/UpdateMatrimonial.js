@@ -678,6 +678,12 @@ const UpdateMatrimonial = (props) => {
                       <button type="submit" className="btn btn-primary">
                         Update
                       </button>
+                      <button type="button" className="btn btn-primary m-2" onClick={(e)=>{
+                        e.preventDefault();
+                        navigate('/profile');
+                      }}>
+                        Cancel
+                      </button>
                     </div>
                   </div>
                 </form>

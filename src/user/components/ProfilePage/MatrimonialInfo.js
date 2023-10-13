@@ -115,7 +115,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].father_name||"NA"}
+                                user.data.matrimonial[0].father_name||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -124,7 +124,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].mother_name||"NA"}
+                                user.data.matrimonial[0].mother_name||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -133,7 +133,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].manglic||"NA"}
+                                user.data.matrimonial[0].manglic||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -151,7 +151,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].salary_package||"NA"}
+                                user.data.matrimonial[0].salary_package||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -160,7 +160,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].dob||"NA"}
+                                user.data.matrimonial[0].dob||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -169,7 +169,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].brother_count||"NA"}
+                                user.data.matrimonial[0].brother_count||"N/A"}
                             </td>
                           </tr>
                           {
@@ -199,7 +199,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].sister_count||"NA"}
+                                user.data.matrimonial[0].sister_count||"N/A"}
                             </td>
                           </tr>
                           {
@@ -218,7 +218,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].gender||"NA"}
+                                user.data.matrimonial[0].gender||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -227,7 +227,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].paternal_gotra||"NA"}
+                                user.data.matrimonial[0].paternal_gotra||"N/A"}
                             </td>
                           </tr>
                           <tr>
@@ -236,7 +236,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].maternal_gotra||"NA"}
+                                user.data.matrimonial[0].maternal_gotra||"N/A"}
                             </td>
                           </tr>
                           <tr>

@@ -85,17 +85,17 @@ const ViewEventForm = () => {
 
             <Card className="col-md-9 w-100 w-lg-75">
               <div className="row w-50">
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <label className="fw-bold">Name - </label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                   <label className="hover-pointer" onClick={(e) => { e.preventDefault(); navigate(`/users/view/${data.user_id}`) }
                   } title="Click to know more about the user">{data.name && data.name}</label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <label className="fw-bold">Email - </label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                   <label>{data.email && data.email}</label>
                 </div>
               </div>

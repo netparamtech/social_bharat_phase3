@@ -88,23 +88,23 @@ const ViewTestimonial = () => {
                   <p className="card-text text-center mb-0">
                     {data.name && data.name}
                   </p>
-                  <p className="card-text text-center text-muted"></p>
+                 
                 </div>
               </div>
             </div>
 
             <Card className="col-md-9 w-100 w-lg-75 mt-2">
-              <div className="row w-50 mt-5">
-                <div className="col-md-6">
+              <div className="row w-50">
+                <div className="col-md-3">
                   <label className="fw-bold">Name - </label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                 <label>{data.name && data.name}</label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <label className="fw-bold">Email - </label>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-9">
                   <label>{data.email && data.email}</label>
                 </div>
               </div>

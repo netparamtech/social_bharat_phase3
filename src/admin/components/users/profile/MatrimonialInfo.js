@@ -23,7 +23,7 @@ const MatrimonialInfo = (props) => {
   return (
     <div>
       <div id="auth-wrapper" className="pt-5 pb-5 mt-2">
-        <div id="event-info" className="container">
+        <div id="matrimonial-info" className="container">
           <div className="card shadow">
             <div className="card-body">
               <div className="row">
@@ -127,7 +127,7 @@ const MatrimonialInfo = (props) => {
                         <div className="row">
                           <div className="col-md-4">
                             <label htmlFor="status" className="fw-bold">
-                              Maternal Gotra :
+                              Maternal Gotra:
                             </label>
                           </div>
                           <div className="col-md-8">

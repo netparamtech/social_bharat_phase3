@@ -204,8 +204,10 @@ function Sidebar() {
           }}
         >
          
-          <i className="fa fa-comments" fill="currentColor"></i>
+         
+          <i class="fa fa-question" fill="currentColor"></i>
 
+          
           <span className="m-2">Enquiry</span>
         </a>
       </li>

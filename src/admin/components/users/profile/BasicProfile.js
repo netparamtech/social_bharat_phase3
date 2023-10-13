@@ -130,7 +130,7 @@ const BasicProfile = (props) => {
                   <div className="col-md-4">
                     <label className="fw-bold">Is Available For Marriage :</label>
                   </div>
-                  <div className="col-md-8">
+                  <div className="col-md-8 text-danger">
                     <label className="">{availableForMarriage}</label>
                   </div>
                 </div>

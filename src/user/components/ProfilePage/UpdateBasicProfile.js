@@ -37,7 +37,7 @@ const UpdateBasicProfile = () => {
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [dob, setDOB] = useState(dayjs(user.user.dob).add(0, 'day')); // Initial DOB
+  const [dob, setDOB] = useState(dayjs(user.user.dob!=null&&user.user.dob).add(0, 'day')); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null);
@@ -82,6 +82,9 @@ const UpdateBasicProfile = () => {
       const day = `${date.getDate()}`.padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
       setDOB(formattedDate);
+    } else {
+      // Handle null or "Invalid Date"
+      setDOB(null); // Or set a default value or handle it as needed
     }
   };
   
@@ -181,6 +184,10 @@ const UpdateBasicProfile = () => {
     // // Format the date as per the custom format (yyyy-mm-dd)
     // const formattedDate = parsedDate.format('YYYY-MM-DD');
 
+    if(isoDateString===null){
+      return '';
+    }
+
     const date = new Date(isoDateString); // Parse ISO date string
     const year = date.getFullYear();
     const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
@@ -191,6 +198,7 @@ const UpdateBasicProfile = () => {
   };
 
   useEffect(()=>{
+    console.log(dob)
    setDOB(convertToCustomDateFormat(user.user.dob));
   },[user]);
 
@@ -241,6 +249,7 @@ const UpdateBasicProfile = () => {
   };
 
   useEffect(() => {
+    console.log(isAvailableForMarriage,"test")
     setToken(user.token || "");
     setCountryID(101);
     setSelectedState({
@@ -251,10 +260,15 @@ const UpdateBasicProfile = () => {
       value: user.user.native_place_city,
       label: user.user.native_place_city,
     }); // Set the selected city as an object
+   if(user.user.marital_status){
     setMaritalStatus({
       value:user.user.marital_status,
       label:user.user.marital_status,
     });
+    setShowMarriageStatus(true);
+   }else {
+    setIsAvailableForMarriage(false);
+   }
     if(user.user.marital_status==='Married'){
       setIsAvailableForMarriage(false);
       setShowAvailableForMarriage(false)
@@ -391,6 +405,9 @@ const UpdateBasicProfile = () => {
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Date of Birth</label>
                       <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
+                      {errors.dob && (
+                        <span className="error">{errors.dob}</span>
+                      )}
                       {/* Add error handling if needed */}
                     </div>
                   </div>

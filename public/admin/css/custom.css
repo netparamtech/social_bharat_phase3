@@ -178,3 +178,7 @@ div.Table{
   max-width: 100%; /* Set maximum width */
   word-wrap: break-word; /* Allow word wrapping within the element */
 }
+
+#setting-url-page label{
+  font-size: 14px;
+}

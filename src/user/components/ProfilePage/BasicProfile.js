@@ -233,7 +233,7 @@ const BasicProfile = (props) => {
                             onClick={() => navigate("/update-mobile")}
                           >
                             <a className="update-mobile btn btn-outline-info  ms-2" title="Update Mobile No.">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit text-success"></i>
                             </a>
                           </a>
                         </div>

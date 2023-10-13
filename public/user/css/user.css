@@ -121,6 +121,11 @@ nav .nav-item .btn {
   color: #ffffff !important;
 }
 
+.navbar-transparent .navbar-nav .nav-link:active{
+  background-color: #008374;
+  color: #ffffff !important;
+}
+
 .navbar-transparent .navbar-brand {
   color: rgba(255, 255, 255, 1);
 }
@@ -1129,12 +1134,10 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 .update-mobile {
- font-size: 8px;
+ font-size: 10px;
 }
 
-.fa-edit{
-  font-size: 6px;
-}
+
 
 #auth-wrapper,
 #contact-banner,

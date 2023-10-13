@@ -15,7 +15,7 @@ import { DatePicker, Space } from 'antd';
 import { ddmmyyyyFormat } from "../../util/DateConvertor";
 
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'DD-MM-YYYY';
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
@@ -42,8 +42,7 @@ const UpdateBasicProfile = () => {
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null);
   const maritalStatusOptions = [
-    { value: "Unmarried", label: "Unmarried" },
-    { value: "Engaged", label: "Engaged" },
+    { value: "Single", label: "Single" },
     { value: "Married", label: "Married" },
     { value: "Divorced", label: "Divorced" },
     { value: "Widow", label: "Widow" },
@@ -75,9 +74,17 @@ const UpdateBasicProfile = () => {
     setEmail(e.target.value);
   };
 
-  const handleDOBChange = (date, dateString) => {
-    setDOB(dateString); // Update the DOB with the selected date
+  const handleDOBChange = (isoDateString) => {
+    if (isoDateString) {
+      const date = new Date(isoDateString); // Parse ISO date string
+      const year = date.getFullYear();
+      const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
+      const day = `${date.getDate()}`.padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      setDOB(formattedDate);
+    }
   };
+  
 
   const handleMaritalStatusChange = (selectedOption) => {
     setMaritalStatus(selectedOption);
@@ -167,15 +174,25 @@ const UpdateBasicProfile = () => {
     }
   };
 
-  const convertToCustomDateFormat = (inputDate) => {
+  const convertToCustomDateFormat = (isoDateString) => {
     // Parse the input date using Day.js
-    const parsedDate = dayjs(inputDate);
+    // const parsedDate = dayjs(inputDate);
 
-    // Format the date as per the custom format (yyyy-mm-dd)
-    const formattedDate = parsedDate.format('YYYY-MM-DD');
+    // // Format the date as per the custom format (yyyy-mm-dd)
+    // const formattedDate = parsedDate.format('YYYY-MM-DD');
+
+    const date = new Date(isoDateString); // Parse ISO date string
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
+    const day = `${date.getDate()}`.padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
 
     return formattedDate;
   };
+
+  useEffect(()=>{
+   setDOB(convertToCustomDateFormat(user.user.dob));
+  },[user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -187,8 +204,9 @@ const UpdateBasicProfile = () => {
       email,
       native_place_city: selectedCity ? selectedCity.label : '',
       native_place_state: selectedState ? selectedState.label : '',
-      dob: convertToCustomDateFormat(dob),
+      dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
+      marital_status:maritalStatus?maritalStatus.label:'',
     };
     console.log(updatedData, "check")
 
@@ -199,7 +217,11 @@ const UpdateBasicProfile = () => {
         setErrors("");
         setServerError('');
         dispatch(login(response.data.data, token));
-        navigate("/profile");
+        if(isAvailableForMarriage){
+          navigate("/user/update-matrimonial-profile")
+        }else {
+          navigate("/profile");
+        }
       }
     } catch (error) {
       // Handle error
@@ -229,12 +251,16 @@ const UpdateBasicProfile = () => {
       value: user.user.native_place_city,
       label: user.user.native_place_city,
     }); // Set the selected city as an object
+    setMaritalStatus({
+      value:user.user.marital_status,
+      label:user.user.marital_status,
+    });
+    if(user.user.marital_status==='Married'){
+      setIsAvailableForMarriage(false);
+      setShowAvailableForMarriage(false)
+    }
 
   }, [user]);
-
-  useEffect(() => {
-    console.log(dob)
-  }, [dob])
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -267,11 +293,11 @@ const UpdateBasicProfile = () => {
 
   useEffect(() => {
     if (age >= 21 && gender === 'Male') {
-      setShowAvailableForMarriage(true);
+      setShowMarriageStatus(true);
     } else if (age >= 18 && gender === 'Female') {
-      setShowAvailableForMarriage(true);
+      setShowMarriageStatus(true);
     } else {
-      setShowAvailableForMarriage(false);
+      setShowMarriageStatus(false);
     }
   }, [age, gender]);
 
@@ -281,9 +307,17 @@ const UpdateBasicProfile = () => {
         setShowAvailableForMarriage(true);
       } else {
         setShowAvailableForMarriage(false);
+        setIsAvailableForMarriage(false);
       }
     }
   }, [maritalStatus]);
+
+  useEffect(()=>{
+    if(user.user.is_available_for_marriage){
+      setShowAvailableForMarriage(true);
+      setIsAvailableForMarriage(true);
+    }
+  },[user]);
 
   useEffect(() => {
     fetchLoggedUserCommunity();
@@ -401,21 +435,26 @@ const UpdateBasicProfile = () => {
                   </div>
 
                   <div className="row">
-                    {/* <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
+                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
                       <label className="form-label">Marital Status</label>
                       <Select
                         options={maritalStatusOptions}
                         value={maritalStatus}
                         onChange={handleMaritalStatusChange}
+                        placeholder="Select..."
                       />
-                    </div> */}
+                    </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Occupation</label>
-                      <Select
-                        options={occupationOptions}
-                        value={occupation}
-                        onChange={handleOccuptionChange}
+                      <input
+                        type="text"
+                        name="occupation"
+                        id="occupation"
+                        placeholder="Enter Your Occupation"
+                        className="form-control"
+                        defaultValue={occupation}
+                        
                       />
                       {/* Add error handling if needed */}
                     </div>

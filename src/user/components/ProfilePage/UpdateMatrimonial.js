@@ -6,6 +6,7 @@ import {
 } from "../../services/userService";
 import { getFeet, getInches } from "../../util/Conversion";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
 
 const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
@@ -27,10 +28,24 @@ const UpdateMatrimonial = (props) => {
 
   const [numBrothers, setNumBrothers] = useState(0); // Number of brothers
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
-  const [brothersDetails, setBrothersDetails] = useState([]); // Details of brothers
-  const [sistersDetails, setSistersDetails] = useState([]);
-  const [salary,setSalary] = useState('');
+  const [brothersDetails, setBrothersDetails] = useState(''); // Details of brothers
+  const [sistersDetails, setSistersDetails] = useState('');
+  const [packageValue, setPackageValue] = useState(null); // Change to null for react-select
+  const [showBrotherDetail, setShowBrotherDetail] = useState(false);
+  const [showSisterDetail, setShowSisterDetail] = useState(false);
 
+  const packageOptions = [
+    { value: '0-2lakh', label: '0 - 2 lakh' },
+    { value: '2-5lakh', label: '2 - 5 lakh' },
+    { value: '5-7lakh', label: '5 - 7 lakh' },
+    { value: '7-10lakh', label: '7 - 10 lakh' },
+    { value: '10-15lakh', label: '10 - 15 lakh' },
+    { value: '15-20lakh', label: '15 - 20 lakh' },
+    { value: 'morethan20lakh', label: 'More than 20 lakh' },
+  ];
+
+  const [brotherCount, setBrotherCount] = useState('');
+  const [sisterCount, setSisterCount] = useState('');
 
   const [proposalPhoto, setProposalPhoto] = useState([]);
   const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
@@ -44,6 +59,29 @@ const UpdateMatrimonial = (props) => {
   const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
+
+  const handlePackageChange = (selectedOption) => {
+    setPackageValue(selectedOption);
+  };
+
+  const handleBrotherCount = (e) => {
+    setBrotherCount(e.target.value);
+    if (brotherCount === 0) {
+      setShowBrotherDetail(false);
+    } else {
+      setShowBrotherDetail(true);
+    }
+  }
+
+  const handleSisterCount = (e) => {
+    setSisterCount(e.target.value);
+    if (sisterCount === 0) {
+      setShowSisterDetail(false);
+    } else {
+      setShowSisterDetail(true);
+    }
+
+  }
 
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -168,26 +206,27 @@ const UpdateMatrimonial = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(brothersDetails,sistersDetails)
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,
       height_in_feet: `${heightFeet}.${heightInch}`,
-      weight_in_kg: weight,
-      skin_tone: skinTone,
-      gotra: gotraSelf,
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
       cast: cast,
       proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
-      brothers_details:brothersDetails,
-      sisters_details:sistersDetails,
-      package:salary,
-      gender:gender,
-      dob:dob,
-      manglic:manglicStatus,
+      brother_count: brotherCount ? brotherCount : 0,
+      sister_count: sisterCount ? sisterCount : 0,
+      brothers_details: brothersDetails ? brothersDetails : '',
+      sisters_details: sistersDetails ? sistersDetails : '',
+      salary_package: packageValue ? packageValue.label : '',
+      gender: gender,
+      dob: dob,
+      manglic: manglicStatus,
+      skin_tone: 'DARK',
     };
+
+    console.log(matrimonialData)
 
     try {
       const response = await updateMatrimonialInfo(matrimonialData);
@@ -241,6 +280,12 @@ const UpdateMatrimonial = (props) => {
       setMaternalGotra(userMatrimonial.maternal_gotra || "");
       setPaternalGotra(userMatrimonial.paternal_gotra || "");
       setProposalPhoto(userMatrimonial.proposal_photos || "");
+      setBrotherCount(userMatrimonial.brother_count);
+      setSisterCount(userMatrimonial.sister_count);
+      setPackageValue({
+        value: userMatrimonial.salary_package,
+        label: userMatrimonial.salary_package,
+      });
       {
         userMatrimonial &&
           userMatrimonial.proposal_photos &&
@@ -261,8 +306,18 @@ const UpdateMatrimonial = (props) => {
       setBiodataPreview(userMatrimonial.biodata || "");
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
 
+      if (userMatrimonial.brothers_details) {
+        setBrothersDetails(userMatrimonial.brothers_details);
+        setShowBrotherDetail(true);
+      }
+      if (userMatrimonial.sisters_details) {
+        setSistersDetails(userMatrimonial.sisters_details);
+        setShowSisterDetail(true);
+      }
+
       // You can similarly handle the proposalPhoto and biodataFile values here if needed
     }
+
   }, [userMatrimonial]);
 
   useEffect(() => {
@@ -316,23 +371,7 @@ const UpdateMatrimonial = (props) => {
                   </div>
 
                   <div className="row">
-                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Skin Tone</label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Default select example"
-                        value={skinTone}
-                        onChange={(e) => setSkinTone(e.target.value)}
-                      >
-                        <option value="">---Select Skin---</option>
-                        <option value="FAIR">FAIR</option>
-                        <option value="DARK">DARK</option>
-                        <option value="WHEATISH">WHEATISH</option>
-                      </select>
-                      {errors.skin_tone && (
-                        <span className="error">{errors.skin_tone}</span>
-                      )}
-                    </div> */}
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Gender</label>
                       <select
@@ -350,7 +389,7 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth</label>
+                      <label className="form-label">Date of Birth(जन्म तिथि)</label>
                       <input
                         type="date"
                         name="dob"
@@ -365,6 +404,166 @@ const UpdateMatrimonial = (props) => {
                   </div>
 
                   <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label"></label>
+                      <input
+                        type="text"
+                        name="cast"
+                        id="cast"
+                        placeholder="Enter Cast"
+                        className="form-control"
+                        defaultValue={cast}
+                        onChange={(e) => setCast(e.target.value)}
+                      />
+                      {errors.cast && (
+                        <span className="error">{errors.cast}</span>
+                      )}
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Paternal Gotra </label>
+                      <input
+                        type="text"
+                        name="gotra"
+                        id="gotra"
+                        placeholder="Enter Gotra"
+                        className="form-control"
+                        defaultValue={paternalGotra}
+                        onChange={(e) => setPaternalGotra(e.target.value)}
+                      />
+                      {errors.gotra && (
+                        <span className="error">{errors.paternal_gotra}</span>
+                      )}
+                    </div>
+
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Maternal Gotra</label>
+                      <input
+                        type="text"
+                        name="maternal"
+                        id="maternal"
+                        placeholder="Enter Maternal Gotra"
+                        className="form-control"
+                        defaultValue={maternalGotra}
+                        onChange={(e) => setMaternalGotra(e.target.value)}
+                      />
+                      {errors.maternal_gotra && (
+                        <span className="error">{errors.maternal_gotra}</span>
+                      )}
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Manglik</label>
+                      <select
+                        className="form-select form-control"
+                        aria-label="Manglic select"
+                        value={manglicStatus}
+                        onChange={(e) => setManglicStatus(e.target.value)}
+                      >
+                        <option value="">---Select Manglic Status---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                      {/* Add error handling if needed */}
+                    </div>
+
+
+                    <label className="form-label">Number of Siblings</label>
+
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Brothers</label>
+                        <select id="numberDropdown" name="numberDropdown" className="m-2" value={brotherCount} onChange={handleBrotherCount}>
+                          <option value="0" selected>0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                        {errors.brother_count && (
+                          <span className="error">{errors.brother_count}</span>
+                        )}
+                        {/* Display the current value */}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Sisters</label>
+                        <select id="numberDropdown" name="numberDropdown" className="m-2" value={sisterCount} onChange={handleSisterCount}>
+                          <option value="0" selected>0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                        {errors.sister_count && (
+                          <span className="error">{errors.sister_count}</span>
+                        )}
+                        {/* Display the current value */}
+                      </div>
+
+
+                    </div>
+
+
+
+                    <div className="row">
+                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
+                        <label className="form-label">Brothers Details</label>
+
+                        <input
+                          type="area"
+                          placeholder="Enter Your Brother(s) details"
+                          className="form-control mt-2"
+                          defaultValue={brothersDetails}
+                          onChange={(e) => setBrothersDetails(e.target.value)}
+                        />
+                        {errors.brothers_details && (
+                          <span className="error">{errors.brothers_details}</span>
+                        )}
+                      </div>
+
+                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
+                        <label className="form-label">Sisters Details</label>
+                        <input
+                          type="area"
+                          placeholder="Enter Your Sister(s) details"
+                          className="form-control mt-2"
+                          defaultValue={sistersDetails}
+                          onChange={(e) => setSistersDetails(e.target.value)}
+                        />
+                        {errors.sisters_details && (
+                          <span className="error">{errors.sisters_details}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Package</label>
+                      <Select
+                        value={packageValue}
+                        onChange={handlePackageChange}
+                        options={packageOptions}
+                        placeholder="Select Package"
+                      />
+                      {errors.salary_package && (
+                        <span className="error">{errors.salary_package}</span>
+                      )}
+                      {/* Add error handling if needed */}
+                    </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Height</label>
                       <div className="d-flex">
@@ -415,145 +614,6 @@ const UpdateMatrimonial = (props) => {
                           <span className="error">{errors.height_in_feet}</span>
                         )}
                       </div>
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Weight</label>
-                      <input
-                        type="number"
-                        name="weight"
-                        id="weight"
-                        placeholder="Enter Weight"
-                        className="form-control"
-                        defaultValue={weight}
-                        onChange={(e) => setWeight(e.target.value)}
-                      />
-                      {errors.weight_in_kg && (
-                        <span className="error">{errors.weight_in_kg}</span>
-                      )}
-                    </div>
-
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Cast</label>
-                      <input
-                        type="text"
-                        name="cast"
-                        id="cast"
-                        placeholder="Enter Cast"
-                        className="form-control"
-                        defaultValue={cast}
-                        onChange={(e) => setCast(e.target.value)}
-                      />
-                      {errors.cast && (
-                        <span className="error">{errors.cast}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Paternal Gotra </label>
-                      <input
-                        type="text"
-                        name="gotra"
-                        id="gotra"
-                        placeholder="Enter Gotra"
-                        className="form-control"
-                        defaultValue={paternalGotra}
-                        onChange={(e) => setPaternalGotra(e.target.value)}
-                      />
-                      {errors.gotra && (
-                        <span className="error">{errors.paternal_gotra}</span>
-                      )}
-                    </div>
-
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Maternal Gotra</label>
-                      <input
-                        type="text"
-                        name="maternal"
-                        id="maternal"
-                        placeholder="Enter Maternal Gotra"
-                        className="form-control"
-                        defaultValue={maternalGotra}
-                        onChange={(e) => setMaternalGotra(e.target.value)}
-                      />
-                      {errors.maternal_gotra && (
-                        <span className="error">{errors.maternal_gotra}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Manglic</label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Manglic select"
-                        value={manglicStatus}
-                        onChange={(e) => setManglicStatus(e.target.value)}
-                      >
-                        <option value="">---Select Manglic Status---</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                      {/* Add error handling if needed */}
-                    </div>
-
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Brothers Details</label>
-                      <button type="button" className="btn-secondary m-2" onClick={handleAddBrother}>
-                        Add Brother
-                      </button>
-                      {brothersDetails.map((brother, index) => (
-                        <input
-                          key={index}
-                          type="text"
-                          placeholder={`Brother ${index + 1} details`}
-                          className="form-control mt-2"
-                          value={brother}
-                          onChange={(e) => handleBrotherDetailsChange(index, e.target.value)}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Sisters Details</label>
-                      <button type="button" className="btn-secondary m-2" onClick={handleAddSister}>
-                        Add Sister
-                      </button>
-                      {sistersDetails.map((sister, index) => (
-                        <input
-                          key={index}
-                          type="text"
-                          placeholder={`Sister ${index + 1} details`}
-                          className="form-control mt-2"
-                          value={sister}
-                          onChange={(e) => handleSisterDetailsChange(index, e.target.value)}
-                        />
-                      ))}
-                    </div>
-
-                  </div>
-
-                  <div className="row">
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Package</label>
-                      <input
-                        type="text"
-                        name="fatherName"
-                        id="fatherName"
-                        placeholder="Enter Your Package"
-                        className="form-control"
-                        autoFocus
-                        defaultValue={salary}
-                        onChange={(e) => setSalary(e.target.value)}
-                      />
-                      {errors.salary && (
-                        <span className="error">{errors.salary}</span>
-                      )}
                     </div>
 
                   </div>
@@ -619,9 +679,9 @@ const UpdateMatrimonial = (props) => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   );
 };
 

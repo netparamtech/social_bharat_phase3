@@ -194,7 +194,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Marital Status </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        NA
+                      {user && user.data && user.data.marital_status}
                       </span>
                     </div>
                   </div>
@@ -233,7 +233,7 @@ const BasicProfile = (props) => {
                             onClick={() => navigate("/update-mobile")}
                           >
                             <button className="btn btn-outline-info btn-sm ms-2">
-                              Update
+                            <i class="fas fa-edit"></i>
                             </button>
                           </a>
                         </div>

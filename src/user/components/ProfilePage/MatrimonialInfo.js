@@ -142,7 +142,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].height_in_feet}
+                                user.data.matrimonial[0].height_in_feet}{" "}ft
                             </td>
                           </tr>
                           <tr>
@@ -151,7 +151,7 @@ const MatrimonialInfo = (props) => {
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].package}
+                                user.data.matrimonial[0].salary_package}
                             </td>
                           </tr>
                           <tr>
@@ -164,14 +164,18 @@ const MatrimonialInfo = (props) => {
                             </td>
                           </tr>
                           <tr>
+                            <td>Brother Count</td>
+                            <td className="text-muted">
+                            {user &&
+                                user.data &&
+                                user.data.matrimonial[0] &&
+                                user.data.matrimonial[0].brother_count}
+                            </td>
+                          </tr>
+                          <tr>
                             <td>Brothers Details</td>
                             <td className="text-muted">
-                              {brothersDetails &&
-                                brothersDetails.map((item, index) => (
-                                  <div key={index}>
-                                    <span>{`Brother ${index + 1}: ${item}`}</span>
-                                  </div>
-                                ))}
+                              {brothersDetails}
                             </td>
                           </tr>
 
@@ -186,14 +190,18 @@ const MatrimonialInfo = (props) => {
                       <table className="table table-striped">
                         <tbody>
                         <tr>
+                            <td>Sister Count</td>
+                            <td className="text-muted">
+                            {user &&
+                                user.data &&
+                                user.data.matrimonial[0] &&
+                                user.data.matrimonial[0].sister_count}
+                            </td>
+                          </tr>
+                        <tr>
                             <td>Sisters Details</td>
                             <td className="text-muted">
-                              {sistersDetails &&
-                                sistersDetails.map((item, index) => (
-                                  <div key={index}>
-                                    <span>{`Brother ${index + 1}: ${item}`}</span>
-                                  </div>
-                                ))}
+                             {sistersDetails}
                             </td>
                           </tr>
                           <tr>

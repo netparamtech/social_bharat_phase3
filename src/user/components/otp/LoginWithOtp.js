@@ -26,10 +26,17 @@ const LoginWithOtp = (props) => {
 
   const handleOTPChange = (e, index) => {
     const value = e.target.value;
-    const otpArray = otp.split("");
-    otpArray[index] = value;
-    setOtp(otpArray.join(""));
-
+    const updatedOtp = [...otp];
+  
+    // Update the OTP array with the new value
+    updatedOtp[index] = value;
+  
+    // Join the OTP array into a string of maximum length 6
+    const updatedOtpString = updatedOtp.slice(0, 6).join("");
+  
+    // Set the updated OTP
+    setOtp(updatedOtpString);
+  
     // Move the focus to the next OTP box if the current box is filled
     if (value !== "" && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
@@ -44,9 +51,9 @@ const LoginWithOtp = (props) => {
 
   const handleVarifiedClicked = async (event) => {
     event.preventDefault();
-
+    const truncatedOtp = otp.slice(0, 6);
     try {
-      const response = await mobileVarified(mobile, otp);
+      const response = await mobileVarified(mobile, truncatedOtp);
 
       if (response && response.status === 200) {
         dispatch(login(response.data.data, response.data.token));

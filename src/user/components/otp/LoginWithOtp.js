@@ -68,12 +68,11 @@ const LoginWithOtp = (props) => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setErrorMessage(error.response.data.errorMessage);
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        setErrorMessage("Invalid Otp");
+        setErrorMessage(error.response.data.message);
         setErrors("");
       }
 

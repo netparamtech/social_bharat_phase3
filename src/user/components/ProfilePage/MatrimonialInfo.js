@@ -13,6 +13,19 @@ const MatrimonialInfo = (props) => {
     user.data &&
     user.data.matrimonial[0] &&
     user.data.matrimonial[0].proposal_photos;
+
+  const brothersDetails =
+    user &&
+    user.data &&
+    user.data.matrimonial[0] &&
+    user.data.matrimonial[0].brothers_details;
+
+  const sistersDetails =
+    user &&
+    user.data &&
+    user.data.matrimonial[0] &&
+    user.data.matrimonial[0].sisters_details;
+
   const getFileType = (url) => {
     // Extract the file extension from the URL
     const extension = url.split(".").pop().toLowerCase();
@@ -56,7 +69,7 @@ const MatrimonialInfo = (props) => {
         <div className="card shadow">
           {matrimonialDetails && matrimonialDetails.length > 0 ? (
             <div className="edit-icon">
-              <a className="hover-pointer" onClick={()=>navigate("/user/update-matrimonial-profile")} title="Edit">
+              <a className="hover-pointer" onClick={() => navigate("/user/update-matrimonial-profile")} title="Edit">
                 <i className="fas fa-pencil-alt"></i>
               </a>
             </div>
@@ -65,7 +78,7 @@ const MatrimonialInfo = (props) => {
               <a
                 className="hover-pointer"
                 title="Add More Detail"
-                onClick={()=>navigate("/user/update-matrimonial-profile")}
+                onClick={() => navigate("/user/update-matrimonial-profile")}
               >
                 <i className="btn btn-outline-info fas fa-plus"></i>
               </a>
@@ -115,12 +128,12 @@ const MatrimonialInfo = (props) => {
                             </td>
                           </tr>
                           <tr>
-                            <td>Skin Tone</td>
+                            <td>Manglic</td>
                             <td className="text-muted">
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].skin_tone}
+                                user.data.matrimonial[0].manglic}
                             </td>
                           </tr>
                           <tr>
@@ -133,14 +146,35 @@ const MatrimonialInfo = (props) => {
                             </td>
                           </tr>
                           <tr>
-                            <td>Weight</td>
+                            <td>Package/Salary</td>
                             <td className="text-muted">
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].weight_in_kg}
+                                user.data.matrimonial[0].package}
                             </td>
                           </tr>
+                          <tr>
+                            <td>Date Of Birth</td>
+                            <td className="text-muted">
+                              {user &&
+                                user.data &&
+                                user.data.matrimonial[0] &&
+                                user.data.matrimonial[0].dob}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Brothers Details</td>
+                            <td className="text-muted">
+                              {brothersDetails &&
+                                brothersDetails.map((item, index) => (
+                                  <div key={index}>
+                                    <span>{`Brother ${index + 1}: ${item}`}</span>
+                                  </div>
+                                ))}
+                            </td>
+                          </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -151,17 +185,28 @@ const MatrimonialInfo = (props) => {
                     <div className="card-body ">
                       <table className="table table-striped">
                         <tbody>
+                        <tr>
+                            <td>Sisters Details</td>
+                            <td className="text-muted">
+                              {sistersDetails &&
+                                sistersDetails.map((item, index) => (
+                                  <div key={index}>
+                                    <span>{`Brother ${index + 1}: ${item}`}</span>
+                                  </div>
+                                ))}
+                            </td>
+                          </tr>
                           <tr>
-                            <td>Gotra</td>
+                            <td>Gender</td>
                             <td className="text-muted">
                               {user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].gotra}
+                                user.data.matrimonial[0].gender}
                             </td>
                           </tr>
                           <tr>
-                            <td>Paternal Self</td>
+                            <td>Paternal Gotra</td>
                             <td className="text-muted">
                               {user &&
                                 user.data &&
@@ -220,6 +265,7 @@ const MatrimonialInfo = (props) => {
                               )}
                             </td>
                           </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -230,7 +276,7 @@ const MatrimonialInfo = (props) => {
               <div className="add-more-info ">
                 <a
                   className="btn btn-secondary hover-pointer"
-                  onClick={()=>navigate('/user/update-matrimonial-profile')}
+                  onClick={() => navigate('/user/update-matrimonial-profile')}
                 >
                   Add Matrimonial Info
                 </a>

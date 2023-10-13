@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import ViewProfileDrawer from "./ViewProfileDrawer";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -32,6 +33,18 @@ const SearchPeople = () => {
 
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
+
+  const [viewProfileDrawerVisible, setViewProfileDrawerVisible] = useState(false);
+
+  // Rest of your existing code
+
+  const handleViewProfileClick = () => {
+    setViewProfileDrawerVisible(true);
+  };
+
+  const handleViewProfileDrawerClose = () => {
+    setViewProfileDrawerVisible(false);
+  };
 
   const handleFilterClicked = () => {
     setIsFilter(!isFilter ? true : false);
@@ -260,10 +273,16 @@ const SearchPeople = () => {
                                 ? `(${item.native_place_state})`
                                 : ""}
                             </p>
+                            <a href="#" onClick={handleViewProfileClick}>
+                              <p>
+                                view profile
+                              </p>
+                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <ViewProfileDrawer visible={viewProfileDrawerVisible} onClose={handleViewProfileDrawerClose} />
                   </div>
                 ))}
 

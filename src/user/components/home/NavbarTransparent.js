@@ -126,7 +126,6 @@ const NavbarTransparent = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="/"
                 onClick={handleHomeClicked}
               >
                 Home

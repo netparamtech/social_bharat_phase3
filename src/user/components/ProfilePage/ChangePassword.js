@@ -20,10 +20,7 @@ const ChangePassword = () => {
     }
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
-
         try {
             const response = await apiWithHeaders.put('/profile/update-password', {
                 password, confirmPassword

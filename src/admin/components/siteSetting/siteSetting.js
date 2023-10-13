@@ -9,7 +9,7 @@ const SiteSetting = () => {
     <>
       <div id="setting-url-page">
       <div ></div>
-      <p className="ps-4 fs-5">Manage Popular Programs</p>
+      <p className="ps-4 fs-5">Manage Pages URL</p>
         <div className="container">
           <div className="card mb-5">
             <div className="card-title p-3 bg-dark text-white fw-bold">

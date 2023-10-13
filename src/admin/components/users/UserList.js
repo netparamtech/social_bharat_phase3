@@ -124,6 +124,7 @@ const UserList = () => {
       render: (text, record) => record.community?.name || 'N/A',
       sorter: true,
       sortDirections: ['asc', 'desc'],
+      width:200,
     },
   
     {
@@ -132,6 +133,7 @@ const UserList = () => {
       render: (text, record) => calculateTimeDifference(record.updated_at),
       sorter: true,
       sortDirections: ['asc', 'desc'],
+      width:150,
     },
 
     { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (

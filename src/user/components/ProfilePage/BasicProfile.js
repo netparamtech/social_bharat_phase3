@@ -74,6 +74,9 @@ const BasicProfile = (props) => {
   };
 
   const formatDate = (dateString) => {
+    if(dateString===null){
+      return '';
+    }
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const [month, day, year] = new Date(dateString)
       .toLocaleDateString('en-GB', options)

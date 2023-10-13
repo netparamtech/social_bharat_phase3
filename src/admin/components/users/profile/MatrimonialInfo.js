@@ -27,6 +27,10 @@ const MatrimonialInfo = (props) => {
     setSisterDetails(userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].sisters_details);
   }, [userDetails]);
 
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  },[]);
+
   return (
     <div>
       <div id="auth-wrapper" className="pt-5 pb-5 mt-2">
@@ -238,7 +242,7 @@ const MatrimonialInfo = (props) => {
                               <label className="">
                                 {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].biodata && (
                                   <span>
-                                    <a href={userDetails.data.matrimonial[0].biodata} download="biodata.pdf">
+                                    <a href={userDetails.data.matrimonial[0].biodata} download="biodata.pdf" target="_blank">
                                       <i className="fa-regular fa-file-lines"></i> Download Biodata
                                     </a>
                                     &nbsp;({getFileType(userDetails.data.matrimonial[0].biodata)})

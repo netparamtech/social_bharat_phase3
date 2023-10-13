@@ -13,13 +13,13 @@ const SiteSetting = () => {
         <div className="container">
           <div className="card mb-5">
             <div className="card-title p-3 bg-dark text-white fw-bold">
-              Course-1 Section
+            Section-1 
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="row ps-3 mb-3">
                   <div className="col-md-12">
-                    <label className="fw-bold">Course Title</label>
+                    <label className="fw-bold">Section Title</label>
                   </div>
                   <div className="col-md-12 ">
                     <input type="text" className="form-control" />
@@ -62,13 +62,13 @@ const SiteSetting = () => {
         <div className="container">
           <div className="card">
             <div className="card-title p-3 bg-dark text-white fw-bold">
-              Course-2 Section
+            Section-2 
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="row ps-3 mb-3">
                   <div className="col-md-12">
-                    <label className="fw-bold">Course Title</label>
+                    <label className="fw-bold">Section Title</label>
                   </div>
                   <div className="col-md-12 ">
                     <input type="text" className="form-control" />
@@ -111,13 +111,13 @@ const SiteSetting = () => {
         <div className="container">
           <div className="card mt-5">
             <div className="card-title p-3 bg-dark text-white fw-bold">
-              Course-3 Section
+            Section-3 
             </div>
             <div className="row">
               <div className="col-md-6">
                 <div className="row ps-3 mb-3">
                   <div className="col-md-12">
-                    <label className="fw-bold">Course Title</label>
+                    <label className="fw-bold">Section Title</label>
                   </div>
                   <div className="col-md-12 ">
                     <input type="text" className="form-control" />

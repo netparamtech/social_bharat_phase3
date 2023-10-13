@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 
 const BasicProfile = (props) => {
   const { userDetails } = props;
-  const [userProfile, setUserProfile] = useState("");
   const defaultPhoto = "/user/images/user.png";
 
-  const [availableForMarriage,setAvailableForMarriage] = useState('');
+  const [availableForMarriage, setAvailableForMarriage] = useState('');
 
   const formatDate = (dateString) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -16,13 +15,13 @@ const BasicProfile = (props) => {
     return `${month}-${day}-${year}`;
   };
 
-  useEffect(()=>{
-    if(userDetails?.data?.name.is_available_for_marriage){
+  useEffect(() => {
+    if (userDetails?.data?.is_available_for_marriage) {
       setAvailableForMarriage("YES")
     } else {
       setAvailableForMarriage("NO");
     }
-  },[userDetails])
+  }, [userDetails])
 
   return (
     <div id="basic-profile-section" className="content-wrapper pt-4">
@@ -125,12 +124,12 @@ const BasicProfile = (props) => {
               </div>
             </div>
             <div className="row">
-            <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
                     <label className="fw-bold">Is Available For Marriage :</label>
                   </div>
-                  <div className="col-md-8 text-danger">
+                  <div className="col-md-8">
                     <label className="">{availableForMarriage}</label>
                   </div>
                 </div>

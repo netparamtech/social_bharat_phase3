@@ -5,6 +5,7 @@ import UserLayout from '../../../layouts/UserLayout';
 
 
 const UpdateBasicProfilePage = () => {
+        
 return (
         <UserLayout>
            <UpdateBasicProfile />

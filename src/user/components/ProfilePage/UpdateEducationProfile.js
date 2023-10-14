@@ -72,8 +72,8 @@ const UpdateEducationProfile = (props) => {
     e.preventDefault();
 
     const requestData = {
-      degree_id: qualificationID,
-      degree:qualification.label,
+      degree_id: degreeId,
+      highest_qualification:qualification.label,
       field_of_study: studyField,
       institution_name: university,
       score,
@@ -152,6 +152,7 @@ const UpdateEducationProfile = (props) => {
   useEffect(() => {
     // Set default values from educationDetails prop when it changes
     if (educationDetails) {
+      setDegreeId(educationDetails.degree_id||'');
       setQualificationID(educationDetails.degree_id || '');
       setStudyField(educationDetails.field_of_study || '');
       setUniversity(educationDetails.institution_name || '');
@@ -159,14 +160,19 @@ const UpdateEducationProfile = (props) => {
       setScoreType(educationDetails.score_type || '');
       setPassingYear(educationDetails.passing_year || '');
 
-      // Find the corresponding degree's title based on degreeId
-      const selectQualification = qualificationList.find((qualification) => qualification.id === educationDetails.degree_id);
-      if (selectQualification) {
-        setQualification({
-          value: selectQualification.id,
-          label: selectQualification.title
-        });
-      }
+      setQualification({
+        value: educationDetails.highest_qualification,
+        label: educationDetails.highest_qualification
+      });
+
+        // Find the corresponding degree's title based on degreeId
+        const selectDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
+        if (selectDegree) {
+          setDegree({
+            value: selectDegree.id,
+            label: selectDegree.title
+          });
+        }
     }
   }, [educationDetails, qualificationList]);
 

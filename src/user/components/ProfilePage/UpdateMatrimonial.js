@@ -41,7 +41,7 @@ const UpdateMatrimonial = (props) => {
 
   const [gender, setGender] = useState('');
   const [dob, setDOB] = useState(null);
-  const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
+  const [manglicStatus, setManglicStatus] = useState(0); // Initial manglic status
 
   const [numBrothers, setNumBrothers] = useState(0); // Number of brothers
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
@@ -326,8 +326,6 @@ const UpdateMatrimonial = (props) => {
         setSistersDetails(userMatrimonial.sisters_details);
         setShowSisterDetail(true);
       }
-
-      setManglicStatus(userMatrimonial.is_manglik);
 
       if (userMatrimonial.profile_created_for !== null) {
         setUpdateFor({

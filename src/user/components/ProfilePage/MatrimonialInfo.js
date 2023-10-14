@@ -6,25 +6,15 @@ const MatrimonialInfo = (props) => {
   const { user } = props;
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
 
+  const [manglik,setManglik] = useState('');
+
   const navigate = useNavigate();
 
-  const proposalPhotos =
-    user &&
-    user.data &&
-    user.data.matrimonial[0] &&
-    user.data.matrimonial[0].proposal_photos;
+  const proposalPhotos = user?.data?.matrimonial[0].proposal_photos;
 
-  const brothersDetails =
-    user &&
-    user.data &&
-    user.data.matrimonial[0] &&
-    user.data.matrimonial[0].brothers_details;
+  const brothersDetails = user?.data?.matrimonial[0].brothers_details;
 
-  const sistersDetails =
-    user &&
-    user.data &&
-    user.data.matrimonial[0] &&
-    user.data.matrimonial[0].sisters_details;
+  const sistersDetails = user?.data?.matrimonial[0].sisters_details;
 
   const getFileType = (url) => {
     // Extract the file extension from the URL
@@ -62,8 +52,25 @@ const MatrimonialInfo = (props) => {
       }
     }
   };
+
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const [month, day, year] = new Date(dateString)
+      .toLocaleDateString('en-GB', options)
+      .split('/');
+    return `${month}-${day}-${year}`;
+  };
+  
   useEffect(() => {
     setMatrimonialDetails(user?.data?.matrimonial || "");
+    if( user &&
+      user.data &&
+      user.data.matrimonial[0] &&
+      user.data.matrimonial[0].is_manglik){
+        setManglik('YES');
+      } else {
+        setManglik('NO');
+      }
   }, [user]);
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
@@ -113,6 +120,11 @@ const MatrimonialInfo = (props) => {
                 <div className="col-md-6">
                   <div className="card shadow">
                     <div className="card-body">
+                    <h5 className="m-2 mb-2">Profile Created For -  {(user &&
+                                user.data &&
+                                user.data.matrimonial[0] &&
+                                user.data.matrimonial[0].profile_created_for) ||
+                                "N/A"}</h5>
                       <table className="table table-striped">
                         <tbody>
                           <tr>
@@ -138,10 +150,7 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Manglic</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].manglic) ||
+                              {manglik ||
                                 "N/A"}
                             </td>
                           </tr>
@@ -168,10 +177,10 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Date Of Birth</td>
                             <td className="text-muted">
-                              {(user &&
+                              {formatDate(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].dob) ||
+                                user.data.matrimonial[0].matrimonial_profile_dob) ||
                                 "N/A"}
                             </td>
                           </tr>
@@ -223,7 +232,7 @@ const MatrimonialInfo = (props) => {
                               {(user &&
                                 user.data &&
                                 user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].gender) ||
+                                user.data.matrimonial[0].matrimonial_profile_gender) ||
                                 "N/A"}
                             </td>
                           </tr>

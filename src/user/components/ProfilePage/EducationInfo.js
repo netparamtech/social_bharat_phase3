@@ -53,6 +53,10 @@ const EducationInfo = (props) => {
                 <div className="delete-icon"><a href="#" title="Delete"><i className="fa-solid fa-trash" onClick={()=>deleteUserEducationalDetails(item.id)}></i></a></div>
                   <div className="card-body">
                     <div className="w-100 w-lg-75">
+                    <div className="mb-2 row">
+                        <label htmlFor="" className="col-sm-3 d-inline-flex">Highest Qualification</label>
+                        <div className="col-sm-8"><span className="text-muted">{item.highest_qualification}</span></div>
+                      </div>
                       <div className="mb-2 row">
                         <label htmlFor="" className="col-sm-3 d-inline-flex">Degree</label>
                         <div className="col-sm-8"><span className="text-muted">{item.degree_title}</span></div>

@@ -8,6 +8,7 @@ const JobInfo = (props) => {
   const [jobDetails, setJobDetails] = useState(initialJobDetails);
 
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   useEffect(() => {
     setJobDetails(initialJobDetails); // Update jobDetails when user changes
@@ -20,6 +21,7 @@ const JobInfo = (props) => {
         // Remove the deleted item from jobDetails
         const updatedJobDetails = jobDetails.filter((item) => item.id !== id);
         setJobDetails(updatedJobDetails); // Update state to trigger a re-render
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -28,7 +30,7 @@ const JobInfo = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -47,6 +49,7 @@ const JobInfo = (props) => {
         <div className="card shadow">
           <div className="edit-icon add-more-detail"><a href="#" onClick={() => navigate("/user/update-job-profile")} title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
           <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
             <h5 className="fw-3 mb-3">Job Info</h5>
             <div className="row">
               {jobDetails && jobDetails.length > 0 ? (

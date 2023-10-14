@@ -7,6 +7,7 @@ const UpdateMobile = () => {
   const [mobile, setMobile] = useState("");
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const [isMobileValid, setIsMobileValid] = useState(false);
   const navigate = useNavigate();
@@ -29,11 +30,13 @@ const UpdateMobile = () => {
         setErrors("");
         setMessage(response.data.message);
         handleMobileValid();
+        setServerError('');
       }
     } catch (error) {
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setServerError('');
       }
 
       //Unauthorized
@@ -42,7 +45,7 @@ const UpdateMobile = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };

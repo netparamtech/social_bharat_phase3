@@ -15,6 +15,7 @@ const SetPassword = () => {
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
     const [alertClass, setAlertClass] = useState('');
+    const [serverError, setServerError] = useState("");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,12 +48,14 @@ const SetPassword = () => {
                 setMessage(response.data.message);
                 setAlertClass('alert-success');
                 dispatch(login(updatedUser, token));
+                setServerError('');
                 navigate('/dashboard');
             }
         } catch (error) {
             // Handle validation errors
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
+                setServerError('');
             }
             //Unauthorized
             else if (error.response && error.response.status === 401) {
@@ -60,7 +63,7 @@ const SetPassword = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
 
         }
@@ -80,6 +83,7 @@ const SetPassword = () => {
                                     <h3 className="mb-3">Set Password</h3>
                                 </div>
                                 <form action='/dashboard' onSubmit={handleSubmit} className="w-100 w-lg-75">
+                                    {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
                                         <input
                                             type="password"
@@ -90,7 +94,7 @@ const SetPassword = () => {
                                             onChange={handlePasswordChange}
                                             autoFocus
                                         />
-                                       
+
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>
                                     <div className="row mb-3">

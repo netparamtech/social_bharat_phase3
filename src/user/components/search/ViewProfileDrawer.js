@@ -26,12 +26,14 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
     const [businessPhotos, setBusinessPhotos] = useState([]);
 
     const navigate = useNavigate();
+    const [serverError, setServerError] = useState("");
 
     const getUserProfile = async () => {
         try {
             const response = await getUserFullProfile();
             if (response && response.status === 200) {
                 setUser(response.data.data);
+                setServerError('');
             }
         } catch (error) {
             //Unauthorized
@@ -40,7 +42,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     }
@@ -88,6 +90,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
 
     return (
         <Drawer width={640} placement="right" closable={visible} onClose={onClose} open={visible}>
+            {serverError && <span className='error'>{serverError}</span>}
             <div className="drawer-header mt-5">
                 <p className="d-flex flex-column flex-sm-row">
                     <a href='#personal' className="me-2 me-sm-3">Basic</a>
@@ -132,7 +135,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                 <p className="site-description-item-profile-p">{user.name}</p>
                 <DescriptionItem title="Email" content={user.email} />
                 <DescriptionItem title="Date Of Birth" content={formatDate(user.dob)} />
-                <DescriptionItem title="Marital Status" content="NA" />
+                <DescriptionItem title="Marital Status" content="N/A" />
                 <DescriptionItem title="Gender" content={user.gender} />
                 <DescriptionItem title="Community" content={user.community && user.community.name} />
                 <DescriptionItem title="City" content={user.native_place_city} />

@@ -8,6 +8,7 @@ const ContactInfo = (props) => {
   const [contactDetails, setContactDetails] = useState([]);
 
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   const deleteUserContact = async (id) => {
     try {
@@ -16,6 +17,7 @@ const ContactInfo = (props) => {
         setContactDetails((prevContactDetails) =>
           prevContactDetails.filter((contact) => contact.id !== id)
         );
+        setServerError('');
       }
     } catch (error) {
 
@@ -25,7 +27,7 @@ const ContactInfo = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -42,6 +44,7 @@ const ContactInfo = (props) => {
               <i className="btn btn-outline-info fas fa-plus"></i></a>
           </div>
           <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
             <h5 className="fw-3 mb-3">Address Info</h5>
             <div className="row">
               {contactDetails && contactDetails.length > 0 ?

@@ -7,6 +7,7 @@ const EducationInfo = (props) => {
   const [educationDetails,setEducationDetails] = useState([]);
 
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   const deleteUserEducationalDetails = async (id) => {
     try {
@@ -15,6 +16,7 @@ const EducationInfo = (props) => {
         // Remove the deleted item from jobDetails
         const updatedEducationDetails = educationDetails.filter((item) => item.id !== id);
         setEducationDetails(updatedEducationDetails); // Update state to trigger a re-render
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -23,7 +25,7 @@ const EducationInfo = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   }
@@ -40,6 +42,7 @@ const EducationInfo = (props) => {
         <div className="card shadow">
         <div className="edit-icon add-more-detail"><a href="#" onClick={()=>navigate('/user/update-education-profile')} title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
           <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
             <h5 className="fw-3 mb-3">Education Info</h5>
             <div className="row">
             {educationDetails && educationDetails.length > 0 ? (

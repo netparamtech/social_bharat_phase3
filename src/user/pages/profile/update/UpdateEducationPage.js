@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getSingleEducationDetails } from '../../../services/userService';
+import { fetchAllActiveQualifications, getSingleEducationDetails } from '../../../services/userService';
 import UserLayout from '../../../layouts/UserLayout';
 import UpdateEducationProfile from '../../../components/ProfilePage/UpdateEducationProfile';
 
@@ -29,15 +29,16 @@ const UpdateEducationPage = () => {
                 }
 
         }
+
         useEffect(() => {
                 if (id) {
                         fetchEducation(id);
                 }
         }, [id]);
 
-        useEffect(()=>{
+        useEffect(() => {
                 window.scrollTo(0, 0);
-            },[]);
+        }, []);
 
         return (
                 <UserLayout>

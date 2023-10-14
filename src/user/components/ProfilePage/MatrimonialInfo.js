@@ -278,7 +278,7 @@ const MatrimonialInfo = (props) => {
                               {proposalPhotos &&
                               Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
-                                  <a href={item} target="_blank">
+                                  <a href={item} target="_blank" key={idx}>
                                     <img className="m-1" src={item} />
                                   </a>
                                 ))

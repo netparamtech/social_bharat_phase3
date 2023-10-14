@@ -19,7 +19,6 @@ const dateFormat = 'DD-MM-YYYY';
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
   const [community, setCommunity] = useState('');
-  console.log(user)
 
   const [name, setName] = useState(user.user.name); // Initial name
   const [gender, setGender] = useState(user.user.gender); // Initial gender
@@ -198,7 +197,6 @@ const UpdateBasicProfile = () => {
   
 
   useEffect(()=>{
-    console.log(dob)
    setDOB(convertToCustomDateFormat(user.user.dob));
   },[user]);
 
@@ -216,7 +214,6 @@ const UpdateBasicProfile = () => {
       is_available_for_marriage: isAvailableForMarriage,
       marital_status:maritalStatus?maritalStatus.label:'',
     };
-    console.log(updatedData, "check")
 
     // Call the API to update the basic profile information
     try {
@@ -249,7 +246,6 @@ const UpdateBasicProfile = () => {
   };
 
   useEffect(() => {
-    console.log(isAvailableForMarriage,"test")
     setToken(user.token || "");
     setCountryID(101);
     setSelectedState({

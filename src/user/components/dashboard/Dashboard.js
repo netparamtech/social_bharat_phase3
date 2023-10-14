@@ -55,7 +55,7 @@ const Dashboard = () => {
                 >
                   Search{" "}
                 </a>
-                <i class="fa-solid fa-arrow-right "></i>
+                <i className="fa-solid fa-arrow-right "></i>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ const Dashboard = () => {
                   Search
                 </a>
                 
-                <i class="fa-solid fa-arrow-right"></i>
+                <i className="fa-solid fa-arrow-right"></i>
                 
               </div>
             </div>

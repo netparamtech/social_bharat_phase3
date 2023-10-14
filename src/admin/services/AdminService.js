@@ -498,3 +498,13 @@ export const createQualification = async (data) => {
         throw error;
     }
 }
+
+//fetch stats
+export const fetchAdminDashboardStatistics = async () => {
+    try {
+        const response = await apiWithHeaders.get('/dashboard-statistics');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

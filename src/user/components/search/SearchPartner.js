@@ -43,6 +43,7 @@ const SearchPartner = () => {
   const [countryID, setCountryID] = useState(101);
 
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
@@ -91,6 +92,7 @@ const SearchPartner = () => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -99,7 +101,7 @@ const SearchPartner = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -109,6 +111,7 @@ const SearchPartner = () => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -117,7 +120,7 @@ const SearchPartner = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -127,13 +130,14 @@ const SearchPartner = () => {
       const response = await searchPartner(id);
       if (response && response.status === 200) {
         setData(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -167,7 +171,17 @@ const SearchPartner = () => {
     try {
       const response = await searchPartnerWithSearchText(queryString);
       setData(response.data.data);
-    } catch (error) {}
+      setServerError('');
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    }
   };
 
   const handleCancelClick = () => {
@@ -218,6 +232,7 @@ const SearchPartner = () => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-7">
+              {serverError && <span className='error'>{serverError}</span>}
                 <h5 className="fw-3 mb-3 ">Search Partner</h5>
               </div>
               <div className=" col-md-5">
@@ -231,14 +246,14 @@ const SearchPartner = () => {
                   <i className="fas fa-filter me-1 "></i>Preference
                 </a>
                 <a
-                title="Add Business"
-                className="btn btn-primary btn-sm  mb-2"
-                onClick={handlePartnerClick}
-              >
-                Submit Your Matrimonial Profile
-              </a>
+                  title="Add Business"
+                  className="btn btn-primary btn-sm  mb-2"
+                  onClick={handlePartnerClick}
+                >
+                  Submit Your Matrimonial Profile
+                </a>
               </div>
-             
+
             </div>
 
             <div className="filter-content pt-3 d-md-block ">

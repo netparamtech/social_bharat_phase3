@@ -132,9 +132,8 @@ const MatrimonialInfo = (props) => {
                         </div>
                       </div>
 
-                      {
-                        brotherDetails || sisterDetails && (
-                          <div className="row">
+                     
+                       <div className="row">
                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                               <div className="row">
                                 <div className="col-md-4">
@@ -165,8 +164,6 @@ const MatrimonialInfo = (props) => {
                               </div>
                             </div>
                           </div>
-                        )
-                      }
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

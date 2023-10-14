@@ -8,6 +8,7 @@ const BusinessInfo = (props) => {
   const [businessDetails, setBusinessDetails] = useState([]);
   const [collapsedItems, setCollapsedItems] = useState([]); // State to control collapse/expand
 
+  const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
   const businessPhotos =
     user &&
@@ -22,13 +23,14 @@ const BusinessInfo = (props) => {
         setBusinessDetails((prevDetails) =>
           prevDetails.filter((detail) => detail.id !== id)
         );
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -54,7 +56,7 @@ const BusinessInfo = (props) => {
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
-
+          {serverError && <span className='error'>{serverError}</span>}
           <div className="card-body">
             <h5 className="fw-3 mb-3">Business Info</h5>
             <div className="row">

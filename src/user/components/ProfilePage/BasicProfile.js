@@ -22,6 +22,7 @@ const BasicProfile = (props) => {
   const defaultPhoto = "/user/images/user.png";
 
   const [errors, setErrors] = useState();
+  const [serverError, setServerError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +44,11 @@ const BasicProfile = (props) => {
       setImagePreview(URL.createObjectURL(file));
 
       dispatch(login(response.data.data, token));
+      setServerError('');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setServerError('');
       }
 
       //Unauthorized
@@ -54,7 +57,7 @@ const BasicProfile = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -64,12 +67,13 @@ const BasicProfile = (props) => {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -99,6 +103,7 @@ const BasicProfile = (props) => {
         <div className="row">
           <div className="col-md-3">
             <div className="card shadow">
+            {serverError && <span className='error'>{serverError}</span>}
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
                 <input
                   type="file"

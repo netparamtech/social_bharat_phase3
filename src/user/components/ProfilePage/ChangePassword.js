@@ -8,6 +8,7 @@ const ChangePassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const [errors, setErrors] = useState('');
+    const [serverError, setServerError] = useState("");
 
     const navigate = useNavigate();
 
@@ -28,11 +29,13 @@ const ChangePassword = () => {
             if (response && response.status === 200) {
 
                 setErrors('');
+                setServerError('');
                 navigate('/dashboard');
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
+                setServerError('');
             }
 
             //Unauthorized
@@ -41,7 +44,7 @@ const ChangePassword = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
 
         }
@@ -57,6 +60,7 @@ const ChangePassword = () => {
                                     <h3 className="mb-3">Change Password</h3>
                                 </div>
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                                {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
                                         <input
                                             type="password"

@@ -33,6 +33,7 @@ const SearchPeople = () => {
 
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState("");
 
   const [viewProfileDrawerVisible, setViewProfileDrawerVisible] = useState(false);
 
@@ -90,6 +91,7 @@ const SearchPeople = () => {
       setData(response.data.data);
       setCity(selectedCity.label ? selectedCity.label : city);
       setState(selectedState.label ? selectedState.label : state);
+      setServerError('');
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -97,7 +99,7 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -107,6 +109,7 @@ const SearchPeople = () => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -115,7 +118,7 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -125,6 +128,7 @@ const SearchPeople = () => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -133,7 +137,7 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -143,13 +147,14 @@ const SearchPeople = () => {
       const response = await searchPeopleWithSearchText(searchText);
       if (response && response.status === 200) {
         setData(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -178,6 +183,7 @@ const SearchPeople = () => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
             <div>
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>

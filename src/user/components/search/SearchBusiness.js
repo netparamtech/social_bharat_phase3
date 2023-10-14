@@ -27,6 +27,7 @@ const SearchBusiness = () => {
     //to show message on top of page
 
     const [message, setMessage] = useState('');
+    const [serverError, setServerError] = useState("");
 
     const [isFilter, setIsFilter] = useState(false);
 
@@ -69,6 +70,7 @@ const SearchBusiness = () => {
             const response = await searchBusinessWithSearchText(searchText);
             if (response && response.status === 200) {
                 setData(response.data.data);
+                setServerError('');
             }
 
         } catch (error) {
@@ -77,7 +79,7 @@ const SearchBusiness = () => {
             if (error.response && error.response.status === 401) {
                 navigate('/login');
             } else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     }
@@ -98,6 +100,7 @@ const SearchBusiness = () => {
             setData(response.data.data);
             setCity(selectedCity.label ? selectedCity.label : city);
             setState(selectedState.label ? selectedState.label : state);
+            setServerError('');
 
         } catch (error) {
             //Unauthorized
@@ -106,7 +109,7 @@ const SearchBusiness = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
 
         }
@@ -118,6 +121,7 @@ const SearchBusiness = () => {
             const response = await fetchAllStatesByCountryID(countryID);
             if (response && response.status === 200) {
                 setStates(response.data.data);
+                setServerError('');
             }
         } catch (error) {
 
@@ -127,7 +131,7 @@ const SearchBusiness = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
 
         }
@@ -138,6 +142,7 @@ const SearchBusiness = () => {
             const response = await fetchAllCitiesByStateID(stateID);
             if (response && response.status === 200) {
                 setCities(response.data.data);
+                setServerError('');
             }
         } catch (error) {
             //Unauthorized
@@ -146,7 +151,7 @@ const SearchBusiness = () => {
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-                navigate('/login');
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     }
@@ -173,6 +178,7 @@ const SearchBusiness = () => {
             <div className="container">
                 <div className="card shadow">
                     <div className="card-body">
+                    {serverError && <span className='error'>{serverError}</span>}
 
                         <div>
                             <h5 className="fw-3 d-none d-sm-block">Search Business</h5>

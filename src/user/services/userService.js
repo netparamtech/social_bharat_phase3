@@ -509,3 +509,12 @@ export const event = async (data) => {
         throw error;
     }
 }
+//fetch all active qualification
+export const fetchAllActiveQualifications = async () => {
+    try {
+        const response = await apiWithHeaders.get('/qualifications');
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

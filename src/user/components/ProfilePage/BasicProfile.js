@@ -232,16 +232,9 @@ const BasicProfile = (props) => {
                           <span className="text-muted">
                             {user && user.data && user.data.mobile||"N/A"}
                           </span>
-
-
-
-                          <a
-                            onClick={() => navigate("/update-mobile")}
-                          >
-                            <a className="update-mobile btn ms-2" title="Update Mobile No.">
-                            <i class="fas fa-edit text-success"></i>
+                          <a className="update-mobile btn ms-2" title="Update Mobile No." onClick={() => navigate("/update-mobile")}>
+                            <i className="fas fa-edit text-success"></i>
                             </a>
-                          </a>
                         </div>
                       </div>
                     </div>

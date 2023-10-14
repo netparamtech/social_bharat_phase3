@@ -61,11 +61,11 @@ const UpdateJobProfile = (props) => {
   useEffect(() => {
     // Set default values from jobDetails prop when it changes
     if (jobDetails) {
-      setCompanyName(jobDetails.company_name || "");
-      setDesignation(jobDetails.designation || "");
-      setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || "");
-      setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || "");
-      setJobType(jobDetails.job_type || "");
+      setCompanyName(jobDetails.company_name || "N/A");
+      setDesignation(jobDetails.designation || "N/A");
+      setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || "N/A");
+      setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || "N/A");
+      setJobType(jobDetails.job_type || "N/A");
 
       // Set jobType based on job_type from jobDetails
       if (jobDetails.job_type === "PART_TIME") {

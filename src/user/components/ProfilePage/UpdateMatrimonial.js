@@ -41,7 +41,7 @@ const UpdateMatrimonial = (props) => {
 
   const [gender, setGender] = useState('');
   const [dob, setDOB] = useState(null);
-    const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
+  const [manglicStatus, setManglicStatus] = useState(""); // Initial manglic status
 
   const [numBrothers, setNumBrothers] = useState(0); // Number of brothers
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
@@ -79,18 +79,17 @@ const UpdateMatrimonial = (props) => {
 
   const handleUpdateForChange = (selectedOption) => {
     setUpdateFor(selectedOption);
-  
+
     if (selectedOption.label === 'Self') {
       setGender(user.user.gender);
-  
-      console.log(yyyyMmDdFormat(user.user.dob))
+
       setDOB(yyyyMmDdFormat(user.user.dob));
     } else {
       setGender('');
       setDOB(dayjs().add(0, 'day'));
     }
   };
-  
+
 
 
   const handlePackageChange = (selectedOption) => {
@@ -112,7 +111,6 @@ const UpdateMatrimonial = (props) => {
     const value = parseInt(e.target.value, 10);  // Parse the value as an integer
     setSisterCount(e.target.value);
     if (value === 0) {
-      console.log("inside");
       setShowSisterDetail(false);
       setSistersDetails('');
     } else {
@@ -212,7 +210,7 @@ const UpdateMatrimonial = (props) => {
   };
 
   const handleDOBChange = (isoDateString) => {
-   setDOB(isoDateString);
+    setDOB(isoDateString);
   };
 
   const handleSubmit = async (event) => {
@@ -235,11 +233,10 @@ const UpdateMatrimonial = (props) => {
       matrimonial_profile_gender: gender,
       matrimonial_profile_dob: dob,
       is_manglik: manglicStatus,
-      profile_created_for:updateFor&&updateFor.label,
+      profile_created_for: updateFor && updateFor.label,
       skin_tone: 'DARK',
     };
 
-    console.log(matrimonialData)
 
     try {
       const response = await updateMatrimonialInfo(matrimonialData);
@@ -282,19 +279,20 @@ const UpdateMatrimonial = (props) => {
   useEffect(() => {
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
-      setFatherName(userMatrimonial.father_name || "NA");
-      setMotherName(userMatrimonial.mother_name || "NA");
+      setFatherName(userMatrimonial.father_name || "N/A");
+      setMotherName(userMatrimonial.mother_name || "N/A");
       setSkinTone(userMatrimonial.skin_tone || "");
-      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || "NA");
-      setHeightInch(getInches(userMatrimonial.height_in_feet) || "NA");
-      setWeight(userMatrimonial.weight_in_kg || "NA");
-      setCast(userMatrimonial.cast || "NA");
-      setGotraSelf(userMatrimonial.gotra || "NA");
-      setMaternalGotra(userMatrimonial.maternal_gotra || "NA");
-      setPaternalGotra(userMatrimonial.paternal_gotra || "NA");
-      setProposalPhoto(userMatrimonial.proposal_photos || "NA");
+      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || "N/A");
+      setHeightInch(getInches(userMatrimonial.height_in_feet) || "N/A");
+      setWeight(userMatrimonial.weight_in_kg || "N/A");
+      setCast(userMatrimonial.cast || "N/A");
+      setGotraSelf(userMatrimonial.gotra || "N/A");
+      setMaternalGotra(userMatrimonial.maternal_gotra || "N/A");
+      setPaternalGotra(userMatrimonial.paternal_gotra || "N/A");
+      setProposalPhoto(userMatrimonial.proposal_photos || "N/A");
       setBrotherCount(userMatrimonial.brother_count);
       setSisterCount(userMatrimonial.sister_count);
+
       setPackageValue({
         value: userMatrimonial.salary_package,
         label: userMatrimonial.salary_package,
@@ -326,6 +324,22 @@ const UpdateMatrimonial = (props) => {
       if (userMatrimonial.sisters_details) {
         setSistersDetails(userMatrimonial.sisters_details);
         setShowSisterDetail(true);
+      }
+
+      setManglicStatus(userMatrimonial.is_manglik);
+
+      if (userMatrimonial.profile_created_for !== null) {
+        setUpdateFor({
+          value: userMatrimonial.profile_created_for,
+          label: userMatrimonial.profile_created_for,
+        });
+        if (userMatrimonial.profile_created_for === 'Self') {
+          setGender(user.user.gender);
+          setDOB(yyyyMmDdFormat(user.user.dob));
+        } else {
+          setGender(userMatrimonial.matrimonial_profile_gender);
+          setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
+        }
       }
 
       // You can similarly handle the proposalPhoto and biodataFile values here if needed
@@ -404,6 +418,7 @@ const UpdateMatrimonial = (props) => {
                         aria-label="Default select example"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
+                        disabled={updateFor && updateFor.label === 'Self'}
                       >
                         <option value="">---Select Gender---</option>
                         <option value="Male">Male</option>
@@ -423,6 +438,7 @@ const UpdateMatrimonial = (props) => {
                         className="form-control"
                         defaultValue={dob}
                         onChange={(e) => setDOB(e.target.value)}
+                        disabled={updateFor && updateFor.label === 'Self'}
                       />
                       {errors.dob && (
                         <span className="error">{errors.dob}</span>
@@ -486,12 +502,12 @@ const UpdateMatrimonial = (props) => {
                       <select
                         className="form-select form-control"
                         aria-label="Manglic select"
-                        value={manglicStatus}
-                        onChange={(e) => setManglicStatus(e.target.value)}
+                        value={manglicStatus === 1 ? 'YES' : 'NO'}
+                        onChange={(e) => setManglicStatus(e.target.value === 'YES' ? 1 : 0)}
                       >
                         <option value="">---Select Manglic Status---</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
                       </select>
                       {/* Add error handling if needed */}
                     </div>
@@ -503,7 +519,7 @@ const UpdateMatrimonial = (props) => {
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Brothers</label>
                         <select id="numberDropdown" name="numberDropdown" className="m-2" value={brotherCount} onChange={handleBrotherCount}>
-                          <option value="0" selected>0</option>
+                          <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -523,7 +539,7 @@ const UpdateMatrimonial = (props) => {
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Sisters</label>
                         <select id="numberDropdown" name="numberDropdown" className="m-2" value={sisterCount} onChange={handleSisterCount}>
-                          <option value="0" selected>0</option>
+                          <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>

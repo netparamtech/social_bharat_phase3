@@ -19,7 +19,6 @@ const MatrimonialInfo = (props) => {
 
   const getProfileHeading = () => {
     const profileFor = matrimonialData.profile_created_for;
-    console.log(profileFor,"Check")
     switch (profileFor) {
       case "Self":
         return "My Profile";

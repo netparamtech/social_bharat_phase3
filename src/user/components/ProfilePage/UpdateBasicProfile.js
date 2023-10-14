@@ -462,12 +462,12 @@ const UpdateBasicProfile = () => {
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Occupation</label>
+                      <label className="form-label">What Is Your Job ?</label>
                       <input
                         type="text"
                         name="occupation"
                         id="occupation"
-                        placeholder="Enter Your Occupation"
+                        placeholder="Example: Software Engineer, Grocery Shop Owner"
                         className="form-control"
                         defaultValue={occupation}
                         

@@ -363,8 +363,8 @@ const UpdateMatrimonial = (props) => {
                 </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Update Matrimonial For</label>
+                    <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                      <label className="form-label">For Whom, You are creating profile</label>
                       <Select
                         value={updateFor}
                         onChange={handleUpdateForChange}
@@ -511,13 +511,11 @@ const UpdateMatrimonial = (props) => {
                       {/* Add error handling if needed */}
                     </div>
 
-
-                    <label className="form-label">Number of Siblings</label>
-
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Brothers</label>
-                        <select id="numberDropdown" name="numberDropdown" className="m-2" value={brotherCount} onChange={handleBrotherCount}>
+                        
+                        <label className="form-label">Number of Brother(s)</label>
+                        <select id="numberDropdown" name="numberDropdown" className="form-control" value={brotherCount} onChange={handleBrotherCount}>
                           <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -536,8 +534,8 @@ const UpdateMatrimonial = (props) => {
                         {/* Display the current value */}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Sisters</label>
-                        <select id="numberDropdown" name="numberDropdown" className="m-2" value={sisterCount} onChange={handleSisterCount}>
+                        <label className="form-label">Number of Sister(s)</label>
+                        <select id="numberDropdown" name="numberDropdown" className="form-control" value={sisterCount} onChange={handleSisterCount}>
                           <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>

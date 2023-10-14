@@ -10,9 +10,12 @@ const AdminLayout = ({ children }) => {
     useEffect(() => {
         // List of script sources
         const scriptSources = [
+          "https://code.jquery.com/jquery-3.5.1.min.js",
+          "https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js",
           'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
           'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js',
           'https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js',
+          "https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js",
           '/admin/js/sb-admin-2.min.js'
         ];
     
@@ -42,6 +45,8 @@ const AdminLayout = ({ children }) => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" integrity="sha512-rt/SrQ4UNIaGfDyEXZtNcyWvQeOq0QLygHluFQcSjaGB04IxWhal71tKuzP6K8eYXYB6vJV4pHkXcmFGGQ1/0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet" />
         <link href="/admin/css/custom.css" rel="stylesheet" />
+          {/*   include summernote css/js*/}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"></link>
     </Helmet>
       <div id="wrapper">
         <Sidebar />

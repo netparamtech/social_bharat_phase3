@@ -6,15 +6,37 @@ const MatrimonialInfo = (props) => {
   const { user } = props;
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
 
-  const [manglik,setManglik] = useState('');
+  const [manglik, setManglik] = useState('');
 
   const navigate = useNavigate();
+  const matrimonialData = user?.data?.matrimonial[0] || {};
 
   const proposalPhotos = user?.data?.matrimonial[0].proposal_photos;
 
   const brothersDetails = user?.data?.matrimonial[0].brothers_details;
 
   const sistersDetails = user?.data?.matrimonial[0].sisters_details;
+
+  const getProfileHeading = () => {
+    const profileFor = matrimonialData.profile_created_for;
+    console.log(profileFor,"Check")
+    switch (profileFor) {
+      case "Self":
+        return "My Profile";
+      case "Sister":
+        return "Profile Created for My Sister";
+      case "Brother":
+        return "Profile Created for My Brother";
+      case "Son":
+        return "Profile Created for My Son";
+      case "Daughter":
+        return "Profile Created for My Daughter";
+      // Add more cases as needed
+      default:
+        return "Matrimonial Info";
+    }
+  };
+
 
   const getFileType = (url) => {
     // Extract the file extension from the URL
@@ -60,17 +82,14 @@ const MatrimonialInfo = (props) => {
       .split('/');
     return `${month}-${day}-${year}`;
   };
-  
+
   useEffect(() => {
     setMatrimonialDetails(user?.data?.matrimonial || "");
-    if( user &&
-      user.data &&
-      user.data.matrimonial[0] &&
-      user.data.matrimonial[0].is_manglik){
-        setManglik('YES');
-      } else {
-        setManglik('NO');
-      }
+    if (user?.data?.matrimonial[0].is_manglik) {
+      setManglik('YES');
+    } else {
+      setManglik('NO');
+    }
   }, [user]);
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
@@ -120,30 +139,20 @@ const MatrimonialInfo = (props) => {
                 <div className="col-md-6">
                   <div className="card shadow">
                     <div className="card-body">
-                    <h5 className="m-2 mb-2">Profile Created For -  {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].profile_created_for) ||
-                                "N/A"}</h5>
+                      <h5 className="m-2 mb-2">{getProfileHeading() || "N/A"}</h5>
                       <table className="table table-striped">
                         <tbody>
                           <tr>
                             <td>Father Name</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].father_name) ||
+                              {(user?.data?.matrimonial[0].father_name) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Mother Name</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].mother_name) ||
+                              {(user?.data?.matrimonial[0].mother_name) ||
                                 "N/A"}
                             </td>
                           </tr>
@@ -157,40 +166,28 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Height</td>
                             <td className="text-muted">
-                              {user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].height_in_feet}{" "}
+                              {user?.data?.matrimonial[0].height_in_feet}{" "}
                               ft
                             </td>
                           </tr>
                           <tr>
                             <td>Package/Salary</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].salary_package) ||
+                              {(user?.data?.matrimonial[0].salary_package) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Date Of Birth</td>
                             <td className="text-muted">
-                              {formatDate(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].matrimonial_profile_dob) ||
+                              {formatDate(user?.data?.matrimonial[0].matrimonial_profile_dob) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Brother Count</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].brother_count) ||
+                              {(user?.data?.matrimonial[0].brother_count) ||
                                 "N/A"}
                             </td>
                           </tr>
@@ -213,10 +210,7 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Sister Count</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].sister_count) ||
+                              {(user?.data?.matrimonial[0].sister_count) ||
                                 "N/A"}
                             </td>
                           </tr>
@@ -229,63 +223,51 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Gender</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].matrimonial_profile_gender) ||
+                              {(user?.data?.matrimonial[0].matrimonial_profile_gender) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Paternal Gotra</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].paternal_gotra) ||
+                              {(user?.data?.matrimonial[0].paternal_gotra) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Maternal Gotra</td>
                             <td className="text-muted">
-                              {(user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].maternal_gotra) ||
+                              {(user?.data?.matrimonial[0].maternal_gotra) ||
                                 "N/A"}
                             </td>
                           </tr>
                           <tr>
                             <td>Biodata</td>
                             <td className="text-muted">
-                              {user &&
-                                user.data &&
-                                user.data.matrimonial[0] &&
-                                user.data.matrimonial[0].biodata && (
-                                  <span>
-                                    <a
-                                      href={user.data.matrimonial[0].biodata}
-                                      download="biodata.pdf"
-                                      target="_blank"
-                                    >
-                                      <i className="fa-regular fa-file-lines"></i>{" "}
-                                      Download Biodata
-                                    </a>
-                                    &nbsp;(
-                                    {getFileType(
-                                      user.data.matrimonial[0].biodata
-                                    )}
-                                    )
-                                  </span>
-                                )}
+                              {user?.data?.matrimonial[0].biodata && (
+                                <span>
+                                  <a
+                                    href={user.data.matrimonial[0].biodata}
+                                    download="biodata.pdf"
+                                    target="_blank"
+                                  >
+                                    <i className="fa-regular fa-file-lines"></i>{" "}
+                                    Download Biodata
+                                  </a>
+                                  &nbsp;(
+                                  {getFileType(
+                                    user.data.matrimonial[0].biodata
+                                  )}
+                                  )
+                                </span>
+                              )}
                             </td>
                           </tr>
                           <tr>
                             <td>Proposal Photo</td>
                             <td className="proposal-Photo">
                               {proposalPhotos &&
-                              Array.isArray(proposalPhotos) ? (
+                                Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
                                   <a href={item} target="_blank" key={idx}>
                                     <img className="m-1" src={item} />

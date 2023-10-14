@@ -182,3 +182,9 @@ div.Table{
 #setting-url-page label{
   font-size: 14px;
 }
+
+#accordion .fa-arrow-down{
+  float: right;
+  color: #a7aeb8;
+  font-size: 14px;
+}

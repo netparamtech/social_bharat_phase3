@@ -13,7 +13,7 @@ const SiteSetting = () => {
         <div className="container">
           <div className="card mb-5">
             <div className="card-title p-3 bg-dark text-white fw-bold">
-            Section-1 
+            Instagram  Section-1 
             </div>
             <div className="row">
               <div className="col-md-6">
@@ -21,16 +21,16 @@ const SiteSetting = () => {
                   <div className="col-md-12">
                     <label className="fw-bold">Section Title</label>
                   </div>
-                  <div className="col-md-12 ">
+                  <div className="col-md-12">
                     <input type="text" className="form-control" />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3 ">
+                <div className="row ps-3 mb-3">
                   <div className="col-md-12">
                     <label className="fw-bold">Description</label>
                   </div>
                   <div className="col-md-12">
-                    <textarea className="form-control" rows="2" cols="50" />
+                    <input type="file" className=" form-control" />
                   </div>
                 </div>
                 <div className="row ps-3 mb-3">
@@ -96,7 +96,7 @@ const SiteSetting = () => {
                 <div className="card shawdo m-3">
                   <div className="card-body">
                     <div className="text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="300px" />
+                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
                       <p className=" m-2">
                       <a href="">Change Picture</a>
                       </p>
@@ -145,7 +145,7 @@ const SiteSetting = () => {
                 <div className="card shawdo m-3">
                   <div className="card-body">
                     <div className=" text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="300px" />
+                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
                       <p className=" m-2">
                       <a href="">Change Picture</a>
                       </p>

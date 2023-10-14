@@ -261,7 +261,7 @@ function Sidebar() {
           >
             <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192h80v56H48V192zm0 104h80v64H48V296zm128 0h96v64H176V296zm144 0h80v64H320V296zm80-48H320V192h80v56zm0 160v40c0 8.8-7.2 16-16 16H320V408h80zm-128 0v56H176V408h96zm-144 0v56H64c-8.8 0-16-7.2-16-16V408h80zM272 248H176V192h96v56z" />
           </svg>
-
+          <i class="fa fa-calendar-days"></i>
           <span className="m-2">Event</span>
         </a>
       </li>
@@ -282,6 +282,28 @@ function Sidebar() {
           
           <i className="fa fa-comment" fill="currentColor"></i>
           <span className="m-2">Testimonial</span>
+        </a>
+      </li>
+
+      {/* <!-- Nav Item - Event Collapse Menu --> */}
+
+      <li className="nav-item">
+        <a
+          className="nav-link collapsed"
+          href=""
+          data-toggle="collapse"
+          data-target="#collapseEvent"
+          aria-expanded="true"
+          aria-controls="collapseEvent"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate("/admin/cms");
+          }}
+        >
+          
+          <i class="fa fa-layer-group"  fill="currentColor"></i>
+
+          <span className="m-2">CMS</span>
         </a>
       </li>
 

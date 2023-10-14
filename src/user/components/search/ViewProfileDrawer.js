@@ -5,13 +5,13 @@ import { getUserFullProfile } from "../../services/userService";
 
 const DescriptionItem = ({ title, content }) => (
   <Row>
-    <Col className="col-6">
+    <Col className="col-4">
       <p className="site-description-item-profile-p-label fw-bold">
         {title}
         {" :"}
       </p>
     </Col>
-    <Col className="col-6">
+    <Col className="col-8">
       <p className="site-description-item-profile-p-label">{content}</p>
     </Col>
   </Row>
@@ -99,7 +99,6 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
       closable={visible}
       onClose={onClose}
       open={visible}
-      id="viewProfileDrawer"
     >
       <div className="drawer-header mt-5">
         <p className="d-flex flex-column flex-sm-row">
@@ -506,22 +505,22 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                         <div className="card-body">
                           <div className="w-100 w-lg-75">
                             <div className="mb-2 row">
-                            <div  className="col-6 fw-bold">
+                            <div  className="col-sm-3 fw-bold">
                               <label
                                 htmlFor=""
                                
                               >
-                                Degree
+                                Degree:
                               </label></div>
-                              <div className="col-6">
-                                <span className="">
+                              <div className="col-sm-8">
+                                <span className="text-muted">
                                   {item.degree_title}
                                 </span>
                               </div>
                             </div>
                             <div className="mb-2 row">
                               <label className="col-sm-3 fw-bold">
-                                Study Field
+                                Study Field:
                               </label>
                               <div className="col-sm-8">
                                 <span className="text-muted">
@@ -734,7 +733,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                 </div>
                 <div className="row mb-2">
                   <div className="col-4">
-                    <label className="fw-bold">Website</label>
+                    <label className="fw-bold">Website:</label>
                   </div>
                   <div className="col-8">N/A</div>
                 </div>

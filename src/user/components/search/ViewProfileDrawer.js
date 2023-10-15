@@ -160,7 +160,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
         <div className="card p-3">
           <DescriptionItem title="Email" content={user.email} />
           <DescriptionItem title="D. O .B" content={formatDate(user.dob)} />
-          <DescriptionItem title="Marital Status" content="N/A" />
+          <DescriptionItem title="Marital Status" content={user.marital_status} />
           <DescriptionItem title="Gender" content={user.gender} />
           <DescriptionItem
             title="Community"
@@ -256,14 +256,14 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                           <div className="row">
                             <div className="col-6">
                               <label htmlFor="status" className="fw-bold">
-                                Weight :
+                                Manglik :
                               </label>
                             </div>
                             <div className="col-6">
                               <label className="">
                                 {user &&
                                   user.matrimonial[0] &&
-                                  user.matrimonial[0].weight_in_kg}
+                                  user.matrimonial[0].is_manglik===1?'YES':'NO'}
                               </label>
                             </div>
                           </div>

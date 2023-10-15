@@ -729,7 +729,9 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                   <div className="col-4">
                     <label className="fw-bold">Phone No:</label>
                   </div>
-                  <div className="col-8">{user && user.mobile}</div>
+                  <div className="col-8">
+                    {user && user.mobile}
+                    </div>
                 </div>
                 <div className="row mb-2">
                   <div className="col-4">

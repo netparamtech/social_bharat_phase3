@@ -80,15 +80,12 @@ const Banner = () => {
                 Social Bharat Helps <br /> <span className="typed" ref={typedRef}></span>
               </h2>
             </div>
-           {
-            isAuthenticUser?'':(
-              <div className="">
+            <div className="">
               <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
                 Become a member
               </a>
             </div>
-            )
-           }
+         
           </div>
         </div>
       </div>

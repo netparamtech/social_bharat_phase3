@@ -32,7 +32,7 @@ function OurPartner() {
       <section id="partner">
         <div className="container">
           <div className="row costomer-logos ">
-            {casts.length > 0 &&
+            {casts&&casts.length > 0 &&
               casts.map(
                 (community) =>
                   community.thumbnail_image && (

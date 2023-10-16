@@ -1269,3 +1269,51 @@ input[type="number"] {
 
 
 /* ---------------------------- */
+
+#footer {
+  color: #37423b;
+  font-size: 14px;
+  background: #f4f8fa;
+  position: relative;
+  z-index: 1;
+ 
+}
+
+#footer-end {
+  color: #37423b;
+  font-size: 13px;
+  padding: 5px 0px 10px 0px;
+  background-color: #ceddd2;
+}
+
+.social-links a {
+  font-size: 18px;
+  display: inline-block;
+  line-height: 1;
+  padding: 9px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 38px;
+  height: 36px;
+  transition: 0.3s;
+  border: 1px solid #212529;
+}
+
+.social-links :hover {
+  border: 1px solid #008374;
+  color: #008374;
+}
+
+.social-links a i:hover {
+  border: 0px;
+}
+
+#footer h4 {
+  padding-bottom: 0px !important;
+}
+
+#footer #scrollToTopBtn i{
+  color: #ffffff;
+}
+

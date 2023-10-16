@@ -19,12 +19,25 @@ const Setting = ({ visible }) => {
                 <Row>
                         <Col>
                             <Row>
-                            <i className="fa fa-mobile m-2" aria-hidden="true"></i>
-                                Mobile
+                            <i className="fa fa-mobile m-2 text-primary fs-2" aria-hidden="true"></i>
+                                <p>Mobile</p>
                             </Row>
                             <Row>
                                 <span className="text-muted">Allow to show your contact number visible to others</span>
                             </Row>
+                        </Col>
+                        <Col>
+                            <Switch className="m-3" />
+                        </Col>
+                    </Row>
+                    <Divider />
+                    <Row>
+                        <Col>
+                            <Row>
+                            <i className="fa fa-mobile m-2 text-primary fs-2" aria-hidden="true" ></i>
+                                Available For Marriage
+                            </Row>
+                           
                         </Col>
                         <Col>
                             <Switch className="m-3" />

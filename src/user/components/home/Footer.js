@@ -179,8 +179,8 @@ const Footer = () => {
               <br />
               <strong>phone:</strong> +91-{data.phone2}
               <br />
-              <strong>Email:</strong> {data.email1}
-              {data && data.email2 ? `/${data.email2}` : ''}
+              <strong>Email: </strong>  {data.email1} / <br/>
+              {data && data.email2 ?  `${data.email2}` : ''}
             </p>
 
           </div>

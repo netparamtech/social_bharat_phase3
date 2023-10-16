@@ -208,10 +208,11 @@ const adminRoutes = [
     },
 
     {
-        path: '/admin/site-setting',
+        path: '/admin/setting',
         component: SiteSettingPage,
         exact:true
     },
+
 
     {
         path: '/admin/cms',

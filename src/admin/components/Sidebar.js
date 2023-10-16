@@ -126,6 +126,7 @@ function Sidebar() {
           data-target="#collapseSideSetting"
           aria-expanded="true"
           aria-controls="collapseUser"
+          
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +174,7 @@ function Sidebar() {
               href=""
               onClick={(e) => {
                 e.preventDefault(); // Prevent the default anchor tag behavior
-                navigate("/admin/site-setting");
+                navigate("/admin/setting");
               }}
             >
               <svg

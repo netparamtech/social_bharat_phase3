@@ -1,162 +1,194 @@
+import { Collapse } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 const SiteSetting = () => {
   const navigate = useNavigate();
+  const { Panel } = Collapse;
 
   return (
     <>
       <div id="setting-url-page">
-      <div ></div>
-      <p className="ps-4 fs-5">Manage Pages URL</p>
+        <div className="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 className="h3 mb-0 text-gray-800">Site Setting</h1>
+        </div>
         <div className="container">
           <div className="card mb-5">
-            <div className="card-title p-3 bg-dark text-white fw-bold">
-            Instagram  Section-1 
-            </div>
             <div className="row">
-              <div className="col-md-6">
-                <div className="row ps-3 mb-3">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3 pt-2">
                   <div className="col-md-12">
-                    <label className="fw-bold">Section Title</label>
+                    <label className="fw-bold">Instagram URL</label>
                   </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="text"
+                      placeholder="Instagram Url"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3">
                   <div className="col-md-12">
+                    <label className="fw-bold">YouTube URL</label>
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="text"
+                      placeholder="Youtube Url"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3">
+                  <div className="col-md-12">
+                    <label className="fw-bold">Twitter URL</label>
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="check-box"
+                      placeholder="Twitter Url"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3">
+                  <div className="col-md-12">
+                    <label className="fw-bold">Facebook URL</label>
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="check-box"
+                      placeholder="Facebook Url"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3">
+                  <div className="col-md-12">
+                    <label className="fw-bold">Linkedin URL</label>
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="check-box"
+                      placeholder="Linkedin Url"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row ps-3 pe-3">
+                  <div className="col-md-12">
+                    <label className="fw-bold">Address</label>
+                  </div>
+                  <div className="col-md-12 form-group">
                     <input type="text" className="form-control" />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Description</label>
+              </div>
+            </div>
+
+            <div className="row mb-3 ps-3 pe-3">
+              <div className="col-md-6">
+                <div className="row ">
+                  <div className="col-md-3">
+                    <label className="fw-bold">Phone no-1</label>
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-9">
+                    <input type="number" className="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <label className="fw-bold">Phone no-2</label>
+                  </div>
+                  <div className="col-md-9">
+                    <input type="number" className="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mb-2 ps-3 pe-3">
+              <div className="col-md-6">
+                <div className="row ">
+                  <div className="col-md-3">
+                    <label className="fw-bold">Email- 1</label>
+                  </div>
+                  <div className="col-md-9">
+                    <input type="number" className="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <label className="fw-bold">Email- 2</label>
+                  </div>
+                  <div className="col-md-9">
+                    <input type="number" className="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row ps-3 pe-3 mb-2">
+            <div className="col-md-12">
+              <div className="row">
+                <div className="col-10">
+                  <label className="fw-bold">Image</label>
+                  <div className="mb-2">
                     <input type="file" className=" form-control" />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Action URL</label>
-                  </div>
-                  <div className="col-md-12 form-group">
-                    <input type="check-box" className="form-control" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="card shawdo m-3">
-                  <div className="card-body">
-                    <div className="text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
-                      <p className="text-center m-2">
-                      <a href="">Change Picture</a>
-                      </p>
-                    </div>
+                <div className="col-2">
+                  <div className="form-group">
+                    <img
+                      className="img-fluid  pt-2"
+                      src="/admin/img/1.jpg"
+                      width="80px"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="container">
-          <div className="card">
-            <div className="card-title p-3 bg-dark text-white fw-bold">
-            Section-2 
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Section Title</label>
-                  </div>
-                  <div className="col-md-12 ">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row ps-3 mb-3 ">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Description</label>
-                  </div>
-                  <div className="col-md-12">
-                    <textarea className="form-control" rows="3" cols="50" />
-                  </div>
-                </div>
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Action URL</label>
-                  </div>
-                  <div className="col-md-12 form-group">
-                    <input type="check-box" className="form-control" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="card shawdo m-3">
-                  <div className="card-body">
-                    <div className="text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
-                      <p className=" m-2">
-                      <a href="">Change Picture</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+            <div className="row ps-3 pe-3 mb-2">
+              <div className="col-12">
+                <a className="btn  btn-primary w-100">Submit</a>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="container">
-          <div className="card mt-5">
-            <div className="card-title p-3 bg-dark text-white fw-bold">
-            Section-3 
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Section Title</label>
-                  </div>
-                  <div className="col-md-12 ">
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="row ps-3 mb-3 ">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Description</label>
-                  </div>
-                  <div className="col-md-12">
-                    <textarea className="form-control" rows="3" cols="50" />
-                  </div>
-                </div>
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Action URL</label>
-                  </div>
-                  <div className="col-md-12 form-group">
-                    <input type="check-box" className="form-control" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="card shawdo m-3">
-                  <div className="card-body">
-                    <div className=" text-center">
-                      <img className="img-fluid" src="/admin/img/1.jpg" width="200px" />
-                      <p className=" m-2">
-                      <a href="">Change Picture</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </>
   );

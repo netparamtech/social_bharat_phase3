@@ -4,11 +4,14 @@ import UserProfileDropdown from "./UserProfileDropdown";
 import { Divider, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
+import { fetchAllSiteSettings } from "../../services/userService";
 
 const NavbarTransparent = () => {
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const isPasswordSet = user && user.user && user.user.is_password_set;
+
+  const [data, setData] = useState({});
 
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
@@ -87,6 +90,25 @@ const NavbarTransparent = () => {
     setVisible(!visible);
   };
 
+  const fetchSettings = async () => {
+    try {
+      const response = await fetchAllSiteSettings();
+      setData(response.data.data);
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
@@ -106,7 +128,7 @@ const NavbarTransparent = () => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" href="/">
-          <img src="/user/images/sb-logo.png" alt="Logo" />
+          <img src={data&&data.logo1} alt="Logo" />
         </a>
 
         <a>

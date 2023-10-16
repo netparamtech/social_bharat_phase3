@@ -27,6 +27,12 @@ const BodyContent = () => {
         }
     }
 
+    const maxProgressValue = 100;  // Maximum value for the progress bar
+
+    // Calculate the width as a percentage based on the current value
+    const progressWidth = `${(statistics && statistics.interested_for_marriage_count) || 0}%`;
+
+
     useEffect(() => {
         fetchDashboardStatistics();
     }, []);
@@ -76,9 +82,7 @@ const BodyContent = () => {
                         <div className="card-body">
                             <div className="row align-items-center">
                                 <div className="col mr-2">
-                                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Enquiry</div>
-                                    <div className="h5 mb-0 font-weight-bold text-gray-800">21</div>
+                                    <div className="h5 mb-0 font-weight-bold text-gray-800"><Statistic title={<span className='text-xs font-weight-bold text-success text-uppercase mb-1'>ENQUIRES</span>} value={statistics && statistics.enquiry_count} formatter={formatter} /></div>
                                 </div>
                                 <div className="col-auto">
                                     <h1> <i className="fa fa-question-circle h-20 text-gray-300" aria-hidden="true"></i></h1>
@@ -94,17 +98,19 @@ const BodyContent = () => {
                         <div className="card-body">
                             <div className="row align-items-center">
                                 <div className="col mr-2">
-                                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Matrimonial
-                                    </div>
                                     <div className="row align-items-center">
                                         <div className="col-auto">
-                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800"><Statistic title={<span className='text-xs font-weight-bold text-info text-uppercase mb-1'>MATRIMONIALS</span>} value={statistics && statistics.interested_for_marriage_count} formatter={formatter} /></div>
                                         </div>
                                         <div className="col">
                                             <div className="progress progress-sm mr-2">
                                                 <div className="progress-bar bg-info" role="progressbar"
-                                                    style={{ width: 50 }} aria-valuenow="50" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
+                                                    style={{ width: progressWidth }}
+                                                    aria-valuenow={(statistics && statistics.interested_for_marriage_count) || 0}
+                                                    aria-valuemin="0"
+                                                    aria-valuemax={maxProgressValue}>
+                                                    {progressWidth}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

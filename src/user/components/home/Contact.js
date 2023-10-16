@@ -18,10 +18,6 @@ function Contact() {
 
   const navigate = useNavigate();
 
-  const handleBecomeMemberClick = () => {
-    navigate("/register");
-  };
-
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -248,19 +244,6 @@ function Contact() {
           </div>
         </div>
       </div>
-      {isAuthenticUser ? (
-        ""
-      ) : (
-        <div className="fixed-button-container">
-          <a
-            className="btn btn-banner"
-            href="#"
-            onClick={handleBecomeMemberClick}
-          >
-            Become a member
-          </a>
-        </div>
-      )}
     </div>
   );
 }

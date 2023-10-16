@@ -518,3 +518,13 @@ export const fetchAllActiveQualifications = async () => {
         throw error;
     }
 }
+
+//fetch all active qualification
+export const fetchAllSiteSettings = async () => {
+    try {
+        const response = await apiConfig.get('/setting');
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}

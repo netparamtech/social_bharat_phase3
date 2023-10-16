@@ -12,12 +12,13 @@ const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
 
   const { user } = props;
-  
+
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const imageInputRef = useRef(null);
   const [token, setToken] = useState("");
   const [community, setCommunity] = useState({});
+
 
   const defaultPhoto = "/user/images/user.png";
 
@@ -79,7 +80,7 @@ const BasicProfile = (props) => {
   };
 
   const formatDate = (dateString) => {
-    if(dateString===null){
+    if (dateString === null) {
       return '';
     }
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -103,7 +104,7 @@ const BasicProfile = (props) => {
         <div className="row">
           <div className="col-md-3">
             <div className="card shadow">
-            {serverError && <span className='error'>{serverError}</span>}
+              {serverError && <span className='error'>{serverError}</span>}
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
                 <input
                   type="file"
@@ -141,7 +142,7 @@ const BasicProfile = (props) => {
 
               <div className="card-body mx-auto">
                 <p className="card-text text-center mb-0">
-                  {user && user.data && user.data.name||"N/A"}
+                  {user && user.data && user.data.name || "N/A"}
                 </p>
 
                 <Image
@@ -154,7 +155,7 @@ const BasicProfile = (props) => {
                   alt=""
                   title=""
                 />
-                <span>{community.name||"N/A"}</span>
+                <span>{community.name || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -176,7 +177,7 @@ const BasicProfile = (props) => {
                     </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.name||"N/A"}
+                        {user && user.data && user.data.name || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -185,7 +186,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Email </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.email||"N/A"}
+                        {user && user.data && user.data.email || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -194,7 +195,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Date Of Birth </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                      {formatDate(user && user.data && user.data.dob)||"N/A"}
+                        {formatDate(user && user.data && user.data.dob) || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -203,7 +204,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Marital Status </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                      {user && user.data && user.data.marital_status||"N/A"}
+                        {user && user.data && user.data.marital_status || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -212,7 +213,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3 ">Gender</label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.gender||"N/A"}
+                        {user && user.data && user.data.gender || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -224,7 +225,7 @@ const BasicProfile = (props) => {
                         {user &&
                           user.data &&
                           user.data.community &&
-                          user.data.community.name||"N/A"}
+                          user.data.community.name || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -235,15 +236,16 @@ const BasicProfile = (props) => {
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
                           <span className="text-muted">
-                            {user && user.data && user.data.mobile||"N/A"}
+                            {user && user.data && user.data.mobile || "N/A"}
                           </span>
                           <a className="update-mobile btn ms-2" title="Update Mobile No." onClick={() => navigate("/update-mobile")}>
                             <i className="fas fa-edit text-success"></i>
-                            </a>
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>

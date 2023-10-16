@@ -203,9 +203,8 @@ const SearchPeople = () => {
             </div>
             <div className="filter-icon">
               <a
-                href="#"
                 title="Filter"
-                className="btn btn-primary btn-sm me-2"
+                className="btn btn-primary btn-sm me-2 hover-pointer"
                 onClick={handleFilterClicked}
               >
                 <i className="fas fa-filter me-1"></i>Filter
@@ -246,8 +245,7 @@ const SearchPeople = () => {
               </div>
               <div className="col-2 mb-3">
                 <a
-                  href=""
-                  className="btn btn-set btn-primary"
+                  className="btn btn-set btn-primary hover-pointer"
                   onClick={handleGoButtonClick}
                 >
                   Go
@@ -279,7 +277,7 @@ const SearchPeople = () => {
                                 ? `(${item.native_place_state})`
                                 : ""}
                             </p>
-                            <a href="#" onClick={handleViewProfileClick}>
+                            <a className="hover-pointer" onClick={handleViewProfileClick}>
                               <p>
                                 view profile
                               </p>

@@ -179,6 +179,9 @@ div.Table{
   word-wrap: break-word; /* Allow word wrapping within the element */
 }
 
+#setting-url-page label{
+  font-size: 14px;
+}
 
 #accordion .fa-arrow-down{
   float: right;

@@ -11,10 +11,21 @@ import { login } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import dayjs from 'dayjs';
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, notification, Button } from 'antd';
+import {
+  RadiusBottomleftOutlined,
+  RadiusBottomrightOutlined,
+  RadiusUpleftOutlined,
+  RadiusUprightOutlined,
+} from '@ant-design/icons';
+import { useMemo } from 'react';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
+
+const Context = React.createContext({
+  name: 'Default',
+});
 
 const UpdateBasicProfile = () => {
   const user = useSelector((state) => state.userAuth);
@@ -35,7 +46,7 @@ const UpdateBasicProfile = () => {
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [dob, setDOB] = useState(dayjs(user.user.dob!=null&&user.user.dob).add(0, 'day')); // Initial DOB
+  const [dob, setDOB] = useState(dayjs(user.user.dob != null && user.user.dob).add(0, 'day')); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null);
@@ -85,7 +96,7 @@ const UpdateBasicProfile = () => {
       setDOB(null); // Or set a default value or handle it as needed
     }
   };
-  
+
 
   const handleMaritalStatusChange = (selectedOption) => {
     setMaritalStatus(selectedOption);
@@ -182,7 +193,7 @@ const UpdateBasicProfile = () => {
     // // Format the date as per the custom format (yyyy-mm-dd)
     // const formattedDate = parsedDate.format('YYYY-MM-DD');
 
-    if(isoDateString===null){
+    if (isoDateString === null) {
       return '';
     }
 
@@ -194,11 +205,26 @@ const UpdateBasicProfile = () => {
 
     return formattedDate;
   };
-  
 
-  useEffect(()=>{
-   setDOB(convertToCustomDateFormat(user.user.dob));
-  },[user]);
+
+  useEffect(() => {
+    setDOB(convertToCustomDateFormat(user.user.dob));
+  }, [user]);
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (placement) => {
+    api.info({
+      message: <Context.Consumer>{({ name }) => `Hello, ${user.user.name}!`}</Context.Consumer>,
+      description: 'Your profile is updated successfully.',
+      placement,
+    });
+  };
+  const contextValue = useMemo(
+    () => ({
+      name: 'Ant Design',
+    }),
+    [],
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -212,7 +238,7 @@ const UpdateBasicProfile = () => {
       native_place_state: selectedState ? selectedState.label : '',
       dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
-      marital_status:maritalStatus?maritalStatus.label:'',
+      marital_status: maritalStatus ? maritalStatus.label : '',
     };
 
     // Call the API to update the basic profile information
@@ -222,10 +248,16 @@ const UpdateBasicProfile = () => {
         setErrors("");
         setServerError('');
         dispatch(login(response.data.data, token));
-        if(isAvailableForMarriage){
-          navigate("/user/update-matrimonial-profile")
-        }else {
-          navigate("/profile");
+        if (isAvailableForMarriage) {
+          openNotification('topLeft')
+          setTimeout(() => {
+            navigate("/user/update-matrimonial-profile")
+          }, 2000);
+        } else {
+          openNotification('topLeft')
+          setTimeout(() => {
+            navigate("/profile");
+          }, 2000);
         }
       }
     } catch (error) {
@@ -256,16 +288,16 @@ const UpdateBasicProfile = () => {
       value: user.user.native_place_city,
       label: user.user.native_place_city,
     }); // Set the selected city as an object
-   if(user.user.marital_status){
-    setMaritalStatus({
-      value:user.user.marital_status,
-      label:user.user.marital_status,
-    });
-    setShowMarriageStatus(true);
-   }else {
-    setIsAvailableForMarriage(false);
-   }
-    if(user.user.marital_status==='Married'){
+    if (user.user.marital_status) {
+      setMaritalStatus({
+        value: user.user.marital_status,
+        label: user.user.marital_status,
+      });
+      setShowMarriageStatus(true);
+    } else {
+      setIsAvailableForMarriage(false);
+    }
+    if (user.user.marital_status === 'Married') {
       setIsAvailableForMarriage(false);
       setShowAvailableForMarriage(false)
     }
@@ -308,7 +340,7 @@ const UpdateBasicProfile = () => {
       setShowMarriageStatus(true);
     } else {
       setShowMarriageStatus(false);
-      if(maritalStatus&&gender===null||maritalStatus&&age===null){
+      if (maritalStatus && gender === null || maritalStatus && age === null) {
         setShowMarriageStatus(true);
       }
     }
@@ -325,12 +357,12 @@ const UpdateBasicProfile = () => {
     }
   }, [maritalStatus]);
 
-  useEffect(()=>{
-    if(user.user.is_available_for_marriage){
+  useEffect(() => {
+    if (user.user.is_available_for_marriage) {
       setShowAvailableForMarriage(true);
       setIsAvailableForMarriage(true);
     }
-  },[user]);
+  }, [user]);
 
   useEffect(() => {
     fetchLoggedUserCommunity();
@@ -338,192 +370,195 @@ const UpdateBasicProfile = () => {
 
 
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
-      <div className="container">
-        <div className="card shadow">
-          <div className="card-body">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-                <div className="card-title">
-                  <h3 className="mb-3">Basic Profile</h3>
+    <Context.Provider value={contextValue}>
+      {contextHolder}
+      <div id="auth-wrapper" className="pt-5 pb-5">
+        <div className="container">
+          <div className="card shadow">
+            <div className="card-body">
+              <div className="row">
+                <div className="col-md-12 col-sm-12 col-xs-12 p-4">
+                  <div className="card-title">
+                    <h3 className="mb-3">Basic Profile</h3>
+                  </div>
+                  <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                    <div className="row ">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                        <label className="form-label">Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          placeholder="Enter your name"
+                          className="form-control"
+                          defaultValue={name}
+                          onChange={handleNameChange}
+                          autoFocus
+                        />
+                        {errors.name && (
+                          <span className="error">{errors.name}</span>
+                        )}
+                      </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Email </label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          placeholder="Enter Email"
+                          className="form-control"
+                          defaultValue={email}
+                          onChange={handleEmailChange}
+                        />
+                        {errors.email && (
+                          <span className="error">{errors.email}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Gender</label>
+                        <select
+                          className="form-select form-control"
+                          aria-label="Default select example"
+                          defaultValue={gender}
+                          onChange={handleGenderChange}
+                        >
+                          <option value="">---Select Gender---</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        {errors.gender && (
+                          <span className="error">{errors.gender}</span>
+                        )}
+                      </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Date of Birth</label>
+                        <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
+                        {errors.dob && (
+                          <span className="error">{errors.dob}</span>
+                        )}
+                        {/* Add error handling if needed */}
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">State</label>
+
+                        <Select
+                          className=""
+                          options={states.map((state) => ({
+                            value: state.name,
+                            label: state.name,
+                          }))}
+                          value={selectedState}
+                          onChange={handleStateChange}
+                        />
+
+                        {errors.native_place_state && (
+                          <span className="error">
+                            {errors.native_place_state}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">City</label>
+
+                        <Select
+                          options={cities.map((city) => ({
+                            value: city.name,
+                            label: city.name,
+                          }))}
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                        />
+                        {errors.native_place_city && (
+                          <span className="error">
+                            {errors.native_place_city}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
+                        <label className="form-label">Marital Status</label>
+                        <Select
+                          options={maritalStatusOptions}
+                          value={maritalStatus}
+                          onChange={handleMaritalStatusChange}
+                          placeholder="Select..."
+                        />
+                      </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">What Is Your Job ?</label>
+                        <input
+                          type="text"
+                          name="occupation"
+                          id="occupation"
+                          placeholder="Example: Software Engineer, Grocery Shop Owner"
+                          className="form-control"
+                          defaultValue={occupation}
+
+                        />
+                        {/* Add error handling if needed */}
+                      </div>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                        <label className="form-label">Community</label>
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          placeholder="Enter your name"
+                          className="form-control"
+                          defaultValue={community.name}
+                          disabled
+                        />
+
+                      </div>
+
+                    </div>
+
+
+
+                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage ? '' : 'd-none'}`}>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id="marriageCheckbox"
+                          checked={isAvailableForMarriage}
+                          onChange={handleAvailableMarriageCheckboxChange}
+                        />
+                        <label className="form-check-label" htmlFor="marriageCheckbox">
+                          Is Available For Marriage
+                        </label>
+                      </div>
+                    </div>
+
+
+
+                    <div className="row mt-4">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary">
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-                <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-                  <div className="row ">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                      <label className="form-label">Name</label>
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Enter your name"
-                        className="form-control"
-                        defaultValue={name}
-                        onChange={handleNameChange}
-                        autoFocus
-                      />
-                      {errors.name && (
-                        <span className="error">{errors.name}</span>
-                      )}
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Email </label>
-                      <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter Email"
-                        className="form-control"
-                        defaultValue={email}
-                        onChange={handleEmailChange}
-                      />
-                      {errors.email && (
-                        <span className="error">{errors.email}</span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Gender</label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Default select example"
-                        defaultValue={gender}
-                        onChange={handleGenderChange}
-                      >
-                        <option value="">---Select Gender---</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      {errors.gender && (
-                        <span className="error">{errors.gender}</span>
-                      )}
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth</label>
-                      <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
-                      {errors.dob && (
-                        <span className="error">{errors.dob}</span>
-                      )}
-                      {/* Add error handling if needed */}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">State</label>
-
-                      <Select
-                        className=""
-                        options={states.map((state) => ({
-                          value: state.name,
-                          label: state.name,
-                        }))}
-                        value={selectedState}
-                        onChange={handleStateChange}
-                      />
-
-                      {errors.native_place_state && (
-                        <span className="error">
-                          {errors.native_place_state}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">City</label>
-
-                      <Select
-                        options={cities.map((city) => ({
-                          value: city.name,
-                          label: city.name,
-                        }))}
-                        value={selectedCity}
-                        onChange={handleCityChange}
-                      />
-                      {errors.native_place_city && (
-                        <span className="error">
-                          {errors.native_place_city}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
-                      <label className="form-label">Marital Status</label>
-                      <Select
-                        options={maritalStatusOptions}
-                        value={maritalStatus}
-                        onChange={handleMaritalStatusChange}
-                        placeholder="Select..."
-                      />
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">What Is Your Job ?</label>
-                      <input
-                        type="text"
-                        name="occupation"
-                        id="occupation"
-                        placeholder="Example: Software Engineer, Grocery Shop Owner"
-                        className="form-control"
-                        defaultValue={occupation}
-                        
-                      />
-                      {/* Add error handling if needed */}
-                    </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                      <label className="form-label">Community</label>
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Enter your name"
-                        className="form-control"
-                        defaultValue={community.name}
-                        disabled
-                      />
-
-                    </div>
-
-                  </div>
-
-
-
-                  <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage ? '' : 'd-none'}`}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="marriageCheckbox"
-                        checked={isAvailableForMarriage}
-                        onChange={handleAvailableMarriageCheckboxChange}
-                      />
-                      <label className="form-check-label" htmlFor="marriageCheckbox">
-                        Is Available For Marriage
-                      </label>
-                    </div>
-                  </div>
-
-
-
-                  <div className="row mt-4">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Context.Provider>
   );
 };
 

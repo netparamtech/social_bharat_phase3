@@ -24,6 +24,7 @@ import EventPage from "./pages/EventPage";
 import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
 import JobInfoPage from "./pages/profile/update/JobInfoPage";
 import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
+import SearchEventPage from "./pages/SearchEventPage";
 
 const userRoutes = [
     {
@@ -204,6 +205,12 @@ const userRoutes = [
     {
         path: '/event',
         component: EventPage,
+        exact: true
+    },
+
+    {
+        path: '/events/search',
+        component: SearchEventPage,
         exact: true
     },
 ]

@@ -128,7 +128,7 @@ const Dashboard = () => {
                 
               <a
                 className="text-white hover-pointer"
-                onClick={() => navigate("/event")}
+                onClick={() => navigate("/events/search")}
               >
              Search Events{" "}
              </a>

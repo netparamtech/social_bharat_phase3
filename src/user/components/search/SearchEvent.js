@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 
-const SearchBusiness = () => {
+const SearchEvent = () => {
 
     const user = useSelector((state) => state.userAuth);
 
@@ -198,7 +198,7 @@ const SearchBusiness = () => {
                             }
                         </div>
                         <div className="filter-icon">
-                            <a title="Filter" className="btn btn-primary btn-sm me-2 hover-pointer" onClick={handleFilterClicked}>
+                            <a href="" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
                                 <i className="fas fa-filter me-1"></i>Filter
                             </a>
                             <a title='Add Business' className='btn btn-primary' onClick={handlePromoteBusinessClick}>Promote Your Business </a>
@@ -227,7 +227,7 @@ const SearchBusiness = () => {
                                 />
                             </div>
                             <div className="col-2 mb-3">
-                                <a className="btn btn-set btn-primary hover-pointer" onClick={handleGoButtonClick}>Go</a>
+                                <a href="" className="btn btn-set btn-primary" onClick={handleGoButtonClick}>Go</a>
                             </div>
                         </div>
                         <div className="row">
@@ -265,4 +265,4 @@ const SearchBusiness = () => {
     );
 };
 
-export default SearchBusiness;
+export default SearchEvent;

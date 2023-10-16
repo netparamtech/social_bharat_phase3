@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
 import { Divider, Drawer } from "antd";
-import { Modal } from 'antd';
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 
@@ -24,7 +23,12 @@ const NavbarTransparent = () => {
   const handleHomeClicked = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-    navigate('/');
+    if(isAuthenticUser){
+      navigate('/dashboard')
+    } else {
+      navigate('/');
+    }
+   
   }
 
   const handleAboutClick = (e) => {

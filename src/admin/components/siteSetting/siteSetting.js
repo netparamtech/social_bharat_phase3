@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import {
   fetchAllSetting,
-  updateSetting, uploadImage, 
-  
+  updateSetting,
+  uploadImage,
 } from "../../services/AdminService";
 
 const SiteSetting = () => {
@@ -25,7 +25,6 @@ const SiteSetting = () => {
   const [email2, setEmail2] = useState("");
   const [logo1, setLogo1] = useState("");
   const [logo2, setLogo2] = useState("");
-  
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
@@ -56,8 +55,8 @@ const SiteSetting = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       }
-       // Internal Server error
-       else if (error.response && error.response.status === 500) {
+      // Internal Server error
+      else if (error.response && error.response.status === 500) {
         // let errorMessage = error.response.data.message;
         // navigate('/server/error', { state: { errorMessage} });
       }
@@ -80,7 +79,6 @@ const SiteSetting = () => {
         email1,
         email2,
         logo1: thumbnailImageTempUrl,
-       
       };
       const response = await updateSetting(settingData);
 
@@ -111,10 +109,10 @@ const SiteSetting = () => {
   const fetchSetting = async () => {
     try {
       const response = await fetchAllSetting();
-      
+
       if (response && response.status === 200) {
         const settingData = response.data.data;
-      
+
         setInstagram(settingData.social_insta_link);
         setYouTube(settingData.social_youtube_link);
         setTwitter(settingData.social_twitter_link);
@@ -125,21 +123,18 @@ const SiteSetting = () => {
         setPhone2(settingData.phone2);
         setEmail1(settingData.email1);
         setEmail2(settingData.email2);
-        // setThumbnailPreview(settingData.logo1);
         setLogo2(settingData.setLogo2);
-     
+
+        setThumbnailPreview(settingData.logo1);
 
         setThumbnailImageTempUrl(settingData.logo1);
-       
-
-       
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
@@ -399,6 +394,7 @@ const SiteSetting = () => {
                       <div className="mb-2">
                         <input
                           type="file"
+                          defaultValue={thumbnailImageTempUrl}
                           onInput={handleThumbnailImageChange}
                           className=" form-control"
                         />
@@ -409,7 +405,6 @@ const SiteSetting = () => {
                     </div>
                     <div className="col-4">
                       <div className="form-group">
-                        
                         {thumbnailPreview && (
                           <img
                             src={thumbnailPreview}
@@ -426,15 +421,10 @@ const SiteSetting = () => {
                   <div className="row">
                     <div className="col-8">
                       <label className="fw-bold">Logo- 2</label>
-                      <div className="mb-2">
-                        
-                      
-                      </div>
+                      <div className="mb-2"></div>
                     </div>
                     <div className="col-4">
-                      <div className="form-group">
-                       
-                      </div>
+                      <div className="form-group"></div>
                     </div>
                   </div>
                 </div>

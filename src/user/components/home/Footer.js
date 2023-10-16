@@ -82,7 +82,7 @@ const Footer = () => {
   return (
     <footer id="footer" className=" text-start lh-lg wow animate_animated animate_fadeInUp">
       <div className="container ">
-        <div className="row pt-5 pb-5  ">
+        <div className="row pt-4 pb-3  ">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
             <p>
@@ -188,14 +188,14 @@ const Footer = () => {
       </div>
       <div id="footer-end">
         <div className="container">
-          <div className="row pt-4 pb-4">
+          <div className="row py-1">
             <div className="col text-center ">
               <div className="copyright ">
                 © Copyright <strong><span>Social Bharat</span></strong>.
                 All Rights Reserved
               </div>
               <div className="credits">
-                Designed by <a href="#" className="text-decoration-none green-ever">NetParam
+                Designed by <a href="#" className="text-decoration-none text-primary">NetParam
                 </a>
               </div>
             </div>

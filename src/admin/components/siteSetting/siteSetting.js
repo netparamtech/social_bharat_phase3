@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import {
+  fetchAllSetting,
   updateSetting, uploadImage, 
   
 } from "../../services/AdminService";
@@ -24,7 +25,7 @@ const SiteSetting = () => {
   const [email2, setEmail2] = useState("");
   const [logo1, setLogo1] = useState("");
   const [logo2, setLogo2] = useState("");
-  const [thumbnailImage, setThumbnailImage] = useState("");
+  
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
@@ -40,12 +41,12 @@ const SiteSetting = () => {
     const selectedFile = e.target.files[0];
     setThumbnailPreview(URL.createObjectURL(selectedFile));
     const formData = new FormData();
-    formData.append("logo1", selectedFile);
+    formData.append("image", selectedFile);
 
     try {
       const response = await uploadImage(formData);
       if (response && response.status === 200) {
-        setThumbnailImageTempUrl(response.data.data.logo1);
+        setThumbnailImageTempUrl(response.data.data.image);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -106,6 +107,46 @@ const SiteSetting = () => {
       }
     }
   };
+
+  const fetchSetting = async () => {
+    try {
+      const response = await fetchAllSetting();
+      
+      if (response && response.status === 200) {
+        const settingData = response.data.data;
+      
+        setInstagram(settingData.social_insta_link);
+        setYouTube(settingData.social_youtube_link);
+        setTwitter(settingData.social_twitter_link);
+        setFacebook(settingData.social_facebook_link);
+        setLinkedin(settingData.social_linkedin_link);
+        setAddress(settingData.address);
+        setPhone1(settingData.phone1);
+        setPhone2(settingData.phone2);
+        setEmail1(settingData.email1);
+        setEmail2(settingData.email2);
+        // setThumbnailPreview(settingData.logo1);
+        setLogo2(settingData.setLogo2);
+     
+
+        setThumbnailImageTempUrl(settingData.logo1);
+       
+
+       
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchSetting();
+  }, []);
 
   return (
     <>
@@ -372,8 +413,8 @@ const SiteSetting = () => {
                         {thumbnailPreview && (
                           <img
                             src={thumbnailPreview}
-                            alt="Thumbnail"
-                            title="Thumbnail"
+                            alt="Logo"
+                            title="Logo-1"
                             className="small-img-thumbnail  img-fluid my-2 "
                           />
                         )}

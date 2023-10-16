@@ -518,3 +518,13 @@ export const updateSetting = async (data) => {
         throw error;
     }
 }
+
+//fetch All Setting
+export const fetchAllSetting = async () => {
+    try {
+        const response = await apiWithHeaders.get('/setting');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

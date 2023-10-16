@@ -33,9 +33,9 @@ const SearchEvent = () => {
 
     const navigate = useNavigate();
 
-    const handlePromoteBusinessClick = (e) => {
+    const handleCreateEventClick = (e) => {
         e.preventDefault();
-        navigate("/user/update-business-profile");
+        navigate("/event");
     };
 
     const handleStateChange = (selectedOption) => {
@@ -181,7 +181,7 @@ const SearchEvent = () => {
                     {serverError && <span className='error'>{serverError}</span>}
 
                         <div>
-                            <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
+                            <h5 className="fw-3 d-none d-sm-block">Search Event</h5>
                         </div>
                         <div className="filter-content pt-5 d-md-block">
                             {
@@ -198,14 +198,14 @@ const SearchEvent = () => {
                             }
                         </div>
                         <div className="filter-icon">
-                            <a href="" title="Filter" className="btn btn-primary btn-sm me-2" onClick={handleFilterClicked}>
+                            <a title="Filter" className="btn btn-primary btn-sm me-2 hover-pointer" onClick={handleFilterClicked}>
                                 <i className="fas fa-filter me-1"></i>Filter
                             </a>
-                            <a title='Add Business' className='btn btn-primary' onClick={handlePromoteBusinessClick}>Promote Your Business </a>
+                            <a title='Add Business' className='btn btn-primary hover-pointer' onClick={handleCreateEventClick}>Create Event </a>
                         </div>
 
                         <div className="container-input mb-3">
-                            <input type="text" placeholder="Search Business" name="text" className="input form-control" onChange={handleSearchText} />
+                            <input type="text" placeholder="Search event" name="text" className="input form-control" onChange={handleSearchText} />
                             <i className="fas fa-search"></i>
                         </div>
                         <div className={`row ${isFilter ? '' : 'd-none'}`}>
@@ -227,7 +227,7 @@ const SearchEvent = () => {
                                 />
                             </div>
                             <div className="col-2 mb-3">
-                                <a href="" className="btn btn-set btn-primary" onClick={handleGoButtonClick}>Go</a>
+                                <a className="btn btn-set btn-primary hover-pointer" onClick={handleGoButtonClick}>Go</a>
                             </div>
                         </div>
                         <div className="row">

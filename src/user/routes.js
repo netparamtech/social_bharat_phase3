@@ -26,6 +26,7 @@ import JobInfoPage from "./pages/profile/update/JobInfoPage";
 import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
 import SearchEventPage from "./pages/SearchEventPage";
 import ChatPage from "./pages/ChatPage";
+import CommunityContentPage from "./pages/CommunityContentPage";
 
 const userRoutes = [
     {
@@ -218,6 +219,12 @@ const userRoutes = [
     {
         path: '/user/chat',
         component: ChatPage,
+        exact: true
+    },
+
+    {
+        path: '/community-content',
+        component: CommunityContentPage,
         exact: true
     },
 ]

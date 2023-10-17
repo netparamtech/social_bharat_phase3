@@ -1148,7 +1148,8 @@ a.btn.dropdown-toggle.show:focus {
 #rating-authpage,
 #event-form,
 #auth-wrapper-cont ,
-#comminity-banners-section{
+#comminity-banners-section,
+#setting-page{
   margin-top: 140px;
 }
 
@@ -1270,4 +1271,14 @@ input[type="number"] {
   font-size: 16px !important;
   font-family: sans-serif !important;
   line-height: 0.7cm;
+}
+
+/* setting-page */
+#setting-page label{
+  font-size: 12px !important;
+}
+
+#setting-page .text-setting-page{
+  font-size: 14px !important;
+  font-weight: 600;
 }

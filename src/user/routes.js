@@ -27,6 +27,7 @@ import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
 import SearchEventPage from "./pages/SearchEventPage";
 import ChatPage from "./pages/ChatPage";
 import CommunityContentPage from "./pages/CommunityContentPage";
+import SettingPage from "./pages/SettingPage";
 
 const userRoutes = [
     {
@@ -225,6 +226,12 @@ const userRoutes = [
     {
         path: '/community-content',
         component: CommunityContentPage,
+        exact: true
+    },
+
+    {
+        path: '/user/setting',
+        component: SettingPage,
         exact: true
     },
 ]

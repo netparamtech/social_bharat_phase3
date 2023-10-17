@@ -175,9 +175,18 @@ const Footer = () => {
                   Contact
                 </a>
               </li>
+              <li className="green-ever-hover">
+                <a
+                  className="text-decoration-none gray-color hover-pointer"
+                  onClick={() => navigate("/user/rating")}
+                >
+                  <i className="fa-solid fa-chevron-right text-primary me-2"></i>
+                  Feedback
+                </a>
+              </li>
             </ul>
           </div>
-
+          
           <div className="our-services  col-lg-3 col-md-6 col-sm-12  mb-md-5  ps-lg-5">
             <h4>Our Services</h4>
             <ul className="list-inline  ms-2">

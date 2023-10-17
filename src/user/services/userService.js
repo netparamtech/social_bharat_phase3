@@ -290,8 +290,6 @@ export const deleteBusinessByID = async (id) => {
     }
 }
 
-
-
 //delete matrimonial details
 export const deleteMatrimonial = async () => {
     try {

@@ -9,8 +9,9 @@ const UserLayout = ({ children }) => {
     // List of script sources
     const scriptSources = [
       // "https://code.jquery.com/jquery-3.6.0.min.js",
-      "https://code.jquery.com/jquery-1.12.4.min.js",
+    
       "https://cdn.jsdelivr.net/npm/typed.js@2.0.12",
+      "https://code.jquery.com/jquery-1.12.4.min.js",
       "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
       "http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js",
@@ -74,7 +75,7 @@ const UserLayout = ({ children }) => {
         <NavbarTransparent />
       </header>
       {children}
-      <footer id="footer">
+      <footer id="footer" className="animate__animated animate__fadeInUp">
         <Footer />
       </footer>
     </>

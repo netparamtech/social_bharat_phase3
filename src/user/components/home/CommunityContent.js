@@ -8,7 +8,7 @@ const CommunityContent = () => {
  
   return (
     <>
-    <div id="comminity-banners-section" className="bg-white">
+    <div id="comminity-banners-section" className="">
       <div className="container">
       <div className="jumbotron navbar-scroll">
           <div className="hero-section">

@@ -1141,14 +1141,14 @@ a.btn.dropdown-toggle.show:focus {
 #contact-banner,
 #dashboard,
 #basic-profile-section,
-#searchPeople-section ,
-#comminity-banners-section{
+#searchPeople-section {
   margin-top: 90px;
 }
 
 #rating-authpage,
 #event-form,
-#auth-wrapper-cont {
+#auth-wrapper-cont ,
+#comminity-banners-section{
   margin-top: 140px;
 }
 

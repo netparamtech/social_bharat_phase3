@@ -508,3 +508,23 @@ export const fetchAdminDashboardStatistics = async () => {
         throw error;
     }
 }
+
+//update Site Setting 
+export const updateSetting = async (data) => {
+    try {
+        const response = await apiWithHeaders.put(`/setting`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch All Setting
+export const fetchAllSetting = async () => {
+    try {
+        const response = await apiWithHeaders.get('/setting');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

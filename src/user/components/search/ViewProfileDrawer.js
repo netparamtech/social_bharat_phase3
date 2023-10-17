@@ -5,14 +5,14 @@ import { getUserFullProfile } from "../../services/userService";
 
 const DescriptionItem = ({ title, content }) => (
   <Row>
-    <Col className="col-4">
-      <p className="site-description-item-profile-p-label fw-bold">
+    <Col className="col-5">
+      <p className="site-description-item-profile-p-label fw-bold p-0 m-0 mb-1">
         {title}
         {" :"}
       </p>
     </Col>
-    <Col className="col-8">
-      <p className="site-description-item-profile-p-label">{content}</p>
+    <Col className="col-7">
+      <p className="site-description-item-profile-p-label p-0 m-0">{content}</p>
     </Col>
   </Row>
 );
@@ -101,7 +101,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
       open={visible}
     >
       <div className="drawer-header mt-5">
-        <p className="d-flex flex-column flex-sm-row">
+        <p className="d-flex ">
           <a href="#basic-view" className="me-2 me-sm-3">
             Basic
           </a>
@@ -112,19 +112,21 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
             Address
           </a>
           <a href="#auth-wrapper-job" className="me-2 me-sm-3">
-            Job Info
+            Job
           </a>
           <a href="#education-section" className="me-2 me-sm-3">
-            Education Info
+            Education
           </a>
           <a href="#contacts" className="me-2 me-sm-3">
             Contacts
           </a>
           <a href="#businesses-section" className="me-2 me-sm-3">
-            Business Info
+            Business
           </a>
         </p>
       </div>
+
+      
 
       <div id="basic-view" className="mt-2">
         <p
@@ -159,8 +161,11 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
         </p>
         <div className="card p-3">
           <DescriptionItem title="Email" content={user.email} />
-          <DescriptionItem title="D. O .B" content={formatDate(user.dob)} />
-          <DescriptionItem title="Marital Status" content={user.marital_status} />
+          <DescriptionItem title="D.O.B" content={formatDate(user.dob)} />
+          <DescriptionItem
+            title="Marital Status"
+            content={user.marital_status}
+          />
           <DescriptionItem title="Gender" content={user.gender} />
           <DescriptionItem
             title="Community"
@@ -262,8 +267,10 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                             <div className="col-6">
                               <label className="">
                                 {user &&
-                                  user.matrimonial[0] &&
-                                  user.matrimonial[0].is_manglik===1?'YES':'NO'}
+                                user.matrimonial[0] &&
+                                user.matrimonial[0].is_manglik === 1
+                                  ? "YES"
+                                  : "NO"}
                               </label>
                             </div>
                           </div>
@@ -377,7 +384,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
           </div>
         </div>
       </div>
-      <Divider />
+     
 
       <div id="contact-section" className="content-wrapper pt-2">
         <div className="">
@@ -419,7 +426,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
           </div>
         </div>
       </div>
-      <Divider />
+      
 
       <div id="auth-wrapper-job" className="pt-2  mt-2">
         <div id="event-info" className="">
@@ -488,7 +495,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
           </div>
         </div>
       </div>
-      <Divider />
+    
 
       <div id="education-section" className="content-wrapper pt-2">
         <div className="">
@@ -505,13 +512,9 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
                         <div className="card-body">
                           <div className="w-100 w-lg-75">
                             <div className="mb-2 row">
-                            <div  className="col-sm-3 fw-bold">
-                              <label
-                                htmlFor=""
-                               
-                              >
-                                Degree:
-                              </label></div>
+                              <div className="col-sm-3 fw-bold">
+                                <label htmlFor="">Degree:</label>
+                              </div>
                               <div className="col-sm-8">
                                 <span className="text-muted">
                                   {item.degree_title}
@@ -581,7 +584,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
           </div>
         </div>
       </div>
-      <Divider />
+    
 
       <div id="businesses-section" className="content-wrapper pt-2">
         <div className="">
@@ -707,7 +710,7 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
           </div>
         </div>
       </div>
-      <Divider />
+      
 
       <div id="contacts" className="mb-3">
         <div className="card">
@@ -715,29 +718,25 @@ const ViewProfileDrawer = ({ visible, onClose }) => {
             <label className="mb-2 fw-bold fs-6 ">Contacts Info</label>
           </div>
           <div className="card-body">
-            
-
             <div className="row">
               <div className="col-12">
                 <div className="row mb-2">
-                  <div className="col-4">
+                  <div className="col-3">
                     <label className="fw-bold">Email:</label>
                   </div>
-                  <div className="col-8">{user && user.email}</div>
+                  <div className="col-9">{user && user.email}</div>
                 </div>
                 <div className="row mb-2">
-                  <div className="col-4">
+                  <div className="col-3">
                     <label className="fw-bold">Phone No:</label>
                   </div>
-                  <div className="col-8">
-                    {user && user.mobile}
-                    </div>
+                  <div className="col-9">{user && user.mobile}</div>
                 </div>
                 <div className="row mb-2">
-                  <div className="col-4">
+                  <div className="col-3">
                     <label className="fw-bold">Website:</label>
                   </div>
-                  <div className="col-8">N/A</div>
+                  <div className="col-9">N/A</div>
                 </div>
               </div>
             </div>

@@ -20,11 +20,14 @@ const Setting = ({ visible }) => {
                     <Col md={12}>
                         <Row className="align-items-center">
                             <Col xs="auto">
-                                <i className="fa fa-mobile m-2 text-primary fs-2" aria-hidden="true"></i>
+                                <i className="fa fa-mobile me-2 text-primary fs-2" aria-hidden="true"></i>
                             </Col>
                             <Col xs="auto">
-                                <p>Mobile</p>
+                                Mobile
                             </Col>
+                            <Col md={12}>
+                            <Switch className="m-3" />
+                        </Col>
                         </Row>
                         <Row>
                             <Col xs={24} className="text-muted">
@@ -32,16 +35,14 @@ const Setting = ({ visible }) => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md={12}>
-                        <Switch className="m-3" />
-                    </Col>
+                   
                 </Row>
                 <Divider />
                 <Row className="align-items-center">
                     <Col md={12}>
                         <Row className="align-items-center">
                             <Col xs="auto">
-                                <i className="fa-solid fa-ring m-2 text-primary fs-2" aria-hidden="true"></i>
+                                <i class="fa-solid fa-heart text-primary me-2 fs-2" aria-hidden="true"></i>
                             </Col>
                             <Col xs="auto">
                                 Available For Marriage

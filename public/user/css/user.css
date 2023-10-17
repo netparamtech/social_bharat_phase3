@@ -1141,7 +1141,8 @@ a.btn.dropdown-toggle.show:focus {
 #contact-banner,
 #dashboard,
 #basic-profile-section,
-#searchPeople-section {
+#searchPeople-section ,
+#comminity-banners-section{
   margin-top: 90px;
 }
 
@@ -1265,4 +1266,8 @@ input[type="number"] {
 }
 
 /* ---------------------------- */
-
+#community-text p{
+  font-size: 16px !important;
+  font-family: sans-serif !important;
+  line-height: 0.7cm;
+}

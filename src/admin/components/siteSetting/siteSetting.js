@@ -118,9 +118,8 @@ const SiteSetting = () => {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
-        setTimeout(() => {
-          navigate("/admin/setting");
-        }, 1000);
+        window.scrollTo(0, 0);
+        navigate("/admin/setting");
       }
       // Redirect to the admin dashboard or desired page
     } catch (error) {
@@ -178,11 +177,11 @@ const SiteSetting = () => {
   return (
     <>
       <div id="setting-url-page">
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <div className="d-sm-flex  justify-content-between mb-4">
           <h1 className="h3 mb-0 text-gray-800">Site Setting</h1>
         </div>
         <div className="container">
-          <div className="card mb-5">
+          <div className="card m-0 p-0 mb-5">
             <form onSubmit={handleSubmit}>
               {message && (
                 <div className={`alert ${alertClass}`}>

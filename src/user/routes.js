@@ -25,6 +25,7 @@ import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
 import JobInfoPage from "./pages/profile/update/JobInfoPage";
 import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
 import SearchEventPage from "./pages/SearchEventPage";
+import ChatPage from "./pages/ChatPage";
 
 const userRoutes = [
     {
@@ -211,6 +212,12 @@ const userRoutes = [
     {
         path: '/events/search',
         component: SearchEventPage,
+        exact: true
+    },
+
+    {
+        path: '/user/chat',
+        component: ChatPage,
         exact: true
     },
 ]

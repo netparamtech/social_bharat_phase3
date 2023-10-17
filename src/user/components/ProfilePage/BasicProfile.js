@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { Image } from "antd";
+import LoadingElement from "../pageLoading/LoadingElement";
 
 const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
@@ -18,6 +19,8 @@ const BasicProfile = (props) => {
   const imageInputRef = useRef(null);
   const [token, setToken] = useState("");
   const [community, setCommunity] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const defaultPhoto = "/user/images/user.png";
@@ -64,13 +67,16 @@ const BasicProfile = (props) => {
   };
 
   const fetchLoggedUserCommunity = async () => {
+    setIsLoading(true);
     try {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
         setServerError('');
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false)
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
@@ -99,6 +105,7 @@ const BasicProfile = (props) => {
   }, [user]);
 
   return (
+    <>
     <div id="basic-profile-section" className="content-wrapper pt-4">
       <div className="container">
         <div className="row">
@@ -145,7 +152,12 @@ const BasicProfile = (props) => {
                   {user && user.data && user.data.name || "N/A"}
                 </p>
 
-                <Image
+               {
+                isLoading?(
+                  <LoadingElement />
+                ):(
+                 <>
+                  <Image
                   className="img-fluid max-width-100 me-2  community-img"
                   src={
                     community.thumbnail_image
@@ -156,6 +168,9 @@ const BasicProfile = (props) => {
                   title=""
                 />
                 <span>{community.name || "N/A"}</span>
+                 </>
+                )
+               }
               </div>
             </div>
           </div>
@@ -253,6 +268,7 @@ const BasicProfile = (props) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

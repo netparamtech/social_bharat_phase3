@@ -38,6 +38,7 @@ const Setting = ({ visible }) => {
                    
                 </Row>
                 <Divider />
+<<<<<<< HEAD
                 <Row className="align-items-center">
                     <Col md={12}>
                         <Row className="align-items-center">
@@ -56,6 +57,8 @@ const Setting = ({ visible }) => {
                 <Divider />
 
 
+=======
+>>>>>>> 96bfab9eb02974948d35ae4300ef8ca41ca4b9c6
             </Drawer>
         </>
     );

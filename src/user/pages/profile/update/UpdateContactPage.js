@@ -35,6 +35,9 @@ const UpdateContactPage = () => {
       fetchJob(id);
     }
   }, [id]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
   return (
     <UserLayout>
       <UpdateContact contactDetails={contactDetails} />

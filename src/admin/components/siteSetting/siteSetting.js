@@ -29,6 +29,9 @@ const SiteSetting = () => {
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
 
+  const [thumbnailImageTempUrl2, setThumbnailImageTempUrl2] = useState("");
+  const [thumbnailPreview2, setThumbnailPreview2] = useState(null);
+
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
@@ -63,6 +66,34 @@ const SiteSetting = () => {
     }
   };
 
+  const handleThumbnailImageChange2 = async (e) => {
+    //setThumbnailImage(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setThumbnailPreview2(URL.createObjectURL(selectedFile));
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    try {
+      const response = await uploadImage(formData);
+      if (response && response.status === 200) {
+        setThumbnailImageTempUrl2(response.data.data.image);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrors(error.response.data.errors);
+      }
+      // Unauthorized
+      else if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      }
+      // Internal Server error
+      else if (error.response && error.response.status === 500) {
+        // let errorMessage = error.response.data.message;
+        // navigate('/server/error', { state: { errorMessage} });
+      }
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -79,6 +110,7 @@ const SiteSetting = () => {
         email1,
         email2,
         logo1: thumbnailImageTempUrl,
+        logo2: thumbnailImageTempUrl2,
       };
       const response = await updateSetting(settingData);
 
@@ -308,7 +340,7 @@ const SiteSetting = () => {
                 <div className="col-md-6">
                   <div className="row ">
                     <div className="col-md-3">
-                      <label className="fw-bold">Phone no-1</label>
+                      <label className="fw-bold">Phone No.-1</label>
                     </div>
                     <div className="col-md-9">
                       <input
@@ -327,7 +359,7 @@ const SiteSetting = () => {
                 <div className="col-md-6">
                   <div className="row">
                     <div className="col-md-3">
-                      <label className="fw-bold">Phone no-2</label>
+                      <label className="fw-bold">Phone No.-2</label>
                     </div>
                     <div className="col-md-9">
                       <input
@@ -421,10 +453,29 @@ const SiteSetting = () => {
                   <div className="row">
                     <div className="col-8">
                       <label className="fw-bold">Logo- 2</label>
-                      <div className="mb-2"></div>
+                      <div className="mb-2">
+                      <input
+                          type="file"
+                          defaultValue={thumbnailImageTempUrl2}
+                          onInput={handleThumbnailImageChange2}
+                          className=" form-control"
+                        />
+                        {errors.logo1 && (
+                          <span className="error">{errors.logo1}</span>
+                        )}
+                      </div>
                     </div>
                     <div className="col-4">
-                      <div className="form-group"></div>
+                      <div className="form-group">
+                      {thumbnailPreview2 && (
+                        <img
+                          src={thumbnailPreview2}
+                          alt="Logo"
+                          title="Logo-1"
+                          className="small-img-thumbnail  img-fluid my-2 "
+                        />
+                      )}
+                      </div>
                     </div>
                   </div>
                 </div>

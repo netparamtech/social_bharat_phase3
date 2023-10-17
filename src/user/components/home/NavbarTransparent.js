@@ -128,7 +128,7 @@ const NavbarTransparent = () => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" href="/">
-          <img src={data&&data.logo1} alt="Logo" />
+          {/* <img src={data&&data.logo1} alt="Logo" /> */}
         </a>
 
         <a>

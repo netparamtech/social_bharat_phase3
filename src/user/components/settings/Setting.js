@@ -37,24 +37,6 @@ const Setting = ({ visible }) => {
                     </Col>
                 </Row>
                 <Divider />
-                <Row className="align-items-center">
-                    <Col md={12}>
-                        <Row className="align-items-center">
-                            <Col xs="auto">
-                                <i className="fa-solid fa-ring m-2 text-primary fs-2" aria-hidden="true"></i>
-                            </Col>
-                            <Col xs="auto">
-                                Available For Marriage
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col md={12}>
-                        <Switch className="m-3" />
-                    </Col>
-                </Row>
-                <Divider />
-
-
             </Drawer>
         </>
     );

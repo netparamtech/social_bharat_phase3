@@ -8,27 +8,32 @@ import { getUserFullProfile } from '../../services/userService';
 import JobInfo from '../../components/ProfilePage/JobInfo';
 import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/pageLoading/Loading';
 
 
 const ProfilePage = () => {
 
     const [user, setUser] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const getUserProfile = async () => {
         try {
+            setIsLoading(true);
             const response = await getUserFullProfile();
             if (response && response.status === 200) {
                 setUser(response.data);
             }
+            setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
             //Unauthorized
             if (error.response && error.response.status === 401) {
                 navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-               // navigate('/login');
+                // navigate('/login');
             }
         }
     }
@@ -43,14 +48,21 @@ const ProfilePage = () => {
     }, []);
 
     return (
-        <UserLayout>
-            <BasicProfile user={user} />
-            <MatrimonialInfo user={user} />
-            <EducationInfo user={user} />
-            <ContactInfo user={user} />
-            <BusinessInfo user={user} />
-            <JobInfo user={user} />
-        </UserLayout>
+        <>
+            {
+                isLoading ? (<Loading />) : (
+                    <UserLayout>
+                        <BasicProfile user={user} />
+                        <MatrimonialInfo user={user} />
+                        <EducationInfo user={user} />
+                        <ContactInfo user={user} />
+                        <BusinessInfo user={user} />
+                        <JobInfo user={user} />
+                    </UserLayout>
+                )
+            }
+
+        </>
     );
 };
 

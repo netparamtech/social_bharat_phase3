@@ -118,9 +118,8 @@ const SiteSetting = () => {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
-        setTimeout(() => {
-          navigate("/admin/setting");
-        }, 1000);
+        window.scrollTo(0, 0);
+        navigate("/admin/setting");
       }
       // Redirect to the admin dashboard or desired page
     } catch (error) {

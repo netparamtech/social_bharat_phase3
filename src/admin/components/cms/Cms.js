@@ -1,14 +1,12 @@
 import { Collapse } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from 'antd';
 
 const Cms = () => {
 
   const navigate = useNavigate();
 
   const { Panel } = Collapse;
-  const { TextArea } = Input;
   return (
     <>
       <div id="accordion">
@@ -177,14 +175,14 @@ const Cms = () => {
           header=" What Social Bharat Do"
           className=""
         >
-          <div class="">
-            <div className="row">
-              <form>
-                <div className="col-md-12">
-                  <div className="row ps-3 mb-3">
-                    <div className="col-md-12">
-                      <label className="fw-bold">Section Title</label>
-                    </div>
+        <div class="">
+              <div className="row">
+                <form>
+                  <div className="col-md-12">
+                    <div className="row ps-3 mb-3">
+                      <div className="col-md-12">
+                        <label className="fw-bold">Section Title</label>
+                      </div>
 
                       <div className="col-md-12">
                         <input type="text" className="form-control" />
@@ -217,54 +215,25 @@ const Cms = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row ps-3 mb-3">
-                    <div className="col-md-12">
-                      <label className="fw-bold">Section Content</label>
-                    </div>
-                    <div className="col-md-12">
-                      <TextArea
-                        id="summernote-3"
-                        name="editordata"
-                        className="form-control"
-                        rows="5"
-                      />
-
-                    </div>
-                  </div>
-                  <div className="row ps-3 mb-3">
-                    <div className="col-md-12">
-                      <label className="fw-bold">Section Image</label>
-                    </div>
-                    <div className="col-md-12 form-group">
-                      <input
-                        type="file"
-                        className="form-control"
-                        accept=".png, .jpg, .jpeg"
-                        multiple
-                      />
-                    </div>
-                  </div>
-                </div>
-              </form>
-              <div className="col-md-12">
-                <div className="card shawdo m-3">
-                  <div className="card-body">
-                    <div className="text-center">
-                      <img
-                        className="img-fluid"
-                        src="/admin/img/1.jpg"
-                        width="200px"
-                      />
+                </form>
+                <div className="col-md-12">
+                  <div className="card shawdo m-3">
+                    <div className="card-body">
+                      <div className="text-center">
+                        <img
+                          className="img-fluid"
+                          src="/admin/img/1.jpg"
+                          width="200px"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </Panel>
-
+        
       </Collapse>
-      
     </>
   );
 };

@@ -9,6 +9,7 @@ const CreateCommunityForm = () => {
   const [status, setStatus] = useState("");
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
+  const [communityArchive,setCommunityArchive] = useState('');
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -17,8 +18,11 @@ const CreateCommunityForm = () => {
   const thumbnailImageRef = useRef(null);
   const bannerImageRef = useRef(null);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleCommunityArchive = (e) => {
+    console.log(e.target.value)
+  }
 
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
@@ -39,10 +43,10 @@ const CreateCommunityForm = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       }
-       //handle internal server error
-       else if (error.response && error.response.status === 500) {
+      //handle internal server error
+      else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -68,7 +72,7 @@ const CreateCommunityForm = () => {
       //handle internal server error
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -82,6 +86,7 @@ const CreateCommunityForm = () => {
         status,
         thumbnail_image: thumbnailImageTempUrl,
         banner_image: bannerImageTempUrl,
+        community_archive:communityArchive,
       };
       const response = await createCommunity(communityData);
 
@@ -112,7 +117,7 @@ const CreateCommunityForm = () => {
 
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -210,18 +215,32 @@ const CreateCommunityForm = () => {
                         className="custom-file-input community-images"
                         id="bannerImage"
                         ref={bannerImageRef}
-                    accept="image/jpeg,image/jpg,image/png"
-                    onChange={handleBannerImageChange}
+                        accept="image/jpeg,image/jpg,image/png"
+                        onChange={handleBannerImageChange}
                       />
                       <label className="custom-file-label" htmlFor="inputGroupFile01">
                         Choose file
                       </label>
                     </div>
                   </div>
-                  
+
                   {errors.banner_image && (
                     <span className="error">{errors.banner_image}</span>
                   )}
+                </div>
+              </div>
+              <div className="row ps-3 mb-3">
+                <div className="col-md-12">
+                  <label className="fw-bold">Community Archieve</label>
+                </div>
+                <div className="col-md-12">
+                  <textarea
+                    id="summernote-1"
+                    name="editordata"
+                    className="form-control"
+                    onChange={handleCommunityArchive}
+                    value={communityArchive}
+                  />
                 </div>
               </div>
             </div>

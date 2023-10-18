@@ -171,7 +171,6 @@ const Cms = () => {
       </div>
 
       <Collapse idaccordion >
-      
         <Panel
           header=" What Social Bharat Do"
           className=""
@@ -195,7 +194,7 @@ const Cms = () => {
                       </div>
                       <div className="col-md-12">
                         <textarea
-                          id="summernote-3"
+                          id="summernote-2"
                           name="editordata"
                           className="form-control"
                           rows="5"

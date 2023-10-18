@@ -37,7 +37,7 @@ function OurPartner() {
                 (community) =>
                   community.thumbnail_image && (
                     <div
-                      className="icon-box col-lg-2 col-md-4 col-sm-4 d-inline-flex"
+                      className="icon-box  d-inline-flex"
                       key={community.id}
                     >
                       <img

@@ -1285,7 +1285,7 @@ input[type="number"] {
 
 /* comminity-banner */
 .jumbotron-comminity-banner {
-  background-image: url("../images/banner/brahman-banner.png");
+  background-image: url("../images/banner/meena-banner.png");
   height: 400px;
   width: auto;
   background-position: center;
@@ -1299,6 +1299,3 @@ input[type="number"] {
   object-fit: cover;
 }
 
-.btn-comminity-banner{
- margin-top: 300px;
-}

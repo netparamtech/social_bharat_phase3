@@ -186,7 +186,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div className="our-services  col-lg-3 col-md-6 col-sm-12  mb-md-5  ps-lg-5">
             <h4>Our Services</h4>
             <ul className="list-inline  ms-2">
@@ -252,8 +252,10 @@ const Footer = () => {
               <br />
               <strong>phone: </strong> +91-{data.phone2}
               <br />
-              <strong>Email: </strong> {data.email1}   <br />
-              <div className="ms-5">{data && data.email2 ? `${data.email2}` : "" }</div>
+              <strong>Email: </strong> {data.email1} <br />
+              <div className="ms-5">
+                {data && data.email2 ? `${data.email2}` : ""}
+              </div>
             </p>
           </div>
         </div>

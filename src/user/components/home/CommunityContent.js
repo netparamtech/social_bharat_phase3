@@ -11,11 +11,7 @@ const CommunityContent = () => {
     <div id="comminity-banners-section" className="">
       <div className="container">
       <div className="jumbotron-comminity-banner img-fluid navbar-scroll">
-      <div className="text-center">
-      <a className="btn btn-comminity-banner btn-banner ">
-        Become a member
-      </a>
-    </div>
+      
         </div>
         
       </div>

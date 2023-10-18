@@ -175,6 +175,15 @@ const Footer = () => {
                   Contact
                 </a>
               </li>
+              <li className="green-ever-hover">
+                <a
+                  className="text-decoration-none gray-color hover-pointer"
+                  onClick={() => navigate("/user/rating")}
+                >
+                  <i className="fa-solid fa-chevron-right text-primary me-2"></i>
+                  Feedback
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -239,14 +248,14 @@ const Footer = () => {
             <p className="ms-2">
               {data.address}
               <br />
-              Rajasthan
+              <strong>phone: </strong> +91-{data.phone1}
               <br />
-              <strong>phone:</strong> +91-{data.phone1}
+              <strong>phone: </strong> +91-{data.phone2}
               <br />
-              <strong>phone:</strong> +91-{data.phone2}
-              <br />
-              <strong>Email: </strong> {data.email1} / <br />
-              {data && data.email2 ? `${data.email2}` : ""}
+              <strong>Email: </strong> {data.email1} <br />
+              <div className="ms-5">
+                {data && data.email2 ? `${data.email2}` : ""}
+              </div>
             </p>
           </div>
         </div>

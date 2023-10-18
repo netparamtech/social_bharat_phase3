@@ -1148,7 +1148,8 @@ a.btn.dropdown-toggle.show:focus {
 #rating-authpage,
 #event-form,
 #auth-wrapper-cont ,
-#comminity-banners-section{
+#comminity-banners-section,
+#setting-page{
   margin-top: 140px;
 }
 
@@ -1271,3 +1272,30 @@ input[type="number"] {
   font-family: sans-serif !important;
   line-height: 0.7cm;
 }
+
+/* setting-page */
+#setting-page label{
+  font-size: 12px !important;
+}
+
+#setting-page .text-setting-page{
+  font-size: 14px !important;
+  font-weight: 600;
+}
+
+/* comminity-banner */
+.jumbotron-comminity-banner {
+  background-image: url("../images/banner/meena-banner.png");
+  height: 400px;
+  width: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  object-fit: cover;
+}
+

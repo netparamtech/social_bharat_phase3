@@ -173,7 +173,6 @@ const Cms = () => {
       </div>
 
       <Collapse idaccordion >
-
         <Panel
           header=" What Social Bharat Do"
           className=""
@@ -187,8 +186,35 @@ const Cms = () => {
                       <label className="fw-bold">Section Title</label>
                     </div>
 
-                    <div className="col-md-12">
-                      <input type="text" className="form-control" />
+                      <div className="col-md-12">
+                        <input type="text" className="form-control" />
+                      </div>
+                    </div>
+                    <div className="row ps-3 mb-3">
+                      <div className="col-md-12">
+                        <label className="fw-bold">Section Content</label>
+                      </div>
+                      <div className="col-md-12">
+                        <textarea
+                          id="summernote-2"
+                          name="editordata"
+                          className="form-control"
+                          rows="5"
+                        />
+                      </div>
+                    </div>
+                    <div className="row ps-3 mb-3">
+                      <div className="col-md-12">
+                        <label className="fw-bold">Section Image</label>
+                      </div>
+                      <div className="col-md-12 form-group">
+                        <input
+                          type="file"
+                          className="form-control"
+                          accept=".png, .jpg, .jpeg"
+                          multiple
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="row ps-3 mb-3">

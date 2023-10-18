@@ -146,15 +146,15 @@ const UserProfileDropdown = () => {
       },
       {
         key: '5',
-        label:  <Setting visible={openSetting} />,
-        // label: (
-        //   <>
-        //     <span onClick={showDrawer} className='menu-font'>
-        //       <i className="fas fa-cog m-2"></i> Settings
-        //     </span>
+        
+        label: (
+          <>
+            <span  onClick={() => navigate("/user/setting")} className='menu-font'>
+              <i className="fas fa-cog m-2"></i> Settings
+            </span>
            
-        //   </>
-        // ),
+          </>
+        ),
       },
 
       {

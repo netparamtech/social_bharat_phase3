@@ -10,21 +10,10 @@ const CommunityContent = () => {
     <>
     <div id="comminity-banners-section" className="">
       <div className="container">
-      <div className="jumbotron navbar-scroll">
-          <div className="hero-section">
-            <div className="">
-              <h2>
-              Brahmin<br /> <span className=""></span>
-              </h2>
-            </div>
-            <div className="">
-              <a className="btn btn-banner" >
-                Become a member
-              </a>
-            </div>
-         
-          </div>
+      <div className="jumbotron-comminity-banner img-fluid navbar-scroll">
+      
         </div>
+        
       </div>
     </div>
 

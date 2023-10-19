@@ -32,18 +32,17 @@ function OurPartner() {
       <section id="partner">
         <div className="container">
           <div className="row costomer-logos ">
-            {casts&&casts.length > 0 &&
+            {casts && casts.length > 0 &&
               casts.map(
                 (community) =>
                   community.thumbnail_image && (
-                    <div
-                      className="icon-box  d-inline-flex"
-                      key={community.id}
-                    >
-                      <img
-                        src={community.thumbnail_image}
-                        alt={community.name}
-                      />
+                    <div className="icon-box d-inline-flex" key={community.id}>
+                      <a href={`/${community.name}`}>
+                        <img
+                          src={community.thumbnail_image}
+                          alt={community.name}
+                        />
+                      </a>
                     </div>
                   )
               )}

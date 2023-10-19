@@ -8,7 +8,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
-import ViewProfileDrawer from "./ViewProfileDrawer";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchAllCategories } from "../../../admin/services/AdminService";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -33,19 +34,36 @@ const SearchPeople = () => {
 
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState("");
 
-  const [viewProfileDrawerVisible, setViewProfileDrawerVisible] = useState(false);
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Rest of your existing code
-
-  const handleViewProfileClick = () => {
-    setViewProfileDrawerVisible(true);
+  const fetchData = async (page, size) => {
+    try {
+      setIsLoading(true);  // Set loading to true when fetching
+      const response = await fetchAllCategories(page, size, '', '', '');
+      setItems([...items, ...response.data.data.businessCategories]);
+      setTotalRows(response.data.data.totalRecords);
+      setIsLoading(false);  // Reset loading when data is loaded
+    } catch (error) {
+      // Error handling logic
+      setIsLoading(false);  // Reset loading in case of an error
+    }
   };
 
-  const handleViewProfileDrawerClose = () => {
-    setViewProfileDrawerVisible(false);
+  const fetchMoreData = () => {
+    if (!isLoading && items.length < totalRows) {
+      search(searchText, page + 1, 20);
+      setPage(page + 1);
+    }
   };
+
+  useEffect(() => {
+    search(searchText, page, 20);
+  }, []);
+
 
   const handleFilterClicked = () => {
     setIsFilter(!isFilter ? true : false);
@@ -77,6 +95,8 @@ const SearchPeople = () => {
   const handleGoButtonClick = async () => {
     const queryParams = {
       q: "",
+      page,
+      size: 20,
       state: selectedState ? selectedState.label : "",
       city: selectedCity ? selectedCity.label : "",
       // Add other modal fields to the queryParams
@@ -88,10 +108,9 @@ const SearchPeople = () => {
     // Do something with the query string (e.g., redirect to a new URL)
     try {
       const response = await searchWithCityState(queryString);
-      setData(response.data.data);
+      setItems(response.data.data);
       setCity(selectedCity.label ? selectedCity.label : city);
       setState(selectedState.label ? selectedState.label : state);
-      setServerError('');
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -99,7 +118,7 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
+        navigate("/login");
       }
     }
   };
@@ -109,7 +128,6 @@ const SearchPeople = () => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
-        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -118,7 +136,7 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
+        navigate("/login");
       }
     }
   };
@@ -128,7 +146,6 @@ const SearchPeople = () => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
-        setServerError('');
       }
     } catch (error) {
       //Unauthorized
@@ -137,34 +154,47 @@ const SearchPeople = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
+        navigate("/login");
       }
     }
   };
 
-  const search = async (searchText) => {
+  const search = async (searchText, page, size) => {
+    setIsLoading(true);
     try {
-      const response = await searchPeopleWithSearchText(searchText);
+      const response = await searchPeopleWithSearchText(searchText, page, size);
       if (response && response.status === 200) {
-        setData(response.data.data);
-        setServerError('');
+        setItems(response.data.data);
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
+        navigate("/login");
       }
     }
   };
+
+  const age = (dob) => {
+    const dobDate = new Date(dob);
+    const currentDate = new Date();
+
+    // Calculate the age in years
+    const ageInMilliseconds = currentDate - dobDate;
+    const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
+
+    return ageInYears;
+  }
 
   useEffect(() => {
     setState(user && user.user && user.user.native_place_state);
     setCity(user && user.user && user.user.native_place_city);
   }, [user]);
   useEffect(() => {
-    search(searchText);
+    search(searchText, page, 20);
   }, [searchText]);
 
   useEffect(() => {
@@ -176,14 +206,19 @@ const SearchPeople = () => {
 
   useEffect(() => {
     setState(selectedState.label)
-}, [city]);
+  }, [city]);
+
+  const groupedItems = [];
+  for (let i = 0; i < items.length; i += 2) {
+    const pair = items.slice(i, i + 2);
+    groupedItems.push(pair);
+  }
 
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-          {serverError && <span className='error'>{serverError}</span>}
             <div>
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
@@ -203,8 +238,9 @@ const SearchPeople = () => {
             </div>
             <div className="filter-icon">
               <a
+                href="#"
                 title="Filter"
-                className="btn btn-primary btn-sm me-2 hover-pointer"
+                className="btn btn-primary btn-sm me-2"
                 onClick={handleFilterClicked}
               >
                 <i className="fas fa-filter me-1"></i>Filter
@@ -245,7 +281,8 @@ const SearchPeople = () => {
               </div>
               <div className="col-2 mb-3">
                 <a
-                  className="btn btn-set btn-primary hover-pointer"
+                  href="#"
+                  className="btn btn-set btn-primary"
                   onClick={handleGoButtonClick}
                 >
                   Go
@@ -255,7 +292,7 @@ const SearchPeople = () => {
             <div className="row">
               {/* User Cards */}
 
-              {data &&
+              {/* {data &&
                 data.map((item, idx) => (
                   <div className="col-md-4" key={idx}>
                     <div className="card shadow mb-2">
@@ -277,20 +314,53 @@ const SearchPeople = () => {
                                 ? `(${item.native_place_state})`
                                 : ""}
                             </p>
-                            <a className="hover-pointer" onClick={handleViewProfileClick}>
-                              <p>
-                                view profile
-                              </p>
-                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <ViewProfileDrawer visible={viewProfileDrawerVisible} onClose={handleViewProfileDrawerClose} />
                   </div>
-                ))}
+                ))} */}
 
               {/* Repeat the user card structure as needed */}
+              <InfiniteScroll
+                dataLength={items.length}
+                next={fetchMoreData}
+                hasMore={items.length < totalRows}
+                loader={isLoading && <h4>Loading...</h4>}
+              >
+                {groupedItems.map((pair, index) => (
+                  <div className="row" key={index}>
+                    {pair.map((item, innerIndex) => (
+                      <div className="col-md-6" key={innerIndex}>
+                        <div className="card shadow mb-2">
+                          <div className="card-body">
+                            <div className="row">
+                              <div className="col-4">
+                                <img
+                                  src={item.photo ? item.photo : defaultImage}
+                                  alt={item.name}
+                                  title={item.name}
+                                  className="avatar img-fluid img-circle"
+                                />
+                              </div>
+                              <div className="col-8 user-detail">
+                                <p>Name-{item.name}</p>
+                                <p>Age-{age(item.dob)}{" "}Years</p>
+                                <p>City-{item.native_place_city}</p>
+                                <p>
+                                  {item.native_place_state
+                                    ? `(${item.native_place_state})`
+                                    : ""}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </InfiniteScroll>
             </div>
           </div>
         </div>

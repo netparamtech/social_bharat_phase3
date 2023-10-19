@@ -6,6 +6,10 @@ import {
   updateCommunity,
   uploadImage,
 } from "../../services/AdminService";
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const CommunityUpdateForm = () => {
   const { id } = useParams();
@@ -17,7 +21,8 @@ const CommunityUpdateForm = () => {
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
-  const [communityArchive,setCommunityArchive] = useState('');
+  const [communityArchive, setCommunityArchive] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -27,6 +32,11 @@ const CommunityUpdateForm = () => {
   const [bannerPreview, setBannerPreview] = useState(null);
 
   const navigate = useNavigate();
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
+
 
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
@@ -86,13 +96,17 @@ const CommunityUpdateForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
+
     try {
       const communityData = {
         name,
         status,
         thumbnail_image: thumbnailImageTempUrl,
         banner_image: (bannerImageTempUrl === null) ? "" : bannerImageTempUrl,
-        community_archive:communityArchive,
+        community_archive: htmlContent,
       };
       const response = await updateCommunity(id, communityData);
 
@@ -130,9 +144,15 @@ const CommunityUpdateForm = () => {
         setBannerImageTempUrl(communityData.banner_image);
         setStatus(communityData.status);
 
+        if (communityData.community_archive) {
+          const blocksFromHTML = convertFromHTML(communityData.community_archive);
+          const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+          const editorStateFromFetchedData = EditorState.createWithContent(contentState);
+          setEditorState(editorStateFromFetchedData);
+        }
+
         setThumbnailPreview(communityData.thumbnail_image);
         setBannerPreview(communityData.banner_image);
-        setCommunityArchive(communityData.community_archive);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -146,7 +166,9 @@ const CommunityUpdateForm = () => {
 
   useEffect(() => {
     fetchCommunities();
-  }, []);
+  }, [])
+
+
 
   return (
     <div className="container-fluid" style={{ minHeight: "100vh" }}>
@@ -292,12 +314,13 @@ const CommunityUpdateForm = () => {
                   <label className="fw-bold">Community Archieve</label>
                 </div>
                 <div className="col-md-12">
-                  <textarea
-                    id="summernote-1"
-                    name="editordata"
-                    className="form-control"
-                    onChange={(e)=>setCommunityArchive(e.target.value)}
-                    defaultValue={communityArchive}
+
+                  <Editor
+                    editorState={editorState}
+                    onEditorStateChange={onEditorStateChange}
+                    wrapperClassName="wrapper-class"
+                    editorClassName="editor-class custom-editor-height"
+                    toolbarClassName="toolbar-class"
                   />
                 </div>
               </div>

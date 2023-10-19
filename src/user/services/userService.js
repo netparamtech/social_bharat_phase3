@@ -365,9 +365,9 @@ export const updateProfilePhoto = async(formData) => {
 }
 
 //search people with searchText
-export const searchPeopleWithSearchText = async(queryString) => {
+export const searchPeopleWithSearchText = async(queryString,page,size) => {
     try{
-        const response = await apiWithHeaders.get(`/users/search?q=${queryString}`);
+        const response = await apiWithHeaders.get(`/users/search?q=${queryString}&page=${page}&size=${size}`);
         return response;
     } catch(error) {
         throw error;

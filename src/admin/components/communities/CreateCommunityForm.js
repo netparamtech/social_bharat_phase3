@@ -1,15 +1,19 @@
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { createCommunity, uploadImage } from "../../services/AdminService";
-import { logout } from "../../actions/authActions";
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+
 
 const CreateCommunityForm = () => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
-  const [communityArchive,setCommunityArchive] = useState('');
+  const [communityArchive, setCommunityArchive] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -18,15 +22,27 @@ const CreateCommunityForm = () => {
   const thumbnailImageRef = useRef(null);
   const bannerImageRef = useRef(null);
 
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [bannerPreview, setBannerPreview] = useState(null);
+
   const navigate = useNavigate();
 
-  const handleCommunityArchive = (e) => {
-    console.log(e.target.value)
-  }
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
+
+  const handleSave = () => {
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
+    setCommunityArchive(htmlContent);
+  };
+
 
   const handleThumbnailImageChange = async (e) => {
     //setThumbnailImage(e.target.files[0]);
     const selectedFile = e.target.files[0];
+    setThumbnailPreview(URL.createObjectURL(selectedFile));
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -53,6 +69,7 @@ const CreateCommunityForm = () => {
 
   const handleBannerImageChange = async (e) => {
     const selectedFile = e.target.files[0];
+    setBannerPreview(URL.createObjectURL(selectedFile));
     const formData = new FormData();
     formData.append("image", selectedFile);
 
@@ -79,14 +96,16 @@ const CreateCommunityForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
     try {
       const communityData = {
         name,
         status,
         thumbnail_image: thumbnailImageTempUrl,
         banner_image: bannerImageTempUrl,
-        community_archive:communityArchive,
+        community_archive: htmlContent,
       };
       const response = await createCommunity(communityData);
 
@@ -121,6 +140,7 @@ const CreateCommunityForm = () => {
       }
     }
   };
+
 
   return (
     <div className="container-fluid">
@@ -199,11 +219,22 @@ const CreateCommunityForm = () => {
                         Choose file
                       </label>
                     </div>
+                    <div className="col-sm-2">
+                    {thumbnailPreview && (
+                      <img
+                        src={thumbnailPreview}
+                        alt="Thumbnail"
+                        title="Thumbnail"
+                        className="small-img-thumbnail"
+                      />
+                    )}
+                  </div>
                   </div>
 
                   {errors.thumbnail_image && (
                     <span className="error">{errors.thumbnail_image}</span>
                   )}
+                  
                 </div>
 
                 <div className="form-group">
@@ -222,11 +253,22 @@ const CreateCommunityForm = () => {
                         Choose file
                       </label>
                     </div>
+                    <div className="col-sm-2">
+                    {bannerPreview && (
+                      <img
+                        src={bannerPreview}
+                        alt="Banner"
+                        title="Banner"
+                        className="small-img-thumbnail"
+                      />
+                    )}
+                    </div>
                   </div>
 
                   {errors.banner_image && (
                     <span className="error">{errors.banner_image}</span>
                   )}
+                   
                 </div>
               </div>
               <div className="row ps-3 mb-3">
@@ -234,14 +276,16 @@ const CreateCommunityForm = () => {
                   <label className="fw-bold">Community Archieve</label>
                 </div>
                 <div className="col-md-12">
-                  <textarea
-                    id="summernote-1"
-                    name="editordata"
-                    className="form-control"
-                    onChange={handleCommunityArchive}
-                    value={communityArchive}
+
+                  <Editor
+                    editorState={editorState}
+                    onEditorStateChange={onEditorStateChange}
+                    wrapperClassName="wrapper-class"
+                    editorClassName="editor-class custom-editor-height"
+                    toolbarClassName="toolbar-class"
                   />
                 </div>
+
               </div>
             </div>
 
@@ -255,4 +299,4 @@ const CreateCommunityForm = () => {
   );
 };
 
-export default CreateCommunityForm;
+export default CreateCommunityForm

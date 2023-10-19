@@ -31,6 +31,7 @@ import CreateQualificationPage from "./pages/qualifications/CreateQualificationP
 import SiteSettingPage from "./pages/siteSetting/SiteSettingPage";
 import CmsPage from "./pages/cms/CmsPage";
 import TestEditorPage from "./pages/TestEditorPage";
+import ViewOneCommunityPage from "./pages/communities/ViewOneCommunityPage";
 
 const adminRoutes = [
     {
@@ -224,6 +225,12 @@ const adminRoutes = [
     {
         path: '/editor',
         component: TestEditorPage,
+        exact:true
+    },
+
+    {
+        path: '/community/:id',
+        component: ViewOneCommunityPage,
         exact:true
     },
 ]

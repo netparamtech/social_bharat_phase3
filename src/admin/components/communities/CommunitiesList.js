@@ -206,7 +206,10 @@ const CommunitiesList = () => {
           }}>
             <i className="fa fa-trash" title='Delete' />
           </a>
-          <a className="collapse-item m-2 hover-pointer-admin">
+          <a className="collapse-item m-2 hover-pointer-admin" onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate(`/community/${record.id}`);
+          }}>
             <i className="fas fa-eye"></i>
           </a>
         </div>

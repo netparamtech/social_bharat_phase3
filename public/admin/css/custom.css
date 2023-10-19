@@ -188,3 +188,7 @@ div.Table{
   color: #a7aeb8;
   font-size: 14px;
 }
+
+.custom-editor-height {
+  height: 400px; /* Adjust the height as needed */
+}

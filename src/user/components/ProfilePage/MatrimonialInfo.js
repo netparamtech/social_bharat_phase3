@@ -11,11 +11,11 @@ const MatrimonialInfo = (props) => {
   const navigate = useNavigate();
   const matrimonialData = user?.data?.matrimonial[0] || {};
 
-  const proposalPhotos = user?.data?.matrimonial[0].proposal_photos;
+  const proposalPhotos = user?.data?.matrimonial[0]?.proposal_photos;
 
-  const brothersDetails = user?.data?.matrimonial[0].brothers_details;
+  const brothersDetails = user?.data?.matrimonial[0]?.brothers_details;
 
-  const sistersDetails = user?.data?.matrimonial[0].sisters_details;
+  const sistersDetails = user?.data?.matrimonial[0]?.sisters_details;
 
   const getProfileHeading = () => {
     const profileFor = matrimonialData.profile_created_for;
@@ -84,7 +84,7 @@ const MatrimonialInfo = (props) => {
 
   useEffect(() => {
     setMatrimonialDetails(user?.data?.matrimonial || "");
-    if (user?.data?.matrimonial[0].is_manglik) {
+    if (user?.data?.matrimonial[0]?.is_manglik) {
       setManglik('YES');
     } else {
       setManglik('NO');

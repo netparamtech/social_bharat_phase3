@@ -85,6 +85,16 @@ export const fetchAllCommunity = async () => {
     }
 }
 
+//fetch one active community
+export const fetchOneCommunity = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/communities/1/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const updateCommunity = async (id, data) => {
     try {
         const response = await apiWithHeaders.put(`/communities/${id}`, data);

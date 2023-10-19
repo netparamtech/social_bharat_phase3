@@ -9,8 +9,8 @@ const Cms = () => {
   const { Panel } = Collapse;
   return (
     <>
-      <div id="accordion">
-        <div class="card shadow mb-3">
+      <div id="accordion ">
+        <div class="card shadow mb-3" id="font-Resize">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0 ">
               <a

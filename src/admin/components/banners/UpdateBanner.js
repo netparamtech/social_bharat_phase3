@@ -154,7 +154,7 @@ const UpdateBanner = (props) => {
   }, [banner]);
 
   return (
-    <div className="container-fluid" style={{ minHeight: "100vh" }}>
+    <div className="container-fluid" style={{ minHeight: "100vh" }} id="font-Resize">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">
           {banner ? "Update Banner" : "Create Banner"}
@@ -174,7 +174,7 @@ const UpdateBanner = (props) => {
         <div className="card-body">
           <form onSubmit={handleSubmit} className="">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 {message && (
                   <div className={`alert ${alertClass}`}>
                     {alertClass === "alert-success" ? (
@@ -186,7 +186,7 @@ const UpdateBanner = (props) => {
                   </div>
                 )}
                 <div className="form-group">
-                  <label htmlFor="bannerUrl">Banner Url</label>
+                  <label htmlFor="bannerUrl" className="fw-bold">Banner Url</label>
                   <div className="input-group ">
                     <div className="custom-file">
                       <input
@@ -207,6 +207,14 @@ const UpdateBanner = (props) => {
                     <span className="error">{errors.banner_urls}</span>
                   )}
                 </div>
+
+                
+                
+              </div>
+
+
+              
+              <div className="col-2">
                 <div className="d-flex flex-wrap">
                   {bannerPreview &&
                     bannerPreview.map((item, idx) => (
@@ -226,10 +234,11 @@ const UpdateBanner = (props) => {
                       </div>
                     ))}
                 </div>
-              </div>
+                </div>
+
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="section">Section</label>
+                  <label htmlFor="section" className="fw-bold">Section</label>
                   <select
                     className="form-control"
                     id="section"
@@ -249,23 +258,29 @@ const UpdateBanner = (props) => {
                     <span className="error">{errors.section}</span>
                   )}
                 </div>
-                <div className="form-group">
-                  <label htmlFor="page">Page</label>
-                  <select
-                    className="form-control"
-                    id="page"
-                    name="page"
-                    value={page}
-                    onChange={handlePageChange}
-                  >
-                    <option value="">----Select Page----</option>
-                    <option value="Home">Home</option>
-                    {/* Add other page options here if needed */}
-                  </select>
-                  {errors.page && <span className="error">{errors.page}</span>}
                 </div>
+
+                <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="status">Status</label>
+                <label htmlFor="page" className="fw-bold">Page</label>
+                <select
+                  className="form-control"
+                  id="page"
+                  name="page"
+                  value={page}
+                  onChange={handlePageChange}
+                >
+                  <option value="">----Select Page----</option>
+                  <option value="Home">Home</option>
+                  {/* Add other page options here if needed */}
+                </select>
+                {errors.page && <span className="error">{errors.page}</span>}
+              </div>
+                </div>
+                
+                <div className="col-md-6 mb-3">
+                <div className="form-group">
+                  <label htmlFor="status" className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"
@@ -281,10 +296,11 @@ const UpdateBanner = (props) => {
                     <span className="error">{errors.status}</span>
                   )}
                 </div>
-              </div>
+                </div>
+              
             </div>
-            <button type="submit" className="btn btn-primary">
-              Save
+            <button type="submit" className="btn btn-primary w-25">
+              Update
             </button>
           </form>
         </div>

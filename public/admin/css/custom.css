@@ -138,7 +138,7 @@
   font-weight: 700;
 }
 
-.css-2ulfj5-MuiTypography-root{
+.css-2ulfj5-MuiTypography-root {
   font-size: 30px !important;
 }
 
@@ -147,8 +147,7 @@ div.ant-table-title {
   font-weight: 500 !important;
 }
 
-div.Table{
- 
+div.Table {
   justify-content: space-evenly;
   justify-items: auto;
 }
@@ -167,7 +166,7 @@ div.Table{
 }
 
 .fw-bold {
-  font-size: 500 !important;
+  font-size: 400 !important;
 }
 
 #communityName {
@@ -179,16 +178,24 @@ div.Table{
   word-wrap: break-word; /* Allow word wrapping within the element */
 }
 
-#setting-url-page label{
-  font-size: 14px;
-}
-
-#accordion .fa-arrow-down{
-  float: right;
+#accordion .fa-arrow-down {
+  float: right !important;
   color: #a7aeb8;
   font-size: 14px;
 }
 
 .custom-editor-height {
-  height: 400px; /* Adjust the height as needed */
+  height: 400px;
+}
+
+#font-Resize label {
+  font-size: 14px;
+}
+
+#view-community-detail .banner{
+  background-image: url("/admin/img/matrimonial-0.jpg");
+  height: 350px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 4px;
 }

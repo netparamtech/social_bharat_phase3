@@ -40,10 +40,10 @@ function OurPartner() {
                       className="icon-box  d-inline-flex"
                       key={community.id}
                     >
-                      <img
+                      <a><img
                         src={community.thumbnail_image}
                         alt={community.name}
-                      />
+                      /></a>
                     </div>
                   )
               )}

@@ -28,18 +28,32 @@ const ViewOneCommunity = () => {
   }, []);
 
   return (
-    <>
-      <div className="container" id="view-community-detail">
-        <div className="banner mb-4"></div>
-        <div className="text-content">
-          {data.length > 0 && (
-            <div
-              dangerouslySetInnerHTML={{ __html: data[0].community_archive }}
-            />
-          )}
+    <div id="auth-wrapper" className="pt-5 pb-5">
+      <div className="container">
+        <div className="mx-auto">
+          <div className="">
+            <div className="row">
+              <div className="col-lg-8 col-md-10 col-sm-12 mx-auto">
+
+                {data && data.length > 0 && (
+                  <>
+                    <div className="text-center">
+                      <img src={data && data[0].banner_image} className="img-fluid" alt="Banner" />
+                    </div>
+                    <div className="text-center">
+                      <img src={data && data[0].thumbnail_image} className="img-fluid" alt="Banner" />
+                    </div>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: data[0].community_archive }}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

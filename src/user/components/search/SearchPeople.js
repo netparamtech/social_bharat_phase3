@@ -25,7 +25,7 @@ const SearchPeople = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
-  const [countryID, setCountryID] = useState(101);
+  const [countryID, setCountryID] = useState(0);
 
   //to show state and city according to user search
 
@@ -37,21 +37,8 @@ const SearchPeople = () => {
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(0);
+  const [totalRows, setTotalRows] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
-
-  const fetchData = async (page, size) => {
-    try {
-      setIsLoading(true);  // Set loading to true when fetching
-      const response = await fetchAllCategories(page, size, '', '', '');
-      setItems([...items, ...response.data.data.businessCategories]);
-      setTotalRows(response.data.data.totalRecords);
-      setIsLoading(false);  // Reset loading when data is loaded
-    } catch (error) {
-      // Error handling logic
-      setIsLoading(false);  // Reset loading in case of an error
-    }
-  };
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
@@ -108,7 +95,7 @@ const SearchPeople = () => {
     // Do something with the query string (e.g., redirect to a new URL)
     try {
       const response = await searchWithCityState(queryString);
-      setItems(response.data.data);
+      setItems([...items, ...response.data.data]);
       setCity(selectedCity.label ? selectedCity.label : city);
       setState(selectedState.label ? selectedState.label : state);
     } catch (error) {
@@ -164,7 +151,12 @@ const SearchPeople = () => {
     try {
       const response = await searchPeopleWithSearchText(searchText, page, size);
       if (response && response.status === 200) {
-        setItems(response.data.data);
+        if(searchText){
+          setItems(response.data.data);
+        }else {
+          setItems([...items, ...response.data.data]);
+        }
+        
       }
       setIsLoading(false);
     } catch (error) {
@@ -194,6 +186,7 @@ const SearchPeople = () => {
     setCity(user && user.user && user.user.native_place_city);
   }, [user]);
   useEffect(() => {
+    setPage(1);
     search(searchText, page, 20);
   }, [searchText]);
 

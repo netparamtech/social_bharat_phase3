@@ -41,7 +41,7 @@ const SearchPeople = () => {
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
-      search(searchText, page + 1, 20);
+      search(searchText, page + 1, 20,state,city);
       setPage(page + 1);
     }
   };
@@ -150,9 +150,10 @@ const SearchPeople = () => {
   };
 
   const search = async (searchText, page, size) => {
+    console.log(state,city)
     setIsLoading(true);
     try {
-      const response = await searchPeopleWithSearchText(searchText, page, size);
+      const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
       if (response && response.status === 200) {
         if (searchText) {
           if (response.data.data.length !== 0) {
@@ -163,6 +164,7 @@ const SearchPeople = () => {
 
 
         } else {
+           const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
           setItems([...items, ...response.data.data]);
         }
 
@@ -194,6 +196,7 @@ const SearchPeople = () => {
     setState(user && user.user && user.user.native_place_state);
     setCity(user && user.user && user.user.native_place_city);
   }, [user]);
+
   useEffect(() => {
     setPage(1);
     search(searchText, page, 20);
@@ -206,9 +209,9 @@ const SearchPeople = () => {
     }
   }, [selectedCountry]);
 
-  useEffect(() => {
-    setState(selectedState.label)
-  }, [city]);
+  // useEffect(() => {
+  //   setState(selectedState.label)
+  // }, [city]);
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {

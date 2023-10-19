@@ -526,3 +526,13 @@ export const fetchAllSiteSettings = async () => {
         throw error;
     }
 }
+
+//fetch community with id given
+export const fetchCommunityWithNAME = async (name) => {
+    try {
+        const response = await apiConfig.get(`/community/${name}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

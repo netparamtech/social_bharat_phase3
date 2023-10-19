@@ -3,13 +3,13 @@ import { fetchOneCommunity } from "../../services/AdminService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ViewOneCommunity = () => {
-  const { id } = useParams();
+  const { name } = useParams();
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
   const fetchOneActiveCommunity = async () => {
     try {
-      const response = await fetchOneCommunity(id);
+      const response = await fetchOneCommunity(name);
       if (response && response.status === 200) {
         setData(response.data.data);
       }

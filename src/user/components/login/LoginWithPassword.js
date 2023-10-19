@@ -28,9 +28,10 @@ const LoginWithPassword = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const cleanMobile = mobile.replace(/^0+/, '');
 
     try {
-      const response = await loginWithPassword(mobile, password);
+      const response = await loginWithPassword(cleanMobile, password);
 
       if (response && response.status === 200) {
         setErrors("");

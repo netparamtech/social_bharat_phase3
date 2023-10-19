@@ -58,9 +58,11 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const cleanMobile = mobile.replace(/^0+/, '');
+
     const userData = {
       name,
-      mobile,
+      mobile:cleanMobile,
       community_id,
     };
     try {

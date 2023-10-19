@@ -10,10 +10,8 @@ const CommunityContent = () => {
     <>
     <div id="comminity-banners-section" className="">
       <div className="container">
-      <div className="jumbotron-comminity-banner img-fluid navbar-scroll">
-      
+        <div className="jumbotron-comminity-banner img-fluid navbar-scroll">
         </div>
-        
       </div>
     </div>
 

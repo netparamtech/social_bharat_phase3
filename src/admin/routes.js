@@ -229,7 +229,7 @@ const adminRoutes = [
     },
 
     {
-        path: '/community/:name',
+        path: '/community/:id',
         component: ViewOneCommunityPage,
         exact:true
     },

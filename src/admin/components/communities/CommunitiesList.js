@@ -146,7 +146,8 @@ const CommunitiesList = () => {
             src={record.banner_image ? record.banner_image : defaultImage}
             alt={record.name}
             title={record.name}
-            className='small-img-user-list'
+            className=''
+            style={{width: record.banner_image ? '150px' : '60px'}}
           />
         </a>
       ),

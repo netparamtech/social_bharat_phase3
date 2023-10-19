@@ -56,6 +56,8 @@ const SearchPeople = () => {
   };
 
   const handleStateChange = (selectedOption) => {
+    setPage(1);
+    setState(selectedOption.label)
     setSelectedState(selectedOption);
     setCity('');
     setSelectedCity('');
@@ -71,6 +73,7 @@ const SearchPeople = () => {
   };
 
   const handleCityChange = (selectedOption) => {
+    setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
   };
 
@@ -80,7 +83,7 @@ const SearchPeople = () => {
 
   const handleGoButtonClick = async () => {
     const queryParams = {
-      q: "",
+      q: searchText,
       page,
       size: 20,
       state: selectedState ? selectedState.label : "",
@@ -165,7 +168,13 @@ const SearchPeople = () => {
 
         } else {
            const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
-          setItems([...items, ...response.data.data]);
+          
+          if (response.data.data.length !== 0) {
+            setItems([...response.data.data]);
+          } else {
+            setItems([...items, ...response.data.data]);
+            
+          }
         }
 
       }
@@ -215,7 +224,7 @@ const SearchPeople = () => {
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
-    const pair = items.slice(i, i + 2);
+    const pair = items.slice(i, i + 3);
     groupedItems.push(pair);
   }
 
@@ -328,6 +337,7 @@ const SearchPeople = () => {
 
               {/* Repeat the user card structure as needed */}
               <InfiniteScroll
+               style={{ overflowX: "hidden" }}
                 dataLength={items.length}
                 next={fetchMoreData}
                 hasMore={items.length < totalRows}
@@ -336,7 +346,7 @@ const SearchPeople = () => {
                 {groupedItems.map((pair, index) => (
                   <div className="row" key={index}>
                     {pair.map((item, innerIndex) => (
-                      <div className="col-md-6" key={innerIndex}>
+                      <div className="col-md-4" key={innerIndex}>
                         <div className="card shadow mb-2">
                           <div className="card-body">
                             <div className="row">

@@ -22,9 +22,10 @@ const UpdateMobile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const cleanMobile = mobile.replace(/^0+/, '');
 
     try {
-      const response = await updateAttemptMobile(mobile);
+      const response = await updateAttemptMobile(cleanMobile);
 
       if (response && response.status === 200) {
         setErrors("");

@@ -56,6 +56,8 @@ const SearchPeople = () => {
   };
 
   const handleStateChange = (selectedOption) => {
+    setPage(1);
+    setState(selectedOption.label)
     setSelectedState(selectedOption);
     setCity('');
     setSelectedCity('');
@@ -71,6 +73,7 @@ const SearchPeople = () => {
   };
 
   const handleCityChange = (selectedOption) => {
+    setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
   };
 
@@ -165,7 +168,13 @@ const SearchPeople = () => {
 
         } else {
            const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
-          setItems([...items, ...response.data.data]);
+          
+          if (response.data.data.length !== 0) {
+            setItems([...response.data.data]);
+          } else {
+            setItems([...items, ...response.data.data]);
+            
+          }
         }
 
       }

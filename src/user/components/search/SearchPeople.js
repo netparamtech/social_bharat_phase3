@@ -153,7 +153,6 @@ const SearchPeople = () => {
   };
 
   const search = async (searchText, page, size) => {
-    console.log(state,city)
     setIsLoading(true);
     try {
       const response = await searchPeopleWithSearchText(searchText, page, size,state,city);

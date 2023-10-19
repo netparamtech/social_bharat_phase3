@@ -217,7 +217,6 @@ export const updatePassword = async (password, confirm_password) => {
 
 //fetch All Degrees
 export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder,isEditClicked) => {
-    console.log("inside search logic",isEditClicked);
     if(isEditClicked){
         return;
     }

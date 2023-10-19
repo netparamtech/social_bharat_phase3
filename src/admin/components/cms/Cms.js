@@ -10,11 +10,11 @@ const Cms = () => {
   return (
     <>
       <div id="accordion ">
-        <div class="card shadow mb-3" id="font-Resize">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0 ">
+        <div className="card shadow mb-3" id="font-Resize">
+          <div className="card-header" id="headingOne">
+            <h5 className="mb-0 ">
               <a
-                class="btn btn-link"
+                className="btn btn-link"
                 data-toggle="collapse"
                 data-target="#collapseOne"
                 aria-expanded="true"
@@ -22,17 +22,17 @@ const Cms = () => {
               >
                 What Social Bharat Do
               </a>
-              <i class="fa fa-arrow-down my-2"></i>
+              <i className="fa fa-arrow-down my-2"></i>
             </h5>
           </div>
 
           <div
             id="collapseOne"
-            class="collapse show"
+            className="collapse show"
             aria-labelledby="headingOne"
             data-parent="#accordion"
           >
-            <div class="card-body">
+            <div className="card-body">
               <div className="row">
                 <form>
                   <div className="col-md-12">
@@ -90,11 +90,11 @@ const Cms = () => {
             </div>
           </div>
         </div>
-        <div class="card mb-3 shadow">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
+        <div className="card mb-3 shadow">
+          <div className="card-header" id="headingTwo">
+            <h5 className="mb-0">
               <a
-                class="btn btn-link collapsed "
+                className="btn btn-link collapsed "
                 data-toggle="collapse"
                 data-target="#collapseTwo"
                 aria-expanded="false"
@@ -102,16 +102,16 @@ const Cms = () => {
               >
                 Services
               </a>
-              <i class="fa fa-arrow-down my-2"></i>
+              <i className="fa fa-arrow-down my-2"></i>
             </h5>
           </div>
           <div
             id="collapseTwo"
-            class="collapse"
+            className="collapse"
             aria-labelledby="headingTwo"
             data-parent="#accordion"
           >
-            <div class="card-body">
+            <div className="card-body">
               <div className="row">
                 <form>
                   <div className="col-12">
@@ -175,7 +175,7 @@ const Cms = () => {
           header=" What Social Bharat Do"
           className=""
         >
-        <div class="">
+        <div className="">
               <div className="row">
                 <form>
                   <div className="col-md-12">

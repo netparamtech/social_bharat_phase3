@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Divider, Drawer, Row, Switch } from "antd";
+import { Switch } from "antd";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 
 const Setting = ({ visible }) => {
@@ -26,9 +26,9 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  <span class="badge bg-primary rounded-pill">
+                  
                     {" "}
-                    <button
+                    {/* <button
                       type="button"
                       class="btn btn-primary"
                       data-toggle="button"
@@ -36,8 +36,9 @@ const Setting = ({ visible }) => {
                       autocomplete="off"
                     >
                       {" "}
-                    </button>
-                  </span>
+                    </button> */}
+                    <Switch defaultChecked />
+                  
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
@@ -46,7 +47,8 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  <span class="badge bg-primary rounded-pill">14</span>
+                  {/* <span class="badge bg-primary rounded-pill">14</span> */}
+                  <Switch defaultChecked />
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
@@ -55,7 +57,8 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  <span class="badge bg-primary rounded-pill">14</span>
+                  {/* <span class="badge bg-primary rounded-pill">14</span> */}
+                  <Switch defaultChecked />
                 </li>
               </ol>
             </div>

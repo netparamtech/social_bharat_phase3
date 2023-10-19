@@ -17,6 +17,7 @@ const CommunityUpdateForm = () => {
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
+  const [communityArchive,setCommunityArchive] = useState('');
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -47,10 +48,10 @@ const CommunityUpdateForm = () => {
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       }
-       // Internal Server error
-       else if (error.response && error.response.status === 500) {
+      // Internal Server error
+      else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -77,7 +78,7 @@ const CommunityUpdateForm = () => {
       //internal server error
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -90,7 +91,8 @@ const CommunityUpdateForm = () => {
         name,
         status,
         thumbnail_image: thumbnailImageTempUrl,
-        banner_image: (bannerImageTempUrl===null)?"":bannerImageTempUrl,
+        banner_image: (bannerImageTempUrl === null) ? "" : bannerImageTempUrl,
+        community_archive:communityArchive,
       };
       const response = await updateCommunity(id, communityData);
 
@@ -113,7 +115,7 @@ const CommunityUpdateForm = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -130,13 +132,14 @@ const CommunityUpdateForm = () => {
 
         setThumbnailPreview(communityData.thumbnail_image);
         setBannerPreview(communityData.banner_image);
+        setCommunityArchive(communityData.community_archive);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -282,6 +285,20 @@ const CommunityUpdateForm = () => {
                       />
                     )}
                   </div>
+                </div>
+              </div>
+              <div className="row ps-3 mb-3">
+                <div className="col-md-12">
+                  <label className="fw-bold">Community Archieve</label>
+                </div>
+                <div className="col-md-12">
+                  <textarea
+                    id="summernote-1"
+                    name="editordata"
+                    className="form-control"
+                    onChange={(e)=>setCommunityArchive(e.target.value)}
+                    defaultValue={communityArchive}
+                  />
                 </div>
               </div>
             </div>

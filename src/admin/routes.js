@@ -30,6 +30,7 @@ import UpdateQualificationPage from "./pages/qualifications/UpdateQualificationP
 import CreateQualificationPage from "./pages/qualifications/CreateQualificationPage";
 import SiteSettingPage from "./pages/siteSetting/SiteSettingPage";
 import CmsPage from "./pages/cms/CmsPage";
+import TestEditorPage from "./pages/TestEditorPage";
 
 const adminRoutes = [
     {
@@ -217,6 +218,12 @@ const adminRoutes = [
     {
         path: '/admin/cms',
         component: CmsPage,
+        exact:true
+    },
+
+    {
+        path: '/editor',
+        component: TestEditorPage,
         exact:true
     },
 ]

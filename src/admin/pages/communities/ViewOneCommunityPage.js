@@ -3,9 +3,9 @@ import AdminLayout from "../../layouts/AdminLayout";
 
 const ViewOneCommunityPage = () =>{
     return(
-       <>
-        <ViewOneCommunity />
-       </>
+        <AdminLayout>
+            <ViewOneCommunity />
+        </AdminLayout>
     );
 }
 export default ViewOneCommunityPage;

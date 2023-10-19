@@ -191,11 +191,3 @@ div.Table {
 #font-Resize label {
   font-size: 14px;
 }
-
-#view-community-detail .banner{
-  background-image: url("/admin/img/matrimonial-0.jpg");
-  height: 350px;
-  background-position: center;
-  background-size: cover;
-  border-radius: 4px;
-}

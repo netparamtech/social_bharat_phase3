@@ -248,12 +248,12 @@ const Footer = () => {
             <p className="ms-2">
               {data.address}
               <br />
-              <strong>phone: </strong> +91-{data.phone1}
+              <strong>phone: </strong> +91-{data.phone1},
               <br />
-              <strong>phone: </strong> +91-{data.phone2}
+               +91-{data.phone2}
               <br />
-              <strong>Email: </strong> {data.email1} <br />
-              <div className="ms-5">
+              <strong>Email: </strong> {data.email1}, <br />
+              <div className="">
                 {data && data.email2 ? `${data.email2}` : ""}
               </div>
             </p>

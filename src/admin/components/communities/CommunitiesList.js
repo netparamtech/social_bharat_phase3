@@ -197,7 +197,7 @@ const CommunitiesList = () => {
             e.preventDefault(); // Prevent the default anchor tag behavior
             navigate(`/admin/update/community/${record.id}`);
           }}>
-            <i className="fa fa-edit mr-4" title='Edit' />
+            <i className="fa fa-edit mr-2" title='Edit' />
           </a>
 
           <a className="collapse-item" onClick={(e) => {

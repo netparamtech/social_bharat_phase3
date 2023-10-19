@@ -16,7 +16,7 @@ function App() {
             userRoutes.map((route, index) => (
               <Route key={index} path={route.path}
                 element={
-                 ( route.path !== '/login' &&route.path !== '/' && route.path !== '/register' && route.path !== '/contact' && route.path !=='/user/block' && route.path !=='/about') ? (
+                 ( route.path !== '/login'&&route.path !== '/:name' &&route.path !== '/' && route.path !== '/register' && route.path !== '/contact' && route.path !=='/user/block' && route.path !=='/about') ? (
                     <UserProtectedRoute element={route.component} path={route.path} />
                   ) : (
                     <route.component />

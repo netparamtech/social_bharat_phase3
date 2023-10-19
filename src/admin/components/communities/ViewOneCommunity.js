@@ -29,9 +29,16 @@ const ViewOneCommunity = () => {
 
   return (
     <>
-      {data.length > 0 && (
-        <div dangerouslySetInnerHTML={{ __html: data[0].community_archive }} />
-      )}
+      <div className="container" id="view-community-detail">
+        <div className="banner mb-4"></div>
+        <div className="text-content">
+          {data.length > 0 && (
+            <div
+              dangerouslySetInnerHTML={{ __html: data[0].community_archive }}
+            />
+          )}
+        </div>
+      </div>
     </>
   );
 };

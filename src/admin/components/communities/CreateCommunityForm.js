@@ -143,7 +143,7 @@ const CreateCommunityForm = () => {
 
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="font-Resize">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Create Community</h1>
         <a
@@ -174,7 +174,7 @@ const CreateCommunityForm = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="name">Name</label>
+                  <label className="fw-bold">Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -186,7 +186,7 @@ const CreateCommunityForm = () => {
                   {errors.name && <span className="error">{errors.name}</span>}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="status">Status</label>
+                  <label className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"
@@ -204,7 +204,7 @@ const CreateCommunityForm = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="thumbnailImage">Thumbnail Image</label>
+                  <label className="fw-bold">Thumbnail Image</label>
                   <div className="input-group mb-3">
                     <div className="custom-file">
                       <input
@@ -238,7 +238,7 @@ const CreateCommunityForm = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="bannerImage">Banner Image</label>
+                  <label htmlFor="bannerImage" className="fw-bold">Banner Image</label>
                   <div className="input-group mb-3">
                     <div className="custom-file">
                       <input
@@ -271,7 +271,7 @@ const CreateCommunityForm = () => {
                    
                 </div>
               </div>
-              <div className="row ps-3 mb-3">
+              <div className="row ps-3 mb-4">
                 <div className="col-md-12">
                   <label className="fw-bold">Community Archieve</label>
                 </div>
@@ -289,7 +289,7 @@ const CreateCommunityForm = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary w-25 ">
               Submit
             </button>
           </form>

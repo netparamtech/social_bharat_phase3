@@ -180,7 +180,7 @@ const SiteSetting = () => {
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 className="h3 mb-0 text-gray-800">Site Setting</h1>
         </div>
-        <div className="">
+        <div id="font-Resize">
           <div className="card mb-5">
             <form onSubmit={handleSubmit}>
               {message && (
@@ -315,13 +315,12 @@ const SiteSetting = () => {
 
               <div className="row">
                 <div className="col-md-12">
-                  <div className="row ps-3 pe-3">
+                  <div className="row ps-3 pe-3 mb-3">
                     <div className="col-md-12">
                       <label className="fw-bold">Address</label>
                     </div>
                     <div className="col-md-12 form-group">
-                      <input
-                        type="text"
+                      <textarea
                         defaultValue={address}
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Address"
@@ -453,7 +452,7 @@ const SiteSetting = () => {
                     <div className="col-8">
                       <label className="fw-bold">Logo- 2</label>
                       <div className="mb-2">
-                      <input
+                        <input
                           type="file"
                           defaultValue={thumbnailImageTempUrl2}
                           onInput={handleThumbnailImageChange2}
@@ -466,14 +465,14 @@ const SiteSetting = () => {
                     </div>
                     <div className="col-4">
                       <div className="form-group">
-                      {thumbnailPreview2 && (
-                        <img
-                          src={thumbnailPreview2}
-                          alt="Logo"
-                          title="Logo-1"
-                          className="small-img-thumbnail  img-fluid my-2 "
-                        />
-                      )}
+                        {thumbnailPreview2 && (
+                          <img
+                            src={thumbnailPreview2}
+                            alt="Logo"
+                            title="Logo-1"
+                            className="small-img-thumbnail  img-fluid my-2 "
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

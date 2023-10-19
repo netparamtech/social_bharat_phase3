@@ -56,7 +56,7 @@ const CreateQualification = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="font-Resize">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Create Qualification</h1>
         <a
@@ -88,7 +88,7 @@ const CreateQualification = () => {
               <div className="col-md-6">
                 
                 <div className="form-group">
-                  <label> Title</label>
+                  <label className="fw-bold"> Title</label>
                   <input
                     type="text"
                     className="form-control"
@@ -104,7 +104,7 @@ const CreateQualification = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="status">Status</label>
+                  <label htmlFor="status" className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"

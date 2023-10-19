@@ -85,7 +85,7 @@ const UpdateBusinessCategorie = () => {
   }, [businessCategories]);
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" id="font-Resize">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Update Business Categorie</h1>
         <a
@@ -116,7 +116,7 @@ const UpdateBusinessCategorie = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="name">Title</label>
+                  <label htmlFor="name" className="fw-bold">Title</label>
                   <input type="text" className="form-control" defaultValue={name} onChange={handleSelectCategoryChange} />
                  
                       {errors.title && <span className='error'>{errors.title}</span>}
@@ -124,7 +124,7 @@ const UpdateBusinessCategorie = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="status">Status</label>
+                  <label htmlFor="status" className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"
@@ -142,8 +142,8 @@ const UpdateBusinessCategorie = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">
-              Submit
+            <button type="submit" className="btn btn-primary w-25">
+             Update
             </button>
           </form>
         </div>

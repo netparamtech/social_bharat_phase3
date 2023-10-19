@@ -171,7 +171,7 @@ const CommunityUpdateForm = () => {
 
 
   return (
-    <div className="container-fluid" style={{ minHeight: "100vh" }}>
+    <div className="container-fluid" id="font-Resize" style={{ minHeight: "100vh" }}>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Update Community</h1>
         <a
@@ -202,7 +202,7 @@ const CommunityUpdateForm = () => {
             <div className="row">
               <div className="col-md-6 col-sm-12 ">
                 <div className="form-group">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name"  className="fw-bold">Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -215,7 +215,7 @@ const CommunityUpdateForm = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="status">Status</label>
+                  <label htmlFor="status"  className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"
@@ -236,7 +236,7 @@ const CommunityUpdateForm = () => {
                 <div className="row">
                   <div className="col-sm-10">
                     <div className="form-group">
-                      <label htmlFor="thumbnailImage">Thumbnail Image</label>
+                      <label htmlFor="thumbnailImage"  className="fw-bold">Thumbnail Image</label>
                       <div className="input-group ">
                         <div className="custom-file">
                           <input
@@ -274,7 +274,7 @@ const CommunityUpdateForm = () => {
                 <div className="row">
                   <div className="col-sm-10">
                     <div className="form-group">
-                      <label htmlFor="bannerImage">Banner Image</label>
+                      <label htmlFor="bannerImage"  className="fw-bold">Banner Image</label>
                       <div className="input-group ">
                         <div className="custom-file">
                           <input
@@ -326,7 +326,7 @@ const CommunityUpdateForm = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary w-25">
               Update
             </button>
           </form>

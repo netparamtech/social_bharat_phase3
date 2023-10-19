@@ -28,28 +28,47 @@ const ViewOneCommunity = () => {
   }, []);
 
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
-      <div className="container">
-        <div className="mx-auto">
-          <div className="">
-            <div className="row">
-              <div className="col-lg-8 col-md-10 col-sm-12 mx-auto">
-
-                {data && data.length > 0 && (
-                  <>
-                    <div className="text-center">
-                      <img src={data && data[0].banner_image} className="img-fluid" alt="Banner" />
-                    </div>
-                    <div className="text-center">
-                      <img src={data && data[0].thumbnail_image} className="img-fluid" alt="Banner" />
-                    </div>
-                    <div
-                      dangerouslySetInnerHTML={{ __html: data[0].community_archive }}
+    <div id="auth-wrapper" className="pt-3 pb-5">
+      <div className="container" id="font-Resize">
+        <div className="row">
+          <div className="col-lg-12">
+            {data && data.length > 0 && (
+              <>
+                <div className="row mb-4">
+                  <div className="col-6">
+                    <label className="fw-bold text-black">Banner Image :</label>
+                  </div>
+                  <div className="col-6 text-center text-black">
+                    <label className="fw-bold">Thumbnail Image :</label>
+                  </div>
+                  <div className="col-6">
+                    <img
+                      src={data && data[0].banner_image}
+                      className="img-fluid"
+                      alt="Banner"
                     />
-                  </>
-                )}
-              </div>
-            </div>
+                  </div>
+                  <div className="col-6 text-center">
+                    <img
+                      src={data && data[0].thumbnail_image}
+                      className="img-fluid"
+                      alt="Banner"
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                <div className="col-12"> 
+                  <label className="fw-bold text-black">Community Content :</label>
+                </div>
+                <div className=""
+                  dangerouslySetInnerHTML={{
+                    __html: data[0].community_archive,
+                  }}
+                />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

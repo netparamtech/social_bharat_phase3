@@ -26,17 +26,6 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  
-                    {" "}
-                    {/* <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-toggle="button"
-                      aria-pressed="false"
-                      autocomplete="off"
-                    >
-                      {" "}
-                    </button> */}
                     <Switch defaultChecked />
                   
                 </li>
@@ -47,7 +36,6 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  {/* <span class="badge bg-primary rounded-pill">14</span> */}
                   <Switch defaultChecked />
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -57,7 +45,6 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                  {/* <span class="badge bg-primary rounded-pill">14</span> */}
                   <Switch defaultChecked />
                 </li>
               </ol>

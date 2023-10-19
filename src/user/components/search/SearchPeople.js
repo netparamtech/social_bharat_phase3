@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchAllCategories } from "../../../admin/services/AdminService";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -25,7 +24,7 @@ const SearchPeople = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
-  const [countryID, setCountryID] = useState(0);
+  const [countryID, setCountryID] = useState(101);
 
   //to show state and city according to user search
 
@@ -95,7 +94,11 @@ const SearchPeople = () => {
     // Do something with the query string (e.g., redirect to a new URL)
     try {
       const response = await searchWithCityState(queryString);
-      setItems([...items, ...response.data.data]);
+      if (response.data.data.length !== 0) {
+        setItems(response.data.data);
+      } else {
+        setItems([]);
+      }
       setCity(selectedCity.label ? selectedCity.label : city);
       setState(selectedState.label ? selectedState.label : state);
     } catch (error) {
@@ -151,12 +154,18 @@ const SearchPeople = () => {
     try {
       const response = await searchPeopleWithSearchText(searchText, page, size);
       if (response && response.status === 200) {
-        if(searchText){
-          setItems(response.data.data);
-        }else {
+        if (searchText) {
+          if (response.data.data.length !== 0) {
+            setItems(response.data.data);
+          } else {
+            setItems([...items, ...response.data.data]);
+          }
+
+
+        } else {
           setItems([...items, ...response.data.data]);
         }
-        
+
       }
       setIsLoading(false);
     } catch (error) {

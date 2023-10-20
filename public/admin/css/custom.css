@@ -191,3 +191,11 @@ div.Table {
 #font-Resize label {
   font-size: 14px;
 }
+
+.font-14{
+  font-size: 14px;
+}
+
+#basic-profile-section .community-img{
+  margin-left: 70px;
+}

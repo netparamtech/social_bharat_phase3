@@ -24,7 +24,7 @@ const BusinessInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-            <h5 className="mb-3 fw-bold fs-5">Business Info</h5>
+            <h5 className="mb-3 text-primary">Business Info</h5>
             <div className="row">
               <div className="col-md-12">
                 {businessDetails && businessDetails.length > 0 ? (
@@ -38,26 +38,26 @@ const BusinessInfo = (props) => {
                         <table className="table table-striped ">
                           <tbody>
                             <tr>
-                              <td className='fw-bold'>City</td>
+                              <td className='fw-bold font-14'>City</td>
                               <td className="text-muted">{item.city}</td>
                             </tr>
                             <tr>
-                              <td className='fw-bold'>State</td>
+                              <td className='fw-bold font-14'>State</td>
                               <td className="text-muted">{item.state}</td>
                             </tr>
                             <tr>
-                              <td className='fw-bold'>Country</td>
+                              <td className='fw-bold font-14'>Country</td>
                               <td className="text-muted">{item.country}</td>
                             </tr>
                             <tr>
-                              <td className='fw-bold'>Contact 1</td>
+                              <td className='fw-bold font-14'>Contact 1</td>
                               <td className="text-muted">{item.contact1}</td>
                             </tr>
 
                             {
                               item.contact2 && (
                                 <tr>
-                                  <td className='fw-bold'>Contact 2</td>
+                                  <td className='fw-bold font-14'>Contact 2</td>
                                   <td className="text-muted">
                                     {item.contact2}
                                   </td>
@@ -69,7 +69,7 @@ const BusinessInfo = (props) => {
                             {
                               item.contact3 && (
                                 <tr>
-                                  <td className='fw-bold'>Contact 3</td>
+                                  <td className='fw-bold font-14'>Contact 3</td>
                                   <td className="text-muted">
                                     {item.contact3}
                                   </td>
@@ -80,7 +80,7 @@ const BusinessInfo = (props) => {
                             {
                               item.business_email && (
                                 <tr>
-                                  <td className='fw-bold'>Website Email</td>
+                                  <td className='fw-bold font-14'>Website Email</td>
                                   <td className="text-muted" style={{ maxWidth: '300px', wordWrap: 'break-word' }}>
                                     {item.business_email}
                                   </td>
@@ -91,7 +91,7 @@ const BusinessInfo = (props) => {
                             {
                               item.business_website && (
                                 <tr>
-                                  <td className='fw-bold'>Website Link</td>
+                                  <td className='fw-bold font-14'>Website Link</td>
                                   <td className="text-muted">
                                     {item.business_website}
                                   </td>
@@ -102,7 +102,7 @@ const BusinessInfo = (props) => {
                             {
                               businessPhotos && (
                                 <tr>
-                                  <td className='fw-bold'>Business Photos</td>
+                                  <td className='fw-bold font-14'>Business Photos</td>
                                   <td className="proposal-Photo">
                                     {businessPhotos &&
                                       Array.isArray(businessPhotos) ? (
@@ -122,7 +122,7 @@ const BusinessInfo = (props) => {
                             }
 
                             <tr>
-                              <td className='fw-bold'>Status</td>
+                              <td className='fw-bold font-14'>Status</td>
                               <td className="text-muted">{item.status}</td>
                             </tr>
                           </tbody>
@@ -132,7 +132,7 @@ const BusinessInfo = (props) => {
                   </Collapse>
                 ) : (
                   <div className="col-md-12">
-                    <p className="mb-3 fw fs-5">No business details available.</p>
+                    <p className="mb-3 font-14">No business details available.</p>
                   </div>
                 )}
               </div>

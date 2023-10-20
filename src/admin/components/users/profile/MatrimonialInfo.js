@@ -33,14 +33,14 @@ const MatrimonialInfo = (props) => {
 
   return (
     <div>
-      <div id="auth-wrapper" className="pt-5 pb-5 mt-2">
+      <div id="auth-wrapper" className="pt-3 pb-4">
         <div id="matrimonial-info" className="container">
-          <div className="card shadow">
+          <div className="card shadow" id='font-Resize'>
             <div className="card-body">
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 ">
                   <div className="card-title">
-                    <h3 className="mb-3 fw-bold fs-5">Matrimonial Info</h3>
+                    <h5 className="mb-3 text-primary">Matrimonial Info</h5>
                   </div>
                   {userDetails && userDetails.data && userDetails.data.matrimonial[0] ? (
                     <form className="p-3 mb-3 ">
@@ -280,7 +280,7 @@ const MatrimonialInfo = (props) => {
                     </form>
                   ) : (
                     <div className="col-md-12">
-                      <p className="mb-3 fw fs-5">No Matrimonial Details available.</p>
+                      <p className="mb-3 font-14">No Matrimonial Details available.</p>
                     </div>
                   )
                   }

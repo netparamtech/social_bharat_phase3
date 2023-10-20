@@ -18,13 +18,14 @@ const ViewCommunity = () => {
   }, []);
   return (
     <div id="auth-wrapper" className="pt-3">
-      <div className="container">
+      <div className="container" id="community-text">
         <div className="row">
           <div className="col-lg-12">
             <div className="mb-5">
               <img src={data.banner_image} className="img-fluid rounded-2" alt="Banner" />
             </div>
-            <div className="pb-5">
+            <div className="card shadow mb-5 p-5">
+            <p className="mb-3 fw-bold text-decoration-underline">About</p>
             {data && (
               <div 
                 dangerouslySetInnerHTML={{ __html: data.community_archive }}

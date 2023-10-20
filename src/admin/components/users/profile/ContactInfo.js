@@ -12,10 +12,10 @@ const ContactInfo = (props) => {
   return (
     <div id="contact-section" className="content-wrapper pt-4">
       <div className="container">
-        <div className="card shadow">
+        <div className="card shadow" id="font-Resize">
           
           <div className="card-body">
-          <h5 className="mb-3 fw-bold fs-5">Contact Info</h5>
+          <h5 className="mb-3 text-primary">Contact Info</h5>
             <div className="row">
               {contactDetails && contactDetails.length > 0 ?
                 contactDetails.map((item, idx) => (
@@ -37,7 +37,7 @@ const ContactInfo = (props) => {
                   </div>
                 )) : (
                   <div className="col-md-12">
-                    <p className="mb-3 fw fs-5">No contact details available.</p>
+                    <p className="mb-3 font-14">No contact details available.</p>
                   </div>
                 )}
 

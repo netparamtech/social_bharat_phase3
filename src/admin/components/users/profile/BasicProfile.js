@@ -40,11 +40,11 @@ const BasicProfile = (props) => {
                 />
               </div>
               <div className="card-body ">
-                <p className="card-text text-center mb-0">
+                <p className=" text-center mb-0">
                   {userDetails?.data?.name}
                 </p>
                 <Image
-                  className="img-fluid max-width-100 community-img"
+                  className="img-fluid community-img"
                   src={
                     userDetails?.data?.community?.thumbnail_image
                       ? userDetails?.data?.community?.thumbnail_image
@@ -54,8 +54,7 @@ const BasicProfile = (props) => {
                   alt=""
                   title=""
                 />
-                <span className="" id="communityName">{userDetails?.data?.community?.name || "N/A"}</span>
-                <p className="card-text text-center text-muted"></p>
+               
               </div>
             </div>
           </div>
@@ -105,7 +104,7 @@ const BasicProfile = (props) => {
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
-                    <label className="fw-bold">Marital Status :</label>
+                    <label className="fw-bold">Marital Status:</label>
                   </div>
                   <div className="col-md-8">
                     <label className="">{userDetails?.data?.marital_status}</label>

@@ -3,11 +3,11 @@ const EducationInfo = (props) => {
   const educationDetails = userDetails&&userDetails.data&&userDetails.data.education;
 
   return (
-    <div id="education-section" className="content-wrapper pt-4">
+    <div id="education-section" className="content-wrapper">
       <div className="container">
-        <div className="card shadow">
+        <div className="card shadow" id="font-Resize">
           <div className="card-body">
-          <h5 className="mb-3 fw-bold fs-5">Education Info</h5>
+          <h5 className="mb-3 text-primary">Education Info</h5>
             <div className="row">
             {educationDetails && educationDetails.length > 0 ? (
                 educationDetails.map((item, idx) => (
@@ -46,7 +46,7 @@ const EducationInfo = (props) => {
 
             )) ) : (
               <div className="col-md-12">
-                <p className="mb-3 fw fs-5">No education details available.</p>
+                <p className="mb-3 font-14">No education details available.</p>
               </div>
             )}
             

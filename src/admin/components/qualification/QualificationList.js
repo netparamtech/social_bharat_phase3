@@ -209,6 +209,7 @@ const QualificationList = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
+        rowKey={(record) => record.id}
       // onChange={handleSearchChange}
       />
     </div>

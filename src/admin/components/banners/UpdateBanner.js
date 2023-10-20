@@ -186,7 +186,7 @@ const UpdateBanner = (props) => {
                   </div>
                 )}
                 <div className="form-group">
-                  <label htmlFor="bannerUrl" className="fw-bold">Banner Url</label>
+                  <label htmlFor="bannerUrl" className="fw-bold">Banner Image</label>
                   <div className="input-group ">
                     <div className="custom-file">
                       <input

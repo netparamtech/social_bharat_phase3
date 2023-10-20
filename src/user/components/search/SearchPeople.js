@@ -41,7 +41,7 @@ const SearchPeople = () => {
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
-      search(searchText, page + 1, 20);
+      search(searchText, page + 1, 20,state,city);
       setPage(page + 1);
     }
   };
@@ -56,6 +56,8 @@ const SearchPeople = () => {
   };
 
   const handleStateChange = (selectedOption) => {
+    setPage(1);
+    setState(selectedOption.label)
     setSelectedState(selectedOption);
     setCity('');
     setSelectedCity('');
@@ -71,6 +73,7 @@ const SearchPeople = () => {
   };
 
   const handleCityChange = (selectedOption) => {
+    setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
   };
 
@@ -80,7 +83,7 @@ const SearchPeople = () => {
 
   const handleGoButtonClick = async () => {
     const queryParams = {
-      q: "",
+      q: searchText,
       page,
       size: 20,
       state: selectedState ? selectedState.label : "",
@@ -152,7 +155,7 @@ const SearchPeople = () => {
   const search = async (searchText, page, size) => {
     setIsLoading(true);
     try {
-      const response = await searchPeopleWithSearchText(searchText, page, size);
+      const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
       if (response && response.status === 200) {
         if (searchText) {
           if (response.data.data.length !== 0) {
@@ -163,7 +166,14 @@ const SearchPeople = () => {
 
 
         } else {
-          setItems([...items, ...response.data.data]);
+           const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
+          
+          if (response.data.data.length !== 0) {
+            setItems([...response.data.data]);
+          } else {
+            setItems([...items, ...response.data.data]);
+            
+          }
         }
 
       }
@@ -194,6 +204,7 @@ const SearchPeople = () => {
     setState(user && user.user && user.user.native_place_state);
     setCity(user && user.user && user.user.native_place_city);
   }, [user]);
+
   useEffect(() => {
     setPage(1);
     search(searchText, page, 20);
@@ -206,13 +217,13 @@ const SearchPeople = () => {
     }
   }, [selectedCountry]);
 
-  useEffect(() => {
-    setState(selectedState.label)
-  }, [city]);
+  // useEffect(() => {
+  //   setState(selectedState.label)
+  // }, [city]);
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
-    const pair = items.slice(i, i + 2);
+    const pair = items.slice(i, i + 3);
     groupedItems.push(pair);
   }
 
@@ -240,7 +251,7 @@ const SearchPeople = () => {
             </div>
             <div className="filter-icon">
               <a
-                href="#"
+                href=""
                 title="Filter"
                 className="btn btn-primary btn-sm me-2"
                 onClick={handleFilterClicked}
@@ -283,7 +294,7 @@ const SearchPeople = () => {
               </div>
               <div className="col-2 mb-3">
                 <a
-                  href="#"
+                  href=""
                   className="btn btn-set btn-primary"
                   onClick={handleGoButtonClick}
                 >
@@ -325,6 +336,7 @@ const SearchPeople = () => {
 
               {/* Repeat the user card structure as needed */}
               <InfiniteScroll
+               style={{ overflowX: "hidden" }}
                 dataLength={items.length}
                 next={fetchMoreData}
                 hasMore={items.length < totalRows}
@@ -333,7 +345,7 @@ const SearchPeople = () => {
                 {groupedItems.map((pair, index) => (
                   <div className="row" key={index}>
                     {pair.map((item, innerIndex) => (
-                      <div className="col-md-6" key={innerIndex}>
+                      <div className="col-md-4" key={innerIndex}>
                         <div className="card shadow mb-2">
                           <div className="card-body">
                             <div className="row">

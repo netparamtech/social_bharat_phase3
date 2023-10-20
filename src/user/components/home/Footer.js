@@ -92,10 +92,10 @@ const Footer = () => {
         <div className="row pt-4 pb-3  ">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
-            <p className="ms-2">
+            <div className="ms-2">
               The platform prioritizes privacy, ensuring that personal
               information remains protected from strangers.
-            </p>
+            </div>
             <div className=" social-links  ms-2">
               <a
                 href={data.social_twitter_link}
@@ -245,18 +245,18 @@ const Footer = () => {
 
           <div className="col-lg-3 col-md-6 col-sm-12  ">
             <h3>Contact Us</h3>
-            <p className="ms-2">
+            <div className="ms-2">
               {data.address}
               <br />
-              <strong>phone: </strong> +91-{data.phone1}
+              <strong>phone: </strong> +91-{data.phone1},
               <br />
-              <strong>phone: </strong> +91-{data.phone2}
+               +91-{data.phone2}
               <br />
-              <strong>Email: </strong> {data.email1} <br />
-              <div className="ms-5">
+              <strong>Email: </strong> {data.email1}, <br />
+              <div className="">
                 {data && data.email2 ? `${data.email2}` : ""}
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </div>

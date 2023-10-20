@@ -146,7 +146,8 @@ const CommunitiesList = () => {
             src={record.banner_image ? record.banner_image : defaultImage}
             alt={record.name}
             title={record.name}
-            className='small-img-user-list'
+            className=''
+            style={{width: record.banner_image ? '150px' : '60px'}}
           />
         </a>
       ),
@@ -208,7 +209,7 @@ const CommunitiesList = () => {
           </a>
           <a className="collapse-item m-2 hover-pointer-admin" onClick={(e) => {
             e.preventDefault(); // Prevent the default anchor tag behavior
-            navigate(`/community/${record.name}`);
+            navigate(`/community/${record.id}`);
           }}>
             <i className="fas fa-eye"></i>
           </a>

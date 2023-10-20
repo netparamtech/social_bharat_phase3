@@ -19,6 +19,8 @@ const SearchPeople = () => {
     "/admin/img/de-default-1.jpeg"
   );
 
+  const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
+
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -39,9 +41,15 @@ const SearchPeople = () => {
   const [totalRows, setTotalRows] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (items.length > 0) {
+      setIssearchingPerformed(true);
+    }
+  }, [items]);
+
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
-      search(searchText, page + 1, 20,state,city);
+      search(searchText, page + 1, 20, state, city);
       setPage(page + 1);
     }
   };
@@ -97,6 +105,9 @@ const SearchPeople = () => {
     // Do something with the query string (e.g., redirect to a new URL)
     try {
       const response = await searchWithCityState(queryString);
+      if (response.data.data.length === 0) {
+        setIssearchingPerformed(false);
+      }
       if (response.data.data.length !== 0) {
         setItems(response.data.data);
       } else {
@@ -155,24 +166,28 @@ const SearchPeople = () => {
   const search = async (searchText, page, size) => {
     setIsLoading(true);
     try {
-      const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
+      const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
+
       if (response && response.status === 200) {
+        if (response.data.data.length === 0) {
+          setIssearchingPerformed(false);
+        }
         if (searchText) {
           if (response.data.data.length !== 0) {
             setItems(response.data.data);
           } else {
-            setItems([...items, ...response.data.data]);
+            setItems([...response.data.data]);
           }
 
 
         } else {
-           const response = await searchPeopleWithSearchText(searchText, page, size,state,city);
-          
+          const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
+
           if (response.data.data.length !== 0) {
             setItems([...response.data.data]);
           } else {
             setItems([...items, ...response.data.data]);
-            
+
           }
         }
 
@@ -249,9 +264,11 @@ const SearchPeople = () => {
                 )
               }
             </div>
+            {
+              !isSearchingPerformed ? (<span className="error">No Data Available</span>) : ''
+            }
             <div className="filter-icon">
               <a
-                href=""
                 title="Filter"
                 className="btn btn-primary btn-sm me-2"
                 onClick={handleFilterClicked}
@@ -294,7 +311,6 @@ const SearchPeople = () => {
               </div>
               <div className="col-2 mb-3">
                 <a
-                  href=""
                   className="btn btn-set btn-primary"
                   onClick={handleGoButtonClick}
                 >
@@ -303,40 +319,10 @@ const SearchPeople = () => {
               </div>
             </div>
             <div className="row">
-              {/* User Cards */}
-
-              {/* {data &&
-                data.map((item, idx) => (
-                  <div className="col-md-4" key={idx}>
-                    <div className="card shadow mb-2">
-                      <div className="card-body">
-                        <div className="row">
-                          <div className="col-4">
-                            <img
-                              src={item.photo ? item.photo : defaultImage}
-                              alt={item.name}
-                              title={item.name}
-                              className="avatar img-fluid img-circle "
-                            />
-                          </div>
-                          <div className="col-8 user-detail">
-                            <p>{item.name}</p>
-                            <p>{item.native_place_city}</p>
-                            <p>
-                              {item.native_place_state
-                                ? `(${item.native_place_state})`
-                                : ""}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))} */}
-
+             
               {/* Repeat the user card structure as needed */}
               <InfiniteScroll
-               style={{ overflowX: "hidden" }}
+                style={{ overflowX: "hidden" }}
                 dataLength={items.length}
                 next={fetchMoreData}
                 hasMore={items.length < totalRows}

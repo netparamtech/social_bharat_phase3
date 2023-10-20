@@ -281,8 +281,8 @@ const CreateCommunityForm = () => {
                     editorState={editorState}
                     onEditorStateChange={onEditorStateChange}
                     wrapperClassName="wrapper-class"
-                    editorClassName="editor-class custom-editor-height"
-                    toolbarClassName="toolbar-class"
+                    editorClassName="editor-class custom-editor-height editor-border p-2"
+                    toolbarClassName="toolbar-class toolbar-border"
                   />
                 </div>
 

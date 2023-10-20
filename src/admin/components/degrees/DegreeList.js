@@ -48,7 +48,6 @@ const DegreeList = () => {
   };
 
   const fetchData = async () => {
-    console.log('Fetching data with parameters:', { page, size, searchQuery, sortField, sortOrder });
   
     try {
       const response = await fetchAllDegrees(page, size, searchQuery, sortField, sortOrder);
@@ -213,6 +212,7 @@ const DegreeList = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
+        rowKey={(record) => record.id}
       // onChange={handleSearchChange}
       />
     </div>

@@ -145,17 +145,23 @@ const BasicProfile = (props) => {
                   {user && user.data && user.data.name || "N/A"}
                 </p>
 
-                <Image
-                  className="img-fluid max-width-100 me-2  community-img"
-                  src={
-                    community.thumbnail_image
-                      ? community.thumbnail_image
-                      : defaultPhoto
-                  }
-                  alt=""
-                  title=""
-                />
-                <span>{community.name || "N/A"}</span>
+                {
+                  community && community.thumbnail_image ? (
+                    <Image
+                      className="img-fluid max-width-100 me-2 community-img"
+                      src={
+                        community.thumbnail_image
+                          ? community.thumbnail_image
+                          : defaultPhoto
+                      }
+                      alt=""
+                      title=""
+                    />
+                  ) : (
+                    <span>{community.name || "N/A"}</span>
+                  )
+                }
+
               </div>
             </div>
           </div>

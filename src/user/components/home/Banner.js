@@ -71,7 +71,7 @@ const Banner = () => {
     : defaultImageUrl;
 
   return (
-    <div id="banners-section" className="bg-white">
+    <div id="banners-section" className="wow animate__animated animate__fadeIn bg-white">
       <div className="container">
       <div className="jumbotron navbar-scroll" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
           <div className="hero-section">

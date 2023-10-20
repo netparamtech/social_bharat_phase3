@@ -133,7 +133,7 @@ const ChangeProfile = (props) => {
                   />
                 </div>
               </div>
-              <div className="col-md-9">
+              <div className="col-md-9 mb-3">
                 <div className="form-group">
                   <label>Name</label>
                   <Input
@@ -154,7 +154,7 @@ const ChangeProfile = (props) => {
             </div>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary w-100"
               onClick={handleSubmit}
             >
               Save

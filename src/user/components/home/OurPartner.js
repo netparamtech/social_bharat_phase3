@@ -31,7 +31,7 @@ function OurPartner() {
     <div className="wow animate__animated animate__fadeIn">
       <section id="partner">
         <div className="container">
-          <div className="row costomer-logos ">
+          <div className="row costomer-logos">
             {casts && casts.length > 0 &&
               casts.map(
                 (community) =>

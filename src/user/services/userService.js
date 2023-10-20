@@ -405,9 +405,9 @@ export const searchBusinessWithCityState = async(queryString) => {
 }
 
 //search partner
-export const searchPartner = async(id) => {
+export const searchPartner = async(searchText,page,size,id,state,city,gender,gotra,cast) => {
     try{
-        const response = await apiWithHeaders.get(`/users/search?community_id=${id}`);
+        const response = await apiWithHeaders.get(`/partner/search?q=${searchText}&page=${page}&size=${size}&community_id=${id}&state=${state}&city=${city}&gender=${gender}&gotra=${gotra}&cast=${cast}`);
         return response;
     } catch(error) {
         throw error;

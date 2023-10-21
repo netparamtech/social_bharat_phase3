@@ -3,6 +3,7 @@ import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/userAction';
+import { Input } from 'antd';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);
@@ -85,12 +86,12 @@ const SetPassword = () => {
                                 <form action='/dashboard' onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
-                                        <input
+                                        <Input.Password
                                             type="password"
                                             name="newPassword"
                                             id="newPassword"
                                             placeholder="Enter New Password"
-                                            className="form-control"
+                                            className="input-height"
                                             onChange={handlePasswordChange}
                                             autoFocus
                                         />
@@ -98,12 +99,12 @@ const SetPassword = () => {
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>
                                     <div className="row mb-3">
-                                        <input
+                                        <Input.Password
                                             type="password"
                                             name="cPassword"
                                             id="cPassword"
                                             placeholder="Enter Confirm Password"
-                                            className="form-control"
+                                            className="input-height"
                                             onChange={handleConfirmPasswordChange}
                                         />
                                         {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}

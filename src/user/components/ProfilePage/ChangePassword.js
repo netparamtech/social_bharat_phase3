@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
+import { Input } from 'antd';
 
 const ChangePassword = () => {
 
@@ -62,23 +63,23 @@ const ChangePassword = () => {
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                                 {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
-                                        <input
+                                        <Input.Password
                                             type="password"
                                             name="newPassword"
                                             id="newPassword"
                                             placeholder="Enter New Password"
-                                            className="form-control"
+                                            className="input-height"
                                             onChange={handlePasswordChange}
                                         />
                                         {errors.password && <span className='error'>{errors.password}</span>}
                                     </div>
                                     <div className="row mb-3">
-                                        <input
+                                        <Input.Password
                                             type="password"
                                             name="cPassword"
                                             id="cPassword"
                                             placeholder="Enter Confirm Password"
-                                            className="form-control"
+                                            className="input-height"
                                             onChange={handleConfirmPasswordChange}
                                         />
                                         {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}

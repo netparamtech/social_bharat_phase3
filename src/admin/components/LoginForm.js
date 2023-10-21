@@ -87,7 +87,7 @@ const LoginForm = () => {
         {errors.email && <span className='error'>{errors.email}</span>}
       </div>
       <div className="form-group">
-        <Input.Password
+        <input
           type="password"
           className="form-control form-control-user"
           id="exampleInputPassword"

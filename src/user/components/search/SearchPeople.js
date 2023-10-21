@@ -3,7 +3,6 @@ import {
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
   searchPeopleWithSearchText,
-  searchWithCityState,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -34,6 +33,7 @@ const SearchPeople = () => {
   const [state, setState] = useState("");
 
   const [isFilter, setIsFilter] = useState(false);
+  const [isGoClick, setIsGoClick] = useState(false);
   const navigate = useNavigate();
 
   const [items, setItems] = useState([]);
@@ -55,18 +55,15 @@ const SearchPeople = () => {
     }
   };
 
-  useEffect(() => {
-    search(searchText, page, 20);
-  }, [page]);
-
 
   const handleFilterClicked = () => {
     setIsFilter(!isFilter ? true : false);
   };
 
   const handleStateChange = (selectedOption) => {
+    setIsGoClick(false);
     setPage(1);
-    setState(selectedOption.label)
+    setState(selectedOption.label);
     setSelectedState(selectedOption);
     setCity('');
     setSelectedCity('');
@@ -82,6 +79,7 @@ const SearchPeople = () => {
   };
 
   const handleCityChange = (selectedOption) => {
+    setIsGoClick(false);
     setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
     setCity(selectedOption.label)
@@ -91,8 +89,8 @@ const SearchPeople = () => {
     setSearchText(e.target.value);
   };
 
-  const handleGoButtonClick = async () => {
-    setIsFilter(true);
+  const handleGoButtonClick = () => {
+    setIsGoClick(true);
   };
 
   const getAllStates = async () => {
@@ -152,9 +150,12 @@ const SearchPeople = () => {
 
 
         } else {
-          setItems([...items, ...response.data.data.users]);
+          if(isGoClick){
+            setItems([...response.data.data.users]);
+          } else {
+            setItems([...items, ...response.data.data.users]);
+          }
         }
-
       }
       setIsLoading(false);
     } catch (error) {
@@ -180,17 +181,17 @@ const SearchPeople = () => {
   }
 
   useEffect(() => {
-    setState(user && user.user && user.user.native_place_state?user.user.native_place_state:'');
-    setCity(user && user.user && user.user.native_place_city?user.user.native_place_city:'');
-  }, [user]);
+    setState(user && user.user && user.user.native_place_state ? user.user.native_place_state : '');
+    setCity(user && user.user && user.user.native_place_city ? user.user.native_place_city : '');
+  }, [user,isFilter]);
 
   useEffect(() => {
     search(searchText, page, 20);
-  }, [searchText,isFilter]);
+  }, [searchText, isGoClick,page,state]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setPage(1);
-  },[searchText])
+  }, [searchText])
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -199,15 +200,12 @@ const SearchPeople = () => {
     }
   }, [selectedCountry]);
 
-  // useEffect(() => {
-  //   setState(selectedState.label)
-  // }, [city]);
-
   const groupedItems = [];
-  for (let i = 0; i < items.length; i += 2) {
-    const pair = items.slice(i, i + 3);
-    groupedItems.push(pair);
-  }
+for (let i = 0; i < items.length; i += 2) {
+  const pair = items.slice(i, i + 2); // Change 3 to 2 here
+  groupedItems.push(pair);
+}
+
 
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
@@ -286,7 +284,7 @@ const SearchPeople = () => {
               </div>
             </div>
             <div className="row">
-             
+
               {/* Repeat the user card structure as needed */}
               <InfiniteScroll
                 style={{ overflowX: "hidden" }}
@@ -310,7 +308,7 @@ const SearchPeople = () => {
                                   className="avatar img-fluid img-circle"
                                 />
                               </div>
-                              <div className="col-8 user-detail">
+                              <div className="col-4 user-detail">
                                 <p>Name-{item.name}</p>
                                 <p>Age-{age(item.dob)}{" "}Years</p>
                                 <p>City-{item.native_place_city}</p>

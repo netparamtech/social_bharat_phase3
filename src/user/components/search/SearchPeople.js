@@ -56,7 +56,7 @@ const SearchPeople = () => {
   };
 
   useEffect(() => {
-    search(searchText, page, 20);
+    search(searchText, page, 20,state,city);
   }, [page]);
 
 
@@ -84,6 +84,7 @@ const SearchPeople = () => {
   const handleCityChange = (selectedOption) => {
     setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
+    setCity(selectedOption.label)
   };
 
   const handleSearchText = (e) => {
@@ -184,7 +185,7 @@ const SearchPeople = () => {
   }, [user]);
 
   useEffect(() => {
-    search(searchText, page, 20);
+    search(searchText, page, 20,state,city);
   }, [searchText,isFilter]);
 
   useEffect(() => {

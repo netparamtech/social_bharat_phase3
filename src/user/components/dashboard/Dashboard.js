@@ -155,18 +155,21 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/jobs/view")}
-                >
-                  Search Jobs
-                </a>
+               {/*
+<a
+  className="text-white hover-pointer"
+  onClick={() => navigate("/user/jobs/view")}
+>
+  Search Jobs
+</a>
+*/}
                 <a
                   className="text-white hover-pointer"
                   onClick={() => navigate("/user/update-job-profile")}
                 >
                   Post New Job
                 </a>
+                <i className="fa-solid fa-arrow-right"></i>
               </div>
             </div>
           </div>

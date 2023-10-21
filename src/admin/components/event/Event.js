@@ -111,13 +111,14 @@ const Event = () => {
       title: 'S.No',
       dataIndex: 'sno',
       render: (text, record, index) => index + 1,
-      width: 100,
+      width: 50,
     },
    
     {
       title: "Event", dataIndex: "title", width: 300,
       sorter: true,
       sortDirections: ['asc', 'desc'],
+      width: 200,
     },
     {
       title: "Location",
@@ -128,7 +129,7 @@ const Event = () => {
       },
       sorter: true,
       sortDirections: ['asc', 'desc'],
-      width: 150,
+      width: 350,
     },
 
     {

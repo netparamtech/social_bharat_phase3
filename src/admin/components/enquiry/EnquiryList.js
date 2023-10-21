@@ -133,11 +133,12 @@ const EnquiryList = () => {
       title: 'S.No',
       dataIndex: 'sno',
       render: (text, record, index) => index + 1,
-      width: 100,
+      width: 50,
     },
     {
       title: 'Name', dataIndex: 'name', sorter: true,
       sortDirections: ['asc', 'desc'],
+      with:150,
     },
     { title: 'Email', dataIndex: 'email',sorter: true,
     sortDirections: ['asc', 'desc'], },

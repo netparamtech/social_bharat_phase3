@@ -50,13 +50,13 @@ const SearchPeople = () => {
   const fetchMoreData = () => {
     console.log("Hello")
     if (!isLoading && items.length < totalRows) {
-      search(searchText, page + 1, 20, state, city);
+      search(searchText, page + 1, 20);
       setPage(page + 1);
     }
   };
 
   useEffect(() => {
-    search(searchText, page, 20,state,city);
+    search(searchText, page, 20);
   }, [page]);
 
 
@@ -180,13 +180,17 @@ const SearchPeople = () => {
   }
 
   useEffect(() => {
-    setState(user && user.user && user.user.native_place_state);
-    setCity(user && user.user && user.user.native_place_city);
+    setState(user && user.user && user.user.native_place_state?user.user.native_place_state:'');
+    setCity(user && user.user && user.user.native_place_city?user.user.native_place_city:'');
   }, [user]);
 
   useEffect(() => {
-    search(searchText, page, 20,state,city);
+    search(searchText, page, 20);
   }, [searchText,isFilter]);
+
+  useEffect(()=>{
+    setPage(1);
+  },[searchText])
 
   useEffect(() => {
     // Check if selectedCountry is already set

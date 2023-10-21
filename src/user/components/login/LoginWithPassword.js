@@ -3,6 +3,7 @@ import { loginWithPassword } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
+import { Input } from "antd";
 
 const LoginWithPassword = (props) => {
   const { chnageFlag } = props;
@@ -98,7 +99,7 @@ const LoginWithPassword = (props) => {
                     </div>
                   )}
                   <div className="row mb-3">
-                    <input
+                    <Input
                       type="number"
                       name="mobile"
                       id="mobile"
@@ -117,7 +118,7 @@ const LoginWithPassword = (props) => {
                     )}
                   </div>
                   <div className="row mb-3">
-                    <input
+                    <Input.Password
                       type="password"
                       name="password"
                       id="password"

@@ -84,6 +84,7 @@ const ChangeProfile = (props) => {
     try {
       const response = await updateBasicProfile(data);
       if (response && response.status === 200) {
+        setErrors('');
         dispatch(login(response.data.data, token));
        navigate('/admin/dashboard');
       }
@@ -103,7 +104,7 @@ const ChangeProfile = (props) => {
 
   return (
     <div className="">
-      <h1 className="h3 mb-0 text-gray-800">Create Profile</h1>
+      <h1 className="h3 mb-0 text-gray-800">Change Profile</h1>
       <div className="card p-3 w-100 mt-3">
         <div className="card-body">
           <form className="">
@@ -135,20 +136,26 @@ const ChangeProfile = (props) => {
               </div>
               <div className="col-md-9 mb-3">
                 <div className="form-group">
-                  <label>Name</label>
+                 <div>
+                 <label>Name</label>
                   <Input
-                    placeholder="Name"
+                    placeholder="Enter Your Name"
                     value={name}
                     onChange={handleNameChange}
                     className="form-control"
                   />
-                  <label>Email</label>
+                   {errors.name && <span className='error'>{errors.name}</span>}
+                 </div>
+                 <div>
+                 <label>Email</label>
                   <Input
-                    placeholder="Email"
+                    placeholder="Enter Your Email"
                     value={email}
                     onChange={handleEmailChange}
                     className="form-control"
                   />
+                   {errors.email && <span className='error'>{errors.email}</span>}
+                 </div>
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -42,8 +43,18 @@ const SearchPartner = () => {
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
 
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
+
+  const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
@@ -125,19 +136,43 @@ const SearchPartner = () => {
     }
   };
 
-  const search = async (id) => {
+  const search = async (searchText, page, size, community_id, state, city, gender, gotra, cast) => {
+    setIsLoading(true);
     try {
-      const response = await searchPartner(id);
+      const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
+
       if (response && response.status === 200) {
-        setData(response.data.data);
-        setServerError('');
+        if (response.data.data.length === 0) {
+          setIssearchingPerformed(false);
+        }
+        if (searchText) {
+          if (response.data.data.length !== 0) {
+            setItems(response.data.data);
+          } else {
+            setItems([...response.data.data]);
+          }
+
+
+        } else {
+          const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
+
+          if (response.data.data.length !== 0) {
+            setItems([...response.data.data]);
+          } else {
+            setItems([...items, ...response.data.data]);
+
+          }
+        }
+
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
+        navigate("/login");
       }
     }
   };
@@ -153,35 +188,6 @@ const SearchPartner = () => {
 
   const handleSaveClick = async () => {
     setIsSaveClicked(true);
-    const queryParams = {
-      community_id: community_id,
-      skintone: skinTone,
-      gender: gender,
-      gotra: gotra,
-      cast: cast,
-      state: selectedState ? selectedState.label : "",
-      city: selectedCity ? selectedCity.label : "",
-      // Add other modal fields to the queryParams
-    };
-
-    // Construct the query string from the queryParams object
-    const queryString = new URLSearchParams(queryParams).toString();
-
-    // Do something with the query string (e.g., redirect to a new URL)
-    try {
-      const response = await searchPartnerWithSearchText(queryString);
-      setData(response.data.data);
-      setServerError('');
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    }
   };
 
   const handleCancelClick = () => {
@@ -195,6 +201,35 @@ const SearchPartner = () => {
     setSearchText("");
     setCommunityName("");
   };
+
+  const fetchMoreData = () => {
+    if (!isLoading && items.length < totalRows) {
+      search(searchText, page + 1, 20, community_id, state, city, gender, gotra, cast);
+      setPage(page + 1);
+    }
+  };
+
+  const age = (dob) => {
+    const dobDate = new Date(dob);
+    const currentDate = new Date();
+
+    // Calculate the age in years
+    const ageInMilliseconds = currentDate - dobDate;
+    const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
+
+    return ageInYears;
+  }
+
+  useEffect(() => {
+    if (items.length > 0) {
+      setIssearchingPerformed(true);
+    }
+  }, [items]);
+
+  useEffect(() => {
+    setState(user && user.user && user.user.native_place_state);
+    setCity(user && user.user && user.user.native_place_city);
+  }, [user]);
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -215,16 +250,30 @@ const SearchPartner = () => {
   }, [states]);
 
   useEffect(() => {
-    setLoggedUserID(user && user.user && user.user.community_id);
+    setCommunity_id(user && user.user && user.user.community_id);
   }, [user]);
 
   useEffect(() => {
-    search(loggedUserID);
-  }, [loggedUserID]);
+    if (community_id) {
+      setPage(1);
+      search(searchText, page, 20, community_id, state, city, gender, gotra, cast);
+    }
+  }, [searchText, community_id, isSaveClicked]);
+
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [searchText, community_id, state, city, gender, gotra, cast])
 
   useEffect(() => {
     fetchCommunities();
   }, []);
+
+  const groupedItems = [];
+  for (let i = 0; i < items.length; i += 2) {
+    const pair = items.slice(i, i + 3);
+    groupedItems.push(pair);
+  }
+
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
@@ -232,7 +281,7 @@ const SearchPartner = () => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-7">
-              {serverError && <span className='error'>{serverError}</span>}
+                {serverError && <span className='error'>{serverError}</span>}
                 <h5 className="fw-3 mb-3 ">Search Partner</h5>
               </div>
               <div className=" col-md-5">
@@ -270,6 +319,10 @@ const SearchPartner = () => {
                 </p>
               )}
             </div>
+
+            {
+              !isSearchingPerformed ? (<span className="error">No Data Available</span>) : ''
+            }
 
             <div
               className="modal fade"
@@ -426,7 +479,7 @@ const SearchPartner = () => {
             <div className="row">
               {/* User Cards */}
 
-              {data &&
+              {/* {data &&
                 data.map((item, idx) => (
                   <div className="col-md-4" key={idx}>
                     <div className="card shadow mb-2">
@@ -454,7 +507,48 @@ const SearchPartner = () => {
                       </div>
                     </div>
                   </div>
+                ))} */}
+
+              <InfiniteScroll
+                style={{ overflowX: "hidden" }}
+                dataLength={items.length}
+                next={fetchMoreData}
+                hasMore={items.length < totalRows}
+                loader={isLoading && <h4>Loading...</h4>}
+              >
+                {groupedItems.map((pair, index) => (
+                  <div className="row" key={index}>
+                    {pair.map((item, innerIndex) => (
+                      <div className="col-md-4" key={innerIndex}>
+                        <div className="card shadow mb-2">
+                          <div className="card-body">
+                            <div className="row">
+                              <div className="col-4">
+                                <img
+                                  src={item.photo ? item.photo : defaultImage}
+                                  alt={item.name}
+                                  title={item.name}
+                                  className="avatar img-fluid img-circle"
+                                />
+                              </div>
+                              <div className="col-8 user-detail">
+                                <p>Name-{item.name}</p>
+                                <p>Age-{age(item.dob)}{" "}Years</p>
+                                <p>City-{item.native_place_city}</p>
+                                <p>
+                                  {item.native_place_state
+                                    ? `(${item.native_place_state})`
+                                    : ""}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 ))}
+              </InfiniteScroll>
 
               {/* Repeat the user card structure as needed */}
             </div>

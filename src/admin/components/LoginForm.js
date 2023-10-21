@@ -3,6 +3,7 @@ import { login } from '../services/AdminService';
 import { useDispatch } from 'react-redux';
 import {login as adminlogin, logout} from '../actions/authActions';
 import { useNavigate } from 'react-router';
+import { Input } from 'antd';
 
 const LoginForm = () => {
 
@@ -86,7 +87,7 @@ const LoginForm = () => {
         {errors.email && <span className='error'>{errors.email}</span>}
       </div>
       <div className="form-group">
-        <input
+        <Input.Password
           type="password"
           className="form-control form-control-user"
           id="exampleInputPassword"

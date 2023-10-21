@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { updatePassword } from '../services/AdminService';
 import { useNavigate } from 'react-router-dom';
+import { Input } from 'antd';
 
 const UpdatePasswordForm = () => {
 
@@ -34,7 +35,7 @@ const UpdatePasswordForm = () => {
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setMessage(error.response.data.message);
+        setMessage('');
         setAlertClass('alert-danger');
       }
       //Internal Server Erro
@@ -50,7 +51,7 @@ const UpdatePasswordForm = () => {
       //Conflict
       else if (error.response && error.response.status === 409) {
         setErrors(error.response.data.errors);
-        setMessage(error.response.data.message);
+        setMessage('');
         setAlertClass('alert-danger');
       }
     }
@@ -72,26 +73,22 @@ const UpdatePasswordForm = () => {
             }
             <div className="mb-3">
               <label htmlFor="newPassword" className="form-label">New Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="newPassword"
-
+             
+               <Input.Password
+                className=""
+                placeholder='Enter New Password'
                 onChange={(e) => setPassword(e.target.value)}
-
-              />
+               />
               {errors.password && <span className='error'>{errors.password}</span>}
             </div>
             <div className="mb-3">
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="confirmPassword"
-
+             
+              <Input.Password
+                className=""
+                placeholder='Confirm Your Password'
                 onChange={(e) => setConfirmPassword(e.target.value)}
-
-              />
+               />
               {errors.confirm_password && <span className='error'>{errors.confirm_password}</span>}
             </div>
             <button type="submit" className="btn btn-primary">Change Password</button>

@@ -3,30 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Services = () => {
-  const user = useSelector((state) => state.userAuth);
-  const isAuthenticUser = user && user.isAuthenticated;
-  const isPasswordSet = user && user.user && user.user.is_password_set;
-  const navigate = useNavigate();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (isAuthenticUser) {
-      if (isPasswordSet) {
-        navigate("/dashboard");
-      } else {
-        navigate("/set-password");
-      }
-    } else {
-      navigate('/login');
-    }
-  }
 
   return (
     <div id="services">
       <h1 className="fs-2 lh-base text-center pt-5">Services</h1>
       <div className="container mt-5 pb-5">
         <div className="row gy-4">
-          <div className="col-lg-6" onClick={handleClick}>
+          <div className="col-lg-6">
             <div className="d-flex mb-4">
               <div className="small-hr"></div>
               <div className="big-hr"></div>
@@ -46,7 +29,7 @@ const Services = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6" onClick={handleClick}>
+          <div className="col-lg-6">
             <div className="d-flex mb-4">
               <div className="small-hr"></div>
               <div className="big-hr"></div>
@@ -67,7 +50,7 @@ const Services = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6" onClick={handleClick}>
+          <div className="col-lg-6">
             <div className="d-flex mb-4">
               <div className="small-hr"></div>
               <div className="big-hr"></div>
@@ -89,7 +72,7 @@ const Services = () => {
             </div>
             
           </div>
-          <div className="col-lg-6" onClick={handleClick}>
+          <div className="col-lg-6">
             <div className=" d-flex mb-4">
               <div className="small-hr"></div>
               <div className="big-hr"></div>

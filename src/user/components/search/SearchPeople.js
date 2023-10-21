@@ -38,7 +38,7 @@ const SearchPeople = () => {
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(100);
+  const [totalRows, setTotalRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const SearchPeople = () => {
   }, [items]);
 
   const fetchMoreData = () => {
+    console.log("Hello")
     if (!isLoading && items.length < totalRows) {
       search(searchText, page + 1, 20, state, city);
       setPage(page + 1);
@@ -56,7 +57,7 @@ const SearchPeople = () => {
 
   useEffect(() => {
     search(searchText, page, 20);
-  }, []);
+  }, [page]);
 
 
   const handleFilterClicked = () => {
@@ -90,41 +91,7 @@ const SearchPeople = () => {
   };
 
   const handleGoButtonClick = async () => {
-    const queryParams = {
-      q: searchText,
-      page,
-      size: 20,
-      state: selectedState ? selectedState.label : "",
-      city: selectedCity ? selectedCity.label : "",
-      // Add other modal fields to the queryParams
-    };
-
-    // Construct the query string from the queryParams object
-    const queryString = new URLSearchParams(queryParams).toString();
-
-    // Do something with the query string (e.g., redirect to a new URL)
-    try {
-      const response = await searchWithCityState(queryString);
-      if (response.data.data.length === 0) {
-        setIssearchingPerformed(false);
-      }
-      if (response.data.data.length !== 0) {
-        setItems(response.data.data);
-      } else {
-        setItems([]);
-      }
-      setCity(selectedCity.label ? selectedCity.label : city);
-      setState(selectedState.label ? selectedState.label : state);
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        navigate("/login");
-      }
-    }
+    setIsFilter(true);
   };
 
   const getAllStates = async () => {
@@ -169,26 +136,22 @@ const SearchPeople = () => {
       const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
 
       if (response && response.status === 200) {
-        if (response.data.data.length === 0) {
+        setTotalRows(response.data.data.totalFilteredRecords);
+        if (response.data.data.users.length === 0) {
           setIssearchingPerformed(false);
         }
         if (searchText) {
-          if (response.data.data.length !== 0) {
-            setItems(response.data.data);
+          if (response.data.data.users.length !== 0) {
+            setItems(response.data.data.users);
+            setTotalRows(response.data.data.totalFilteredRecords);
           } else {
-            setItems([...response.data.data]);
+            setItems([...response.data.data.users]);
+            setTotalRows(response.data.data.totalFilteredRecords);
           }
 
 
         } else {
-          const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
-
-          if (response.data.data.length !== 0) {
-            setItems([...response.data.data]);
-          } else {
-            setItems([...items, ...response.data.data]);
-
-          }
+          setItems([...items, ...response.data.data.users]);
         }
 
       }
@@ -221,9 +184,8 @@ const SearchPeople = () => {
   }, [user]);
 
   useEffect(() => {
-    setPage(1);
     search(searchText, page, 20);
-  }, [searchText]);
+  }, [searchText,isFilter]);
 
   useEffect(() => {
     // Check if selectedCountry is already set

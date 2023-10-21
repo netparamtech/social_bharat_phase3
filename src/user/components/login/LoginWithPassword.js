@@ -124,11 +124,14 @@ const LoginWithPassword = (props) => {
                       placeholder="Enter Password"
                       className="form-control"
                       onChange={handlePasswordChange}
+                      
                     />
+                    
                     {errors.password && (
                       <span className="error">{errors.password}</span>
                     )}
                   </div>
+                
                   <div className="row mb-3">
                     <button type="submit" className="btn btn-primary">
                       Login With Password

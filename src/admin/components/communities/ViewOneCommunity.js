@@ -42,18 +42,22 @@ const ViewOneCommunity = () => {
                     <label className="fw-bold">Thumbnail Image :</label>
                   </div>
                   <div className="col-6">
+                  <div className="card w-100 mx-auto p-3">
                     <img
                       src={data && data[0].banner_image}
                       className="img-fluid"
                       alt="Banner"
                     />
+                    </div>
                   </div>
                   <div className="col-6 text-center">
+                  <div className="card w-50 mx-auto p-3">
                     <img
                       src={data && data[0].thumbnail_image}
                       className="img-fluid"
                       alt="Banner"
                     />
+                    </div>
                   </div>
                 </div>
 
@@ -61,7 +65,7 @@ const ViewOneCommunity = () => {
                 <div className="col-12"> 
                   <label className="fw-bold text-black">Community Content :</label>
                 </div>
-                <div className=""
+                <div className="card shadow px-5 pb-3"
                   dangerouslySetInnerHTML={{
                     __html: data[0].community_archive,
                   }}

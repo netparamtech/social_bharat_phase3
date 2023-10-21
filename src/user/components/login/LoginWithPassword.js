@@ -104,7 +104,7 @@ const LoginWithPassword = (props) => {
                       name="mobile"
                       id="mobile"
                       placeholder="Enter your mobile number"
-                      className="form-control"
+                      className="input-height"
                       maxLength="10" // Limit to 10 characters
                       onInput={(e) => {
                         // Trim the input to 10 characters
@@ -123,7 +123,7 @@ const LoginWithPassword = (props) => {
                       name="password"
                       id="password"
                       placeholder="Enter Password"
-                      className="form-control"
+                      className="input-height"
                       onChange={handlePasswordChange}
                       
                     />

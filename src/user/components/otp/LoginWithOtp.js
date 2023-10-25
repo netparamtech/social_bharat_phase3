@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../actions/userAction";
 import { mobileVarified, resendOtp } from "../../services/userService";
+import { Input } from "antd";
 
 const LoginWithOtp = (props) => {
   const { mobile, message } = props;
@@ -135,7 +136,7 @@ const LoginWithOtp = (props) => {
     <>
       <form className="w-100 w-lg-75" onSubmit={handleVarifiedClicked}>
         <div className="row mb-3">
-          <input
+          <Input
             type="number"
             name="mobile"
             id="mobile"

@@ -95,7 +95,7 @@ const BodyContent = () => {
                     <Statistic
                       title={
                         <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                        <a href="/admin/enquiries" className="text-success stretched-link">
+                        <a className="text-success stretched-link" onClick={()=>navigate('/admin/enquiries')}>
                         ENQUIRES
                         </a> 
                         </span>
@@ -130,7 +130,7 @@ const BodyContent = () => {
                         <Statistic
                           title={
                             <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                            <a href="/admin/users" className="text-info stretched-link">
+                            <a className="text-info stretched-link" onClick={()=> navigate('/admin/users')}>
                             MATRIMONIALS
                             </a> 
                             </span>
@@ -181,7 +181,7 @@ const BodyContent = () => {
                       <Statistic
                         title={
                             <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                            <a href="/admin/event/index" className="text-warning stretched-link">
+                            <a className="text-warning stretched-link" onClick={()=>navigate('/admin/event/index')}>
                             Total Events
                             </a> 
                             </span>

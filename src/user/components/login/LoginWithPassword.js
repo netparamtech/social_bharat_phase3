@@ -36,6 +36,7 @@ const LoginWithPassword = (props) => {
 
       if (response && response.status === 200) {
         setErrors("");
+        setMessage('');
 
         dispatch(login(response.data.data, response.data.token));
 
@@ -48,7 +49,7 @@ const LoginWithPassword = (props) => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setMessage(error.response.data.message);
+        setMessage('');
         setAlertClass("alert-danger");
       } else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
@@ -103,7 +104,7 @@ const LoginWithPassword = (props) => {
                       type="number"
                       name="mobile"
                       id="mobile"
-                      placeholder="Enter your mobile number"
+                      placeholder="Enter mobile number"
                       className="input-height"
                       maxLength="10" // Limit to 10 characters
                       onInput={(e) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { attemptLoginWithMobile } from '../../services/userService';
 import LoginWithOtp from '../otp/LoginWithOtp';
+import { Input } from 'antd';
 
 const LoginWithMobile = (props) => {
 
@@ -74,12 +75,12 @@ const LoginWithMobile = (props) => {
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
-                        <input
+                        <Input
                           type="number"
                           name="mobile"
                           id="mobile"
                           placeholder="Enter your mobile number"
-                          className="form-control"
+                          className="input-height"
                           maxLength="10" // Limit to 10 characters
                           onInput={(e) => {
                             // Trim the input to 10 characters

@@ -40,6 +40,7 @@ const SearchPeople = () => {
   const [page, setPage] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   useEffect(() => {
     if (items.length > 0) {
@@ -135,25 +136,35 @@ const SearchPeople = () => {
       const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
 
       if (response && response.status === 200) {
+        setServerError('');
         setTotalRows(response.data.data.totalFilteredRecords);
         if (response.data.data.users.length === 0) {
           setIssearchingPerformed(false);
         }
         if (searchText) {
           if (response.data.data.users.length !== 0) {
-            setItems(response.data.data.users);
+            setItems([...new Set([...response.data.data.users])]);
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
             setItems([...response.data.data.users]);
             setTotalRows(response.data.data.totalFilteredRecords);
           }
 
-
         } else {
-          if(isGoClick){
+          if (isGoClick) {
             setItems([...response.data.data.users]);
           } else {
-            setItems([...items, ...response.data.data.users]);
+            const combinedItems = [...items, ...response.data.data.users];
+            const uniqueItems = [];
+
+            for (const item of combinedItems) {
+              if (!uniqueItems.some((u) => u.id === item.id)) {
+                uniqueItems.push(item);
+              }
+            }
+
+            setItems(uniqueItems);
+
           }
         }
       }
@@ -164,30 +175,33 @@ const SearchPeople = () => {
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
 
   const age = (dob) => {
-    const dobDate = new Date(dob);
-    const currentDate = new Date();
+    if (dob !== null) {
+      const dobDate = new Date(dob);
+      const currentDate = new Date();
 
-    // Calculate the age in years
-    const ageInMilliseconds = currentDate - dobDate;
-    const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
-
-    return ageInYears;
+      // Calculate the age in years
+      const ageInMilliseconds = currentDate - dobDate;
+      const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
+      return ageInYears;
+    } else {
+      return "N/A"
+    }
   }
 
   useEffect(() => {
     setState(user && user.user && user.user.native_place_state ? user.user.native_place_state : '');
     setCity(user && user.user && user.user.native_place_city ? user.user.native_place_city : '');
-  }, [user,isFilter]);
+  }, [user, isFilter]);
 
   useEffect(() => {
     search(searchText, page, 20);
-  }, [searchText, isGoClick,page,state]);
+  }, [searchText, isGoClick, page, state]);
 
   useEffect(() => {
     setPage(1);
@@ -201,10 +215,10 @@ const SearchPeople = () => {
   }, [selectedCountry]);
 
   const groupedItems = [];
-for (let i = 0; i < items.length; i += 2) {
-  const pair = items.slice(i, i + 2); // Change 3 to 2 here
-  groupedItems.push(pair);
-}
+  for (let i = 0; i < items.length; i += 2) {
+    const pair = items.slice(i, i + 2); // Change 3 to 2 here
+    groupedItems.push(pair);
+  }
 
 
   return (
@@ -212,6 +226,7 @@ for (let i = 0; i < items.length; i += 2) {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
             <div>
               <h5 className="fw-3 mb-3 ">Search People</h5>
             </div>
@@ -293,38 +308,40 @@ for (let i = 0; i < items.length; i += 2) {
                 hasMore={items.length < totalRows}
                 loader={isLoading && <h4>Loading...</h4>}
               >
-                {groupedItems.map((pair, index) => (
-                  <div className="row" key={index}>
-                    {pair.map((item, innerIndex) => (
-                      <div className="col-md-4" key={innerIndex}>
-                        <div className="card shadow mb-2">
-                          <div className="card-body">
-                            <div className="row">
-                              <div className="col-4">
-                                <img
-                                  src={item.photo ? item.photo : defaultImage}
-                                  alt={item.name}
-                                  title={item.name}
-                                  className="avatar img-fluid img-circle"
-                                />
-                              </div>
-                              <div className="col-4 user-detail">
-                                <p>Name-{item.name}</p>
-                                <p>Age-{age(item.dob)}{" "}Years</p>
-                                <p>City-{item.native_place_city}</p>
-                                <p>
-                                  {item.native_place_state
-                                    ? `(${item.native_place_state})`
-                                    : ""}
-                                </p>
+                <div className="container pw-20">
+                  {groupedItems.map((pair, index) => (
+                    <div className="row" key={index}>
+                      {pair.map((item, innerIndex) => (
+                        <div className="col-md-6" key={innerIndex}>
+                          <div className="card shadow mb-2">
+                            <div className="card-body">
+                              <div className="row">
+                                <div className="col-4">
+                                  <img
+                                    src={item.photo ? item.photo : defaultImage}
+                                    alt={item.name}
+                                    title={item.name}
+                                    className="avatar img-fluid img-circle"
+                                  />
+                                </div>
+                                <div className="col-4 user-detail">
+                                  <p>Name-{item.name}</p>
+                                  <p>Age-{age(item.dob)}{" "}Years</p>
+                                  <p>City-{item.native_place_city}</p>
+                                  <p>
+                                    {item.native_place_state
+                                      ? `(${item.native_place_state})`
+                                      : ""}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </InfiniteScroll>
             </div>
           </div>

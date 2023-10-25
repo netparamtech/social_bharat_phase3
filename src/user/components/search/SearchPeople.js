@@ -59,6 +59,9 @@ const SearchPeople = () => {
 
   const handleFilterClicked = () => {
     setIsFilter(!isFilter ? true : false);
+    setIsGoClick(false);
+    setSelectedState('');
+    setSelectedCity('');
   };
 
   const handleStateChange = (selectedOption) => {

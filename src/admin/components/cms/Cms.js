@@ -73,27 +73,6 @@ const Cms = () => {
     setEditorState(editorState);
   };
 
-  const createCMS = async () => {
-    try {
-      const response = await updateCMS();
-      if (response && response.status === 200) {
-
-      }
-    } catch (error) {
-      // Handle validation errors
-      if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
-      }
-      // Unauthorized
-      else if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage } });
-      }
-    }
-  }
-
   const updateRowData = (index, key, value) => {
     const updatedRowData = [...items];
     if (!updatedRowData[index]) {

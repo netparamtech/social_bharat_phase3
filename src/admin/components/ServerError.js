@@ -25,7 +25,7 @@ const ServerError = ({ errorMessage }) => {
           <p>Error Message: {errorMessage || "Oops! Something went wrong on our server."}</p>
           {
             errorMessage === 'userId is not defined' ? (
-              <Button className="errorButtonServerError" type="primary" onClick={navigate('/admin')}>
+              <Button className="errorButtonServerError" type="primary" onClick={()=>navigate('/admin')}>
                 Need to Logout
               </Button>) : (
               <Button className="errorButtonServerError" type="primary" onClick={handleGoBack}>

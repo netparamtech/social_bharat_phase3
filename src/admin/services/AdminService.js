@@ -537,3 +537,13 @@ export const fetchAllSetting = async () => {
         throw error;
     }
 }
+
+//cms(create or update)
+export const updateCMS = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/cms/create',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

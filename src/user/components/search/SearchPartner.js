@@ -142,6 +142,7 @@ const SearchPartner = () => {
       const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
 
       if (response && response.status === 200) {
+        setServerError('');
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
@@ -172,7 +173,7 @@ const SearchPartner = () => {
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };

@@ -54,6 +54,7 @@ nav .nav-item .btn {
   transition: background-color 0.3s, color 0.3s;
 }
 
+
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus {
   background-color: #ffffff;
@@ -121,10 +122,10 @@ nav .nav-item .btn {
   color: #ffffff !important;
 }
 
-.navbar-transparent .navbar-nav .nav-link:active{
+/* .navbar-transparent .navbar-nav .nav-link:active{
   background-color: #008374;
   color: #ffffff !important;
-}
+} */
 
 .navbar-transparent .navbar-brand {
   color: rgba(255, 255, 255, 1);
@@ -1305,6 +1306,20 @@ input[type="number"] {
   font-size: 16px;
   outline: none;
 }
+
+/* on page active */
+.navbar-transparent .nav-link.active {
+  color: #008374 !important; 
+}
+
+.navbar-transparent .nav-link.inactive {
+  color: #008374 !important; /* Change this to your desired color for inactive links */
+  transition: color 0.3s !important; /* Add a transition effect for smooth color change */
+  opacity: 0.5;
+}
+
+
+
 
 
 

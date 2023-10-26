@@ -26,20 +26,18 @@ const NavbarTransparent = () => {
   const handleHomeClicked = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-    if(isAuthenticUser){
-      navigate('/dashboard')
+    if (isAuthenticUser) {
+      navigate("/dashboard");
     } else {
-      navigate('/');
+      navigate("/");
     }
-   
-  }
+  };
 
   const handleAboutClick = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
-    navigate('/about');
-
-  }
+    navigate("/about");
+  };
 
   const handleEventClick = (e) => {
     e.preventDefault();
@@ -51,10 +49,9 @@ const NavbarTransparent = () => {
         navigate("/set-password");
       }
     } else {
-      navigate('/login')
+      navigate("/login");
     }
-
-  }
+  };
 
   const handleContactClicked = (e) => {
     e.preventDefault();
@@ -70,18 +67,18 @@ const NavbarTransparent = () => {
       }
     } else {
       // Check if the current page is the home page
-      const isHomePage = window.location.pathname === '/';
+      const isHomePage = window.location.pathname === "/";
 
       if (!isHomePage) {
         e.preventDefault();
-        navigate('/login');
+        navigate("/login");
         return;
       }
 
       // Scroll to the "Services" section on the home page
-      const servicesSection = document.getElementById('services');
+      const servicesSection = document.getElementById("services");
       if (servicesSection) {
-        servicesSection.scrollIntoView({ behavior: 'smooth' });
+        servicesSection.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
@@ -103,7 +100,7 @@ const NavbarTransparent = () => {
       else if (error.response && error.response.status === 500) {
       }
     }
-  }
+  };
 
   useEffect(() => {
     fetchSettings();
@@ -128,7 +125,7 @@ const NavbarTransparent = () => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" href="/">
-          <img src={data&&data.logo1} alt="Logo" />
+          <img src={data && data.logo1} alt="Logo" />
         </a>
 
         <a>
@@ -150,26 +147,37 @@ const NavbarTransparent = () => {
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a
-                className="nav-link active"
-                aria-current="page"
+                className={`nav-link ${
+                  window.location.pathname === "/" ? "active" : "inactive"
+                }`}
                 onClick={handleHomeClicked}
               >
                 Home
               </a>
             </li>
-
             <li className="nav-item">
-              <a className="nav-link" onClick={handleServiceClick}>
+              <a
+                className={`nav-link ${
+                  window.location.pathname === "/service" ||
+                  window.location.pathname === "/dashboard"
+                    ? "active"
+                    : "inactive"
+                }`}
+                onClick={handleServiceClick}
+              >
                 Services
               </a>
             </li>
-
             <li className="nav-item">
-              <a className="nav-link" onClick={handleContactClicked}>
+              <a
+                className={`nav-link ${
+                  window.location.pathname === "/contact" ? "active" : "inactive"
+                }`}
+                onClick={handleContactClicked}
+              >
                 Contact
               </a>
             </li>
-
             <li className="nav-item">
               {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
             </li>
@@ -231,21 +239,23 @@ const NavbarTransparent = () => {
                 </li>
 
                 <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleServiceClick} >
-                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>Services
+                  <a className="nav-link" onClick={handleServiceClick}>
+                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                    Services
                   </a>
                 </li>
 
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleContactClicked}>
-                    <i className='fas fa-address-book m-2'></i>Contact
+                    <i className="fas fa-address-book m-2"></i>Contact
                   </a>
                 </li>
 
                 <li className="nav-item mt-2">
                   {isAuthenticUser && isAuthenticUser ? (
                     <a className="nav-link">
-                      <i className="fa fa-search m-2 " aria-hidden="true"></i><UserSearchDropdown />
+                      <i className="fa fa-search m-2 " aria-hidden="true"></i>
+                      <UserSearchDropdown />
                     </a>
                   ) : (
                     ""
@@ -254,10 +264,9 @@ const NavbarTransparent = () => {
 
                 {isAuthenticUser && isAuthenticUser ? (
                   <li className="nav-item mt-2">
-                    <a
-                      onClick={() => navigate("/login")}
-                    >
-                      <i className="fa fa-sign-out m-2" aria-hidden="true"></i>Log out
+                    <a onClick={() => navigate("/login")}>
+                      <i className="fa fa-sign-out m-2" aria-hidden="true"></i>
+                      Log out
                     </a>
                   </li>
                 ) : (
@@ -268,8 +277,6 @@ const NavbarTransparent = () => {
                     </a>
                   </li>
                 )}
-
-
               </ul>
             </div>
           </Drawer>

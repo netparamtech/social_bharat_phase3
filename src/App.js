@@ -4,8 +4,6 @@ import userRoutes from './user/routes';
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";
 import UserProtectedRoute from "./user/util/UserProtectedRoute";
-import { useDispatch } from "react-redux";
-import { setLoader } from "./user/actions/loaderAction";
 
 function App() {
  

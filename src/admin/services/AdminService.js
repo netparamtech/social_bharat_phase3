@@ -547,3 +547,13 @@ export const updateCMS = async (data) => {
         throw error;
     }
 }
+
+//fetch single page cms
+export const fetchSinglePageCMS = async (page) => {
+    try {
+        const response = await apiWithHeaders.get(`/cms/pages/${page}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

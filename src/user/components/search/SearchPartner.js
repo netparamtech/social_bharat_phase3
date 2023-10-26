@@ -146,23 +146,27 @@ const SearchPartner = () => {
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if (searchText) {
-          if (response.data.data.length !== 0) {
-            setItems(response.data.data);
+        if (searchText&&isSaveClicked||isSaveClicked||searchText) {
+          if (response.data.data.users.length !== 0) {
+            setItems([...new Set([...response.data.data.users])]);
+            setTotalRows(response.data.data.totalFilteredRecords);
           } else {
-            setItems([...response.data.data]);
+            setItems([...response.data.data.users]);
+            setTotalRows(response.data.data.totalFilteredRecords);
           }
-
 
         } else {
-          const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
+          const combinedItems = [...items, ...response.data.data.users];
+          const uniqueItems = [];
 
-          if (response.data.data.length !== 0) {
-            setItems([...response.data.data]);
-          } else {
-            setItems([...items, ...response.data.data]);
-
+          for (const item of combinedItems) {
+            if (!uniqueItems.some((u) => u.id === item.id)) {
+              uniqueItems.push(item);
+            }
           }
+
+          setItems(uniqueItems);
+
         }
 
       }
@@ -192,7 +196,8 @@ const SearchPartner = () => {
   };
 
   const handleCancelClick = () => {
-    setCommunity_id("");
+    setCommunity_id(user && user.user && user.user.community_id);
+    setIsSaveClicked(false);
     setCast("");
     setGender("");
     setSelectedState("");
@@ -202,6 +207,25 @@ const SearchPartner = () => {
     setSearchText("");
     setCommunityName("");
   };
+  const handleCloseClick = () => {
+    handleCancelClick();
+    // Call the search function with appropriate parameters
+    // For example:
+    search(
+      searchText,
+      page,
+      20,
+      community_id,
+      state,
+      city,
+      gender,
+      gotra,
+      cast
+    );
+  };
+  const handlePreferenceClick = () => {
+    setIsSaveClicked(false);
+  }
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
@@ -228,8 +252,8 @@ const SearchPartner = () => {
   }, [items]);
 
   useEffect(() => {
-    setState(user && user.user && user.user.native_place_state);
-    setCity(user && user.user && user.user.native_place_city);
+    setState(user && user.user && user.user.native_place_state ? user.user.native_place_state : '');
+    setCity(user && user.user && user.user.native_place_city ? user.user.native_place_city : '');
   }, [user]);
 
   useEffect(() => {
@@ -271,7 +295,7 @@ const SearchPartner = () => {
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
-    const pair = items.slice(i, i + 3);
+    const pair = items.slice(i, i + 2); // Change 3 to 2 here
     groupedItems.push(pair);
   }
 
@@ -287,11 +311,11 @@ const SearchPartner = () => {
               </div>
               <div className=" col-md-5">
                 <a
-                  href=""
                   title="Filter"
-                  className="btn btn-primary btn-sm me-1  mb-2"
+                  className="btn btn-primary btn-sm me-1 mb-2 hover-pointer"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
+                  onClick={handlePreferenceClick}
                 >
                   <i className="fas fa-filter me-1 "></i>Preference
                 </a>
@@ -449,7 +473,7 @@ const SearchPartner = () => {
                       type="button"
                       className="btn btn-secondary"
                       data-bs-dismiss="modal"
-                      onClick={handleCancelClick}
+                      onClick={()=>handleCloseClick()}
                     >
                       Close
                     </button>
@@ -478,38 +502,6 @@ const SearchPartner = () => {
             </div>
 
             <div className="row">
-              {/* User Cards */}
-
-              {/* {data &&
-                data.map((item, idx) => (
-                  <div className="col-md-4" key={idx}>
-                    <div className="card shadow mb-2">
-                      <div className="card-body">
-                        <div className="row">
-                          <div className="col-4">
-                            <img
-                              src={item.photo ? item.photo : defaultImage}
-                              alt={item.name}
-                              title={item.name}
-                              className="avatar img-fluid img-circle "
-                            />
-                          </div>
-                          <div className="col-8 user-detail">
-                            <p>{item.name}</p>
-                            <p className="text-muted">{item.father_name}</p>
-                            <p className="text-muted">
-                              {item.native_place_city}
-                            </p>
-                            <p className="text-muted">
-                              {item.native_place_state}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))} */}
-
               <InfiniteScroll
                 style={{ overflowX: "hidden" }}
                 dataLength={items.length}
@@ -520,7 +512,7 @@ const SearchPartner = () => {
                 {groupedItems.map((pair, index) => (
                   <div className="row" key={index}>
                     {pair.map((item, innerIndex) => (
-                      <div className="col-md-4" key={innerIndex}>
+                      <div className="col-md-6" key={innerIndex}>
                         <div className="card shadow mb-2">
                           <div className="card-body">
                             <div className="row">
@@ -534,7 +526,9 @@ const SearchPartner = () => {
                               </div>
                               <div className="col-8 user-detail">
                                 <p>Name-{item.name}</p>
+                                <p>Father Name-{item.father_name?item.father_name:"N/A"}</p>
                                 <p>Age-{age(item.dob)}{" "}Years</p>
+                                <p>Cast-{item.cast?item.cast:"N/A"}</p>
                                 <p>City-{item.native_place_city}</p>
                                 <p>
                                   {item.native_place_state

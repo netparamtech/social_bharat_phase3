@@ -1306,5 +1306,11 @@ input[type="number"] {
   outline: none;
 }
 
+/* In your CSS file or inline styles */
+.nav-link.active {
+  color: #ff0000 !important; /* Change this to your desired color */
+}
+
+
 
 

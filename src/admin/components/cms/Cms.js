@@ -13,22 +13,22 @@ const Cms = () => {
   const [editorStates, setEditorStates] = useState([EditorState.createEmpty()]);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  const [page, setPage] = useState('');
+  const [page, setPage] = useState("");
   const [about, setAbout] = useState({
-    title: '',
-    subtitle: '',
-    sectionContent: '',
-    images: []
+    title: "",
+    subtitle: "",
+    sectionContent: "",
+    images: [],
   });
-  const [serviceTitle, setServiceTitle] = useState('');
+  const [serviceTitle, setServiceTitle] = useState("");
   const [services, setServices] = useState({
-    sectionTitle: '',
-    items: []
-  })
+    sectionTitle: "",
+    items: [],
+  });
 
-  const [errors, setErrors] = useState('');
-  const [message, setMessage] = useState('');
-  const [alertClass, setAlertClass] = useState('');
+  const [errors, setErrors] = useState("");
+  const [message, setMessage] = useState("");
+  const [alertClass, setAlertClass] = useState("");
 
   const [items, setItems] = useState([]);
 
@@ -38,10 +38,10 @@ const Cms = () => {
     { value: "fas fa-star", label: "Star" },
     { value: "fas fa-heart", label: "Heart" },
     { value: "fas fa-thumbs-up", label: "Thumbs Up" },
-    {value: "fa-solid fa-handshake-simple", label: "Handshake"},
-    {value: "fa-solid fa-ring", label: "Ring"},
-    {value: "fa-sharp fa-solid fa-briefcase fa-2xl", label: "Briefcase"},
-    {value: "fa-solid fa-list", label: "List"},
+    { value: "fa-solid fa-handshake-simple", label: "Handshake" },
+    { value: "fa-solid fa-ring", label: "Ring" },
+    { value: "fa-sharp fa-solid fa-briefcase fa-2xl", label: "Briefcase" },
+    { value: "fa-solid fa-list", label: "List" },
 
     // Add more icons as needed
   ];
@@ -51,15 +51,10 @@ const Cms = () => {
     setAbout({ ...about, [name]: value });
   };
 
-
-
   const addRow = () => {
     setNumRows(numRows + 1);
     setEditorStates([...editorStates, EditorState.createEmpty()]);
   };
-
-
-
 
   const navigate = useNavigate();
 
@@ -104,31 +99,31 @@ const Cms = () => {
         page: "Home",
         about,
         services,
-      }
+      };
       const response = await updateCMS(data);
       if (response && response.status === 200) {
-        setErrors('');
+        setErrors("");
         setMessage(response.data.message);
-        setAlertClass('alert-success');
+        setAlertClass("alert-success");
         window.scrollTo(0, 0);
-        setTimeout(()=>{
-          setMessage('');
-        },2000);
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
       }
       console.log(itemsWithEditorState, about); // Print the data including editor state to the console
     } catch (error) {
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setMessage('');
-        setAlertClass('');
+        setMessage("");
+        setAlertClass("");
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage } });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
@@ -136,11 +131,16 @@ const Cms = () => {
 
   return (
     <>
-      {message && <div className={`alert ${alertClass}`}>
-        {alertClass === 'alert-success' ? (<i className="fas fa-check-circle"></i>) : (<i className="fas fa-exclamation-triangle"></i>)}
-        {" " + message}
-      </div>
-      }
+      {message && (
+        <div className={`alert ${alertClass}`}>
+          {alertClass === "alert-success" ? (
+            <i className="fas fa-check-circle"></i>
+          ) : (
+            <i className="fas fa-exclamation-triangle"></i>
+          )}
+          {" " + message}
+        </div>
+      )}
       <Collapse idaccordion className="mb-3">
         <Panel
           header={<label className="text-primary">What Social Bharat Do</label>}
@@ -213,8 +213,12 @@ const Cms = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-center">
-                <button type="button" className="btn btn-primary mx-auto  " onClick={handleSubmit}>
+              <div className="ps-4">
+                <button
+                  type="button"
+                  className="btn btn-primary w-25"
+                  onClick={handleSubmit}
+                >
                   Save
                 </button>
               </div>
@@ -224,13 +228,16 @@ const Cms = () => {
       </Collapse>
 
       <Collapse idaccordion className="mb-3">
-        <Panel
-          header={<label className="text-primary">Service</label>}
-        >
+        <Panel header={<label className="text-primary">Service</label>}>
           <div>
-            <div className="row ps-3 mb-3">
-              <div className="col-md-12">
+            <div className="row ps-4 mb-3">
+              <div className="col-md-10">
                 <label className="fw-bold">Section Title</label>
+              </div>
+              <div className="col-md-2 mb-2">
+                <button type="button" className="btn btn-outline-primary" title="Add More " onClick={addRow}>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
               </div>
               <div className="col-md-12">
                 <input
@@ -240,7 +247,7 @@ const Cms = () => {
                 />
               </div>
             </div>
-            <Divider />
+
             {Array.from({ length: numRows }, (_, index) => (
               <div className="row" key={index}>
                 <form>
@@ -279,7 +286,7 @@ const Cms = () => {
                       <div className="col-md-12">
                         <label className="fw-bold">Section Icon</label>
                       </div>
-                      <div className="col-md-10 form-group">
+                      <div className="col-md-12 form-group">
                         <Select
                           options={iconOptions}
                           onChange={(selectedOption) =>
@@ -287,22 +294,22 @@ const Cms = () => {
                           }
                         />
                       </div>
-
-                    </div>
-                    <div>
-                      <button type="button" className="m-3" onClick={addRow}><i class="fa fa-plus" aria-hidden="true"></i></button>
                     </div>
                   </div>
-                  <Divider />
-                  <div className="text-center">
-                    <button type="button" className="btn btn-primary mx-auto  " onClick={handleSubmit}>
+
+                  <div className="ps-4">
+                    <button
+                      type="button"
+                      className="btn btn-primary w-25"
+                      onClick={handleSubmit}
+                    >
                       Save
                     </button>
                   </div>
+                  <Divider />
                 </form>
               </div>
             ))}
-
           </div>
         </Panel>
       </Collapse>

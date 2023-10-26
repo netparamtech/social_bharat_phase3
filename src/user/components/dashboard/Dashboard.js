@@ -144,7 +144,7 @@ const Dashboard = () => {
                 </a>*/}
 
                 <a
-                  className="text-white hover-pointer"
+                  className="text-white hover-pointer stretched-link"
                   onClick={() => navigate("/event")}
                 >
                   Create Event{" "}
@@ -178,7 +178,7 @@ const Dashboard = () => {
 </a>
 */}
                 <a
-                  className="text-white hover-pointer"
+                  className="text-white hover-pointer stretched-link"
                   onClick={() => navigate("/user/update-job-profile")}
                 >
                   Post New Job

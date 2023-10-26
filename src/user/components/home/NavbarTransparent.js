@@ -148,7 +148,7 @@ const NavbarTransparent = () => {
             <li className="nav-item">
               <a
                 className={`nav-link ${
-                  window.location.pathname === "/" ? "active" : ""
+                  window.location.pathname === "/" ? "active" : "inactive"
                 }`}
                 onClick={handleHomeClicked}
               >
@@ -161,7 +161,7 @@ const NavbarTransparent = () => {
                   window.location.pathname === "/service" ||
                   window.location.pathname === "/dashboard"
                     ? "active"
-                    : ""
+                    : "inactive"
                 }`}
                 onClick={handleServiceClick}
               >
@@ -171,7 +171,7 @@ const NavbarTransparent = () => {
             <li className="nav-item">
               <a
                 className={`nav-link ${
-                  window.location.pathname === "/contact" ? "active" : ""
+                  window.location.pathname === "/contact" ? "active" : "inactive"
                 }`}
                 onClick={handleContactClicked}
               >

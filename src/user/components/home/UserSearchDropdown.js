@@ -89,7 +89,7 @@ const UserSearchDropdown = () => {
             window.location.pathname === "/user/search/business" ||
             window.location.pathname === "/user/search/partner"
               ? "active"
-              : ""
+              : "inactive"
           }`}
         >
           Search

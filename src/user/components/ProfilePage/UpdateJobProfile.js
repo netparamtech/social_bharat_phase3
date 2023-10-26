@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { updateJobDetail } from '../../services/userService';
 import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
 import { useNavigate } from 'react-router-dom';
+import { setLoader } from '../../actions/loaderAction';
+import { useDispatch } from 'react-redux';
 
 const UpdateJobProfile = (props) => {
   const { jobDetails } = props;
@@ -16,9 +18,11 @@ const UpdateJobProfile = (props) => {
   const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
 
     // Map the selected job type back to "PART_TYPE" or "FULL_TYPE"
     const mappedJobType =
@@ -39,11 +43,13 @@ const UpdateJobProfile = (props) => {
     try {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
+        dispatch(setLoader(false));
         setErrors('');
         setServerError('');
         navigate('/profile');
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);

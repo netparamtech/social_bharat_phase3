@@ -65,7 +65,6 @@ const Footer = () => {
     try {
       const response = await fetchAllSiteSettings();
       setData(response.data.data);
-      console.log(response.data.data.social_twitter_link);
       setServerError("");
     } catch (error) {
       //Unauthorized

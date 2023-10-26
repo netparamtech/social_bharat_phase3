@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
 import { Input } from "antd";
+import { setLoader } from "../../actions/loaderAction";
 
 const LoginWithPassword = (props) => {
+  
   const { chnageFlag } = props;
 
   const [mobile, setMobile] = useState("");
@@ -28,12 +30,12 @@ const LoginWithPassword = (props) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    dispatch(setLoader(true))
     event.preventDefault();
     const cleanMobile = mobile.replace(/^0+/, '');
 
     try {
       const response = await loginWithPassword(cleanMobile, password);
-
       if (response && response.status === 200) {
         setErrors("");
         setMessage('');
@@ -45,6 +47,7 @@ const LoginWithPassword = (props) => {
         } else {
           navigate("/setPassword");
         }
+        dispatch(setLoader(false))
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -126,14 +129,14 @@ const LoginWithPassword = (props) => {
                       placeholder="Enter Password"
                       className="input-height"
                       onChange={handlePasswordChange}
-                      
+
                     />
-                    
+
                     {errors.password && (
                       <span className="error">{errors.password}</span>
                     )}
                   </div>
-                
+
                   <div className="row mb-3">
                     <button type="submit" className="btn btn-primary">
                       Login With Password

@@ -33,6 +33,8 @@ import CmsPage from "./pages/cms/CmsPage";
 import TestEditorPage from "./pages/TestEditorPage";
 import ViewOneCommunityPage from "./pages/communities/ViewOneCommunityPage";
 import NewSidebar from "./components/Test/NewSidebar";
+import HomeCmsViewPage from "./pages/cms/HomeCmsViewPage";
+import UpdateCmsPage from "./pages/cms/UpdateCmsPage";
 
 const adminRoutes = [
     {
@@ -220,6 +222,18 @@ const adminRoutes = [
     {
         path: '/admin/cms',
         component: CmsPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/cms/update',
+        component: UpdateCmsPage,
+        exact:true
+    },
+
+    {
+        path: '/home/cms',
+        component: HomeCmsViewPage,
         exact:true
     },
 

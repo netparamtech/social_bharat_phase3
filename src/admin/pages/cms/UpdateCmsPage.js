@@ -3,8 +3,9 @@ import Cms from "../../components/cms/Cms";
 import { useEffect, useState } from "react";
 import { fetchSinglePageCMS } from "../../services/AdminService";
 import { useNavigate } from "react-router-dom";
+import UpdateCms from "../../components/cms/UpdateCms";
 
-const CmsPage = () => {
+const UpdateCmsPage = () => {
     const [homeCms, setHomeCms] = useState({});
     const navigate = useNavigate();
     const fetchCMS = async () => {
@@ -28,9 +29,9 @@ const CmsPage = () => {
     }, []);
     return (
         <AdminLayout>
-            <Cms homeCms = {homeCms} />
+            <UpdateCms homeCms = {homeCms} />
         </AdminLayout>
     );
 }
 
-export default CmsPage;
+export default UpdateCmsPage;

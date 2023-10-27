@@ -536,3 +536,13 @@ export const fetchCommunityWithNAME = async (name) => {
         throw error;
     }
 }
+
+//fetch single page cms
+export const fetchSinglePageCMS = async (page) => {
+    try {
+        const response = await apiConfig.get(`/pages/${page}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

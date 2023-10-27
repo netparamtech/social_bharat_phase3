@@ -1,10 +1,10 @@
+import { useNavigate } from "react-router-dom";
+import HomeViewCms from "../../components/cms/HomeCmsView";
 import AdminLayout from "../../layouts/AdminLayout";
-import Cms from "../../components/cms/Cms";
 import { useEffect, useState } from "react";
 import { fetchSinglePageCMS } from "../../services/AdminService";
-import { useNavigate } from "react-router-dom";
 
-const CmsPage = () => {
+const HomeCmsViewPage = () => {
     const [homeCms, setHomeCms] = useState({});
     const navigate = useNavigate();
     const fetchCMS = async () => {
@@ -26,11 +26,10 @@ const CmsPage = () => {
     useEffect(() => {
         fetchCMS();
     }, []);
-    return (
+    return(
         <AdminLayout>
-            <Cms homeCms = {homeCms} />
+            <HomeViewCms homeCms = {homeCms} />
         </AdminLayout>
     );
 }
-
-export default CmsPage;
+export default HomeCmsViewPage;

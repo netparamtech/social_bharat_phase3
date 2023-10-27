@@ -557,3 +557,14 @@ export const fetchSinglePageCMS = async (page) => {
         throw error;
     }
 }
+
+//Fetch All Pages Cms
+export const fetchAllPagesCMS = async () => {
+    try {
+        const response = await apiWithHeaders.get('/cms/pages');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+

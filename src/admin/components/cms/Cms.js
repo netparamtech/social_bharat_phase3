@@ -1,314 +1,178 @@
-import { Collapse, Divider } from "antd";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { updateCMS } from "../../services/AdminService";
-import Select from "react-select";
-import { data } from "jquery";
+import React, { useEffect, useState } from 'react';
+import { Table } from 'antd';
+import {
+  deleteCommunity,
+  fetchAllCommunity,
+  fetchAllPagesCMS,
+  updateCommunityStatus,
+} from "../../services/AdminService";
+import { useNavigate } from 'react-router-dom';
+import Search from 'antd/es/input/Search';
 
 const Cms = () => {
-  const [editorStates, setEditorStates] = useState([EditorState.createEmpty()]);
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  const [page, setPage] = useState("");
-  const [about, setAbout] = useState({
-    title: "",
-    subtitle: "",
-    sectionContent: "",
-    images: [],
-  });
-  const [serviceTitle, setServiceTitle] = useState("");
-  const [services, setServices] = useState({
-    sectionTitle: "",
-    items: [],
-  });
-
-  const [errors, setErrors] = useState("");
-  const [message, setMessage] = useState("");
-  const [alertClass, setAlertClass] = useState("");
-
-  const [items, setItems] = useState([]);
-
-  const [numRows, setNumRows] = useState(1);
-
-  const iconOptions = [
-    { value: "fas fa-star", label: "Star" },
-    { value: "fas fa-heart", label: "Heart" },
-    { value: "fas fa-thumbs-up", label: "Thumbs Up" },
-    { value: "fa-solid fa-handshake-simple", label: "Handshake" },
-    { value: "fa-solid fa-ring", label: "Ring" },
-    { value: "fa-sharp fa-solid fa-briefcase fa-2xl", label: "Briefcase" },
-    { value: "fa-solid fa-list", label: "List" },
-
-    // Add more icons as needed
-  ];
-
-  const handleAboutChange = (e) => {
-    const { name, value } = e.target;
-    setAbout({ ...about, [name]: value });
-  };
-
-  const addRow = () => {
-    setNumRows(numRows + 1);
-    setEditorStates([...editorStates, EditorState.createEmpty()]);
-  };
-
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+  const [defaultImage, setDefaultImage] = useState('img/en.jpg');
   const navigate = useNavigate();
 
-  const onEditorStateChanges = (editorState, index) => {
-    const updatedEditorStates = [...editorStates];
-    updatedEditorStates[index] = editorState;
-    setEditorStates(updatedEditorStates);
+  const handlePageChange = (page) => {
+    setPage(page);
   };
 
-  const onEditorStateChange = (editorState) => {
-    setEditorState(editorState);
+  const handlePageSizeChange = (current, pageSize) => {
+    setSize(pageSize);
   };
 
-  const updateRowData = (index, key, value) => {
-    const updatedRowData = [...items];
-    if (!updatedRowData[index]) {
-      updatedRowData[index] = {};
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    const newSortField = sorter.field || '';
+    let newSortOrder = sorter.order || '';
+
+    // If the same column is clicked again, toggle the sort order
+    if (sortField === newSortField) {
+      newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     }
-    updatedRowData[index][key] = value;
-    setItems(updatedRowData);
+
+    setSortField(newSortField);
+    setSortOrder(newSortOrder);
   };
 
-  const htmlFormet = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const rawContentState = convertToRaw(contentState);
-    const htmlContent = draftToHtml(rawContentState);
-    return htmlContent;
-  };
 
-  const handleSubmit = async () => {
+  const fetchData = async () => {
     try {
-      const itemsWithEditorState = items.map((row, index) => ({
-        ...row,
-        content: htmlFormet(editorStates[index]), // Include the editor state in the item
-      }));
-
-      about.sectionContent = htmlFormet(editorState);
-      services.sectionTitle = serviceTitle;
-      services.items = itemsWithEditorState;
-
-      const data = {
-        page: "Home",
-        about,
-        services,
-      };
-      const response = await updateCMS(data);
-      if (response && response.status === 200) {
-        setErrors("");
-        setMessage(response.data.message);
-        setAlertClass("alert-success");
-        window.scrollTo(0, 0);
-        setTimeout(() => {
-          setMessage("");
-        }, 2000);
-      }
-      console.log(itemsWithEditorState, about); // Print the data including editor state to the console
+      const response = await fetchAllPagesCMS();
+      setData(response.data.data);
+      setTotalRows(response.data.data.length);
     } catch (error) {
-      // Handle validation errors
-      if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
-        setMessage("");
-        setAlertClass("");
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
       }
-      // Unauthorized
-      else if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
+      else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate("/server/error", { state: { errorMessage } });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
-  const { Panel } = Collapse;
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const columns = [
+    {
+      title: 'S.No',
+      dataIndex: 'sno',
+      render: (text, record, index) => (page - 1) * size + index + 1,
+      width: 100,
+    },
+
+    {
+      title: 'Page', dataIndex: 'page',
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+      with: 100,
+    },
+
+    {
+      title: 'Sections', dataIndex: 'about',
+      render: (text, record) => (
+        <div>
+          <button className='btn btn-success'>About</button>
+          <button className='btn btn-primary m-2'>Services</button>
+        </div>
+      ),
+      width: 200,
+    },
+
+    {
+      title: 'Banner Image', dataIndex: 'banner_image',
+      render: (text, record) => (
+        <a href={record.banner_image} target='_blank'>
+          <img
+            src={record.banner_image ? record.banner_image : defaultImage}
+            alt={record.name}
+            title={record.name}
+            className=''
+            style={{ width: record.banner_image ? '150px' : '60px' }}
+          />
+        </a>
+      ),
+      width: 200,
+    },
+
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (text, record) => (
+        <div>
+          <a className="collapse-item" onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate(`/admin/update/community/${record.id}`);
+          }}>
+            <i className="fa fa-edit mr-2" title='Edit' />
+          </a>
+
+          <a className="collapse-item m-2 hover-pointer-admin" onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate(`/community/${record.id}`);
+          }}>
+            <i className="fas fa-eye"></i>
+          </a>
+        </div>
+      ),
+      fixed: 'right',
+      width: 200,
+    },
+    // Rest of the columns definition
+  ];
 
   return (
-    <>
-      {message && (
-        <div className={`alert ${alertClass}`}>
-          {alertClass === "alert-success" ? (
-            <i className="fas fa-check-circle"></i>
-          ) : (
-            <i className="fas fa-exclamation-triangle"></i>
-          )}
-          {" " + message}
-        </div>
-      )}
-      <Collapse idaccordion className="mb-3"  id="font-Resize"> 
-        <Panel
-          header={<label className="text-primary">What Social Bharat Do</label>}
+    <div>
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 className="h3 mb-0 text-gray-800">Master CMS</h1>
+        <h5 className="h5 mb-0 text-gray-800">Content Management System (CMS)</h5>
+        <a href="" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/admin/cms/update')
+          }}
         >
-          <div className="row">
-            <form>
-              <div className="col-md-12 p-3">
-                <div className="row  mb-3">
-                  <div className="col-md-12 ">
-                    <label className="fw-bold">Title</label>
-                  </div>
+          Update CMS
+        </a>
+      </div>
+      <div className="col-xl-3 col-md-6 mb-4">
+        <div className="card border-left-success shadow h-100 py-2">
+          <div className="card-body">
+            <div className="row align-items-center">
+              <div className="col mr-2">
+                <div className="h5 mb-0 font-weight-bold text-gray-800">
 
-                  <div className="col-md-12">
-                    <input
-                      type="text"
-                      name="title"
-                      className="form-control"
-                      onChange={handleAboutChange}
-                    />
-                  </div>
-                </div>
-                <div className="row  mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Sub Title</label>
-                  </div>
-
-                  <div className="col-md-12">
-                    <input
-                      type="text"
-                      name="subtitle"
-                      className="form-control"
-                      onChange={handleAboutChange}
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Section Content</label>
-                  </div>
-                  <div className="col-md-12">
-                    <Editor
-                      editorState={editorState}
-                      onEditorStateChange={onEditorStateChange}
-                      wrapperClassName="wrapper-class"
-                      editorClassName="editor-class custom-editor-height editor-border p-2"
-                      toolbarClassName="toolbar-class toolbar-border"
-                    />
-                  </div>
-                </div>
-                <div className="row  mb-2">
-                  <div className="col-md-12">
-                    <label className="fw-bold">Section Image</label>
-                  </div>
-                  <div className="col-md-10 form-group">
-                    <input
-                      type="file"
-                      className="form-control"
-                      accept=".png, .jpg, .jpeg"
-                      multiple
-                    />
-                  </div>
-                  <div className="col-md-2">
-                    <div className="text-center">
-                      <img
-                        className="img-fluid"
-                        src="/admin/img/1.jpg"
-                        width="80px"
-                      />
-                    </div>
-                  </div>
+                  <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                    <a className="text-success stretched-link hover-pointer-admin" onClick={() => navigate('/home/cms')}>
+                    <h3>  HOME</h3>
+                    </a>
+                  </span>
                 </div>
               </div>
-              <div className="ps-3">
-                <button
-                  type="button"
-                  className="btn btn-primary w-25"
-                  onClick={handleSubmit}
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </Panel>
-      </Collapse>
-
-      <Collapse idaccordion className="mb-3"  id="font-Resize">
-        <Panel header={<label className="text-primary">Service</label>}>
-          <div>
-            <div className="row">
-              <div className="col-md-11">
-                <label className="fw-bold">Section Title</label>
-              </div>
-              <div className="col-md-1 mb-2">
-                <button type="button" className="btn btn-outline-primary " title="Add More " onClick={addRow}>
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div className="col-md-12">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setServiceTitle(e.target.value)}
-                />
+              <div className="col-auto">
+                <h1>
+                  <i class="fa fa-home h-20 text-gray-300" aria-hidden="true"></i>
+                </h1>
               </div>
             </div>
-
-            {Array.from({ length: numRows }, (_, index) => (
-              <div className="row p-3" key={index}>
-                <form>
-                  <div className="col-md-12">
-                    <div className="row  mb-3">
-                      <div className="col-md-12">
-                        <label className="fw-bold">Title</label>
-                      </div>
-                      <div className="col-md-12">
-                        <input
-                          type="text"
-                          className="form-control"
-                          onChange={(e) =>
-                            updateRowData(index, "title", e.target.value)
-                          }
-                        />
-                      </div>
-                    </div>
-                    <div className="row  mb-3">
-                      <div className="col-md-12">
-                        <label className="fw-bold">Section Content</label>
-                      </div>
-                      <div className="col-md-12">
-                        <Editor
-                          editorState={editorStates[index]}
-                          onEditorStateChange={(editorState) =>
-                            onEditorStateChanges(editorState, index)
-                          }
-                          wrapperClassName="wrapper-class"
-                          editorClassName="editor-class custom-editor-height editor-border p-2"
-                          toolbarClassName="toolbar-class toolbar-border"
-                        />
-                      </div>
-                    </div>
-                    <div className="row  mb-3">
-                      <div className="col-md-12">
-                        <label className="fw-bold">Section Icon</label>
-                      </div>
-                      <div className="col-md-12 form-group">
-                          
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ps-3">
-                    <button
-                      type="button"
-                      className="btn btn-primary w-25"
-                      onClick={handleSubmit}
-                    >
-                      Save
-                    </button>
-                  </div>
-                  <Divider />
-                </form>
-              </div>
-            ))}
           </div>
-        </Panel>
-      </Collapse>
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -3,7 +3,8 @@ import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'antd';
 
-const WhySocial = () => {
+const WhySocial = (props) => {
+  const {aboutCMS} = props;
   const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
   const defaultImage = '/user/images/banner-3.jpg';
@@ -44,33 +45,15 @@ const WhySocial = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-6 col-md-6 mt-5  what-social-bharat wow animate__animated animate__fadeInUp">
-            <h1>What social Bharat Do?</h1>
-            <p>Connecting Communities with Privacy & Matrimonial Excellence.</p>
+            <h1>{aboutCMS && aboutCMS.title && aboutCMS.title}</h1>
+            <p>{aboutCMS && aboutCMS.subtitle && aboutCMS.subtitle}</p>
             <ul>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Discover and participate in communities you love.
-              </li>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Trustworthy profiles for a secure matrimonial experience.
-              </li>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Private Sharing in Chosen Communities.
-              </li>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Find Life Partners with Privacy.
-              </li>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Elevate your business to new heights.{' '}
-              </li>
-              <li>
-                <i className="fa-sharp fa-regular fa-circle-check me-2"></i>
-                Plan and attend events with friends and like-minded individuals.{' '}
-              </li>
+             <li
+              dangerouslySetInnerHTML={{
+                    __html:aboutCMS && aboutCMS.content,
+                  }}
+             />
+             
             </ul>
           </div>
           <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 d-none d-md-block wow animate__animated animate__zoomIn">

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function()  {
   //Wow
   new WOW().init({
     offset: 3000,
@@ -58,11 +58,12 @@ $(document).ready(function() {
     }
   ]
   });
-});
-AOS.init({
-offset: 1000,
-duration: 1500,
-once: false,
+  AOS.init({
+    offset: 1000,
+    duration: 1500,
+    once: false,
+    });
+    
 });
 
 // ---------

@@ -8,12 +8,16 @@ import { getUserFullProfile } from '../../services/userService';
 import JobInfo from '../../components/ProfilePage/JobInfo';
 import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 
 const ProfilePage = () => {
 
     const [user, setUser] = useState();
     const navigate = useNavigate();
+
+    const dispatch = useDispatch();
 
     const getUserProfile = async () => {
         try {

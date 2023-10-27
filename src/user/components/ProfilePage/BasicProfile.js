@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { Image } from "antd";
+import { setLoader } from "../../actions/loaderAction";
 
 const BasicProfile = (props) => {
   const loggedUser = useSelector((state) => state.userAuth);
@@ -38,10 +39,12 @@ const BasicProfile = (props) => {
     formData.append("image", file);
 
     try {
+      dispatch(setLoader(true))
       const response = await updateProfilePhoto(formData);
 
       setProfileImage(response.data.data.photo);
       setImagePreview(URL.createObjectURL(file));
+      dispatch(setLoader(false))
 
       dispatch(login(response.data.data, token));
       setServerError("");

@@ -1,16 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import userRoutes from './user/routes';
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";
 import UserProtectedRoute from "./user/util/UserProtectedRoute";
-import { useSelector } from "react-redux";
 
 function App() {
+ 
   return (
-
-    <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+    <div>
+      
+      <Router>
+     <Suspense fallback={null}>
         <Routes>
           {
             userRoutes.map((route, index) => (
@@ -42,6 +43,9 @@ function App() {
         
       </Suspense >
     </Router>
+    </div>
+
+    
   );
 }
 

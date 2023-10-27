@@ -7,10 +7,11 @@ import {
 import { getFeet, getInches } from "../../util/Conversion";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "antd";
 import dayjs from 'dayjs';
 import { yyyyMmDdFormat } from "../../util/DateConvertor";
+import { setLoader } from "../../actions/loaderAction";
 
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
@@ -18,6 +19,7 @@ const UpdateMatrimonial = (props) => {
   const { userMatrimonial } = props;
 
   const user = useSelector((state) => state.userAuth);
+  const dispatch = useDispatch();
 
   const [updateFor, setUpdateFor] = useState(null);
   const updateForOptions = [
@@ -215,6 +217,7 @@ const UpdateMatrimonial = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    dispatch(setLoader(true));
 
     const matrimonialData = {
       father_name: fatherName,
@@ -241,11 +244,13 @@ const UpdateMatrimonial = (props) => {
     try {
       const response = await updateMatrimonialInfo(matrimonialData);
       if (response && response.status === 200) {
+        dispatch(setLoader(false));
         setErrors("");
         setServerError('');
         navigate("/profile");
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);

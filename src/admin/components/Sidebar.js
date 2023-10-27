@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
+  
   const navigate = useNavigate();
   return (
     <ul
@@ -43,12 +44,11 @@ function Sidebar() {
       {/* <!-- Nav Item - Master Setting Collapse Menu --> */}
       <li className="nav-item">
         <a
-          className="nav-link collapsed"
-          href=""
-          data-toggle="collapse"
-          data-target="#collapseMasterSetting"
-          aria-expanded="true"
-          aria-controls="collapseUser"
+           className="nav-link collapsed hover-pointer-admin"
+           data-toggle="collapse"
+           data-target="#collapseMasterSetting"
+           aria-expanded="true"
+           aria-controls="collapseMasterSetting"
         >
           <i className="fas fa-cog" fill="currentColor"></i>
           <span className="m-2">Master Settings </span>

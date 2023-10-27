@@ -11,13 +11,7 @@ import { login } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import dayjs from 'dayjs';
-import { DatePicker, Space, notification, Button } from 'antd';
-import {
-  RadiusBottomleftOutlined,
-  RadiusBottomrightOutlined,
-  RadiusUpleftOutlined,
-  RadiusUprightOutlined,
-} from '@ant-design/icons';
+import { DatePicker, notification } from 'antd';
 import { useMemo } from 'react';
 
 const { RangePicker } = DatePicker;
@@ -187,11 +181,6 @@ const UpdateBasicProfile = () => {
   };
 
   const convertToCustomDateFormat = (isoDateString) => {
-    // Parse the input date using Day.js
-    // const parsedDate = dayjs(inputDate);
-
-    // // Format the date as per the custom format (yyyy-mm-dd)
-    // const formattedDate = parsedDate.format('YYYY-MM-DD');
 
     if (isoDateString === null) {
       return '';
@@ -348,6 +337,7 @@ const UpdateBasicProfile = () => {
 
   useEffect(() => {
     if (maritalStatus) {
+
       if (maritalStatus.label !== 'Married' && maritalStatus.label !== 'Engaged') {
         setShowAvailableForMarriage(true);
       } else {
@@ -361,6 +351,9 @@ const UpdateBasicProfile = () => {
     if (user.user.is_available_for_marriage) {
       setShowAvailableForMarriage(true);
       setIsAvailableForMarriage(true);
+    }else {
+      setShowAvailableForMarriage(false);
+      setIsAvailableForMarriage(false);
     }
   }, [user]);
 
@@ -504,6 +497,7 @@ const UpdateBasicProfile = () => {
                           placeholder="Example: Software Engineer, Grocery Shop Owner"
                           className="form-control"
                           defaultValue={occupation}
+                          onChange={(e)=>setOccupation(e.target.value)}
 
                         />
                         {/* Add error handling if needed */}

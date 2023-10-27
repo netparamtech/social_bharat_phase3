@@ -32,6 +32,7 @@ import SiteSettingPage from "./pages/siteSetting/SiteSettingPage";
 import CmsPage from "./pages/cms/CmsPage";
 import TestEditorPage from "./pages/TestEditorPage";
 import ViewOneCommunityPage from "./pages/communities/ViewOneCommunityPage";
+import NewSidebar from "./components/Test/NewSidebar";
 
 const adminRoutes = [
     {
@@ -231,6 +232,12 @@ const adminRoutes = [
     {
         path: '/community/:id',
         component: ViewOneCommunityPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/sidebar',
+        component: NewSidebar,
         exact:true
     },
 ]

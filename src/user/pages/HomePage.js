@@ -5,9 +5,13 @@ import Services from "../components/home/Services";
 import Testimonials from "../components/home/Testimonial";
 import WhySocial from "../components/home/WhySocial";
 import UserLayout from "../layouts/UserLayout";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../actions/loaderAction";
 
 const HomePage = () => {
+    const dispatch = useDispatch();
     useEffect(()=>{
+        dispatch(setLoader(false));
         window.scrollTo(0, 0);
     },[]);
     return (

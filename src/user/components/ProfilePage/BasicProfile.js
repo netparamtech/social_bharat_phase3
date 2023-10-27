@@ -19,7 +19,6 @@ const BasicProfile = (props) => {
   const [token, setToken] = useState("");
   const [community, setCommunity] = useState({});
 
-
   const defaultPhoto = "/user/images/user.png";
 
   const [errors, setErrors] = useState();
@@ -45,11 +44,11 @@ const BasicProfile = (props) => {
       setImagePreview(URL.createObjectURL(file));
 
       dispatch(login(response.data.data, token));
-      setServerError('');
+      setServerError("");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setServerError('');
+        setServerError("");
       }
 
       //Unauthorized
@@ -68,7 +67,7 @@ const BasicProfile = (props) => {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
-        setServerError('');
+        setServerError("");
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -81,12 +80,12 @@ const BasicProfile = (props) => {
 
   const formatDate = (dateString) => {
     if (dateString === null) {
-      return '';
+      return "";
     }
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     const [month, day, year] = new Date(dateString)
-      .toLocaleDateString('en-GB', options)
-      .split('/');
+      .toLocaleDateString("en-GB", options)
+      .split("/");
     return `${month}-${day}-${year}`;
   };
 
@@ -104,7 +103,7 @@ const BasicProfile = (props) => {
         <div className="row">
           <div className="col-md-3">
             <div className="card shadow">
-              {serverError && <span className='error'>{serverError}</span>}
+              {serverError && <span className="error">{serverError}</span>}
               <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
                 <input
                   type="file"
@@ -140,35 +139,33 @@ const BasicProfile = (props) => {
                 </div>
               </div>
 
-              <div className="card-body mx-auto">
-                <p className="card-text text-center mb-0">
-                  {user && user.data && user.data.name || "N/A"}
+              <div className="card-body mx-auto text-center">
+                <p className="card-text  mb-0">
+                  {(user && user.data && user.data.name) || "N/A"}
                 </p>
 
-                {
-                  community && community.thumbnail_image ? (
-                    <Image
-                      className="img-fluid max-width-100 me-2 community-img"
-                      src={
-                        community.thumbnail_image
-                          ? community.thumbnail_image
-                          : defaultPhoto
-                      }
-                      alt=""
-                      title=""
-                    />
-                  ) : (
-                    <span>{community.name || "N/A"}</span>
-                  )
-                }
-
+                {community && community.thumbnail_image ? (
+                  <Image
+                    className="img-fluid max-width-100  community-img"
+                    src={
+                      community.thumbnail_image
+                        ? community.thumbnail_image
+                        : defaultPhoto
+                    }
+                    alt=""
+                    title=""
+                  />
+                ) : (
+                  <span>{community.name || "N/A"}</span>
+                )}
               </div>
             </div>
           </div>
           <div className="col-md-9">
             <div className="card shadow">
               <div className="edit-icon">
-                <a className="hover-pointer"
+                <a
+                  className="hover-pointer"
                   onClick={() => navigate("/user/update-basic-profile")}
                   title="Edit"
                 >
@@ -183,7 +180,7 @@ const BasicProfile = (props) => {
                     </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.name || "N/A"}
+                        {(user && user.data && user.data.name) || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -192,7 +189,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Email </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.email || "N/A"}
+                        {(user && user.data && user.data.email) || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -201,7 +198,8 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Date Of Birth </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {formatDate(user && user.data && user.data.dob) || "N/A"}
+                        {formatDate(user && user.data && user.data.dob) ||
+                          "N/A"}
                       </span>
                     </div>
                   </div>
@@ -210,7 +208,8 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Marital Status </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.marital_status || "N/A"}
+                        {(user && user.data && user.data.marital_status) ||
+                          "N/A"}
                       </span>
                     </div>
                   </div>
@@ -219,7 +218,7 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3 ">Gender</label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user && user.data && user.data.gender || "N/A"}
+                        {(user && user.data && user.data.gender) || "N/A"}
                       </span>
                     </div>
                   </div>
@@ -228,10 +227,11 @@ const BasicProfile = (props) => {
                     <label className="col-sm-3">Community </label>
                     <div className="col-sm-8">
                       <span className="text-muted">
-                        {user &&
+                        {(user &&
                           user.data &&
                           user.data.community &&
-                          user.data.community.name || "N/A"}
+                          user.data.community.name) ||
+                          "N/A"}
                       </span>
                     </div>
                   </div>
@@ -242,16 +242,19 @@ const BasicProfile = (props) => {
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
                           <span className="text-muted">
-                            {user && user.data && user.data.mobile || "N/A"}
+                            {(user && user.data && user.data.mobile) || "N/A"}
                           </span>
-                          <a className="update-mobile btn ms-2" title="Update Mobile No." onClick={() => navigate("/update-mobile")}>
+                          <a
+                            className="update-mobile btn ms-2"
+                            title="Update Mobile No."
+                            onClick={() => navigate("/update-mobile")}
+                          >
                             <i className="fas fa-edit text-success"></i>
                           </a>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

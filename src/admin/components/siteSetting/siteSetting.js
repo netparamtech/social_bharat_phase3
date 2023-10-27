@@ -479,9 +479,9 @@ const SiteSetting = () => {
                 </div>
               </div>
 
-              <div className="row ps-3 pe-3 mb-3 mt-3">
+              <div className="row ps-3 pe-3 mb-3 mt-4">
                 <div className="col-12">
-                  <button type="submit" className="btn btn-primary w-100">
+                  <button type="submit" className="btn btn-primary w-25">
                     Update
                   </button>
                 </div>

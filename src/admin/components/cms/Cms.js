@@ -141,15 +141,15 @@ const Cms = () => {
           {" " + message}
         </div>
       )}
-      <Collapse idaccordion className="mb-3">
+      <Collapse idaccordion className="mb-3"  id="font-Resize"> 
         <Panel
           header={<label className="text-primary">What Social Bharat Do</label>}
         >
           <div className="row">
             <form>
-              <div className="col-md-12">
-                <div className="row ps-3 mb-3">
-                  <div className="col-md-12">
+              <div className="col-md-12 p-3">
+                <div className="row  mb-3">
+                  <div className="col-md-12 ">
                     <label className="fw-bold">Title</label>
                   </div>
 
@@ -162,7 +162,7 @@ const Cms = () => {
                     />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3">
+                <div className="row  mb-3">
                   <div className="col-md-12">
                     <label className="fw-bold">Sub Title</label>
                   </div>
@@ -176,7 +176,7 @@ const Cms = () => {
                     />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3">
+                <div className="row mb-3">
                   <div className="col-md-12">
                     <label className="fw-bold">Section Content</label>
                   </div>
@@ -190,7 +190,7 @@ const Cms = () => {
                     />
                   </div>
                 </div>
-                <div className="row ps-3 mb-3">
+                <div className="row  mb-2">
                   <div className="col-md-12">
                     <label className="fw-bold">Section Image</label>
                   </div>
@@ -213,7 +213,7 @@ const Cms = () => {
                   </div>
                 </div>
               </div>
-              <div className="ps-4">
+              <div className="ps-3">
                 <button
                   type="button"
                   className="btn btn-primary w-25"
@@ -227,15 +227,15 @@ const Cms = () => {
         </Panel>
       </Collapse>
 
-      <Collapse idaccordion className="mb-3">
+      <Collapse idaccordion className="mb-3"  id="font-Resize">
         <Panel header={<label className="text-primary">Service</label>}>
           <div>
-            <div className="row ps-4 mb-3">
-              <div className="col-md-10">
+            <div className="row">
+              <div className="col-md-11">
                 <label className="fw-bold">Section Title</label>
               </div>
-              <div className="col-md-2 mb-2">
-                <button type="button" className="btn btn-outline-primary" title="Add More " onClick={addRow}>
+              <div className="col-md-1 mb-2">
+                <button type="button" className="btn btn-outline-primary " title="Add More " onClick={addRow}>
                   <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
               </div>
@@ -249,10 +249,10 @@ const Cms = () => {
             </div>
 
             {Array.from({ length: numRows }, (_, index) => (
-              <div className="row" key={index}>
+              <div className="row p-3" key={index}>
                 <form>
                   <div className="col-md-12">
-                    <div className="row ps-3 mb-3">
+                    <div className="row  mb-3">
                       <div className="col-md-12">
                         <label className="fw-bold">Title</label>
                       </div>
@@ -266,7 +266,7 @@ const Cms = () => {
                         />
                       </div>
                     </div>
-                    <div className="row ps-3 mb-3">
+                    <div className="row  mb-3">
                       <div className="col-md-12">
                         <label className="fw-bold">Section Content</label>
                       </div>
@@ -282,22 +282,17 @@ const Cms = () => {
                         />
                       </div>
                     </div>
-                    <div className="row ps-3 mb-3">
+                    <div className="row  mb-3">
                       <div className="col-md-12">
                         <label className="fw-bold">Section Icon</label>
                       </div>
                       <div className="col-md-12 form-group">
-                        <Select
-                          options={iconOptions}
-                          onChange={(selectedOption) =>
-                            updateRowData(index, "icon", selectedOption.value)
-                          }
-                        />
+                          
                       </div>
                     </div>
                   </div>
 
-                  <div className="ps-4">
+                  <div className="ps-3">
                     <button
                       type="button"
                       className="btn btn-primary w-25"

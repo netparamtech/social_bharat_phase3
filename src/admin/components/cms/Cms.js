@@ -12,21 +12,12 @@ const Cms = () => {
     <div>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master CMS</h1>
-        <a href="" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate('/admin/cms/update');
-          }}
-        >
-          Update CMS
-        </a>
       </div>
-     
-      <Card title="Content Management System (CMS)">
 
-      <Card.Grid style={gridStyle}><a className="text-success stretched-link hover-pointer-admin" onClick={() => navigate('/home/cms')}>
-                      <h3>  HOME</h3>
-                    </a></Card.Grid>
+      <Card title="Content Management System (CMS)">
+        <Card.Grid style={gridStyle}><a className="text-success stretched-link hover-pointer-admin" onClick={() => navigate('/home/cms')}>
+          <h4>  HOME</h4>
+        </a></Card.Grid>
       </Card>
     </div>
   );

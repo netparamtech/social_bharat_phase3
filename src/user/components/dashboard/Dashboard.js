@@ -136,12 +136,6 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-            {/*<a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/event")}
-                >
-                  Search Events{" "}
-                </a>*/}
 
                 <a
                   className="text-white hover-pointer stretched-link"
@@ -169,20 +163,39 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
-                {/*
-<a
-  className="text-white hover-pointer"
-  onClick={() => navigate("/user/jobs/view")}
->
-  Search Jobs
-</a>
-*/}
                 <a
                   className="text-white hover-pointer stretched-link"
                   onClick={() => navigate("/user/update-job-profile")}
                 >
                   Post New Job
                 </a>
+                <i className="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-darkyellow text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Share Your Feedback</div>
+                    <div className="text-lg fw-bold">
+                      Feedback <br />
+                      फ़ीड बैक
+                    </div>
+                  </div>
+                  <img src="/user/images/fe.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer stretched-link"
+                  onClick={() => navigate("/user/rating")}
+                >
+                  Give Feedback
+                </a>
+                <i class="fas fa-comments"></i>
                 <i className="fa-solid fa-arrow-right"></i>
               </div>
             </div>

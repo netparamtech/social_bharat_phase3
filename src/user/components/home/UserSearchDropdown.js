@@ -29,7 +29,9 @@ const UserSearchDropdown = () => {
       {
         key: "1",
         label: (
-          <span onClick={handleSearchPeopleClick} className="menu-font ">
+          <span onClick={handleSearchPeopleClick}  className={`menu-font ${
+            window.location.pathname === "/user/search" ? "active" : "inactive"
+          }`}>
             <i className="fa-solid fa-users m-2"></i> Search People
           </span>
         ),
@@ -37,7 +39,9 @@ const UserSearchDropdown = () => {
       {
         key: "2",
         label: (
-          <span onClick={handleSearchBusinessClick} className="menu-font">
+          <span onClick={handleSearchBusinessClick} className={`menu-font ${
+            window.location.pathname === "/user/search/business" ? "active" : "inactive"
+          }`}>
             <i className="fa-solid fa-briefcase m-2"></i> Search Business
           </span>
         ),
@@ -45,7 +49,9 @@ const UserSearchDropdown = () => {
       {
         key: "3",
         label: (
-          <span onClick={handleSearchPartnerClick} className="menu-font">
+          <span onClick={handleSearchPartnerClick} className={`menu-font ${
+            window.location.pathname === "/user/search/partner" ? "active" : "inactive"
+          }`}>
             <i className="fa-solid fa-heart-pulse m-2"></i>Search Partner
           </span>
         ),

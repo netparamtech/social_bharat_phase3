@@ -330,6 +330,7 @@ const SearchPeople = () => {
                                 <div className="col-4 user-detail">
                                   <p>Name-{item.name}</p>
                                   <p>Age-{age(item.dob)}{" "}Years</p>
+                                  <p>Marital Status-{item.marital_status?item.marital_status:"N/A"}</p>
                                   <p>City-{item.native_place_city}</p>
                                   <p>
                                     {item.native_place_state

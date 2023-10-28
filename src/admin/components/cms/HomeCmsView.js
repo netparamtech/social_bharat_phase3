@@ -1,13 +1,17 @@
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
 
+const gridStyle = {
+    width: '100%',
+    textAlign: 'center',
+};
 const HomeViewCms = (props) => {
     const { homeCms } = props;
     const navigate = useNavigate();
     return (
         <div>
-             <div className="d-flex justify-content-between align-items-center mb-4">
-             <h5 className="mb-0 text-gray-800">Content Management System (CMS)</h5>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h5 className="mb-0 text-gray-800">Content Management System (CMS)</h5>
                 <a href="" className="btn btn-sm btn-primary shadow-sm"
                     onClick={(e) => {
                         e.preventDefault();
@@ -27,7 +31,9 @@ const HomeViewCms = (props) => {
             </Card>
 
             <Card title="Services (CMS)" className="mt-2">
-                <h5 className="card-title">{homeCms && homeCms.services && homeCms.services.section_title}</h5>
+                <Card.Grid style={gridStyle}><h5 className="card-title">
+                    {homeCms && homeCms.services && homeCms.services.section_title}</h5>
+                </Card.Grid>
                 <ul className="list-group list-group-flush">
                     {homeCms && homeCms.services && homeCms.services.items.map((item, index) => (
                         <li className="list-group-item" key={index}>

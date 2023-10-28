@@ -48,7 +48,7 @@ const SearchPartner = () => {
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -142,6 +142,7 @@ const SearchPartner = () => {
       const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
 
       if (response && response.status === 200) {
+        setTotalRows(response.data.data.totalFilteredRecords);
         setServerError('');
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
@@ -228,7 +229,9 @@ const SearchPartner = () => {
   }
 
   const fetchMoreData = () => {
+    console.log("fetchMoreData is called"); // Add this line for debugging
     if (!isLoading && items.length < totalRows) {
+      console.log("Fetching more data"); // Add this line for debugging
       search(searchText, page + 1, 20, community_id, state, city, gender, gotra, cast);
       setPage(page + 1);
     }

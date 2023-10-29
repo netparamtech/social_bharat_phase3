@@ -146,7 +146,11 @@ const SearchPeople = () => {
         }
         if (searchText) {
           if (response.data.data.users.length !== 0) {
-            setItems([...new Set([...response.data.data.users])]);
+            if(page===1){
+              setItems([...new Set([...response.data.data.users])]);
+            } else {
+              setItems([...new Set([...items,...response.data.data.users])]);
+            }
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
             setItems([...response.data.data.users]);

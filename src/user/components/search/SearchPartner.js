@@ -28,6 +28,7 @@ const SearchPartner = () => {
   );
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);
+  const [isFilter,setIsFilter] = useState(false);
 
   const [gender, setGender] = useState("");
   const [gotra, setGotra] = useState("");
@@ -149,7 +150,13 @@ const SearchPartner = () => {
         }
         if (searchText&&isSaveClicked||isSaveClicked||searchText) {
           if (response.data.data.users.length !== 0) {
-            setItems([...new Set([...response.data.data.users])]);
+            if(page===1){
+              setItems([...new Set([...response.data.data.users])]);
+            } else {
+              setItems([...new Set([...items,...response.data.data.users])]);
+            }
+            
+            console.log(response.data.data.totalFilteredRecords)
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
             setItems([...response.data.data.users]);
@@ -225,13 +232,13 @@ const SearchPartner = () => {
     );
   };
   const handlePreferenceClick = () => {
+    !isFilter?setIsFilter(true):isFilter?setIsFilter(false):setIsFilter(false);
     setIsSaveClicked(false);
   }
 
   const fetchMoreData = () => {
-    console.log("fetchMoreData is called"); // Add this line for debugging
     if (!isLoading && items.length < totalRows) {
-      console.log("Fetching more data"); // Add this line for debugging
+      console.log("Fetching more data",items.length); // Add this line for debugging
       search(searchText, page + 1, 20, community_id, state, city, gender, gotra, cast);
       setPage(page + 1);
     }
@@ -288,9 +295,9 @@ const SearchPartner = () => {
     }
   }, [searchText, community_id, isSaveClicked]);
 
-  // useEffect(() => {
-  //   setPage(1);
-  // }, [searchText, community_id, state, city, gender, gotra, cast])
+  useEffect(() => {
+    setPage(1);
+  }, [isFilter]);
 
   useEffect(() => {
     fetchCommunities();

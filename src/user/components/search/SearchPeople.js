@@ -49,7 +49,7 @@ const SearchPeople = () => {
   }, [items]);
 
   const fetchMoreData = () => {
-    console.log("Hello")
+    console.log("Hello",totalRows,page,items.length)
     if (!isLoading && items.length < totalRows) {
       search(searchText, page + 1, 20);
       setPage(page + 1);

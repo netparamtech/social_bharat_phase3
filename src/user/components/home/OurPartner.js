@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 function OurPartner() {
   const [casts, setCasts] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const settings = {
     slidesToShow: 12,
@@ -19,12 +22,16 @@ function OurPartner() {
   };
 
   const fetchCommunities = async () => {
+    dispatch(setLoader(true));
     try {
+      console.log("Loading")
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
         setCasts(response.data.data);
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -39,7 +46,7 @@ function OurPartner() {
     fetchCommunities();
   }, []);
   return (
-    <div className="wow animate__animated animate__fadeIn">
+    <div className="">
       <section id="partner">
         <div className="container">
           <div className="row costomer-logos">

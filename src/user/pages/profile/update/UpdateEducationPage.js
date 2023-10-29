@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { fetchAllActiveQualifications, getSingleEducationDetails } from '../../../services/userService';
 import UserLayout from '../../../layouts/UserLayout';
 import UpdateEducationProfile from '../../../components/ProfilePage/UpdateEducationProfile';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../../actions/loaderAction';
 
 const UpdateEducationPage = () => {
 
@@ -10,14 +12,18 @@ const UpdateEducationPage = () => {
         const [educationDetails, setEducationDetails] = useState(null);
 
         const navigate = useNavigate();
+        const dispatch = useDispatch();
 
         const fetchEducation = async (id) => {
+                dispatch(setLoader(true));
                 try {
                         const response = await getSingleEducationDetails(id);
                         if (response && response.status === 200) {
                                 setEducationDetails(response.data.data);
+                                dispatch(setLoader(false));
                         }
                 } catch (error) {
+                        dispatch(setLoader(false));
                         //Unauthorized
                         if (error.response && error.response.status === 401) {
                                 navigate('/login');

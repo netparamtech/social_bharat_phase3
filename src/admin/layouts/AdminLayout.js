@@ -7,6 +7,9 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 
 const AdminLayout = ({ children }) => {
+  const handleScrollTopClick = () => {
+    window.scrollTo(0, 0);
+  }
     useEffect(() => {
         // List of script sources
         const scriptSources = [
@@ -67,7 +70,7 @@ const AdminLayout = ({ children }) => {
       </div>
 
       {/* Scroll to Top Button--> */}
-      <a className="scroll-to-top rounded" href="#page-top">
+      <a className="" onClick={handleScrollTopClick}>
         <i className="fas fa-angle-up"></i>
       </a>
     </>

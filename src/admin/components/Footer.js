@@ -2,6 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
+    <div>
     <footer className="sticky-footer bg-white shadow py-2 m-0">
       <div className="container">
         <div className="copyright text-center pt-3">
@@ -9,6 +10,7 @@ function Footer() {
         </div>
       </div>
     </footer>
+    </div>
   );
 }
 

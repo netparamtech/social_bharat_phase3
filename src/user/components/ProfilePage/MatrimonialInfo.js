@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { deleteMatrimonial } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const MatrimonialInfo = (props) => {
   const { user } = props;
@@ -9,6 +11,7 @@ const MatrimonialInfo = (props) => {
   const [manglik, setManglik] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const matrimonialData = user?.data?.matrimonial[0] || {};
 
   const proposalPhotos = user?.data?.matrimonial[0]?.proposal_photos;
@@ -53,6 +56,7 @@ const MatrimonialInfo = (props) => {
     return fileTypeMappings[extension] || extension.toUpperCase();
   };
   const deleteMatrimonialDetails = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await deleteMatrimonial();
       if (response && response.status === 200) {
@@ -61,8 +65,10 @@ const MatrimonialInfo = (props) => {
             (detail) => detail.id !== user?.data?.matrimonial[0].id
           )
         );
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");

@@ -50,6 +50,7 @@ const LoginWithPassword = (props) => {
         dispatch(setLoader(false))
       }
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setMessage('');

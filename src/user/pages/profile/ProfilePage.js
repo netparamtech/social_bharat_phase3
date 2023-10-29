@@ -20,12 +20,15 @@ const ProfilePage = () => {
     const dispatch = useDispatch();
 
     const getUserProfile = async () => {
+        dispatch(setLoader(true));
         try {
             const response = await getUserFullProfile();
             if (response && response.status === 200) {
                 setUser(response.data);
+                dispatch(setLoader(false));
             }
         } catch (error) {
+            dispatch(setLoader(false));
             //Unauthorized
             if (error.response && error.response.status === 401) {
                 navigate('/login');

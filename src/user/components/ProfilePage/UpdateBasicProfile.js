@@ -13,6 +13,7 @@ import Select from "react-select";
 import dayjs from 'dayjs';
 import { DatePicker, notification } from 'antd';
 import { useMemo } from 'react';
+import { setLoader } from "../../actions/loaderAction";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
@@ -217,6 +218,7 @@ const UpdateBasicProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true))
 
     // Prepare the updated data
     const updatedData = {
@@ -234,6 +236,7 @@ const UpdateBasicProfile = () => {
     try {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
+        dispatch(setLoader(false))
         setErrors("");
         setServerError('');
         dispatch(login(response.data.data, token));

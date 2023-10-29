@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import { useNavigate } from "react-router-dom";
 import { fetchBannerWithPageAndSection } from "../../services/userService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const Banner = () => {
   const user = useSelector((state) => state.userAuth);
@@ -10,6 +11,7 @@ const Banner = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const typedRef = useRef(null); // Use a single ref for Typed instance
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const defaultImageUrl = '/user/images/banner-1.jpg'
 
@@ -18,6 +20,7 @@ const Banner = () => {
   };
 
   const fetchBanners = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchBannerWithPageAndSection(
         "Home",
@@ -36,7 +39,9 @@ const Banner = () => {
       }
 
       setImageUrls(activeBanners);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -71,7 +76,7 @@ const Banner = () => {
     : defaultImageUrl;
 
   return (
-    <div id="banners-section" className="wow animate__animated animate__fadeIn bg-white">
+    <div id="banners-section" className="">
       <div className="container">
       <div className="jumbotron navbar-scroll" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
           <div className="hero-section">

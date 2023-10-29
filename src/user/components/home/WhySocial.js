@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const WhySocial = (props) => {
   const {aboutCMS} = props;
   const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const defaultImage = '/user/images/banner-3.jpg';
 
   const fetchBanners = async () => {
+    dispatch(setLoader(true));
+
     try {
       const response = await fetchBannerWithPageAndSection('Home', 'Why Social Bharat');
 
@@ -19,7 +24,11 @@ const WhySocial = (props) => {
         activeBanners[0].banner_urls = updatedBannerUrls;
       }
       setImageUrls(activeBanners[0].banner_urls);
+      dispatch(setLoader(false));
+
     } catch (error) {
+      dispatch(setLoader(false));
+
       if (error.response && error.response.status === 401) {
         navigate('/login');
       } else if (error.response && error.response.status === 500) {

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { fetchAllActiveQualifications, fetchAllDegrees, updateEducationalDetails } from '../../services/userService';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
@@ -24,6 +26,7 @@ const UpdateEducationProfile = (props) => {
   const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Handle onChange for each input field
   const handleDegreeIdChange = (selectedOption) => {
@@ -70,6 +73,7 @@ const UpdateEducationProfile = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
 
     const requestData = {
       degree_id: degreeId,
@@ -87,8 +91,10 @@ const UpdateEducationProfile = (props) => {
         setErrors('');
         setServerError('');
         navigate('/profile');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -107,13 +113,16 @@ const UpdateEducationProfile = (props) => {
   };
 
   const fetchDegrees = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllDegrees();
       if (response && response.status === 200) {
         setDegrees(response.data.data.degrees);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
 
       //Unauthorized
       if (error.response && error.response.status === 401) {

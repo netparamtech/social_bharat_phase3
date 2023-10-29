@@ -66,13 +66,16 @@ const BasicProfile = (props) => {
   };
 
   const fetchLoggedUserCommunity = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
         setServerError("");
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {

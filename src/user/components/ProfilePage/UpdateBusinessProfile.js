@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { fetchAllActiveBusinessCategories, fetchAllCitiesByStateID, fetchAllStatesByCountryID, updateBusinessInfo, updateMatrimonialInfo, uploadMultipleImages, uploadPdf } from '../../services/userService';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
@@ -33,6 +35,7 @@ const UpdateBusinessProfile = (props) => {
   const [errors, setErrors] = useState('');
   const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleBusinessPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -122,6 +125,7 @@ const UpdateBusinessProfile = (props) => {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
+    dispatch(setLoader(true));
     const businessData = {
       business_name: businessName,
       business_category: businessType,
@@ -141,8 +145,10 @@ const UpdateBusinessProfile = (props) => {
         setErrors('');
         setServerError('');
         navigate('/profile');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -176,13 +182,16 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const getAllStates = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
 
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -197,13 +206,16 @@ const UpdateBusinessProfile = (props) => {
   }
 
   const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');

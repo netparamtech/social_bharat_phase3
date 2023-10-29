@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { apiWithHeaders } from '../../axios/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const ChangePassword = () => {
 
@@ -12,6 +14,7 @@ const ChangePassword = () => {
     const [serverError, setServerError] = useState("");
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
@@ -23,6 +26,7 @@ const ChangePassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        dispatch(setLoader(true));
         try {
             const response = await apiWithHeaders.put('/profile/update-password', {
                 password, confirmPassword
@@ -32,8 +36,10 @@ const ChangePassword = () => {
                 setErrors('');
                 setServerError('');
                 navigate('/dashboard');
+                dispatch(setLoader(false));
             }
         } catch (error) {
+            dispatch(setLoader(false));
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);
                 setServerError('');

@@ -106,12 +106,15 @@ const UpdateBasicProfile = () => {
   };
 
   const fetchLoggedUserCommunity = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -144,13 +147,16 @@ const UpdateBasicProfile = () => {
   };
 
   const getAllStates = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllStatesByCountryID(101);
       if (response && response.status === 200) {
         setStates(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -163,13 +169,16 @@ const UpdateBasicProfile = () => {
   };
 
   const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");

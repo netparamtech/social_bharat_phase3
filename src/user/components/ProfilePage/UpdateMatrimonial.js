@@ -151,6 +151,7 @@ const UpdateMatrimonial = (props) => {
     }
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
       if (response.status === 200) {
         const combineTempUrls = [
@@ -159,8 +160,10 @@ const UpdateMatrimonial = (props) => {
         ];
         setTempProposalPhotoUrl(combineTempUrls);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -189,12 +192,15 @@ const UpdateMatrimonial = (props) => {
     formData.append("pdf", selectedFiles);
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadPdf(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
         setTempBiodataFileUrl(response.data.data.file);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);

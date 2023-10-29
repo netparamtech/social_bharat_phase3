@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/userAction';
 import { Input } from 'antd';
+import { setLoader } from '../../actions/loaderAction';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);
@@ -32,6 +33,7 @@ const SetPassword = () => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+        dispatch(setLoader(true));
 
         const updatedUser = {
             ...user, // Spread the original object to keep its other properties
@@ -51,8 +53,10 @@ const SetPassword = () => {
                 dispatch(login(updatedUser, token));
                 setServerError('');
                 navigate('/dashboard');
+                dispatch(setLoader(false));
             }
         } catch (error) {
+            dispatch(setLoader(false));
             // Handle validation errors
             if (error.response && error.response.status === 400) {
                 setErrors(error.response.data.errors);

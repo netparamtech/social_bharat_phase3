@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteSingleJobDetails } from '../../services/userService';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const JobInfo = (props) => {
   const { user } = props;
@@ -8,6 +10,7 @@ const JobInfo = (props) => {
   const [jobDetails, setJobDetails] = useState(initialJobDetails);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [serverError, setServerError] = useState("");
 
   useEffect(() => {
@@ -15,6 +18,7 @@ const JobInfo = (props) => {
   }, [user]);
 
   const deleteUserJobDetails = async (id) => {
+    dispatch(setLoader(true));
     try {
       const response = await deleteSingleJobDetails(id);
       if (response && response.status === 200) {
@@ -22,8 +26,10 @@ const JobInfo = (props) => {
         const updatedJobDetails = jobDetails.filter((item) => item.id !== id);
         setJobDetails(updatedJobDetails); // Update state to trigger a re-render
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');

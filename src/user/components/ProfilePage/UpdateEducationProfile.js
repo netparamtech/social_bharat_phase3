@@ -136,12 +136,15 @@ const UpdateEducationProfile = (props) => {
   }
 
   const fetchAllQualification = async () => {
+    dispatch(setLoader(true));
     try {
             const response = await fetchAllActiveQualifications();
             if (response && response.status === 200) {
                     setQualificationList(response.data.data.qualifications);
+                    dispatch(setLoader(false));
             }
     } catch (error) {
+      dispatch(setLoader(false));
             //Unauthorized
             if (error.response && error.response.status === 401) {
                     navigate('/login');

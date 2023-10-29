@@ -44,11 +44,12 @@ const BasicProfile = (props) => {
 
       setProfileImage(response.data.data.photo);
       setImagePreview(URL.createObjectURL(file));
-      dispatch(setLoader(false))
 
       dispatch(login(response.data.data, token));
       setServerError("");
+      dispatch(setLoader(false))
     } catch (error) {
+      dispatch(setLoader(false))
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setServerError("");

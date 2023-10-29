@@ -43,10 +43,10 @@ const UpdateJobProfile = (props) => {
     try {
       const response = await updateJobDetail(jobProfileData);
       if (response && response.status === 200) {
-        dispatch(setLoader(false));
         setErrors('');
         setServerError('');
         navigate('/profile');
+        dispatch(setLoader(false));
       }
     } catch (error) {
       dispatch(setLoader(false));

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { enquiry } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 function Contact() {
   const user = useSelector((state) => state.userAuth);
@@ -17,10 +18,12 @@ function Contact() {
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
     const data = {
       name,
       email,
@@ -38,8 +41,10 @@ function Contact() {
         setEmail('');
         setMobile('');
         setUserQuery('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 400) {
         setMessage("");
         setErrors(error.response.data.errors);

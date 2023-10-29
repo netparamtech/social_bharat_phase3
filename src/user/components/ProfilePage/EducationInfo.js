@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { deleteSingleEducationDetails } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const EducationInfo = (props) => {
   const { user } = props;
   const [educationDetails, setEducationDetails] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [serverError, setServerError] = useState("");
 
   const deleteUserEducationalDetails = async (id) => {
+    dispatch(setLoader(true));
     try {
       const response = await deleteSingleEducationDetails(id);
       if (response && response.status === 200) {
@@ -19,8 +23,10 @@ const EducationInfo = (props) => {
         );
         setEducationDetails(updatedEducationDetails); // Update state to trigger a re-render
         setServerError("");
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");

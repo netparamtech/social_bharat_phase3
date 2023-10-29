@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { deleteContact } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const ContactInfo = (props) => {
 
@@ -8,9 +10,11 @@ const ContactInfo = (props) => {
   const [contactDetails, setContactDetails] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [serverError, setServerError] = useState("");
 
   const deleteUserContact = async (id) => {
+    dispatch(setLoader(true));
     try {
       const response = await deleteContact(id);
       if (response && response.status === 200) {
@@ -18,8 +22,10 @@ const ContactInfo = (props) => {
           prevContactDetails.filter((contact) => contact.id !== id)
         );
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
 
       //Unauthorized
       if (error.response && error.response.status === 401) {

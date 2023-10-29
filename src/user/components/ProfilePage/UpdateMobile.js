@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { updateAttemptMobile } from "../../services/userService";
 import CheckOtpToUpdateMobile from "../otp/CheckOtpToUpdateMobile";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const UpdateMobile = () => {
   const [mobile, setMobile] = useState("");
@@ -11,6 +13,7 @@ const UpdateMobile = () => {
 
   const [isMobileValid, setIsMobileValid] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -22,6 +25,7 @@ const UpdateMobile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
     const cleanMobile = mobile.replace(/^0+/, '');
 
     try {
@@ -32,8 +36,10 @@ const UpdateMobile = () => {
         setMessage(response.data.message);
         handleMobileValid();
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);

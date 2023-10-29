@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { deleteBusinessByID } from "../../services/userService";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const BusinessInfo = (props) => {
   const { user } = props;
@@ -10,6 +12,7 @@ const BusinessInfo = (props) => {
 
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const businessPhotos =
     user &&
     user.data &&
@@ -17,6 +20,7 @@ const BusinessInfo = (props) => {
     user.data.businesses.business_photos;
 
   const deleteBusinessDetails = async (id) => {
+    dispatch(setLoader(true));
     try {
       const response = await deleteBusinessByID(id);
       if (response && response.status === 200) {
@@ -24,8 +28,10 @@ const BusinessInfo = (props) => {
           prevDetails.filter((detail) => detail.id !== id)
         );
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');

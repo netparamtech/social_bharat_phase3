@@ -195,7 +195,6 @@ const Dashboard = () => {
                 >
                   Give Feedback
                 </a>
-                <i class="fas fa-comments"></i>
                 <i className="fa-solid fa-arrow-right"></i>
               </div>
             </div>

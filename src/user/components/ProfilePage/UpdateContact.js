@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchCountries, updateContactDetail } from '../../services/userService';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 const UpdateContact = (props) => {
   const { contactDetails } = props;
 
@@ -18,6 +20,7 @@ const UpdateContact = (props) => {
   const [serverError,setServerError] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAddressTypeChange = (e) => {
     setAddressType(e.target.value);
@@ -52,6 +55,7 @@ const UpdateContact = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
 
     const updatedData = {
       address_type: addressType,
@@ -68,8 +72,10 @@ const UpdateContact = (props) => {
         setErrors('');
         setServerError('');
         navigate('/profile');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -89,13 +95,16 @@ const UpdateContact = (props) => {
 
 
   const getAllStates = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
 
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -110,13 +119,16 @@ const UpdateContact = (props) => {
   }
 
   const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
        //Unauthorized
        if (error.response && error.response.status === 401) {
         navigate('/login');

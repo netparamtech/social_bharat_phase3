@@ -97,35 +97,35 @@ const Footer = () => {
             </div>
             <div className=" social-links  ms-2">
               <a
-                href={data.social_twitter_link}
+                href={data&&data.social_twitter_link}
                 className="twitter"
                 target="_blank"
               >
                 <i className="fa-brands fa-twitter"></i>
               </a>
               <a
-                href={data.social_facebook_link}
+                href={data&&data.social_facebook_link}
                 className="facebook"
                 target="_blank"
               >
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
               <a
-                href={data.social_insta_link}
+                href={data&&data.social_insta_link}
                 className="instagram"
                 target="_blank"
               >
                 <i className="fa-brands fa-instagram"></i>
               </a>
               <a
-                href={data.social_linkedin_link}
+                href={data&&data.social_linkedin_link}
                 className="linkedin"
                 target="_blank"
               >
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
               <a
-                href={data.social_youtube_link}
+                href={data&&data.social_youtube_link}
                 className="youtube"
                 target="_blank"
               >
@@ -245,13 +245,13 @@ const Footer = () => {
           <div className="col-lg-3 col-md-6 col-sm-12  ">
             <h3>Contact Us</h3>
             <div className="ms-2">
-              {data.address}
+              {data&&data.address}
               <br />
-              <strong>phone: </strong> +91-{data.phone1},
+              <strong>phone: </strong> +91-{data&&data.phone1},
               <br />
-               +91-{data.phone2}
+               +91-{data&&data.phone2}
               <br />
-              <strong>Email: </strong> {data.email1}, <br />
+              <strong>Email: </strong> {data&&data.email1}, <br />
               <div className="">
                 {data && data.email2 ? `${data.email2}` : ""}
               </div>

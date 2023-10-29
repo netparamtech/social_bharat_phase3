@@ -58,6 +58,7 @@ const SearchPeople = () => {
 
 
   const handleFilterClicked = () => {
+    setPage(1);
     setIsFilter(!isFilter ? true : false);
     setIsGoClick(false);
     setSelectedState('');
@@ -94,6 +95,7 @@ const SearchPeople = () => {
   };
 
   const handleGoButtonClick = () => {
+    setPage(1);
     setIsGoClick(true);
   };
 
@@ -159,7 +161,11 @@ const SearchPeople = () => {
 
         } else {
           if (isGoClick) {
-            setItems([...response.data.data.users]);
+            if(page===1){
+              setItems([...new Set([...response.data.data.users])]);
+            } else {
+              setItems([...new Set([...items,...response.data.data.users])]);
+            }
           } else {
             const combinedItems = [...items, ...response.data.data.users];
             const uniqueItems = [];

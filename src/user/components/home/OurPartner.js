@@ -24,7 +24,6 @@ function OurPartner() {
   const fetchCommunities = async () => {
     dispatch(setLoader(true));
     try {
-      console.log("Loading")
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
         setCasts(response.data.data);

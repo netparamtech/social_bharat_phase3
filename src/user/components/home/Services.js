@@ -11,7 +11,7 @@ const Services = (props) => {
         <div className="row gy-4">
           {
             servicesCMS && servicesCMS.items && servicesCMS.items.map((item, index) => (
-              <div className="col-lg-6">
+              <div className="col-lg-6" key={index}>
                 <div className="d-flex mb-4">
                   <div className="small-hr"></div>
                   <div className="big-hr"></div>

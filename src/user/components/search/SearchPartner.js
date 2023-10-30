@@ -156,7 +156,6 @@ const SearchPartner = () => {
               setItems([...new Set([...items,...response.data.data.users])]);
             }
             
-            console.log(response.data.data.totalFilteredRecords)
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
            if(page===1){
@@ -242,7 +241,6 @@ const SearchPartner = () => {
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
-      console.log("Fetching more data",items.length); // Add this line for debugging
       search(searchText, page + 1, 20, community_id, state, city, gender, gotra, cast);
       setPage(page + 1);
     }

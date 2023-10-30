@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchTestimonialsOnHomePage } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const Testimonials = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleReviewClick = (e) => {
     e.preventDefault();
@@ -12,12 +15,15 @@ const Testimonials = () => {
   }
 
   const fetchTestimonials = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchTestimonialsOnHomePage();
       if(response && response.status === 200){
         setData(response.data.data);
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {

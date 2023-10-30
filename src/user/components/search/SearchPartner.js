@@ -8,8 +8,9 @@ import {
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { setLoader } from "../../actions/loaderAction";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -53,6 +54,8 @@ const SearchPartner = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [serverError, setServerError] = useState("");
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
@@ -139,6 +142,7 @@ const SearchPartner = () => {
 
   const search = async (searchText, page, size, community_id, state, city, gender, gotra, cast) => {
     setIsLoading(true);
+    dispatch(setLoader(true));
     try {
       const response = await searchPartner(searchText, page, 20, community_id, state, city, gender, gotra, cast);
 
@@ -179,10 +183,12 @@ const SearchPartner = () => {
           setItems(uniqueItems);
 
         }
+        dispatch(setLoader(false));
 
       }
       setIsLoading(false);
     } catch (error) {
+      dispatch(setLoader(false));
       setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {

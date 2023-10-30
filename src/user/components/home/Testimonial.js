@@ -18,7 +18,7 @@ const Testimonials = () => {
     dispatch(setLoader(true));
     try {
       const response = await fetchTestimonialsOnHomePage();
-      if(response && response.status === 200){
+      if (response && response.status === 200) {
         setData(response.data.data);
         dispatch(setLoader(false));
       }
@@ -27,7 +27,7 @@ const Testimonials = () => {
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        
+
       }
     }
   };

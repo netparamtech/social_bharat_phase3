@@ -5,12 +5,15 @@ import {
   searchPeopleWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { setLoader } from "../../actions/loaderAction";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
+
+  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -136,6 +139,7 @@ const SearchPeople = () => {
 
   const search = async (searchText, page, size) => {
     setIsLoading(true);
+    dispatch(setLoader(true));
     try {
       const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
 
@@ -179,9 +183,11 @@ const SearchPeople = () => {
 
           }
         }
+        dispatch(setLoader(false));
       }
       setIsLoading(false);
     } catch (error) {
+      dispatch(setLoader(false));
       setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {

@@ -188,6 +188,10 @@ nav .nav-item .btn {
   object-fit: cover;
 }
 
+#banners-section{
+  background-color: #ffffff;
+}
+
 #banners-section {
   margin-top: 94px;
   @media (max-width: 767px) {
@@ -1316,6 +1320,10 @@ input[type="number"] {
   color: #008374 !important; /* Change this to your desired color for inactive links */
   transition: color 0.3s !important; /* Add a transition effect for smooth color change */
   opacity: 0.5;
+}
+
+.custom-active-user{
+  color: #008374 ;
 }
 
 

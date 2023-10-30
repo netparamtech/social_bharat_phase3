@@ -138,7 +138,7 @@ const UserProfileDropdown = () => {
         key: '3',
         label: (
           <span onClick={handleProfileClick} className={`menu-font ${
-            window.location.pathname === "/profile" ? "active" : "inactive"
+            window.location.pathname === "/profile" ? "custom-active-user" : "inactive"
           }`}>
             <i className="fas fa-user-alt m-2"></i> Profile
           </span>
@@ -148,7 +148,7 @@ const UserProfileDropdown = () => {
         key: '4',
         label: (
           <span onClick={handleChangePasswordClick} className={`menu-font ${
-            window.location.pathname === "/change-password" ? "active" : "inactive"
+            window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
           }`}>
             <i className="fas fa-key m-2"></i> Change Password
           </span>

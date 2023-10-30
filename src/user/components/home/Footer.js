@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { fetchAllSiteSettings } from "../../services/userService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const Footer = () => {
   const [data, setData] = useState({});
@@ -12,6 +13,7 @@ const Footer = () => {
   const isPasswordSet = user && user.user && user.user.is_password_set;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleHomeClick = () => {
     if (isAuthenticUser) {
@@ -62,11 +64,14 @@ const Footer = () => {
   };
 
   const fetchSettings = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllSiteSettings();
       setData(response.data.data);
       setServerError("");
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");

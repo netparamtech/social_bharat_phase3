@@ -35,7 +35,7 @@ body {
 .nav-item {
   margin: auto 10px;
   font-weight: 500 !important;
-  font-size: 16px !important;
+  font-size: 20px !important;
 }
 
 nav .nav-item .btn {
@@ -275,7 +275,7 @@ nav .container,
 #why-social-section .what-social-bharat ul {
   list-style: none;
   line-height: 1cm;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #why-social-section .what-social-bharat ul li i {
@@ -680,14 +680,14 @@ a.btn.dropdown-toggle.show:focus {
 /* Footer */
 #footer {
   color: #37423b;
-  font-size: 14px;
+  font-size: 16px;
   background: #f4f8fa;
   position: relative;
 }
 
 #footer-end {
   color: #37423b;
-  font-size: 13px;
+  font-size: 16px;
   padding: 5px 0px 10px 0px;
   background-color: #ceddd2;
 }

@@ -58,7 +58,7 @@ const Testimonials = () => {
                 alt={`User ${index + 1}`}
               />
               {/* Include other content for each carousel item here */}
-              <div className="mb-2 comment-text mx-auto">{item.name}</div>
+              <div className="mb-2 h5 comment-text mx-auto">{item.name}</div>
               <div className="mb-2 comment-text mx-auto">{item.message}</div>
               <div className="mb-3 mx-auto">{generateRatingStars(item.rating)}</div>
             </div>

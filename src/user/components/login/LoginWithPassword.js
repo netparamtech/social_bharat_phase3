@@ -16,6 +16,7 @@ const LoginWithPassword = (props) => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
+  const [maxPassword,setMaxPassword] = useState(8);
 
   //onChange handler
   const handleMobileChange = (event) => {
@@ -30,7 +31,7 @@ const LoginWithPassword = (props) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    dispatch(setLoader(true))
+    dispatch(setLoader(true));
     event.preventDefault();
     const cleanMobile = mobile.replace(/^0+/, '');
 
@@ -57,6 +58,7 @@ const LoginWithPassword = (props) => {
         setAlertClass("alert-danger");
       } else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
+        setErrors('');
         setAlertClass("alert-danger");
       }
       //User Bloked
@@ -64,6 +66,7 @@ const LoginWithPassword = (props) => {
         navigate("/user/block");
       } else if (error.response && error.response.status === 500) {
         setMessage(error.response.data.message);
+        setErrors('');
         setAlertClass("alert-danger");
       }
     }
@@ -130,7 +133,6 @@ const LoginWithPassword = (props) => {
                       placeholder="Enter Password"
                       className="input-height"
                       onChange={handlePasswordChange}
-
                     />
 
                     {errors.password && (

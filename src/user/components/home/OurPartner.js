@@ -9,17 +9,33 @@ import { setLoader } from "../../actions/loaderAction";
 
 function OurPartner() {
   const [casts, setCasts] = useState([]);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const settings = {
-    slidesToShow: 12,
+    slidesToShow: !isAndroidUsed?12:3,
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
     autoplaySpeed: 1500,
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const fetchCommunities = async () => {
     dispatch(setLoader(true));

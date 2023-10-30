@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import {
+  fetchAllActiveQualifications,
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
   fetchOneCommunity,
@@ -45,6 +46,9 @@ const UpdateBasicProfile = () => {
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null);
+  const [qualification, setQualification] = useState('');
+  const [qualificationID, setQualificationID] = useState('');
+  const [qualificationList, setQualificationList] = useState([]);
   const maritalStatusOptions = [
     { value: "Single", label: "Single" },
     { value: "Married", label: "Married" },
@@ -97,8 +101,10 @@ const UpdateBasicProfile = () => {
     setMaritalStatus(selectedOption);
   };
 
-  const handleOccuptionChange = (selectedOption) => {
-    setMaritalStatus(selectedOption);
+  // Handle onChange for each input field
+  const handleQualificationChange = (selectedOption) => {
+    setQualificationID(selectedOption.value);
+    setQualification(selectedOption); // Update the degree state with the selected option
   };
 
   const handleAvailableMarriageCheckboxChange = (e) => {
@@ -205,6 +211,32 @@ const UpdateBasicProfile = () => {
     return formattedDate;
   };
 
+  const fetchAllQualification = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllActiveQualifications();
+      if (response && response.status === 200) {
+        setQualificationList(response.data.data.qualifications);
+        dispatch(setLoader(false));
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+
+  }
+
+  useEffect(() => {
+    fetchAllQualification();
+  }, []);
+
 
   useEffect(() => {
     setDOB(convertToCustomDateFormat(user.user.dob));
@@ -239,6 +271,8 @@ const UpdateBasicProfile = () => {
       dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
       marital_status: maritalStatus ? maritalStatus.label : '',
+      occupation,
+      highest_qualification: qualification.label
     };
 
     // Call the API to update the basic profile information
@@ -262,6 +296,7 @@ const UpdateBasicProfile = () => {
         }
       }
     } catch (error) {
+      dispatch(setLoader(false))
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -302,6 +337,12 @@ const UpdateBasicProfile = () => {
       setIsAvailableForMarriage(false);
       setShowAvailableForMarriage(false)
     }
+
+    setOccupation(user && user.user && user.user.occupation && user.user.occupation);
+    setQualification({
+      value: user && user.user && user.user.highest_qualification,
+      label: user && user.user && user.user.highest_qualification
+    });
 
   }, [user]);
 
@@ -363,7 +404,7 @@ const UpdateBasicProfile = () => {
     if (user.user.is_available_for_marriage) {
       setShowAvailableForMarriage(true);
       setIsAvailableForMarriage(true);
-    }else {
+    } else {
       setShowAvailableForMarriage(false);
       setIsAvailableForMarriage(false);
     }
@@ -490,16 +531,24 @@ const UpdateBasicProfile = () => {
                     </div>
 
                     <div className="row">
-                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
-                        <label className="form-label">Marital Status</label>
+
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Highest Qualification</label>
                         <Select
-                          options={maritalStatusOptions}
-                          value={maritalStatus}
-                          onChange={handleMaritalStatusChange}
-                          placeholder="Select..."
+                          id="qualification"
+                          className="form-control"
+                          value={qualification} // Use the degree prop directly as the default value
+                          onChange={handleQualificationChange}
+                          options={
+                            qualificationList &&
+                            qualificationList.map((qualification) => ({
+                              value: qualification.id,
+                              label: qualification.title,
+                            }))
+                          }
+                          placeholder="---Select...---"
                         />
                       </div>
-
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">What Is Your Job ?</label>
                         <input
@@ -509,12 +558,22 @@ const UpdateBasicProfile = () => {
                           placeholder="Example: Software Engineer, Grocery Shop Owner"
                           className="form-control"
                           defaultValue={occupation}
-                          onChange={(e)=>setOccupation(e.target.value)}
+                          onChange={(e) => setOccupation(e.target.value)}
 
                         />
                         {/* Add error handling if needed */}
                       </div>
-
+                    </div>
+                    <div className="row">
+                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
+                        <label className="form-label">Marital Status</label>
+                        <Select
+                          options={maritalStatusOptions}
+                          value={maritalStatus}
+                          onChange={handleMaritalStatusChange}
+                          placeholder="Select..."
+                        />
+                      </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
                         <label className="form-label">Community</label>
                         <input

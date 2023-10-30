@@ -11,6 +11,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
+import { Image } from "antd";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -29,7 +30,7 @@ const SearchPartner = () => {
   );
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);
-  const [isFilter,setIsFilter] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
 
   const [gender, setGender] = useState("");
   const [gotra, setGotra] = useState("");
@@ -55,7 +56,7 @@ const SearchPartner = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const [serverError, setServerError] = useState("");
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
@@ -152,20 +153,20 @@ const SearchPartner = () => {
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if (searchText&&isSaveClicked||isSaveClicked||searchText) {
+        if (searchText && isSaveClicked || isSaveClicked || searchText) {
           if (response.data.data.users.length !== 0) {
-            if(page===1){
+            if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
             } else {
-              setItems([...new Set([...items,...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.users])]);
             }
-            
+
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
-           if(page===1){
+            if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
             } else {
-              setItems([...new Set([...items,...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.users])]);
             }
             setTotalRows(response.data.data.totalFilteredRecords);
           }
@@ -241,7 +242,7 @@ const SearchPartner = () => {
     );
   };
   const handlePreferenceClick = () => {
-    !isFilter?setIsFilter(true):isFilter?setIsFilter(false):setIsFilter(false);
+    !isFilter ? setIsFilter(true) : isFilter ? setIsFilter(false) : setIsFilter(false);
     setIsSaveClicked(false);
   }
 
@@ -491,7 +492,7 @@ const SearchPartner = () => {
                       type="button"
                       className="btn btn-secondary"
                       data-bs-dismiss="modal"
-                      onClick={()=>handleCloseClick()}
+                      onClick={() => handleCloseClick()}
                     >
                       Close
                     </button>
@@ -535,7 +536,7 @@ const SearchPartner = () => {
                           <div className="card-body">
                             <div className="row">
                               <div className="col-4">
-                                <img
+                                <Image
                                   src={item.photo ? item.photo : defaultImage}
                                   alt={item.name}
                                   title={item.name}
@@ -543,10 +544,12 @@ const SearchPartner = () => {
                                 />
                               </div>
                               <div className="col-8 user-detail">
-                                <p>Name-{item.name}</p>
-                                <p>Father Name-{item.father_name?item.father_name:"N/A"}</p>
+                                <h6>{item.name}</h6>
+                                <p>Occupation-{item.occupation ? item.occupation : "N/A"}</p>
+                                <p>Education-{item.highest_qualification ? item.highest_qualification : "N/A"}</p>
+                                <p>Father Name-{item.father_name ? item.father_name : "N/A"}</p>
                                 <p>Age-{age(item.dob)}{" "}Years</p>
-                                <p>Cast-{item.cast?item.cast:"N/A"}</p>
+                                <p>Cast-{item.cast ? item.cast : "N/A"}</p>
                                 <p>City-{item.native_place_city}</p>
                                 <p>
                                   {item.native_place_state

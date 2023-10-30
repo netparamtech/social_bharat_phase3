@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
+import { Image } from "antd";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -335,15 +336,16 @@ const SearchPeople = () => {
                             <div className="card-body">
                               <div className="row">
                                 <div className="col-4">
-                                  <img
+                                  <Image
                                     src={item.photo ? item.photo : defaultImage}
                                     alt={item.name}
                                     title={item.name}
                                     className="avatar img-fluid img-circle"
                                   />
                                 </div>
-                                <div className="col-4 user-detail">
-                                  <p>Name-{item.name}</p>
+                                <div className="col-6 user-detail">
+                                  <h6>{item.name}</h6>
+                                  <p>Occupation-{item.occupation?item.occupation:"N/A"}</p>
                                   <p>Age-{age(item.dob)}{" "}Years</p>
                                   <p>Marital Status-{item.marital_status?item.marital_status:"N/A"}</p>
                                   <p>City-{item.native_place_city}</p>

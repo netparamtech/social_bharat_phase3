@@ -90,19 +90,7 @@ const EducationInfo = (props) => {
                       </div>
                       <div className="card-body">
                         <div className="w-100 w-lg-75">
-                          <div className="mb-2 row">
-                            <label
-                              htmlFor=""
-                              className="col-sm-6 d-inline-flex"
-                            >
-                              Highest Qualification
-                            </label>
-                            <div className="col-sm-6">
-                              <span className="text-muted">
-                                {item.highest_qualification}
-                              </span>
-                            </div>
-                          </div>
+                         
                           <div className="mb-2 row">
                             <label
                               htmlFor=""

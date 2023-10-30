@@ -8,19 +8,14 @@ import { setLoader } from '../../actions/loaderAction';
 const UpdateEducationProfile = (props) => {
   const { educationDetails } = props;
   const [degrees, setDegrees] = useState([]);
-  const [qualificationList,setQualificationList] = useState([]);
-
-
+  const [qualification,setQualification] = useState("");
   const [degreeId, setDegreeId] = useState('');
-  const [qualificationID,setQualificationID] = useState('');
   const [degree, setDegree] = useState('');
   const [studyField, setStudyField] = useState('');
   const [university, setUniversity] = useState('');
   const [score, setScore] = useState('');
   const [scoreType, setScoreType] = useState('');
   const [passingYear, setPassingYear] = useState('');
-
-  const [qualification, setQualification] = useState('');
 
   const [errors, setErrors] = useState('');
   const [serverError, setServerError] = useState("");
@@ -32,12 +27,6 @@ const UpdateEducationProfile = (props) => {
   const handleDegreeIdChange = (selectedOption) => {
     setDegreeId(selectedOption.value);
     setDegree(selectedOption); // Update the degree state with the selected option
-  };
-
-   // Handle onChange for each input field
-   const handleQualificationChange = (selectedOption) => {
-    setQualificationID(selectedOption.value);
-    setQualification(selectedOption); // Update the degree state with the selected option
   };
 
   const handleStudyFieldChange = (e) => {
@@ -77,7 +66,7 @@ const UpdateEducationProfile = (props) => {
 
     const requestData = {
       degree_id: degreeId,
-      highest_qualification:qualification.label,
+      highest_qualification:qualification,
       field_of_study: studyField,
       institution_name: university,
       score,
@@ -135,58 +124,30 @@ const UpdateEducationProfile = (props) => {
     }
   }
 
-  const fetchAllQualification = async () => {
-    dispatch(setLoader(true));
-    try {
-            const response = await fetchAllActiveQualifications();
-            if (response && response.status === 200) {
-                    setQualificationList(response.data.data.qualifications);
-                    dispatch(setLoader(false));
-            }
-    } catch (error) {
-      dispatch(setLoader(false));
-            //Unauthorized
-            if (error.response && error.response.status === 401) {
-                    navigate('/login');
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                    navigate('/login');
-            }
-    }
-
-}
   useEffect(() => {
     fetchDegrees();
-    fetchAllQualification();
   }, []);
 
   useEffect(() => {
     // Set default values from educationDetails prop when it changes
     if (educationDetails) {
-      setDegreeId(educationDetails.degree_id||'');
-      setQualificationID(educationDetails.degree_id || '');
+      setDegreeId(educationDetails.degree_id || '');
       setStudyField(educationDetails.field_of_study || '');
       setUniversity(educationDetails.institution_name || '');
       setScore(educationDetails.score || '');
       setScoreType(educationDetails.score_type || '');
       setPassingYear(educationDetails.passing_year || '');
 
-      setQualification({
-        value: educationDetails.highest_qualification,
-        label: educationDetails.highest_qualification
-      });
-
-        // Find the corresponding degree's title based on degreeId
-        const selectDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
-        if (selectDegree) {
-          setDegree({
-            value: selectDegree.id,
-            label: selectDegree.title
-          });
-        }
+      // Find the corresponding degree's title based on degreeId
+      const selectDegree = degrees.find((degree) => degree.id === educationDetails.degree_id);
+      if (selectDegree) {
+        setDegree({
+          value: selectDegree.id,
+          label: selectDegree.title
+        });
+      }
     }
-  }, [educationDetails, qualificationList]);
+  }, [educationDetails]);
 
   useEffect(() => {
     setServerError('');
@@ -207,28 +168,6 @@ const UpdateEducationProfile = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="card p-3">
                     <div className="row">
-                      
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Qualifications Highest</label>
-                        <Select
-                          id="qualification"
-                          className="form-control"
-                          value={qualification} // Use the degree prop directly as the default value
-                          onChange={handleQualificationChange}
-                          options={
-                            qualificationList &&
-                            qualificationList.map((qualification) => ({
-                              value: qualification.id,
-                              label: qualification.title,
-                            }))
-                          }
-                          placeholder="---Select...---"
-                        />
-                        {errors.degree_id && <span className='error'>Highest qualification is required</span>}
-                      </div>
-
-
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Degree</label>
                         <Select
@@ -247,10 +186,7 @@ const UpdateEducationProfile = (props) => {
                         />
                         {/* {errors.degree_id && <span className='error'>{errors.degree_id}</span>} */}
                       </div>
-                    </div>
-
-                    <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Field Of Study</label>
                         <input
                           type="text"
@@ -263,6 +199,10 @@ const UpdateEducationProfile = (props) => {
                         />
                         {errors.field_of_study && <span className='error'>{errors.field_of_study}</span>}
                       </div>
+                    </div>
+
+                    <div className="row">
+                    
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">University/Institution</label>
                         <input
@@ -276,12 +216,7 @@ const UpdateEducationProfile = (props) => {
                         />
                         {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
                       </div>
-                      
-
-                    </div>
-
-                    <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Passing Year</label>
                         <select
                           name="year"
@@ -295,6 +230,11 @@ const UpdateEducationProfile = (props) => {
                         </select>
                         {errors.passing_year && <span className='error'>{errors.passing_year}</span>}
                       </div>
+
+                    </div>
+
+                    <div className="row">
+                     
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Score Type</label>
                         <select className="form-select form-control" aria-label="Default select example"

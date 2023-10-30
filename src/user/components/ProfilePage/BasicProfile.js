@@ -212,6 +212,26 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
+                    <label className="col-sm-3">Highest Qualification </label>
+                    <div className="col-sm-8">
+                      <span className="text-muted">
+                        {user && user.data && user.data.highest_qualification ||
+                          "N/A"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
+                    <label className="col-sm-3">Occupation </label>
+                    <div className="col-sm-8">
+                      <span className="text-muted">
+                        {user && user.data && user.data.occupation ||
+                          "N/A"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-2 row">
                     <label className="col-sm-3">Marital Status </label>
                     <div className="col-sm-8">
                       <span className="text-muted">

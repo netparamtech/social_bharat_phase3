@@ -4,6 +4,8 @@ import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
 
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -14,6 +16,7 @@ const UserList = () => {
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
 
@@ -33,31 +36,33 @@ const UserList = () => {
   const handleTableChange = (pagination, filters, sorter) => {
     const newSortField = sorter.field || '';
     let newSortOrder = sorter.order || '';
-  
+
     // If the same column is clicked again, toggle the sort order
     if (sortField === newSortField) {
       newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     }
-  
+
     setSortField(newSortField);
     setSortOrder(newSortOrder);
   };
 
   const fetchData = async () => {
-    
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllUsers(page, size, searchQuery, sortField, sortOrder);
 
       setData(response.data.data);
 
       setTotalRows(response.data.totalRecords);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate('/admin');
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -75,7 +80,7 @@ const UserList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -109,7 +114,7 @@ const UserList = () => {
           />
         </a>
       ),
-      width:100,
+      width: 100,
     },
     {
       title: 'Name',
@@ -117,49 +122,51 @@ const UserList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
-   
+
     {
       title: 'Community',
       dataIndex: 'community',
       render: (text, record) => record.community?.name || 'N/A',
       sorter: true,
       sortDirections: ['asc', 'desc'],
-      width:200,
+      width: 200,
     },
-  
+
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => calculateTimeDifference(record.updated_at),
       sorter: true,
       sortDirections: ['asc', 'desc'],
-      width:150,
+      width: 150,
     },
 
-    { title: 'Status', dataIndex: 'status', render: (text,record) =>  (record.status === 'Active' ? (
-      <a
-        className="collapse-item m-2 hover-pointer-admin"
-        onClick={(e) => {
-          e.preventDefault();
-          handleUserToggleStatus(record.id);
-        }}
-      >
-        <i className="fa fa-thumbs-up text-primary" title="Active" />
-      </a>
-    ) : (
-      <a
-        className="collapse-item text-secondary m-2 hover-pointer-admin"
-        onClick={(e) => {
-          e.preventDefault();
-          handleUserToggleStatus(record.id);
-        }}
-      >
-        <i className="fa fa-thumbs-down" title="Inactive" />
-      </a>
-    )), sorter: true,
-    sortDirections: ['asc', 'desc'],
-  fixed: 'right',
-width:100,},
+    {
+      title: 'Status', dataIndex: 'status', render: (text, record) => (record.status === 'Active' ? (
+        <a
+          className="collapse-item m-2 hover-pointer-admin"
+          onClick={(e) => {
+            e.preventDefault();
+            handleUserToggleStatus(record.id);
+          }}
+        >
+          <i className="fa fa-thumbs-up text-primary" title="Active" />
+        </a>
+      ) : (
+        <a
+          className="collapse-item text-secondary m-2 hover-pointer-admin"
+          onClick={(e) => {
+            e.preventDefault();
+            handleUserToggleStatus(record.id);
+          }}
+        >
+          <i className="fa fa-thumbs-down" title="Inactive" />
+        </a>
+      )), sorter: true,
+      sortDirections: ['asc', 'desc'],
+      fixed: 'right',
+      width: 100,
+    },
     {
       title: 'Actions',
       dataIndex: 'actions',
@@ -172,7 +179,7 @@ width:100,},
         </div>
       ),
       fixed: 'right',
-      width:100
+      width: 100
     },
     // Rest of the columns definition
   ];
@@ -224,7 +231,7 @@ width:100,},
         }}
         onChange={handleTableChange}
         rowKey={(record) => record.id}
-       
+
       // onChange={handleSearchChange}
       />
     </div>

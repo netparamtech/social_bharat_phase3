@@ -7,6 +7,8 @@ import {
 } from "../../services/AdminService";
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const Event = () => {
   const [data, setData] = useState([]);
@@ -17,6 +19,7 @@ const Event = () => {
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
 
@@ -47,13 +50,16 @@ const Event = () => {
   };
 
   const fetchData = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchEvents(page, size, searchQuery, sortField, sortOrder);
 
       setData(response.data.data);
 
       setTotalRows(response.data.totalRecords);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {

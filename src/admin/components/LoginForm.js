@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {login as adminlogin, logout} from '../actions/authActions';
 import { useNavigate } from 'react-router';
 import { Input } from 'antd';
+import { setLoader } from '../actions/loaderAction';
 
 const LoginForm = () => {
 
@@ -26,6 +27,7 @@ const LoginForm = () => {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
+    dispatch(setLoader(true));
    
     try{
 
@@ -36,12 +38,14 @@ const LoginForm = () => {
         setMessage(response.data.message);
         setAlertClass('alert-success');
         dispatch(adminlogin(response.data.user, response.data.token));
+        dispatch(setLoader(false));
                 
         setTimeout(() => {
           navigate('/admin/dashboard')
         }, 1000);
       }
     } catch(error) {
+      dispatch(setLoader(false));
       
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);

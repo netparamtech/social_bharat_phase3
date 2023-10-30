@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { deleteQualificationsByID,  fetchAllQualifications, updateToggleStatusForQualifications } from "../../services/AdminService";
 import Search from "antd/es/input/Search";
 import { Table } from "antd";
+import { setLoader } from "../../actions/loaderAction";
 
 const QualificationList = () => {
   const [data, setData] = useState([]);
@@ -15,6 +16,7 @@ const QualificationList = () => {
   const [sortOrder, setSortOrder] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -43,13 +45,16 @@ const QualificationList = () => {
   };
 
   const fetchData = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllQualifications(page, size, searchQuery, sortField, sortOrder);
 
       setData(response.data.data.qualifications);
 
       setTotalRows(response.data.data.totalRecords);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate('/admin');
       }

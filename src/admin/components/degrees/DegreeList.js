@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { deleteDegree, fetchAllDegrees, updateDegreeStatus } from "../../services/AdminService";
 import Search from "antd/es/input/Search";
 import { Table } from "antd";
+import { setLoader } from "../../actions/loaderAction";
 
 const DegreeList = () => {
   const [data, setData] = useState([]);
@@ -16,6 +17,7 @@ const DegreeList = () => {
   const [isEditClicked,setIsEditClicked] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -48,13 +50,15 @@ const DegreeList = () => {
   };
 
   const fetchData = async () => {
-  
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllDegrees(page, size, searchQuery, sortField, sortOrder);
   
       setData(response.data.data.degrees);
       setTotalRows(response.data.data.totalRecords);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {

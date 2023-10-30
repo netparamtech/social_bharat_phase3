@@ -7,6 +7,8 @@ import {
 } from "../../services/AdminService";
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const CommunitiesList = () => {
   const [data, setData] = useState([]);
@@ -18,6 +20,7 @@ const CommunitiesList = () => {
   const [sortOrder, setSortOrder] = useState('');
   const [defaultImage, setDefaultImage] = useState('img/en.jpg');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -46,6 +49,7 @@ const CommunitiesList = () => {
 
 
   const fetchData = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllCommunity();
       const fetchedData = response.data.data;
@@ -57,7 +61,9 @@ const CommunitiesList = () => {
 
       setData(filteredData);
       setTotalRows(filteredData.length);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate('/admin');
       }

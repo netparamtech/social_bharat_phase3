@@ -467,7 +467,6 @@ nav .container,
 /* Testimonials Section */
 #testimonials {
   background-image: url("../images/pexels-photo-18409047.webp");
-  /* opacity: 0.8; */
   padding: 40px 0;
   background-position: center;
   object-fit: cover;
@@ -475,11 +474,11 @@ nav .container,
   overflow: hidden;
 }
 
-#testimonials::before {
+/* #testimonials::before {
   content: " ";
   position: absolute;
   inset: 0;
-}
+} */
 
 #testimonials .comment-text {
   text-align: center;
@@ -652,6 +651,7 @@ a.btn.dropdown-toggle.show:focus {
   background-color: #50cc14;
   border-color: #50cc14;
   color: #fff;
+  cursor: pointer;
 }
 
 .btn-banner:hover,

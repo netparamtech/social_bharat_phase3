@@ -259,11 +259,14 @@ const UpdateBasicProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setLoader(true))
+    dispatch(setLoader(true));
+
+    const arrayName = name.split(' ');
+    const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
 
     // Prepare the updated data
     const updatedData = {
-      name,
+      name:modifiedName,
       gender,
       email,
       native_place_city: selectedCity ? selectedCity.label : '',
@@ -381,6 +384,7 @@ const UpdateBasicProfile = () => {
     } else if (age >= 18 && gender === 'Female') {
       setShowMarriageStatus(true);
     } else {
+      console.log("inside age")
       setShowMarriageStatus(false);
       if (maritalStatus && gender === null || maritalStatus && age === null) {
         setShowMarriageStatus(true);
@@ -392,7 +396,17 @@ const UpdateBasicProfile = () => {
     if (maritalStatus) {
 
       if (maritalStatus.label !== 'Married' && maritalStatus.label !== 'Engaged') {
-        setShowAvailableForMarriage(true);
+        console.log(age)
+        if (age >= 21 && gender === 'Male') {
+          setShowAvailableForMarriage(true);
+        } else if (age >= 18 && gender === 'Female') {
+          setShowAvailableForMarriage(true);
+        } else {
+          setShowAvailableForMarriage(false);
+          if (maritalStatus && gender === null || maritalStatus && age === null) {
+            setShowAvailableForMarriage(true);
+          }
+        }
       } else {
         setShowAvailableForMarriage(false);
         setIsAvailableForMarriage(false);
@@ -435,7 +449,7 @@ const UpdateBasicProfile = () => {
                           type="text"
                           name="name"
                           id="name"
-                          placeholder="Enter your name"
+                          placeholder="Enter your name. Example: Vipul Sharma"
                           className="form-control"
                           defaultValue={name}
                           onChange={handleNameChange}
@@ -592,7 +606,7 @@ const UpdateBasicProfile = () => {
 
 
 
-                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showAvailableForMarriage ? '' : 'd-none'}`}>
+                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus&&showAvailableForMarriage ? '' : 'd-none'}`}>
                       <div className="form-check">
                         <input
                           className="form-check-input"

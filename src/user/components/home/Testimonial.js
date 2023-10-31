@@ -3,6 +3,7 @@ import { fetchTestimonialsOnHomePage } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { Carousel } from "antd";
 
 const Testimonials = () => {
   const [data, setData] = useState([]);
@@ -49,20 +50,24 @@ const Testimonials = () => {
   return (
     <section id="testimonials" className="wow animate__animated animate__zoomIn">
       <div id="carouselExampleInterval" className="carousel slide text-center" data-bs-ride="carousel">
-        <div className="carousel-inner">
-          {data.map((item, index) => (
-            <div key={index} className={index === 0 ? "carousel-item active" : "carousel-item"}>
-              <img
-                className="rounded-circle shadow-1-strong mb-3"
-                src={item.photo || "/user/images/OIP.jpg"} // Use default image if imageUrl is not available
-                alt={`User ${index + 1}`}
-              />
-              {/* Include other content for each carousel item here */}
-              <div className="mb-2 h5 comment-text mx-auto">{item.name}</div>
-              <div className="mb-2 comment-text mx-auto">{item.message}</div>
-              <div className="mb-3 mx-auto">{generateRatingStars(item.rating)}</div>
-            </div>
-          ))}
+        <div className="">
+          <Carousel autoplay>
+            {data.map((item, index) => (
+              <div key={index}>
+                <div className="text-center">
+                  <img
+                    className="rounded-circle shadow-1-strong mb-3 mx-auto"
+                    src={item.photo || "/user/images/OIP.jpg"} // Use default image if imageUrl is not available
+                    alt={`User ${index + 1}`}
+                  />
+                  <div className="mb-2 h5 text-muted comment-text mx-auto">{item.name}</div>
+                  <div className="mb-2 comment-text mx-auto">{item.message}</div>
+                  <div className="mb-3 mx-auto">{generateRatingStars(item.rating)}</div>
+                </div>
+              </div>
+            ))}
+          </Carousel>
+
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>

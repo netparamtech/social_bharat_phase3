@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
+
   const [mobile, setMobile] = useState("");
   const [community_id, SetCommunity_id] = useState("");
   const [casts, setCasts] = useState([]);
@@ -16,6 +17,7 @@ const RegisterForm = () => {
   const [isTempUserCreated, setIsTempUserCreated] = useState(false);
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
 
@@ -42,13 +44,15 @@ const RegisterForm = () => {
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
         setCasts(response.data.data);
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
+        setServerError('');
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -60,15 +64,20 @@ const RegisterForm = () => {
 
     const cleanMobile = mobile.replace(/^0+/, '');
 
+    //converting first letter in upper case in name
+    const arrayName = name.split(' ');
+    const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
+    setName(modifiedName);
     const userData = {
-      name,
-      mobile:cleanMobile,
+      name: modifiedName,
+      mobile: cleanMobile,
       community_id,
     };
     try {
       const response = await createTempUser(userData);
       if (response && response.status === 201) {
         setErrors("");
+        setServerError('');
         setMessage(response.data.message);
         tempUserCreated();
       }
@@ -76,12 +85,13 @@ const RegisterForm = () => {
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setServerError('');
       }
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -95,6 +105,7 @@ const RegisterForm = () => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
+            {serverError && <span className='error'>{serverError}</span>}
             <div className="row">
               <div className="col-md-6 d-none d-md-block">
                 <img

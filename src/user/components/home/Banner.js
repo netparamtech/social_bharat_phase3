@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchBannerWithPageAndSection } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { Button, Typography } from "antd";
+
+const { Title, Text } = Typography;
 
 const Banner = () => {
   const user = useSelector((state) => state.userAuth);
@@ -30,11 +33,8 @@ const Banner = () => {
         (banner) => banner.status === "Active"
       );
 
-      // Check if activeBanner.banner_urls is not an array
       if (!Array.isArray(activeBanners[0].banner_urls)) {
-        // Convert it into an array
         const updatedBannerUrls = [activeBanners[0].banner_urls];
-        // Update activeBanners with the updated banner URLs
         activeBanners[0].banner_urls = updatedBannerUrls;
       }
 
@@ -42,7 +42,6 @@ const Banner = () => {
       dispatch(setLoader(false));
     } catch (error) {
       dispatch(setLoader(false));
-      //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
@@ -66,35 +65,41 @@ const Banner = () => {
     if (typedRef.current) {
       const typedInstance = new Typed(typedRef.current, options);
       return () => {
-        typedInstance.destroy(); // Clean up the Typed instance on unmount
+        typedInstance.destroy();
       };
     }
-  }, []); // Empty dependency array to run this effect only once
+  }, []);
 
   const backgroundImageUrl = imageUrls.length > 0 && imageUrls[0]?.banner_urls[0]
     ? imageUrls[0].banner_urls[0].replace(/\\/g, "/")
     : defaultImageUrl;
 
   return (
-    <div id="banners-section" className="">
-      <div className="container">
-      <div className="jumbotron navbar-scroll" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
-          <div className="hero-section">
-            <div className="">
-              <h2>
-                Social Bharat Helps <br /> <span className="typed" ref={typedRef}></span>
-              </h2>
+    <>
+
+      <div id="banners-section" className="">
+        <div className="container">
+          <div className="jumbotron navbar-scroll" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
+            <div className="hero-section">
+
+              <div>
+                <Title level={2}>Social Bharat Helps</Title>
+               <h2>
+               <Text className="h2 typed" ref={typedRef}></Text>
+                </h2> 
+              </div>
+              <div className="">
+                <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
+                  Become a member
+                </a>
+              </div>
+
             </div>
-            <div className="">
-              <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
-                Become a member
-              </a>
-            </div>
-         
           </div>
         </div>
       </div>
-    </div>
+
+    </>
   );
 };
 

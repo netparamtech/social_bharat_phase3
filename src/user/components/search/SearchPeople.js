@@ -329,14 +329,14 @@ const SearchPeople = () => {
                 hasMore={items.length < totalRows}
                 loader={isLoading && <h4>Loading...</h4>}
               >
-                <div className="container pw-20">
+                <div className="container pw-20 wow animate__animated animate__zoomIn">
                   {groupedItems.map((pair, index) => (
                     <div className="row" key={index}>
                       {pair.map((item, innerIndex) => (
                         <div className="col-md-6" key={innerIndex}>
                           <div className="card shadow mb-2">
                             <div className="card-body">
-                              <div className="row">
+                              <div className="row wow animate__animated animate__zoomIn">
                                 <div className="col-4">
                                   <Image
                                     src={item.photo ? item.photo : defaultImage}
@@ -348,8 +348,8 @@ const SearchPeople = () => {
                                 <div className="col-6 user-detail">
                                   <h6>{item.name}</h6>
                                   <p>Occupation-{item.occupation?item.occupation:"N/A"}</p>
+                                  <p>Education-{item.highest_qualification ? item.highest_qualification : "N/A"}</p>
                                   <p>Age-{age(item.dob)}{" "}Years</p>
-                                  <p>Marital Status-{item.marital_status?item.marital_status:"N/A"}</p>
                                   <p>City-{item.native_place_city}</p>
                                   <p>
                                     {item.native_place_state

@@ -57,11 +57,11 @@ const LoginWithMobile = (props) => {
   }
 
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
+    <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-            <div className="row">
+            <div className="row wow animate__animated animate__zoomIn">
               <div className="col-md-6 d-none d-md-block">
                 <img src="/user/images/signup.png" className="img-fluid" alt="Sign In" />
               </div>

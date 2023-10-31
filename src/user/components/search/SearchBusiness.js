@@ -238,7 +238,7 @@ const SearchBusiness = () => {
                                     <div className="col-md-4" key={idx}>
                                         <div className="card shadow mb-2">
                                             <div className="card-body">
-                                                <div className="row">
+                                                <div className="row wow animate__animated animate__zoomIn">
                                                     <div className="col-4">
                                                         <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
                                                     </div>

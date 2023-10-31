@@ -520,7 +520,7 @@ const SearchPartner = () => {
               <i className="fas fa-search"></i>
             </div>
 
-            <div className="row">
+            <div className="row wow animate__animated animate__zoomIn">
               <InfiniteScroll
                 style={{ overflowX: "hidden" }}
                 dataLength={items.length}
@@ -534,7 +534,7 @@ const SearchPartner = () => {
                       <div className="col-md-6" key={innerIndex}>
                         <div className="card shadow mb-2">
                           <div className="card-body">
-                            <div className="row">
+                            <div className="row wow animate__animated animate__zoomIn">
                               <div className="col-4">
                                 <Image
                                   src={item.photo ? item.photo : defaultImage}

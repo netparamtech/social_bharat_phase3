@@ -84,13 +84,13 @@ const UserSearchDropdown = () => {
       }}
       trigger={["hover"]}
       placement="bottomRight"
-      className="d-inline nav-link"
+      className="d-inline nav-link nav-item"
     >
       {isAndroidUsed ? (
-        <span className="customDrawerBody customUl">Search</span>
+        <span className="nav-item">Search</span>
       ) : (
         <span
-          className={`btn btn-icon btn-transparent-dark text-capitalize text-primary  custom-font nav-link ${
+          className={`btn btn-icon btn-transparent-dark text-capitalize text-primary  custom-font nav-link nav-item ${
             window.location.pathname === "/user/search" ||
             window.location.pathname === "/user/search/business" ||
             window.location.pathname === "/user/search/partner"

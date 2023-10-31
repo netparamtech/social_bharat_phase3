@@ -67,7 +67,7 @@ const EducationInfo = (props) => {
                     <div className="card shadow mt-2 mb-2">
                       <div className="edit-icon">
                         <a
-                          href="#"
+                         className="hover-pointer"
                           onClick={() =>
                             navigate(
                               `/user/update-education-profile/${item.id}`
@@ -89,7 +89,7 @@ const EducationInfo = (props) => {
                         </a>
                       </div>
                       <div className="card-body">
-                        <div className="w-100 w-lg-75">
+                        <div className="w-100 w-lg-75 wow animate__animated animate__zoomIn">
                          
                           <div className="mb-2 row">
                             <label

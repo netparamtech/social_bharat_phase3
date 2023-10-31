@@ -69,7 +69,7 @@ const BusinessInfo = (props) => {
               {businessDetails && businessDetails.length > 0 ? (
                 <>                  {/* Render all fields inside a collapse div */}
                   {businessDetails.map((item, value) => (
-                    <div className="col-md-6" key={value}>
+                    <div className="col-md-6 wow animate__animated animate__zoomIn" key={value}>
                       <div className="card shadow mb-2">
                         <div className="edit-icon ">
                           <a className="hover-pointer" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">

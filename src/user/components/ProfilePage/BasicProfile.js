@@ -146,7 +146,7 @@ const BasicProfile = (props) => {
                 </div>
               </div>
 
-              <div className="card-body mx-auto text-center">
+              <div className="card-body mx-auto text-center wow animate__animated animate__zoomIn">
                 <p className="card-text  mb-0">
                   {(user && user.data && user.data.name) || "N/A"}
                 </p>
@@ -180,7 +180,7 @@ const BasicProfile = (props) => {
                 </a>
               </div>
               <div className="card-body ">
-                <div className="w-100 w-lg-75">
+                <div className="w-100 w-lg-75 wow animate__animated animate__zoomIn">
                   <div className="mb-2 row">
                     <label htmlFor="" className="col-sm-3">
                       Name

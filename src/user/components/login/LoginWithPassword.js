@@ -75,12 +75,12 @@ const LoginWithPassword = (props) => {
     chnageFlag(true);
   };
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
+    <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-6 d-none d-md-block">
+              <div className="col-md-6 d-none d-md-block wow animate__animated animate__zoomIn">
                 <img
                   src="/user/images/signup.png"
                   className="img-fluid"

@@ -123,7 +123,7 @@ const NavbarTransparent = () => {
 
   return (
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
-      <div className="container">
+      <div className="container wow animate__animated animate__zoomIn">
         <a className="navbar-brand" onClick={handleHomeClicked}>
           <img src={data && data.logo1} alt="Logo" />
         </a>
@@ -253,8 +253,8 @@ const NavbarTransparent = () => {
 
                 <li className="nav-item mt-2">
                   {isAuthenticUser && isAuthenticUser ? (
-                    <a className="nav-link">
-                      <i className="fa fa-search m-2 " aria-hidden="true"></i>
+                    <a className="nav-link m-2">
+                      <i className="fa fa-search" aria-hidden="true"></i>
                       <UserSearchDropdown />
                     </a>
                   ) : (

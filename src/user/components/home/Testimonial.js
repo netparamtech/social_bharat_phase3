@@ -77,7 +77,7 @@ const Testimonials = () => {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
-        <a className="btn btn-primary hover-pointer" onClick={handleReviewClick}>Share Your Review</a>
+        <a className="btn btn-primary hover-pointer fw-bold" onClick={handleReviewClick}>Share Your Review</a>
 
       </div>
     </section>

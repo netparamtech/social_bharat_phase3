@@ -61,7 +61,7 @@ const ChangePassword = () => {
             <div id="changePassword" className="container">
                 <div className="card shadow mx-auto">
                     <div className="card-body">
-                        <div className="row">
+                        <div className="row wow animate__animated animate__zoomIn">
                             <div className="col-md-12 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
                                     <h3 className="mb-3">Change Password</h3>

@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { DatePicker, notification } from 'antd';
 import { useMemo } from 'react';
 import { setLoader } from "../../actions/loaderAction";
+import WOW from 'wowjs';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
@@ -232,6 +233,12 @@ const UpdateBasicProfile = () => {
     }
 
   }
+
+  useEffect(() => {
+    new WOW.WOW({
+      live: true
+    }).init();
+  }, [])
 
   useEffect(() => {
     fetchAllQualification();

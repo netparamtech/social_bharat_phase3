@@ -93,7 +93,7 @@ const Footer = () => {
       className=" text-start lh-lg wow animate_animated animate_fadeInUp"
     >
       <div className="container ">
-        <div className="row pt-4 pb-3  ">
+        <div className="row pt-4 pb-3  wow animate__animated animate__zoomIn">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-3">
             <h3>Social Bharat</h3>
             <div className="ms-2">

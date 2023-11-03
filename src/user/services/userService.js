@@ -546,3 +546,23 @@ export const fetchSinglePageCMS = async (page) => {
         throw error;
     }
 }
+
+//Chat
+export const sendMessage = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/chat/send-message',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//chat receive
+export const receiveMessage = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/chat/${id}/messages`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

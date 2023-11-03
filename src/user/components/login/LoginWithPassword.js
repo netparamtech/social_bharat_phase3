@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { loginWithPassword } from "../../services/userService";
+import React, { useEffect, useState } from "react";
+import { fetchBannerWithPageAndSection, loginWithPassword } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
@@ -18,6 +18,8 @@ const LoginWithPassword = (props) => {
   const [alertClass, setAlertClass] = useState("");
   const [maxPassword,setMaxPassword] = useState(8);
 
+  const [imageUrls, setImageUrls] = useState([]);
+
   //onChange handler
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -29,6 +31,31 @@ const LoginWithPassword = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const fetchBanners = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const response = await fetchBannerWithPageAndSection('Login', 'Login With Password');
+
+      const activeBanners = response.data.data.filter((banner) => banner.status === 'Active');
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+      setImageUrls(activeBanners[0].banner_urls);
+      dispatch(setLoader(false));
+
+    } catch (error) {
+      dispatch(setLoader(false));
+
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+  };
 
   const handleSubmit = async (event) => {
     dispatch(setLoader(true));
@@ -74,6 +101,11 @@ const LoginWithPassword = (props) => {
   const openLoginWithOtpForm = () => {
     chnageFlag(true);
   };
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
   return (
     <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
       <div className="container">
@@ -82,7 +114,7 @@ const LoginWithPassword = (props) => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block wow animate__animated animate__zoomIn">
                 <img
-                  src="/user/images/signup.png"
+                  src={imageUrls&&imageUrls[0]}
                   className="img-fluid"
                   alt="Signup"
                 />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   createTempUser,
   fetchAllActiveCommunities,
+  fetchBannerWithPageAndSection,
 } from "../../services/userService";
 import RegisterWithOtp from "../otp/RegisterWithOtp";
 import Select from "react-select";
@@ -20,6 +21,8 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [serverError, setServerError] = useState("");
+
+  const [imageUrls, setImageUrls] = useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -102,6 +105,35 @@ const RegisterForm = () => {
     }
   };
 
+  const fetchBanners = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const response = await fetchBannerWithPageAndSection('Register', 'Register');
+
+      const activeBanners = response.data.data.filter((banner) => banner.status === 'Active');
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+      setImageUrls(activeBanners[0].banner_urls);
+      dispatch(setLoader(false));
+
+    } catch (error) {
+      dispatch(setLoader(false));
+
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
   useEffect(() => {
     fetchCommunities();
   }, []);
@@ -115,7 +147,7 @@ const RegisterForm = () => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block">
                 <img
-                  src="/user/images/signup.png"
+                  src={imageUrls&&imageUrls[0]}
                   className="img-fluid"
                   alt="Sign Up"
                 />

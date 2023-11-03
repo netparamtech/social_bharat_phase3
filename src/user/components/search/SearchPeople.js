@@ -10,6 +10,7 @@ import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
+import Chat from "../chats/Chat";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -45,6 +46,21 @@ const SearchPeople = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+
+  const [selectedUser,setSelectedUser] = useState(null);
+
+  const [isChat,setIsChat] = useState(false);
+
+  const changeChatFlag = (value) => {
+    setIsChat(value);
+  }
+
+  const handleChatclick = (item) =>{
+    setIsChat(true);
+    setSelectedUser(item);
+  }
+
+
 
   useEffect(() => {
     if (items.length > 0) {
@@ -243,7 +259,12 @@ const SearchPeople = () => {
 
 
   return (
-    <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+   <>
+   {
+    isChat?(
+      <Chat changeChatFlag = {changeChatFlag} selectedUser = {selectedUser} />
+    ):(
+      <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
@@ -344,6 +365,7 @@ const SearchPeople = () => {
                                     title={item.name}
                                     className="avatar img-fluid img-circle"
                                   />
+                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={()=>handleChatclick(item)}><i class="fa-regular fa-comments text-primary" ></i></div>
                                 </div>
                                 <div className="col-6 user-detail">
                                   <h6>{item.name}</h6>
@@ -371,6 +393,9 @@ const SearchPeople = () => {
         </div>
       </div>
     </div>
+    )
+   }
+   </>
   );
 };
 

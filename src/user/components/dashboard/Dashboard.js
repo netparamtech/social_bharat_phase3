@@ -19,7 +19,7 @@ const Dashboard = () => {
                       प्रोफ़ाइल प्रबंधित करें{" "}
                     </div>
                   </div>
-                  <img src="/user/images/activities.png" width="40px" />
+                  <img src="/user/images/activities.png" width="60px" />
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">

@@ -230,7 +230,7 @@ const SearchBusiness = () => {
                                 <a className="btn btn-set btn-primary hover-pointer" onClick={handleGoButtonClick}>Go</a>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row wow animate__animated animate__zoomIn">
                             {/* User Cards */}
 
                             {
@@ -243,7 +243,7 @@ const SearchBusiness = () => {
                                                         <img src={item.photo ? item.photo : defaultImage} alt={item.name} title={item.name} className="avatar img-fluid img-circle " />
                                                     </div>
                                                     <div className="col-8 user-detail">
-                                                        <p>{item.business_name}</p>
+                                                        <h6>{item.business_name}</h6>
                                                         <p>{item.city}</p>
                                                         <p>{item.state ? `(${item.state})` : ""}</p>
                                                     </div>

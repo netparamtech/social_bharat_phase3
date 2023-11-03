@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
 import { Divider, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 import { fetchAllSiteSettings } from "../../services/userService";
+import { setLoader } from "../../actions/loaderAction";
 
 const NavbarTransparent = () => {
   const user = useSelector((state) => state.userAuth);
@@ -17,6 +18,7 @@ const NavbarTransparent = () => {
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLoginClicked = (e) => {
     e.preventDefault();
@@ -88,10 +90,13 @@ const NavbarTransparent = () => {
   };
 
   const fetchSettings = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllSiteSettings();
       setData(response.data.data);
+      dispatch(setLoader(false));
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");

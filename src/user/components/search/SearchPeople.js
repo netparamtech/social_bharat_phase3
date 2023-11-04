@@ -366,7 +366,7 @@ const SearchPeople = () => {
                                     title={item.name}
                                     className="avatar img-fluid img-circle"
                                   />
-                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={()=>handleChatclick(item)}><i class="fa-regular fa-comments text-primary" ></i></div>
+                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={()=>handleChatclick(item)}><i className="fa-regular fa-comments text-primary" ></i></div>
                                 </div>
                                 <div className="col-6 user-detail">
                                   <h6>{item.name}</h6>

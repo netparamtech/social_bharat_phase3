@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState,useLayoutEffect  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveMessage, sendMessage } from "../../services/userService";
 import { useNavigate, useParams } from "react-router-dom";
@@ -146,6 +146,18 @@ const NewChat = (props) => {
     window.scroll(0, 0);
   }, []);
 
+const chatMessagesContainerRef = useRef();
+
+useEffect(() => {
+    // Scroll to the end when the component mounts
+    chatMessagesContainerRef.current.scrollTop = chatMessagesContainerRef.current.scrollHeight;
+  }, []); // The empty dependency array ensures this effect runs only once when the component mounts
+
+  useLayoutEffect(() => {
+    // Scroll to the end whenever the messageList changes
+    chatMessagesContainerRef.current.scrollTop = chatMessagesContainerRef.current.scrollHeight;
+  }, [messageList]);
+
   return (
     <div id="chat">
       <main className="content mb-5">
@@ -196,7 +208,7 @@ const NewChat = (props) => {
                 </div>
 
                 <div className="position-relative">
-                  <div className="chat-messages p-4">
+                  <div className="chat-messages p-4" ref={chatMessagesContainerRef}>
                     {messageList &&
                       messageList.map((item, index) => (
                         <div key={index}>

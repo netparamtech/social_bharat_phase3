@@ -10,7 +10,6 @@ import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
-import Chat from "../chats/Chat";
 import NewChat from "../chats/NewChat";
 
 const SearchPeople = () => {

@@ -1352,9 +1352,15 @@ input[type="number"] {
 
 #chat .bg-primary {
   background-color: #008577 !important;
-  background-color: transparent;
   color: white;
 }
+
+#chat .bg-right-msg {
+  background-color: #68e0d4 !important;
+  color: white;
+}
+
+
 
 #chat .chat-offline {
   color: #e4606d;
@@ -1412,7 +1418,7 @@ input[type="number"] {
  }
 
  #chat .close-button-chat:hover{
-  color: #46e4d1 !important;
+  color: red !important;
  }
 
 .font-weight-bold {

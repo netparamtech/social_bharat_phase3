@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import Footer from "../components/home/Footer";
 import NavbarTransparent from "../components/home/NavbarTransparent";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../actions/loaderAction";
+import { fetchAllSiteSettings } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const UserLayout = ({ children }) => {
+
+  const [data, setData] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const fetchSettings = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllSiteSettings();
+      setData(response.data.data);
+      dispatch(setLoader(false));
+    } catch (error) {
+      dispatch(setLoader(false));
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchSettings();
+  }, [])
+
   useEffect(() => {
     // List of script sources
     const scriptSources = [
@@ -41,7 +72,7 @@ const UserLayout = ({ children }) => {
   return (
     <>
       <Helmet>
-     
+
         <link rel="icon" type="image/x-icon" href="/user/images/logo.png" />
 
         <link
@@ -50,7 +81,7 @@ const UserLayout = ({ children }) => {
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
           crossorigin="anonymous"
         />
-         <link rel="stylesheet" href="/user/css/user.css" />
+        <link rel="stylesheet" href="/user/css/user.css" />
         {/* amimate Css CDN */}
         <link
           rel="stylesheet"
@@ -69,15 +100,15 @@ const UserLayout = ({ children }) => {
         />
         {/* Animate on scroll library CSS  */}
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-        
+
       </Helmet>
 
       <header>
-        <NavbarTransparent />
+        <NavbarTransparent data = {data} />
       </header>
       {children}
       <footer id="footer" className="animate__animated animate__fadeInUp">
-        <Footer />
+        <Footer data={data} />
       </footer>
     </>
   );

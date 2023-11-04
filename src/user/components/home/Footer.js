@@ -4,8 +4,8 @@ import { fetchAllSiteSettings } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 
-const Footer = () => {
-  const [data, setData] = useState({});
+const Footer = (props) => {
+  const {data} = props;
   const [serverError, setServerError] = useState("");
 
   const user = useSelector((state) => state.userAuth);
@@ -63,29 +63,6 @@ const Footer = () => {
     }
   };
 
-  const fetchSettings = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await fetchAllSiteSettings();
-      setData(response.data.data);
-      setServerError("");
-      dispatch(setLoader(false));
-    } catch (error) {
-      dispatch(setLoader(false));
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchSettings();
-  }, []);
 
   return (
     <footer
@@ -102,35 +79,35 @@ const Footer = () => {
             </div>
             <div className=" social-links  ms-2">
               <a
-                href={data&&data.social_twitter_link}
+                href={data&&data.social_twitter_link&&data.social_twitter_link}
                 className="twitter"
                 target="_blank"
               >
                 <i className="fa-brands fa-twitter"></i>
               </a>
               <a
-                href={data&&data.social_facebook_link}
+                href={data&&data.social_facebook_link&&data.social_facebook_link}
                 className="facebook"
                 target="_blank"
               >
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
               <a
-                href={data&&data.social_insta_link}
+                href={data&&data.social_insta_link&&data.social_insta_link}
                 className="instagram"
                 target="_blank"
               >
                 <i className="fa-brands fa-instagram"></i>
               </a>
               <a
-                href={data&&data.social_linkedin_link}
+                href={data&&data.social_linkedin_link&&data.social_linkedin_link}
                 className="linkedin"
                 target="_blank"
               >
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
               <a
-                href={data&&data.social_youtube_link}
+                href={data&&data.social_youtube_link&&data.social_youtube_link}
                 className="youtube"
                 target="_blank"
               >

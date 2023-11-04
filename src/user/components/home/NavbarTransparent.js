@@ -1,18 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
-import { Divider, Drawer } from "antd";
+import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
-import { fetchAllSiteSettings } from "../../services/userService";
-import { setLoader } from "../../actions/loaderAction";
 
-const NavbarTransparent = () => {
+const NavbarTransparent = (props) => {
+  const {data,community} = props;
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const isPasswordSet = user && user.user && user.user.is_password_set;
-
-  const [data, setData] = useState({});
 
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
@@ -89,28 +86,6 @@ const NavbarTransparent = () => {
     setVisible(!visible);
   };
 
-  const fetchSettings = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await fetchAllSiteSettings();
-      setData(response.data.data);
-      dispatch(setLoader(false));
-    } catch (error) {
-      dispatch(setLoader(false));
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
   useEffect(() => {
     const handleResize = () => {
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
@@ -130,12 +105,12 @@ const NavbarTransparent = () => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" onClick={handleHomeClicked}>
-          <img src={data && data.logo1} alt="Logo" />
+          <img src={data && data.logo1&&data.logo1} alt="Logo" />
         </a>
 
         <a>
           {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-            <UserProfileDropdown />
+            <UserProfileDropdown community = {community} />
           ) : (
             ""
           )}

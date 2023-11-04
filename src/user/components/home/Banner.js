@@ -81,7 +81,7 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, [imageUrls]);
 
-  const backgroundImageUrl = imageUrls.length > 0 && imageUrls[0]
+  const backgroundImageUrl = imageUrls && imageUrls.length > 0 && imageUrls[0]
     ? imageUrls[0].banner_urls[currentImageIndex].replace(/\\/g, "/")
     : defaultImageUrl;
 

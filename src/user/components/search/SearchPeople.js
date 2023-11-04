@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 import Chat from "../chats/Chat";
+import NewChat from "../chats/NewChat";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -262,7 +263,7 @@ const SearchPeople = () => {
    <>
    {
     isChat?(
-      <Chat changeChatFlag = {changeChatFlag} selectedUser = {selectedUser} />
+      <NewChat changeChatFlag = {changeChatFlag} selectedUser = {selectedUser} />
     ):(
       <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">

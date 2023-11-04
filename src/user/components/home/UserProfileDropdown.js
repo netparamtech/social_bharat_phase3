@@ -4,7 +4,6 @@ import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { fetchOneCommunity, userLogout } from '../../services/userService';
-import Setting from '../settings/Setting';
 
 // ...
 

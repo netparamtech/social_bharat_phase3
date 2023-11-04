@@ -391,7 +391,6 @@ const UpdateBasicProfile = () => {
     } else if (age >= 18 && gender === 'Female') {
       setShowMarriageStatus(true);
     } else {
-      console.log("inside age")
       setShowMarriageStatus(false);
       if (maritalStatus && gender === null || maritalStatus && age === null) {
         setShowMarriageStatus(true);
@@ -403,7 +402,6 @@ const UpdateBasicProfile = () => {
     if (maritalStatus) {
 
       if (maritalStatus.label !== 'Married' && maritalStatus.label !== 'Engaged') {
-        console.log(age)
         if (age >= 21 && gender === 'Male') {
           setShowAvailableForMarriage(true);
         } else if (age >= 18 && gender === 'Female') {

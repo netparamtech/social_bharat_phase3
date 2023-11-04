@@ -14,6 +14,8 @@ const NavbarTransparent = (props) => {
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
+  const defaultLogo = '/user/images/sb-logo.png'
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -105,7 +107,7 @@ const NavbarTransparent = (props) => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" onClick={handleHomeClicked}>
-          <img src={data && data.logo1&&data.logo1} alt="Logo" />
+          <img src={data && data.logo1&&data.logo1?data.logo1:defaultLogo} alt="Logo" />
         </a>
 
         <a>

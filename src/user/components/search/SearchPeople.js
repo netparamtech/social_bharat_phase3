@@ -357,7 +357,7 @@ const SearchPeople = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    <div className="container pw-20 wow animate__animated animate__zoomIn">
+                    <div className="container pw-20">
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
@@ -374,7 +374,14 @@ const SearchPeople = () => {
                                         title={item.name}
                                         className="avatar img-fluid img-circle"
                                       />
-                                      
+
+                                      <div
+                                        className="text-start ms-3 mt-2 hover-pointer"
+                                        onClick={() => handleChatclick(item)}
+                                      >
+                                        <img src="/user/images/chat-icon.jpg" width="40px" />
+                                      </div>
+
                                     </div>
                                     <div className="col-5 user-detail">
                                       <h6>{item.name}</h6>
@@ -398,12 +405,7 @@ const SearchPeople = () => {
                                           : ""}
                                       </p>
                                     </div>
-                                    <div
-                                        className="col-1 text-end ms-5     hover-pointer"
-                                        onClick={() => handleChatclick(item)}
-                                      >
-                                        <img src="/user/images/chat-icon.jpg" width="40px" />
-                                      </div>
+
                                   </div>
                                 </div>
                               </div>

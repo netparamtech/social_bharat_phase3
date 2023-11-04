@@ -140,7 +140,7 @@ const MatrimonialInfo = (props) => {
           <div className="card-body">
             <h5 className="fw-3 mb-3">Matrimonial Info</h5>
             {matrimonialDetails && matrimonialDetails.length > 0 ? (
-              <div className="row">
+              <div className="row wow animate__animated animate__zoomIn">
                 <div className="col-md-6">
                   <div className="card shadow">
                     <div className="card-body">

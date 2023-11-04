@@ -1156,7 +1156,8 @@ a.btn.dropdown-toggle.show:focus {
 #event-form,
 #auth-wrapper-cont ,
 #comminity-banners-section,
-#setting-page{
+#setting-page,
+#chat{
   margin-top: 140px;
 }
 
@@ -1327,6 +1328,14 @@ input[type="number"] {
 .custom-active-user{
   color: #008374 ;
 }
+
+/* chat */
+#chat .card{
+  height: 500px !important;
+}
+/*---------  */
+
+
 
 
 

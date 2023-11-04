@@ -23,8 +23,7 @@ function Sidebar() {
       {/* Nav Item - Dashboard */}
       <li className="nav-item active">
         <a
-          className="nav-link"
-          href=""
+          className="nav-link hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault(); // Prevent the default anchor tag behavior
             navigate("/admin/dashboard");

@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   return (
+    
     <div id="dashboard">
-      <div className="container pt-5 mb-5">
+      <div className="container pt-5 mb-5 wow animate__animated animate__zoomIn">
         <div className="row">
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-peal text-white h-100">
@@ -18,7 +19,7 @@ const Dashboard = () => {
                       प्रोफ़ाइल प्रबंधित करें{" "}
                     </div>
                   </div>
-                  <img src="/user/images/activities.png" width="40px" />
+                  <img src="/user/images/activities.png" width="60px" />
                 </div>
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">

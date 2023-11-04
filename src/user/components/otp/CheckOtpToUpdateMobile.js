@@ -122,7 +122,7 @@ const CheckOtpToUpdateMobile = (props) => {
 
   return (
     <>
-      <form className="w-100 w-lg-75 " onSubmit={handleVarifiedClicked}>
+      <form className="w-100 w-lg-75 wow animate__animated animate__zoomIn" onSubmit={handleVarifiedClicked}>
         <div className="row mb-3">
           <input
             type="number"

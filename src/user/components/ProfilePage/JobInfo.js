@@ -72,7 +72,7 @@ const JobInfo = (props) => {
                       </a>
                       </div>
                       <div className="card-body">
-                        <table className="table table-striped">
+                        <table className="table table-striped wow animate__animated animate__zoomIn">
                           <tbody>
                             <tr>
                               <td>Company Name</td>

@@ -12,7 +12,7 @@ function App() {
   const isLoading = useSelector((state) => state.loader.isLoaderSet);
 
   return (
-    <div>
+    <div className="">
 
       <Router>
         <Suspense fallback={<div>Loading...</div>}>

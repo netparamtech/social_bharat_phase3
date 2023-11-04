@@ -5,13 +5,19 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-import { updateCMS } from "../../services/AdminService";
+import { updateCMS, uploadMultipleImages } from "../../services/AdminService";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const UpdateCms = (props) => {
     const { homeCms } = props;
     const [initialEditorValue, setInitialEditorValue] = useState([EditorState.createEmpty()])
     const [editorStates, setEditorStates] = useState(initialEditorValue);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const [proposalPhoto, setProposalPhoto] = useState([]);
+    const [tempProposalPhotoUrl, setTempProposalPhotoUrl] = useState([]);
+    const [proposalPreview, setProposalPreview] = useState([]);
 
     const [page, setPage] = useState("");
     const [about, setAbout] = useState({
@@ -34,9 +40,71 @@ const UpdateCms = (props) => {
 
     const [numRows, setNumRows] = useState(1);
 
+    const dispatch = useDispatch();
+
+
     const handleAboutChange = (e) => {
         const { name, value } = e.target;
         setAbout({ ...about, [name]: value });
+    };
+
+    const handleProposalPhotoChange = async (e) => {
+        const selectedFiles = e.target.files;
+        setProposalPhoto(selectedFiles); // Set the selected files
+
+        const totalFiles = tempProposalPhotoUrl.length + selectedFiles.length;
+        if (totalFiles > 5) {
+            alert("Total files (including existing ones) cannot exceed 5.");
+            e.target.value = null; // Clear the input field
+            return;
+        }
+
+        const previewUrls = [];
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const previewUrl = URL.createObjectURL(file);
+            previewUrls.push(previewUrl);
+        }
+
+        const combinedUrls = [...previewUrls, ...tempProposalPhotoUrl];
+        setProposalPreview(combinedUrls);
+
+        const formData = new FormData();
+
+        // Append each file to the FormData
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.append("images", selectedFiles[i]);
+        }
+
+        try {
+            dispatch(setLoader(true));
+            const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
+            if (response.status === 200) {
+                const combineTempUrls = [
+                    ...tempProposalPhotoUrl,
+                    ...response.data.data.files,
+                ];
+                setTempProposalPhotoUrl(combineTempUrls);
+                dispatch(setLoader(false));
+            }
+        } catch (error) {
+            dispatch(setLoader(false));
+            // Handle error
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+            }
+
+            //Unauthorized
+            else if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                let errorMessage = error.response.data.message;
+                navigate('/server/error', { state: { errorMessage } });
+            }
+        }
     };
 
     const addNewRow = () => {
@@ -105,6 +173,7 @@ const UpdateCms = (props) => {
             console.log(itemsWithEditorState, "itemsWithEditorState")
 
             about.content = htmlFormet(editorState);
+            about.images = tempProposalPhotoUrl;
             services.section_title = serviceTitle ? serviceTitle : services.section_title
             services.items = itemsWithEditorState.length === 0 ? services.items : itemsWithEditorState;
 
@@ -146,9 +215,30 @@ const UpdateCms = (props) => {
         }
     };
 
+    const handleDeleteImage = (indexToDelete) => {
+        // Create copies of the current arrays
+        const updatedProposalPreview = [...proposalPreview];
+        const updatedProposalTempUrl = [...tempProposalPhotoUrl];
+
+        // Remove the image at the specified index from both arrays
+        updatedProposalPreview.splice(indexToDelete, 1);
+        updatedProposalTempUrl.splice(indexToDelete, 1);
+
+        // Update the state variables with the updated arrays
+        setProposalPreview(updatedProposalPreview);
+        setTempProposalPhotoUrl(updatedProposalTempUrl);
+    };
+
 
     useEffect(() => {
-        setAbout(homeCms && homeCms.about && homeCms.about);
+        console.log(homeCms.about)
+        if (homeCms && homeCms.about) {
+            setAbout(homeCms.about);
+            if (homeCms.about.images) {
+                setTempProposalPhotoUrl(homeCms.about.images);
+                setProposalPreview(homeCms.about.images);
+            }
+        }
         if (homeCms && homeCms.about &&
             homeCms.about.content && homeCms.about.content) {
             const blocksFromHTML = convertFromHTML(homeCms.about.content);
@@ -156,6 +246,7 @@ const UpdateCms = (props) => {
             const editorStateFromFetchedData = EditorState.createWithContent(contentState);
             setEditorState(editorStateFromFetchedData);
         }
+
 
         setServices(homeCms && homeCms.services && homeCms.services);
     }, [homeCms]);
@@ -239,24 +330,34 @@ const UpdateCms = (props) => {
                                     </div>
                                 </div>
                                 <div className="row  mb-2">
-                                    <div className="col-md-12">
-                                        <label className="fw-bold">Section Image</label>
-                                    </div>
-                                    <div className="col-md-10 form-group">
+                                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                        <label className="form-label">Section Image(s) </label>
                                         <input
                                             type="file"
                                             className="form-control"
                                             accept=".png, .jpg, .jpeg"
+                                            id="proposalPhoto"
+                                            defaultValue={proposalPhoto}
+                                            onChange={handleProposalPhotoChange}
                                             multiple
                                         />
-                                    </div>
-                                    <div className="col-md-2">
-                                        <div className="text-center">
-                                            <img
-                                                className="img-fluid"
-                                                src="/admin/img/1.jpg"
-                                                width="80px"
-                                            />
+                                        {errors.images && (
+                                            <span className="error">{errors.images}</span>
+                                        )}
+                                        <div className="proposal-Photo d-flex">
+                                            {proposalPreview &&
+                                                proposalPreview.map((item, idx) => (
+                                                    <div className="m-2" key={idx}>
+                                                        <img src={item} alt={`Photos ${idx + 1}`} />
+                                                        <button
+                                                            type="button"
+                                                            className="btn"
+                                                            onClick={() => handleDeleteImage(idx)}
+                                                        >
+                                                            <i className="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                ))}
                                         </div>
                                     </div>
                                 </div>

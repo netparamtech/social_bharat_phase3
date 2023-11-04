@@ -12,6 +12,7 @@ const Banner = () => {
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const [imageUrls, setImageUrls] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const typedRef = useRef(null); // Use a single ref for Typed instance
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -70,8 +71,18 @@ const Banner = () => {
     }
   }, []);
 
-  const backgroundImageUrl = imageUrls.length > 0 && imageUrls[0]?.banner_urls[0]
-    ? imageUrls[0].banner_urls[0].replace(/\\/g, "/")
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        (prevIndex + 1) % imageUrls.length
+      );
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [imageUrls]);
+
+  const backgroundImageUrl = imageUrls.length > 0 && imageUrls[0]
+    ? imageUrls[0].banner_urls[currentImageIndex].replace(/\\/g, "/")
     : defaultImageUrl;
 
   return (

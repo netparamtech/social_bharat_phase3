@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { attemptLoginWithMobile } from '../../services/userService';
+import { attemptLoginWithMobile, fetchBannerWithPageAndSection } from '../../services/userService';
 import LoginWithOtp from '../otp/LoginWithOtp';
 import { Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../actions/loaderAction';
 
 const LoginWithMobile = (props) => {
 
@@ -14,7 +16,10 @@ const LoginWithMobile = (props) => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [serverError, setServerError] = useState('');
 
+  const [imageUrls, setImageUrls] = useState([]);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -26,6 +31,7 @@ const LoginWithMobile = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    dispatch(setLoader(true));
     const cleanMobile = mobile.replace(/^0+/, '');
     try {
 
@@ -36,9 +42,11 @@ const LoginWithMobile = (props) => {
         setMessage(response.data.message);
         setServerError('');
         handleLoginClicked();
+        dispatch(setLoader(false));
       }
 
     } catch (error) {
+      dispatch(setLoader(false));
 
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -56,14 +64,43 @@ const LoginWithMobile = (props) => {
     }
   }
 
+  const fetchBanners = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const response = await fetchBannerWithPageAndSection('Login', 'Login With OTP');
+
+      const activeBanners = response.data.data.filter((banner) => banner.status === 'Active');
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+      setImageUrls(activeBanners[0].banner_urls);
+      dispatch(setLoader(false));
+
+    } catch (error) {
+      dispatch(setLoader(false));
+
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
+    <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-            <div className="row">
+            <div className="row wow animate__animated animate__zoomIn">
               <div className="col-md-6 d-none d-md-block">
-                <img src="/user/images/signup.png" className="img-fluid" alt="Sign In" />
+                <img  src={imageUrls&&imageUrls[0]} className="img-fluid" alt="Sign In" />
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                 <div className="card-title">

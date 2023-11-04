@@ -29,6 +29,7 @@ import ChatPage from "./pages/ChatPage";
 import CommunityContentPage from "./pages/CommunityContentPage";
 import SettingPage from "./pages/SettingPage";
 import ViewCommunityPage from "./pages/ViewCommunityPage";
+import ChatDrawer from "./components/chats/ChatDrawer";
 
 const userRoutes = [
     {
@@ -239,6 +240,12 @@ const userRoutes = [
     {
         path: '/:name',
         component: ViewCommunityPage,
+        exact: true
+    },
+
+    {
+        path: '/chat',
+        component: ChatDrawer,
         exact: true
     },
 ]

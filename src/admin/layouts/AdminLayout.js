@@ -68,11 +68,6 @@ const AdminLayout = ({ children }) => {
           <Footer />
         </div>
       </div>
-
-      {/* Scroll to Top Button--> */}
-      <a className="" onClick={handleScrollTopClick}>
-        <i className="fas fa-angle-up"></i>
-      </a>
     </>
   );
 };

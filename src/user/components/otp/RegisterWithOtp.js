@@ -135,7 +135,7 @@ const RegisterWithOtp = (props) => {
     <>
       <form
         action="/dashboard"
-        className="w-100 w-lg-75"
+        className="w-100 w-lg-75 wow animate__animated animate__zoomIn"
         onSubmit={handleVarifiedClicked}
       >
         <div className="row mb-3">

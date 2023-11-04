@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   createTempUser,
   fetchAllActiveCommunities,
+  fetchBannerWithPageAndSection,
 } from "../../services/userService";
 import RegisterWithOtp from "../otp/RegisterWithOtp";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -19,7 +22,10 @@ const RegisterForm = () => {
   const [message, setMessage] = useState("");
   const [serverError, setServerError] = useState("");
 
+  const [imageUrls, setImageUrls] = useState([]);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -40,13 +46,16 @@ const RegisterForm = () => {
   //fetch all active communities
 
   const fetchCommunities = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
         setCasts(response.data.data);
         setServerError('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         setServerError('');
@@ -96,12 +105,41 @@ const RegisterForm = () => {
     }
   };
 
+  const fetchBanners = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const response = await fetchBannerWithPageAndSection('Register', 'Register');
+
+      const activeBanners = response.data.data.filter((banner) => banner.status === 'Active');
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+      setImageUrls(activeBanners[0].banner_urls);
+      dispatch(setLoader(false));
+
+    } catch (error) {
+      dispatch(setLoader(false));
+
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+        navigate('/login');
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
   useEffect(() => {
     fetchCommunities();
   }, []);
 
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
+    <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
@@ -109,7 +147,7 @@ const RegisterForm = () => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block">
                 <img
-                  src="/user/images/signup.png"
+                  src={imageUrls&&imageUrls[0]}
                   className="img-fluid"
                   alt="Sign Up"
                 />

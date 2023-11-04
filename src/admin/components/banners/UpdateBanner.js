@@ -208,12 +208,12 @@ const UpdateBanner = (props) => {
                   )}
                 </div>
 
-                
-                
+
+
               </div>
 
 
-              
+
               <div className="col-2">
                 <div className="d-flex flex-wrap">
                   {bannerPreview &&
@@ -234,7 +234,29 @@ const UpdateBanner = (props) => {
                       </div>
                     ))}
                 </div>
+              </div>
+
+              
+
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="page" className="fw-bold">Page</label>
+                  <select
+                    className="form-control"
+                    id="page"
+                    name="page"
+                    value={page}
+                    onChange={handlePageChange}
+                  >
+                    <option value="">----Select Page----</option>
+                    <option value="Home">Home</option>
+                    <option value="Login">Login</option>
+                    <option value="Register">Register</option>
+                    {/* Add other page options here if needed */}
+                  </select>
+                  {errors.page && <span className="error">{errors.page}</span>}
                 </div>
+              </div>
 
               <div className="col-md-6">
                 <div className="form-group">
@@ -251,34 +273,20 @@ const UpdateBanner = (props) => {
                     <option value="Testimonial">Testimonial</option>
                     <option value="Matrimonial">Matrimonial</option>
                     <option value="Why Social Bharat">Why Social Bharat</option>
+                    <option value="Login With Password">Login With Password</option>
+                    <option value="Login With OTP">Login With OTP</option>
+                    <option value="Register">Register</option>
                     <option value="Stats Bg">Stats Bg</option>
+
                     {/* Add other section options here if needed */}
                   </select>
                   {errors.section && (
                     <span className="error">{errors.section}</span>
                   )}
                 </div>
-                </div>
-
-                <div className="col-md-6">
-                <div className="form-group">
-                <label htmlFor="page" className="fw-bold">Page</label>
-                <select
-                  className="form-control"
-                  id="page"
-                  name="page"
-                  value={page}
-                  onChange={handlePageChange}
-                >
-                  <option value="">----Select Page----</option>
-                  <option value="Home">Home</option>
-                  {/* Add other page options here if needed */}
-                </select>
-                {errors.page && <span className="error">{errors.page}</span>}
               </div>
-                </div>
-                
-                <div className="col-md-6 mb-3">
+
+              <div className="col-md-6 mb-3">
                 <div className="form-group">
                   <label htmlFor="status" className="fw-bold">Status</label>
                   <select
@@ -296,8 +304,8 @@ const UpdateBanner = (props) => {
                     <span className="error">{errors.status}</span>
                   )}
                 </div>
-                </div>
-              
+              </div>
+
             </div>
             <button type="submit" className="btn btn-primary w-25">
               Update

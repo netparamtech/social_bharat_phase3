@@ -1436,4 +1436,7 @@ input[type="number"] {
 #chat .chat-message-right .font-messages{
   color: black;
 }
+.flex-shrink-1{
+  max-width: 400px;
+}
 /*---------  */

@@ -100,6 +100,7 @@ nav .nav-item .btn {
   top: 0px;
   left: 0px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  height: 14%;
 }
 
 /* .navbar-transparent.Sticky-top {
@@ -253,6 +254,7 @@ nav .container,
 /* Our partners */
 #partner {
   width: 100%px;
+  height: 70px;
   /* height: 130px; */
   background-color: #ffffff;
   /* background-color: #e6dddd; */

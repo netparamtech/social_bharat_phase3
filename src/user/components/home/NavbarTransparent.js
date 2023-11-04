@@ -128,7 +128,7 @@ const NavbarTransparent = () => {
 
   return (
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
-      <div className="container wow animate__animated animate__zoomIn">
+      <div className="container">
         <a className="navbar-brand" onClick={handleHomeClicked}>
           <img src={data && data.logo1} alt="Logo" />
         </a>

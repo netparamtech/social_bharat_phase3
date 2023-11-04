@@ -185,7 +185,7 @@ const NewChat = (props) => {
                     </div>
                     <div>
                       <span
-                        className="btn fs-4 close-button-chat"
+                        className="btn fs-4  btn-whi close-button-chat"
                         onClick={handleCloseClick}
                         title="Close"
                       >
@@ -211,7 +211,7 @@ const NewChat = (props) => {
                                   height="40"
                                 />
                               </div>
-                              <div className="flex-shrink-1 bg-primary rounded py-2 px-3 mr-3">
+                              <div className="flex-shrink-1 bg-right-msg rounded py-2 px-3 mr-3">
                                 <div className="font-weight-bold "></div>
                                 <div className="p-0 m-0 font-messages">
                                   {item.message}

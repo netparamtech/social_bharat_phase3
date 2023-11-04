@@ -48,20 +48,18 @@ const SearchPeople = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
 
-  const [selectedUser,setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const [isChat,setIsChat] = useState(false);
+  const [isChat, setIsChat] = useState(false);
 
   const changeChatFlag = (value) => {
     setIsChat(value);
-  }
+  };
 
-  const handleChatclick = (item) =>{
+  const handleChatclick = (item) => {
     setIsChat(true);
     setSelectedUser(item);
-  }
-
-
+  };
 
   useEffect(() => {
     if (items.length > 0) {
@@ -76,13 +74,12 @@ const SearchPeople = () => {
     }
   };
 
-
   const handleFilterClicked = () => {
     setPage(1);
     setIsFilter(!isFilter ? true : false);
     setIsGoClick(false);
-    setSelectedState('');
-    setSelectedCity('');
+    setSelectedState("");
+    setSelectedCity("");
   };
 
   const handleStateChange = (selectedOption) => {
@@ -90,8 +87,8 @@ const SearchPeople = () => {
     setPage(1);
     setState(selectedOption.label);
     setSelectedState(selectedOption);
-    setCity('');
-    setSelectedCity('');
+    setCity("");
+    setSelectedCity("");
 
     if (selectedOption) {
       const selectedStateObject = states.find(
@@ -107,7 +104,7 @@ const SearchPeople = () => {
     setIsGoClick(false);
     setPage(1);
     setSelectedCity(selectedOption); // Update the state with the selected option object
-    setCity(selectedOption.label)
+    setCity(selectedOption.label);
   };
 
   const handleSearchText = (e) => {
@@ -124,7 +121,7 @@ const SearchPeople = () => {
       const response = await fetchAllStatesByCountryID(countryID);
       if (response && response.status === 200) {
         setStates(response.data.data);
-        setServerError('');
+        setServerError("");
       }
     } catch (error) {
       //Unauthorized
@@ -143,7 +140,7 @@ const SearchPeople = () => {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
         setCities(response.data.data);
-        setServerError('');
+        setServerError("");
       }
     } catch (error) {
       //Unauthorized
@@ -161,33 +158,38 @@ const SearchPeople = () => {
     setIsLoading(true);
     dispatch(setLoader(true));
     try {
-      const response = await searchPeopleWithSearchText(searchText, page, size, state, city);
+      const response = await searchPeopleWithSearchText(
+        searchText,
+        page,
+        size,
+        state,
+        city
+      );
 
       if (response && response.status === 200) {
-        setServerError('');
+        setServerError("");
         setTotalRows(response.data.data.totalFilteredRecords);
         if (response.data.data.users.length === 0) {
           setIssearchingPerformed(false);
         }
         if (searchText) {
           if (response.data.data.users.length !== 0) {
-            if(page===1){
+            if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
             } else {
-              setItems([...new Set([...items,...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.users])]);
             }
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
             setItems([...response.data.data.users]);
             setTotalRows(response.data.data.totalFilteredRecords);
           }
-
         } else {
           if (isGoClick) {
-            if(page===1){
+            if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
             } else {
-              setItems([...new Set([...items,...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.users])]);
             }
           } else {
             const combinedItems = [...items, ...response.data.data.users];
@@ -200,7 +202,6 @@ const SearchPeople = () => {
             }
 
             setItems(uniqueItems);
-
           }
         }
         dispatch(setLoader(false));
@@ -225,16 +226,26 @@ const SearchPeople = () => {
 
       // Calculate the age in years
       const ageInMilliseconds = currentDate - dobDate;
-      const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
+      const ageInYears = Math.floor(
+        ageInMilliseconds / (1000 * 60 * 60 * 24 * 365)
+      );
       return ageInYears;
     } else {
-      return "N/A"
+      return "N/A";
     }
-  }
+  };
 
   useEffect(() => {
-    setState(user && user.user && user.user.native_place_state ? user.user.native_place_state : '');
-    setCity(user && user.user && user.user.native_place_city ? user.user.native_place_city : '');
+    setState(
+      user && user.user && user.user.native_place_state
+        ? user.user.native_place_state
+        : ""
+    );
+    setCity(
+      user && user.user && user.user.native_place_city
+        ? user.user.native_place_city
+        : ""
+    );
   }, [user, isFilter]);
 
   useEffect(() => {
@@ -243,7 +254,7 @@ const SearchPeople = () => {
 
   useEffect(() => {
     setPage(1);
-  }, [searchText])
+  }, [searchText]);
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -258,145 +269,157 @@ const SearchPeople = () => {
     groupedItems.push(pair);
   }
 
-
   return (
-   <>
-   {
-    isChat?(
-      <NewChat changeChatFlag = {changeChatFlag} selectedUser = {selectedUser} />
-    ):(
-      <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
-      <div className="container">
-        <div className="card shadow">
-          <div className="card-body">
-          {serverError && <span className='error'>{serverError}</span>}
-            <div>
-              <h5 className="fw-3 mb-3 ">Search People</h5>
-            </div>
-            <div className="filter-content">
-              {
-                city ? (
-                  <p >
-                    {city}
-                    {state && `(${state})`}
-                  </p>
+    <>
+      {isChat ? (
+        <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
+      ) : (
+        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+          <div className="container">
+            <div className="card shadow">
+              <div className="card-body">
+                {serverError && <span className="error">{serverError}</span>}
+                <div>
+                  <h5 className="fw-3 mb-3 ">Search People</h5>
+                </div>
+                <div className="filter-content">
+                  {city ? (
+                    <p>
+                      {city}
+                      {state && `(${state})`}
+                    </p>
+                  ) : (
+                    <p>{state && `state - ${state}`}</p>
+                  )}
+                </div>
+                {!isSearchingPerformed ? (
+                  <span className="error">No Data Available</span>
                 ) : (
-                  <p >
-                    {state && `state - ${state}`}
-                  </p>
-                )
-              }
-            </div>
-            {
-              !isSearchingPerformed ? (<span className="error">No Data Available</span>) : ''
-            }
-            <div className="filter-icon">
-              <a
-                title="Filter"
-                className="btn btn-primary btn-sm me-2"
-                onClick={handleFilterClicked}
-              >
-                <i className="fas fa-filter me-1"></i>Filter
-              </a>
-            </div>
-            <div className="container-input mb-3">
-              <input
-                type="text"
-                placeholder="Search"
-                name="text"
-                className="input form-control"
-                onChange={handleSearchText}
-              />
-              <i className="fas fa-search"></i>
-            </div>
-            <div className={`row ${isFilter ? "" : "d-none"}`}>
-              <div className="col-5 mb-3">
-                <Select
-                  options={states.map((state) => ({
-                    value: state.name,
-                    label: state.name,
-                  }))}
-                  value={selectedState}
-                  placeholder="State"
-                  onChange={handleStateChange}
-                />
-              </div>
-              <div className="col-5 mb-3">
-                <Select
-                  options={cities.map((city) => ({
-                    value: city.name,
-                    label: city.name,
-                  }))}
-                  value={selectedCity}
-                  placeholder="City"
-                  onChange={handleCityChange}
-                />
-              </div>
-              <div className="col-2 mb-3">
-                <a
-                  className="btn btn-set btn-primary"
-                  onClick={handleGoButtonClick}
-                >
-                  Go
-                </a>
-              </div>
-            </div>
-            <div className="row">
-
-              {/* Repeat the user card structure as needed */}
-              <InfiniteScroll
-                style={{ overflowX: "hidden" }}
-                dataLength={items.length}
-                next={fetchMoreData}
-                hasMore={items.length < totalRows}
-                loader={isLoading && <h4>Loading...</h4>}
-              >
-                <div className="container pw-20 wow animate__animated animate__zoomIn">
-                  {groupedItems.map((pair, index) => (
-                    <div className="row" key={index}>
-                      {pair.map((item, innerIndex) => (
-                        <div className="col-md-6" key={innerIndex}>
-                          <div className="card shadow mb-2">
-                            <div className="card-body">
-                              <div className="row wow animate__animated animate__zoomIn">
-                                <div className="col-4">
-                                  <Image
-                                    src={item.photo ? item.photo : defaultImage}
-                                    alt={item.name}
-                                    title={item.name}
-                                    className="avatar img-fluid img-circle"
-                                  />
-                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={()=>handleChatclick(item)}><i className="fa-regular fa-comments text-primary" ></i></div>
-                                </div>
-                                <div className="col-6 user-detail">
-                                  <h6>{item.name}</h6>
-                                  <p>Occupation-{item.occupation?item.occupation:"N/A"}</p>
-                                  <p>Education-{item.highest_qualification ? item.highest_qualification : "N/A"}</p>
-                                  <p>Age-{age(item.dob)}{" "}Years</p>
-                                  <p>City-{item.native_place_city}</p>
-                                  <p>
-                                    {item.native_place_state
-                                      ? `(${item.native_place_state})`
-                                      : ""}
-                                  </p>
+                  ""
+                )}
+                <div className="filter-icon">
+                  <a
+                    title="Filter"
+                    className="btn btn-primary btn-sm me-2"
+                    onClick={handleFilterClicked}
+                  >
+                    <i className="fas fa-filter me-1"></i>Filter
+                  </a>
+                </div>
+                <div className="container-input mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    name="text"
+                    className="input form-control"
+                    onChange={handleSearchText}
+                  />
+                  <i className="fas fa-search"></i>
+                </div>
+                <div className={`row ${isFilter ? "" : "d-none"}`}>
+                  <div className="col-5 mb-3">
+                    <Select
+                      options={states.map((state) => ({
+                        value: state.name,
+                        label: state.name,
+                      }))}
+                      value={selectedState}
+                      placeholder="State"
+                      onChange={handleStateChange}
+                    />
+                  </div>
+                  <div className="col-5 mb-3">
+                    <Select
+                      options={cities.map((city) => ({
+                        value: city.name,
+                        label: city.name,
+                      }))}
+                      value={selectedCity}
+                      placeholder="City"
+                      onChange={handleCityChange}
+                    />
+                  </div>
+                  <div className="col-2 mb-3">
+                    <a
+                      className="btn btn-set btn-primary"
+                      onClick={handleGoButtonClick}
+                    >
+                      Go
+                    </a>
+                  </div>
+                </div>
+                <div className="row">
+                  {/* Repeat the user card structure as needed */}
+                  <InfiniteScroll
+                    style={{ overflowX: "hidden" }}
+                    dataLength={items.length}
+                    next={fetchMoreData}
+                    hasMore={items.length < totalRows}
+                    loader={isLoading && <h4>Loading...</h4>}
+                  >
+                    <div className="container pw-20 wow animate__animated animate__zoomIn">
+                      {groupedItems.map((pair, index) => (
+                        <div className="row" key={index}>
+                          {pair.map((item, innerIndex) => (
+                            <div className="col-md-6" key={innerIndex}>
+                              <div className="card shadow mb-2">
+                                <div className="card-body">
+                                  <div className="row wow animate__animated animate__zoomIn">
+                                    <div className="col-4">
+                                      <Image
+                                        src={
+                                          item.photo ? item.photo : defaultImage
+                                        }
+                                        alt={item.name}
+                                        title={item.name}
+                                        className="avatar img-fluid img-circle"
+                                      />
+                                      
+                                    </div>
+                                    <div className="col-5 user-detail">
+                                      <h6>{item.name}</h6>
+                                      <p>
+                                        Occupation-
+                                        {item.occupation
+                                          ? item.occupation
+                                          : "N/A"}
+                                      </p>
+                                      <p>
+                                        Education-
+                                        {item.highest_qualification
+                                          ? item.highest_qualification
+                                          : "N/A"}
+                                      </p>
+                                      <p>Age-{age(item.dob)} Years</p>
+                                      <p>City-{item.native_place_city}</p>
+                                      <p>
+                                        {item.native_place_state
+                                          ? `(${item.native_place_state})`
+                                          : ""}
+                                      </p>
+                                    </div>
+                                    <div
+                                        className="col-1 text-end ms-5     hover-pointer"
+                                        onClick={() => handleChatclick(item)}
+                                      >
+                                        <i className="fa-regular fa-message  text-primary"></i>
+                                      </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          ))}
                         </div>
                       ))}
                     </div>
-                  ))}
+                  </InfiniteScroll>
                 </div>
-              </InfiniteScroll>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    )
-   }
-   </>
+      )}
+    </>
   );
 };
 

@@ -162,7 +162,7 @@ const adminRoutes = [
         path: '/admin/testimonials/index',
         component: TestimonialIndex,
         exact: true
-    },
+    },  
 
     {
         path: '/admin/event/index',

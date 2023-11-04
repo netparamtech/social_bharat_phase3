@@ -219,7 +219,7 @@ const NewChat = (props) => {
                                 />
                                 
                               </div>
-                              <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                              <div class="flex-shrink-1 bg-primary rounded py-2 px-3 mr-3">
                                 <div class="font-weight-bold ">You</div>
                                 <p class="p-0 m-0 font-messages">
                                   {item.message}

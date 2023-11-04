@@ -215,7 +215,7 @@ const NewChat = (props) => {
                                 <div className="font-weight-bold "></div>
                                 <div className="p-0 m-0 font-messages">
                                   {item.message}
-                                  <div className="text-muted small text-nowrap">
+                                  <div className="text-muted  small text-nowrap">
                                     {calculateTimeDifference(item.timestamp)}
                                   </div>
                                 </div>

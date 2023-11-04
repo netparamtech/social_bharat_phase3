@@ -1421,15 +1421,18 @@ input[type="number"] {
   color: red !important;
  }
 
-.font-weight-bold {
+#chat .font-weight-bold {
   font-weight: 600 !important;
   font-size: 14px !important;
   font-family: sans-serif;
 }
 
-.font-messages {
+#chat .font-messages {
   font-size: medium;
   font-family: sans-serif;
 }
 
+#chat .chat-message-right .font-messages{
+  color: black;
+}
 /*---------  */

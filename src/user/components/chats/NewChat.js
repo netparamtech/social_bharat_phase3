@@ -218,13 +218,13 @@ useEffect(() => {
                                 <img
                                   src={user.user.photo}
                                   className="rounded-circle mr-1 m-1"
-                                  alt="Chris Wood"
+                                  alt={user&&user.user.name}
                                   width="40"
                                   height="40"
                                 />
                               </div>
                               <div className="flex-shrink-1 bg-right-msg rounded py-2 px-3 mr-3">
-                                <div className="font-weight-bold "></div>
+                                <div className="font-weight-bold text-dark">You</div>
                                 <div className="p-0 m-0 font-messages">
                                   {item.message}
                                   <div className="text-muted  small text-nowrap">
@@ -267,6 +267,7 @@ useEffect(() => {
                               </div>
                             </div>
                           )}
+                         
                         </div>
                       ))}
                   </div>

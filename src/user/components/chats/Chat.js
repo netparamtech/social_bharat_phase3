@@ -154,33 +154,47 @@ const Chat = (props) => {
         <div class="col-md-6 mx-auto">
           <div class="card">
             <div class="card-header text-bg-primary">
-              <span
-                class="m-2 btn btn-danger close-button-chat"
-                onClick={handleCloseClick}
-              >
-                <i class="fa-solid fa-x hover-pointer"></i>
-              </span>
-              <span class="glyphicon glyphicon-comment"></span> Chat
-              <span class="m-5">{user && user.user && user.user.name}</span>
-              <span class="m-2">
-                {" "}
-                {user && user.user && user.user.photo ? (
-                  <Image
-                    src={user.user.photo}
-                    alt={user && user.user.name}
-                    size="small"
-                    className="dropdown-user-img me-2"
-                    width={50}
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    className="dropdown-user-img-letter m-2"
+              <div className="row">
+                <div className="col-4 my-3">
+                  <span class="fs-5">SB Chat</span>
+                </div>
+
+                <div className="col-4 ps-5 my-2">
+                  <span class="">
+                    {" "}
+                    {user && user.user && user.user.photo ? (
+                      <Image
+                        src={user.user.photo}
+                        alt={user && user.user.name}
+                        size="small"
+                        className="dropdown-user-img-letter"
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        className="dropdown-user-img-letter m-2"
+                      >
+                        {loggedUserFirstLatter}
+                      </button>
+                    )}
+                  </span>{" "}
+                  <span class="ms-2 ">
+                    {user && user.user && user.user.name}
+                  </span>{" "}
+                </div>
+                <div className="col-4 text-end my-2">
+                  <span
+                    class="btn  btn-whites close-button-chat"
+                    onClick={handleCloseClick}
+                    title="Close"
                   >
-                    {loggedUserFirstLatter}
-                  </button>
-                )}
-              </span>
+                   
+                    <i class="fa-regular fa-circle-xmark hover-pointer"></i>
+                  </span>
+                </div>
+              </div>
             </div>
             <div class="card-body overflow-y-scroll">
               {serverError && <span className="error">{serverError}</span>}
@@ -191,12 +205,12 @@ const Chat = (props) => {
                       {item.sender_id === user.user.id ? (
                         <li class="list-group-item text-end align-items-start">
                           <div class="ms-2 me-auto">
-                            <div class="fw-bold">
+                            <div class="fw-bold ">
                               {user && user.user && user.user.name}
                             </div>
                             {item.message}
                           </div>
-                          <span class="badge bg-primary rounded-pill text-muted">
+                          <span class="badge text-muted">
                             <i class="bi bi-clock"></i>{" "}
                             {calculateTimeDifference(item.timestamp)}
                           </span>
@@ -209,8 +223,9 @@ const Chat = (props) => {
                             </div>
                             {item.message}
                           </div>
-                          <span class="badge bg-success rounded-pill text-muted">
+                          <span class="badge  text-muted">
                             <i class="bi bi-clock "></i>
+                            
                             {calculateTimeDifference(item.timestamp)}
                           </span>
                         </li>
@@ -236,6 +251,7 @@ const Chat = (props) => {
                   class="btn btn-warning"
                   id="btn-chat"
                   onClick={sendChatMessage}
+                  title="Send Message"
                 >
                   Send
                 </button>
@@ -243,6 +259,7 @@ const Chat = (props) => {
                   class="btn btn-warning"
                   id="btn-chat"
                   onClick={receiveChatMessage}
+                  title="Refresh"
                 >
                   <i class="fa fa-refresh" aria-hidden="true"></i>
                 </button>

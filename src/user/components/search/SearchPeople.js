@@ -402,7 +402,7 @@ const SearchPeople = () => {
                                         className="col-1 text-end ms-5     hover-pointer"
                                         onClick={() => handleChatclick(item)}
                                       >
-                                        <i className="fa-regular fa-message  text-primary"></i>
+                                        <img src="/user/images/chat-icon.jpg" width="40px" />
                                       </div>
                                   </div>
                                 </div>

@@ -254,8 +254,6 @@ const SearchBusiness = () => {
                                 ))
                             }
 
-
-
                             {/* Repeat the user card structure as needed */}
                         </div>
                     </div>

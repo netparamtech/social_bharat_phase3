@@ -107,7 +107,7 @@ const LoginWithPassword = (props) => {
   }, []);
 
   return (
-    <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__zoomIn">
+    <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">

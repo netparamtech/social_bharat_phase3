@@ -539,7 +539,7 @@ const SearchPartner = () => {
                     <i className="fas fa-search"></i>
                   </div>
 
-                  <div className="row wow animate__animated animate__zoomIn">
+                  <div className="row">
                     <InfiniteScroll
                       style={{ overflowX: "hidden" }}
                       dataLength={items.length}
@@ -561,7 +561,7 @@ const SearchPartner = () => {
                                         title={item.name}
                                         className="avatar img-fluid img-circle"
                                       />
-                                      <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}><i class="fa-regular fa-comments text-primary" ></i></div>
+                                      <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}> <img src="/user/images/chat-icon.jpg" width="40px" /></div>
 
                                     </div>
                                     <div className="col-8 user-detail">

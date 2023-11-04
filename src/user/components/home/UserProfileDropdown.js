@@ -102,14 +102,14 @@ const UserProfileDropdown = () => {
         key: '1',
         label: (
           <>
-            <h6 className="dropdown-header d-flex align-items-center menu-font wow animate__animated animate__zoomIn">
+            <h6 className="dropdown-header d-flex align-items-center menu-font">
               <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
               <div className="dropdown-user-details">
                 <div className="dropdown-user-details-name menu-font">{userName}</div>
                 <div className="dropdown-user-details-email menu-font">{userEmail}</div>
               </div>
             </h6>
-            <div className="dropdown-divider wow animate__animated animate__fadeInUp"></div>
+            <div className="dropdown-divider"></div>
           </>
         ),
       },
@@ -117,7 +117,7 @@ const UserProfileDropdown = () => {
         key: '2',
         label: (
           <>
-            <h6 className="dropdown-header d-flex align-items-center wow animate__animated animate__zoomIn">
+            <h6 className="dropdown-header d-flex align-items-center">
               {
                 community&&community.thumbnail_image?(
                   <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
@@ -129,14 +129,14 @@ const UserProfileDropdown = () => {
               }
              
             </h6>
-            <div className="dropdown-divider wow animate__animated animate__fadeInUp"></div>
+            <div className="dropdown-divider"></div>
           </>
         ),
       },
       {
         key: '3',
         label: (
-          <span onClick={handleProfileClick} className={`menu-font wow animate__animated animate__fadeInUp ${
+          <span onClick={handleProfileClick} className={`menu-font ${
             window.location.pathname === "/profile" ? "custom-active-user" : "inactive"
           }`}>
             <i className="fas fa-user-alt m-2"></i> Profile
@@ -146,7 +146,7 @@ const UserProfileDropdown = () => {
       {
         key: '4',
         label: (
-          <span onClick={handleChangePasswordClick} className={`menu-font wow animate__animated animate__fadeInUp ${
+          <span onClick={handleChangePasswordClick} className={`menu-font ${
             window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
           }`}>
             <i className="fas fa-key m-2"></i> Change Password
@@ -158,7 +158,7 @@ const UserProfileDropdown = () => {
         
         label: (
           <>
-            <span  onClick={() => navigate("/user/setting")} className='menu-font wow animate__animated animate__fadeInUp'>
+            <span  onClick={() => navigate("/user/setting")} className='menu-font'>
               <i className="fas fa-cog m-2"></i> Settings
             </span>
            
@@ -169,7 +169,7 @@ const UserProfileDropdown = () => {
       {
         key: '6',
         label: (
-          <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }} className='menu-font wow animate__animated animate__fadeInUp'>
+          <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }} className='menu-font'>
             <i className="fas fa-sign-out m-2"></i> Logout
           </span>
         ),

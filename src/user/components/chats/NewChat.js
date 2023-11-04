@@ -142,6 +142,9 @@ const NewChat = (props) => {
     receiveChatMessage();
   }, [selectedUser]);
 
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   return (
     <div id="chat">

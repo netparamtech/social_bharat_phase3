@@ -41,6 +41,7 @@ const UserLayout = ({ children }) => {
   return (
     <>
       <Helmet>
+     
         <link rel="icon" type="image/x-icon" href="/user/images/logo.png" />
 
         <link
@@ -49,6 +50,7 @@ const UserLayout = ({ children }) => {
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
           crossorigin="anonymous"
         />
+         <link rel="stylesheet" href="/user/css/user.css" />
         {/* amimate Css CDN */}
         <link
           rel="stylesheet"
@@ -67,7 +69,7 @@ const UserLayout = ({ children }) => {
         />
         {/* Animate on scroll library CSS  */}
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-        <link rel="stylesheet" href="/user/css/user.css" />
+        
       </Helmet>
 
       <header>

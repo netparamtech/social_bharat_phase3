@@ -176,7 +176,7 @@ const Dashboard = () => {
           </div>
 
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-darkyellow text-white h-100">
+            <div className="card shadow bg-navyblue  text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">

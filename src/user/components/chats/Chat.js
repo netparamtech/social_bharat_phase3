@@ -10,14 +10,14 @@ const Chat = (props) => {
 
   const { changeChatFlag, selectedUser } = props;
 
-  const [loggedID, setLoggedID] = useState('');
-  const [receiverID, setReceiverID] = useState('');
-  const [message, setMessage] = useState('');
+  const [loggedID, setLoggedID] = useState("");
+  const [receiverID, setReceiverID] = useState("");
+  const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [isSendClicked, setIsSendClicked] = useState(false);
 
-  const [secondaryId, setSecondaryId] = useState('');
-  const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
+  const [secondaryId, setSecondaryId] = useState("");
+  const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState("");
 
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
@@ -27,39 +27,38 @@ const Chat = (props) => {
 
   const handleCloseClick = () => {
     changeChatFlag(false);
-  }
+  };
 
   const handleSendClicked = () => {
     setIsSendClicked(!isSendClicked);
-  }
+  };
 
   const sendChatMessage = async () => {
     dispatch(setLoader(true));
     const data = {
       receiver_id: selectedUser && selectedUser.id,
       message,
-    }
-    console.log(data)
+    };
+    console.log(data);
     try {
       const response = await sendMessage(data);
       if (response && response.status === 200) {
-        setServerError('');
+        setServerError("");
         handleSendClicked();
-        setMessage('');
+        setMessage("");
         dispatch(setLoader(false));
-
       }
     } catch (error) {
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
-        setServerError('');
+        setServerError("");
       }
 
       //Unauthorized
       else if (error.response && error.response.status === 401) {
-        setServerError('');
+        setServerError("");
         navigate("/login");
       }
       //Internal Server Error
@@ -67,25 +66,27 @@ const Chat = (props) => {
         setServerError("Oops! Something went wrong on our server.");
       }
     }
-  }
+  };
 
   const receiveChatMessage = async () => {
     dispatch(setLoader(true));
-    console.log(selectedUser, "selectedUser")
+    console.log(selectedUser, "selectedUser");
     try {
       const response = await receiveMessage(selectedUser.id);
       if (response && response.status === 200) {
-        console.log(response.data)
-        const sortedMessages = response.data.data.sort((a, b) => a.timestamp - b.timestamp).reverse();
+        console.log(response.data);
+        const sortedMessages = response.data.data
+          .sort((a, b) => a.timestamp - b.timestamp)
+          .reverse();
         setMessageList(sortedMessages);
-        setServerError('');
+        setServerError("");
         dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 401) {
-        setServerError('');
+        setServerError("");
         navigate("/login");
       }
       //Internal Server Error
@@ -93,7 +94,7 @@ const Chat = (props) => {
         setServerError("Oops! Something went wrong on our server.");
       }
     }
-  }
+  };
 
   const calculateTimeDifference = (updatedDate) => {
     const currentDate = new Date();
@@ -122,7 +123,7 @@ const Chat = (props) => {
   };
 
   const handleEnterKey = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       sendChatMessage();
     }
   };
@@ -132,7 +133,6 @@ const Chat = (props) => {
       setLoggedID(user && user.user.id);
       setLoggedUserFirstLatter(user.user.name.charAt(0).toUpperCase());
     }
-
   }, [user]);
 
   useEffect(() => {
@@ -140,84 +140,83 @@ const Chat = (props) => {
   }, [isSendClicked]);
 
   useEffect(() => {
-    console.log(selectedUser)
+    console.log(selectedUser);
     receiveChatMessage();
   }, [selectedUser]);
 
   useEffect(() => {
-    window.scroll(0,0);
+    window.scroll(0, 0);
   }, []);
 
-
-  
   return (
     <div class="container " id="chat">
       <div class="row mb-5 ">
         <div class="col-md-6 mx-auto">
           <div class="card">
             <div class="card-header text-bg-primary">
-            <span class="m-2 btn btn-danger close-button-chat" onClick={handleCloseClick}><i class="fa-solid fa-x hover-pointer"></i></span>
+              <span
+                class="m-2 btn btn-danger close-button-chat"
+                onClick={handleCloseClick}
+              >
+                <i class="fa-solid fa-x hover-pointer"></i>
+              </span>
               <span class="glyphicon glyphicon-comment"></span> Chat
-              <span class="m-5">{user&&user.user&&user.user.name}</span>
-              <span class="m-2"> {user && user.user && user.user.photo ? (
-                <Image
-                  src={user.user.photo}
-                  alt={user && user.user.name}
-                  size="small"
-                  className="dropdown-user-img me-2"
-                  width={50}
-                />
-              ) : (
-                <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
-              )}</span>
-             
-
+              <span class="m-5">{user && user.user && user.user.name}</span>
+              <span class="m-2">
+                {" "}
+                {user && user.user && user.user.photo ? (
+                  <Image
+                    src={user.user.photo}
+                    alt={user && user.user.name}
+                    size="small"
+                    className="dropdown-user-img me-2"
+                    width={50}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="dropdown-user-img-letter m-2"
+                  >
+                    {loggedUserFirstLatter}
+                  </button>
+                )}
+              </span>
             </div>
             <div class="card-body overflow-y-scroll">
-              {serverError && <span className='error'>{serverError}</span>}
+              {serverError && <span className="error">{serverError}</span>}
               <ul class="list-group ">
-
-                {
-                  messageList && messageList.map((item, index) => (
+                {messageList &&
+                  messageList.map((item, index) => (
                     <>
-
-                      {
-                        item.sender_id === user.user.id ? (
-                          <li
-                            class="list-group-item text-end align-items-start"
-                          >
-                            <div class="ms-2 me-auto">
-                              <div class="fw-bold">{user && user.user && user.user.name}</div>
-                              {item.message}
+                      {item.sender_id === user.user.id ? (
+                        <li class="list-group-item text-end align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                              {user && user.user && user.user.name}
                             </div>
-                            <span class="badge bg-primary rounded-pill text-muted"
-                            ><i class="bi bi-clock"></i> {calculateTimeDifference(item.timestamp)}</span
-                            >
-                          </li>
-                        ) : (
-                          <li
-                            class="list-group-item  text-start  align-items-start"
-                          >
-                            <div class="ms-2 me-auto">
-                              <div class="fw-bold">{selectedUser && selectedUser.name}</div>
-                              {item.message}
+                            {item.message}
+                          </div>
+                          <span class="badge bg-primary rounded-pill text-muted">
+                            <i class="bi bi-clock"></i>{" "}
+                            {calculateTimeDifference(item.timestamp)}
+                          </span>
+                        </li>
+                      ) : (
+                        <li class="list-group-item  text-start  align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                              {selectedUser && selectedUser.name}
                             </div>
-                            <span class="badge bg-success rounded-pill text-muted"
-                            ><i class="bi bi-clock "></i>{calculateTimeDifference(item.timestamp)}</span
-                            >
-                          </li>
-                        )
-                      }
-
-
-
-
-
+                            {item.message}
+                          </div>
+                          <span class="badge bg-success rounded-pill text-muted">
+                            <i class="bi bi-clock "></i>
+                            {calculateTimeDifference(item.timestamp)}
+                          </span>
+                        </li>
+                      )}
                     </>
-
-                  ))
-                }
-
+                  ))}
               </ul>
             </div>
 
@@ -233,8 +232,20 @@ const Chat = (props) => {
                   placeholder="Type your message here..."
                   autoFocus
                 />
-                <button class="btn btn-warning" id="btn-chat" onClick={sendChatMessage}>Send</button>
-                <button class="btn btn-warning" id="btn-chat" onClick={receiveChatMessage}><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                <button
+                  class="btn btn-warning"
+                  id="btn-chat"
+                  onClick={sendChatMessage}
+                >
+                  Send
+                </button>
+                <button
+                  class="btn btn-warning"
+                  id="btn-chat"
+                  onClick={receiveChatMessage}
+                >
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
               </div>
             </div>
           </div>

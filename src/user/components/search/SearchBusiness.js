@@ -178,7 +178,7 @@ const SearchBusiness = () => {
             <div className="container">
                 <div className="card shadow">
                     <div className="card-body">
-                    {serverError && <span className='error'>{serverError}</span>}
+                        {serverError && <span className='error'>{serverError}</span>}
 
                         <div>
                             <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
@@ -248,8 +248,12 @@ const SearchBusiness = () => {
                                                         <p>Street-{item.street_address}</p>
                                                         <p>{item.city}</p>
                                                         <p>{item.state ? `(${item.state})` : ""}</p>
-                                                        <p>Contact Numbers: {item.contact1}{item.contact2 ? `, ${item.contact2}` : ''}{item.contact3 ? `, ${item.contact3}` : ''}</p>
-                                                    </div>
+                                                        <p>
+                                                            Contact Numbers:
+                                                            <a href={`tel:${item.contact1}`}>{item.contact1}</a>
+                                                            {item.contact2 ? <>, <a href={`tel:${item.contact2}`}>{item.contact2}</a></> : ''}
+                                                            {item.contact3 ? <>, <a href={`tel:${item.contact3}`}>{item.contact3}</a></> : ''}
+                                                        </p>                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

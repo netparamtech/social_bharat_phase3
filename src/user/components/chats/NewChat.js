@@ -35,7 +35,7 @@ const NewChat = (props) => {
 
   const sendChatMessage = async () => {
     if (message) {
-      dispatch(setLoader(true));
+      dispatch(setLoader(false));
       const data = {
         receiver_id: selectedUser && selectedUser.id,
         message,
@@ -70,7 +70,7 @@ const NewChat = (props) => {
   };
 
   const receiveChatMessage = async () => {
-    dispatch(setLoader(true));
+    dispatch(setLoader(false));
     try {
       const response = await receiveMessage(selectedUser.id);
       if (response && response.status === 200) {

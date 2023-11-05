@@ -57,11 +57,11 @@ const ChangePassword = () => {
         }
     };
     return (
-        <div id="auth-wrapper" className="pt-5 pb-5 wow animate__animated animate__slideInLeft">
+        <div id="auth-wrapper" className="pt-5 pb-5">
             <div id="changePassword" className="container">
                 <div className="card shadow mx-auto">
                     <div className="card-body">
-                        <div className="row wow animate__animated animate__fadeInUp">
+                        <div className="row">
                             <div className="col-md-12 col-sm-12 col-xs-12 p-5">
                                 <div className="card-title">
                                     <h3 className="mb-3">Change Password</h3>

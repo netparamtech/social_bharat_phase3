@@ -6,7 +6,7 @@ const Setting = ({ visible }) => {
     <>
       <div id="setting-page">
         <div className="container mb-5">
-          <div className="card shadow p-4 wow animate__animated animate__slideInLeft">
+          <div className="card shadow p-4">
             <div className="">
               <h5 className="">Settings</h5>
               <ol className="list-group list-group-flush">

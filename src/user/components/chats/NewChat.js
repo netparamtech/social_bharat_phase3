@@ -215,13 +215,24 @@ useEffect(() => {
                           {item.sender_id === user.user.id ? (
                             <div className="chat-message-right pb-4">
                               <div>
-                                <img
-                                  src={user.user.photo}
-                                  className="rounded-circle mr-1 m-1"
-                                  alt={user&&user.user.name}
-                                  width="40"
-                                  height="40"
-                                />
+                               
+                                 {user && user.user.photo ? (
+                                  <img
+                                    src={user.user.photo}
+                                    className="rounded-circle mr-1 m-1"
+                                    alt={user.user.name}
+                                    width="40"
+                                    height="40"
+                                  />
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="dropdown-user-img-letter mr-1 m-2"
+                                  >
+                                    {user &&
+                                      user.user.name.charAt(0).toUpperCase()}
+                                  </button>
+                                )}
                               </div>
                               <div className="flex-shrink-1 bg-right-msg rounded py-2 px-3 mr-3">
                                 <div className="font-weight-bold text-dark">You</div>

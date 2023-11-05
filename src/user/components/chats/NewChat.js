@@ -159,12 +159,12 @@ useEffect(() => {
   }, [messageList]);
 
   return (
-    <div id="chat">
+    <div id="chat" className="new-chat-container">
       <main className="content mb-5">
         <div className="container p-0">
           <div className="card shadow mt-2">
             <div className="row g-0">
-              <div className="col-12    ">
+              <div className="col-12">
                 <div className="py-2 px-4 border-bottom bg-primary">
                   <div className="d-flex align-items-center py-1">
                     <div className="position-relative">

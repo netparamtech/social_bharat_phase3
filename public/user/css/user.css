@@ -1370,6 +1370,7 @@ input[type="number"] {
 #chat .chat-messages {
   display: flex;
   flex-direction: column;
+  min-height: 300px;
   max-height: 300px;
   overflow-y: scroll;
 }
@@ -1439,4 +1440,19 @@ input[type="number"] {
 .flex-shrink-1{
   max-width: 400px;
 }
+
+/* NewChat.css */
+
+/* Mobile-first styles */
+.new-chat-container {
+  padding: 10px; /* Add padding for mobile */
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .new-chat-container {
+    padding: 20px; /* Increase padding for larger screens */
+  }
+}
+
 /*---------  */

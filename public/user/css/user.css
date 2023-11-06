@@ -1375,6 +1375,8 @@ input[type="number"] {
   overflow-y: scroll;
 }
 
+
+
 #chat .chat-message-left,
 .chat-message-right {
   display: flex;
@@ -1440,6 +1442,11 @@ input[type="number"] {
 .flex-shrink-1{
   max-width: 400px;
 }
+
+@media screen and (min-width: 768px) {
+  
+}
+
 
 /* NewChat.css */
 

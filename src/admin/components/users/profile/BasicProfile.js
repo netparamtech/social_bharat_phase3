@@ -139,7 +139,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Highest Qualification :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.highest_qualification}</label>
+                    <label className="">{userDetails?.data?.highest_qualification?userDetails.data.highest_qualification:'N/A'}</label>
                   </div>
                 </div>
               </div>

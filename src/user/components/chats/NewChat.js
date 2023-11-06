@@ -236,7 +236,7 @@ useEffect(() => {
                               </div>
                               <div className="flex-shrink-1 bg-right-msg rounded py-2 px-3 mr-3">
                                 <div className="font-weight-bold text-dark">You</div>
-                                <div className="p-0 m-0 font-messages">
+                                <div className="font-messages">
                                   {item.message}
                                   <div className="text-muted  small text-nowrap">
                                     {calculateTimeDifference(item.timestamp)}
@@ -269,7 +269,7 @@ useEffect(() => {
                                 <div className="font-weight-bold ">
                                   {selectedUser && selectedUser.name}
                                 </div>
-                                <div className="p-0 m-0 font-messages">
+                                <div className=" font-messages">
                                   {item.message}
                                   <div className="text-muted small text-nowrap ">
                                     {calculateTimeDifference(item.timestamp)}

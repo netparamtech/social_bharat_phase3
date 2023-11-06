@@ -117,6 +117,8 @@ const BusinessCategoriesList = () => {
     },
     {
       title: 'Status', dataIndex: 'status',
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
       render: (text, record) => (
         <div>
           {record.status === 'Active' ? (
@@ -144,8 +146,6 @@ const BusinessCategoriesList = () => {
           )}
         </div>
       ),
-      sorter: true,
-      sortDirections: ['asc', 'desc'],
     },
     {
       title: 'Actions',
@@ -184,7 +184,7 @@ const BusinessCategoriesList = () => {
   return (
     <div>
        <div className="d-sm-flex align-items-center justify-content-between mb-4" >
-        <h1 className="h3 mb-0 text-gray-800">Businesses</h1>
+        <h1 className="h3 mb-0 text-gray-800">Master Businesses</h1>
         <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
@@ -201,7 +201,7 @@ const BusinessCategoriesList = () => {
         style={{ marginBottom: 20, width: 200 }}
       />
       <Table
-        title={() => 'Business Catagories'}  // Set the title to 'Catagories'
+        title={() => 'Business'}  // Set the title to 'Catagories'
         dataSource={data}
         columns={columns}
         pagination={{

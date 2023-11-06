@@ -178,7 +178,7 @@ const SiteSetting = () => {
     <>
       <div id="setting-url-page" className="container-fluid">
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 className="h3 mb-0 text-gray-800">Site Setting</h1>
+          <h1 className="h3 mb-0 text-gray-800">Site Settings</h1>
         </div>
         <div id="font-Resize">
           <div className="card mb-5">

@@ -55,6 +55,7 @@ const LoginForm = () => {
       
       else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
+        setErrors('');
         setAlertClass('alert-danger');
       }
       else if (error.response && error.response.status === 404) {

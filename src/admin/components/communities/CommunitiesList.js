@@ -12,6 +12,7 @@ import { setLoader } from '../../actions/loaderAction';
 
 const CommunitiesList = () => {
   const [data, setData] = useState([]);
+  const [searchData,setSearchData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -30,8 +31,8 @@ const CommunitiesList = () => {
     setSize(pageSize);
   };
 
-  const handleSearchChange = (query) => {
-    setSearchQuery(query);
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -47,20 +48,25 @@ const CommunitiesList = () => {
     setSortOrder(newSortOrder);
   };
 
+  const fetchSearchData = () => {
+    if(data){
+       // Filter the data based on the search query
+     const filteredData = data.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchData(filteredData);
+    }
+  }
 
   const fetchData = async () => {
     dispatch(setLoader(true));
     try {
       const response = await fetchAllCommunity();
       const fetchedData = response.data.data;
-      
-      // Filter the data based on the search query
-      const filteredData = fetchedData.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
 
-      setData(filteredData);
-      setTotalRows(filteredData.length);
+      setData(fetchedData);
+      setSearchData(fetchedData);
+      setTotalRows(fetchedData.length);
       dispatch(setLoader(false));
     } catch (error) {
       dispatch(setLoader(false));
@@ -111,8 +117,12 @@ const CommunitiesList = () => {
   // Rest of the code for handleUserToggleStatus, handleDeleteEnquiry, formatDate, and columns remains the same
 
   useEffect(() => {
-    fetchData();
+    console.log(searchQuery)
+    fetchSearchData();
   }, [searchQuery]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const columns = [
     {
@@ -124,7 +134,7 @@ const CommunitiesList = () => {
 
     {
       title: 'Name', dataIndex: 'name',
-      sorter: true,
+      sorter: false,
       sortDirections: ['asc', 'desc'],
       with:100,
     },
@@ -191,7 +201,7 @@ const CommunitiesList = () => {
         </div>
       ),
       fixed: 'right',
-      sorter: true,
+      sorter: false,
       sortDirections: ['asc', 'desc'],
       width: 150,
     },
@@ -243,12 +253,12 @@ const CommunitiesList = () => {
       <Search
         placeholder="Search"
         allowClear
-        onSearch={handleSearchChange}
+        onChange={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
       <Table
         title={() => 'Communities'}  // Set the title to 'Enquiries'
-        dataSource={data}
+        dataSource={searchData}
         columns={columns}
         pagination={{
           current: page,

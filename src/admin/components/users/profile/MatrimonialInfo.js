@@ -175,7 +175,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].manglik||"N/A"}
+                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].is_manglik===0?'NO':'YES'}
                               </label>
                             </div>
                           </div>

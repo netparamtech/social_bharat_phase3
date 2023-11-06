@@ -123,6 +123,26 @@ const BasicProfile = (props) => {
               </div>
             </div>
             <div className="row">
+            <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+                <div className="row">
+                  <div className="col-md-4">
+                    <label className="fw-bold">Occupation :</label>
+                  </div>
+                  <div className="col-md-8">
+                    <label className="">{userDetails?.data?.occupation}</label>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+                <div className="row">
+                  <div className="col-md-4">
+                    <label className="fw-bold">Highest Qualification :</label>
+                  </div>
+                  <div className="col-md-8">
+                    <label className="">{userDetails?.data?.highest_qualification}</label>
+                  </div>
+                </div>
+              </div>
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">

@@ -1,10 +1,10 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet-async";
 
 const AdminLayout = ({ children }) => {
   const handleScrollTopClick = () => {

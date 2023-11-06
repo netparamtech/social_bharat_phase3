@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import Footer from "../components/home/Footer";
 import NavbarTransparent from "../components/home/NavbarTransparent";
@@ -7,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setLoader } from "../actions/loaderAction";
 import { fetchAllSiteSettings } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const UserLayout = ({ children }) => {
 
@@ -74,14 +74,13 @@ const UserLayout = ({ children }) => {
       <Helmet>
 
         <link rel="icon" type="image/x-icon" href="/user/images/logo.png" />
-
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
           crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="/user/css/user.css" />
+         <link rel="stylesheet" href="/user/css/user.css" />
         {/* amimate Css CDN */}
         <link
           rel="stylesheet"

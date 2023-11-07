@@ -98,7 +98,7 @@ nav .nav-item .btn {
   top: 0px;
   left: 0px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
- 
+  
 }
 
 /* .navbar-transparent.Sticky-top {
@@ -195,9 +195,16 @@ nav .nav-item .btn {
 
 #banners-section {
   margin-top: 94px;
-  @media (max-width: 767px) {
-    margin-top: 90px !important;
-  }
+  @media (width: 375px) {
+    margin-top: 60px !important;
+  } 
+}
+
+#banners-section {
+ 
+  @media (width: 414px) {
+    margin-top: 60px !important;
+  } 
 }
 
 nav .container,

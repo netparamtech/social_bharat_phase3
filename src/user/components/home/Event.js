@@ -6,8 +6,8 @@ import {
   uploadImage,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import Select from "react-dropdown-select";
 import { DatePicker, TimePicker, Button } from "antd";
+import Select from "react-select";
 import moment from "moment";
 
 const EventForm = () => {
@@ -54,7 +54,7 @@ const EventForm = () => {
 
     if (selectedOption) {
       const selectedStateObject = states.find(
-        (state) => state.name === selectedOption[0].value
+        (state) => state.name === selectedOption.value
       );
 
       if (selectedStateObject) {
@@ -179,8 +179,8 @@ const EventForm = () => {
 
     const data = {
       title,
-      city: selectedCity && selectedCity[0].label,
-      state: selectedState && selectedState[0].label, // Update to selectedState
+      city: selectedCity && selectedCity.label,
+      state: selectedState && selectedState.label, // Update to selectedState
       country,
       venue,
       start_datetime: formattedStartDateTime,

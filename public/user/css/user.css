@@ -98,7 +98,7 @@ nav .nav-item .btn {
   top: 0px;
   left: 0px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  height: 14%;
+ 
 }
 
 /* .navbar-transparent.Sticky-top {
@@ -1009,6 +1009,10 @@ a.btn.dropdown-toggle.show:focus {
 /* ......Search Bar........ */
 #searchPeople-section .container-input {
   position: relative;
+}
+
+#searchPeople-section .card-search {
+  min-height: 400px;
 }
 
 #searchPeople-section .input {

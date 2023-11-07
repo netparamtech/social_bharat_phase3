@@ -275,7 +275,7 @@ const SearchPeople = () => {
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
-            <div className="card shadow">
+            <div className="card shadow card-search">
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
                 <div>

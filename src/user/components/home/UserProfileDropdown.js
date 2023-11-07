@@ -82,6 +82,7 @@ const UserProfileDropdown = () => {
         navigate('/login');
       }
     } catch (error) {
+      navigate('/login');
       handleFetchError(error);
     }
   };

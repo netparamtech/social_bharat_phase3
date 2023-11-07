@@ -1351,7 +1351,6 @@ input[type="number"] {
 
 #chat .card {
   background-color: whitesmoke;
-
 }
 
 #chat .chat-online {
@@ -1368,8 +1367,6 @@ input[type="number"] {
   color: white;
 }
 
-
-
 #chat .chat-offline {
   color: #e4606d;
 }
@@ -1381,8 +1378,6 @@ input[type="number"] {
   max-height: 300px;
   overflow-y: scroll;
 }
-
-
 
 #chat .chat-message-left,
 .chat-message-right {
@@ -1446,12 +1441,15 @@ input[type="number"] {
 #chat .chat-message-right .font-messages{
   color: black;
 }
+
 .flex-shrink-1{
   max-width: 400px;
 }
 
-@media screen and (min-width: 768px) {
-  
+@media (max-width: 390px) {
+  .flex-shrink-1{
+    max-width: 200px;
+  }
 }
 
 

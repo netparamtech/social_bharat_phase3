@@ -356,8 +356,9 @@ const SearchPeople = () => {
                   />
                   <i className="fas fa-search"></i>
                 </div>
+                <div className="container">
                 <div className={`row ${isFilter ? "" : "d-none"}`}>
-                  <div className="col-5 mb-3">
+                  <div className="col-5 mb-3 p-0">
                     <Select
                       options={states.map((state) => ({
                         value: state.name,
@@ -368,7 +369,7 @@ const SearchPeople = () => {
                       onChange={handleStateChange}
                     />
                   </div>
-                  <div className="col-5 mb-3">
+                  <div className="col-5 mb-3 ">
                     <Select
                       options={cities.map((city) => ({
                         value: city.name,
@@ -379,15 +380,17 @@ const SearchPeople = () => {
                       onChange={handleCityChange}
                     />
                   </div>
-                  <div className="col-2 mb-3">
+                  <div className="col-2 mb-3 p-0 ">
                     <a
-                      className="btn btn-set btn-primary"
+                      className="btn btn-set w-100  btn-primary"
                       onClick={handleGoButtonClick}
                     >
                       Go
                     </a>
                   </div>
                 </div>
+                </div>
+                
                 <div className="row">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll

@@ -472,7 +472,7 @@ const SearchPeople = () => {
           onClick={handleScrollToUp}
           title="Refresh"
         >
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i className="fa fa-arrow-up" aria-hidden="true"></i>
         </a>
       </div>
     </>

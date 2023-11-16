@@ -227,23 +227,40 @@ const NavbarTransparent = (props) => {
           >
             <div className="customDrawerBody">
               <ul className="customUl">
-                <li className="nav-item mt-2">
-                  <a
-                    className="nav-link active"
-                    aria-current="page"
-                    href=""
-                    onClick={handleHomeClicked}
-                  >
-                    <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+
+                {
+                  isAuthenticUser?'':(
+                    <li className="nav-item mt-2">
+                    <a
+                      className="nav-link active"
+                      aria-current="page"
+                      href=""
+                      onClick={handleHomeClicked}
+                    >
+                      <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+                    </a>
+                  </li>
+                  )
+                }
+               
+
+               {
+                isAuthenticUser?(
+                  <li className="nav-item mt-2">
+                  <a className="nav-link" onClick={handleServiceClick}>
+                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                    Home
                   </a>
                 </li>
-
-                <li className="nav-item mt-2">
+                ):(
+                  <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleServiceClick}>
                     <i className="fa fa-wrench m-2" aria-hidden="true"></i>
                     Services
                   </a>
                 </li>
+                )
+               }
 
                 <li className="nav-item mt-2">
                   <a className="nav-link" onClick={handleContactClicked}>

@@ -231,7 +231,7 @@ const Footer = (props) => {
               <br />
               <div className="row">
                 <div className="col-2">
-                  <strong>phone: </strong>
+                <i className="fa-solid fa-phone-volume text-primary"></i>
                 </div>
                 <div className="col-10">
                   +91-{data && data.phone1}
@@ -246,7 +246,7 @@ const Footer = (props) => {
 
               <div className="row">
                 <div className="col-2">
-                  <strong>Email: </strong>
+                <i className="fa-solid fa-envelope text-primary"></i>
                 </div>
                 <div className="col-10">
                   {data && data.email1}

@@ -118,7 +118,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
                               
-                              <i class="fa-solid fa-location-dot fs-2 text-primary"></i>
+                              <i className="fa-solid fa-location-dot fs-2 text-primary"></i>
                               <h4 className="ms-3 ">Address</h4>
                             </div>
                             <div>
@@ -134,7 +134,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
                               
-                              <i class="fa-solid fa-phone-volume fs-2 text-primary"></i>
+                              <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
                               <h4 className="ms-3">Call Us</h4>
                             </div>
                             <div>
@@ -151,7 +151,7 @@ function Contact() {
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
-                              <i class="fa-solid fa-envelope fs-2 text-primary"></i>
+                              <i className="fa-solid fa-envelope fs-2 text-primary"></i>
                               <h4 className="ms-3">Email Us</h4>
                             </div>
                             <div>
@@ -170,7 +170,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
                              
-                              <i class="fa-solid fa-clock fs-2 text-primary"></i>
+                              <i className="fa-solid fa-clock fs-2 text-primary"></i>
                               <h4 className="ms-3">Open Hours</h4>
                             </div>
                             <div>

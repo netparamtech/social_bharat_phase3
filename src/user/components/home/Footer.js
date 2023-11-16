@@ -230,7 +230,7 @@ const Footer = (props) => {
               {data && data.address}
               <br />
               <div className="row">
-                <div className="col-2">
+                <div className="col-1">
                 <i className="fa-solid fa-phone-volume text-primary"></i>
                 </div>
                 <div className="col-10">
@@ -238,14 +238,14 @@ const Footer = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-2"></div>
+                <div className="col-1"></div>
                 <div className="col-10">
                   +91-{data && data.phone2}
                 </div>
               </div>
 
               <div className="row">
-                <div className="col-2">
+                <div className="col-1">
                 <i className="fa-solid fa-envelope text-primary"></i>
                 </div>
                 <div className="col-10">
@@ -253,7 +253,7 @@ const Footer = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-2"></div>
+                <div className="col-1"></div>
                 <div className="col-10">
                   {data && data.email2 ? `${data.email2}` : ""}
                 </div>

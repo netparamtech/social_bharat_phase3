@@ -60,6 +60,7 @@ const NavbarTransparent = (props) => {
   };
 
   const handleServiceClick = (e) => {
+    
     if (isAuthenticUser) {
       if (isPasswordSet) {
         navigate("/dashboard");

@@ -1018,6 +1018,10 @@ a.btn.dropdown-toggle.show:focus {
   position: relative;
 }
 
+#searchPeople-section .card-search {
+  min-height: 400px;
+}
+
 #searchPeople-section .input {
   padding-left: 40px !important;
 }

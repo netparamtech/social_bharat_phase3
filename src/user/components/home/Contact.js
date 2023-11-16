@@ -175,9 +175,7 @@ function Contact() {
                             </div>
                             <div>
                               <span className="text-muted">
-                                Monday - Sturday
-                                <br />
-                                9:00 AM - 06:00 PM
+                                Monday - Sturday, 9:00 AM - 06:00 PM
                                 <br />
                                 Sunday - Off
                               </span>

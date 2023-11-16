@@ -382,7 +382,7 @@ const SearchPeople = () => {
                   </div>
                   <div className="col-2 mb-3 p-0 ">
                     <a
-                      className="btn btn-set w-100  btn-primary"
+                      className="btn btn-set w-100  btn-sm  btn-primary"
                       onClick={handleGoButtonClick}
                     >
                       Go

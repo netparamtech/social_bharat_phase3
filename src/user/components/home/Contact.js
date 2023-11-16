@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { enquiry } from "../../services/userService";
+import React, { useEffect, useState } from "react";
+import { enquiry, fetchAllSiteSettings } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
@@ -13,12 +13,33 @@ function Contact() {
   const [mobile, setMobile] = useState("");
   const [userQuery, setUserQuery] = useState("");
 
+  const [settings,setSettings] = useState({});
+
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //fetch site setting 
+  const fetchSettings = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllSiteSettings();
+      setSettings(response.data.data);
+      dispatch(setLoader(false));
+    } catch (error) {
+      dispatch(setLoader(false));
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+      }
+    }
+  };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -59,6 +80,10 @@ function Contact() {
     }
   };
 
+  useEffect(()=>{
+    fetchSettings();
+  },[]);
+
   return (
     <div>
       {/* Address Banner */}
@@ -98,8 +123,7 @@ function Contact() {
                             </div>
                             <div>
                               <span className="text-muted">
-                                747, Janpath,Rani sathi nagar, Nirman nagar,
-                                jaipur-302019 Rajasthan
+                              {settings && settings.address}
                               </span>
                             </div>
                           </div>
@@ -115,9 +139,9 @@ function Contact() {
                             </div>
                             <div>
                               <span className="text-muted">
-                                +91-96492-72709
+                                +91-{settings && settings.phone1}
                                 <br />
-                                +91-76650-10205
+                                +91-{settings && settings.phone2}
                               </span>
                             </div>
                           </div>
@@ -133,9 +157,9 @@ function Contact() {
                             <div>
                               <span className="text-muted">
                                 {" "}
-                                placement@netparam.in
+                                {settings && settings.email1&&settings.email1}
                                 <br />
-                                contact@example.com
+                                {settings && settings.email2&&settings.email2}
                               </span>
                             </div>
                           </div>

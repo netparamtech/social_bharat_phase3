@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 
 const NavbarTransparent = (props) => {
-  const {data,community} = props;
+  const { data, community } = props;
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const isPasswordSet = user && user.user && user.user.is_password_set;
@@ -107,12 +107,12 @@ const NavbarTransparent = (props) => {
     <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a className="navbar-brand" onClick={handleHomeClicked}>
-          <img src={data && data.logo1&&data.logo1?data.logo1:defaultLogo} alt="Logo" />
+          <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />
         </a>
 
         <a>
           {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-            <UserProfileDropdown community = {community} />
+            <UserProfileDropdown community={community} />
           ) : (
             ""
           )}
@@ -127,34 +127,52 @@ const NavbarTransparent = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+            {
+              isAuthenticUser ? ('') : (
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${window.location.pathname === "/" ? "active" : "inactive"
+                      }`}
+                    onClick={handleHomeClicked}
+                  >
+                    Home
+                  </a>
+                </li>
+              )
+            }
+            {
+              isAuthenticUser ? (
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${window.location.pathname === "/service" ||
+                        window.location.pathname === "/dashboard"
+                        ? "active"
+                        : "inactive"
+                      }`}
+                    onClick={handleServiceClick}
+                  >
+                    Home
+                  </a>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${window.location.pathname === "/service" ||
+                        window.location.pathname === "/dashboard"
+                        ? "active"
+                        : "inactive"
+                      }`}
+                    onClick={handleServiceClick}
+                  >
+                    Services
+                  </a>
+                </li>
+              )
+            }
             <li className="nav-item">
               <a
-                className={`nav-link ${
-                  window.location.pathname === "/" ? "active" : "inactive"
-                }`}
-                onClick={handleHomeClicked}
-              >
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className={`nav-link ${
-                  window.location.pathname === "/service" ||
-                  window.location.pathname === "/dashboard"
-                    ? "active"
-                    : "inactive"
-                }`}
-                onClick={handleServiceClick}
-              >
-                Services
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className={`nav-link ${
-                  window.location.pathname === "/contact" ? "active" : "inactive"
-                }`}
+                className={`nav-link ${window.location.pathname === "/contact" ? "active" : "inactive"
+                  }`}
                 onClick={handleContactClicked}
               >
                 Contact

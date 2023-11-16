@@ -101,9 +101,9 @@ const SearchPartner = () => {
   };
 
   const handleStateChange = (selectedOption) => {
-    setSelectedState(selectedOption);
-
     if (selectedOption) {
+      setSelectedState(selectedOption);
+      setState(selectedOption.label)
       const selectedStateObject = states.find(
         (state) => state.name === selectedOption.value
       );
@@ -114,7 +114,10 @@ const SearchPartner = () => {
   };
 
   const handleCityChange = (selectedOption) => {
-    setSelectedCity(selectedOption); // Update the state with the selected option object
+    if (selectedOption) {
+      setSelectedCity(selectedOption); // Update the state with the selected option object
+      setCity(selectedOption.label);
+    }
   };
 
   const getAllStates = async () => {
@@ -278,6 +281,15 @@ const SearchPartner = () => {
     return ageInYears;
   }
 
+  const handleRefressClicked = (e) => {
+    e.preventDefault();
+    window.location.href = '/user/search/partner';
+  }
+
+  const handleScrollToUp = () => {
+    window.scrollTo(0, 0);
+  }
+
   useEffect(() => {
     if (items.length > 0) {
       setIssearchingPerformed(true);
@@ -364,6 +376,14 @@ const SearchPartner = () => {
                       >
                         Submit Your Matrimonial Profile
                       </a>
+                      <button
+                        className="btn btn-primary btn-sm mb-2 ms-5"
+                        id="btn-chat"
+                        title="Refresh"
+                        onClick={handleRefressClicked}
+                      >
+                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                      </button>
                     </div>
 
                   </div>
@@ -595,6 +615,16 @@ const SearchPartner = () => {
           </div>
         )
       }
+      <div className={`scroll-to-up ${isChat ? 'd-none' : ''}`} >
+        <a
+          className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
+          id=""
+          onClick={handleScrollToUp}
+          title="Refresh"
+        >
+          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        </a>
+      </div>
     </>
   );
 };

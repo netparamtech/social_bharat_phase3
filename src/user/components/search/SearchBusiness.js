@@ -155,6 +155,9 @@ const SearchBusiness = () => {
             }
         }
     }
+    const handleScrollToUp = () => {
+        window.scrollTo(0, 0);
+    }
 
     useEffect(() => {
         setState(user && user.user && user.user.native_place_state);
@@ -265,6 +268,16 @@ const SearchBusiness = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="scroll-to-up" >
+                <a
+                    className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
+                    id=""
+                    onClick={handleScrollToUp}
+                    title="Refresh"
+                >
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     );

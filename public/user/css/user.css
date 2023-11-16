@@ -1472,3 +1472,14 @@ input[type="number"] {
 }
 
 /*---------  */
+
+.scroll-to-up {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 999;
+  border-radius: 50% !important
+}
+.scroll-to-up-btn{
+  border-radius: 50%;
+}

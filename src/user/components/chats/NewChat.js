@@ -295,6 +295,7 @@ useEffect(() => {
                       placeholder="Type your message here..."
                       autoFocus
                     />
+                    
                     <button
                       className="btn btn-primary"
                       id="btn-chat"

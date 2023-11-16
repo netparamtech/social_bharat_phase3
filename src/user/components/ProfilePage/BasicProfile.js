@@ -125,7 +125,7 @@ const BasicProfile = (props) => {
                   src={profileImage}
                   alt=""
                   title=""
-                  onClick={handleImageClick}
+                 
                 />
 
                 <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">

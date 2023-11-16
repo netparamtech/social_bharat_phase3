@@ -1,6 +1,10 @@
 import { Switch } from "antd";
+import { useEffect } from "react";
 
 const Setting = ({ visible }) => {
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[]);
 
   return (
     <>

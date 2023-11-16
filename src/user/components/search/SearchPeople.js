@@ -18,7 +18,7 @@ const SearchPeople = () => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/de-default-1.jpeg"
   );
@@ -50,6 +50,8 @@ const SearchPeople = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [isChat, setIsChat] = useState(false);
+  const [isRefressed, setIsRefressed] = useState(false);
+  const [copyItems, setCopyItems] = useState([]);
 
   const changeChatFlag = (value) => {
     setIsChat(value);
@@ -165,6 +167,8 @@ const SearchPeople = () => {
         city
       );
 
+      setIsRefressed(false);
+
       if (response && response.status === 200) {
         setServerError("");
         setTotalRows(response.data.data.totalFilteredRecords);
@@ -187,6 +191,7 @@ const SearchPeople = () => {
           if (isGoClick) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
+              setCopyItems([...new Set([...response.data.data.users])]);
             } else {
               setItems([...new Set([...items, ...response.data.data.users])]);
             }
@@ -234,7 +239,29 @@ const SearchPeople = () => {
     }
   };
 
+  const handleRefressClicked = () => {
+    if (!isRefressed) {
+      setItems([]);
+      setIsRefressed(true);
+    }
+  }
+
+  const handleRefress = () => {
+    if (isRefressed) {
+      setItems(copyItems);
+      setSearchText('');
+      setIsFilter(false);
+      setSelectedState(null);
+      setSelectedCity(null);
+    }
+  }
+
+  const handleScrollToUp = () => {
+    window.scrollTo(0, 0);
+  }
+
   useEffect(() => {
+    handleRefress()
     setState(
       user && user.user && user.user.native_place_state
         ? user.user.native_place_state
@@ -245,11 +272,16 @@ const SearchPeople = () => {
         ? user.user.native_place_city
         : ""
     );
-  }, [user, isFilter]);
+    search('', 1, 20);
+  }, [user, isRefressed]);
 
   useEffect(() => {
-    search(searchText, page, 20);
-  }, [searchText, isGoClick, page, state]);
+    // Check if the component is not just mounted
+    if (page > 1 || searchText || isGoClick) {
+      console.log("call1");
+      search(searchText, page, 20);
+    }
+  }, [searchText, isGoClick, page]);
 
   useEffect(() => {
     setPage(1);
@@ -275,11 +307,11 @@ const SearchPeople = () => {
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
-            <div className="card shadow">
+            <div className="card shadow card-search">
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
-                <div>
-                  <h5 className="fw-3 mb-3 ">Search People</h5>
+                <div className="d-flex">
+                  <h5 className="fw-3 mb-3">Search People</h5>
                 </div>
                 <div className="filter-content">
                   {city ? (
@@ -304,6 +336,14 @@ const SearchPeople = () => {
                   >
                     <i className="fas fa-filter me-1"></i>Filter
                   </a>
+                  <button
+                    className="btn btn-primary btn-sm me-2"
+                    id="btn-chat"
+                    onClick={handleRefressClicked}
+                    title="Refresh"
+                  >
+                    <i className="fa fa-refresh" aria-hidden="true"></i>
+                  </button>
                 </div>
                 <div className="container-input mb-3">
                   <input
@@ -311,12 +351,14 @@ const SearchPeople = () => {
                     placeholder="Search"
                     name="text"
                     className="input form-control"
+                    value={searchText}
                     onChange={handleSearchText}
                   />
                   <i className="fas fa-search"></i>
                 </div>
+                <div className="">
                 <div className={`row ${isFilter ? "" : "d-none"}`}>
-                  <div className="col-5 mb-3">
+                  <div className="col-5 mb-3 ">
                     <Select
                       options={states.map((state) => ({
                         value: state.name,
@@ -327,7 +369,7 @@ const SearchPeople = () => {
                       onChange={handleStateChange}
                     />
                   </div>
-                  <div className="col-5 mb-3">
+                  <div className="col-5 mb-3 ps-0">
                     <Select
                       options={cities.map((city) => ({
                         value: city.name,
@@ -338,15 +380,17 @@ const SearchPeople = () => {
                       onChange={handleCityChange}
                     />
                   </div>
-                  <div className="col-2 mb-3">
+                  <div className="col-2 mb-3 ps-0">
                     <a
-                      className="btn btn-set btn-primary"
+                      className="btn btn-set w-100  btn-sm  btn-primary"
                       onClick={handleGoButtonClick}
                     >
                       Go
                     </a>
                   </div>
                 </div>
+                </div>
+                
                 <div className="row">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
@@ -390,6 +434,7 @@ const SearchPeople = () => {
                                           ? item.occupation
                                           : "N/A"}
                                       </p>
+                                      
                                       <p>
                                         Education-
                                         {item.highest_qualification
@@ -420,6 +465,16 @@ const SearchPeople = () => {
           </div>
         </div>
       )}
+      <div className={`scroll-to-up ${isChat ? 'd-none' : ''}`} >
+        <a
+          className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
+          id=""
+          onClick={handleScrollToUp}
+          title="Refresh"
+        >
+          <i className="fa fa-arrow-up" aria-hidden="true"></i>
+        </a>
+      </div>
     </>
   );
 };

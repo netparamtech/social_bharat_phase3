@@ -8,11 +8,15 @@ const BasicProfile = (props) => {
   const [availableForMarriage, setAvailableForMarriage] = useState('');
 
   const formatDate = (dateString) => {
+   if(dateString!==null){
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const [month, day, year] = new Date(dateString)
       .toLocaleDateString('en-GB', options)
       .split('/');
     return `${month}-${day}-${year}`;
+   }else {
+    return "N/A"
+   }
   };
 
   useEffect(() => {
@@ -77,7 +81,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Email :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.email}</label>
+                    <label className="">{userDetails?.data?.email?userDetails.data.email:'N/A'}</label>
                   </div>
                 </div>
               </div>
@@ -87,7 +91,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Gender :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.gender}</label>
+                    <label className="">{userDetails?.data?.gender?userDetails.data.gender:'N/A'}</label>
                   </div>
                 </div>
               </div>
@@ -107,7 +111,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Marital Status:</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.marital_status}</label>
+                    <label className="">{userDetails?.data?.marital_status?userDetails.data.marital_status:'N/A'}</label>
                   </div>
                 </div>
               </div>
@@ -117,7 +121,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Mobile :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.mobile}</label>
+                    <label className="">{userDetails?.data?.mobile?userDetails.data.mobile:'N/A'}</label>
                   </div>
                 </div>
               </div>
@@ -129,7 +133,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Occupation :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.occupation}</label>
+                    <label className="">{userDetails?.data?.occupation?userDetails.data.occupation:'N/A'}</label>
                   </div>
                 </div>
               </div>
@@ -146,7 +150,7 @@ const BasicProfile = (props) => {
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
-                    <label className="fw-bold">Is Available For Marriage :</label>
+                    <label className="fw-bold">Available For Marriage :</label>
                   </div>
                   <div className="col-md-8">
                     <label className="">{availableForMarriage}</label>

@@ -19,9 +19,7 @@ const UserLayout = ({ children }) => {
     try {
       const response = await fetchAllSiteSettings();
       setData(response.data.data);
-      dispatch(setLoader(false));
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -29,6 +27,8 @@ const UserLayout = ({ children }) => {
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

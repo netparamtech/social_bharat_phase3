@@ -5,6 +5,8 @@ import {
   createBanner,
   uploadMultipleImages,
 } from "../../services/AdminService";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const UpdateBanner = (props) => {
   const { banner } = props;
@@ -19,6 +21,7 @@ const UpdateBanner = (props) => {
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleBannerChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -45,13 +48,21 @@ const UpdateBanner = (props) => {
     }
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
       if (response.status === 200) {
         const combineTempUrls = [...bannerTempUrl, ...response.data.data.files];
         setBannerTempUrl(combineTempUrls);
+        setMessage('');
+        setErrors('');
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       // Handle error or show an error message
+      if (error.response && error.response.status === 400) {
+        setMessage(error.response.data.message);
+      }
       if (error.response && error.response.status === 401) {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
@@ -89,6 +100,7 @@ const UpdateBanner = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
 
     let updatedBannerTempUrl = bannerTempUrl; // Use let to allow reassignment
 
@@ -112,10 +124,13 @@ const UpdateBanner = (props) => {
         setTimeout(() => {
           navigate('/admin/banners');
         }, 1000);
+        dispatch(setLoader(false));
       }
     } catch (error) {
+      dispatch(setLoader(false));
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setMessage('');
       }
 
       //Unauthorized
@@ -192,7 +207,7 @@ const UpdateBanner = (props) => {
                       <input
                         type="file"
                         className="custom-file-input"
-                        accept=".png, .jpg, .jpeg"
+                        accept=".png, .jpg, .jpeg, .webp, .avif"
                         id="bannerUrl"
                         onChange={handleBannerChange}
                         multiple
@@ -236,7 +251,7 @@ const UpdateBanner = (props) => {
                 </div>
               </div>
 
-              
+
 
               <div className="col-md-6">
                 <div className="form-group">

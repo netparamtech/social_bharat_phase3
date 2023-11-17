@@ -566,3 +566,13 @@ export const receiveMessage = async (id) => {
         throw error;
     }
 }
+
+//toggle-mobile-visiblity
+export const toggleMobile = async (id) => {
+    try {
+        const response = await apiWithHeaders.put('/users/settings/toggle-mobile-visiblity');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

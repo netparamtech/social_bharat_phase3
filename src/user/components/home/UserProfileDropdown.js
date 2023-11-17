@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneCommunity, userLogout } from '../../services/userService';
+import { setLoader } from '../../actions/loaderAction';
 
 // ...
 
@@ -18,6 +19,7 @@ const UserProfileDropdown = () => {
   const defaultPhoto = '/user/images/user.png';
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -60,7 +62,13 @@ const UserProfileDropdown = () => {
     navigate(isPasswordSet ? '/change-password' : '/set-password');
   };
 
+  const handleSettingClick = (e) => {
+    e.preventDefault();
+    navigate('/user/setting');
+  }
+
   const fetchLoggedUserCommunity = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
@@ -68,6 +76,8 @@ const UserProfileDropdown = () => {
       }
     } catch (error) {
       handleFetchError(error);
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -76,6 +86,7 @@ const UserProfileDropdown = () => {
   }, []);
 
   const handleLogOutClick = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await userLogout(id);
       if (response.status === 200) {
@@ -84,6 +95,8 @@ const UserProfileDropdown = () => {
     } catch (error) {
       navigate('/login');
       handleFetchError(error);
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -120,15 +133,15 @@ const UserProfileDropdown = () => {
           <>
             <h6 className="dropdown-header d-flex align-items-center">
               {
-                community&&community.thumbnail_image?(
+                community && community.thumbnail_image ? (
                   <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
-                ):(
+                ) : (
                   <div className="dropdown-user-details">
-                  <div className="dropdown-user-details-name menu-font">{community&&community.name}</div>
-                </div>
+                    <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
+                  </div>
                 )
               }
-             
+
             </h6>
             <div className="dropdown-divider"></div>
           </>
@@ -137,9 +150,8 @@ const UserProfileDropdown = () => {
       {
         key: '3',
         label: (
-          <span onClick={handleProfileClick} className={`menu-font ${
-            window.location.pathname === "/profile" ? "custom-active-user" : "inactive"
-          }`}>
+          <span onClick={handleProfileClick} className={`menu-font ${window.location.pathname === "/profile" ? "custom-active-user" : "inactive"
+            }`}>
             <i className="fas fa-user-alt m-2"></i> Profile
           </span>
         ),
@@ -147,22 +159,21 @@ const UserProfileDropdown = () => {
       {
         key: '4',
         label: (
-          <span onClick={handleChangePasswordClick} className={`menu-font ${
-            window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
-          }`}>
+          <span onClick={handleChangePasswordClick} className={`menu-font ${window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
+            }`}>
             <i className="fas fa-key m-2"></i> Change Password
           </span>
         ),
       },
       {
         key: '5',
-        
+
         label: (
           <>
-            <span  onClick={() => navigate("/user/setting")} className='menu-font'>
+            <span onClick={handleSettingClick} className='menu-font'>
               <i className="fas fa-cog m-2"></i> Settings
             </span>
-           
+
           </>
         ),
       },

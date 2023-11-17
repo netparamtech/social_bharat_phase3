@@ -279,8 +279,8 @@ const SearchPartner = () => {
     !isFilter
       ? setIsFilter(true)
       : isFilter
-      ? setIsFilter(false)
-      : setIsFilter(false);
+        ? setIsFilter(false)
+        : setIsFilter(false);
     setIsSaveClicked(false);
   };
 
@@ -395,6 +395,11 @@ const SearchPartner = () => {
     groupedItems.push(pair);
   }
 
+  const checkMobileVisibility = (mobileNumber) => {
+    const isHidden = /\*/.test(mobileNumber);
+    return !isHidden;
+  };
+
   return (
     <>
       {isChat ? (
@@ -404,55 +409,55 @@ const SearchPartner = () => {
           <div className="container">
             <div className="card shadow">
               <div className="card-body">
-              <div className="container">
-              <div className="row">
-                  <div className="col-md-7 ps-0">
-                    {serverError && (
-                      <span className="error">{serverError}</span>
-                    )}
-                    <h5 className="fw-3 mb-3 ">Search Partner</h5>
-                  </div>
-                  <div className=" col-md-5">
+                <div className="container">
                   <div className="row">
-                      <div className="col-4 ps-0">
-                      <a
-                      title="Filter"
-                      className="btn btn-primary btn-sm  mb-2 hover-pointer"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      onClick={handlePreferenceClick}
-                    >
-                      <i className="fas fa-filter me-1"></i>Preference
-                    </a>
+                    <div className="col-md-7 ps-0">
+                      {serverError && (
+                        <span className="error">{serverError}</span>
+                      )}
+                      <h5 className="fw-3 mb-3 ">Search Partner</h5>
+                    </div>
+                    <div className=" col-md-5">
+                      <div className="row">
+                        <div className="col-4 ps-0">
+                          <a
+                            title="Filter"
+                            className="btn btn-primary btn-sm  mb-2 hover-pointer"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            onClick={handlePreferenceClick}
+                          >
+                            <i className="fas fa-filter me-1"></i>Preference
+                          </a>
+                        </div>
+                        <div className="col-7 ps-0">
+                          <a
+                            title="Add Business"
+                            className="btn btn-primary btn-sm  mb-2"
+                            onClick={handlePartnerClick}
+                          >
+                            Submit Your Matrimonial Profile
+                          </a>
+                        </div>
+                        <div className="col-1 ps-0 ">
+                          <button
+                            className="btn btn-primary btn-sm "
+                            id="btn-chat"
+                            title="Refresh"
+                            onClick={handleRefressClicked}
+                          >
+                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-7 ps-0">
-                      <a
-                      title="Add Business"
-                      className="btn btn-primary btn-sm  mb-2"
-                      onClick={handlePartnerClick}
-                    >
-                      Submit Your Matrimonial Profile
-                    </a>
-                      </div>
-                      <div className="col-1 ps-0 ">
-                      <button
-                      className="btn btn-primary btn-sm "
-                      id="btn-chat"
-                      title="Refresh"
-                      onClick={handleRefressClicked}
-                    >
-                      <i className="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                      </div>
+
+
+
+                    </div>
+
                   </div>
-                   
-                    
-                   
-                  </div>
-                  
                 </div>
-              </div>
-                
+
 
                 <div className="filter-content pt-3 d-md-block ">
                   {isSaveClicked && (
@@ -692,6 +697,15 @@ const SearchPartner = () => {
                                         ? `(${item.native_place_state})`
                                         : ""}
                                     </p>
+
+                                    {
+                                      checkMobileVisibility(item.mobile) ? (
+                                        <a href={`tel:${item.mobile}`}>
+                                          {item.mobile}
+                                        </a>
+                                      ) : ''
+                                    }
+
                                   </div>
                                 </div>
                               </div>

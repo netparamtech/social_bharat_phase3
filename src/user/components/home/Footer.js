@@ -63,6 +63,11 @@ const Footer = (props) => {
     }
   };
 
+  const handleFeedbackClick = (e) => {
+    e.preventDefault();
+    isAuthenticUser?navigate('/user/rating'):navigate('/login');
+  }
+
 
   return (
     <footer
@@ -159,7 +164,7 @@ const Footer = (props) => {
               <li className="green-ever-hover">
                 <a
                   className="text-decoration-none gray-color hover-pointer"
-                  onClick={() => navigate("/user/rating")}
+                  onClick={handleFeedbackClick}
                 >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
                   Feedback
@@ -178,7 +183,7 @@ const Footer = (props) => {
                   onClick={handleSearchClick}
                 >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Search People
+                  Search People/Chat
                 </a>{" "}
               </li>
               <li>
@@ -198,7 +203,7 @@ const Footer = (props) => {
                   onClick={handlePartnerClick}
                 >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Find Life Partner
+                  Find Life Partner/Chat
                 </a>
               </li>
               <li>

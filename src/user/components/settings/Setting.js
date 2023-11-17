@@ -1,10 +1,74 @@
 import { Switch } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getUserFullProfile, toggleMobile } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
-const Setting = ({ visible }) => {
+const Setting = () => {
+ 
+  const [user,setUser] = useState();
+  const [message, setMessage] = useState("");
+  const [alertClass, setAlertClass] = useState("");
+
+  const [isMobileVisible,setIsMobileVisible] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const getUserProfile = async () => {
+    dispatch(setLoader(true));
+    try {
+        const response = await getUserFullProfile();
+        if (response && response.status === 200) {
+            setUser(response.data);
+        }
+    } catch (error) {
+        //Unauthorized
+        if (error.response && error.response.status === 401) {
+            navigate('/login');
+        }
+        //Internal Server Error
+        else if (error.response && error.response.status === 500) {
+           // navigate('/login');
+        }
+    }finally {
+        dispatch(setLoader(false));
+    }
+}
+
+  const handleToggleChangeForMobile = async () => {
+   
+    dispatch(setLoader(true));
+    try {
+      const response = await toggleMobile();
+      if (response && response.status === 200) {
+        setMessage(response.data.message);
+        getUserProfile();
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
   useEffect(()=>{
-    window.scrollTo(0,0);
-  },[]);
+    if(user && user.data && user.data.mobile){
+      const isHidden = /\*/.test(user.data.mobile);
+      setIsMobileVisible(!isHidden);
+    }
+  },[user]);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getUserProfile();
+  }, []);
 
   return (
     <>
@@ -21,27 +85,14 @@ const Setting = ({ visible }) => {
                       Allow to show your contact number visible to others
                     </label>
                   </div>
-                    <Switch defaultChecked />
                   
+                  <Switch
+                    checked={isMobileVisible}
+                    onChange={handleToggleChangeForMobile}
+                  />
+
                 </li>
-                <li className="list-group-item d-flex justify-content-between align-items-start">
-                  <div className="ms-2 me-auto">
-                    <div className="text-setting-page">Subheading</div>
-                    <label className="text-muted">
-                      Allow to show your contact number visible to others
-                    </label>
-                  </div>
-                  <Switch defaultChecked />
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-start">
-                  <div className="ms-2 me-auto">
-                    <div className="text-setting-page">Subheading</div>
-                    <label className="text-muted">
-                      Allow to show your contact number visible to others
-                    </label>
-                  </div>
-                  <Switch defaultChecked />
-                </li>
+
               </ol>
             </div>
           </div>

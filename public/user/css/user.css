@@ -473,12 +473,14 @@ nav .container,
 
 /* Testimonials Section */
 #testimonials {
-  background-image: url("../images/pexels-photo-18409047.webp");
+  /* background-image: url("../images/pexels-photo-18409047.webp"); */
   padding: 40px 0;
   background-position: center;
   object-fit: cover;
   background-size: cover;
   overflow: hidden;
+  border-radius: 10px;
+ 
 }
 
 /* #testimonials::before {

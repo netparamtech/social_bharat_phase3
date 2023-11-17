@@ -36,10 +36,9 @@ const UpdateMobile = () => {
         setMessage(response.data.message);
         handleMobileValid();
         setServerError('');
-        dispatch(setLoader(false));
+       
       }
     } catch (error) {
-      dispatch(setLoader(false));
       // Handle validation errors
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -54,6 +53,8 @@ const UpdateMobile = () => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
   return (

@@ -278,7 +278,6 @@ const SearchPeople = () => {
   useEffect(() => {
     // Check if the component is not just mounted
     if (page > 1 || searchText || isGoClick) {
-      console.log("call1");
       search(searchText, page, 20);
     }
   }, [searchText, isGoClick, page]);
@@ -299,6 +298,11 @@ const SearchPeople = () => {
     const pair = items.slice(i, i + 2); // Change 3 to 2 here
     groupedItems.push(pair);
   }
+
+  const checkMobileVisibility = (mobileNumber) => {
+    const isHidden = /\*/.test(mobileNumber);
+    return !isHidden;
+  };
 
   return (
     <>
@@ -357,40 +361,40 @@ const SearchPeople = () => {
                   <i className="fas fa-search"></i>
                 </div>
                 <div className="">
-                <div className={`row ${isFilter ? "" : "d-none"}`}>
-                  <div className="col-5 mb-3 ">
-                    <Select
-                      options={states.map((state) => ({
-                        value: state.name,
-                        label: state.name,
-                      }))}
-                      value={selectedState}
-                      placeholder="State"
-                      onChange={handleStateChange}
-                    />
-                  </div>
-                  <div className="col-5 mb-3 ps-0">
-                    <Select
-                      options={cities.map((city) => ({
-                        value: city.name,
-                        label: city.name,
-                      }))}
-                      value={selectedCity}
-                      placeholder="City"
-                      onChange={handleCityChange}
-                    />
-                  </div>
-                  <div className="col-2 mb-3 ps-0">
-                    <a
-                      className="btn btn-set w-100  btn-sm  btn-primary"
-                      onClick={handleGoButtonClick}
-                    >
-                      Go
-                    </a>
+                  <div className={`row ${isFilter ? "" : "d-none"}`}>
+                    <div className="col-5 mb-3 ">
+                      <Select
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
+                        value={selectedState}
+                        placeholder="State"
+                        onChange={handleStateChange}
+                      />
+                    </div>
+                    <div className="col-5 mb-3 ps-0">
+                      <Select
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
+                        value={selectedCity}
+                        placeholder="City"
+                        onChange={handleCityChange}
+                      />
+                    </div>
+                    <div className="col-2 mb-3 ps-0">
+                      <a
+                        className="btn btn-set w-100  btn-sm  btn-primary"
+                        onClick={handleGoButtonClick}
+                      >
+                        Go
+                      </a>
+                    </div>
                   </div>
                 </div>
-                </div>
-                
+
                 <div className="row">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
@@ -434,7 +438,7 @@ const SearchPeople = () => {
                                           ? item.occupation
                                           : "N/A"}
                                       </p>
-                                      
+
                                       <p>
                                         Education-
                                         {item.highest_qualification
@@ -448,6 +452,16 @@ const SearchPeople = () => {
                                           ? `(${item.native_place_state})`
                                           : ""}
                                       </p>
+
+                                      {
+                                        checkMobileVisibility(item.mobile) ? (
+                                          <p>
+                                            <a href={`tel:${item.mobile}`}>
+                                              {item.mobile}
+                                            </a>
+                                          </p>
+                                        ) : ''
+                                      }
                                     </div>
 
                                   </div>

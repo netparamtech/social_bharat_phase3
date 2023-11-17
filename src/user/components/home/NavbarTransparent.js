@@ -4,6 +4,7 @@ import UserProfileDropdown from "./UserProfileDropdown";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
+import { setLoader } from "../../actions/loaderAction";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
@@ -21,7 +22,9 @@ const NavbarTransparent = (props) => {
 
   const handleLoginClicked = (e) => {
     e.preventDefault();
+    dispatch(setLoader(true));
     navigate("/login");
+    dispatch(setLoader(false));
   };
 
   const handleHomeClicked = (e) => {

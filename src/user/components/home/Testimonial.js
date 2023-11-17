@@ -1,19 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { fetchTestimonialsOnHomePage } from "../../services/userService";
+import { fetchBannerWithPageAndSection, fetchTestimonialsOnHomePage } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { Carousel } from "antd";
 
 const Testimonials = () => {
   const [data, setData] = useState([]);
+  const [statsBg, setStatsBg] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const backgroundImage = '/user/images/pexels-photo-18409047.webp';
+
+  const user = useSelector((state) => state.userAuth);
+  const isAuthenticUser = user && user.isAuthenticated;
+
   const handleReviewClick = (e) => {
     e.preventDefault();
-    navigate('/user/rating');
+   isAuthenticUser? navigate('/user/rating'): navigate('/login');
   }
+
+
+  const fetchBanners = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchBannerWithPageAndSection(
+        "Home",
+        "Stats Bg"
+      );
+      const activeBanners = response.data.data.filter(
+        (banner) => banner.status === "Active"
+      );
+
+      if (!Array.isArray(activeBanners[0].banner_urls)) {
+        const updatedBannerUrls = [activeBanners[0].banner_urls];
+        activeBanners[0].banner_urls = updatedBannerUrls;
+      }
+      setStatsBg(activeBanners);
+      dispatch(setLoader(false));
+    } catch (error) {
+      dispatch(setLoader(false));
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+      }
+    }
+  };
 
   const fetchTestimonials = async () => {
     dispatch(setLoader(true));
@@ -47,8 +80,12 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
   return (
-    <section id="testimonials" className="wow animate__animated animate__zoomIn">
+    <section id="testimonials" className="wow animate__animated animate__zoomIn" style={{ backgroundImage: `url(${statsBg[0] && statsBg[0].banner_urls[0]})` }}>
       <div id="carouselExampleInterval" className="carousel slide text-center" data-bs-ride="carousel">
         <div className="">
           <Carousel autoplay>

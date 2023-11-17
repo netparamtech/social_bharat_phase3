@@ -62,10 +62,8 @@ function Contact() {
         setEmail('');
         setMobile('');
         setUserQuery('');
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       if (error.response && error.response.status === 400) {
         setMessage("");
         setErrors(error.response.data.errors);
@@ -77,6 +75,8 @@ function Contact() {
         setMessage(error.response.data.message);
         setAlertClass("alert-danger");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

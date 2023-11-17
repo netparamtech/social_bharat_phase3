@@ -17,7 +17,7 @@ const Setting = () => {
   const dispatch = useDispatch();
 
   const getUserProfile = async () => {
-    dispatch(setLoader(true));
+    dispatch(setLoader(false));
     try {
       const response = await getUserFullProfile();
       if (response && response.status === 200) {
@@ -38,13 +38,13 @@ const Setting = () => {
   }
 
   const handleToggleChangeForMobile = async () => {
-
-    dispatch(setLoader(true));
+    setIsMobileVisible(!isMobileVisible);
+    dispatch(setLoader(false));
     try {
       const response = await toggleMobile();
       if (response && response.status === 200) {
         setMessage(response.data.message);
-        getUserProfile();
+        
       }
     } catch (error) {
       //Unauthorized

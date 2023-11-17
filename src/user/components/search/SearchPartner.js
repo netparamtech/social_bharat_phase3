@@ -219,11 +219,9 @@ const SearchPartner = () => {
 
           setItems(uniqueItems);
         }
-        dispatch(setLoader(false));
       }
       setIsLoading(false);
     } catch (error) {
-      dispatch(setLoader(false));
       setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -231,6 +229,8 @@ const SearchPartner = () => {
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

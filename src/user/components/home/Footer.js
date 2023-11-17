@@ -65,7 +65,7 @@ const Footer = (props) => {
 
   const handleFeedbackClick = (e) => {
     e.preventDefault();
-    isAuthenticUser?navigate('/user/rating'):navigate('/login');
+    isAuthenticUser ? navigate('/user/rating') : navigate('/login');
   }
 
 
@@ -236,31 +236,38 @@ const Footer = (props) => {
               <br />
               <div className="row">
                 <div className="col-1">
-                <i className="fa-solid fa-phone-volume text-primary"></i>
+                  <i className="fa-solid fa-phone-volume text-primary"></i>
                 </div>
                 <div className="col-10">
-                  +91-{data && data.phone1}
+
+                  <a className="text-dark" href={`tel:${data && data.phone1}`}>
+                    +91-{data && data.phone1}
+                  </a>
                 </div>
               </div>
               <div className="row">
                 <div className="col-1"></div>
                 <div className="col-10">
-                  +91-{data && data.phone2}
+                  <a className="text-dark" href={`tel:${data && data.phone2}`}>
+                    +91-{data && data.phone2}
+                  </a>
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-1">
-                <i className="fa-solid fa-envelope text-primary"></i>
+                  <i className="fa-solid fa-envelope text-primary"></i>
                 </div>
                 <div className="col-10">
-                  {data && data.email1}
+                  <a className="text-dark" href={`mailto:${data && data.email1}`}>{data && data.email1}</a>
                 </div>
               </div>
               <div className="row">
                 <div className="col-1"></div>
                 <div className="col-10">
-                  {data && data.email2 ? `${data.email2}` : ""}
+                  {data && data.email2 && (
+                    <a className="text-dark" href={`mailto:${data.email2}`}>{data.email2}</a>
+                  )}
                 </div>
               </div>
             </div>

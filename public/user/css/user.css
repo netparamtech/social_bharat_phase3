@@ -259,7 +259,7 @@ nav .container,
 /* Our partners */
 #partner {
   width: 100%px;
-  height: 70px;
+  height: 100px;
   /* height: 130px; */
   background-color: #ffffff;
   /* background-color: #e6dddd; */
@@ -271,6 +271,11 @@ nav .container,
 #partner img {
   width: 100px;
   border-radius: 10px;
+  height: 70px;
+}
+
+.community-name {
+  margin-top: 8px; /* Optional: add margin between image and name */
 }
 
 /* why-social-section */

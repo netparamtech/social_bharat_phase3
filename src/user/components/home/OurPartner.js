@@ -71,10 +71,11 @@ function OurPartner() {
                   (community) =>
                     community.thumbnail_image && (
                       <div className="icon-box d-inline-flex" key={community.id}>
-                        <a href={`/${community.name}`}>
+                        <a className="hover-pointer">
                           <img
                             src={community.thumbnail_image}
                             alt={community.name}
+                            onClick={() => navigate(`/${community.name}`)}
                           />
                         </a>
                       </div>

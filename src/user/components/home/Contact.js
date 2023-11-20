@@ -238,6 +238,7 @@ function Contact() {
                         </div>
                       )}
                       <h4 className="mb-4 ">Send message for enquiry</h4>
+                      <div>(All fields are required to fill.)</div>
                       <div className="form-group mb-4">
                         <input
                           type="text"

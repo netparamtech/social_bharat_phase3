@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   createTempUser,
-  fetchAllActiveCommunities,
+  fetchAllCommunities,
   fetchBannerWithPageAndSection,
 } from "../../services/userService";
 import RegisterWithOtp from "../otp/RegisterWithOtp";
@@ -48,9 +48,10 @@ const RegisterForm = () => {
   const fetchCommunities = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await fetchAllActiveCommunities();
+      const response = await fetchAllCommunities();
       if (response && response.status === 200) {
-        setCasts(response.data.data);
+        const requestedCasts = response.data.data.filter((item)=>item.status === 'Inactive');
+        setCasts(requestedCasts);
         setServerError('');
         dispatch(setLoader(false));
       }

@@ -295,7 +295,7 @@ const UpdateBusinessProfile = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">*Business Name</label>
+                      <label className="form-label">Business Name{" "}<span className="text-danger">*</span></label>
                       <input type="text"
                         name="businessName"
                         id="businessName"
@@ -320,7 +320,7 @@ const UpdateBusinessProfile = (props) => {
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
                     </div> */}
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">*Business Type</label>
+                      <label className="form-label">Business Type{" "}<span className="text-danger">*</span></label>
                       <Select
                         options={[
                           { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
@@ -341,13 +341,13 @@ const UpdateBusinessProfile = (props) => {
                         onChange={handleBusinessType}
                       />
 
-                      {errors.business_type && <span className='error'>{errors.business_type}</span>}
+                      {errors.business_category && <span className='error'>{errors.business_category}</span>}
                     </div>
                   </div>
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">*Street Address</label>
+                      <label className="form-label">Street Address{" "}<span className="text-danger">*</span></label>
                       <input type="text"
                         name="stressAddress"
                         id="stressAddress"
@@ -360,7 +360,7 @@ const UpdateBusinessProfile = (props) => {
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Country</label>
+                      <label className="form-label">Country{" "}<span className="text-danger">*</span></label>
 
                       <Select
                         options={[
@@ -378,7 +378,7 @@ const UpdateBusinessProfile = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">State</label>
+                      <label className="form-label">State{" "}<span className="text-danger">*</span></label>
 
                       <Select
                         options={states.map(state => ({ value: state.name, label: state.name }))}
@@ -389,7 +389,7 @@ const UpdateBusinessProfile = (props) => {
                       {errors.state && <span className='error'>{errors.state}</span>}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">City</label>
+                      <label className="form-label">City{" "}<span className="text-danger">*</span></label>
 
                       <Select
                         options={cities.map(city => ({ value: city.name, label: city.name }))}
@@ -402,7 +402,7 @@ const UpdateBusinessProfile = (props) => {
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">*Contact 1</label>
+                      <label className="form-label">Contact 1{" "}<span className="text-danger">*</span></label>
                       <input type="text"
                         name="contact1"
                         id="contact1"
@@ -495,7 +495,7 @@ const UpdateBusinessProfile = (props) => {
                   </div>
                   <div className='row'>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label htmlFor="status">Status</label>
+                      <label htmlFor="status">Status{" "}<span className="text-danger">*</span></label>
                       <select
                         className="form-control"
                         id="status"

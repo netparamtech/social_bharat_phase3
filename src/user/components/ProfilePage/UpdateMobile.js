@@ -65,7 +65,7 @@ const UpdateMobile = () => {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                 <div className="card-title">
-                  <h3 className="mb-3">Update Mobile</h3>
+                  <h3 className="mb-3">Update Mobile{" "}<span className="text-danger">*</span></h3>
                 </div>
                 {!isMobileValid && !isMobileValid ? (
                   <form

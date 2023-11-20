@@ -134,7 +134,7 @@ const UserProfileDropdown = () => {
         label: (
           <>
             <h6 className="dropdown-header d-flex align-items-center">
-              {/* {
+              {
                 community && community.thumbnail_image ? (
                   <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
                 ) : (
@@ -142,11 +142,11 @@ const UserProfileDropdown = () => {
                     <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
                   </div>
                 )
-              } */}
-
-              {
-                community && <span className="dropdown-user-details-name menu-font">{community.name || ""}</span>
               }
+
+              {/* {
+                community && <span className="dropdown-user-details-name menu-font">{community.name || ""}</span>
+              } */}
 
             </h6>
             <div className="dropdown-divider"></div>

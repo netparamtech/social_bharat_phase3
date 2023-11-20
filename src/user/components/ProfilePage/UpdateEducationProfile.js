@@ -169,7 +169,7 @@ const UpdateEducationProfile = (props) => {
                   <div className="card p-3">
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Degree</label>
+                        <label className="form-label">Degree{" "}<span className="text-danger">*</span></label>
                         <Select
                           id="degree"
                           className="form-control"
@@ -187,7 +187,7 @@ const UpdateEducationProfile = (props) => {
                         {/* {errors.degree_id && <span className='error'>{errors.degree_id}</span>} */}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Field Of Study</label>
+                        <label className="form-label">Field Of Study{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="university"
@@ -204,7 +204,7 @@ const UpdateEducationProfile = (props) => {
                     <div className="row">
                     
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">University/Institution</label>
+                        <label className="form-label">University/Institution{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="university"
@@ -217,7 +217,7 @@ const UpdateEducationProfile = (props) => {
                         {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Passing Year</label>
+                        <label className="form-label">Passing Year{" "}<span className="text-danger">*</span></label>
                         <select
                           name="year"
                           id="year"
@@ -236,7 +236,7 @@ const UpdateEducationProfile = (props) => {
                     <div className="row">
                      
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Score Type</label>
+                        <label className="form-label">Score Type{" "}<span className="text-danger">*</span></label>
                         <select className="form-select form-control" aria-label="Default select example"
                           onChange={handleScoreTypeChange}
                           value={scoreType}
@@ -248,7 +248,7 @@ const UpdateEducationProfile = (props) => {
                         {errors.score_type && <span className='error'>{errors.score_type}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Score</label>
+                        <label className="form-label">Score{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="Score"

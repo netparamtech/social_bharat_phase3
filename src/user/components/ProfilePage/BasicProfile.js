@@ -151,7 +151,7 @@ const BasicProfile = (props) => {
                   {(user && user.data && user.data.name) || "N/A"}
                 </p>
 
-                {/* {community && community.thumbnail_image ? (
+                {community && community.thumbnail_image ? (
                   <Image
                     className="img-fluid max-width-100  community-img"
                     src={
@@ -164,10 +164,10 @@ const BasicProfile = (props) => {
                   />
                 ) : (
                   <span>{community.name || "N/A"}</span>
-                )} */}
-                {
+                )}
+                {/* {
                   community && <span>{community.name || ""}</span>
-                }
+                } */}
               </div>
             </div>
           </div>

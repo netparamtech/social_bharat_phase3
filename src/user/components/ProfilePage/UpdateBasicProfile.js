@@ -450,7 +450,7 @@ const UpdateBasicProfile = () => {
                   <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                     <div className="row ">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                        <label className="form-label">Name</label>
+                        <label className="form-label">Name{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="name"
@@ -484,7 +484,7 @@ const UpdateBasicProfile = () => {
                     </div>
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Gender</label>
+                        <label className="form-label">Gender{" "}<span className="text-danger">*</span></label>
                         <select
                           className="form-select form-control"
                           aria-label="Default select example"
@@ -502,7 +502,7 @@ const UpdateBasicProfile = () => {
                       </div>
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Date of Birth</label>
+                        <label className="form-label">Date of Birth{" "}<span className="text-danger">*</span></label>
                         <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
                         {errors.dob && (
                           <span className="error">{errors.dob}</span>
@@ -512,7 +512,7 @@ const UpdateBasicProfile = () => {
                     </div>
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">State</label>
+                        <label className="form-label">State{" "}<span className="text-danger">*</span></label>
 
                         <Select
                           className=""
@@ -532,7 +532,7 @@ const UpdateBasicProfile = () => {
                       </div>
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">City</label>
+                        <label className="form-label">City{" "}<span className="text-danger">*</span></label>
 
                         <Select
                           options={cities.map((city) => ({
@@ -553,7 +553,7 @@ const UpdateBasicProfile = () => {
                     <div className="row">
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Highest Qualification</label>
+                        <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
                         <Select
                           id="qualification"
                           className="form-control"
@@ -570,7 +570,7 @@ const UpdateBasicProfile = () => {
                         />
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">What Is Your Job ?</label>
+                        <label className="form-label">What Is Your Job ?{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="occupation"
@@ -586,7 +586,7 @@ const UpdateBasicProfile = () => {
                     </div>
                     <div className="row">
                       <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
-                        <label className="form-label">Marital Status</label>
+                        <label className="form-label">Marital Status{" "}<span className="text-danger">*</span></label>
                         <Select
                           options={maritalStatusOptions}
                           value={maritalStatus}

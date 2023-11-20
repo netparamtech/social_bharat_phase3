@@ -98,7 +98,7 @@ const UpdateJobProfile = (props) => {
                 <form className="w-100 w-lg-75" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Company Name</label>
+                      <label className="form-label">Company Name{" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="companyName"
@@ -113,7 +113,7 @@ const UpdateJobProfile = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Designation</label>
+                      <label className="form-label">Designation{" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="designation"
@@ -131,7 +131,7 @@ const UpdateJobProfile = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Job Start Date</label>
+                      <label className="form-label">Job Start Date {" "}<span className="text-danger">*</span></label>
                       <input
                         type="date"
                         name="jobStartDate"
@@ -146,7 +146,7 @@ const UpdateJobProfile = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Job End Date</label>
+                      <label className="form-label">Job End Date {" "}<span className="text-danger">*</span></label>
                       <input
                         type="date"
                         name="jobEndDate"
@@ -164,7 +164,7 @@ const UpdateJobProfile = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Job Type</label>
+                      <label className="form-label">Job Type{" "}<span className="text-danger">*</span></label>
                       <select
                         className="form-select form-control"
                         aria-label="Default select example"

@@ -17,7 +17,7 @@ const UpdateContact = (props) => {
   const [countryID, setCountryID] = useState('');
 
   const [errors, setErrors] = useState('');
-  const [serverError,setServerError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -129,8 +129,8 @@ const UpdateContact = (props) => {
       }
     } catch (error) {
       dispatch(setLoader(false));
-       //Unauthorized
-       if (error.response && error.response.status === 401) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
         navigate('/login');
       }
       //Internal Server Error
@@ -181,7 +181,7 @@ const UpdateContact = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Address Type</label>
+                      <label className="form-label">Address Type{" "}<span className="text-danger">*</span></label>
                       <select className="form-select form-control" aria-label="Default select example" value={addressType} onChange={handleAddressTypeChange}>
                         <option value="">---Address Type---</option>
                         <option value="PERMANENT">PERMANENT</option>
@@ -189,25 +189,9 @@ const UpdateContact = (props) => {
                       </select>
                       {errors.address_type && <span className='error'>{errors.address_type}</span>}
                     </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Address Line</label>
-                      <input
-                        type="text"
-                        name="addressLine"
-                        id="addressLine"
-                        placeholder="Enter Address Line"
-                        className="form-control"
-                        defaultValue={addressLine}
-                        onChange={handleAddressLineChange}
-                        autoFocus
-                      />
-                      {errors.address_line && <span className='error'>{errors.address_line}</span>}
-                    </div>
-                  </div>
 
-                  <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Country</label>
+                      <label className="form-label">Country {" "}<span className="text-danger">*</span></label>
 
                       <Select
                         options={[
@@ -222,8 +206,12 @@ const UpdateContact = (props) => {
                       {errors.country && <span className='error'>{errors.country}</span>}
                     </div>
 
+                  </div>
+
+                  <div className="row">
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">State</label>
+                      <label className="form-label">State{" "}<span className="text-danger">*</span></label>
 
                       <Select
                         options={states.map(state => ({ value: state.name, label: state.name }))}
@@ -233,18 +221,33 @@ const UpdateContact = (props) => {
 
                       {errors.state && <span className='error'>{errors.state}</span>}
                     </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">City{" "}<span className="text-danger">*</span></label>
+
+                      <Select
+                        options={cities.map(city => ({ value: city.name, label: city.name }))}
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                      />
+                      {errors.city && <span className='error'>{errors.city}</span>}
+
+                    </div>
                   </div>
 
+
                   <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label className="form-label">City</label>
-
-                    <Select
-                      options={cities.map(city => ({ value: city.name, label: city.name }))}
-                      value={selectedCity}
-                      onChange={handleCityChange}
+                    <label className="form-label">Address Line{" "}<span className="text-danger">*</span></label>
+                    <textarea
+                      type="text"
+                      name="addressLine"
+                      id="addressLine"
+                      placeholder="Enter Address Line"
+                      className="form-control"
+                      defaultValue={addressLine}
+                      onChange={handleAddressLineChange}
+                      autoFocus
                     />
-                    {errors.city && <span className='error'>{errors.city}</span>}
-
+                    {errors.address_line && <span className='error'>{errors.address_line}</span>}
                   </div>
 
                   <div className="row mt-4">

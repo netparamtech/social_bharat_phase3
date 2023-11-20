@@ -302,6 +302,15 @@ export const deleteMatrimonial = async () => {
 
 //fetch all community
 
+export const fetchAllCommunities = async () => {
+    try {
+        const response = await apiConfig.get('/communities/2');  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+//fetch all active communities
 export const fetchAllActiveCommunities = async () => {
     try {
         const response = await apiConfig.get('/communities/1');  

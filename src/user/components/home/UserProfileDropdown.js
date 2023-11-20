@@ -1,3 +1,5 @@
+import '../../css/bootstrap.min.css';
+import '../../css/style.css';
 import React, { useEffect, useState } from 'react';
 import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS

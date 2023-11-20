@@ -33,8 +33,8 @@ const UpdateMatrimonial = (props) => {
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
   const [skinTone, setSkinTone] = useState("");
-  const [heightFeet, setHeightFeet] = useState("");
-  const [heightInch, setHeightInch] = useState("");
+  const [heightFeet, setHeightFeet] = useState(0);
+  const [heightInch, setHeightInch] = useState(0);
   const [weight, setWeight] = useState("");
   const [cast, setCast] = useState("");
   const [gotraSelf, setGotraSelf] = useState("");
@@ -53,7 +53,11 @@ const UpdateMatrimonial = (props) => {
   const [showBrotherDetail, setShowBrotherDetail] = useState(false);
   const [showSisterDetail, setShowSisterDetail] = useState(false);
 
+  const [isBrotherDetails,setIsBrotherDetails] = useState(true);
+  const [isSisterDetails,setIsSisterDetails] = useState(true)
+
   const packageOptions = [
+    { value: 'none', label: 'none' },
     { value: '0-2lakh', label: '0 - 2 lakh' },
     { value: '2-5lakh', label: '2 - 5 lakh' },
     { value: '5-7lakh', label: '5 - 7 lakh' },
@@ -294,8 +298,8 @@ const UpdateMatrimonial = (props) => {
       setFatherName(userMatrimonial.father_name || "N/A");
       setMotherName(userMatrimonial.mother_name || "N/A");
       setSkinTone(userMatrimonial.skin_tone || "");
-      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || "N/A");
-      setHeightInch(getInches(userMatrimonial.height_in_feet) || "N/A");
+      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
+      setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
       setWeight(userMatrimonial.weight_in_kg || "N/A");
       setCast(userMatrimonial.cast || "N/A");
       setGotraSelf(userMatrimonial.gotra || "N/A");
@@ -330,12 +334,17 @@ const UpdateMatrimonial = (props) => {
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
 
       if (userMatrimonial.brothers_details) {
+        
         setBrothersDetails(userMatrimonial.brothers_details);
         setShowBrotherDetail(true);
+      } else {
+        setIsBrotherDetails(false);
       }
       if (userMatrimonial.sisters_details) {
         setSistersDetails(userMatrimonial.sisters_details);
         setShowSisterDetail(true);
+      }else{
+        setIsSisterDetails(false);
       }
 
       if (userMatrimonial.profile_created_for !== null) {
@@ -375,7 +384,7 @@ const UpdateMatrimonial = (props) => {
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                   <div className="row">
                     <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
-                      <label className="form-label">For Whom, You are creating profile</label>
+                      <label className="form-label">For Whom, You are creating profile {" "}<span className="text-danger">*</span></label>
                       <Select
                         value={updateFor}
                         onChange={handleUpdateForChange}
@@ -387,7 +396,7 @@ const UpdateMatrimonial = (props) => {
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Father Name</label>
+                      <label className="form-label">Father Name {" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="fatherName"
@@ -403,7 +412,7 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Mother Name</label>
+                      <label className="form-label">Mother Name {" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="motherName"
@@ -422,7 +431,7 @@ const UpdateMatrimonial = (props) => {
                   <div className="row">
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Gender</label>
+                      <label className="form-label">Gender {" "}<span className="text-danger">*</span></label>
                       <select
                         className="form-select form-control"
                         aria-label="Default select example"
@@ -439,7 +448,7 @@ const UpdateMatrimonial = (props) => {
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth</label>
+                      <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
                       <input
                         type="date"
                         name="jobStartDate"
@@ -459,7 +468,7 @@ const UpdateMatrimonial = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Cast</label>
+                      <label className="form-label">Cast {" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="cast"
@@ -567,10 +576,10 @@ const UpdateMatrimonial = (props) => {
                     </div>
 
                     <div className="row">
-                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
+                      <div className={`mb-3 ${isBrotherDetails?'col-lg-6':'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
                         <label className="form-label">Brothers Details</label>
 
-                        <input
+                        <textarea
                           type="area"
                           placeholder="Enter Your Brother(s) details"
                           className="form-control mt-2"
@@ -582,9 +591,9 @@ const UpdateMatrimonial = (props) => {
                         )}
                       </div>
 
-                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
+                      <div className={`mb-3 ${isSisterDetails?'col-lg-6':'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
                         <label className="form-label">Sisters Details</label>
-                        <input
+                        <textarea
                           type="area"
                           placeholder="Enter Your Sister(s) details"
                           className="form-control mt-2"
@@ -628,11 +637,12 @@ const UpdateMatrimonial = (props) => {
                             id=""
                             min="1"
                             max="15"
-                            defaultValue={heightFeet}
+                            value={heightFeet}
                             onChange={(e) =>
                               setHeightFeet(parseInt(e.target.value, 10))
                             }
                           />
+                          
                           <span>{heightFeet}</span>{" "}
                           {/* Display the current value */}
                         </div>
@@ -647,9 +657,9 @@ const UpdateMatrimonial = (props) => {
                             type="range"
                             name=""
                             id=""
-                            min="1"
+                            min="0"
                             max="12"
-                            defaultValue={heightInch}
+                            value={heightInch}
                             onChange={(e) =>
                               setHeightInch(parseInt(e.target.value, 10))
                             }
@@ -668,7 +678,7 @@ const UpdateMatrimonial = (props) => {
 
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Proposal Photo </label>
+                      <label className="form-label">Proposal Photo {" "}<span className="text-danger">*</span></label>
                       <input
                         type="file"
                         className="form-control"
@@ -699,11 +709,11 @@ const UpdateMatrimonial = (props) => {
                     </div>
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Biodata </label>
+                      <label className="form-label">Biodata {" "}<span className="text-danger">*</span></label>
                       <input
                         type="file"
                         className="form-control"
-                        accept=".pdf ,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        accept=".pdf"
                         id="biodata"
                         onChange={handleBiodataFileChange}
                         multiple

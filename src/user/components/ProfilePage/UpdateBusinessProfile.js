@@ -117,6 +117,10 @@ const UpdateBusinessProfile = (props) => {
     setBusinessCategory(selectedOption);
   };
 
+  const handleBusinessType = (selectedOption) => {
+    SetBusinessType(selectedOption);
+  }
+
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value === "Active" ? "Active" : "Inactive");
@@ -128,7 +132,7 @@ const UpdateBusinessProfile = (props) => {
     dispatch(setLoader(true));
     const businessData = {
       business_name: businessName,
-      business_category: businessType,
+      business_category: businessType.label,
       street_address: streetAddress,
       country: selectedCountry.label,
       state: selectedState.label,
@@ -232,7 +236,7 @@ const UpdateBusinessProfile = (props) => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
       setBusinessName(businessDetails.business_name || '');
-      SetBusinessType(businessDetails.business_category || '')
+      SetBusinessType({ value: businessDetails.business_category, label: businessDetails.business_category })
       setStreetAddress(businessDetails.street_address || '');
       setCountryID(businessDetails.country === 'India' ? 101 : ''); // Set the countryID accordingly
       setSelectedCountry({ value: businessDetails.country, label: businessDetails.country }); // Set the selected country as an object
@@ -317,15 +321,26 @@ const UpdateBusinessProfile = (props) => {
                     </div> */}
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Type</label>
-                      <input type="text"
-                        name="businessName"
-                        id="businessName"
-                        placeholder="Enter Business Name"
-                        className="form-control"
-                        autoFocus
-                        defaultValue={businessType}
-                        onChange={(e) => SetBusinessType(e.target.value)}
+                      <Select
+                        options={[
+                          { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
+                          { value: 'Sales', label: 'Sales' },
+                          { value: 'Marketing', label: 'Marketing' },
+                          { value: 'Manufacturing', label: 'Manufacturing' },
+                          { value: 'Service', label: 'Service' },
+                          { value: 'Finance', label: 'Finance' },
+                          { value: 'Real Estate', label: 'Real Estate' },
+                          { value: 'Healthcare', label: 'Healthcare' },
+                          { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
+                          { value: 'Hospitality', label: 'Hospitality' },
+                          { value: 'Education', label: 'Education' },
+                          { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+                          // Add other country options here
+                        ]}
+                        value={businessType}
+                        onChange={handleBusinessType}
                       />
+
                       {errors.business_type && <span className='error'>{errors.business_type}</span>}
                     </div>
                   </div>

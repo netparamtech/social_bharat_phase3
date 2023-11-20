@@ -1,3 +1,5 @@
+import '../../css/bootstrap.min.css';
+import '../../css/style.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
@@ -108,7 +110,7 @@ const NavbarTransparent = (props) => {
   }, []);
 
   return (
-    <nav className="navbar navbar-transparent  navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-transparent  navbar-expand-lg">
       <div className="container">
         <a className="navbar-brand" onClick={handleHomeClicked}>
           <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />

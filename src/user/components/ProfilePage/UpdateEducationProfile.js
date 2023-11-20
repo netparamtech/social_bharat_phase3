@@ -192,7 +192,7 @@ const UpdateEducationProfile = (props) => {
                           type="text"
                           name="university"
                           id="university"
-                          placeholder="Enter university name"
+                          placeholder="Enter Study Field"
                           className="form-control"
                           defaultValue={studyField}
                           onChange={handleStudyFieldChange}

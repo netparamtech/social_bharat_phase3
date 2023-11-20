@@ -57,15 +57,17 @@ const EducationInfo = (props) => {
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
+          <div className="card-header"> <h5 className="mb-3 text-primary">Education Info</h5></div>
+
           <div className="card-body">
             {serverError && <span className="error">{serverError}</span>}
-            <h5 className="fw-3 mb-3">Education Info</h5>
             <div className="row">
               {educationDetails && educationDetails.length > 0 ? (
                 educationDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow mt-2 mb-2">
-                      <div className="edit-icon">
+                     <div className="">
+                     <div className="edit-icon">
                         <a
                          className="hover-pointer"
                           onClick={() =>
@@ -88,6 +90,7 @@ const EducationInfo = (props) => {
                           ></i>
                         </a>
                       </div>
+                     </div>
                       <div className="card-body">
                         <div className="w-100 w-lg-75 wow animate__animated animate__zoomIn">
                          

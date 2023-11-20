@@ -236,37 +236,47 @@ const Footer = (props) => {
               <br />
               <div className="row">
                 <div className="col-1">
-                  <i className="fa-solid fa-phone-volume text-primary"></i>
+                  <a className="text-dark text-line-none" href={`tel:${data && data.phone1}`}>
+                    <i className="fa-solid fa-phone-volume text-primary"></i>
+                  </a>
                 </div>
                 <div className="col-10">
 
-                  <a className="text-dark" href={`tel:${data && data.phone1}`}>
-                    +91-{data && data.phone1}
-                  </a>
+                  +91-{data && data.phone1}
                 </div>
               </div>
               <div className="row">
-                <div className="col-1"></div>
-                <div className="col-10">
-                  <a className="text-dark" href={`tel:${data && data.phone2}`}>
-                    +91-{data && data.phone2}
+                <div className="col-1">
+                  <a className="text-dark text-line-none" href={`tel:${data && data.phone2}`}>
+                    <i className="fa-solid fa-phone-volume text-primary"></i>
                   </a>
+
+                </div>
+                <div className="col-10">
+                  +91-{data && data.phone2}
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-1">
-                  <i className="fa-solid fa-envelope text-primary"></i>
+                  <a className="text-dark text-line-none" href={`mailto:${data && data.email1}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
+
                 </div>
                 <div className="col-10">
-                  <a className="text-dark" href={`mailto:${data && data.email1}`}>{data && data.email1}</a>
+                  {data && data.email1}
                 </div>
               </div>
               <div className="row">
-                <div className="col-1"></div>
+                <div className="col-1">
+                  {
+                    data && data.email2 && (
+                      <a className="text-dark text-line-none" href={`mailto:${data && data.email2}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
+                    )
+                  }
+                </div>
                 <div className="col-10">
                   {data && data.email2 && (
-                    <a className="text-dark" href={`mailto:${data.email2}`}>{data.email2}</a>
+                    data.email2
                   )}
                 </div>
               </div>

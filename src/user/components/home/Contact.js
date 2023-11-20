@@ -3,6 +3,7 @@ import { enquiry, fetchAllSiteSettings } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { Button, Modal } from "antd";
 
 function Contact() {
   const user = useSelector((state) => state.userAuth);
@@ -80,6 +81,17 @@ function Contact() {
     }
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     fetchSettings();
   }, []);
@@ -134,18 +146,30 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
 
-                              <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
+
+                              <Button type="" onClick={showModal}>
+                                <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
+                              </Button>
                               <h4 className="ms-3">Call Us</h4>
+                              <Modal title="Select One" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                <div>
+                                  <span className="text-muted">
+                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone1}`}>
+                                      +91-{settings && settings.phone1}
+                                    </a>
+                                    <br />
+                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone2}`}>
+                                      +91-{settings && settings.phone2}
+                                    </a>
+                                  </span>
+                                </div>
+                              </Modal>
                             </div>
                             <div>
-                              <span className="text-muted">
-                                <a className="text-dark" href={`tel:${settings && settings.phone1}`}>
-                                  +91-{settings && settings.phone1}
-                                </a>
+                              <span className="text-muted hover-pointer" onClick={showModal}>
+                                +91-{settings && settings.phone1}
                                 <br />
-                                <a className="text-dark" href={`tel:${settings && settings.phone2}`}>
-                                  +91-{settings && settings.phone2}
-                                </a>
+                                +91-{settings && settings.phone2}
                               </span>
                             </div>
                           </div>
@@ -161,16 +185,17 @@ function Contact() {
                             <div>
                               <span className="text-muted">
                                 {" "}
-                                <a className="text-dark" href={`mailto:${settings && settings.email1}`}>{settings && settings.email1}</a>
+                                <a className="text-dark text-line-none" href={`mailto:${settings && settings.email1}`}>{settings && settings.email1}</a>
                                 <br />
                                 {settings && settings.email2 && (
-                                  <a className="text-dark" href={`mailto:${settings.email2}`}>{settings.email2}</a>
+                                  <a className="text-dark text-line-none" href={`mailto:${settings.email2}`}>{settings.email2}</a>
                                 )}
                               </span>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="mb-3 user-auth-panel-info  col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">

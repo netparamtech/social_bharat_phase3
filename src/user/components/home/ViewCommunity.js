@@ -23,8 +23,8 @@ const ViewCommunity = () => {
       <div className="container" id="community-text">
         <div className="row">
           <div className="col-lg-12">
-            <div className="mb-5">
-              <img src={data.banner_image} className="img-fluid rounded-2" alt="Banner" />
+            <div className="mb-5 community-img">
+              <img src={data.banner_image} className=" img-fluid rounded-2" alt="Banner" />
             </div>
             <div className="card shadow mb-5 p-5">
             {data && (

@@ -1,5 +1,3 @@
-import '../../css/bootstrap.min.css';
-import '../../css/style.css';
 import React, { useEffect, useState } from "react";
 import { Dropdown, Select } from "antd";
 import { useNavigate } from "react-router-dom";

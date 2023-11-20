@@ -1,5 +1,3 @@
-import '../../css/bootstrap.min.css';
-import '../../css/style.css';
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

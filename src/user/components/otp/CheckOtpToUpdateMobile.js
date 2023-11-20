@@ -40,6 +40,7 @@ const CheckOtpToUpdateMobile = (props) => {
   const handleResendOTP = () => {
     setIsTimeExpired(false);
     setRemainingTime(120);
+    setOtp('');
   };
 
   const handleVarifiedClicked = async (event) => {

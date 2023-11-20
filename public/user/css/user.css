@@ -1302,6 +1302,11 @@ input[type="number"] {
   line-height: 0.7cm;
 }
 
+#community-text .community-img img{
+  max-height: 500px;
+  width: 100%;
+}
+
 /* setting-page */
 #setting-page label {
   font-size: 12px !important;

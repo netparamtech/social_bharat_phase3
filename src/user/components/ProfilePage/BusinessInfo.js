@@ -26,14 +26,14 @@ const BusinessInfo = (props) => {
         setBusinessDetails((prevDetails) =>
           prevDetails.filter((detail) => detail.id !== id)
         );
-        setServerError('');
+        setServerError("");
         dispatch(setLoader(false));
       }
     } catch (error) {
       dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
@@ -57,21 +57,41 @@ const BusinessInfo = (props) => {
       <div className="container">
         <div className="card shadow ">
           <div className="edit-icon add-more-detail">
-            <a className="hover-pointer" onClick={()=>navigate('/user/update-business-profile')} title="Add More Detail">
+            <a
+              className="hover-pointer"
+              onClick={() => navigate("/user/update-business-profile")}
+              title="Add More Detail"
+            >
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
-          {serverError && <span className='error'>{serverError}</span>}
-          <div className='card-header'> <h5 className="fw-3 mb-3 text-primary">Business Info</h5></div>
+          {serverError && <span className="error">{serverError}</span>}
+          <div className="card-header">
+            {" "}
+            <h5 className="fw-3 mb-3 text-primary">Business Info</h5>
+          </div>
           <div className="card-body">
             <div className="row">
               {businessDetails && businessDetails.length > 0 ? (
-                <>                  {/* Render all fields inside a collapse div */}
+                <>
+                  {" "}
+                  {/* Render all fields inside a collapse div */}
                   {businessDetails.map((item, value) => (
-                    <div className="col-md-6 wow animate__animated animate__zoomIn" key={value}>
+                    <div
+                      className="col-md-6 wow animate__animated animate__zoomIn"
+                      key={value}
+                    >
                       <div className="card shadow mb-2">
                         <div className="edit-icon ">
-                          <a className="hover-pointer" onClick={()=>navigate(`/user/update-business-profile/${item.id}`)} title="Edit">
+                          <a
+                            className="hover-pointer"
+                            onClick={() =>
+                              navigate(
+                                `/user/update-business-profile/${item.id}`
+                              )
+                            }
+                            title="Edit"
+                          >
                             <i className="fas fa-pencil-alt"></i>
                           </a>
                         </div>
@@ -87,30 +107,29 @@ const BusinessInfo = (props) => {
                           </a>
                         </div>
 
-                        
-                          <table className="table table-striped">
-                            <tbody>
-                              <tr>
-                                <td>Business Name</td>
-                                <td className="text-muted">
-                                  {item.business_name}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Business Category</td>
-                                <td className="text-muted">
-                                  {item.business_category}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Street Address</td>
-                                <td className="text-muted">
-                                  {item.street_address}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        
+                        <table className="table table-striped">
+                          <tbody>
+                            <tr>
+                              <td>Business Name</td>
+                              <td className="text-muted">
+                                {item.business_name}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Business Category</td>
+                              <td className="text-muted">
+                                {item.business_category}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Street Address</td>
+                              <td className="text-muted">
+                                {item.street_address}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
                         <div
                           className={`pt-0 collapse${
                             collapsedItems[value] ? "" : " show"
@@ -193,13 +212,12 @@ const BusinessInfo = (props) => {
                       </div>
                     </div>
                   ))}
-                  </>
-                
+                </>
               ) : (
                 <div className="add-more-info ">
                   <a
                     className="btn btn-secondary hover-pointer"
-                    onClick={()=>navigate("/user/update-business-profile")}
+                    onClick={() => navigate("/user/update-business-profile")}
                   >
                     Add Business Info
                   </a>

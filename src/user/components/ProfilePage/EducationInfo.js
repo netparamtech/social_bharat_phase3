@@ -97,7 +97,7 @@ const EducationInfo = (props) => {
                           <div className="mb-2 row">
                             <label
                               htmlFor=""
-                              className="col-sm-6 d-inline-flex"
+                              className="col-sm-4 d-inline-flex"
                             >
                               Degree
                             </label>
@@ -108,7 +108,7 @@ const EducationInfo = (props) => {
                             </div>
                           </div>
                           <div className="mb-2 row">
-                            <label className="col-sm-6">Study Field</label>
+                            <label className="col-sm-4">Study Field</label>
                             <div className="col-sm-6">
                               <span className="text-muted">
                                 {item.field_of_study}
@@ -116,7 +116,7 @@ const EducationInfo = (props) => {
                             </div>
                           </div>
                           <div className="mb-2 row">
-                            <label className="col-sm-6">University</label>
+                            <label className="col-sm-4">University</label>
                             <div className="col-sm-6">
                               <span className="text-muted">
                                 {item.institution_name}
@@ -124,7 +124,7 @@ const EducationInfo = (props) => {
                             </div>
                           </div>
                           <div className="mb-2 row">
-                            <label className="col-sm-6">Passing Year</label>
+                            <label className="col-sm-4">Passing Year</label>
                             <div className="col-sm-6">
                               <span className="text-muted">
                                 {item.passing_year}
@@ -132,7 +132,7 @@ const EducationInfo = (props) => {
                             </div>
                           </div>
                           <div className="mb-2 row">
-                            <label className="col-sm-6">Score Type</label>
+                            <label className="col-sm-4">Score Type</label>
                             <div className="col-sm-6">
                               <span className="text-muted">
                                 {item.score_type}
@@ -140,7 +140,7 @@ const EducationInfo = (props) => {
                             </div>
                           </div>
                           <div className="mb-2 row">
-                            <label className="col-sm-6">Score</label>
+                            <label className="col-sm-4">Score</label>
                             <div className="col-sm-6">
                               <span className="text-muted">{item.score}</span>
                             </div>

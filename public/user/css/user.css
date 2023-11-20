@@ -1510,7 +1510,7 @@ input[type="number"] {
 
 @media (min-width: 768px) {
   .truncate-text {
-    max-width: 400px;
+    max-width: 350px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

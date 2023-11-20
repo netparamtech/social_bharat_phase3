@@ -182,10 +182,10 @@ const BasicProfile = (props) => {
               <div className="card-body ">
                 <div className="w-100 w-lg-75">
                   <div className="mb-2 row">
-                    <label htmlFor="" className="col-sm-3">
+                    <label htmlFor="" className="col-4">
                       Name
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-8">
                       <span className="text-muted">
                         {(user && user.data && user.data.name) || "N/A"}
                       </span>
@@ -193,8 +193,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Email </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Email </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {(user && user.data && user.data.email) || "N/A"}
                       </span>
@@ -202,8 +202,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Date Of Birth </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Date Of Birth </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {formatDate(user && user.data && user.data.dob) ||
                           "N/A"}
@@ -212,8 +212,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Highest Qualification </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Highest Qualification </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {user && user.data && user.data.highest_qualification ||
                           "N/A"}
@@ -222,8 +222,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Occupation </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Occupation </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {user && user.data && user.data.occupation ||
                           "N/A"}
@@ -232,8 +232,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Marital Status </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Marital Status </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {(user && user.data && user.data.marital_status) ||
                           "N/A"}
@@ -242,8 +242,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3 ">Gender</label>
-                    <div className="col-sm-8">
+                    <label className="col-4 ">Gender</label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {(user && user.data && user.data.gender) || "N/A"}
                       </span>
@@ -251,8 +251,8 @@ const BasicProfile = (props) => {
                   </div>
 
                   <div className="mb-2 row">
-                    <label className="col-sm-3">Community </label>
-                    <div className="col-sm-8">
+                    <label className="col-4">Community </label>
+                    <div className="col-8">
                       <span className="text-muted">
                         {(user &&
                           user.data &&
@@ -266,8 +266,8 @@ const BasicProfile = (props) => {
                   <div className="p-0 m-0">
                     <div className="card-footer p-0 m-0">
                       <div className="py-1 row">
-                        <label className="col-sm-3">Mobile No</label>
-                        <div className="col-sm-8">
+                        <label className="col-4">Mobile No</label>
+                        <div className="col-8">
                           <span className="text-muted">
                             {(loggedUser && loggedUser.user && loggedUser.user.mobile) || "N/A"}
                           </span>

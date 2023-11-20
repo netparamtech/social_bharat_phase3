@@ -18,7 +18,7 @@ const SearchPeople = () => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/de-default-1.jpeg"
   );
@@ -244,24 +244,24 @@ const SearchPeople = () => {
       setItems([]);
       setIsRefressed(true);
     }
-  }
+  };
 
   const handleRefress = () => {
     if (isRefressed) {
       setItems(copyItems);
-      setSearchText('');
+      setSearchText("");
       setIsFilter(false);
       setSelectedState(null);
       setSelectedCity(null);
     }
-  }
+  };
 
   const handleScrollToUp = () => {
     window.scrollTo(0, 0);
-  }
+  };
 
   useEffect(() => {
-    handleRefress()
+    handleRefress();
     setState(
       user && user.user && user.user.native_place_state
         ? user.user.native_place_state
@@ -272,7 +272,7 @@ const SearchPeople = () => {
         ? user.user.native_place_city
         : ""
     );
-    search('', 1, 20);
+    search("", 1, 20);
   }, [user, isRefressed]);
 
   useEffect(() => {
@@ -357,40 +357,40 @@ const SearchPeople = () => {
                   <i className="fas fa-search"></i>
                 </div>
                 <div className="">
-                <div className={`row ${isFilter ? "" : "d-none"}`}>
-                  <div className="col-5 mb-3 ">
-                    <Select
-                      options={states.map((state) => ({
-                        value: state.name,
-                        label: state.name,
-                      }))}
-                      value={selectedState}
-                      placeholder="State"
-                      onChange={handleStateChange}
-                    />
-                  </div>
-                  <div className="col-5 mb-3 ps-0">
-                    <Select
-                      options={cities.map((city) => ({
-                        value: city.name,
-                        label: city.name,
-                      }))}
-                      value={selectedCity}
-                      placeholder="City"
-                      onChange={handleCityChange}
-                    />
-                  </div>
-                  <div className="col-2 mb-3 ps-0">
-                    <a
-                      className="btn btn-set w-100  btn-sm  btn-primary"
-                      onClick={handleGoButtonClick}
-                    >
-                      Go
-                    </a>
+                  <div className={`row ${isFilter ? "" : "d-none"}`}>
+                    <div className="col-5 mb-3 ">
+                      <Select
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
+                        value={selectedState}
+                        placeholder="State"
+                        onChange={handleStateChange}
+                      />
+                    </div>
+                    <div className="col-5 mb-3 ps-0">
+                      <Select
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
+                        value={selectedCity}
+                        placeholder="City"
+                        onChange={handleCityChange}
+                      />
+                    </div>
+                    <div className="col-2 mb-3 ps-0">
+                      <a
+                        className="btn btn-set w-100  btn-sm  btn-primary"
+                        onClick={handleGoButtonClick}
+                      >
+                        Go
+                      </a>
+                    </div>
                   </div>
                 </div>
-                </div>
-                
+
                 <div className="row">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
@@ -422,9 +422,11 @@ const SearchPeople = () => {
                                         className="text-start ms-3 mt-2 hover-pointer"
                                         onClick={() => handleChatclick(item)}
                                       >
-                                        <img src="/user/images/chat-icon.jpg" width="40px" />
+                                        <img
+                                          src="/user/images/chat-icon.jpg"
+                                          width="40px"
+                                        />
                                       </div>
-
                                     </div>
                                     <div className="col-5 user-detail">
                                       <h6>{item.name}</h6>
@@ -434,7 +436,7 @@ const SearchPeople = () => {
                                           ? item.occupation
                                           : "N/A"}
                                       </p>
-                                      
+
                                       <p>
                                         Education-
                                         {item.highest_qualification
@@ -449,7 +451,6 @@ const SearchPeople = () => {
                                           : ""}
                                       </p>
                                     </div>
-
                                   </div>
                                 </div>
                               </div>
@@ -465,7 +466,7 @@ const SearchPeople = () => {
           </div>
         </div>
       )}
-      <div className={`scroll-to-up ${isChat ? 'd-none' : ''}`} >
+      <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
         <a
           className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
           id=""

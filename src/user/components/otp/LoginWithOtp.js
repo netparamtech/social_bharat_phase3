@@ -48,6 +48,7 @@ const LoginWithOtp = (props) => {
   const handleResendOTP = () => {
     setIsTimeExpired(false);
     setRemainingTime(120);
+    setOtp('');
   };
 
   const handleVarifiedClicked = async (event) => {
@@ -91,6 +92,7 @@ const LoginWithOtp = (props) => {
 
   const resendOTP = async () => {
     setErrors("");
+   
     try {
       const response = await resendOtp(mobile);
 

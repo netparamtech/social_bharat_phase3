@@ -1,9 +1,7 @@
-import '../../css/bootstrap.min.css';
-import '../../css/style.css';
 import React, { useEffect, useState } from 'react';
 import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneCommunity, userLogout } from '../../services/userService';
 import { setLoader } from '../../actions/loaderAction';
@@ -12,8 +10,10 @@ import { setLoader } from '../../actions/loaderAction';
 
 const UserProfileDropdown = () => {
 
+  const {id} = useParams();
+
   const user = useSelector((state) => state.userAuth);
-  const [id, setId] = useState(user && user.user && user.user.id);
+  const [userId, setUserId] = useState(user && user.user && user.user.id);
   const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
   const isPasswordSet = user && user.user && user.user.is_password_set;
   const [community, setCommunity] = useState({});
@@ -33,7 +33,7 @@ const UserProfileDropdown = () => {
   useEffect(() => {
     if (user && user.user) {
       const { id, name, email, photo, is_password_set } = user.user;
-      setId(id);
+      setUserId(id);
       setUserName(name || '');
       setUserEmail(email || '');
       setUserProfile(photo || '');
@@ -90,7 +90,7 @@ const UserProfileDropdown = () => {
   const handleLogOutClick = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await userLogout(id);
+      const response = await userLogout(userId);
       if (response.status === 200) {
         navigate('/login');
       }
@@ -134,7 +134,7 @@ const UserProfileDropdown = () => {
         label: (
           <>
             <h6 className="dropdown-header d-flex align-items-center">
-              {
+              {/* {
                 community && community.thumbnail_image ? (
                   <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
                 ) : (
@@ -142,6 +142,10 @@ const UserProfileDropdown = () => {
                     <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
                   </div>
                 )
+              } */}
+
+              {
+                community && <span className="dropdown-user-details-name menu-font">{community.name || ""}</span>
               }
 
             </h6>
@@ -152,7 +156,12 @@ const UserProfileDropdown = () => {
       {
         key: '3',
         label: (
-          <span onClick={handleProfileClick} className={`menu-font ${window.location.pathname === "/profile" ? "custom-active-user" : "inactive"
+          <span onClick={handleProfileClick} className={`menu-font ${window.location.pathname === "/profile" || window.location.pathname === "/user/update-basic-profile" ||
+            window.location.pathname === "/update-mobile" || window.location.pathname === "/user/update-matrimonial-profile" ||
+            window.location.pathname === "/user/update-education-profile" || window.location.pathname === "/user/update-business-profile" || window.location.pathname === `/user/update-business-profile/${id}`||
+            window.location.pathname === "/user/update-contact" ||  window.location.pathname === `/user/update-contact/${id}` ||  window.location.pathname === "/user/update-job-profile"
+            || window.location.pathname === `/user/update-job-profile/${id}` || window.location.pathname === `/user/update-contact/:id` ||
+            window.location.pathname === `/user/update-education-profile/${id}` ? "custom-active-user" : "inactive"
             }`}>
             <i className="fas fa-user-alt m-2"></i> Profile
           </span>
@@ -172,7 +181,8 @@ const UserProfileDropdown = () => {
 
         label: (
           <>
-            <span onClick={handleSettingClick} className='menu-font'>
+            <span onClick={handleSettingClick} className={`menu-font ${window.location.pathname === "/user/setting" ? "custom-active-user" : "inactive"
+            }`}>
               <i className="fas fa-cog m-2"></i> Settings
             </span>
 

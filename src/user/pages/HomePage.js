@@ -1,4 +1,3 @@
-import '../css/bootstrap.min.css';
 import { useEffect, useState } from "react";
 import Banner from "../components/home/Banner";
 import OurPartner from "../components/home/OurPartner";

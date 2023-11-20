@@ -1,5 +1,3 @@
-import '../../css/bootstrap.min.css';
-import '../../css/style.css';
 import { useParams } from "react-router-dom";
 import { fetchCommunityWithNAME } from "../../services/userService";
 import { useEffect, useState } from "react";

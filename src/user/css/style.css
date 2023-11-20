@@ -175,7 +175,7 @@ nav .nav-item .btn {
 
 /* banner on trans new */
 .jumbotron {
-  background-image: url("../images/banner-1.jpg");
+  background-image: url("/public/user/images/banner-1.jpg");
   height: 400px;
   width: auto;
   background-position: center;
@@ -306,7 +306,7 @@ nav .container,
 }
 
 #Promote-business {
-  background-image: url("/user/images/promot.jpeg");
+  background-image: url("/public/user/images/promot.jpeg");
   background-size: cover;
   background-attachment: fixed;
   padding: 100px 0;
@@ -1050,7 +1050,7 @@ a.btn.dropdown-toggle.show:focus {
   background-position: center;
   background-size: cover;
   object-fit: cover;
-  background-image: url("/images/matrimonial-1.jpg");
+  background-image: url("/public/user/images/matrimonial-1.jpg");
   border-radius: 100%;
   /* border: 1px solid rgb(185, 183, 183) ; */
 }
@@ -1140,7 +1140,7 @@ a.btn.dropdown-toggle.show:focus {
 
   /* Add styles to the dropdown arrow */
   .rbt-input-wrapper .rbt-input {
-    background-image: url("path-to-your-dropdown-icon.png"); /* Replace with your dropdown icon image path */
+    /* background-image: url("/public/user/images/path-to-your-dropdown-icon.png"); Replace with your dropdown icon image path */
     background-repeat: no-repeat;
     background-position: right center;
   }
@@ -1230,7 +1230,7 @@ nav .nav-item {
 
 /* About Page */
 .about-img {
-  background-image: url("../images/banner-2.jpg");
+  background-image: url("/public/user/images/banner-2.jpg");
   height: 300px;
   width: auto;
   background-position: center;
@@ -1309,7 +1309,7 @@ input[type="number"] {
 
 /* comminity-banner */
 .jumbotron-comminity-banner {
-  background-image: url("../images/banner/meena-banner.png");
+  background-image: url("/public/user/images/banner/meena-banner.png");
   height: 400px;
   width: auto;
   background-position: center;

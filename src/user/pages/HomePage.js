@@ -1,3 +1,4 @@
+import '../css/bootstrap.min.css';
 import { useEffect, useState } from "react";
 import Banner from "../components/home/Banner";
 import OurPartner from "../components/home/OurPartner";
@@ -7,12 +8,16 @@ import WhySocial from "../components/home/WhySocial";
 import UserLayout from "../layouts/UserLayout";
 import { useNavigate } from "react-router-dom";
 import { fetchSinglePageCMS } from "../services/userService";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../actions/loaderAction";
 
 const HomePage = () => {
 
     const [homeCms, setHomeCms] = useState({});
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const fetchCMS = async () => {
+        dispatch(setLoader(true));
         try {
             const response = await fetchSinglePageCMS("home");
             if (response && response.status === 200) {
@@ -22,6 +27,8 @@ const HomePage = () => {
             if (error.response && error.response.status === 500) {
 
             }
+        } finally {
+            dispatch(setLoader(false));
         }
     }
 

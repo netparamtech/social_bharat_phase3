@@ -54,9 +54,9 @@ const JobInfo = (props) => {
       <div className="container">
         <div className="card shadow">
           <div className="edit-icon add-more-detail"><a href="#" onClick={() => navigate("/user/update-job-profile")} title="Add More Detail"><i className="btn btn-outline-info fas fa-plus"></i></a></div>
+          <div className='card-header'> <h5 className="fw-3 mb-3 text-primary">Job Info</h5></div>
           <div className="card-body">
           {serverError && <span className='error'>{serverError}</span>}
-            <h5 className="fw-3 mb-3">Job Info</h5>
             <div className="row">
               {jobDetails && jobDetails.length > 0 ? (
                 jobDetails.map((item, idx) => (

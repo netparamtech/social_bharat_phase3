@@ -3,6 +3,7 @@ import { enquiry, fetchAllSiteSettings } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { Button, Modal } from "antd";
 
 function Contact() {
   const user = useSelector((state) => state.userAuth);
@@ -13,7 +14,7 @@ function Contact() {
   const [mobile, setMobile] = useState("");
   const [userQuery, setUserQuery] = useState("");
 
-  const [settings,setSettings] = useState({});
+  const [settings, setSettings] = useState({});
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -62,10 +63,8 @@ function Contact() {
         setEmail('');
         setMobile('');
         setUserQuery('');
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       if (error.response && error.response.status === 400) {
         setMessage("");
         setErrors(error.response.data.errors);
@@ -77,12 +76,25 @@ function Contact() {
         setMessage(error.response.data.message);
         setAlertClass("alert-danger");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
-  useEffect(()=>{
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
     fetchSettings();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -117,13 +129,13 @@ function Contact() {
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
-                              
+
                               <i className="fa-solid fa-location-dot fs-2 text-primary"></i>
                               <h4 className="ms-3 ">Address</h4>
                             </div>
                             <div>
                               <span className="text-muted">
-                              {settings && settings.address}
+                                {settings && settings.address}
                               </span>
                             </div>
                           </div>
@@ -133,12 +145,28 @@ function Contact() {
                         <div className="card shadow ">
                           <div className="card-body">
                             <div className="d-inline-flex">
-                              
-                              <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
+
+
+                              <Button type="" onClick={showModal}>
+                                <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
+                              </Button>
                               <h4 className="ms-3">Call Us</h4>
+                              <Modal title="Select One" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                <div>
+                                  <span className="text-muted">
+                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone1}`}>
+                                      +91-{settings && settings.phone1}
+                                    </a>
+                                    <br />
+                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone2}`}>
+                                      +91-{settings && settings.phone2}
+                                    </a>
+                                  </span>
+                                </div>
+                              </Modal>
                             </div>
                             <div>
-                              <span className="text-muted">
+                              <span className="text-muted hover-pointer" onClick={showModal}>
                                 +91-{settings && settings.phone1}
                                 <br />
                                 +91-{settings && settings.phone2}
@@ -157,19 +185,22 @@ function Contact() {
                             <div>
                               <span className="text-muted">
                                 {" "}
-                                {settings && settings.email1&&settings.email1}
+                                <a className="text-dark text-line-none" href={`mailto:${settings && settings.email1}`}>{settings && settings.email1}</a>
                                 <br />
-                                {settings && settings.email2&&settings.email2}
+                                {settings && settings.email2 && (
+                                  <a className="text-dark text-line-none" href={`mailto:${settings.email2}`}>{settings.email2}</a>
+                                )}
                               </span>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="mb-3 user-auth-panel-info  col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
-                             
+
                               <i className="fa-solid fa-clock fs-2 text-primary"></i>
                               <h4 className="ms-3">Open Hours</h4>
                             </div>

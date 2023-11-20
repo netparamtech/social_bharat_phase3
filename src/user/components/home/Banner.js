@@ -1,3 +1,5 @@
+import '../../css/bootstrap.min.css';
+import '../../css/style.css';
 import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import { useNavigate } from "react-router-dom";
@@ -40,14 +42,13 @@ const Banner = () => {
       }
 
       setImageUrls(activeBanners);
-      dispatch(setLoader(false));
     } catch (error) {
-      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

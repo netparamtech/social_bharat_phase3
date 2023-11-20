@@ -278,7 +278,6 @@ const SearchPeople = () => {
   useEffect(() => {
     // Check if the component is not just mounted
     if (page > 1 || searchText || isGoClick) {
-      console.log("call1");
       search(searchText, page, 20);
     }
   }, [searchText, isGoClick, page]);
@@ -299,6 +298,11 @@ const SearchPeople = () => {
     const pair = items.slice(i, i + 2); // Change 3 to 2 here
     groupedItems.push(pair);
   }
+
+  const checkMobileVisibility = (mobileNumber) => {
+    const isHidden = /\*/.test(mobileNumber);
+    return !isHidden;
+  };
 
   return (
     <>
@@ -450,6 +454,16 @@ const SearchPeople = () => {
                                           ? `(${item.native_place_state})`
                                           : ""}
                                       </p>
+
+                                      {
+                                        checkMobileVisibility(item.mobile) ? (
+                                          <p>
+                                            <a href={`tel:${item.mobile}`}>
+                                              {item.mobile}
+                                            </a>
+                                          </p>
+                                        ) : ''
+                                      }
                                     </div>
                                   </div>
                                 </div>

@@ -118,10 +118,8 @@ const UpdateBasicProfile = () => {
       const response = await fetchOneCommunity();
       if (response && response.status === 200) {
         setCommunity(response.data.data);
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -130,6 +128,8 @@ const UpdateBasicProfile = () => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -160,10 +160,8 @@ const UpdateBasicProfile = () => {
       if (response && response.status === 200) {
         setStates(response.data.data);
         setServerError('');
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -172,6 +170,8 @@ const UpdateBasicProfile = () => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -182,10 +182,8 @@ const UpdateBasicProfile = () => {
       if (response && response.status === 200) {
         setCities(response.data.data);
         setServerError('');
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -194,6 +192,8 @@ const UpdateBasicProfile = () => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -218,10 +218,8 @@ const UpdateBasicProfile = () => {
       const response = await fetchAllActiveQualifications();
       if (response && response.status === 200) {
         setQualificationList(response.data.data.qualifications);
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate('/login');
@@ -230,6 +228,8 @@ const UpdateBasicProfile = () => {
       else if (error.response && error.response.status === 500) {
         navigate('/login');
       }
+    } finally {
+      dispatch(setLoader(false));
     }
 
   }
@@ -289,7 +289,6 @@ const UpdateBasicProfile = () => {
     try {
       const response = await updateBasicProfile(updatedData);
       if (response && response.status === 200) {
-        dispatch(setLoader(false))
         setErrors("");
         setServerError('');
         dispatch(login(response.data.data, token));
@@ -306,7 +305,6 @@ const UpdateBasicProfile = () => {
         }
       }
     } catch (error) {
-      dispatch(setLoader(false))
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -320,6 +318,8 @@ const UpdateBasicProfile = () => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

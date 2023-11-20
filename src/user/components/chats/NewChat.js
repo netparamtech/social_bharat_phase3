@@ -46,6 +46,7 @@ const NewChat = (props) => {
           setServerError("");
           handleSendClicked();
           setMessage("");
+          setErrors('');
           dispatch(setLoader(false));
         }
       } catch (error) {
@@ -64,6 +65,7 @@ const NewChat = (props) => {
         //Internal Server Error
         else if (error.response && error.response.status === 500) {
           setServerError("Oops! Something went wrong on our server.");
+          setErrors(error.response.data.error);
         }
       }
     }
@@ -285,7 +287,9 @@ useEffect(() => {
                 </div>
 
                 <div className="flex-grow-0 py-3 px-4 border-top">
+                {errors?(<span className="error">Data too long for send 'message'</span>):''}
                   <div className="input-group sticky-bottom">
+                   
                     <input
                       type="text"
                       className="form-control"

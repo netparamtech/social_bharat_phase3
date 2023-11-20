@@ -47,9 +47,7 @@ const BasicProfile = (props) => {
 
       dispatch(login(response.data.data, token));
       setServerError("");
-      dispatch(setLoader(false))
     } catch (error) {
-      dispatch(setLoader(false))
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setServerError("");
@@ -63,6 +61,8 @@ const BasicProfile = (props) => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally{
+      dispatch(setLoader(false));
     }
   };
 
@@ -73,15 +73,15 @@ const BasicProfile = (props) => {
       if (response && response.status === 200) {
         setCommunity(response.data.data);
         setServerError("");
-        dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -269,7 +269,7 @@ const BasicProfile = (props) => {
                         <label className="col-sm-3">Mobile No</label>
                         <div className="col-sm-8">
                           <span className="text-muted">
-                            {(user && user.data && user.data.mobile) || "N/A"}
+                            {(loggedUser && loggedUser.user && loggedUser.user.mobile) || "N/A"}
                           </span>
                           <a
                             className="update-mobile btn ms-2"

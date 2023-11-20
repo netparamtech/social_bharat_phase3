@@ -25,10 +25,8 @@ const ProfilePage = () => {
             const response = await getUserFullProfile();
             if (response && response.status === 200) {
                 setUser(response.data);
-                dispatch(setLoader(false));
             }
         } catch (error) {
-            dispatch(setLoader(false));
             //Unauthorized
             if (error.response && error.response.status === 401) {
                 navigate('/login');
@@ -37,6 +35,8 @@ const ProfilePage = () => {
             else if (error.response && error.response.status === 500) {
                // navigate('/login');
             }
+        }finally {
+            dispatch(setLoader(false));
         }
     }
 

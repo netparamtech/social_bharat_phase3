@@ -62,8 +62,8 @@ const BusinessInfo = (props) => {
             </a>
           </div>
           {serverError && <span className='error'>{serverError}</span>}
+          <div className='card-header'> <h5 className="fw-3 mb-3 text-primary">Business Info</h5></div>
           <div className="card-body">
-            <h5 className="fw-3 mb-3">Business Info</h5>
             <div className="row">
               {businessDetails && businessDetails.length > 0 ? (
                 <>                  {/* Render all fields inside a collapse div */}

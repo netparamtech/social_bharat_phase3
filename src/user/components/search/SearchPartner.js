@@ -11,7 +11,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image } from "antd";
+import { Image, Modal } from "antd";
 import NewChat from "../chats/NewChat";
 
 const SearchPartner = () => {
@@ -219,11 +219,9 @@ const SearchPartner = () => {
 
           setItems(uniqueItems);
         }
-        dispatch(setLoader(false));
       }
       setIsLoading(false);
     } catch (error) {
-      dispatch(setLoader(false));
       setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -231,6 +229,8 @@ const SearchPartner = () => {
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -245,6 +245,7 @@ const SearchPartner = () => {
 
   const handleSaveClick = async () => {
     setIsSaveClicked(true);
+    setIsModalOpen(false);
   };
 
   const handleCancelClick = () => {
@@ -276,12 +277,29 @@ const SearchPartner = () => {
     );
   };
   const handlePreferenceClick = () => {
+    setSelectedState(null);
+    setSelectedCity(null);
+
+    if(user){
+      setState(
+        user && user.user && user.user.native_place_state
+          ? user.user.native_place_state
+          : ""
+      );
+      setCity(
+        user && user.user && user.user.native_place_city
+          ? user.user.native_place_city
+          : ""
+      );
+    }
+
     !isFilter
       ? setIsFilter(true)
       : isFilter
-      ? setIsFilter(false)
-      : setIsFilter(false);
+        ? setIsFilter(false)
+        : setIsFilter(false);
     setIsSaveClicked(false);
+    showModal();
   };
 
   const fetchMoreData = () => {
@@ -350,7 +368,7 @@ const SearchPartner = () => {
   }, [selectedCountry]);
 
   useEffect(() => {
-    if (states) {
+    if (states && selectedState) {
       const selectedStateObject = states.find(
         (state) => state.name === selectedState.label
       );
@@ -395,6 +413,22 @@ const SearchPartner = () => {
     groupedItems.push(pair);
   }
 
+  const checkMobileVisibility = (mobileNumber) => {
+    const isHidden = /\*/.test(mobileNumber);
+    return !isHidden;
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       {isChat ? (
@@ -404,55 +438,54 @@ const SearchPartner = () => {
           <div className="container">
             <div className="card shadow">
               <div className="card-body">
-              <div className="container">
-              <div className="row">
-                  <div className="col-md-7 ps-0">
-                    {serverError && (
-                      <span className="error">{serverError}</span>
-                    )}
-                    <h5 className="fw-3 mb-3 ">Search Partner</h5>
-                  </div>
-                  <div className=" col-md-5">
+                <div className="container">
                   <div className="row">
-                      <div className="col-4 ps-0">
-                      <a
-                      title="Filter"
-                      className="btn btn-primary btn-sm  mb-2 hover-pointer"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      onClick={handlePreferenceClick}
-                    >
-                      <i className="fas fa-filter me-1"></i>Preference
-                    </a>
+                    <div className="col-md-7 ps-0">
+                      {serverError && (
+                        <span className="error">{serverError}</span>
+                      )}
+                      <h5 className="fw-3 mb-3 ">Search Partner</h5>
+                    </div>
+                    <div className=" col-md-5">
+                      <div className="row">
+                        <div className="col-4 ps-0">
+                          <a
+                            title="Filter"
+                            className="btn btn-primary btn-sm  mb-2 hover-pointer"
+
+                            onClick={handlePreferenceClick}
+                          >
+                            <i className="fas fa-filter me-1"></i>Preference
+                          </a>
+                        </div>
+                        <div className="col-7 ps-0">
+                          <a
+                            title="Add Business"
+                            className="btn btn-primary btn-sm  mb-2"
+                            onClick={handlePartnerClick}
+                          >
+                            Submit Your Matrimonial Profile
+                          </a>
+                        </div>
+                        <div className="col-1 ps-0 ">
+                          <button
+                            className="btn btn-primary btn-sm "
+                            id="btn-chat"
+                            title="Refresh"
+                            onClick={handleRefressClicked}
+                          >
+                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-7 ps-0">
-                      <a
-                      title="Add Business"
-                      className="btn btn-primary btn-sm  mb-2"
-                      onClick={handlePartnerClick}
-                    >
-                      Submit Your Matrimonial Profile
-                    </a>
-                      </div>
-                      <div className="col-1 ps-0 ">
-                      <button
-                      className="btn btn-primary btn-sm "
-                      id="btn-chat"
-                      title="Refresh"
-                      onClick={handleRefressClicked}
-                    >
-                      <i className="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                      </div>
+
+
+
+                    </div>
+
                   </div>
-                   
-                    
-                   
-                  </div>
-                  
                 </div>
-              </div>
-                
+
 
                 <div className="filter-content pt-3 d-md-block ">
                   {isSaveClicked && (
@@ -463,8 +496,8 @@ const SearchPartner = () => {
                       {gotra && `Gotra-${gotra}, `}
                       {cast && `Cast-${cast}, `}{" "}
                       {(selectedCity && "in") || (selectedState && "in")}
-                      {selectedCity.label && ` ${selectedCity.label}`}
-                      {selectedState.label && ` (${selectedState.label})`}
+                      {selectedCity && selectedCity.label && ` ${selectedCity.label}`}
+                      {selectedState && selectedState.label && ` (${selectedState.label})`}
                     </p>
                   )}
                 </div>
@@ -474,149 +507,114 @@ const SearchPartner = () => {
                 ) : (
                   ""
                 )}
+                <Modal title="Preference" open={isModalOpen} onOk={handleSaveClick} onCancel={handleCancel}>
 
-                <div
-                  className="modal fade"
-                  id="exampleModal"
-                  tabIndex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div className="modal-dialog" id="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">
-                          Preference
-                        </h1>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div className="modal-body" id="modal-body">
-                        <div className="container">
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="mb-3">
-                                <label className="form-label">
-                                  Interested In
-                                </label>
-                                <select
-                                  className="form-select form-control"
-                                  aria-label="Default select example"
-                                  value={gender}
-                                  onChange={handleGenderChange}
-                                >
-                                  <option value="">---Select Gender---</option>
-                                  <option value="Male">Male</option>
-                                  <option value="Female">Female</option>
-                                </select>
-                              </div>
-                              <div className="mb-3">
-                                <label className="form-label">Gotra</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue={gotra}
-                                  onChange={handleGotraChange}
-                                />
-                              </div>
-                              <div className="mb-3">
-                                <label className="form-label">State</label>
-                                <Select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  options={states.map((state) => ({
-                                    value: state.name,
-                                    label: state.name,
-                                  }))}
-                                  value={selectedState}
-                                  onChange={handleStateChange}
-                                />
-                              </div>
-                              <div className="mb-3">
-                                <label className="form-label">Skin Tone</label>
-                                <select
-                                  className="form-select form-control"
-                                  aria-label="Default select example"
-                                  value={skinTone}
-                                  onChange={handleSkinToneChange}
-                                >
-                                  <option value="">---Select Skin---</option>
-                                  <option value="FAIR">FAIR</option>
-                                  <option value="DARK">DARK</option>
-                                  <option value="WHEATISH">WHEATISH</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="mb-3">
-                                <label className="form-label">Community</label>
-                                <Select
-                                  id="community_id"
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  defaultValue={community_id} // Provide a selected option state
-                                  onChange={handleSelectChange} // Your change handler function
-                                  options={
-                                    communities &&
-                                    communities.map((data) => ({
-                                      value: data.id,
-                                      label: data.name,
-                                    }))
-                                  }
-                                  placeholder="---Select---"
-                                />
-                              </div>
-                              <div className="mb-3">
-                                <label className="form-label">Cast</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue={cast}
-                                  onChange={handleCastChange}
-                                />
-                              </div>
-                              <div className="mb-3">
-                                <label className="form-label">City</label>
-                                <Select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  options={cities.map((city) => ({
-                                    value: city.name,
-                                    label: city.name,
-                                  }))}
-                                  value={selectedCity}
-                                  onChange={handleCityChange}
-                                />
-                              </div>
-                            </div>
+
+                  <div>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Interested In
+                            </label>
+                            <select
+                              className="form-select form-control"
+                              aria-label="Default select example"
+                              value={gender}
+                              onChange={handleGenderChange}
+                            >
+                              <option value="">---Select Gender---</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
                           </div>
+                          <div className="mb-3">
+                            <label className="form-label">Gotra</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={gotra}
+                              placeholder="Enter Your Gotra"
+                              onChange={handleGotraChange}
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">State</label>
+                            <Select
+                              className="form-select"
+                              aria-label="Default select example"
+                              options={states.map((state) => ({
+                                value: state.name,
+                                label: state.name,
+                              }))}
+                              value={selectedState}
+                              onChange={handleStateChange}
+                            />
+                          </div>
+                          {/* <div className="mb-3">
+                            <label className="form-label">Skin Tone</label>
+                            <select
+                              className="form-select form-control"
+                              aria-label="Default select example"
+                              value={skinTone}
+                              onChange={handleSkinToneChange}
+                            >
+                              <option value="">---Select Skin---</option>
+                              <option value="FAIR">FAIR</option>
+                              <option value="DARK">DARK</option>
+                              <option value="WHEATISH">WHEATISH</option>
+                            </select>
+                          </div> */}
                         </div>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                          onClick={() => handleCloseClick()}
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={handleSaveClick}
-                          data-bs-dismiss="modal"
-                        >
-                          Save
-                        </button>
+                        <div className="col-md-6">
+                        <div className="mb-3">
+                            <label className="form-label">City</label>
+                            <Select
+                              className="form-select"
+                              aria-label="Default select example"
+                              options={cities.map((city) => ({
+                                value: city.name,
+                                label: city.name,
+                              }))}
+                              value={selectedCity}
+                              onChange={handleCityChange}
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Cast</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={cast}
+                              placeholder="Enter Your Cast"
+                              onChange={handleCastChange}
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label">Community</label>
+                            <Select
+                              id="community_id"
+                              className="form-select"
+                              aria-label="Default select example"
+                              defaultValue={community_id} // Provide a selected option state
+                              onChange={handleSelectChange} // Your change handler function
+                              options={
+                                communities &&
+                                communities.map((data) => ({
+                                  value: data.id,
+                                  label: data.name,
+                                }))
+                              }
+                              placeholder="---Select---"
+                            />
+                          </div>
+                         
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </Modal>
 
                 <div className="container-input mb-3 mt-3">
                   <input
@@ -692,6 +690,15 @@ const SearchPartner = () => {
                                         ? `(${item.native_place_state})`
                                         : ""}
                                     </p>
+
+                                    {
+                                      checkMobileVisibility(item.mobile) ? (
+                                        <a href={`tel:${item.mobile}`}>
+                                          {item.mobile}
+                                        </a>
+                                      ) : ''
+                                    }
+
                                   </div>
                                 </div>
                               </div>

@@ -1,3 +1,5 @@
+import '../../css/bootstrap.min.css';
+import '../../css/style.css';
 import { useParams } from "react-router-dom";
 import { fetchCommunityWithNAME } from "../../services/userService";
 import { useEffect, useState } from "react";
@@ -25,7 +27,6 @@ const ViewCommunity = () => {
               <img src={data.banner_image} className="img-fluid rounded-2" alt="Banner" />
             </div>
             <div className="card shadow mb-5 p-5">
-            <p className="mb-3 fw-bold text-decoration-underline">About</p>
             {data && (
               <div 
                 dangerouslySetInnerHTML={{ __html: data.community_archive }}

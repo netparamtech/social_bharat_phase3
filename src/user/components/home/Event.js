@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { DatePicker, TimePicker, Button } from "antd";
 import Select from "react-select";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const EventForm = () => {
   // State variables to store form input values
@@ -36,6 +38,7 @@ const EventForm = () => {
   const [alertClass, setAlertClass] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleStartDateTimeChange = (date, dateString) => {
     setStartDateTime(dateString); // Update startDateTime with the selected date and time
@@ -71,6 +74,7 @@ const EventForm = () => {
   };
 
   const getAllStates = async () => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllStatesByCountryID(101);
       if (response && response.status === 200) {
@@ -83,12 +87,15 @@ const EventForm = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+       
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
   const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
     try {
       const response = await fetchAllCitiesByStateID(stateID);
       if (response && response.status === 200) {
@@ -101,12 +108,15 @@ const EventForm = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+       
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
   const handleThumbnailImageChange = async (e) => {
+    dispatch(setLoader(true));
     //setThumbnailImage(e.target.files[0]);
     const selectedFile = e.target.files[0];
     const formData = new FormData();
@@ -123,16 +133,19 @@ const EventForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        navigate("/admin");
+        navigate("/login");
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        navigate("/admin");
+        
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
   const handleBannerImageChange = async (e) => {
+    dispatch(setLoader(true));
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -148,19 +161,21 @@ const EventForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-        // navigate("/login");
+         navigate("/login");
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        //  navigate("/login");
+        
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedState, selectedCity);
+    dispatch(setLoader(true));
 
     const formattedStartDateTime = formatDateTime(startDateTime);
     const formattedEndDateTime = formatDateTime(endDateTime);
@@ -217,6 +232,8 @@ const EventForm = () => {
         setMessage(error.response.data.message);
         setAlertClass("alert-danger");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

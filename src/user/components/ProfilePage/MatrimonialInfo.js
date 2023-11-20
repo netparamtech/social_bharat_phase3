@@ -136,16 +136,20 @@ const MatrimonialInfo = (props) => {
           ) : (
             ""
           )}
+          <div className="card-header">
+          <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
+          </div>
 
           <div className="card-body">
-            <h5 className="fw-3 mb-3">Matrimonial Info</h5>
+            
+          
             {matrimonialDetails && matrimonialDetails.length > 0 ? (
               <div className="row wow animate__animated animate__zoomIn">
-                <div className="col-md-6">
+                <div id="section-1" className="col-md-6 card-in-section">
                   <div className="card shadow">
                     <div className="card-body">
                       <h5 className="m-2 mb-2">{getProfileHeading() || "N/A"}</h5>
-                      <table className="table table-striped">
+                      <table className="table table-striped mb-2">
                         <tbody>
                           <tr>
                             <td>Father Name</td>
@@ -178,8 +182,7 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Package/Salary</td>
                             <td className="text-muted">
-                              {(user?.data?.matrimonial[0].salary_package) ||
-                                "N/A"}
+                              {(user?.data?.matrimonial[0].salary_package ? (user?.data?.matrimonial[0].salary_package === 'none') ? "N/A" : user.data.matrimonial[0].salary_package : "N/A")}
                             </td>
                           </tr>
                           <tr>
@@ -199,7 +202,11 @@ const MatrimonialInfo = (props) => {
                           {brothersDetails && (
                             <tr>
                               <td>Brothers Details</td>
-                              <td className="text-muted">{brothersDetails}</td>
+                              <td className="text-muted">
+                                <div className="truncate-text">
+                                  {brothersDetails}
+                                </div>
+                              </td>
                             </tr>
                           )}
                         </tbody>
@@ -207,7 +214,7 @@ const MatrimonialInfo = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div id="section-2" className="col-md-6 card-in-section">
                   <div className="card shadow">
                     <div className="card-body ">
                       <table className="table table-striped">
@@ -222,7 +229,11 @@ const MatrimonialInfo = (props) => {
                           {sistersDetails && (
                             <tr>
                               <td>Sisters Details</td>
-                              <td className="text-muted">{sistersDetails}</td>
+                              <td className="text-muted">
+                                <div className="truncate-text">
+                                  {sistersDetails}
+                                </div>
+                              </td>
                             </tr>
                           )}
                           <tr>

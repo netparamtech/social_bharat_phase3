@@ -1,4 +1,6 @@
-import '../pages/css/bootstrap.min.css'
+import '../pages/css/bootstrap.min.css';
+import '../pages/css/userStyle.css';
+import '../pages/css/btn.css';
 import React, { useState } from "react";
 import { useEffect } from "react";
 import Footer from "../components/home/Footer";

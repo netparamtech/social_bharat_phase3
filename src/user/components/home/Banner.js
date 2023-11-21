@@ -1,3 +1,4 @@
+import './css/mainBanner.css'
 import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import { useNavigate } from "react-router-dom";

@@ -63,7 +63,7 @@ const NavbarTransparent = (props) => {
   };
 
   const handleServiceClick = (e) => {
-    
+
     if (isAuthenticUser) {
       if (isPasswordSet) {
         navigate("/dashboard");
@@ -108,202 +108,204 @@ const NavbarTransparent = (props) => {
   }, []);
 
   return (
-    <nav className="navbar navbar-transparent  navbar-expand-lg">
-      <div className="container">
-        <a className="navbar-brand" onClick={handleHomeClicked}>
-          <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />
-        </a>
+    <div id='customNavID'>
+      <nav className="navbar navbar-transparent  navbar-expand-lg">
+        <div className="container">
+          <a className="navbar-brand" onClick={handleHomeClicked}>
+            <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />
+          </a>
 
-        <a>
-          {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-            <UserProfileDropdown community={community} />
-          ) : (
-            ""
-          )}
-        </a>
-
-        <button
-          className={`navbar-toggler ${isAndroidUsed ? "" : "d-none"}`}
-          type="button"
-          onClick={showDrawer}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-            {
-              isAuthenticUser ? ('') : (
-                <li className="nav-item">
-                  <a
-                    className={`nav-link ${window.location.pathname === "/" ? "active" : "inactive"
-                      }`}
-                    onClick={handleHomeClicked}
-                  >
-                    Home
-                  </a>
-                </li>
-              )
-            }
-            {
-              isAuthenticUser ? (
-                <li className="nav-item">
-                  <a
-                    className={`nav-link ${window.location.pathname === "/service" ||
-                        window.location.pathname === "/dashboard"
-                        ? "active"
-                        : "inactive"
-                      }`}
-                    onClick={handleServiceClick}
-                  >
-                    Home
-                  </a>
-                </li>
-              ) : (
-                <li className="nav-item">
-                  <a
-                    className={`nav-link ${window.location.pathname === "/service" ||
-                        window.location.pathname === "/dashboard"
-                        ? "active"
-                        : "inactive"
-                      }`}
-                    onClick={handleServiceClick}
-                  >
-                    Services
-                  </a>
-                </li>
-              )
-            }
-            <li className="nav-item">
-              <a
-                className={`nav-link ${window.location.pathname === "/contact" ? "active" : "inactive"
-                  }`}
-                onClick={handleContactClicked}
-              >
-                Contact
-              </a>
-            </li>
-            <li className="nav-item">
-              {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
-            </li>
-
-            {/* You can add more nav items here */}
-          </ul>
-          <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-            {isAuthenticUser && isAuthenticUser ? (
-              ""
+          <a>
+            {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
+              <UserProfileDropdown community={community} />
             ) : (
-              <li className="nav-item">
-                <a
-                  className="text-decoration-none btn-primary login-btn"
-                  href=""
-                  onClick={handleLoginClicked}
-                >
-                  Login
-                </a>
-              </li>
+              ""
             )}
-          </ul>
+          </a>
 
-          <ul className="navbar-nav ml-auto  mb-2 mb-lg-0">
-            <li className="">
-              {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-                <UserProfileDropdown />
-              ) : (
-                ""
-              )}
-            </li>
-          </ul>
-
-          <Drawer
-            title={"Menu"}
-            placement="top"
-            closable={true}
-            onClose={showDrawer}
-            open={visible}
-            style={{
-              zIndex: 99999,
-              // width: "70%",
-              background: "rgba(255, 255, 255, 0.8)",
-              borderBottomLeftRadius: "3%",
-              borderBottomRightRadius: "3%",
-              // height:"70%"
-            }}
+          <button
+            className={`navbar-toggler ${isAndroidUsed ? "" : "d-none"}`}
+            type="button"
+            onClick={showDrawer}
           >
-            <div className="customDrawerBody">
-              <ul className="customUl">
-
-                {
-                  isAuthenticUser?'':(
-                    <li className="nav-item mt-2">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+              {
+                isAuthenticUser ? ('') : (
+                  <li className="nav-item">
                     <a
-                      className="nav-link active"
-                      aria-current="page"
-                      href=""
+                      className={`nav-link ${window.location.pathname === "/" ? "active" : "inactive"
+                        }`}
                       onClick={handleHomeClicked}
                     >
-                      <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+                      Home
                     </a>
                   </li>
-                  )
-                }
-               
-
-               {
-                isAuthenticUser?(
-                  <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleServiceClick}>
-                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                    Home
-                  </a>
-                </li>
-                ):(
-                  <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleServiceClick}>
-                    <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                    Services
-                  </a>
-                </li>
                 )
-               }
-
-                <li className="nav-item mt-2">
-                  <a className="nav-link" onClick={handleContactClicked}>
-                    <i className="fas fa-address-book m-2"></i>Contact
-                  </a>
-                </li>
-
-                <li className="nav-item mt-2">
-                  {isAuthenticUser && isAuthenticUser ? (
-                    <a className="nav-link m-2">
-                      <i className="fa fa-search" aria-hidden="true"></i>
-                      <UserSearchDropdown />
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </li>
-
-                {isAuthenticUser && isAuthenticUser ? (
-                  <li className="nav-item mt-2">
-                    <a onClick={() => navigate("/login")}>
-                      <i className="fa fa-sign-out m-2" aria-hidden="true"></i>
-                      Log out
+              }
+              {
+                isAuthenticUser ? (
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${window.location.pathname === "/service" ||
+                        window.location.pathname === "/dashboard"
+                        ? "active"
+                        : "inactive"
+                        }`}
+                      onClick={handleServiceClick}
+                    >
+                      Home
                     </a>
                   </li>
                 ) : (
-                  <li className="nav-item mt-2">
-                    <a onClick={() => navigate("/login")}>
-                      <i className="fa fa-sign-in m-2" aria-hidden="true"></i>{" "}
-                      Login
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${window.location.pathname === "/service" ||
+                        window.location.pathname === "/dashboard"
+                        ? "active"
+                        : "inactive"
+                        }`}
+                      onClick={handleServiceClick}
+                    >
+                      Services
                     </a>
                   </li>
+                )
+              }
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${window.location.pathname === "/contact" ? "active" : "inactive"
+                    }`}
+                  onClick={handleContactClicked}
+                >
+                  Contact
+                </a>
+              </li>
+              <li className="nav-item">
+                {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
+              </li>
+
+              {/* You can add more nav items here */}
+            </ul>
+            <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+              {isAuthenticUser && isAuthenticUser ? (
+                ""
+              ) : (
+                <li className="nav-item">
+                  <a
+                    className="text-decoration-none btn-primary login-btn"
+                    href=""
+                    onClick={handleLoginClicked}
+                  >
+                    Login
+                  </a>
+                </li>
+              )}
+            </ul>
+
+            <ul className="navbar-nav ml-auto  mb-2 mb-lg-0">
+              <li className="">
+                {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
+                  <UserProfileDropdown />
+                ) : (
+                  ""
                 )}
-              </ul>
-            </div>
-          </Drawer>
+              </li>
+            </ul>
+
+            <Drawer
+              title={"Menu"}
+              placement="top"
+              closable={true}
+              onClose={showDrawer}
+              open={visible}
+              style={{
+                zIndex: 99999,
+                // width: "70%",
+                background: "rgba(255, 255, 255, 0.8)",
+                borderBottomLeftRadius: "3%",
+                borderBottomRightRadius: "3%",
+                // height:"70%"
+              }}
+            >
+              <div className="customDrawerBody">
+                <ul className="customUl">
+
+                  {
+                    isAuthenticUser ? '' : (
+                      <li className="nav-item mt-2">
+                        <a
+                          className="nav-link active"
+                          aria-current="page"
+                          href=""
+                          onClick={handleHomeClicked}
+                        >
+                          <i className="fa fa-home m-2" aria-hidden="true"></i> Home
+                        </a>
+                      </li>
+                    )
+                  }
+
+
+                  {
+                    isAuthenticUser ? (
+                      <li className="nav-item mt-2">
+                        <a className="nav-link" onClick={handleServiceClick}>
+                          <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                          Home
+                        </a>
+                      </li>
+                    ) : (
+                      <li className="nav-item mt-2">
+                        <a className="nav-link" onClick={handleServiceClick}>
+                          <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                          Services
+                        </a>
+                      </li>
+                    )
+                  }
+
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleContactClicked}>
+                      <i className="fas fa-address-book m-2"></i>Contact
+                    </a>
+                  </li>
+
+                  <li className="nav-item mt-2">
+                    {isAuthenticUser && isAuthenticUser ? (
+                      <a className="nav-link m-2">
+                        <i className="fa fa-search" aria-hidden="true"></i>
+                        <UserSearchDropdown />
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </li>
+
+                  {isAuthenticUser && isAuthenticUser ? (
+                    <li className="nav-item mt-2">
+                      <a onClick={() => navigate("/login")}>
+                        <i className="fa fa-sign-out m-2" aria-hidden="true"></i>
+                        Log out
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item mt-2">
+                      <a onClick={() => navigate("/login")}>
+                        <i className="fa fa-sign-in m-2" aria-hidden="true"></i>{" "}
+                        Login
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </Drawer>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

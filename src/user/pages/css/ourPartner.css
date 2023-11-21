@@ -1,0 +1,21 @@
+/* Our partners */
+#partner {
+    width: 100%px;
+    height: 100px;
+    /* height: 130px; */
+    background-color: #ffffff;
+    /* background-color: #e6dddd; */
+    box-shadow: 0px 3px 6px #f4f4f4;
+    color: #595959;
+    padding: 10px;
+  }
+  
+  #partner img {
+    width: 100px;
+    border-radius: 10px;
+    height: 70px;
+  }
+  
+  .community-name {
+    margin-top: 8px; /* Optional: add margin between image and name */
+  }

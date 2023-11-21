@@ -1540,4 +1540,13 @@ input[type="number"] {
   text-decoration: none;
 }
 
+.zoom-on-hover {
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.1); /* Adjust the scaling factor as needed */
+}
+
 

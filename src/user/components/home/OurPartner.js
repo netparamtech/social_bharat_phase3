@@ -22,6 +22,10 @@ function OurPartner() {
     autoplaySpeed: 1500,
   };
 
+  const handleImageClick = (communityName) => {
+    navigate(`/${communityName}`);
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
@@ -75,7 +79,7 @@ function OurPartner() {
                           <img
                             src={community.thumbnail_image}
                             alt={community.name}
-                            onClick={() => navigate(`/${community.name}`)}
+                            onClick={()=>handleImageClick(community.name)}
                           />
                         </a>
                       </div>

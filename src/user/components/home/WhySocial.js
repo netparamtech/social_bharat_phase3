@@ -1,3 +1,4 @@
+import './css/whySocial.css'
 import React, { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';
@@ -65,12 +66,12 @@ const WhySocial = (props) => {
              
             </ul>
           </div>
-          <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 d-none d-md-block wow animate__animated animate__zoomIn">
-            <div className="image-zoom-containerm fade-in-image ">
+          <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 d-md-block wow animate__animated animate__zoomIn">
+            <div className="image-zoom-containerm fade-in-image">
               <Carousel effect="fade" autoplay>
                 {aboutCMS && aboutCMS.images && aboutCMS.images.map((item, index) => (
-                  <div key={index} style={contentStyle}>
-                  <img src={item} className="img-fluid image-zoom pb-3 " alt={`Banner ${index}`} />
+                  <div key={index} style={contentStyle} className='zoom-on-hover'>
+                  <img src={item} className="img-fluid image-zoom pb-3" alt={`Banner ${index}`} />
 
                   </div>
                 ))}

@@ -1,3 +1,4 @@
+import './css/ourPartner.css'
 import React, { useEffect, useState } from "react";
 import { fetchAllActiveCommunities } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,10 @@ function OurPartner() {
     arrows: false,
     autoplaySpeed: 1500,
   };
+
+  const handleImageClick = (communityName) => {
+    navigate(`/${communityName}`);
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,7 +80,7 @@ function OurPartner() {
                           <img
                             src={community.thumbnail_image}
                             alt={community.name}
-                            onClick={() => navigate(`/${community.name}`)}
+                            onClick={()=>handleImageClick(community.name)}
                           />
                         </a>
                       </div>

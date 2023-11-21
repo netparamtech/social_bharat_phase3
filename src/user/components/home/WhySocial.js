@@ -1,4 +1,3 @@
-import './css/whySocial.css'
 import React, { useEffect, useState } from 'react';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import { useNavigate } from 'react-router-dom';

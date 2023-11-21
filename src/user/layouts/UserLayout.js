@@ -1,3 +1,4 @@
+import '../pages/css/bootstrap.min.css'
 import React, { useState } from "react";
 import { useEffect } from "react";
 import Footer from "../components/home/Footer";
@@ -7,6 +8,7 @@ import { setLoader } from "../actions/loaderAction";
 import { fetchAllSiteSettings } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import '../pages/css/navbar.css';
 
 const UserLayout = ({ children }) => {
 

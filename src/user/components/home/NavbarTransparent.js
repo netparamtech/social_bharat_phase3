@@ -1,5 +1,3 @@
-import './css/navbar.css'
-import './css/bootstrap.min.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";

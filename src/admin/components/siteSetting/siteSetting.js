@@ -420,17 +420,27 @@ const SiteSetting = () => {
                 <div className="col-md-6">
                   <div className="row">
                     <div className="col-8">
-                      <label className="fw-bold">Logo- 1</label>
-                      <div className="mb-2">
-                        <input
-                          type="file"
-                          defaultValue={thumbnailImageTempUrl}
-                          onInput={handleThumbnailImageChange}
-                          className=" form-control"
-                        />
-                        {errors.logo1 && (
-                          <span className="error">{errors.logo1}</span>
-                        )}
+                      <div className="form-group">
+                        <label className="fw-bold">Logo- 1</label>
+                        <div className="input-group mb-2">
+                          <div className="custom-file">
+                            <input
+                              type="file"
+                              defaultValue={thumbnailImageTempUrl}
+                              onInput={handleThumbnailImageChange}
+                              className=" custom-file-input"
+                            />
+                            <label
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile01"
+                            >
+                              Choose file
+                            </label>
+                            {errors.logo1 && (
+                              <span className="error">{errors.logo1}</span>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="col-4">
@@ -450,29 +460,40 @@ const SiteSetting = () => {
                 <div className="col-md-6">
                   <div className="row">
                     <div className="col-8">
-                      <label className="fw-bold">Logo- 2</label>
-                      <div className="mb-2">
-                        <input
-                          type="file"
-                          defaultValue={thumbnailImageTempUrl2}
-                          onInput={handleThumbnailImageChange2}
-                          className=" form-control"
-                        />
-                        {errors.logo1 && (
-                          <span className="error">{errors.logo1}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-4">
                       <div className="form-group">
-                        {thumbnailPreview2 && (
-                          <img
-                            src={thumbnailPreview2}
-                            alt="Logo"
-                            title="Logo-1"
-                            className="small-img-thumbnail  img-fluid my-2 "
-                          />
-                        )}
+                        <label className="fw-bold">Logo- 2</label>
+                        <div className="input-group  mb-2">
+                          <div className="custom-file">
+                            <label
+                              className="custom-file-label"
+                              htmlFor="inputGroupFile01"
+                            >
+                              Choose file
+                            </label>
+                            <input
+                              type="file"
+                              defaultValue={thumbnailImageTempUrl2}
+                              onInput={handleThumbnailImageChange2}
+                              className="custom-file-input"
+                            />
+
+                            {errors.logo1 && (
+                              <span className="error">{errors.logo1}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-4">
+                        <div className="form-group">
+                          {thumbnailPreview2 && (
+                            <img
+                              src={thumbnailPreview2}
+                              alt="Logo"
+                              title="Logo-1"
+                              className="small-img-thumbnail  img-fluid my-2 "
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

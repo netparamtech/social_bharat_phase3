@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  fetchAllActiveCommunities,
   fetchAllCitiesByStateID,
+  fetchAllCommunities,
   fetchAllStatesByCountryID,
   searchPartner,
-  searchPartnerWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -237,9 +236,10 @@ const SearchPartner = () => {
   //fetch all active communities
 
   const fetchCommunities = async () => {
-    const response = await fetchAllActiveCommunities();
+    const response = await fetchAllCommunities();
     if (response && response.status === 200) {
-      setCommunities(response.data.data);
+      const requestedCasts = response.data.data.filter((item)=>item.status === 'Inactive');
+      setCommunities(requestedCasts);
     }
   };
 

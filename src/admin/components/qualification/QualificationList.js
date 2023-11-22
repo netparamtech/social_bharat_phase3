@@ -9,7 +9,7 @@ import { setLoader } from "../../actions/loaderAction";
 const QualificationList = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(15);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState('');

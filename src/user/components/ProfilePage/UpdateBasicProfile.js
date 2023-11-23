@@ -16,6 +16,7 @@ import { DatePicker, notification } from 'antd';
 import { useMemo } from 'react';
 import { setLoader } from "../../actions/loaderAction";
 import WOW from 'wowjs';
+import { yyyyMmDdFormat } from "../../util/DateConvertor";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
@@ -43,13 +44,14 @@ const UpdateBasicProfile = () => {
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [dob, setDOB] = useState(dayjs(user.user.dob != null && user.user.dob).add(0, 'day')); // Initial DOB
+  const [dob, setDOB] = useState(dayjs().add(0, 'day')); // Initial DOB
   const [age, setAge] = useState(0); // Initial age
   const [maritalStatus, setMaritalStatus] = useState(null); // Initial marital status
   const [occupation, setOccupation] = useState(null);
-  const [qualification, setQualification] = useState('');
+  const [qualification, setQualification] = useState(null);
   const [qualificationID, setQualificationID] = useState('');
   const [qualificationList, setQualificationList] = useState([]);
+  const [jobType, setJobType] = useState(null);
   const maritalStatusOptions = [
     { value: "Single", label: "Single" },
     { value: "Married", label: "Married" },
@@ -83,21 +85,6 @@ const UpdateBasicProfile = () => {
     setEmail(e.target.value);
   };
 
-  const handleDOBChange = (isoDateString) => {
-    if (isoDateString) {
-      const date = new Date(isoDateString); // Parse ISO date string
-      const year = date.getFullYear();
-      const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
-      const day = `${date.getDate()}`.padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
-      setDOB(formattedDate);
-    } else {
-      // Handle null or "Invalid Date"
-      setDOB(null); // Or set a default value or handle it as needed
-    }
-  };
-
-
   const handleMaritalStatusChange = (selectedOption) => {
     setMaritalStatus(selectedOption);
   };
@@ -107,6 +94,12 @@ const UpdateBasicProfile = () => {
     setQualificationID(selectedOption.value);
     setQualification(selectedOption); // Update the degree state with the selected option
   };
+
+  const handleJobType = (selectedOption) => {
+    if (selectedOption) {
+      setJobType(selectedOption);
+    }
+  }
 
   const handleAvailableMarriageCheckboxChange = (e) => {
     setIsAvailableForMarriage(e.target.checked);
@@ -197,21 +190,6 @@ const UpdateBasicProfile = () => {
     }
   };
 
-  const convertToCustomDateFormat = (isoDateString) => {
-
-    if (isoDateString === null) {
-      return '';
-    }
-
-    const date = new Date(isoDateString); // Parse ISO date string
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
-    const day = `${date.getDate()}`.padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-
-    return formattedDate;
-  };
-
   const fetchAllQualification = async () => {
     dispatch(setLoader(true));
     try {
@@ -246,7 +224,10 @@ const UpdateBasicProfile = () => {
 
 
   useEffect(() => {
-    setDOB(convertToCustomDateFormat(user.user.dob));
+    console.log(user)
+    if(user.user&&user.user.dob!==null){
+      setDOB(yyyyMmDdFormat(user.user.dob));
+    }
   }, [user]);
 
   const [api, contextHolder] = notification.useNotification();
@@ -273,7 +254,7 @@ const UpdateBasicProfile = () => {
 
     // Prepare the updated data
     const updatedData = {
-      name:modifiedName,
+      name: modifiedName,
       gender,
       email,
       native_place_city: selectedCity ? selectedCity.label : '',
@@ -441,7 +422,7 @@ const UpdateBasicProfile = () => {
         <div className="container">
           <div className="card shadow">
             <div className="card-body">
-            {serverError && <span className='error'>{serverError}</span>}
+              {serverError && <span className='error'>{serverError}</span>}
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                   <div className="card-title">
@@ -501,14 +482,23 @@ const UpdateBasicProfile = () => {
                         )}
                       </div>
 
+                     
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Date of Birth{" "}<span className="text-danger">*</span></label>
-                        <DatePicker className="form-control" defaultValue={dayjs(dob, dateFormat)} format={dateFormat} onChange={handleDOBChange} />
-                        {errors.dob && (
-                          <span className="error">{errors.dob}</span>
-                        )}
-                        {/* Add error handling if needed */}
-                      </div>
+                      <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
+                      <input
+                        type="date"
+                        name="jobStartDate"
+                        id="jobStartDate"
+                        placeholder=""
+                        className="form-control"
+                        value={dob}
+                        onChange={(e) => setDOB(e.target.value)}
+                      />
+                      {errors.dob && (
+                        <span className="error">{errors.dob}</span>
+                      )}
+                      {/* Add error handling if needed */}
+                    </div>
                     </div>
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -552,7 +542,7 @@ const UpdateBasicProfile = () => {
 
                     <div className="row">
 
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
                         <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
                         <Select
                           id="qualification"
@@ -562,15 +552,27 @@ const UpdateBasicProfile = () => {
                           options={
                             qualificationList &&
                             qualificationList.map((qualification) => ({
-                              value: qualification.id,
+                              value: qualification.title,
                               label: qualification.title,
                             }))
                           }
                           placeholder="---Select...---"
                         />
                       </div>
+                    </div>
+                    <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">What Is Your Job ?{" "}<span className="text-danger">*</span></label>
+                        <label className="form-label">Job Type {" "}<span className="text-danger">*</span></label>
+                        <Select
+                          options={occupationOptions}
+                          value={jobType}
+                          onChange={handleJobType}
+                          placeholder="Select..."
+                        />
+                        {/* Add error handling if needed */}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">Job Detail {" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="occupation"
@@ -612,7 +614,7 @@ const UpdateBasicProfile = () => {
 
 
 
-                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus&&showAvailableForMarriage ? '' : 'd-none'}`}>
+                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus && showAvailableForMarriage ? '' : 'd-none'}`}>
                       <div className="form-check">
                         <input
                           className="form-check-input"

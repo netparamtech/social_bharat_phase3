@@ -103,6 +103,8 @@ const SearchPartner = () => {
     if (selectedOption) {
       setSelectedState(selectedOption);
       setState(selectedOption.label);
+      setCity('');
+      setSelectedCity('');
       const selectedStateObject = states.find(
         (state) => state.name === selectedOption.value
       );
@@ -544,7 +546,7 @@ const SearchPartner = () => {
                             <Select
                               className="form-select"
                               aria-label="Default select example"
-                              options={states.map((state) => ({
+                              options={states&&states.map((state) => ({
                                 value: state.name,
                                 label: state.name,
                               }))}

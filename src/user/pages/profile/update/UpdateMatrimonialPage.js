@@ -9,7 +9,7 @@ import { setLoader } from '../../../actions/loaderAction';
 
 const UpdateMatrimonialPage = () => {
 
-    const [userMatrimonial, setUserMatrimonial] = useState();
+    const [userData, setUserData] = useState({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -18,19 +18,20 @@ const UpdateMatrimonialPage = () => {
         try {
             const response = await getUserFullProfile();
             if (response && response.status === 200) {
-                setUserMatrimonial(response.data?.data?.matrimonial[0]);
-                dispatch(setLoader(false));
+                setUserData(response.data.data);
+                console.log(response.data.data)
             }
         } catch (error) {
-            dispatch(setLoader(false));
             //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        //navigate('/login');
-      }
+            if (error.response && error.response.status === 401) {
+                navigate('/login');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                //navigate('/login');
+            }
+        } finally {
+            dispatch(setLoader(false));
         }
     }
 
@@ -40,7 +41,7 @@ const UpdateMatrimonialPage = () => {
     }, []);
     return (
         <UserLayout>
-            <UpdateMatrimonial userMatrimonial={userMatrimonial} />
+            <UpdateMatrimonial userData={userData} />
         </UserLayout>
     );
 };

@@ -1550,4 +1550,6 @@ input[type="number"] {
   transform: scale(1.1); /* Adjust the scaling factor as needed */
 }
 
-
+.form-check-input {
+  border: 1px solid #000; /* Adjust the color as needed */
+}

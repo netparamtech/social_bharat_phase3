@@ -16,7 +16,10 @@ import { setLoader } from "../../actions/loaderAction";
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
 const UpdateMatrimonial = (props) => {
-  const { userMatrimonial } = props;
+  const { userData } = props;
+  const loggedUser = useSelector((state) => state.userAuth);
+
+  const [userMatrimonial, setUserMatrimonial] = useState();
 
   const user = useSelector((state) => state.userAuth);
   const dispatch = useDispatch();
@@ -29,7 +32,7 @@ const UpdateMatrimonial = (props) => {
     { value: 'Son', label: 'Son' },
     { value: 'Daughter', label: 'Daughter' },
   ];
-
+  const [maritalStatus, setMaritalStatus] = useState('');
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
   const [skinTone, setSkinTone] = useState("");
@@ -49,23 +52,14 @@ const UpdateMatrimonial = (props) => {
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
   const [brothersDetails, setBrothersDetails] = useState(''); // Details of brothers
   const [sistersDetails, setSistersDetails] = useState('');
-  const [packageValue, setPackageValue] = useState(null); // Change to null for react-select
+  const [packageValue, setPackageValue] = useState(''); // Change to null for react-select
   const [showBrotherDetail, setShowBrotherDetail] = useState(false);
   const [showSisterDetail, setShowSisterDetail] = useState(false);
 
-  const [isBrotherDetails,setIsBrotherDetails] = useState(true);
-  const [isSisterDetails,setIsSisterDetails] = useState(true)
-
-  const packageOptions = [
-    { value: 'none', label: 'none' },
-    { value: '0-2lakh', label: '0 - 2 lakh' },
-    { value: '2-5lakh', label: '2 - 5 lakh' },
-    { value: '5-7lakh', label: '5 - 7 lakh' },
-    { value: '7-10lakh', label: '7 - 10 lakh' },
-    { value: '10-15lakh', label: '10 - 15 lakh' },
-    { value: '15-20lakh', label: '15 - 20 lakh' },
-    { value: 'morethan20lakh', label: 'More than 20 lakh' },
-  ];
+  const [isBrotherDetails, setIsBrotherDetails] = useState(true);
+  const [isSisterDetails, setIsSisterDetails] = useState(true);
+  const [community, setCommunity] = useState('');
+  const [communityName, setCommunityName] = useState('');
 
   const [brotherCount, setBrotherCount] = useState('');
   const [sisterCount, setSisterCount] = useState('');
@@ -79,6 +73,8 @@ const UpdateMatrimonial = (props) => {
   const [biodataPreview, setBiodataPreview] = useState("");
 
   const [errors, setErrors] = useState("");
+  const [messagePhotos, setMessagePhotos] = useState('');
+  const [messageBiodata, setMessageBiodata] = useState('');
   const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
@@ -98,8 +94,8 @@ const UpdateMatrimonial = (props) => {
 
 
 
-  const handlePackageChange = (selectedOption) => {
-    setPackageValue(selectedOption);
+  const handlePackageChange = (e) => {
+    setPackageValue(e.target.value);
   };
 
   const handleBrotherCount = (e) => {
@@ -145,7 +141,6 @@ const UpdateMatrimonial = (props) => {
     }
 
     const combinedUrls = [...previewUrls, ...tempProposalPhotoUrl];
-    setProposalPreview(combinedUrls);
 
     const formData = new FormData();
 
@@ -163,7 +158,9 @@ const UpdateMatrimonial = (props) => {
           ...response.data.data.files,
         ];
         setTempProposalPhotoUrl(combineTempUrls);
+        setProposalPreview(combinedUrls);
         setServerError('');
+        setMessagePhotos('');
         dispatch(setLoader(false));
       }
     } catch (error) {
@@ -171,6 +168,7 @@ const UpdateMatrimonial = (props) => {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setMessagePhotos(error.response.data.message);
       }
 
       //Unauthorized
@@ -190,7 +188,6 @@ const UpdateMatrimonial = (props) => {
       return;
     }
     setBiodataFile(selectedFiles);
-    setBiodataPreview(URL.createObjectURL(selectedFiles));
 
     const formData = new FormData();
     formData.append("pdf", selectedFiles);
@@ -200,7 +197,9 @@ const UpdateMatrimonial = (props) => {
       const response = await uploadPdf(formData); // Make an API call to get temporary URL
       if (response && response.status === 200) {
         setTempBiodataFileUrl(response.data.data.file);
+        setBiodataPreview(URL.createObjectURL(selectedFiles));
         setServerError('');
+        setMessageBiodata('');
         dispatch(setLoader(false));
       }
     } catch (error) {
@@ -208,6 +207,7 @@ const UpdateMatrimonial = (props) => {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setMessageBiodata(error.response.data.message);
       }
 
       //Unauthorized
@@ -221,10 +221,6 @@ const UpdateMatrimonial = (props) => {
     }
   };
 
-  const handleDOBChange = (isoDateString) => {
-    setDOB(isoDateString);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(setLoader(true));
@@ -235,14 +231,14 @@ const UpdateMatrimonial = (props) => {
       height_in_feet: `${heightFeet}.${heightInch}`,
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
-      cast: cast,
+      cast: cast ? cast : communityName,
       proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
       brother_count: brotherCount ? brotherCount : 0,
       sister_count: sisterCount ? sisterCount : 0,
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
-      salary_package: packageValue ? packageValue.label : '',
+      salary_package: packageValue ? packageValue : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_dob: dob,
       is_manglik: manglicStatus,
@@ -293,6 +289,22 @@ const UpdateMatrimonial = (props) => {
   };
 
   useEffect(() => {
+    if (userData) {
+      console.log(userData, "hjgjhg")
+      setCommunity(userData && userData.community && userData.community);
+      setUserMatrimonial(userData && userData.matrimonial && userData.matrimonial[0]);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (community) {
+      console.log(community.name);
+      setCommunityName(community && community.name);
+    }
+  }, [community]);
+
+  useEffect(() => {
+    console.log(userMatrimonial, "userMatrimonial");
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
       setFatherName(userMatrimonial.father_name || "N/A");
@@ -301,18 +313,14 @@ const UpdateMatrimonial = (props) => {
       setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
       setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
       setWeight(userMatrimonial.weight_in_kg || "N/A");
-      setCast(userMatrimonial.cast || "N/A");
+      setCast(userMatrimonial.cast || communityName);
       setGotraSelf(userMatrimonial.gotra || "N/A");
       setMaternalGotra(userMatrimonial.maternal_gotra || "N/A");
       setPaternalGotra(userMatrimonial.paternal_gotra || "N/A");
       setProposalPhoto(userMatrimonial.proposal_photos || "N/A");
       setBrotherCount(userMatrimonial.brother_count);
       setSisterCount(userMatrimonial.sister_count);
-
-      setPackageValue({
-        value: userMatrimonial.salary_package,
-        label: userMatrimonial.salary_package,
-      });
+      setPackageValue(userMatrimonial.salary_package);
       {
         userMatrimonial &&
           userMatrimonial.proposal_photos &&
@@ -334,7 +342,7 @@ const UpdateMatrimonial = (props) => {
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
 
       if (userMatrimonial.brothers_details) {
-        
+
         setBrothersDetails(userMatrimonial.brothers_details);
         setShowBrotherDetail(true);
       } else {
@@ -343,7 +351,7 @@ const UpdateMatrimonial = (props) => {
       if (userMatrimonial.sisters_details) {
         setSistersDetails(userMatrimonial.sisters_details);
         setShowSisterDetail(true);
-      }else{
+      } else {
         setIsSisterDetails(false);
       }
 
@@ -354,6 +362,7 @@ const UpdateMatrimonial = (props) => {
         });
         if (userMatrimonial.profile_created_for === 'Self') {
           setGender(user.user.gender);
+
           setDOB(yyyyMmDdFormat(user.user.dob));
         } else {
           setGender(userMatrimonial.matrimonial_profile_gender);
@@ -365,6 +374,12 @@ const UpdateMatrimonial = (props) => {
     }
 
   }, [userMatrimonial]);
+
+  useEffect(() => {
+    if (loggedUser && loggedUser.user) {
+      setMaritalStatus(loggedUser && loggedUser.user.marital_status && loggedUser.user.marital_status);
+    }
+  }, [loggedUser]);
 
   useEffect(() => {
     setServerError('');
@@ -402,12 +417,14 @@ const UpdateMatrimonial = (props) => {
                         name="fatherName"
                         id="fatherName"
                         placeholder="Enter Father Name"
-                        className="form-control"
+                        className="form-control "
                         autoFocus
                         defaultValue={fatherName}
                         onChange={(e) => setFatherName(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+
                       />
-                      {errors.father_name && (
+                      {errors && errors.father_name && (
                         <span className="error">{errors.father_name}</span>
                       )}
                     </div>
@@ -421,8 +438,9 @@ const UpdateMatrimonial = (props) => {
                         className="form-control"
                         defaultValue={motherName}
                         onChange={(e) => setMotherName(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.mother_name && (
+                      {errors && errors.mother_name && (
                         <span className="error">{errors.mother_name}</span>
                       )}
                     </div>
@@ -437,13 +455,13 @@ const UpdateMatrimonial = (props) => {
                         aria-label="Default select example"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                        disabled={updateFor && updateFor.label === 'Self'}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       >
                         <option value="">---Select Gender---</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
-                      {errors.gender && (
+                      {errors && errors.gender && (
                         <span className="error">{errors.gender}</span>
                       )}
                     </div>
@@ -457,9 +475,9 @@ const UpdateMatrimonial = (props) => {
                         className="form-control"
                         defaultValue={dob}
                         onChange={(e) => setDOB(e.target.value)}
-                        disabled={updateFor && updateFor.label === 'Self'}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.dob && (
+                      {errors && errors.dob && (
                         <span className="error">{errors.dob}</span>
                       )}
                       {/* Add error handling if needed */}
@@ -475,10 +493,11 @@ const UpdateMatrimonial = (props) => {
                         id="cast"
                         placeholder="Enter Cast"
                         className="form-control"
-                        defaultValue={cast}
+                        defaultValue={cast ? cast : communityName}
                         onChange={(e) => setCast(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.cast && (
+                      {errors && errors.cast && (
                         <span className="error">{errors.cast}</span>
                       )}
                     </div>
@@ -492,8 +511,9 @@ const UpdateMatrimonial = (props) => {
                         className="form-control"
                         defaultValue={paternalGotra}
                         onChange={(e) => setPaternalGotra(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.gotra && (
+                      {errors && errors.gotra && (
                         <span className="error">{errors.paternal_gotra}</span>
                       )}
                     </div>
@@ -511,8 +531,9 @@ const UpdateMatrimonial = (props) => {
                         className="form-control"
                         defaultValue={maternalGotra}
                         onChange={(e) => setMaternalGotra(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.maternal_gotra && (
+                      {errors && errors.maternal_gotra && (
                         <span className="error">{errors.maternal_gotra}</span>
                       )}
                     </div>
@@ -522,20 +543,23 @@ const UpdateMatrimonial = (props) => {
                         className="form-select form-control"
                         aria-label="Manglic select"
                         value={manglicStatus === 1 ? 'YES' : 'NO'}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                         onChange={(e) => setManglicStatus(e.target.value === 'YES' ? 1 : 0)}
                       >
                         <option value="">---Select Manglic Status---</option>
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
+
                       </select>
                       {/* Add error handling if needed */}
                     </div>
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        
+
                         <label className="form-label">Number of Brother(s)</label>
-                        <select id="numberDropdown" name="numberDropdown" className="form-control" value={brotherCount} onChange={handleBrotherCount}>
+                        <select id="numberDropdown" name="numberDropdown" className="form-control"
+                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={brotherCount} onChange={handleBrotherCount}>
                           <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -547,15 +571,17 @@ const UpdateMatrimonial = (props) => {
                           <option value="8">8</option>
                           <option value="9">9</option>
                           <option value="10">10</option>
+
                         </select>
-                        {errors.brother_count && (
+                        {errors && errors.brother_count && (
                           <span className="error">{errors.brother_count}</span>
                         )}
                         {/* Display the current value */}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Number of Sister(s)</label>
-                        <select id="numberDropdown" name="numberDropdown" className="form-control" value={sisterCount} onChange={handleSisterCount}>
+                        <select id="numberDropdown" name="numberDropdown" className="form-control"
+                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={sisterCount} onChange={handleSisterCount}>
                           <option value="0" defaultChecked>0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -567,8 +593,9 @@ const UpdateMatrimonial = (props) => {
                           <option value="8">8</option>
                           <option value="9">9</option>
                           <option value="10">10</option>
+
                         </select>
-                        {errors.sister_count && (
+                        {errors && errors.sister_count && (
                           <span className="error">{errors.sister_count}</span>
                         )}
                         {/* Display the current value */}
@@ -576,7 +603,7 @@ const UpdateMatrimonial = (props) => {
                     </div>
 
                     <div className="row">
-                      <div className={`mb-3 ${isBrotherDetails?'col-lg-6':'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
+                      <div className={`mb-3 ${isBrotherDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
                         <label className="form-label">Brothers Details</label>
 
                         <textarea
@@ -585,13 +612,14 @@ const UpdateMatrimonial = (props) => {
                           className="form-control mt-2"
                           defaultValue={brothersDetails}
                           onChange={(e) => setBrothersDetails(e.target.value)}
+                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                         />
-                        {errors.brothers_details && (
+                        {errors && errors.brothers_details && (
                           <span className="error">{errors.brothers_details}</span>
                         )}
                       </div>
 
-                      <div className={`mb-3 ${isSisterDetails?'col-lg-6':'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
+                      <div className={`mb-3 ${isSisterDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
                         <label className="form-label">Sisters Details</label>
                         <textarea
                           type="area"
@@ -599,8 +627,9 @@ const UpdateMatrimonial = (props) => {
                           className="form-control mt-2"
                           defaultValue={sistersDetails}
                           onChange={(e) => setSistersDetails(e.target.value)}
+                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                         />
-                        {errors.sisters_details && (
+                        {errors && errors.sisters_details && (
                           <span className="error">{errors.sisters_details}</span>
                         )}
                       </div>
@@ -610,13 +639,14 @@ const UpdateMatrimonial = (props) => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Package</label>
-                      <Select
+                      <input
                         value={packageValue}
+                        className="form-control mt-2"
                         onChange={handlePackageChange}
-                        options={packageOptions}
-                        placeholder="Select Package"
+                        placeholder="Enter Your Income..."
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.salary_package && (
+                      {errors && errors.salary_package && (
                         <span className="error">{errors.salary_package}</span>
                       )}
                       {/* Add error handling if needed */}
@@ -638,11 +668,12 @@ const UpdateMatrimonial = (props) => {
                             min="1"
                             max="15"
                             value={heightFeet}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                             onChange={(e) =>
                               setHeightFeet(parseInt(e.target.value, 10))
                             }
                           />
-                          
+
                           <span>{heightFeet}</span>{" "}
                           {/* Display the current value */}
                         </div>
@@ -660,6 +691,7 @@ const UpdateMatrimonial = (props) => {
                             min="0"
                             max="12"
                             value={heightInch}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                             onChange={(e) =>
                               setHeightInch(parseInt(e.target.value, 10))
                             }
@@ -668,7 +700,7 @@ const UpdateMatrimonial = (props) => {
                           {/* Display the current value */}
                         </div>
 
-                        {errors.height_in_feet && (
+                        {errors && errors.height_in_feet && (
                           <span className="error">{errors.height_in_feet}</span>
                         )}
                       </div>
@@ -679,16 +711,19 @@ const UpdateMatrimonial = (props) => {
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Proposal Photo {" "}<span className="text-danger">*</span></label>
+                      <p>Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg formet)</p>
                       <input
                         type="file"
                         className="form-control"
-                        accept=".png, .jpg, .jpeg"
+                        accept="images/*"
                         id="proposalPhoto"
                         defaultValue={proposalPhoto}
                         onChange={handleProposalPhotoChange}
                         multiple
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.proposal_photos && (
+                      {messagePhotos && <span className="error">{messagePhotos}</span>}
+                      {errors && errors.proposal_photos && (
                         <span className="error">{errors.proposal_photos}</span>
                       )}
                       <div className="proposal-Photo d-flex">
@@ -710,15 +745,18 @@ const UpdateMatrimonial = (props) => {
 
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Biodata {" "}<span className="text-danger">*</span></label>
+                      <p>upload biodata in pdf format only</p>
                       <input
                         type="file"
                         className="form-control"
-                        accept=".pdf"
+                        accept=".pdf, .doc"
                         id="biodata"
                         onChange={handleBiodataFileChange}
                         multiple
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors.biodata && (
+                      {messageBiodata && <span className="error">{messageBiodata}</span>}
+                      {errors && errors.biodata && (
                         <span className="error">{errors.biodata}</span>
                       )}
                       <div className="proposal-Photo d-flex">
@@ -728,7 +766,9 @@ const UpdateMatrimonial = (props) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" className="btn btn-primary"
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                      >
                         Update
                       </button>
                       <button type="button" className="btn btn-primary m-2" onClick={(e) => {

@@ -37,7 +37,7 @@ const SearchPeople = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
 
-  const [isFilter, setIsFilter] = useState(false);
+  const [isFilter, setIsFilter] = useState(true);
   const [isGoClick, setIsGoClick] = useState(false);
   const navigate = useNavigate();
 

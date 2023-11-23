@@ -225,6 +225,8 @@ const UpdateMatrimonial = (props) => {
     event.preventDefault();
     dispatch(setLoader(true));
 
+    const trimmedTempProposalPhotoUrl = tempProposalPhotoUrl.map(item => item.trim()).filter((item) => item !== '');
+
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,
@@ -232,7 +234,7 @@ const UpdateMatrimonial = (props) => {
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
       cast: cast ? cast : communityName,
-      proposal_photos: tempProposalPhotoUrl, // Use the temporary URL
+      proposal_photos: trimmedTempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
       brother_count: brotherCount ? brotherCount : 0,
       sister_count: sisterCount ? sisterCount : 0,
@@ -290,7 +292,6 @@ const UpdateMatrimonial = (props) => {
 
   useEffect(() => {
     if (userData) {
-      console.log(userData, "hjgjhg")
       setCommunity(userData && userData.community && userData.community);
       setUserMatrimonial(userData && userData.matrimonial && userData.matrimonial[0]);
     }
@@ -298,13 +299,11 @@ const UpdateMatrimonial = (props) => {
 
   useEffect(() => {
     if (community) {
-      console.log(community.name);
       setCommunityName(community && community.name);
     }
   }, [community]);
 
   useEffect(() => {
-    console.log(userMatrimonial, "userMatrimonial");
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
       setFatherName(userMatrimonial.father_name || "N/A");
@@ -730,14 +729,20 @@ const UpdateMatrimonial = (props) => {
                         {proposalPreview &&
                           proposalPreview.map((item, idx) => (
                             <div className="m-2" key={idx}>
-                              <img src={item} alt={`Photos ${idx + 1}`} />
-                              <button
-                                type="button"
-                                className="btn"
-                                onClick={() => handleDeleteImage(idx)}
-                              >
-                                <i className="fas fa-trash"></i>
-                              </button>
+                              {
+                                item.trim() !== '' && (
+                                  <>
+                                    <img src={item} alt={`Photos ${idx + 1}`} />
+                                    <button
+                                      type="button"
+                                      className="btn"
+                                      onClick={() => handleDeleteImage(idx)}
+                                    >
+                                      <i className="fas fa-trash"></i>
+                                    </button>
+                                  </>
+                                )
+                              }
                             </div>
                           ))}
                       </div>

@@ -248,8 +248,17 @@ const UpdateBasicProfile = () => {
     dispatch(setLoader(true));
 
     const arrayName = name.split(' ');
-    const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
-
+    const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    let modifiedOccupation = occupation;
+    if (jobType !== null) {
+      if(modifiedOccupation.includes('/')){
+        const itemsArray = modifiedOccupation.split('/');
+        console.log(itemsArray)
+        modifiedOccupation = itemsArray[1];
+        console.log(modifiedOccupation)
+      }
+      modifiedOccupation = `${jobType.label}/${modifiedOccupation}`;
+    }
     // Prepare the updated data
     const updatedData = {
       name: modifiedName,
@@ -260,7 +269,7 @@ const UpdateBasicProfile = () => {
       dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
       marital_status: maritalStatus ? maritalStatus.label : '',
-      occupation,
+      occupation:modifiedOccupation,
       highest_qualification: qualification.label
     };
 
@@ -327,7 +336,15 @@ const UpdateBasicProfile = () => {
       setShowAvailableForMarriage(false)
     }
 
-    setOccupation(user && user.user && user.user.occupation && user.user.occupation);
+    if(user && user.user && user.user.occupation){
+      const itemsArray = user.user.occupation.split('/');
+      setJobType({
+        value:itemsArray[0],
+        label:itemsArray[0]
+      });
+      setOccupation(itemsArray[1]);
+    }
+
     setQualification({
       value: user && user.user && user.user.highest_qualification,
       label: user && user.user && user.user.highest_qualification

@@ -140,6 +140,9 @@ const UpdateBusinessProfile = (props) => {
       contact1: contact1,
       contact2: contact2,
       contact3: contact3,
+      business_website: businessWebsite,
+      business_email: businessEmail,
+      status:status,
     };
 
 
@@ -248,6 +251,7 @@ const UpdateBusinessProfile = (props) => {
       setBusinessEmail(businessDetails.business_email || '');
       setBusinessWebsite(businessDetails.business_website || '');
       setBusinessPhoto(businessDetails.business_photos || '');
+      setStatus(businessDetails.status||'');
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
           (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (setTempBusinessPhotoUrl([businessDetails.business_photos] || ''))
@@ -480,20 +484,7 @@ const UpdateBusinessProfile = (props) => {
                       />
                       {errors.business_email && <span className='error'>{errors.business_email}</span>}
                     </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Website Link</label>
-                      <input type="text"
-                        name="businessWebsite"
-                        id="businessWebsite"
-                        placeholder="Enter Business Website Link"
-                        className="form-control"
-                        defaultValue={businessWebsite}
-                        onChange={(e) => setBusinessWebsite(e.target.value)}
-                      />
-                      {errors.business_website && <span className='error'>{errors.business_website}</span>}
-                    </div>
-                  </div>
-                  <div className='row'>
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label htmlFor="status">Status{" "}<span className="text-danger">*</span></label>
                       <select
@@ -511,6 +502,23 @@ const UpdateBusinessProfile = (props) => {
                         <span className="error">{errors.status}</span>
                       )}
                     </div>
+
+                  </div>
+                  <div className='row'>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Business Details</label>
+                      <p>(Please add your business details and website link if any.)</p>
+                      <textarea type="text"
+                        name="businessWebsite"
+                        id="businessWebsite"
+                        placeholder="Enter Business Website Link"
+                        className="form-control"
+                        defaultValue={businessWebsite}
+                        onChange={(e) => setBusinessWebsite(e.target.value)}
+                      />
+                      {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                    </div>
+
                   </div>
 
                   <div className="row mt-4">

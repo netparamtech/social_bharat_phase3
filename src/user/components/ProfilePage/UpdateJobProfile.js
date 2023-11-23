@@ -35,8 +35,8 @@ const UpdateJobProfile = (props) => {
     const jobProfileData = {
       company_name: companyName,
       designation,
-      job_start_date: ddmmyyyyFormat(jobStartDate),
-      job_end_date: ddmmyyyyFormat(jobEndDate),
+      job_start_date: '2023-10-23',
+      job_end_date: '2023-11-23',
       job_type: mappedJobType,
     };
 
@@ -129,7 +129,7 @@ const UpdateJobProfile = (props) => {
                     </div>
                   </div>
 
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">Job Start Date {" "}<span className="text-danger">*</span></label>
                       <input
@@ -160,10 +160,10 @@ const UpdateJobProfile = (props) => {
                         <span className="error">{errors.job_end_date}</span>
                       )}
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
                       <label className="form-label">Job Type{" "}<span className="text-danger">*</span></label>
                       <select
                         className="form-select form-control"

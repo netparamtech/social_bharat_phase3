@@ -282,7 +282,7 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Proposal Photo</td>
                             <td className="proposal-Photo">
-                              {proposalPhotos &&
+                              {proposalPhotos && proposalPhotos.length>0 &&
                                 Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
                                   <a href={item} target="_blank" key={idx}>
@@ -291,7 +291,9 @@ const MatrimonialInfo = (props) => {
                                 ))
                               ) : (
                                 <a href={proposalPhotos} target="_blank">
-                                  <img src={proposalPhotos} />
+                                 {
+                                  proposalPhotos && proposalPhotos.length>0 &&  <img src={proposalPhotos} />
+                                 }
                                 </a>
                               )}
                             </td>

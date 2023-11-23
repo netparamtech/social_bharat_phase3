@@ -173,13 +173,15 @@ const BusinessInfo = (props) => {
                                 </td>
                               </tr>
                               <tr>
-                                <td>Website Link</td>
-                                <td className="text-muted">
+                                <td>Business Details (or Website)</td>
+                                <td className="truncate-text text-muted">
                                   {item.business_website}
                                 </td>
                               </tr>
 
-                              <tr>
+                             {
+                              item.business_photos && (
+                                <tr>
                                 <td>Business Photo</td>
                                 <td className="proposal-Photo">
                                   {businessPhotos &&
@@ -196,6 +198,8 @@ const BusinessInfo = (props) => {
                                   )}
                                 </td>
                               </tr>
+                              )
+                             }
                               <tr>
                                 <td>Status</td>
                                 <td className="text-muted">{item.status}</td>

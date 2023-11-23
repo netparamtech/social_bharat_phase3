@@ -111,7 +111,7 @@ const JobInfo = (props) => {
                                 {item.designation || "NA"}
                               </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                               <td>Job Start Date</td>
                               <td className="text-muted">
                                 {formatDate(item.job_start_date) || "NA"}
@@ -122,7 +122,7 @@ const JobInfo = (props) => {
                               <td className="text-muted">
                                 {formatDate(item.job_end_date) || "NA"}
                               </td>
-                            </tr>
+                            </tr> */}
                             <tr>
                               <td>Job Type</td>
                               <td className="text-muted">

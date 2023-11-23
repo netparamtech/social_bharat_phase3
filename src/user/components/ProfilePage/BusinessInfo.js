@@ -106,7 +106,7 @@ const BusinessInfo = (props) => {
                             ></i>
                           </a>
                         </div>
-
+                          <div className="table-responsive">
                         <table className="table table-striped">
                           <tbody>
                             <tr>
@@ -114,21 +114,25 @@ const BusinessInfo = (props) => {
                               <td className="text-muted">
                                 {item.business_name}
                               </td>
+                              <td  width="50px"></td>
                             </tr>
                             <tr>
                               <td>Business Category</td>
                               <td className="text-muted">
                                 {item.business_category}
                               </td>
+                              <td  width="50px"></td>
                             </tr>
                             <tr>
                               <td>Street Address</td>
                               <td className="text-muted">
                                 {item.street_address}
                               </td>
+                              <td  width="50px"></td>
                             </tr>
                           </tbody>
                         </table>
+                        </div>
 
                         <div
                           className={`pt-0 collapse${

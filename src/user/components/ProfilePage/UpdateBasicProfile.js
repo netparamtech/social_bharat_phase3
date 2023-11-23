@@ -231,7 +231,6 @@ const UpdateBasicProfile = () => {
     } finally {
       dispatch(setLoader(false));
     }
-
   }
 
   useEffect(() => {
@@ -243,7 +242,6 @@ const UpdateBasicProfile = () => {
   useEffect(() => {
     fetchAllQualification();
   }, []);
-
 
   useEffect(() => {
     setDOB(convertToCustomDateFormat(user.user.dob));

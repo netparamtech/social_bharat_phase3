@@ -136,13 +136,13 @@ const MatrimonialInfo = (props) => {
                        <div className="row">
                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                               <div className="row">
-                                <div className="col-md-4">
+                                <div className="col-4">
                                   <label htmlFor="status" className="fw-bold">
                                     Brother Details :
                                   </label>
                                 </div>
-                                <div className="col-md-8">
-                                  <label className="">
+                                <div className="col-8">
+                                  <label className="w-75" >
                                     {brotherDetails||"N/A"}
                                   </label>
                                 </div>
@@ -152,12 +152,12 @@ const MatrimonialInfo = (props) => {
                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                               <div className="row">
                                 <div className="col-md-4">
-                                  <label htmlFor="status" className="fw-bold">
+                                  <label htmlFor="status" className="fw-bold ">
                                     Sister Details :
                                   </label>
                                 </div>
                                 <div className="col-md-8">
-                                  <label className="">
+                                  <label className="w-75">
                                     {sisterDetails||"N/A"}
                                   </label>
                                 </div>

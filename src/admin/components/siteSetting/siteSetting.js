@@ -483,17 +483,17 @@ const SiteSetting = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-4">
-                        <div className="form-group">
-                          {thumbnailPreview2 && (
-                            <img
-                              src={thumbnailPreview2}
-                              alt="Logo"
-                              title="Logo-1"
-                              className="small-img-thumbnail  img-fluid my-2 "
-                            />
-                          )}
-                        </div>
+                    </div>
+                    <div className="col-4">
+                      <div className="form-group">
+                        {thumbnailPreview2 && (
+                          <img
+                            src={thumbnailPreview2}
+                            alt="Logo"
+                            title="Logo-1"
+                            className="small-img-thumbnail  img-fluid my-2 "
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  fetchAllActiveCommunities,
   fetchAllCitiesByStateID,
+  fetchAllCommunities,
   fetchAllStatesByCountryID,
   searchPartner,
-  searchPartnerWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -104,6 +103,8 @@ const SearchPartner = () => {
     if (selectedOption) {
       setSelectedState(selectedOption);
       setState(selectedOption.label);
+      setCity('');
+      setSelectedCity('');
       const selectedStateObject = states.find(
         (state) => state.name === selectedOption.value
       );
@@ -237,9 +238,10 @@ const SearchPartner = () => {
   //fetch all active communities
 
   const fetchCommunities = async () => {
-    const response = await fetchAllActiveCommunities();
+    const response = await fetchAllCommunities();
     if (response && response.status === 200) {
-      setCommunities(response.data.data);
+      const requestedCasts = response.data.data.filter((item)=>item.status === 'Inactive');
+      setCommunities(requestedCasts);
     }
   };
 
@@ -544,7 +546,7 @@ const SearchPartner = () => {
                             <Select
                               className="form-select"
                               aria-label="Default select example"
-                              options={states.map((state) => ({
+                              options={states&&states.map((state) => ({
                                 value: state.name,
                                 label: state.name,
                               }))}

@@ -100,7 +100,7 @@ const LoginWithMobile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
-                <img  src={imageUrls&&imageUrls[0]} className="img-fluid" alt="Sign In" />
+                <img src={imageUrls && imageUrls[0]} className="img-fluid" alt="Sign In" />
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                 <div className="card-title">
@@ -129,7 +129,7 @@ const LoginWithMobile = (props) => {
                         {errors.mobile && <span className='error'>{errors.mobile}</span>}
                       </div>
                       <div className="row mb-3">
-                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                        <button type="submit" className="btn-custom btn-primary-custom" onClick={handleSubmit}>
                           Login With OTP
                         </button>
                       </div>

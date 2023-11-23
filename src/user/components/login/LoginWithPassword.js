@@ -173,7 +173,7 @@ const LoginWithPassword = (props) => {
                   </div>
 
                   <div className="row mb-3">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn-custom btn-primary-custom">
                       Login With Password
                     </button>
                   </div>
@@ -190,7 +190,7 @@ const LoginWithPassword = (props) => {
                   <div className="row mt-3">
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn-custom btn-secondary"
                       onClick={openLoginWithOtpForm}
                     >
                       Login With OTP

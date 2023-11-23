@@ -33,7 +33,7 @@ const SearchBusiness = () => {
   const [message, setMessage] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [isFilter, setIsFilter] = useState(false);
+  const [isFilter, setIsFilter] = useState(true);
 
   const navigate = useNavigate();
 

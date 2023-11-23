@@ -1,0 +1,82 @@
+
+.btn-check:focus + .btn,
+.btn:focus {
+  outline: 0px;
+  box-shadow: none !important;
+}
+
+/* Buttons */
+.btn-custom {
+  border-radius: 0px !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.btn-primary-custom {
+  background-color: #008374 !important;
+  border-color: #008374 !important;
+  color: #fff;
+}
+
+.btn-primary-custom:hover,
+.btn-primary-custom:focus {
+  background-color: #006b5d !important;
+  border-color: #006b5d !important;
+}
+
+.btn-primary-custom:disabled {
+  background-color: #006b5d1a !important;
+  border-color: #006b5d6e !important;
+  color: #888888c9 !important;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #ff9933 !important;
+  border-color: #ff9933 !important;
+  color: #fff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #e58c28 !important;
+  border-color: #e58c28 !important;
+  /* color: #e7e4e4c9; */
+  color: #fff;
+}
+
+.btn-secondary:disabled {
+  background-color: #e58d285b !important;
+  border-color: #e58d28a6 !important;
+  color: #fff;
+}
+
+.btn-banner {
+  background-color: #50cc14 !important;
+  border-color: #50cc14 !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-banner:hover,
+.btn-banner:focus {
+  background-color: #51cc14c7 !important;
+  border-color: #50cc14 !important;
+  /* color: #e7e4e4c9; */
+  color: #fff;
+}
+
+/* .btn-set{
+  width: 100%;
+  height: 40px;
+  text-align: center;
+}  */
+
+.form-control-custom {
+  border-radius: 0px !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.form-control:focus,
+.form-control:hover {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.05) !important;
+}

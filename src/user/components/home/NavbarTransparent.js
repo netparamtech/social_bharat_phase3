@@ -22,6 +22,9 @@ const NavbarTransparent = (props) => {
 
   const handleLoginClicked = (e) => {
     e.preventDefault();
+    if(isAndroidUsed){
+      showDrawer();
+     }
     dispatch(setLoader(true));
     navigate("/login");
     dispatch(setLoader(false));
@@ -29,6 +32,9 @@ const NavbarTransparent = (props) => {
 
   const handleHomeClicked = (e) => {
     e.preventDefault();
+    if(isAndroidUsed){
+      showDrawer();
+     }
     window.scrollTo(0, 0);
     if (isAuthenticUser) {
       navigate("/dashboard");
@@ -39,12 +45,18 @@ const NavbarTransparent = (props) => {
 
   const handleAboutClick = (e) => {
     e.preventDefault();
+    if(isAndroidUsed){
+      showDrawer();
+     }
     window.scrollTo(0, 0);
     navigate("/about");
   };
 
   const handleEventClick = (e) => {
     e.preventDefault();
+    if(isAndroidUsed){
+      showDrawer();
+     }
     window.scrollTo(0, 0);
     if (isAuthenticUser) {
       if (isPasswordSet) {
@@ -59,10 +71,16 @@ const NavbarTransparent = (props) => {
 
   const handleContactClicked = (e) => {
     e.preventDefault();
+   if(isAndroidUsed){
+    showDrawer();
+   }
     navigate("/contact");
   };
 
   const handleServiceClick = (e) => {
+    if(isAndroidUsed){
+      showDrawer();
+     }
 
     if (isAuthenticUser) {
       if (isPasswordSet) {
@@ -71,6 +89,9 @@ const NavbarTransparent = (props) => {
         navigate("/set-password");
       }
     } else {
+      if(isAndroidUsed){
+        showDrawer();
+       }
       // Check if the current page is the home page
       const isHomePage = window.location.pathname === "/";
 
@@ -293,7 +314,7 @@ const NavbarTransparent = (props) => {
                     </li>
                   ) : (
                     <li className="nav-item mt-2">
-                      <a onClick={() => navigate("/login")}>
+                      <a onClick={handleLoginClicked}>
                         <i className="fa fa-sign-in m-2" aria-hidden="true"></i>{" "}
                         Login
                       </a>

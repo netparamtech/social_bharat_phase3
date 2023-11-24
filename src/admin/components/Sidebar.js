@@ -269,8 +269,7 @@ function Sidebar() {
             navigate("/admin/bharat-mandir/index");
           }}
         >
-          
-          <i className="fa fa-comment" fill="currentColor"></i>
+        <i class="fa fa-book" fill="currentColor"></i>
           <span className="m-2">Bharat Mata Mandir</span>
         </a>
       </li>

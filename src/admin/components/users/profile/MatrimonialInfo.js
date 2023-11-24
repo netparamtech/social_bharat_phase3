@@ -33,7 +33,7 @@ const MatrimonialInfo = (props) => {
 
   return (
     <div>
-      <div id="auth-wrapper" className="pt-3 pb-4">
+      <div id="" className="pb-4 pt-2">
         <div id="matrimonial-info" className="container">
           <div className="card shadow" id='font-Resize'>
             <div className="card-body">

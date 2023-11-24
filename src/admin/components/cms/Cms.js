@@ -15,7 +15,7 @@ const Cms = () => {
       </div>
 
       <Card title="Content Management System (CMS)">
-        <Card.Grid style={gridStyle}><a className="text-success stretched-link hover-pointer-admin" onClick={() => navigate('/home/cms')}>
+        <Card.Grid style={gridStyle}><a className="text-success" onClick={() => navigate('/home/cms')}>
           <h4>  HOME</h4>
         </a></Card.Grid>
       </Card>

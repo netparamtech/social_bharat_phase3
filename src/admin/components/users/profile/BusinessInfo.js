@@ -19,7 +19,7 @@ const BusinessInfo = (props) => {
   }, [userDetails]);
 
   return (
-    <div id="businesses-section" className="content-wrapper pt-4">
+    <div id="businesses-section" className="content-wrapper pt-4 pb-3">
       <div className="container">
         <div className="card shadow">
           <div className="card-body">

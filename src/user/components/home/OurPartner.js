@@ -18,7 +18,7 @@ function OurPartner() {
     slidesToShow: !isAndroidUsed?12:3,
     slidesToScroll: 1,
     autoplay: true,
-    arrows: false,
+    arrows: true,
     autoplaySpeed: 1500,
   };
 
@@ -69,6 +69,7 @@ function OurPartner() {
       <section id="partner">
         <div className="container">
           <div className="row costomer-logos">
+          <div className="card shadow bg-warning  text-white h-100">
             <Slider {...settings}>
               {casts && casts.length > 0 &&
                 casts.map(
@@ -86,6 +87,7 @@ function OurPartner() {
                     )
                 )}
             </Slider>
+            </div>
           </div>
         </div>
       </section>

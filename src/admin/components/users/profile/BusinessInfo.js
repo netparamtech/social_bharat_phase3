@@ -90,7 +90,7 @@ const BusinessInfo = (props) => {
                             {
                               item.business_website && (
                                 <tr>
-                                  <td className='fw-bold font-14'>Website Link</td>
+                                  <td className='fw-bold font-14'>Business Details(or Website links)</td>
                                   <td className="text-muted">
                                     {item.business_website}
                                   </td>

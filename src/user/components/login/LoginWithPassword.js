@@ -109,7 +109,7 @@ const LoginWithPassword = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className="card shadow">
+        <div className={`card shadow ${errors ? 'border-danger':''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 d-none d-md-block wow animate__animated animate__zoomIn">

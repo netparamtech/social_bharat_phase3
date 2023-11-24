@@ -35,6 +35,7 @@ import ViewOneCommunityPage from "./pages/communities/ViewOneCommunityPage";
 import NewSidebar from "./components/Test/NewSidebar";
 import HomeCmsViewPage from "./pages/cms/HomeCmsViewPage";
 import UpdateCmsPage from "./pages/cms/UpdateCmsPage";
+import BharatMandirPage from "./pages/BharatMandirPage";
 
 const adminRoutes = [
     {
@@ -252,6 +253,12 @@ const adminRoutes = [
     {
         path: '/admin/sidebar',
         component: NewSidebar,
+        exact:true
+    },
+
+    {
+        path: '/admin/bharat-mandir/index',
+        component: BharatMandirPage,
         exact:true
     },
 ]

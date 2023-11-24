@@ -60,7 +60,7 @@ const UpdateMobile = () => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div id="changePassword" className="container">
-        <div className="card shadow mx-auto">
+        <div className = {`card shadow mx-auto ${errors ? 'border-danger':''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">

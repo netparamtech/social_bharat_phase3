@@ -420,9 +420,6 @@ const EventForm = () => {
                         )}
                       </div>
                     </div>
-                    <div className="fw-light fs-6">
-                      <input type="checkbox" /> Ticket charges if any
-                    </div>
 
                     <div className="row mt-4">
                       <div className="col-lg-6 col-sm-12 col-xs-12">

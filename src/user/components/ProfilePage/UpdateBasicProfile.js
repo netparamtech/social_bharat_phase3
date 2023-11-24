@@ -557,7 +557,7 @@ const UpdateBasicProfile = () => {
 
                     <div className="row">
 
-                      <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
                         <Select
                           id="qualification"
@@ -574,6 +574,19 @@ const UpdateBasicProfile = () => {
                           placeholder="---Select...---"
                         />
                       </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                      <label className="form-label">Community</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Enter your name"
+                        className="form-control"
+                        defaultValue={community.name}
+                        disabled
+                      />
+
+                    </div>
                     </div>
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -611,19 +624,7 @@ const UpdateBasicProfile = () => {
                           placeholder="Select..."
                         />
                       </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                        <label className="form-label">Community</label>
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          placeholder="Enter your name"
-                          className="form-control"
-                          defaultValue={community.name}
-                          disabled
-                        />
-
-                      </div>
+                     
 
                     </div>
 

@@ -435,7 +435,7 @@ const UpdateBasicProfile = () => {
       {contextHolder}
       <div id="auth-wrapper" className="pt-5 pb-5">
         <div className="container">
-          <div className="card shadow">
+          <div className={`card shadow ${errors ? 'border-danger':''}`}>
             <div className="card-body">
               {serverError && <span className='error'>{serverError}</span>}
               <div className="row">

@@ -86,7 +86,7 @@ const Testimonials = () => {
 
   return (
     <section id="testimonials" className="wow animate__animated animate__zoomIn" style={{ backgroundImage: `url(${statsBg[0] && statsBg[0].banner_urls[0]})` }}>
-      <div id="carouselExampleInterval" className="carousel slide text-center" data-bs-ride="carousel">
+      <div id="carouselExampleInterval" className="text-center">
         <div className="">
           <Carousel autoplay>
             {data.map((item, index) => (
@@ -106,14 +106,7 @@ const Testimonials = () => {
           </Carousel>
 
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+       
         <a className="btn btn-primary hover-pointer fw-bold" onClick={handleReviewClick}>Share Your Review</a>
 
       </div>

@@ -261,6 +261,20 @@ function Sidebar() {
         </a>
       </li>
 
+      <li className="nav-item">
+        <a
+          className="nav-link collapsed hover-pointer-admin"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate("/admin/bharat-mandir/index");
+          }}
+        >
+          
+          <i className="fa fa-comment" fill="currentColor"></i>
+          <span className="m-2">Bharat Mata Mandir</span>
+        </a>
+      </li>
+
       {/* <!-- Nav Item - Event Collapse Menu --> */}
 
       <li className="nav-item">

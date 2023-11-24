@@ -79,9 +79,7 @@ const MatrimonialInfo = (props) => {
                               </label>
                             </div>
                             <div className="col-md-8">
-                              <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].skin_tone||"N/A"}
-                              </label>
+                              <label className="">N/A</label>
                             </div>
                           </div>
                         </div>

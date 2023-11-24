@@ -28,13 +28,13 @@ const BasicProfile = (props) => {
   }, [userDetails])
 
   return (
-    <div id="basic-profile-section" className="content-wrapper pt-4">
+    <div id="" className="content-wrapper ">
       <div className="container">
         <div className="row mb-3 fw fs-5">
           <div className="col-md-3 mb-sm-3 ">
             <div className="card shadow">
-              <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
-                <Image
+              <div className="container-profilepic mx-auto  card-block-md overflow-hidden ">
+                <img
                   src={
                     userDetails?.data?.photo
                       ? userDetails.data.photo
@@ -46,9 +46,9 @@ const BasicProfile = (props) => {
               <div className="card-body ">
                 <p className=" text-center mb-0">
                   {userDetails?.data?.name}
-                </p>
+                </p><span>Community=</span>
                 <Image
-                  className="img-fluid community-img"
+                  className="img-fluid community-img ms-2"
                   src={
                     userDetails?.data?.community?.thumbnail_image
                       ? userDetails?.data?.community?.thumbnail_image
@@ -137,7 +137,7 @@ const BasicProfile = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+              <div className="mb-2 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
                     <label className="fw-bold">Highest Qualification :</label>
@@ -147,7 +147,7 @@ const BasicProfile = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
+              <div className=" col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-4">
                     <label className="fw-bold">Available For Marriage :</label>

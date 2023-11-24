@@ -272,14 +272,14 @@ const SearchBusiness = () => {
                             />
                           </div>
                           <div className="col-8 user-detail">
-                            <h6>Name-{item.business_name}</h6>
+                            <h6>{item.business_name}</h6>
                             <p>Category-{item.business_category}</p>
                             <p>Street-{item.street_address}</p>
                             <p>{item.city}</p>
                             <p>{item.state ? `(${item.state})` : ""}</p>
                             <p>
-                              Contact Numbers:
-                              <a href={`tel:${item.contact1}`}>
+                              Contact Numbers: 
+                              <a href={`tel:${item.contact1 }`}>
                                 {item.contact1}
                               </a>
                               {item.contact2 ? (

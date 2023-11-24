@@ -12,7 +12,7 @@ import { setLoader } from '../../actions/loaderAction';
 
 const BharatMataMandirIndex = () => {
   const [data, setData] = useState([]);
-  const [searchData,setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -49,12 +49,12 @@ const BharatMataMandirIndex = () => {
   };
 
   const fetchSearchData = () => {
-    if(data){
-       // Filter the data based on the search query
-     const filteredData = data.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSearchData(filteredData);
+    if (data) {
+      // Filter the data based on the search query
+      const filteredData = data.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchData(filteredData);
     }
   }
 
@@ -62,7 +62,7 @@ const BharatMataMandirIndex = () => {
     dispatch(setLoader(true));
     try {
       const response = await fetchAllCommunity();
-      const fetchedData = response.data.data.filter((item)=>item.status==='Active');
+      const fetchedData = response.data.data.filter((item) => item && item.community_archive!=='');
 
       setData(fetchedData);
       setSearchData(fetchedData);
@@ -113,7 +113,7 @@ const BharatMataMandirIndex = () => {
       }
     }
   }
- 
+
   // Rest of the code for handleUserToggleStatus, handleDeleteEnquiry, formatDate, and columns remains the same
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const BharatMataMandirIndex = () => {
       title: 'Name', dataIndex: 'name',
       sorter: false,
       sortDirections: ['asc', 'desc'],
-      with:100,
+      with: 100,
     },
 
     {
@@ -152,7 +152,7 @@ const BharatMataMandirIndex = () => {
           />
         </a>
       ),
-      width:200,
+      width: 200,
     },
 
     {
@@ -164,11 +164,46 @@ const BharatMataMandirIndex = () => {
             alt={record.name}
             title={record.name}
             className=''
-            style={{width: record.banner_image ? '60px' : '60px'}}
+            style={{ width: record.banner_image ? '60px' : '60px' }}
           />
         </a>
       ),
-      width:200,
+      width: 200,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (text, record) => (
+        <div>
+          {record.status === 'Active' ? (
+            <a
+              className="collapse-item m-2"
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                handleCommunityToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-up text-primary" title="Active" />
+            </a>
+          ) : (
+            <a
+              className="collapse-item text-secondary m-2"
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                handleCommunityToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-down" title="Inactive" />
+            </a>
+          )}
+        </div>
+      ),
+      fixed: 'right',
+      sorter: false,
+      sortDirections: ['asc', 'desc'],
+      width: 150,
     },
 
     {
@@ -178,7 +213,7 @@ const BharatMataMandirIndex = () => {
         <div>
           <a className="collapse-item" onClick={(e) => {
             e.preventDefault(); // Prevent the default anchor tag behavior
-            navigate(`/admin/update/community/${record.id}`);
+            navigate(`/admin/bharat-mandir/update/${record.id}`);
           }}>
             <i className="fa fa-edit mr-2" title='Edit' />
           </a>
@@ -205,12 +240,12 @@ const BharatMataMandirIndex = () => {
 
   return (
     <div>
-       <div className="d-sm-flex align-items-center justify-content-between mb-4">
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master Celebrities</h1>
-        <a href="" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        <a className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault();
-            navigate('/admin/create/community')
+            navigate('/admin/bharat-mandir/create');
           }}
         >
           Create New

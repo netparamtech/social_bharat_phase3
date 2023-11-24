@@ -240,7 +240,7 @@ const SearchPartner = () => {
   const fetchCommunities = async () => {
     const response = await fetchAllCommunities();
     if (response && response.status === 200) {
-      const requestedCasts = response.data.data.filter((item)=>item.status === 'Inactive');
+      const requestedCasts = response.data.data.filter((item)=>item && item.community_archive==='');
       setCommunities(requestedCasts);
     }
   };

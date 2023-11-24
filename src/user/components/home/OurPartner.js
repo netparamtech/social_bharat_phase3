@@ -46,7 +46,8 @@ function OurPartner() {
     try {
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
-        setCasts(response.data.data);
+        const filteredFetch = response.data.data.filter((item)=>item && item.community_archive!=='');
+        setCasts(filteredFetch);
         dispatch(setLoader(false));
       }
     } catch (error) {

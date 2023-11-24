@@ -62,7 +62,7 @@ const CommunitiesList = () => {
     dispatch(setLoader(true));
     try {
       const response = await fetchAllCommunity();
-      const fetchedData = response.data.data;
+      const fetchedData = response.data.data.filter((item)=>item && item.community_archive==='');
 
       setData(fetchedData);
       setSearchData(fetchedData);

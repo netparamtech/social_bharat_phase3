@@ -106,7 +106,7 @@ const CommunityUpdateForm = () => {
         status,
         thumbnail_image: thumbnailImageTempUrl,
         banner_image: (bannerImageTempUrl === null) ? "" : bannerImageTempUrl,
-        community_archive: htmlContent,
+        community_archive: '',
       };
       const response = await updateCommunity(id, communityData);
 
@@ -313,7 +313,7 @@ const CommunityUpdateForm = () => {
                 <div className="col-md-12">
                   <label className="fw-bold">Community Archieve</label>
                 </div>
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
 
                   <Editor
                     editorState={editorState}
@@ -322,7 +322,7 @@ const CommunityUpdateForm = () => {
                     editorClassName="editor-class custom-editor-height editor-border p-2"
                     toolbarClassName="toolbar-class toolbar-border"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 

@@ -121,7 +121,7 @@ const CreateNewBharatMandir = () => {
         bannerImageRef.current.value = null;
 
         setTimeout(() => {
-          navigate('/admin/communities')
+          navigate('/admin/bharat-mandir/index')
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -151,7 +151,7 @@ const CreateNewBharatMandir = () => {
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            navigate('/admin/communities')
+            navigate('/admin/bharat-mandir/index')
           }}
         >
           View All

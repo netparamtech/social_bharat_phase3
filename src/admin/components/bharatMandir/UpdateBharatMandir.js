@@ -11,7 +11,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
-const CommunityUpdateForm = () => {
+const UpdateBharatMandir = () => {
   const { id } = useParams();
 
   const [name, setName] = useState("");
@@ -115,7 +115,7 @@ const CommunityUpdateForm = () => {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         setTimeout(() => {
-          navigate('/admin/communities')
+          navigate('/admin/bharat-mandir/index');
         }, 1000);
       }
       // Redirect to the admin dashboard or desired page
@@ -173,16 +173,16 @@ const CommunityUpdateForm = () => {
   return (
     <div className="container-fluid" id="font-Resize" style={{ minHeight: "100vh" }}>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Update Community</h1>
+        <h1 className="h3 mb-0 text-gray-800">Update Bharat Mandir</h1>
         <a
           href=""
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {
             e.preventDefault();
-            navigate('/admin/communities');
+            navigate('/admin/bharat-mandir/index');
           }}
         >
-          View All Communities
+          View All
         </a>
       </div>
       <div className="card">
@@ -336,4 +336,4 @@ const CommunityUpdateForm = () => {
   );
 };
 
-export default CommunityUpdateForm;
+export default UpdateBharatMandir;

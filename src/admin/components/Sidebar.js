@@ -270,7 +270,7 @@ function Sidebar() {
           }}
         >
           
-          <i className="fa fa-comment" fill="currentColor"></i>
+          <i class="fa fa-history" fill="currentColor" aria-hidden="true"></i>
           <span className="m-2">Bharat Mata Mandir</span>
         </a>
       </li>

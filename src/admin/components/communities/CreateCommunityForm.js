@@ -275,7 +275,7 @@ const CreateCommunityForm = () => {
                 <div className="col-md-12">
                   <label className="fw-bold">Community Archieve</label>
                 </div>
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
 
                   <Editor
                     editorState={editorState}
@@ -284,7 +284,7 @@ const CreateCommunityForm = () => {
                     editorClassName="editor-class custom-editor-height editor-border p-2"
                     toolbarClassName="toolbar-class toolbar-border"
                   />
-                </div>
+                </div> */}
 
               </div>
             </div>

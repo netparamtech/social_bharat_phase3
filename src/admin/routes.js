@@ -36,6 +36,8 @@ import NewSidebar from "./components/Test/NewSidebar";
 import HomeCmsViewPage from "./pages/cms/HomeCmsViewPage";
 import UpdateCmsPage from "./pages/cms/UpdateCmsPage";
 import BharatMandirPage from "./pages/BharatMandirPage";
+import BharatMataMandirCreatePage from "./pages/BharatMataMandirCreatePage";
+import UpdateBharatMandirPage from "./pages/UpdateBharatMandirPage";
 
 const adminRoutes = [
     {
@@ -259,6 +261,18 @@ const adminRoutes = [
     {
         path: '/admin/bharat-mandir/index',
         component: BharatMandirPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/bharat-mandir/create',
+        component: BharatMataMandirCreatePage,
+        exact:true
+    },
+
+    {
+        path: '/admin/bharat-mandir/update/:id',
+        component: UpdateBharatMandirPage,
         exact:true
     },
 ]

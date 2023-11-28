@@ -33,7 +33,7 @@ const EventForm = () => {
   const thumbnailImageRef = useRef(null);
   const bannerImageRef = useRef(null);
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState('');
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
@@ -246,7 +246,7 @@ const EventForm = () => {
     <>
       <div id="auth-wrapper" className="pt-5 pb-5">
         <div className="container">
-          <div className="card shadow">
+          <div className={`card shadow ${errors ? 'border-danger':''}`}>
             <div className="card-body">
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
@@ -269,7 +269,7 @@ const EventForm = () => {
                     )}
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">*Event Title</label>
+                        <label className="form-label">Event Title {" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="eventName"
@@ -283,7 +283,7 @@ const EventForm = () => {
                         )}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Country</label>
+                        <label className="form-label">Country{" "}<span className="text-danger">*</span></label>
                         <select
                           id="country"
                           className="form-control"
@@ -300,7 +300,7 @@ const EventForm = () => {
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">State</label>
+                        <label className="form-label">State{" "}<span className="text-danger">*</span></label>
                         <Select
                           className=""
                           options={states.map((state) => ({
@@ -316,7 +316,7 @@ const EventForm = () => {
                         )}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">City</label>
+                        <label className="form-label">City{" "}<span className="text-danger">*</span></label>
                         <Select
                           options={cities.map((city) => ({
                             value: city.name,
@@ -335,7 +335,7 @@ const EventForm = () => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">
-                          Start Event Date/Time
+                          Start Event Date/Time{" "}<span className="text-danger">*</span>
                         </label>
                         <DatePicker
                           showTime
@@ -354,7 +354,7 @@ const EventForm = () => {
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">
-                          End Event Date/Time
+                          End Event Date/Time{" "}<span className="text-danger">*</span>
                         </label>
                         <DatePicker
                           showTime
@@ -375,7 +375,7 @@ const EventForm = () => {
 
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Venue</label>
+                        <label className="form-label">Venue{" "}<span className="text-danger">*</span></label>
                         <input
                           type="text"
                           name="venue"

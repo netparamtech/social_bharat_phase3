@@ -44,7 +44,7 @@ const ViewCommunity = () => {
                 />
               )}
               <div>
-                <a className="hover-pointer fs-2" onClick={handleHomeClick}>Go Home</a>
+                <a className="btn btn-primary hover-pointer" onClick={handleHomeClick}>Go Back</a>
               </div>
             </div>
 

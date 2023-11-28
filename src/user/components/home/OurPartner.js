@@ -15,7 +15,7 @@ function OurPartner() {
   const dispatch = useDispatch();
 
   const settings = {
-    slidesToShow: !isAndroidUsed?12:3,
+    slidesToShow: !isAndroidUsed ? 12 : 3,
     slidesToScroll: 1,
     autoplay: true,
     arrows: true,
@@ -46,7 +46,7 @@ function OurPartner() {
     try {
       const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
-        const filteredFetch = response.data.data.filter((item)=>item && item.community_archive!=='');
+        const filteredFetch = response.data.data.filter((item) => item && item.community_archive !== '');
         setCasts(filteredFetch);
         dispatch(setLoader(false));
       }
@@ -66,10 +66,9 @@ function OurPartner() {
     fetchCommunities();
   }, []);
   return (
-    <div className="">
-      <section id="partner">
-        <div className="container">
-          <div className="row costomer-logos">
+    <section id="partner">
+      <div className="container">
+        <div className="row costomer-logos">
           <div className="card shadow bg-warning  text-white h-100">
             <Slider {...settings}>
               {casts && casts.length > 0 &&
@@ -81,18 +80,17 @@ function OurPartner() {
                           <img
                             src={community.thumbnail_image}
                             alt={community.name}
-                            onClick={()=>handleImageClick(community.name)}
+                            onClick={() => handleImageClick(community.name)}
                           />
                         </a>
                       </div>
                     )
                 )}
             </Slider>
-            </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 

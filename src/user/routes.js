@@ -24,11 +24,9 @@ import EventPage from "./pages/EventPage";
 import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
 import JobInfoPage from "./pages/profile/update/JobInfoPage";
 import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
-import SearchEventPage from "./pages/SearchEventPage";
 import CommunityContentPage from "./pages/CommunityContentPage";
 import SettingPage from "./pages/SettingPage";
 import ViewCommunityPage from "./pages/ViewCommunityPage";
-import ChatDrawer from "./components/chats/ChatDrawer";
 
 const userRoutes = [
     {
@@ -213,12 +211,6 @@ const userRoutes = [
     },
 
     {
-        path: '/events/search',
-        component: SearchEventPage,
-        exact: true
-    },
-
-    {
         path: '/community-content',
         component: CommunityContentPage,
         exact: true
@@ -236,11 +228,6 @@ const userRoutes = [
         exact: true
     },
 
-    {
-        path: '/chat',
-        component: ChatDrawer,
-        exact: true
-    },
 ]
 
 export default userRoutes;

@@ -80,14 +80,11 @@ const EducationInfo = (props) => {
                             <i className="fas fa-pencil-alt"></i>
                           </a>
                         </div>
-                        <div className="delete-icon">
-                          <a href="#" title="Delete">
-                            <i
-                              className="fa-solid fa-trash"
-                              onClick={() =>
+                        <div className="delete-icon" onClick={() =>
                                 deleteUserEducationalDetails(item.id)
-                              }
-                            ></i>
+                              }>
+                          <a className="hover-pointer" title="Delete"  >
+                            <i className="fa-solid fa-trash"></i>
                           </a>
                         </div>
                       </div>

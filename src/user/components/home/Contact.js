@@ -221,7 +221,7 @@ function Contact() {
 
               {/* Contact form */}
               <div className="col-md-6 user-auth-form-container">
-                <div className="card shadow">
+                <div className={`card shadow ${errors ? 'border-danger':''}`}>
                   <div className="card-body p-4">
                     <form
                       className="user-auth-form-contact"

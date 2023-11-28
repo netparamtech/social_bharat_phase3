@@ -38,6 +38,7 @@ import UpdateCmsPage from "./pages/cms/UpdateCmsPage";
 import BharatMandirPage from "./pages/BharatMandirPage";
 import BharatMataMandirCreatePage from "./pages/BharatMataMandirCreatePage";
 import UpdateBharatMandirPage from "./pages/UpdateBharatMandirPage";
+import ViewBharatMandirPage from "./pages/ViewBharatMandirPage";
 
 const adminRoutes = [
     {
@@ -273,6 +274,12 @@ const adminRoutes = [
     {
         path: '/admin/bharat-mandir/update/:id',
         component: UpdateBharatMandirPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/bharat-mandir/view/:id',
+        component: ViewBharatMandirPage,
         exact:true
     },
 ]

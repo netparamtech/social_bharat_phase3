@@ -184,7 +184,7 @@ const UpdateEducationProfile = (props) => {
                           }
                           placeholder="---Select Degree---"
                         />
-                        {/* {errors.degree_id && <span className='error'>{errors.degree_id}</span>} */}
+                        {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Field Of Study{" "}<span className="text-danger">*</span></label>

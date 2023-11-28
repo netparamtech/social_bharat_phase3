@@ -151,6 +151,13 @@ nav .container,
 #banners-section .container {
   max-width: 1290px !important;
 }
+
+/* #customNavID .container {
+    height: 80px;
+    @media (max-width: 767px) {
+        height: 45px;
+    }
+} */
 /* ......... */
 
 

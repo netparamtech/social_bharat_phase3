@@ -53,6 +53,19 @@ const Footer = (props) => {
     }
   };
 
+  const handleCommunityConnect = () => {
+    if (isAuthenticUser) {
+      window.scrollTo(0,0);
+      isPasswordSet
+        ? navigate("/dashboard")
+        : navigate("/set-password");
+    } else {
+      window.scrollTo(0,0);
+      navigate("/register");
+     
+    }
+  }
+
   const handlePartnerClick = () => {
     if (isAuthenticUser) {
       isPasswordSet
@@ -220,10 +233,10 @@ const Footer = (props) => {
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
-                  onClick={() => navigate("/register")}
+                  onClick={handleCommunityConnect}
                 >
                   <i className="fa-solid fa-chevron-right text-primary me-2"></i>
-                  Connect To Cmmunity
+                  Connect To Community
                 </a>
               </li>
             </ul>

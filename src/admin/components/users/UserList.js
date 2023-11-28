@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -210,14 +213,76 @@ const UserList = () => {
     }
   };
 
+  // const generatePDF = async () => {
+  //   const response = await fetchAllUsers(page, totalRows, searchQuery, sortField, sortOrder);
+  //   const fetchedData = response.data.data;
+
+  //   if (fetchedData !== null) {
+  //     console.log(fetchedData)
+  //     const doc = new jsPDF();
+
+  //     doc.text('User Table PDF', 14, 20);
+  //     doc.autoTable({
+  //       head: [['ID', 'Name', 'Email', 'Mobile', 'Date Of Birth', 'Occupation', 'Community']],
+  //       body: fetchedData.map(user => [user && user.id, user && user.name, user && user.email, user && user.mobile, user && formatDate(user.dob), user && user.occupation, user && user.community && user.community.name]),
+  //     });
+
+  //     // Save the PDF
+  //     doc.save('user_table.pdf');
+  //   } else {
+  //     alert('No User Available');
+  //   }
+  // };
+
+  const exportToExcel = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const response = await fetchAllUsers(page, totalRows, searchQuery, sortField, sortOrder);
+      const fetchedData = response.data.data;
+      if (fetchedData !== null) {
+        // Create a new workbook
+        const wb = XLSX.utils.book_new();
+
+        // Add a worksheet to the workbook
+        const ws = XLSX.utils.json_to_sheet(fetchedData);
+
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'User Data');
+
+        // Save the workbook to an Excel file
+        XLSX.writeFile(wb, 'user_data.xlsx');
+      } else {
+        alert('No User Available');
+      }
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+
   return (
     <div>
-      <Search
-        placeholder="Search"
-        allowClear
-        onSearch={handleSearchChange}
-        style={{ marginBottom: 20, width: 200 }}
-      />
+      <div className='d-sm-flex align-items-center justify-content-between mb-4'>
+        <Search
+          placeholder="Search"
+          allowClear
+          onSearch={handleSearchChange}
+          style={{ marginBottom: 20, width: 200 }}
+        />
+        {/* <button className='btn btn-primary' onClick={generatePDF}>Export to PDF</button> */}
+        <button className='btn btn-primary' onClick={exportToExcel}>Export to Excel</button>
+      </div>
+
       <Table
         title={() => 'Users'}  // Set the title to 'Enquiries'
         dataSource={data}

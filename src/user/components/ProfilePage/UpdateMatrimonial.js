@@ -82,10 +82,13 @@ const UpdateMatrimonial = (props) => {
   const handleUpdateForChange = (selectedOption) => {
     setUpdateFor(selectedOption);
 
-    if (selectedOption.label === 'Self') {
+    if (selectedOption.label === 'Self' && maritalStatus === 'Married') {
+      alert('You cannot update self matrimonial because you are already married.')
+    } else if (selectedOption.label === 'Self') {
       setGender(user.user.gender);
 
       setDOB(yyyyMmDdFormat(user.user.dob));
+
     } else {
       setGender('');
       setDOB(dayjs().add(0, 'day'));
@@ -387,7 +390,7 @@ const UpdateMatrimonial = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">

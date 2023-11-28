@@ -97,21 +97,55 @@ const JobInfo = (props) => {
                         </a>
                       </div>
                       <div className="card-body">
-                        <table className="table table-striped wow animate__animated animate__zoomIn">
-                          <tbody>
-                            <tr>
-                              <td>Company Name</td>
-                              <td className="text-muted">
+                        <div className="w-100 w-lg-75  wow animate__animated animate__zoomIn">
+                          <div className="mb-2 row">
+                            <label
+                              htmlFor=""
+                              className="col-sm-4 d-inline-flex"
+                            >
+                              Company Name
+                            </label>
+                            <div className="col-sm-6">
+                              <span className="text-muted">
                                 {item.company_name || "NA"}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Designation</td>
-                              <td className="text-muted">
+                              </span>
+                            </div>
+                          </div>
+                          <div className="mb-2 row">
+                            <label
+                              htmlFor=""
+                              className="col-sm-4 d-inline-flex"
+                            >
+                              Designation
+                            </label>
+                            <div className="col-sm-6">
+                              <span className="text-muted">
                                 {item.designation || "NA"}
-                              </td>
-                            </tr>
-                            {/* <tr>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="mb-2 row">
+                            <label
+                              htmlFor=""
+                              className="col-sm-4 d-inline-flex"
+                            >
+                              Job Type
+                            </label>
+                            <div className="col-sm-6">
+                              <span className="text-muted">
+                                {item.job_type === "PART_TIME"
+                                  ? "PART TIME"
+                                  : item.job_type === "FULL_TIME"
+                                    ? "FULL TIME"
+                                    : ""}
+                              </span>
+                            </div>
+                          </div>
+
+
+
+                          {/* <tr>
                               <td>Job Start Date</td>
                               <td className="text-muted">
                                 {formatDate(item.job_start_date) || "NA"}
@@ -123,18 +157,9 @@ const JobInfo = (props) => {
                                 {formatDate(item.job_end_date) || "NA"}
                               </td>
                             </tr> */}
-                            <tr>
-                              <td>Job Type</td>
-                              <td className="text-muted">
-                                {item.job_type === "PART_TIME"
-                                  ? "PART TIME"
-                                  : item.job_type === "FULL_TIME"
-                                  ? "FULL TIME"
-                                  : ""}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+
+
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -493,6 +493,7 @@ const UpdateBusinessProfile = (props) => {
                         name="status"
                         value={status}
                         onChange={handleStatusChange}
+                        required
                       >
                         <option value="">Select Status</option>
                         <option value="Active">Active</option>

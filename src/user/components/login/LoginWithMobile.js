@@ -17,6 +17,7 @@ const LoginWithMobile = (props) => {
   const [serverError, setServerError] = useState('');
 
   const [imageUrls, setImageUrls] = useState([]);
+  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ const LoginWithMobile = (props) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
-                <img src={imageUrls && imageUrls[0]} className="img-fluid" alt="Sign In" />
+                <img src={imageUrls?imageUrls[0]:defaultImage} className="img-fluid" alt="Sign In" />
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                 <div className="card-title">

@@ -21,7 +21,7 @@ const UserList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
+  const [defaultImage, setDefaultImage] = useState('img/de-default.png');
 
   const handlePageChange = (page) => {
     setPage(page);

@@ -23,6 +23,7 @@ const RegisterForm = () => {
   const [serverError, setServerError] = useState("");
 
   const [imageUrls, setImageUrls] = useState([]);
+  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const RegisterForm = () => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
                 <img
-                  src={imageUrls&&imageUrls[0]}
+                  src={imageUrls?imageUrls[0]:defaultImage}
                   className="img-fluid"
                   alt="Sign Up"
                 />

@@ -1,0 +1,47 @@
+#searchPeople-section .container-input {
+    position: relative;
+  }
+  
+  #searchPeople-section .card-search {
+    min-height: 400px;
+  }
+  
+  #searchPeople-section .input {
+    padding-left: 40px !important;
+  }
+  
+  #searchPeople-section .container-input i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translate(0, -50%);
+    opacity: 0.5;
+  }
+  
+  /* Search People Page */
+  #searchPeople-section .avatar {
+    /* vertical-align: middle; */
+    width: 70px;
+    height: 70px;
+    background-position: center;
+    background-size: cover;
+    object-fit: cover;
+    /* background-image: url("/images/matrimonial-1.jpg"); */
+    border-radius: 100%;
+    /* border: 1px solid rgb(185, 183, 183) ; */
+  }
+  
+  #searchPeople-section .user-detail p {
+    margin: 0px !important;
+    font-size: 12px;
+    padding: 0px !important;
+    line-height: 0.5cm;
+  }
+  
+  #searchPeople-section .filter-content p {
+    /* position: absolute; */
+    right: 100px;
+    top: 15px;
+    padding: 0px !important;
+  }
+  

@@ -14,7 +14,7 @@ const SearchBusiness = () => {
 
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [defaultImage] = useState("/admin/img/de-default-1.jpeg");
+  const [defaultImage] = useState("/admin/img/download.png");
 
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState("");

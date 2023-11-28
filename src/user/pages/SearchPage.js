@@ -1,3 +1,4 @@
+import './css/searchPeople.css';
 import { useEffect } from "react";
 import SearchPeople from "../components/search/SearchPeople";
 import UserLayout from "../layouts/UserLayout";

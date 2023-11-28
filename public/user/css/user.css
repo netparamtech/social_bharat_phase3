@@ -1630,3 +1630,10 @@ input[type="number"] {
 .form-check-input {
   border: 1px solid #000; /* Adjust the color as needed */
 }
+.btn-secondary {
+  width: 200px;
+}
+
+#auth-wrapper .btn-secondary{
+  width: 100%;
+}

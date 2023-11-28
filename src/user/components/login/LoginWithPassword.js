@@ -19,6 +19,7 @@ const LoginWithPassword = (props) => {
   const [maxPassword,setMaxPassword] = useState(8);
 
   const [imageUrls, setImageUrls] = useState([]);
+  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
 
   //onChange handler
   const handleMobileChange = (event) => {
@@ -114,7 +115,7 @@ const LoginWithPassword = (props) => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block wow animate__animated animate__zoomIn">
                 <img
-                  src={imageUrls&&imageUrls[0]}
+                  src={imageUrls?imageUrls[0]:defaultImage}
                   className="img-fluid"
                   alt="Signup"
                 />

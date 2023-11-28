@@ -170,6 +170,7 @@ const UpdateJobProfile = (props) => {
                         aria-label="Default select example"
                         value={jobType}
                         onChange={(e) => setJobType(e.target.value)}
+                        required
                       >
                         <option value="">--- Job Type ---</option>
                         <option value="PART TIME">PART TIME</option>

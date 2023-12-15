@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 import NewChat from "../chats/NewChat";
+import ViewProfileDrawer from "./ViewProfileDrawer";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -20,7 +21,7 @@ const SearchPeople = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState(
-    "/admin/img/download.png"
+    "/admin/img/download.jpg"
   );
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
@@ -464,6 +465,7 @@ const SearchPeople = () => {
                                           </p>
                                         ) : ''
                                       }
+                                     <ViewProfileDrawer id={item.id} />
                                     </div>
                                   </div>
                                 </div>

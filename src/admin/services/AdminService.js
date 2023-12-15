@@ -508,6 +508,66 @@ export const createQualification = async (data) => {
     }
 }
 
+//create service
+export const createService = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/services',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all services
+export const fetchAllServices = async () => {
+    try {
+        const response = await apiWithHeaders.get('/services');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch service by id
+export const fetchServiceByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/service/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of service by admin
+export const updateToggleStatusForService = async (clickedId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/service/${clickedId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete service by id
+export const deleteServiceByID = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/service/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update service Categories
+export const updateService = async (id,data) => {
+    try {
+        const response = await apiWithHeaders.put(`/service/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //fetch stats
 export const fetchAdminDashboardStatistics = async () => {
     try {

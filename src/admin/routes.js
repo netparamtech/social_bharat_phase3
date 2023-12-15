@@ -39,6 +39,9 @@ import BharatMandirPage from "./pages/BharatMandirPage";
 import BharatMataMandirCreatePage from "./pages/BharatMataMandirCreatePage";
 import UpdateBharatMandirPage from "./pages/UpdateBharatMandirPage";
 import ViewBharatMandirPage from "./pages/ViewBharatMandirPage";
+import ServiceIndexPage from "./pages/services/ServiceIndexPage";
+import CreateServicePage from "./pages/services/CreateServicePage";
+import UpdateServicePage from "./pages/services/UpdateServicePage";
 
 const adminRoutes = [
     {
@@ -280,6 +283,24 @@ const adminRoutes = [
     {
         path: '/admin/bharat-mandir/view/:id',
         component: ViewBharatMandirPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/service/index',
+        component: ServiceIndexPage,
+        exact:true
+    },
+
+    {
+        path: '/admin/service/create',
+        component: CreateServicePage,
+        exact:true
+    },
+
+    {
+        path: '/admin/service/update/:id',
+        component: UpdateServicePage,
         exact:true
     },
 ]

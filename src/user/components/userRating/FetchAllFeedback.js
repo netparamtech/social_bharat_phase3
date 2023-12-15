@@ -59,6 +59,19 @@ const FetchAllFeedback = () => {
       const days = Math.floor(differenceInSeconds / 86400);
       if (!days) {
         return "";
+      } else if (days) {
+        const months = Math.floor(days / 30);
+        if (!months) {
+          return `${days} day ago`;
+        } else {
+          const years = Math.floor(months / 12);
+          if (!years) {
+            return `${months} months ago`;
+          } else {
+            return `${years} years ago`;
+          }
+          return `${months} months ago`;
+        }
       }
       return `${days} day ago`;
     }
@@ -106,7 +119,7 @@ const FetchAllFeedback = () => {
                               </p>
                             </h6>
                           </div>
-                          
+
                           <div className="d-flex justify-content-between align-items-center">
                             {/* <p className="small mb-0" style={{ color: "#aaa" }}>
                               <a href="" className="link-grey me-2">
@@ -125,8 +138,8 @@ const FetchAllFeedback = () => {
                               ></i>
                             </div>
                             <p className="link-grey mt-3">
-                            {calculateTimeDifference(item.updated_at)}
-                          </p>
+                              {calculateTimeDifference(item.updated_at)}
+                            </p>
                           </div>
                         </div>
                       </div>

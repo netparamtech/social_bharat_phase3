@@ -5,6 +5,7 @@ import LoginWithMobile from '../components/login/LoginWithMobile';
 import LoginWithPassword from '../components/login/LoginWithPassword';
 import { useDispatch } from 'react-redux';
 import { logout } from '../actions/userAction';
+import { setModelAction } from '../actions/loaderAction';
 
 
 const LoginPage = () => {
@@ -17,6 +18,7 @@ const LoginPage = () => {
 
     useEffect(()=>{
         dispatch(logout());
+        dispatch(setModelAction(true));
         window.scrollTo(0, 0);
     },[]);
   

@@ -149,7 +149,7 @@ const RegisterForm = () => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
                 <img
-                  src={imageUrls?imageUrls[0]:defaultImage}
+                  src={imageUrls&&imageUrls[0]?imageUrls[0]:defaultImage}
                   className="img-fluid"
                   alt="Sign Up"
                 />

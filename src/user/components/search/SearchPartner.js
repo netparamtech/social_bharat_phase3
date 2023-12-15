@@ -26,7 +26,7 @@ const SearchPartner = () => {
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
   const [defaultImage, setDefaultImage] = useState(
-    "/admin/img/download.png"
+    "/admin/img/download.jpg"
   );
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);

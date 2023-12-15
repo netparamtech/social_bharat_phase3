@@ -37,12 +37,12 @@ const Testimonial = () => {
   const handleTableChange = (pagination, filters, sorter) => {
     const newSortField = sorter.field || '';
     let newSortOrder = sorter.order || '';
-  
+
     // If the same column is clicked again, toggle the sort order
     if (sortField === newSortField) {
       newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     }
-  
+
     setSortField(newSortField);
     setSortOrder(newSortOrder);
   };
@@ -64,7 +64,7 @@ const Testimonial = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -81,7 +81,7 @@ const Testimonial = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -98,7 +98,7 @@ const Testimonial = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -124,6 +124,19 @@ const Testimonial = () => {
       const days = Math.floor(differenceInSeconds / 86400);
       if (!days) {
         return "";
+      } else if (days) {
+        const months = Math.floor(days / 30);
+        if (!months) {
+          return `${days} day ago`;
+        } else {
+          const years = Math.floor(months / 12);
+          if (!years) {
+            return `${months} months ago`;
+          } else {
+            return `${years} years ago`;
+          }
+          return `${months} months ago`;
+        }
       }
       return `${days} day ago`;
     }
@@ -154,72 +167,75 @@ const Testimonial = () => {
       title: 'S.No',
       dataIndex: 'sno',
       render: (text, record, index) => index + 1,
-      width:100,
+      width: 100,
     },
-   
-    { title: 'Message', dataIndex: 'message',
-    sorter: true,
-    sortDirections: ['asc', 'desc'], },
 
-    { title: 'Rating', dataIndex: 'rating', render:(text,record)=>(generateRatingStars(record.rating)),width:180,
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-  },
-   
+    {
+      title: 'Message', dataIndex: 'message',
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+
+    {
+      title: 'Rating', dataIndex: 'rating', render: (text, record) => (generateRatingStars(record.rating)), width: 180,
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => calculateTimeDifference(record.updated_at),
-      width:150,
+      width: 150,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       render: (text, record) => (
         <div>
-        {record.status === 'Active' ? (
-          <a
-          className="collapse-item m-2"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            handleTestimonialToggleStatus(record.id);
-          }}
-        >
-          <i className="fa fa-thumbs-up text-primary" title="Active" />
-        </a>
-      ) : (
-        <a
-          className="collapse-item text-secondary m-2"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            handleTestimonialToggleStatus(record.id);
-          }}
-        >
-          <i className="fa fa-thumbs-down" title="Inactive" />
-        </a>
-         )}
-         </div>
+          {record.status === 'Active' ? (
+            <a
+              className="collapse-item m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleTestimonialToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-up text-primary" title="Active" />
+            </a>
+          ) : (
+            <a
+              className="collapse-item text-secondary m-2"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleTestimonialToggleStatus(record.id);
+              }}
+            >
+              <i className="fa fa-thumbs-down" title="Inactive" />
+            </a>
+          )}
+        </div>
       ),
       fixed: 'right',
       sorter: true,
       sortDirections: ['asc', 'desc'],
-      width:100,
+      width: 100,
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-           <a
+          <a
             className="collapse-item"
             onClick={() => navigate(`/testimonials/view/${record.id}`)}
           >
             <i className="fas fa-eye"></i>
           </a>
-         
-         <a
+
+          <a
             className="collapse-item m-2"
             href="#"
             onClick={(e) => {
@@ -232,21 +248,21 @@ const Testimonial = () => {
         </div>
       ),
       fixed: 'right',
-      width:100,
+      width: 100,
     },
     // Rest of the columns definition
   ];
 
   return (
     <div>
-       <Search
+      <Search
         placeholder="Search"
         allowClear
         onSearch={handleSearchChange}
-        style={{ marginBottom: 20,width:200 }}
+        style={{ marginBottom: 20, width: 200 }}
       />
       <Table
-      title={() => 'Testimonials'}  // Set the title to 'Enquiries'
+        title={() => 'Testimonials'}  // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{
@@ -257,9 +273,9 @@ const Testimonial = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         onChange={handleTableChange}
-      
+
         rowKey={(record) => record.id}
-        // onChange={handleSearchChange}
+      // onChange={handleSearchChange}
       />
     </div>
   );

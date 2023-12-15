@@ -117,7 +117,6 @@ const CommunitiesList = () => {
   // Rest of the code for handleUserToggleStatus, handleDeleteEnquiry, formatDate, and columns remains the same
 
   useEffect(() => {
-    console.log(searchQuery)
     fetchSearchData();
   }, [searchQuery]);
   useEffect(() => {

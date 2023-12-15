@@ -107,7 +107,7 @@ const Testimonials = () => {
 
         </div>
        
-        <a className="btn btn-primary hover-pointer fw-bold" onClick={handleReviewClick}>Share Your Review</a>
+        <button className="btn btn-primary rounded fw-bold" onClick={handleReviewClick}>Share Your Review</button>
 
       </div>
     </section>

@@ -14,6 +14,7 @@ const RegisterWithOtp = (props) => {
 
   const [errors, setErrors] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [serverError, setServerError] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,6 +60,7 @@ const RegisterWithOtp = (props) => {
       if (response && response.status === 201) {
         dispatch(login(response.data.data, response.data.token));
         setOtp("");
+        setServerError('');
 
         if (response.data.data.is_password_set) {
           navigate("/dashboard");
@@ -73,6 +75,7 @@ const RegisterWithOtp = (props) => {
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setErrorMessage('');
+        setServerError('');
       }
 
       //Unauthorized
@@ -83,7 +86,7 @@ const RegisterWithOtp = (props) => {
 
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -96,11 +99,13 @@ const RegisterWithOtp = (props) => {
       if (response && response.status === 200) {
         setErrorMessage("");
         handleResendOTP();
+        setServerError('');
       }
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setServerError('');
       }
 
       //Unauthorized
@@ -109,7 +114,7 @@ const RegisterWithOtp = (props) => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -139,6 +144,7 @@ const RegisterWithOtp = (props) => {
         className="w-100 w-lg-75 wow animate__animated animate__zoomIn"
         onSubmit={handleVarifiedClicked}
       >
+        {serverError && <span className='error'>{serverError}</span>}
         <div className="row mb-3">
           <input
             type="number"

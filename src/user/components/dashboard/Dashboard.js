@@ -1,66 +1,14 @@
-import { Carousel } from "antd";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllActiveCommunities } from "../../services/userService";
-import { useDispatch } from "react-redux";
-import { setLoader } from "../../actions/loaderAction";
-import Slider from "react-slick";
+import FeedbackModel from "../home/FeedbackModel";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const [casts, setCasts] = useState([]);
-  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+  const isShow = useSelector((state) => state.loader.isShowSet);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleImageClick = (communityName) => {
-    navigate(`/${communityName}`);
-  }
-  const fetchCommunities = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await fetchAllActiveCommunities();
-      if (response && response.status === 200) {
-        const filteredFetch = response.data.data.filter((item)=>item && item.community_archive!=='');
-        setCasts(filteredFetch);
-        dispatch(setLoader(false));
-      }
-    } catch (error) {
-      dispatch(setLoader(false));
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      } else if (error.response && error.response.status === 500) {
-        navigate("/login");
-      }
-    }
-  };
-  const settings = {
-    slidesToShow: !isAndroidUsed ? 12 : 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    arrows: true,
-    autoplaySpeed: 1500,
-  };
-  useEffect(() => {
-    const handleResize = () => {
-      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
-    };
-
-    // Listen for window resize events
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Call initially to set the correct value
-
-    // Cleanup the event listener when component is unmounted
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  useEffect(() => {
-    fetchCommunities();
-  }, []);
   return (
 
     <div id="dashboard">
+      {isShow && <FeedbackModel />}
       <div className="container pt-5 mb-5">
         <div className="row">
           <div className="col-lg-6 col-xl-3 mb-4">
@@ -231,6 +179,36 @@ const Dashboard = () => {
           </div>
 
           <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-classicbrown text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Services</div>
+                    <div className="text-lg fw-bold">
+                      Services <br /> सेवाएँ खोजें
+                    </div>
+                  </div>
+                  <img src="/user/images/service3.jpg" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search/service")}
+                >
+                  Search{" "}
+                </a>
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/service/add")}
+                >
+                  Add Service{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-navyblue  text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -256,7 +234,9 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <section id="partner">
+          
+
+          {/* <section id="partner">
             <div className="container">
               <div className="row costomer-logos">
                 <div className="card shadow bg-warning  text-white h-100">
@@ -280,7 +260,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
 
         </div>

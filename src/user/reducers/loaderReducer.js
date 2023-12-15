@@ -1,6 +1,7 @@
 // loaderReducer.js
 const initialState = {
     isLoaderSet: false, // Initial state
+    isShowSet:true,
   };
   
   const loaderReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const initialState = {
           ...state,
           isLoaderSet: action.payload,
         };
+        case 'SET_MODEL_SHOW':
+          return {
+            ...state,
+            isShowSet: action.payload,
+          };
       default:
         return state;
     }

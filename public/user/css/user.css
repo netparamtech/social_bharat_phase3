@@ -50,7 +50,7 @@ body {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 131, 116, 0.99%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e ");
 }
 
-#customNavID .navbar-dark .navbar-nav .nav-link {
+#customNavID .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.75);
   transition: background-color 0.3s, color 0.3s;
 }
@@ -339,11 +339,12 @@ color: #fff;
   width: 100%px;
   height: 100px;
   /* height: 130px; */
-  background-color: #ffffff;
+  background-color: #e7efef;
   /* background-color: #e6dddd; */
   box-shadow: 0px 3px 6px #f4f4f4;
   color: #595959;
   padding: 10px;
+  border-radius: 20px;
 }
 
 #partner img {
@@ -1283,7 +1284,7 @@ nav .nav-item {
 
 .rating label:before {
   content: "\2605";
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .rating input:checked ~ label,
@@ -1636,4 +1637,8 @@ input[type="number"] {
 
 #auth-wrapper .btn-secondary{
   width: 100%;
+}
+
+#searchPeople-section .services-hover:hover{
+  background-color: #0a2090;
 }

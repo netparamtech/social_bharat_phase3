@@ -8,7 +8,7 @@ const ENV = process.env.REACT_APP_ENV;
 // Function to determine the base URL based on the environment
 const getBaseUrl = () => {
   if (ENV === 'PROD') {
-    return 'http://api.socialbharat.org/admin';
+    return 'http://api.socialbharat.org/api/admin';
   } 
   else if (ENV === 'UAT') {
     return 'http://uat-api.socialbharat.org/api/admin';

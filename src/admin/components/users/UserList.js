@@ -208,31 +208,23 @@ const UserList = () => {
       const days = Math.floor(differenceInSeconds / 86400);
       if (!days) {
         return "";
+      } else if (days) {
+        const months = Math.floor(days / 30);
+        if (!months) {
+          return `${days} day ago`;
+        } else {
+          const years = Math.floor(months / 12);
+          if (!years) {
+            return `${months} months ago`;
+          } else {
+            return `${years} years ago`;
+          }
+          return `${months} months ago`;
+        }
       }
       return `${days} day ago`;
     }
   };
-
-  // const generatePDF = async () => {
-  //   const response = await fetchAllUsers(page, totalRows, searchQuery, sortField, sortOrder);
-  //   const fetchedData = response.data.data;
-
-  //   if (fetchedData !== null) {
-  //     console.log(fetchedData)
-  //     const doc = new jsPDF();
-
-  //     doc.text('User Table PDF', 14, 20);
-  //     doc.autoTable({
-  //       head: [['ID', 'Name', 'Email', 'Mobile', 'Date Of Birth', 'Occupation', 'Community']],
-  //       body: fetchedData.map(user => [user && user.id, user && user.name, user && user.email, user && user.mobile, user && formatDate(user.dob), user && user.occupation, user && user.community && user.community.name]),
-  //     });
-
-  //     // Save the PDF
-  //     doc.save('user_table.pdf');
-  //   } else {
-  //     alert('No User Available');
-  //   }
-  // };
 
   const exportToExcel = async () => {
     dispatch(setLoader(true));

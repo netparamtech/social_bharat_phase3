@@ -28,7 +28,10 @@ const ViewCommunity = () => {
   };
   useEffect(() => {
     fetchCommunity();
-  }, []);
+  }, [name]);
+  const bannerStyle = {
+    
+  }
   return (
     <div id="auth-wrapper" className="pt-3">
       <div className="container" id="community-text">

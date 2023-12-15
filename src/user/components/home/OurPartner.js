@@ -10,6 +10,7 @@ import { setLoader } from "../../actions/loaderAction";
 function OurPartner() {
   const [casts, setCasts] = useState([]);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+  const [serverError, setServerError] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function OurPartner() {
       if (response && response.status === 200) {
         const filteredFetch = response.data.data.filter((item) => item && item.community_archive !== '');
         setCasts(filteredFetch);
+        setServerError('');
         dispatch(setLoader(false));
       }
     } catch (error) {
@@ -56,7 +58,7 @@ function OurPartner() {
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -70,6 +72,7 @@ function OurPartner() {
       <div className="container">
         <div className="row costomer-logos">
           <div className="card shadow bg-warning  text-white h-100">
+          {serverError && <span className='error'>{serverError}</span>}
             <Slider {...settings}>
               {casts && casts.length > 0 &&
                 casts.map(
@@ -79,6 +82,7 @@ function OurPartner() {
                         <a className="hover-pointer">
                           <img
                             src={community.thumbnail_image}
+                            className="mt-2"
                             alt={community.name}
                             onClick={() => handleImageClick(community.name)}
                           />

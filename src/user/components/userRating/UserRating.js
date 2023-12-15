@@ -14,6 +14,7 @@ const UserRating = () => {
   const [alertClass, setAlertClass] = useState("");
 
   const [userProfile, setUserProfile] = useState("");
+  const [fetchUserRating, setFetchUserRating] = useState(true);
 
   const defaultPhoto = "/user/images/OIP.jpg";
 
@@ -58,11 +59,21 @@ const UserRating = () => {
     }
   };
 
+  const toggleFetchRating = () => {
+    setFetchUserRating(!fetchUserRating);
+  }
+
   useEffect(() => {
     if (message) {
       setComment("");
     }
   }, [message]);
+
+  useEffect(() => {
+    if (window.location.pathname === '/dashboard') {
+      setFetchUserRating(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (user && user.user) {
@@ -74,105 +85,104 @@ const UserRating = () => {
   return (
     <>
       <div id="rating-authpage">
-        
-          <div className="container text-dark">
-            <div className="row d-flex justify-content-center">
-              <div className="col-md-6 col-lg-12 col-xl-12">
-                <div className="card">
-                  <div className="card-body p-4">
-                    <form onSubmit={handleSubmit}>
-                      {message && (
-                        <div className={`alert ${alertClass}`}>
-                          {alertClass === "alert-success" ? (
-                            <i className="fas fa-check-circle"></i>
-                          ) : (
-                            <i className="fas fa-exclamation-triangle"></i>
-                          )}
-                          {" " + message}
+        <div className="container text-dark">
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-6 col-lg-12 col-xl-12">
+              <div className="card">
+                <div className="card-body p-4">
+                  <form onSubmit={handleSubmit}>
+                    {message && (
+                      <div className={`alert ${alertClass}`}>
+                        {alertClass === "alert-success" ? (
+                          <i className="fas fa-check-circle"></i>
+                        ) : (
+                          <i className="fas fa-exclamation-triangle"></i>
+                        )}
+                        {" " + message}
+                      </div>
+                    )}
+                    <div className="d-flex flex-start w-100">
+                      <img
+                        className="rounded-circle shadow-1-strong me-3"
+                        src={userProfile ? userProfile : defaultPhoto}
+                        alt="avatar"
+                        width="65"
+                        height="65"
+                      />
+                      <div className="w-100">
+                        <h5>Add a comment</h5>
+                        <div className="rating mb-3">
+                          <input
+                            value="5"
+                            name="rating"
+                            id="star5"
+                            type="radio"
+                            onChange={handleRatingChange}
+                          />
+                          <label htmlFor="star5"></label>
+                          <input
+                            value="4"
+                            name="rating"
+                            id="star4"
+                            type="radio"
+                            onChange={handleRatingChange}
+                          />
+                          <label htmlFor="star4"></label>
+                          <input
+                            value="3"
+                            name="rating"
+                            id="star3"
+                            type="radio"
+                            onChange={handleRatingChange}
+                          />
+                          <label htmlFor="star3"></label>
+                          <input
+                            value="2"
+                            name="rating"
+                            id="star2"
+                            type="radio"
+                            onChange={handleRatingChange}
+                          />
+                          <label htmlFor="star2"></label>
+                          <input
+                            value="1"
+                            name="rating"
+                            id="star1"
+                            type="radio"
+                            onChange={handleRatingChange}
+                          />
+                          <label htmlFor="star1"></label>
                         </div>
-                      )}
-                      <div className="d-flex flex-start w-100">
-                        <img
-                          className="rounded-circle shadow-1-strong me-3"
-                          src={userProfile ? userProfile : defaultPhoto}
-                          alt="avatar"
-                          width="65"
-                          height="65"
-                        />
-                        <div className="w-100">
-                          <h5>Add a comment</h5>
-                          <div className="rating mb-3">
-                            <input
-                              value="5"
-                              name="rating"
-                              id="star5"
-                              type="radio"
-                              onChange={handleRatingChange}
-                            />
-                            <label htmlFor="star5"></label>
-                            <input
-                              value="4"
-                              name="rating"
-                              id="star4"
-                              type="radio"
-                              onChange={handleRatingChange}
-                            />
-                            <label htmlFor="star4"></label>
-                            <input
-                              value="3"
-                              name="rating"
-                              id="star3"
-                              type="radio"
-                              onChange={handleRatingChange}
-                            />
-                            <label htmlFor="star3"></label>
-                            <input
-                              value="2"
-                              name="rating"
-                              id="star2"
-                              type="radio"
-                              onChange={handleRatingChange}
-                            />
-                            <label htmlFor="star2"></label>
-                            <input
-                              value="1"
-                              name="rating"
-                              id="star1"
-                              type="radio"
-                              onChange={handleRatingChange}
-                            />
-                            <label htmlFor="star1"></label>
-                          </div>
-                          <div className="form-outline">
-                            <textarea
-                              className="form-control"
-                              placeholder="What is your view?"
-                              id="textAreaExample"
-                              rows="4"
-                              value={comment}
-                              onChange={handleMessageChange}
-                            ></textarea>
-                            {errors.message && (
-                              <span className="error">{errors.message}</span>
-                            )}
-                          </div>
-                          <div className="d-flex justify-content-between mt-3">
-                            <button type="submit" className="btn btn-primary">
-                              Send{" "}
-                              <i className="fas fa-long-arrow-alt-right ms-1"></i>
-                            </button>
-                          </div>
+                        <div className="form-outline">
+                          <textarea
+                            className="form-control"
+                            placeholder="What is your view?"
+                            id="textAreaExample"
+                            rows="4"
+                            value={comment}
+                            onChange={handleMessageChange}
+                          ></textarea>
+                          {errors.message && (
+                            <span className="error">{errors.message}</span>
+                          )}
+                        </div>
+                        <div className="d-flex justify-content-between mt-3">
+                          <button type="submit" className="btn btn-primary">
+                            Send{" "}
+                            <i className="fas fa-long-arrow-alt-right ms-1"></i>
+                          </button>
                         </div>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-      
-
-        <FetchAllFeedback />
+        </div>
+        {
+          fetchUserRating && <FetchAllFeedback />
+        }
       </div>
     </>
   );

@@ -214,6 +214,16 @@ export const getUserFullProfile = async () => {
         throw error;
     }
 }
+//search user full profile
+export const getSearchedUserFullProfile = async (id) => {
+   
+    try {
+        const response = await apiWithHeaders.get(`/user/profile/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
 
 
 //educational detail update module
@@ -552,6 +562,16 @@ export const fetchSinglePageCMS = async (page) => {
         const response = await apiConfig.get(`/pages/${page}`);
         return response;
     } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all services
+export const fetchAllServices = async () => {
+    try {
+        const response = await apiWithHeaders.get('/user/services');
+        return response;
+    } catch(error) {
         throw error;
     }
 }

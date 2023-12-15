@@ -32,7 +32,7 @@ const UserSearchDropdown = () => {
           <span onClick={handleSearchPeopleClick}  className={`menu-font ${
             window.location.pathname === "/user/search" ? "active" : "inactive"
           }`}>
-            <i className="fa-solid fa-users m-2"></i> Search People
+            <i className="fa-solid fa-users m-2"></i> SEARCH MEMBER
           </span>
         ),
       },
@@ -42,7 +42,7 @@ const UserSearchDropdown = () => {
           <span onClick={handleSearchBusinessClick} className={`menu-font ${
             window.location.pathname === "/user/search/business" ? "active" : "inactive"
           }`}>
-            <i className="fa-solid fa-briefcase m-2"></i> Search Business
+            <i className="fa-solid fa-briefcase m-2"></i> SEARCH BUSINESS
           </span>
         ),
       },
@@ -52,7 +52,7 @@ const UserSearchDropdown = () => {
           <span onClick={handleSearchPartnerClick} className={`menu-font ${
             window.location.pathname === "/user/search/partner" ? "active" : "inactive"
           }`}>
-            <i className="fa-solid fa-heart-pulse m-2"></i>Search Partner
+            <i className="fa-solid fa-heart-pulse m-2"></i>SEARCH PARTNER
           </span>
         ),
       },
@@ -87,7 +87,7 @@ const UserSearchDropdown = () => {
       className="d-inline nav-link nav-item"
     >
       {isAndroidUsed ? (
-        <span className="nav-item">Search</span>
+        <span className="nav-item m-2">SEARCH</span>
       ) : (
         <span
           className={`btn btn-icon btn-transparent-dark text-capitalize text-primary  custom-font nav-link nav-item ${
@@ -98,7 +98,7 @@ const UserSearchDropdown = () => {
               : "inactive"
           }`}
         >
-          Search
+          SEARCH
         </span>
       )}
     </Dropdown>

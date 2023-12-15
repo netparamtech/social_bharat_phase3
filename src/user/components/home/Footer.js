@@ -55,14 +55,14 @@ const Footer = (props) => {
 
   const handleCommunityConnect = () => {
     if (isAuthenticUser) {
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       isPasswordSet
         ? navigate("/dashboard")
         : navigate("/set-password");
     } else {
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       navigate("/register");
-     
+
     }
   }
 
@@ -249,30 +249,40 @@ const Footer = (props) => {
               <br />
               <div className="row">
                 <div className="col-1">
-                  <a className="text-dark text-line-none" href={`tel:${data && data.phone1}`}>
+                  {data && data.phone1 && (<a className="text-dark text-line-none" href={`tel:${data && data.phone1}`}>
                     <i className="fa-solid fa-phone-volume text-primary"></i>
-                  </a>
-                </div>
-                <div className="col-10">
+                  </a>)}
 
-                  +91-{data && data.phone1}
                 </div>
+                {
+                  data && data.phone1 && (
+                    <div className="col-10">
+                      +91-{data && data.phone1}
+                    </div>
+                  )
+                }
               </div>
               <div className="row">
                 <div className="col-1">
-                  <a className="text-dark text-line-none" href={`tel:${data && data.phone2}`}>
+                  {data && data.phone2 && (<a className="text-dark text-line-none" href={`tel:${data && data.phone2}`}>
                     <i className="fa-solid fa-phone-volume text-primary"></i>
-                  </a>
+                  </a>)}
 
                 </div>
-                <div className="col-10">
-                  +91-{data && data.phone2}
-                </div>
+                {
+                  data && data.phone2&& (
+                    <div className="col-10">
+                      +91-{data && data.phone2}
+                    </div>
+                  )
+                }
               </div>
 
               <div className="row">
                 <div className="col-1">
-                  <a className="text-dark text-line-none" href={`mailto:${data && data.email1}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
+                  {data && data.email1 && (
+                    <a className="text-dark text-line-none" href={`mailto:${data && data.email1}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
+                  )}
 
                 </div>
                 <div className="col-10">

@@ -30,12 +30,14 @@ const ProfilePage = () => {
             //Unauthorized
             if (error.response && error.response.status === 401) {
                 navigate('/login');
+            } else if (error.response && error.response.status === 404) {
+                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
-               // navigate('/login');
+                // navigate('/login');
             }
-        }finally {
+        } finally {
             dispatch(setLoader(false));
         }
     }

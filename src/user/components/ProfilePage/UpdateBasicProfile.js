@@ -222,7 +222,6 @@ const UpdateBasicProfile = () => {
   }, []);
 
   useEffect(() => {
-    console.log(user)
     if(user.user&&user.user.dob!==null){
       setDOB(yyyyMmDdFormat(user.user.dob));
     }

@@ -118,6 +118,19 @@ const EnquiryList = () => {
       const days = Math.floor(differenceInSeconds / 86400);
       if (!days) {
         return "";
+      } else if (days) {
+        const months = Math.floor(days / 30);
+        if (!months) {
+          return `${days} day ago`;
+        } else {
+          const years = Math.floor(months / 12);
+          if (!years) {
+            return `${months} months ago`;
+          } else {
+            return `${years} years ago`;
+          }
+          return `${months} months ago`;
+        }
       }
       return `${days} day ago`;
     }

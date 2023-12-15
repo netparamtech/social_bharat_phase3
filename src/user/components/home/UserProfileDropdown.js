@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneCommunity, userLogout } from '../../services/userService';
 import { setLoader } from '../../actions/loaderAction';
+import BharatMandirDrawer from './BharatMandirDrawer';
 
 // ...
 
@@ -121,7 +122,7 @@ const UserProfileDropdown = () => {
             <h6 className="dropdown-header d-flex align-items-center menu-font">
               <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
               <div className="dropdown-user-details">
-                <div className="dropdown-user-details-name menu-font">{userName}</div>
+                <div className="dropdown-user-details-name menu-font">{userName.toUpperCase()}</div>
                 <div className="dropdown-user-details-email menu-font">{userEmail}</div>
               </div>
             </h6>
@@ -163,7 +164,7 @@ const UserProfileDropdown = () => {
             || window.location.pathname === `/user/update-job-profile/${id}` || window.location.pathname === `/user/update-contact/:id` ||
             window.location.pathname === `/user/update-education-profile/${id}` ? "custom-active-user" : "inactive"
             }`}>
-            <i className="fas fa-user-alt m-2"></i> Profile
+            <i className="fas fa-user-alt m-2"></i> PROFILE
           </span>
         ),
       },
@@ -172,7 +173,7 @@ const UserProfileDropdown = () => {
         label: (
           <span onClick={handleChangePasswordClick} className={`menu-font ${window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
             }`}>
-            <i className="fas fa-key m-2"></i> Change Password
+            <i className="fas fa-key m-2"></i> CHANGE PASSWORD
           </span>
         ),
       },
@@ -183,7 +184,7 @@ const UserProfileDropdown = () => {
           <>
             <span onClick={handleSettingClick} className={`menu-font ${window.location.pathname === "/user/setting" ? "custom-active-user" : "inactive"
             }`}>
-              <i className="fas fa-cog m-2"></i> Settings
+              <i className="fas fa-cog m-2"></i> SETTING
             </span>
 
           </>
@@ -192,9 +193,20 @@ const UserProfileDropdown = () => {
 
       {
         key: '6',
+
+        label: (
+          <>
+           <BharatMandirDrawer />
+
+          </>
+        ),
+      },
+
+      {
+        key: '7',
         label: (
           <span onClick={(e) => { e.preventDefault(); handleLogOutClick(); }} className='menu-font'>
-            <i className="fas fa-sign-out m-2"></i> Logout
+            <i className="fas fa-sign-out m-2"></i> LOGOUT
           </span>
         ),
       },
@@ -228,7 +240,7 @@ const UserProfileDropdown = () => {
         ) : (
           <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
         )}
-        <span className='custom-font'><span className={isAndroidUsed ? 'd-none' : ''}>Hi</span> {!isAndroidUsed && userName}</span>
+        <span className='custom-font'><span className={isAndroidUsed ? 'd-none' : ''}>Hi</span> {!isAndroidUsed && userName.toUpperCase()}</span>
       </span>
     </Dropdown>);
 };

@@ -243,7 +243,7 @@ function Contact() {
                         <input
                           type="text"
                           placeholder="Enter Name"
-                          className="form-control col-lg-6 col-md-6 col-xs-12"
+                          className="form-control"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                         />
@@ -255,7 +255,7 @@ function Contact() {
                         <input
                           type="email"
                           placeholder="Enter Email"
-                          className="form-control col-lg-6 col-md-6 col-xs-12"
+                          className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />

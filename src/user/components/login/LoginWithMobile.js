@@ -17,7 +17,7 @@ const LoginWithMobile = (props) => {
   const [serverError, setServerError] = useState('');
 
   const [imageUrls, setImageUrls] = useState([]);
-  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
+  const [defaultImage, setDefaultImage] = useState("/user/images/signup.png");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,6 +77,7 @@ const LoginWithMobile = (props) => {
         activeBanners[0].banner_urls = updatedBannerUrls;
       }
       setImageUrls(activeBanners[0].banner_urls);
+      setServerError('');
       dispatch(setLoader(false));
 
     } catch (error) {
@@ -85,7 +86,7 @@ const LoginWithMobile = (props) => {
       if (error.response && error.response.status === 401) {
         navigate('/login');
       } else if (error.response && error.response.status === 500) {
-        navigate('/login');
+        setServerError("Oops! Something went wrong on our server.");
       }
     }
   };
@@ -97,11 +98,11 @@ const LoginWithMobile = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
-                <img src={imageUrls?imageUrls[0]:defaultImage} className="img-fluid" alt="Sign In" />
+                <img src={imageUrls && imageUrls[0] ? imageUrls[0] : defaultImage} className="img-fluid" alt="Sign In" />
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12 p-5">
                 <div className="card-title">
@@ -144,9 +145,10 @@ const LoginWithMobile = (props) => {
                         </div>
                       </div>
                       <div className="row mt-3">
-                        <a className="btn btn-secondary" onClick={() => chnageFlag(false)}>
+                        <button type="submit" className="btn-custom btn-secondary" onClick={() => chnageFlag(false)}>
                           Login With PASSWORD
-                        </a>
+                        </button>
+
                       </div>
                       <div className="row mt-3">
                         <p className="fw-lighter fs-6">New User? <a className="text-primary text-decoration-none hover-pointer" onClick={() => navigate('/register')}>Signup</a>.</p>

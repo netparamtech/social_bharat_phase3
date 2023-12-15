@@ -27,6 +27,7 @@ import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
 import CommunityContentPage from "./pages/CommunityContentPage";
 import SettingPage from "./pages/SettingPage";
 import ViewCommunityPage from "./pages/ViewCommunityPage";
+import ServicesPage from "./pages/ServicesPage";
 
 const userRoutes = [
     {
@@ -225,6 +226,12 @@ const userRoutes = [
     {
         path: '/:name',
         component: ViewCommunityPage,
+        exact: true
+    },
+
+    {
+        path: '/user/search/service',
+        component: ServicesPage,
         exact: true
     },
 

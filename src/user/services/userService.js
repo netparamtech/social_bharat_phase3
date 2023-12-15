@@ -576,6 +576,16 @@ export const fetchAllServices = async () => {
     }
 }
 
+//create user service
+export const createUserService = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/user/service/create',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //Chat
 export const sendMessage = async (data) => {
     try {

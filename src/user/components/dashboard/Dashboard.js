@@ -191,20 +191,17 @@ const Dashboard = () => {
                   <img src="/user/images/service3.jpg" width="40px" />
                 </div>
               </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
+
+              <div className="card-footer d-flex align-items-center justify-content-between small ">
                 <a
-                  className="text-white hover-pointer"
+                  className="text-white hover-pointer stretched-link"
                   onClick={() => navigate("/user/search/service")}
                 >
                   Search{" "}
                 </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/service/add")}
-                >
-                  Add Service{" "}
-                </a>
+                <i className="fa-solid fa-arrow-right "></i>
               </div>
+
             </div>
           </div>
 
@@ -234,7 +231,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          
+
 
           {/* <section id="partner">
             <div className="container">

@@ -28,6 +28,9 @@ import CommunityContentPage from "./pages/CommunityContentPage";
 import SettingPage from "./pages/SettingPage";
 import ViewCommunityPage from "./pages/ViewCommunityPage";
 import ServicesPage from "./pages/ServicesPage";
+import RegisteredServicesPage from "./pages/RegisteredServicesPage";
+import UpdateRegisteredServicePage from "./pages/UpdateRegisteredServicePage";
+import SearchUsersWithServicePage from "./pages/SearchUsersWithServicePage";
 
 const userRoutes = [
     {
@@ -232,6 +235,24 @@ const userRoutes = [
     {
         path: '/user/search/service',
         component: ServicesPage,
+        exact: true
+    },
+
+    {
+        path: '/user/user-registered-services',
+        component: RegisteredServicesPage,
+        exact: true
+    },
+
+    {
+        path: '/user/update/user-registered-service/:id',
+        component: UpdateRegisteredServicePage,
+        exact: true
+    },
+
+    {
+        path: '/users-basedOn-services/:title',
+        component: SearchUsersWithServicePage,
         exact: true
     },
 

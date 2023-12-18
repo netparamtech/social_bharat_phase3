@@ -521,7 +521,7 @@ export const createService = async (data) => {
 //fetch all services
 export const fetchAllServices = async () => {
     try {
-        const response = await apiWithHeaders.get('/services');
+        const response = await apiWithHeaders.get('/services/0');
         return response;
     } catch (error) {
         throw error;

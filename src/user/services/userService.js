@@ -576,10 +576,69 @@ export const fetchAllServices = async () => {
     }
 }
 
+//fetch user registered services
+export const fetchUserRegisteredServices = async () => {
+    try {
+        const response = await apiWithHeaders.get('/user/services/registered');
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+//fetch user registered single service
+export const fetchUserRegisteredSingleService = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/service/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //create user service
 export const createUserService = async (data) => {
     try {
         const response = await apiWithHeaders.post('/user/service/create',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//update user service
+export const updateUserService = async (data,id) => {
+    try {
+        const response = await apiWithHeaders.put(`/user/service/update/${id}`,data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch users with service title
+export const fetchUsersWithServiceTitle = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/users/service',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//delete user registered single service
+export const deleteUserRegisteredSingleService = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/service/${id}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//search people in service
+export const searchPeopleInService = async(queryString,page,size,title) => {
+    try{
+        const response = await apiWithHeaders.get(`/search/users/service?searchQuery=${queryString}&page=${page}&size=${size}&title=${title}`);
         return response;
     } catch(error) {
         throw error;

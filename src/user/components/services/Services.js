@@ -77,7 +77,7 @@ const Services = () => {
         {
             title: 'Services', dataIndex: 'title', className: 'bg-secondary fs-4 text-white',
             render: (text, record) => (
-                <div className="card shadow mb-2 services-hover">
+                <div className="card shadow mb-2 services-hover hover-pointer" onClick={()=>navigate(`/users-basedOn-services/${record.title}`)}>
                     <div className="card-body bg-secondary rounded">
                         <div className="row wow animate__animated animate__zoomIn">
                             <div className="text-white fs-5">
@@ -127,19 +127,20 @@ const Services = () => {
             dispatch(setLoader(true));
             const response = await createUserService(data);
             if (response && response.status === 201) {
+                window.scroll(0, 0);
                 setErrors("");
                 setAlertClass("alert-success");
                 setMessage(response.data.message);
-                setSelectedService("");
-                setServiceTitle("");
-                setMobile1("");
-                setMobile2("");
-                setLocation("");
-                setExperience("");
-                setDescription("");
-                setStatus('Active');
-                setDisableServiceTitle(true);
-                
+                // setSelectedService("");
+                // setServiceTitle("");
+                // setMobile1("");
+                // setMobile2("");
+                // setLocation("");
+                // setExperience("");
+                // setDescription("");
+                // setStatus('Active');
+                // setDisableServiceTitle(true);
+
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -227,6 +228,12 @@ const Services = () => {
             <div className="container">
                 <div className="card shadow card-search">
                     <div className="card-body">
+                        <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 className="h3 mb-0 text-gray-800">{" "}</h1>
+                           <a className="btn btn-primary rounded hover-pointer" onClick={()=>navigate('/user/user-registered-services')} >
+                                 My Services
+                            </a>
+                        </div>
 
                         {serverError && <span className='error'>{serverError}</span>}
                         <div className='col-md-12 d-flex'>
@@ -248,7 +255,7 @@ const Services = () => {
                                     bordered
                                     pagination={false}
                                     scroll={{
-                                        y: 400,
+                                        y: 540,
                                     }}
 
                                     rowKey={(record) => record.id}
@@ -256,7 +263,7 @@ const Services = () => {
                                 />
                             </div>
                             <div className='col-md-4'>
-                                <div className="card shadow mb-2">
+                                <div className={`card shadow mb-2 ${errors ? 'border-danger' : ''}`}>
                                     <div className='card-header bg-primary text-light fs-4'>Add Service</div>
                                     <div className="card-body">
                                         {message && (
@@ -279,8 +286,8 @@ const Services = () => {
                                                 placeholder="Select Your Service"
                                                 onChange={handleSelectService}
                                             />
-                                             {!selectedService && (
-                                                <span className="error">select any service if not then select 'Other'</span>
+                                            {!selectedService && (
+                                                <span className="">select any service if not, then select 'Other'</span>
                                             )}
                                         </div>
                                         <div className="form-group mb-4">

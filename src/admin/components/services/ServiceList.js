@@ -151,8 +151,7 @@ const ServiceList = () => {
       render: (text, record) => (
         <div>
           <a
-            className="collapse-item"
-            href=""
+            className="collapse-item hover-pointer-admin"
             onClick={(e) => {
               e.preventDefault();
               navigate(`/admin/service/update/${record.id}`)
@@ -162,8 +161,7 @@ const ServiceList = () => {
           </a>
 
           <a
-            className="collapse-item"
-            href=""
+            className="collapse-item hover-pointer-admin"
             onClick={(e) => {
               e.preventDefault();
               handleDelete(record.id);
@@ -191,7 +189,7 @@ const ServiceList = () => {
     <div>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master Services</h1>
-        <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        <a className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault();
             navigate('/admin/service/create')

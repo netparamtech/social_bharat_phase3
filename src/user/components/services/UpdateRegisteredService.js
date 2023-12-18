@@ -156,7 +156,19 @@ const UpdateRegisteredService = () => {
 
                 <div className='col-md-12'>
                     <div className={`card shadow mb-2 ${errors ? 'border-danger' : ''}`}>
-                        <div className='card-header bg-primary text-light fs-4'>Edit Service</div>
+                    <div className="card-header bg-success">
+                        <div className="d-sm-flex align-items-center justify-content-between text-light fs-5">
+                            Update Service
+                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer fs-5"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/user/user-registered-services')
+                                }}
+                            >
+                                My Services
+                            </a>
+                        </div>
+                    </div>
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">

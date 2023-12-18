@@ -31,6 +31,7 @@ import ServicesPage from "./pages/ServicesPage";
 import RegisteredServicesPage from "./pages/RegisteredServicesPage";
 import UpdateRegisteredServicePage from "./pages/UpdateRegisteredServicePage";
 import SearchUsersWithServicePage from "./pages/SearchUsersWithServicePage";
+import CreateJobPage from "./pages/CreateJobPage";
 
 const userRoutes = [
     {
@@ -253,6 +254,12 @@ const userRoutes = [
     {
         path: '/users-basedOn-services/:title',
         component: SearchUsersWithServicePage,
+        exact: true
+    },
+
+    {
+        path: '/user/job/create',
+        component: CreateJobPage,
         exact: true
     },
 

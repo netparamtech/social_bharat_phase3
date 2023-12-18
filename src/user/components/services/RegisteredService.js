@@ -35,20 +35,23 @@ const RegisteredService = () => {
     };
 
     const handleDelete = async (id) => {
+        dispatch(setLoader(true));
         try {
-          const response = await deleteUserRegisteredSingleService(id);
-          if (response && response.status === 200) {
-            fetchServices();
-          }
+            const response = await deleteUserRegisteredSingleService(id);
+            if (response && response.status === 200) {
+                fetchServices();
+            }
         } catch (error) {
-          if (error.response && error.response.status === 401) {
-            navigate('/login');
-          }
-          else if (error.response && error.response.status === 500) {
-            setServerError("Oops! Something went wrong on our server.");
-          }
+            if (error.response && error.response.status === 401) {
+                navigate('/login');
+            }
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
         }
-      }
+    }
 
 
     const columns = [
@@ -83,25 +86,25 @@ const RegisteredService = () => {
             render: (text, record) => (
                 <div>
                     <a
-                className="collapse-item hover-pointer-admin"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate(`/user/update/user-registered-service/${record.id}`)
-                }}
-              >
-                <i className="fa fa-edit mr-4" title="Edit" />
-              </a>
-    
-              <a
-                className="collapse-item hover-pointer-admin"
-                
-                onClick={(e) => {
-                  e.preventDefault();
-                   handleDelete(record.id);
-                }}
-              >
-                <i className="fas fa-trash"></i>
-              </a>
+                        className="collapse-item hover-pointer-admin"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/user/update/user-registered-service/${record.id}`)
+                        }}
+                    >
+                        <i className="fa fa-edit mr-4" title="Edit" />
+                    </a>
+
+                    <a
+                        className="collapse-item hover-pointer-admin"
+
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleDelete(record.id);
+                        }}
+                    >
+                        <i className="fas fa-trash"></i>
+                    </a>
                 </div>
             ),
         },
@@ -138,8 +141,22 @@ const RegisteredService = () => {
         <div id="searchPeople-section" className="pt-4 mb-4">
             <div className="container">
                 <div className="card shadow card-search">
+                    <div className="card-header bg-success">
+                        <div className="d-sm-flex align-items-center justify-content-between text-light">
+                            Registered Services
+                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/user/search/service')
+                                }}
+                            >
+                                View All Services/Create
+                            </a>
+                        </div>
+                    </div>
                     <div className="card-body">
                         <div>
+
                             <Table
                                 dataSource={service}
                                 className='bg-success mt-2'

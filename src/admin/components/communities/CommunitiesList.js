@@ -12,7 +12,7 @@ import { setLoader } from '../../actions/loaderAction';
 
 const CommunitiesList = () => {
   const [data, setData] = useState([]);
-  const [searchData,setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -49,12 +49,12 @@ const CommunitiesList = () => {
   };
 
   const fetchSearchData = () => {
-    if(data){
-       // Filter the data based on the search query
-     const filteredData = data.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSearchData(filteredData);
+    if (data) {
+      // Filter the data based on the search query
+      const filteredData = data.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchData(filteredData);
     }
   }
 
@@ -62,7 +62,7 @@ const CommunitiesList = () => {
     dispatch(setLoader(true));
     try {
       const response = await fetchAllCommunity();
-      const fetchedData = response.data.data.filter((item)=>item && item.community_archive==='');
+      const fetchedData = response.data.data.filter((item) => item && item.community_archive === '');
 
       setData(fetchedData);
       setSearchData(fetchedData);
@@ -113,7 +113,7 @@ const CommunitiesList = () => {
       }
     }
   }
- 
+
   // Rest of the code for handleUserToggleStatus, handleDeleteEnquiry, formatDate, and columns remains the same
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const CommunitiesList = () => {
       title: 'Name', dataIndex: 'name',
       sorter: false,
       sortDirections: ['asc', 'desc'],
-      with:100,
+      with: 100,
     },
 
     {
@@ -150,7 +150,7 @@ const CommunitiesList = () => {
           />
         </a>
       ),
-      width:200,
+      width: 200,
     },
 
     {
@@ -162,11 +162,11 @@ const CommunitiesList = () => {
             alt={record.name}
             title={record.name}
             className=''
-            style={{width: record.banner_image ? '150px' : '60px'}}
+            style={{ width: record.banner_image ? '150px' : '60px' }}
           />
         </a>
       ),
-      width:200,
+      width: 200,
     },
 
     {
@@ -238,7 +238,7 @@ const CommunitiesList = () => {
 
   return (
     <div>
-       <div className="d-sm-flex align-items-center justify-content-between mb-4">
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master Communities</h1>
         <a href="" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           onClick={(e) => {

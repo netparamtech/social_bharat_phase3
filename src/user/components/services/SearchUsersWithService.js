@@ -170,7 +170,27 @@ const SearchUsersWithService = () => {
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
             <div className="card shadow card-search">
-              <div className="card-header text-light bg-success fs-5">{title}</div>
+            <div className="card-header bg-success">
+                        <div className="d-sm-flex align-items-center justify-content-between text-light">
+                            {title}
+                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/user/user-registered-services')
+                                }}
+                            >
+                                My Registered Services
+                            </a>
+                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/user/search/service')
+                                }}
+                            >
+                                View All Services/Create
+                            </a>
+                        </div>
+                    </div>
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
               
@@ -208,6 +228,7 @@ const SearchUsersWithService = () => {
                           {pair.map((item, innerIndex) => (
                             <div className="col-md-6" key={innerIndex}>
                               <div className="card shadow mb-2">
+                                <div className="card-header">{item.title}</div>
                                 <div className="card-body">
                                   <div className="row wow animate__animated animate__zoomIn">
                                     <div className="col-4">
@@ -230,14 +251,12 @@ const SearchUsersWithService = () => {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-5 user-detail">
+                                    <div className="col-6 user-detail">
 
-                                      <div className="col-8 user-detail">
-                                        <h6>{item.title}</h6>
+                                      <div className="col-12 user-detail">
                                         <p>Name-{item.name}</p>
                                         <p>Service At-{item.location}</p>
                                         <p>Experience-{item.experience}</p>
-                                        <p>Description-{item.description}</p>
                                         {/* <p>{item.state ? `(${item.state})` : ""}</p> */}
                                         <p className="d-flex">
                                           Contact Numbers:
@@ -283,6 +302,7 @@ const SearchUsersWithService = () => {
                                     </div>
                                   </div>
                                 </div>
+                                <div className="card-footer">Description-{item.description}</div>
                               </div>
                             </div>
                           ))}

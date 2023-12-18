@@ -77,7 +77,7 @@ const Services = () => {
         {
             title: 'Services', dataIndex: 'title', className: 'bg-secondary fs-4 text-white',
             render: (text, record) => (
-                <div className="card shadow mb-2 services-hover hover-pointer" onClick={()=>navigate(`/users-basedOn-services/${record.title}`)}>
+                <div className="card shadow mb-2 services-hover hover-pointer" onClick={() => navigate(`/users-basedOn-services/${record.title}`)}>
                     <div className="card-body bg-secondary rounded">
                         <div className="row wow animate__animated animate__zoomIn">
                             <div className="text-white fs-5">
@@ -227,13 +227,21 @@ const Services = () => {
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
             <div className="container">
                 <div className="card shadow card-search">
-                    <div className="card-body">
-                        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 className="h3 mb-0 text-gray-800">{" "}</h1>
-                           <a className="btn btn-primary rounded hover-pointer" onClick={()=>navigate('/user/user-registered-services')} >
-                                 My Services
+                    <div className="card-header bg-success">
+                        <div className="d-sm-flex align-items-center justify-content-between text-light fs-5">
+                            All Services
+                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer fs-5"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/user/user-registered-services')
+                                }}
+                            >
+                                My Services
                             </a>
                         </div>
+                    </div>
+                    <div className="card-body">
+
 
                         {serverError && <span className='error'>{serverError}</span>}
                         <div className='col-md-12 d-flex'>

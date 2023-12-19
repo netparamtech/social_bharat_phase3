@@ -10,6 +10,7 @@ const CreateJob = () => {
     const [previewSelectedFile, setPreviewSelectedFile] = useState('');
     const [description, setDescription] = useState('');
     const [isActive, setIsActive] = useState('active');
+    const [isApplyForm,setIsApplyForm] = useState('false');
 
 
     const jobTypeOption = [
@@ -41,9 +42,12 @@ const CreateJob = () => {
             setPreviewSelectedFile(previewUrl);
         }
     }
-    const handleStatusChange = (event) => {
+    const handleActiveChange = (event) => {
         setIsActive(event.target.value);
     };
+    const handleApplyFormChange = (event) => {
+        setIsApplyForm(event.target.value);
+    }
 
     return (
         <div id="auth-wrapper" className="pt-5 pb-4">
@@ -123,7 +127,7 @@ const CreateJob = () => {
                                             className="form-check-input"
                                             value="active"
                                             checked={isActive === 'active'}
-                                            onChange={handleStatusChange}
+                                            onChange={handleActiveChange}
                                         />
                                         Active
                                     </label>
@@ -134,15 +138,44 @@ const CreateJob = () => {
                                             className="form-check-input"
                                             value="inactive"
                                             checked={isActive === 'inactive'}
-                                            onChange={handleStatusChange}
+                                            onChange={handleActiveChange}
                                         />
                                         Inactive
                                     </label>
 
 
                                 </div>
+
+                                <div className="form-check mt-2">
+                                    <p>Need a apply form to Apply ?</p>
+                                    <label className="form-control">
+                                        <input
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="true"
+                                            checked={isApplyForm === 'true'}
+                                            onChange={handleApplyFormChange}
+                                        />
+                                        Yes
+                                    </label>
+
+                                    <label className="form-control">
+                                        <input
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="false"
+                                            checked={isApplyForm === 'false'}
+                                            onChange={handleApplyFormChange}
+                                        />
+                                        No
+                                    </label>
+                                </div>
+                                <div className="col-3 mx-auto mt-3 submit-btn">
+                                    <button type="submit" className="btn btn-success border-danger" >submit</button>
+                                </div>
+
                             </div>
-                            <div className="col-md-6 col-sm-12 mt-2" style={{ height: '400px', border: '1px solid #ccc' }}>
+                            <div className="col-md-6 col-sm-12 mt-2" style={{ height: '600px', border: '1px solid #ccc' }}>
                                 {selectedFile && selectedFile.type === 'application/pdf' && (
                                     <div >
                                         <embed src={previewSelectedFile} type="application/pdf" width="100%" height="400px" />

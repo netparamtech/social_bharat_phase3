@@ -105,7 +105,7 @@ const ServiceList = () => {
     {
       title: 'S.No',
       dataIndex: 'sno',
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => (page - 1) * size + index + 1,
       width: 100,
     },
     {
@@ -187,9 +187,18 @@ const ServiceList = () => {
 
   return (
     <div>
-      <div className="d-sm-flex align-items-center justify-content-between mb-4">
+      <div className=" card-header bg-success d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master Services</h1>
-        <a className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin"
+       
+        <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
+          onClick={(e) => {
+            e.preventDefault();
+            // navigate('/admin/service/create')
+          }}
+        >
+          Requested Services
+        </a>
+        <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault();
             navigate('/admin/service/create')

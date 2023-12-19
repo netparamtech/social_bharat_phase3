@@ -17,8 +17,9 @@ const UpdateRegisteredService = () => {
     const [experience, setExperience] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
-    const [status, setStatus] = useState('Active');
+    const [status, setStatus] = useState('Inactive');
     const [disableServiceTitle, setDisableServiceTitle] = useState(true);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const [errors, setErrors] = useState('');
     const [serverError, setServerError] = useState('');
@@ -85,11 +86,11 @@ const UpdateRegisteredService = () => {
             if (selectedService.label !== 'Other') {
                 setServiceTitle(selectedService.label);
                 setDisableServiceTitle(true);
-                setStatus('Active');
+
             } else {
                 setServiceTitle('');
                 setDisableServiceTitle(false);
-                setStatus('Inactive');
+
             }
 
         }
@@ -106,6 +107,13 @@ const UpdateRegisteredService = () => {
             setExperience(data && data[0].experience);
             setLocation(data && data[0].location);
             setDescription(data && data[0].description);
+            setServiceTitle(data && data[0].title);
+            setStatus(data && data[0].status);
+            if (data[0].status === 'Active') {
+                setIsUpdate(true);
+            } else {
+                setIsUpdate(false);
+            }
         }
     }, [data])
 
@@ -127,7 +135,6 @@ const UpdateRegisteredService = () => {
             description,
             status,
         };
-
         try {
             dispatch(setLoader(true));
             const response = await updateUserService(data, id);
@@ -156,20 +163,21 @@ const UpdateRegisteredService = () => {
 
                 <div className='col-md-12'>
                     <div className={`card shadow mb-2 ${errors ? 'border-danger' : ''}`}>
-                    <div className="card-header bg-success">
-                        <div className="d-sm-flex align-items-center justify-content-between text-light fs-5">
-                            Update Service
-                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer fs-5"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/user/user-registered-services')
-                                }}
-                            >
-                                My Services
-                            </a>
+                        <div className="card-header bg-success">
+                            <div className="d-sm-flex align-items-center justify-content-between text-light fs-5">
+                                Update Service
+                                <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer fs-5"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate('/user/user-registered-services')
+                                    }}
+                                >
+                                    My Services
+                                </a>
+                            </div>
                         </div>
-                    </div>
                         <div className="card-body">
+                            {!isUpdate && <p className="col-12 error">You cannot update until admin approves it.</p>}
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">
 

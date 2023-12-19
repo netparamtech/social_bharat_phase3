@@ -1642,3 +1642,7 @@ input[type="number"] {
 #searchPeople-section .services-hover:hover{
   background-color: #0a2090;
 }
+
+#auth-wrapper .submit-btn{
+  border-radius: 20px;
+}

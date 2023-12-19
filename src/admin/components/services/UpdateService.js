@@ -86,8 +86,7 @@ const UpdateService = () => {
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Update Service</h1>
         <a
-          href="#"
-          className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault();
             navigate('/admin/service/index');

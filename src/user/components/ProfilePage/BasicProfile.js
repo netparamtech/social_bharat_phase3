@@ -61,7 +61,7 @@ const BasicProfile = (props) => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
-    } finally{
+    } finally {
       dispatch(setLoader(false));
     }
   };
@@ -125,7 +125,7 @@ const BasicProfile = (props) => {
                   src={profileImage}
                   alt=""
                   title=""
-                 
+
                 />
 
                 <div className="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">

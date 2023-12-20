@@ -1,5 +1,11 @@
 import { useState } from "react";
 import Select from "react-select";
+import React from 'react';
+import dayjs from 'dayjs';
+import { DatePicker, Space } from 'antd';
+
+const { RangePicker } = DatePicker;
+const dateFormat = 'YYYY/MM/DD';
 
 const CreateJob = () => {
     const [jobTitle, setJobTitle] = useState('');
@@ -10,7 +16,7 @@ const CreateJob = () => {
     const [previewSelectedFile, setPreviewSelectedFile] = useState('');
     const [description, setDescription] = useState('');
     const [isActive, setIsActive] = useState('active');
-    const [isApplyForm,setIsApplyForm] = useState('false');
+    const [isApplyForm, setIsApplyForm] = useState('false');
 
 
     const jobTypeOption = [
@@ -170,6 +176,22 @@ const CreateJob = () => {
                                         No
                                     </label>
                                 </div>
+                                <div className="form-check mt-2">
+                                    <label className="row bg-info fs-5 m-2 rounded">
+                                        <Space direction="vertical" size={12} className="mt-2">
+                                            <div className="d-flex">
+                                                <DatePicker className="col-8" size={12} placeholder="Start Date" />
+                                                <p className="col-4 fs-6 text-light">Hello</p>
+                                            </div>
+                                            <div className="d-flex">
+                                                <DatePicker className="col-8" size={12} placeholder="Start Date" />
+                                                <p className="col-4 fs-6 text-light">Hello</p>
+                                            </div>
+                                        </Space>
+                                        <p>Please Select Job Start And End Date</p>
+                                    </label>
+                                </div>
+
                                 <div className="col-3 mx-auto mt-3 submit-btn">
                                     <button type="submit" className="btn btn-success border-danger" >submit</button>
                                 </div>

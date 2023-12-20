@@ -42,6 +42,8 @@ import ViewBharatMandirPage from "./pages/ViewBharatMandirPage";
 import ServiceIndexPage from "./pages/services/ServiceIndexPage";
 import CreateServicePage from "./pages/services/CreateServicePage";
 import UpdateServicePage from "./pages/services/UpdateServicePage";
+import RegisteredUsersInServicePage from "./pages/services/RegisteredUsersInServicePage";
+import RequestedForNewServicePage from "./pages/services/RequestedForNewServicePage";
 
 const adminRoutes = [
     {
@@ -301,6 +303,18 @@ const adminRoutes = [
     {
         path: '/admin/service/update/:id',
         component: UpdateServicePage,
+        exact:true
+    },
+
+    {
+        path: '/admin/service/in/:title',
+        component: RegisteredUsersInServicePage,
+        exact:true
+    },
+
+    {
+        path: '/admin/services/requested',
+        component: RequestedForNewServicePage,
         exact:true
     },
 ]

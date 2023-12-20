@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteQualificationsByID,  deleteServiceByID,  fetchAllQualifications, fetchAllServices, updateToggleStatusForQualifications, updateToggleStatusForService } from "../../services/AdminService";
+import { deleteQualificationsByID, deleteServiceByID, fetchAllQualifications, fetchAllServices, updateToggleStatusForQualifications, updateToggleStatusForService } from "../../services/AdminService";
 import Search from "antd/es/input/Search";
 import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 
 const ServiceList = () => {
   const [data, setData] = useState([]);
-  const [copyData,setCopyData] = useState([]);
+  const [copyData, setCopyData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(7);
   const [totalRows, setTotalRows] = useState(0);
@@ -62,7 +62,7 @@ const ServiceList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -79,7 +79,7 @@ const ServiceList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -96,7 +96,7 @@ const ServiceList = () => {
       }
       else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   }
@@ -114,7 +114,7 @@ const ServiceList = () => {
       sortDirections: ['asc', 'desc'],
     },
 
-  
+
     {
       title: 'Status', dataIndex: 'status',
       render: (text, record) => (
@@ -169,6 +169,12 @@ const ServiceList = () => {
           >
             <i className="fas fa-trash"></i>
           </a>
+          <a className="collapse-item m-3 hover-pointer-admin" onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate(`/admin/service/in/${record.title}`);
+          }}>
+            <i className="fas fa-eye"></i>
+          </a>
         </div>
       ),
       fixed: 'right',
@@ -176,10 +182,10 @@ const ServiceList = () => {
     // Rest of the columns definition
   ];
 
-  useEffect(()=>{
-    const filteredData = copyData.filter(item=>item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  useEffect(() => {
+    const filteredData = copyData.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
     setData(filteredData);
-  },[searchQuery]);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -189,11 +195,11 @@ const ServiceList = () => {
     <div>
       <div className=" card-header bg-success d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Master Services</h1>
-       
+
         <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
           onClick={(e) => {
             e.preventDefault();
-            // navigate('/admin/service/create')
+            navigate('/admin/services/requested')
           }}
         >
           Requested Services
@@ -207,7 +213,7 @@ const ServiceList = () => {
           Create Service
         </a>
       </div>
-      
+
       <Search
         placeholder="Search"
         allowClear

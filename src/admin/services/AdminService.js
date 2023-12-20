@@ -568,6 +568,16 @@ export const updateService = async (id,data) => {
     }
 }
 
+//change toggle-status of user service in user_service_details  by admin
+export const updateToggleStatusForUserRegisteredService = async (clickedUserId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/service/${clickedUserId}/toggle-statusforUserRegisteredService`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //fetch stats
 export const fetchAdminDashboardStatistics = async () => {
     try {
@@ -624,6 +634,26 @@ export const fetchAllPagesCMS = async () => {
         const response = await apiWithHeaders.get('/cms/pages');
         return response;
     } catch (error) {
+        throw error;
+    }
+}
+
+//fetch all users of respective service title
+export const searchUsersInService = async(queryString,page,size,title) => {
+    try{
+        const response = await apiWithHeaders.get(`/search/users/service?role=admin&searchQuery=${queryString}&page=${page}&size=${size}&title=${title}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch all users of respective new service request
+export const UsersRequestedForNewService = async(page,size) => {
+    try{
+        const response = await apiWithHeaders.get(`/admin/fetch-all-new-services?page=${page}&size=${size}`);
+        return response;
+    } catch(error) {
         throw error;
     }
 }

@@ -9,32 +9,37 @@ const dateFormat = 'YYYY/MM/DD';
 
 const CreateJob = () => {
     const [jobTitle, setJobTitle] = useState('');
+    const [jobSector, setJobSector] = useState('');
     const [jobType, setJobType] = useState("");
     const [subHeading, setSubHeading] = useState('');
     const [location, setLocation] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const [previewSelectedFile, setPreviewSelectedFile] = useState('');
+    const [logo, setLogo] = useState("");
+    const [logoPreview, setLogoPreview] = useState("");
     const [description, setDescription] = useState('');
     const [isActive, setIsActive] = useState('active');
     const [isApplyForm, setIsApplyForm] = useState('false');
 
 
     const jobTypeOption = [
-        { value: "Professional Jobs", label: "Professional Jobs" },
-        { value: "Domestic Jobs", label: "Domestic Jobs" },
-        { value: "Blue-Collar Jobs", label: "Blue-Collar Jobs" },
-        { value: "White-Collar Jobs", label: "White-Collar Jobs" },
-        { value: "Skilled Trades", label: "Skilled Trades" },
-        { value: "Service Industry Jobs", label: "Service Industry Jobs" },
-        { value: "Freelance or Gig Jobs", label: "Freelance or Gig Jobs" },
+        { value: "Part Time", label: "Part Time" },
+        { value: "Full Time", label: "Full Time" },
+        { value: "Freelance", label: "Freelance" },
+    ];
+
+    const jobSectorOption = [
+        { value: "Private Jobs", label: "Private Jobs" },
         { value: "Government Jobs", label: "Government Jobs" },
-        { value: "Academic Jobs", label: "Academic Jobs" },
-        { value: "Technical Jobs", label: "Technical Jobs" },
+        { value: "Other", label: "Other" },
     ];
 
 
     const handleJobTypeChange = (selectedOption) => {
         setJobType(selectedOption);
+    }
+    const handleJobSectorChange = (selectedOption) => {
+        setJobSector(selectedOption);
     }
     const handleAttachmentChange = (e) => {
         const file = e.target.files[0];
@@ -46,6 +51,18 @@ const CreateJob = () => {
             // Optionally, you can also generate a preview URL for the selected file
             const previewUrl = URL.createObjectURL(file);
             setPreviewSelectedFile(previewUrl);
+        }
+    }
+    const handleLogoChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            // Set the selected file in state
+            setLogo(file);
+
+            // Optionally, you can also generate a preview URL for the selected file
+            const previewUrl = URL.createObjectURL(file);
+            setLogoPreview(previewUrl);
         }
     }
     const handleActiveChange = (event) => {
@@ -70,6 +87,17 @@ const CreateJob = () => {
                             onChange={(e) => setJobTitle(e.target.value)}
                         />
                     </div>
+                    <div className="form-group">
+                        <label>Job Sector:</label>
+                        <Select
+                            className=""
+                            options={jobSectorOption}
+                            value={jobSector}
+                            onChange={handleJobSectorChange}
+                            placeholder="Select Job Type..."
+                        />
+                    </div>
+
                     <div className="form-group">
                         <label>Job Type:</label>
                         <Select
@@ -110,6 +138,15 @@ const CreateJob = () => {
                                         accept=".pdf"
                                         defaultValue={selectedFile}
                                         onChange={handleAttachmentChange}
+                                    />
+                                </div>
+                                <div>
+                                    <label>Logo Image(Optional):</label>
+                                    <input type="file"
+                                        className="form-control"
+                                        accept=".jpg,.jpeg,.png"
+                                        defaultValue={logo}
+                                        onChange={handleLogoChange}
                                     />
                                 </div>
                                 <div>
@@ -197,13 +234,24 @@ const CreateJob = () => {
                                 </div>
 
                             </div>
-                            <div className="col-md-6 col-sm-12 mt-2" style={{ height: '600px', border: '1px solid #ccc' }}>
+                            <div className="col-md-3 col-sm-12 mt-2" style={{ height: '600px', border: '1px solid #ccc' }}>
                                 {selectedFile && selectedFile.type === 'application/pdf' && (
                                     <div >
                                         <embed src={previewSelectedFile} type="application/pdf" width="100%" height="400px" />
+
+                                    </div>
+                                )}
+
+                            </div>
+                            <div className="col-md-3 col-sm-12 mt-2" style={{ height: '600px', border: '1px solid #ccc' }}>
+                                {logo && (
+                                    <div >
+                                        <img src={logoPreview} width={250} height={600} />
+
                                     </div>
                                 )}
                             </div>
+
 
                         </div>
                     </div>

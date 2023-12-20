@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteUserRegisteredSingleService, fetchUserRegisteredServices } from "../../services/userService";
 import { useEffect, useState } from "react";
 import { setLoader } from "../../actions/loaderAction";
+import DropdownOnServices from "./DropdownOnServices";
 
 const RegisteredService = () => {
     const [service, setService] = useState([]);
@@ -143,15 +144,9 @@ const RegisteredService = () => {
                 <div className="card shadow card-search">
                     <div className="card-header bg-success">
                         <div className="d-sm-flex align-items-center justify-content-between text-light">
-                            Registered Services
-                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/user/search/service')
-                                }}
-                            >
-                                View All Services/Create
-                            </a>
+                            REGISTERED SERVICES
+                           
+                            <DropdownOnServices path = {window.location.pathname} />
                         </div>
                     </div>
                     <div className="card-body">

@@ -8,6 +8,7 @@ import { setLoader } from '../../actions/loaderAction';
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 import Select from "react-select";
+import DropdownOnServices from './DropdownOnServices';
 
 const suffix = (
     <AudioOutlined
@@ -228,16 +229,10 @@ const Services = () => {
             <div className="container">
                 <div className="card shadow card-search">
                     <div className="card-header bg-success">
-                        <div className="d-sm-flex align-items-center justify-content-between text-light fs-5">
-                            All Services
-                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer fs-5"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/user/user-registered-services')
-                                }}
-                            >
-                                My Services
-                            </a>
+                        <div className="d-sm-flex align-items-center justify-content-between text-light">
+                            ALL SERVICES
+                            <DropdownOnServices />
+                           
                         </div>
                     </div>
                     <div className="card-body">
@@ -248,9 +243,9 @@ const Services = () => {
                             <div className="col-md-8 rounded">
 
                                 <Search
-                                    placeholder="input search text"
+                                    placeholder="Enter Search Text"
                                     allowClear
-                                    enterButton="Search"
+                                    enterButton="SEARCH"
                                     size="large"
                                     onChange={handleSearchChange}
                                     autoFocus
@@ -272,7 +267,7 @@ const Services = () => {
                             </div>
                             <div className='col-md-4'>
                                 <div className={`card shadow mb-2 ${errors ? 'border-danger' : ''}`}>
-                                    <div className='card-header bg-primary text-light fs-4'>Add Service</div>
+                                    <div className='card-header bg-primary text-light'>ADD SERVICE</div>
                                     <div className="card-body">
                                         {message && (
                                             <div className={`alert ${alertClass}`}>

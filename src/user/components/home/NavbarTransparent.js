@@ -46,7 +46,7 @@ const NavbarTransparent = (props) => {
     }
     window.scrollTo(0, 0);
     if (isAuthenticUser) {
-      navigate("/dashboard");
+      navigate("/");
     } else {
       navigate("/");
     }
@@ -86,7 +86,7 @@ const NavbarTransparent = (props) => {
     navigate("/contact");
   };
 
-  const handleServiceClick = (e) => {
+  const handleProvidesClick = (e) => {
     if (isAndroidUsed) {
       showDrawer();
     }
@@ -106,7 +106,8 @@ const NavbarTransparent = (props) => {
 
       if (!isHomePage) {
         e.preventDefault();
-        navigate("/login");
+        window.scroll(20,20)
+        navigate("/social-bharat-provides");
         return;
       }
 
@@ -115,6 +116,28 @@ const NavbarTransparent = (props) => {
       if (servicesSection) {
         servicesSection.scrollIntoView({ behavior: "smooth" });
       }
+    }
+  };
+
+  const handleServiceClick = (e) => {
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/user/search/service");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        navigate("/login");
+      } else {
+        navigate("/login");
+      }
+     
     }
   };
 
@@ -175,48 +198,27 @@ const NavbarTransparent = (props) => {
                 {" "}
               </li>
 
-              {
-                isAuthenticUser ? ('') : (
-                  <li className="nav-item">
-                    <a
-                      className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
-                        }`}
-                      onClick={handleHomeClicked}
-                    >
-                      HOME
-                    </a>
-                  </li>
-                )
-              }
-              {
-                isAuthenticUser ? (
-                  <li className="nav-item">
-                    <a
-                      className={`nav-link rounded ${window.location.pathname === "/service" ||
-                        window.location.pathname === "/dashboard"
-                        ? "active"
-                        : "inactive"
-                        }`}
-                      onClick={handleServiceClick}
-                    >
-                      HOME
-                    </a>
-                  </li>
-                ) : (
-                  <li className="nav-item">
-                    <a
-                      className={`nav-link rounded ${window.location.pathname === "/service" ||
-                        window.location.pathname === "/dashboard"
-                        ? "active"
-                        : "inactive"
-                        }`}
-                      onClick={handleServiceClick}
-                    >
-                      SERVICES
-                    </a>
-                  </li>
-                )
-              }
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
+                    }`}
+                  onClick={handleHomeClicked}
+                >
+                  HOME
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ||
+                    window.location.pathname === "/social-bharat-provides"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleProvidesClick}
+                >
+                  PROVIDES
+                </a>
+              </li>
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/contact" ? "active" : "inactive"
@@ -227,8 +229,21 @@ const NavbarTransparent = (props) => {
                 </a>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
+              </li> */}
+
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/service" ||
+                    window.location.pathname === "/user/search/service"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleServiceClick}
+                >
+                  SERVICES
+                </a>
               </li>
 
               {/* You can add more nav items here */}
@@ -278,7 +293,7 @@ const NavbarTransparent = (props) => {
               <div className="customDrawerBody">
                 <ul className="customUl">
 
-                  {
+                  {/* {
                     isAuthenticUser ? '' : (
                       <li className="nav-item mt-2">
                         <a
@@ -291,34 +306,34 @@ const NavbarTransparent = (props) => {
                         </a>
                       </li>
                     )
-                  }
+                  } */}
 
 
-                  {
-                    isAuthenticUser ? (
-                      <li className="nav-item mt-2">
-                        <a className="nav-link" onClick={handleServiceClick}>
-                          <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                          HOME
-                        </a>
-                      </li>
-                    ) : (
-                      <li className="nav-item mt-2">
-                        <a className="nav-link" onClick={handleServiceClick}>
-                          <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                          SERVICES
-                        </a>
-                      </li>
-                    )
-                  }
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleHomeClicked}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      HOME
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleProvidesClick}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      PROVIDES
+                    </a>
+                  </li>
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleContactClicked}>
                       <i className="fas fa-address-book m-2"></i>CONTACT
                     </a>
                   </li>
-
                   <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleServiceClick}>
+                      <i className="fas fa-address-book m-2"></i>SERVICES
+                    </a>
+                  </li>
+
+                  {/* <li className="nav-item mt-2">
                     {isAuthenticUser && isAuthenticUser ? (
                       <a className="nav-link m-2">
                         <i className="fa fa-search" aria-hidden="true"></i>
@@ -327,7 +342,7 @@ const NavbarTransparent = (props) => {
                     ) : (
                       ""
                     )}
-                  </li>
+                  </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">

@@ -1,14 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import FeedbackModel from "../home/FeedbackModel";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const isShow = useSelector((state) => state.loader.isShowSet);
+  const user = useSelector((state) => state.userAuth);
+  const isFeedback = useSelector((state) => state.loader.isShowSet);
+  const [isShow, setIsShow] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(isFeedback)
+    if (user) {
+      if (user.user.count % 5 === 0 && user.user.count !== 0) {
+        setIsShow(true);
+      } else {
+        setIsShow(false);
+      }
+    } else {
+      setIsShow(false);
+    }
+  }, [user])
+
   return (
 
     <div id="dashboard">
-      {isShow && <FeedbackModel />}
+      {isShow && isFeedback && <FeedbackModel />}
       <div className="container pt-5 mb-5">
         <div className="row">
           <div className="col-lg-6 col-xl-3 mb-4">
@@ -222,7 +239,7 @@ const Dashboard = () => {
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
                   className="text-white hover-pointer"
-                  // onClick={() => navigate("/user/search/business")}
+                  onClick={() => navigate("/user/search/jobs")}
                 >
                   Search{" "}
                 </a>

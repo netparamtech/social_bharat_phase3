@@ -239,8 +239,8 @@ const Services = () => {
 
 
                         {serverError && <span className='error'>{serverError}</span>}
-                        <div className='col-md-12 d-flex'>
-                            <div className="col-md-8 rounded">
+                        <div className='row'>
+                            <div className="col-12 col-sm-8 rounded">
 
                                 <Search
                                     placeholder="Enter Search Text"
@@ -265,7 +265,7 @@ const Services = () => {
                                 // onChange={handleSearchChange}
                                 />
                             </div>
-                            <div className='col-md-4'>
+                            <div className='col-12 col-sm-4'>
                                 <div className={`card shadow mb-2 ${errors ? 'border-danger' : ''}`}>
                                     <div className='card-header bg-primary text-light'>ADD SERVICE</div>
                                     <div className="card-body">

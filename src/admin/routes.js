@@ -44,6 +44,7 @@ import CreateServicePage from "./pages/services/CreateServicePage";
 import UpdateServicePage from "./pages/services/UpdateServicePage";
 import RegisteredUsersInServicePage from "./pages/services/RegisteredUsersInServicePage";
 import RequestedForNewServicePage from "./pages/services/RequestedForNewServicePage";
+import AllJobsPostPage from "./pages/jobs/AllJobsPostPage";
 
 const adminRoutes = [
     {
@@ -315,6 +316,12 @@ const adminRoutes = [
     {
         path: '/admin/services/requested',
         component: RequestedForNewServicePage,
+        exact:true
+    },
+
+    {
+        path: '/admin/job-board',
+        component: AllJobsPostPage,
         exact:true
     },
 ]

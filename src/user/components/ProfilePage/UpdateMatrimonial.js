@@ -206,7 +206,6 @@ const UpdateMatrimonial = (props) => {
         dispatch(setLoader(false));
       }
     } catch (error) {
-      dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
@@ -221,6 +220,8 @@ const UpdateMatrimonial = (props) => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

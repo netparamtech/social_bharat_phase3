@@ -645,6 +645,16 @@ export const searchPeopleInService = async(queryString,page,size,title) => {
     }
 }
 
+//create new job post
+export const createNewJobPost = async(data) => {
+    try{
+        const response = await apiWithHeaders.post('/user/create/new-job',data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //Chat
 export const sendMessage = async (data) => {
     try {

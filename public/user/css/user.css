@@ -1610,6 +1610,32 @@ input[type="number"] {
   }
 }
 
+@media (max-width: 767px) {
+  .truncate-text-job {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 768px) {
+  .truncate-text-job {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+}
+
 .card-header-height{
   height: 40px;
   border-bottom: none;
@@ -1646,3 +1672,4 @@ input[type="number"] {
 #auth-wrapper .submit-btn{
   border-radius: 20px;
 }
+

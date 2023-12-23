@@ -289,6 +289,20 @@ function Sidebar() {
         </a>
       </li>
 
+      <li className="nav-item">
+        <a
+          className="nav-link collapsed hover-pointer-admin"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            navigate('/admin/job-board');
+          }}
+        >
+
+          <i class="fa fa-tasks" aria-hidden="true"></i>
+          <span className="m-2">JOBS</span>
+        </a>
+      </li>
+
       {/* <!-- Nav Item - Event Collapse Menu --> */}
 
       <li className="nav-item">

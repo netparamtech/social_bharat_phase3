@@ -32,6 +32,8 @@ import RegisteredServicesPage from "./pages/RegisteredServicesPage";
 import UpdateRegisteredServicePage from "./pages/UpdateRegisteredServicePage";
 import SearchUsersWithServicePage from "./pages/SearchUsersWithServicePage";
 import CreateJobPage from "./pages/CreateJobPage";
+import OurSocialBharatProvidesPage from "./pages/OurSocialBharatProvidesPage";
+import JobBoardPage from "./pages/JobBoardPage";
 
 const userRoutes = [
     {
@@ -260,6 +262,17 @@ const userRoutes = [
     {
         path: '/user/job/create',
         component: CreateJobPage,
+        exact: true
+    },
+    {
+        path: '/social-bharat-provides',
+        component: OurSocialBharatProvidesPage,
+        exact: true
+    },
+
+    {
+        path: '/user/search/jobs',
+        component: JobBoardPage,
         exact: true
     },
 

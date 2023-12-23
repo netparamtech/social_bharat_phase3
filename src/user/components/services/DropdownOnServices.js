@@ -55,8 +55,8 @@ const DropdownOnServices = ({path}) => {
         >
             <a onClick={(e) => e.preventDefault()}>
                 <Space>
-                    <p className='text-light m-2'>SERVICES</p>
-                    <DownOutlined className='text-light mt-0' />
+                    <p className='text-black m-2'>SERVICES</p>
+                    <DownOutlined className='text-black mt-0' />
                 </Space>
             </a>
         </Dropdown>

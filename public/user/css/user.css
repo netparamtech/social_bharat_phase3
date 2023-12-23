@@ -12,6 +12,10 @@ body {
   color: #008374 !important;
 }
 
+.bg-all{
+  background-color: #008374 !important;
+}
+
 #customNavID .navbar-brand img {
   width: 200px;
   background-image: 'user/images/sb-logo.png';
@@ -1257,7 +1261,8 @@ a.btn.dropdown-toggle.show:focus {
 #auth-wrapper-cont,
 #comminity-banners-section,
 #setting-page,
-#chat {
+#chat,
+#service-section {
   margin-top: 140px;
 }
 
@@ -1657,6 +1662,7 @@ input[type="number"] {
 .form-check-input {
   border: 1px solid #000; /* Adjust the color as needed */
 }
+
 .btn-secondary {
   width: 200px;
 }
@@ -1665,11 +1671,37 @@ input[type="number"] {
   width: 100%;
 }
 
-#searchPeople-section .services-hover:hover{
-  background-color: #0a2090;
-}
-
 #auth-wrapper .submit-btn{
   border-radius: 20px;
 }
 
+#service-section .sevice-item{
+  margin-top: 20px;
+}
+
+#service-section .sevice-item .card{
+  height: 70px !important;
+  /* background-color: #006b5d; */
+}
+
+#service-section .sevice-item .card:hover{
+  background-color: #637976 !important;
+  color: white;
+}
+
+.bg-darkskyblue{
+  background-color: #81b5b5;
+}
+
+#service-section :where(.css-dev-only-do-not-override-1adbn6x).ant-btn-primary {
+  color: #fff;
+  background-color: #81b5b5;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+  font-weight: 500;
+}
+
+#service-section :where(.css-dev-only-do-not-override-1adbn6x).ant-btn-primary:hover {
+
+  background-color: #6cbdbd;
+
+}

@@ -57,6 +57,16 @@ export const uploadMultipleImages = async (formData) => {
     }
 }
 
+//upload pdf section
+export const uploadPdf = async (formData) => {
+    try {
+        const response = await apiWithFileHeaders.post('/upload-pdf',formData);  
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 export const createCommunity = async (data) => {
     try {
         const response = await apiWithHeaders.post('/communities', data);
@@ -572,6 +582,46 @@ export const updateService = async (id,data) => {
 export const updateToggleStatusForUserRegisteredService = async (clickedUserId) => {
     try {
         const response = await apiWithHeaders.patch(`/service/${clickedUserId}/toggle-statusforUserRegisteredService`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch All Jobs
+export const fetchAllJobsPosted = async (is_admin_post,page, size, searchQuery, jobType) => {
+    try {
+        const response = await apiWithHeaders.get(`/search/users/jobs?is_admin_post=${is_admin_post}&page=${page}&size=${size}&searchQuery=${searchQuery}&jobType=${jobType}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//toggle job post status
+export const toggleJobPostStatus = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/job/${id}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete job posted
+export const deleteJobsPosted = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/job/${id}/delete`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//create new job
+export const createNewJob = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/create/new-job',data);
         return response;
     } catch (error) {
         throw error;

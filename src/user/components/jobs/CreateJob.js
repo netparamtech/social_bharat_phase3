@@ -28,7 +28,8 @@ const CreateJob = () => {
     const [description, setDescription] = useState('');
     const [jobStartDate, setJobStartDate] = useState('');
     const [jobEndDate, setJobEndDate] = useState('');
-    const [isActive, setIsActive] = useState('Active');
+    const [application_fee_details,setApplication_fee_details] = useState('');
+    const [isActive, setIsActive] = useState('Inactive');
     const [isApplyForm, setIsApplyForm] = useState('Inactive');
 
     const [errors, setErrors] = useState('');
@@ -160,6 +161,7 @@ const CreateJob = () => {
             job_apply_form: isApplyForm,
             job_start_date: jobStartDate,
             job_end_date: jobEndDate,
+            fee_details: application_fee_details,
         }
         console.log(data)
         try {
@@ -198,7 +200,7 @@ const CreateJob = () => {
             <div className="row">
                 <div className="col-12 col-sm-8 m-2">
 
-                    <div className=" card shadow mx-auto rounded">
+                    <div className={`card shadow mx-auto rounded ${errors?'border-danger':''}`}>
                         <div className=" card-header bg-primary text-light rounded">Create New Job</div>
                         <div className="card-body">
                             {serverError && <span className='error'>{serverError}</span>}
@@ -215,7 +217,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Title:</label>
                                 <input type="text"
-                                    className="form-control"
+                                    className={`form-control ${errors.job_title?'border-danger':''}`}
                                     placeholder="Enter Job Title"
                                     defaultValue={jobTitle}
                                     onChange={(e) => setJobTitle(e.target.value)}
@@ -227,7 +229,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Sector:</label>
                                 <Select
-                                    className=""
+                                    className={`form-control ${errors.job_sector?'border-danger':''}`}
                                     options={jobSectorOption}
                                     value={jobSector}
                                     onChange={handleJobSectorChange}
@@ -241,7 +243,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Type:</label>
                                 <Select
-                                    className=""
+                                    className={`form-control ${errors.job_type?'border-danger':''}`}
                                     options={jobTypeOption}
                                     value={jobType}
                                     onChange={handleJobTypeChange}
@@ -321,7 +323,7 @@ const CreateJob = () => {
                                         <div>
                                             <label>Description{" "}<span className="text-danger">*</span></label>
                                             <textarea type="text"
-                                                className="form-control"
+                                                className={`form-control ${errors.description?'border-danger':''}`}
                                                 placeholder="Enter Description"
                                                 defaultValue={description}
                                                 onChange={(e) => setDescription(e.target.value)}
@@ -393,22 +395,37 @@ const CreateJob = () => {
                                         <div className="form-check mt-2">
                                             <label className="row bg-info fs-5 m-2 rounded">
                                                 <Space direction="vertical" size={12} className="mt-2">
-                                                    <div className="d-flex">
-                                                        <DatePicker className="col-8" size={12} placeholder="Start Date" onChange={jobStartDateChange} />
-                                                        <p className="col-4 fs-6 text-light">{jobStartDate}</p>
+                                                    <div className="">
+                                                    <label className="">Application Start</label>
+                                                        <input
+                                                            type="date"
+                                                            name="jobStartDate"
+                                                            id="jobStartDate"
+                                                            placeholder=""
+                                                            className={`form-control ${errors.job_start_date?'border-danger':''}`}
+                                                            value={jobStartDate}
+                                                            onChange={(e) => setJobStartDate(e.target.value)}
+                                                        />
                                                     </div>
                                                     {errors.job_start_date && (
                                                         <span className="error">{errors.job_start_date}</span>
                                                     )}
-                                                    <div className="d-flex">
-                                                        <DatePicker className="col-8" size={12} placeholder="End Date" onChange={jobEndDateChange} />
-                                                        <p className="col-4 fs-6 text-light">{jobEndDate}</p>
+                                                    <div className="">
+                                                    <label className="">Application End</label>
+                                                        <input
+                                                            type="date"
+                                                            name="jobStartDate"
+                                                            id="jobStartDate"
+                                                            placeholder=""
+                                                            className={`form-control ${errors.job_end_date?'border-danger':''}`}
+                                                            value={jobEndDate}
+                                                            onChange={(e) => setJobEndDate(e.target.value)}
+                                                        />
                                                     </div>
                                                     {errors.job_end_date && (
                                                         <span className="error">{errors.job_end_date}</span>
                                                     )}
                                                 </Space>
-                                                <p>Please Select Job Start And End Date</p>
 
 
                                             </label>
@@ -419,7 +436,7 @@ const CreateJob = () => {
                                         </div>
 
                                     </div>
-                                    <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
+                                    {/* <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
                                         {previewSelectedFile && (
                                             <div >
                                                 <embed src={previewSelectedFile} type="application/pdf" width="100%" height="300px" />
@@ -434,6 +451,19 @@ const CreateJob = () => {
                                                 <img src={logoPreview} width={150} height={300} />
 
                                             </div>
+                                        )}
+                                    </div> */}
+
+                                    <div className="col-md-6 col-sm-12 mt-2">
+                                        <label>Short Information about Application Fee</label>
+                                        <textarea type="text"
+                                            className={`form-control ${errors.fee_details?'border-danger':''}`}
+                                            placeholder="Enter application fee details or details about fee..."
+                                            defaultValue={application_fee_details}
+                                            onChange={(e) => setApplication_fee_details(e.target.value)}
+                                        />
+                                        {errors.fee_details && (
+                                            <span className="error">{errors.fee_details}</span>
                                         )}
                                     </div>
 

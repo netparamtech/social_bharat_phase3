@@ -28,7 +28,7 @@ const CreateJob = () => {
     const [description, setDescription] = useState('');
     const [jobStartDate, setJobStartDate] = useState('');
     const [jobEndDate, setJobEndDate] = useState('');
-    const [application_fee_details,setApplication_fee_details] = useState('');
+    const [application_fee_details, setApplication_fee_details] = useState('');
     const [isActive, setIsActive] = useState('Inactive');
     const [isApplyForm, setIsApplyForm] = useState('Inactive');
 
@@ -200,7 +200,7 @@ const CreateJob = () => {
             <div className="row">
                 <div className="col-12 col-sm-8 m-2">
 
-                    <div className={`card shadow mx-auto rounded ${errors?'border-danger':''}`}>
+                    <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
                         <div className=" card-header bg-primary text-light rounded">Create New Job</div>
                         <div className="card-body">
                             {serverError && <span className='error'>{serverError}</span>}
@@ -217,7 +217,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Title:</label>
                                 <input type="text"
-                                    className={`form-control ${errors.job_title?'border-danger':''}`}
+                                    className={`form-control ${errors.job_title ? 'border-danger' : ''}`}
                                     placeholder="Enter Job Title"
                                     defaultValue={jobTitle}
                                     onChange={(e) => setJobTitle(e.target.value)}
@@ -229,7 +229,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Sector:</label>
                                 <Select
-                                    className={`form-control ${errors.job_sector?'border-danger':''}`}
+                                    className={`form-control ${errors.job_sector ? 'border-danger' : ''}`}
                                     options={jobSectorOption}
                                     value={jobSector}
                                     onChange={handleJobSectorChange}
@@ -243,7 +243,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <label>Job Type:</label>
                                 <Select
-                                    className={`form-control ${errors.job_type?'border-danger':''}`}
+                                    className={`form-control ${errors.job_type ? 'border-danger' : ''}`}
                                     options={jobTypeOption}
                                     value={jobType}
                                     onChange={handleJobTypeChange}
@@ -323,7 +323,7 @@ const CreateJob = () => {
                                         <div>
                                             <label>Description{" "}<span className="text-danger">*</span></label>
                                             <textarea type="text"
-                                                className={`form-control ${errors.description?'border-danger':''}`}
+                                                className={`form-control ${errors.description ? 'border-danger' : ''}`}
                                                 placeholder="Enter Description"
                                                 defaultValue={description}
                                                 onChange={(e) => setDescription(e.target.value)}
@@ -396,13 +396,13 @@ const CreateJob = () => {
                                             <label className="row bg-info fs-5 m-2 rounded">
                                                 <Space direction="vertical" size={12} className="mt-2">
                                                     <div className="">
-                                                    <label className="">Application Start</label>
+                                                        <label className="">Application Start</label>
                                                         <input
                                                             type="date"
                                                             name="jobStartDate"
                                                             id="jobStartDate"
                                                             placeholder=""
-                                                            className={`form-control ${errors.job_start_date?'border-danger':''}`}
+                                                            className={`form-control ${errors.job_start_date ? 'border-danger' : ''}`}
                                                             value={jobStartDate}
                                                             onChange={(e) => setJobStartDate(e.target.value)}
                                                         />
@@ -411,13 +411,13 @@ const CreateJob = () => {
                                                         <span className="error">{errors.job_start_date}</span>
                                                     )}
                                                     <div className="">
-                                                    <label className="">Application End</label>
+                                                        <label className="">Application End</label>
                                                         <input
                                                             type="date"
                                                             name="jobStartDate"
                                                             id="jobStartDate"
                                                             placeholder=""
-                                                            className={`form-control ${errors.job_end_date?'border-danger':''}`}
+                                                            className={`form-control ${errors.job_end_date ? 'border-danger' : ''}`}
                                                             value={jobEndDate}
                                                             onChange={(e) => setJobEndDate(e.target.value)}
                                                         />
@@ -431,9 +431,6 @@ const CreateJob = () => {
                                             </label>
                                         </div>
 
-                                        <div className="col-3 mx-auto mt-3 submit-btn">
-                                            <button type="button" className="btn btn-success border-danger" onClick={handleSubmit}>submit</button>
-                                        </div>
 
                                     </div>
                                     {/* <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
@@ -457,7 +454,7 @@ const CreateJob = () => {
                                     <div className="col-md-6 col-sm-12 mt-2">
                                         <label>Short Information about Application Fee</label>
                                         <textarea type="text"
-                                            className={`form-control ${errors.fee_details?'border-danger':''}`}
+                                            className={`form-control ${errors.fee_details ? 'border-danger' : ''}`}
                                             placeholder="Enter application fee details or details about fee..."
                                             defaultValue={application_fee_details}
                                             onChange={(e) => setApplication_fee_details(e.target.value)}
@@ -465,7 +462,17 @@ const CreateJob = () => {
                                         {errors.fee_details && (
                                             <span className="error">{errors.fee_details}</span>
                                         )}
+                                        <div className="col-md-12 col-sm-12 mt-2"><b>सामाजिक भारत</b> <li>एक ही समुदाय के लोगों को आपस में जोड़कर उन्हें सामाजिक रूप से जोड़ता है, जिससे समृद्धि और समर्थन में वृद्धि होती है।</li>
+                                            <li>समुदाय के लोगों को समृद्धि के साथ ही अपने समुदाय से ही जीवनसाथी ढूंढने की सुविधा प्रदान करता है।</li>
+                                            <li> सदस्यों को रोजगार और व्यापार की खोज के लिए एक सामाजिक मंच प्रदान करने से उन्हें अधिक अवसर मिलते हैं।</li>
+                                            <li>समुदाय के सदस्यों के बीच सामूहिक समर्थन बढ़ता है, जिससे आपसी सहारा मिलता है और समस्याओं का समाधान होता है।</li>
+                                            <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li></div>
+
                                     </div>
+                                    <div className="col-3 mx-auto mt-3 submit-btn">
+                                        <button type="button" className="btn btn-success border-danger" onClick={handleSubmit}>submit</button>
+                                    </div>
+
 
 
                                 </div>
@@ -481,7 +488,7 @@ const CreateJob = () => {
 
             </div>
 
-        </div>
+        </div >
 
     );
 }

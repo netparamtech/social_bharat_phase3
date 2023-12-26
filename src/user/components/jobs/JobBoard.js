@@ -11,9 +11,10 @@ const JobBoard = () => {
     const [size, setSize] = useState('');
     const [data, setData] = useState([]);
     const [totalRows, setTotalRows] = useState(0);
+    const [isMyJobsClicked,setIsMyJobsClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [defaultImage, setDefaultImage] = useState(
-        "/admin/img/download.jpg"
+        "/user/images/netparamlogo.jpg"
     );
 
     const handleNavItemClick = (navItem) => {
@@ -67,7 +68,12 @@ const JobBoard = () => {
         }
     };
     useEffect(() => {
-        fetchJobs(page, 20, activeNavItem);
+        if(activeNavItem==='ALL'||activeNavItem==='PART TIME'||activeNavItem==='FULL TIME'||activeNavItem==='FREELANCE'||activeNavItem==='OTHERS'){
+            fetchJobs(page, 20, activeNavItem);
+        } else if(activeNavItem==='MY JOBS'){
+            setIsMyJobsClicked(true);
+        }
+        
     }, [activeNavItem]);
 
     const groupedItems = [];
@@ -133,6 +139,8 @@ const JobBoard = () => {
                                         style={{ color: activeNavItem === 'FREELANCE' ? 'red' : 'inherit' }}>FREELANCE</Nav.Link>
                                     <Nav.Link href="#" onClick={() => handleNavItemClick('OTHERS')}
                                         style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
+                                         <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
+                                        style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
 
                                     {/* Remove the following NavDropdown section */}
                                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

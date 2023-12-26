@@ -6,6 +6,7 @@ import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import CreateJobs from "./CreateJobs";
+import UpdateJobPosted from "./UpdateJobPosted";
 
 const AllJobs = () => {
   const [data, setData] = useState([]);
@@ -15,6 +16,8 @@ const AllJobs = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeNavItem, setActiveNavItem] = useState('ALL');
   const [openCreateForm, setOpenCreateForm] = useState(false);
+  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [jobId,setJobId] = useState('');
 
   const handleNavItemClick = (navItem) => {
     if (navItem === 'CREATE JOBS') {
@@ -29,6 +32,13 @@ const AllJobs = () => {
 
   const actionInModel = (value) => {
     setOpenCreateForm(value);
+  }
+
+  const actionInModelToUpdate = (value,id) => {
+    setOpenUpdateForm(value);
+    if(id){
+      setJobId(id);
+    }
   }
 
 
@@ -66,7 +76,7 @@ const AllJobs = () => {
     } else if (jobType === 'MY JOBS') {
       jobType = 'myJobs';
     }
-    if (jobType === '' || jobType === 'Part Time' || jobType === 'Full Time' || jobType === 'Freelance' || jobType === 'Other' || jobType === 'myJobs') {
+    if (jobType === '' || jobType === 'Part Time' || jobType === 'Full Time' || jobType === 'Freelance' || jobType === 'Other' || jobType === 'myJobs' || jobType === 'GOVERNMENT') {
       try {
         let is_admin_post = '';
         if (jobType === 'myJobs') {
@@ -244,15 +254,16 @@ const AllJobs = () => {
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-          {/* <a
-            className="collapse-item hover-pointer-admin"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(`/admin/service/update/${record.id}`)
-            }}
-          >
-            <i className="fa fa-edit mr-4" title="Edit" />
-          </a> */}
+          {
+            activeNavItem === 'MY JOBS' ? (
+              <a
+                className="collapse-item hover-pointer-admin"
+                onClick={(e) => actionInModelToUpdate(true,record.job_id)}
+              >
+                <i className="fa fa-edit mr-4" title="Edit" />
+              </a>
+            ) : ''
+          }
 
           <a
             className="collapse-item hover-pointer-admin"
@@ -278,7 +289,7 @@ const AllJobs = () => {
 
   useEffect(() => {
     fetchData();
-  }, [activeNavItem, searchQuery]);
+  }, [activeNavItem, searchQuery,openCreateForm,openUpdateForm]);
   return (
     <div>
       <div id="" className="">
@@ -294,10 +305,12 @@ const AllJobs = () => {
                       style={{ color: activeNavItem === 'ALL' ? 'red' : 'inherit' }}>ALL</Nav.Link>
                     <Nav.Link href="#" onClick={() => handleNavItemClick('PART TIME')}
                       style={{ color: activeNavItem === 'PART TIME' ? 'red' : 'inherit' }}>PART TIME</Nav.Link>
-                    <Nav.Link href="#" onClick={() => handleNavItemClick('FULL TIM')}
-                      style={{ color: activeNavItem === 'FULL TIM' ? 'red' : 'inherit' }}>FULL TIME</Nav.Link>
+                    <Nav.Link href="#" onClick={() => handleNavItemClick('FULL TIME')}
+                      style={{ color: activeNavItem === 'FULL TIME' ? 'red' : 'inherit' }}>FULL TIME</Nav.Link>
                     <Nav.Link href="#" onClick={() => handleNavItemClick('FREELANCE')}
                       style={{ color: activeNavItem === 'FREELANCE' ? 'red' : 'inherit' }}>FREELANCE</Nav.Link>
+                    <Nav.Link href="#" onClick={() => handleNavItemClick('GOVERNMENT')}
+                      style={{ color: activeNavItem === 'GOVERNMENT' ? 'red' : 'inherit' }}>GOVERNMENT</Nav.Link>
                     <Nav.Link href="#" onClick={() => handleNavItemClick('OTHERS')}
                       style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
                     <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
@@ -321,26 +334,30 @@ const AllJobs = () => {
               </Navbar>
             </div>
             <div className="card-body">
-             {
-              !openCreateForm?(
-                <Table
-                title={() => `${activeNavItem} Jobs`}  // Set the title to 'Enquiries'
-                dataSource={data}
-                columns={columns}
-                pagination={{
-                  current: page,
-                  pageSize: size,
-                  total: totalRows,
-                  onChange: handlePageChange,
-                  onShowSizeChange: handlePageSizeChange,
-                }}
-                // onChange={handleTableChange}
+              {
+                !openCreateForm ? (
+                  <Table
+                    title={() => `${activeNavItem} Jobs`}  // Set the title to 'Enquiries'
+                    dataSource={data}
+                    columns={columns}
+                    pagination={{
+                      current: page,
+                      pageSize: size,
+                      total: totalRows,
+                      onChange: handlePageChange,
+                      onShowSizeChange: handlePageSizeChange,
+                    }}
+                    // onChange={handleTableChange}
 
-                rowKey={(record) => record.id}
-              // onChange={handleSearchChange}
-              />
-              ):(<CreateJobs actionInModel = {actionInModel} />)
-             }
+                    rowKey={(record) => record.id}
+                  // onChange={handleSearchChange}
+                  />
+                ) : (<CreateJobs actionInModel={actionInModel} />)
+              }
+
+              {
+                openUpdateForm?(<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />):''
+              }
 
             </div>
 

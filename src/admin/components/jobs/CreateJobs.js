@@ -128,21 +128,10 @@ const CreateJobs = (props) => {
             dispatch(setLoader(false));
         }
     }
-
-    const handleActiveChange = (event) => {
-        setIsActive(event.target.value);
-    };
     const handleApplyFormChange = (event) => {
         setIsApplyForm(event.target.value);
     }
-    const jobStartDateChange = (value, dateString) => {
-        setJobStartDate(dateString);
-    };
-
-    const jobEndDateChange = (value, dateString) => {
-        setJobEndDate(dateString);
-    };
-
+   
     const handleSubmit = async () => {
         dispatch(setLoader(true));
         const data = {
@@ -155,7 +144,6 @@ const CreateJobs = (props) => {
             logo: selectedLogoTempUrl,
             description,
             apply_link: applyLink,
-            job_request_status: isActive,
             job_apply_form: isApplyForm,
             job_start_date: jobStartDate,
             job_end_date: jobEndDate,
@@ -332,38 +320,6 @@ const CreateJobs = (props) => {
                                                 <span className="error">{errors.description}</span>
                                             )}
                                         </div>
-                                        <div className="form-check mt-2">
-                                            <p className={`btn ${isActive === 'Active' ? 'btn-success' : 'btn-danger'}`}>
-                                                {isActive === 'Active' ?
-                                                    (<span>On submission of this job a request will be send to admin to 'active' to show on job search portal.</span>
-                                                    ) : ((<span>On submission of this job a request will be send to admin to 'deactive' and not show on job search portal.
-                                                    </span>))}</p>
-                                            <label className="form-control">
-                                                <input
-                                                    type="radio"
-                                                    className="form-check-input"
-                                                    value="Active"
-                                                    checked={isActive === 'Active'}
-                                                    onChange={handleActiveChange}
-                                                />
-                                                Active
-                                            </label>
-
-                                            <label className="form-control">
-                                                <input
-                                                    type="radio"
-                                                    className="form-check-input"
-                                                    value="Inactive"
-                                                    checked={isActive === 'Inactive'}
-                                                    onChange={handleActiveChange}
-                                                />
-                                                Inactive
-                                            </label>
-
-                                            {errors.job_request_status && (
-                                                <span className="error">{errors.job_request_status}</span>
-                                            )}
-                                        </div>
 
                                         <div className="form-check mt-2">
                                             <p>Need a apply form to Apply ?</p>
@@ -467,7 +423,19 @@ const CreateJobs = (props) => {
                                             <li>समुदाय के लोगों को समृद्धि के साथ ही अपने समुदाय से ही जीवनसाथी ढूंढने की सुविधा प्रदान करता है।</li>
                                             <li> सदस्यों को रोजगार और व्यापार की खोज के लिए एक सामाजिक मंच प्रदान करने से उन्हें अधिक अवसर मिलते हैं।</li>
                                             <li>समुदाय के सदस्यों के बीच सामूहिक समर्थन बढ़ता है, जिससे आपसी सहारा मिलता है और समस्याओं का समाधान होता है।</li>
-                                            <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li></div>
+                                            <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li>
+                                        </div>
+                                        <div className="col-md-12 col-sm-12 mt-2">
+                                            <b>Social Bharat</b>
+                                            <ul>
+                                                <li>Brings together people of the same community, fostering social connectivity, leading to growth and support.</li>
+                                                <li>Provides the community members with the convenience of finding life partners within their community, along with prosperity.</li>
+                                                <li>By offering a social platform for job and business search, it provides community members with more opportunities.</li>
+                                                <li>Enhances mutual support among community members, providing a collective solution to problems.</li>
+                                                <li>By connecting community members through awareness and education, it keeps them informed about social issues.</li>
+                                            </ul>
+                                        </div>
+
                                     </div>
 
                                     <div className="col-3 mx-auto mt-3 submit-btn">

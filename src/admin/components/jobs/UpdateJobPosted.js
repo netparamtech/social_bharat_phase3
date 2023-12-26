@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import React from 'react';
 import { Space } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
-import { createNewJob, uploadImage, uploadPdf } from "../../services/AdminService";
+import { createNewJob, findSingleJobsPosted, updateSingleJobsPosted, uploadImage, uploadPdf } from "../../services/AdminService";
 import Modal from 'react-bootstrap/Modal';
+import { yyyyMmDdFormat } from "../../../user/util/DateConvertor";
+import dayjs from 'dayjs';
 
 const UpdateJobPosted = (props) => {
-    const { actionInModel } = props;
+    const { actionInModelToUpdate, jobId } = props;
     const [jobTitle, setJobTitle] = useState('');
     const [jobSector, setJobSector] = useState('');
     const [jobType, setJobType] = useState("");
@@ -23,8 +25,8 @@ const UpdateJobPosted = (props) => {
     const [selectedLogoTempUrl, setSelectedLogoiTempUrl] = useState('');
     const [applyLink, setApplyLink] = useState('');
     const [description, setDescription] = useState('');
-    const [jobStartDate, setJobStartDate] = useState('');
-    const [jobEndDate, setJobEndDate] = useState('');
+    const [jobStartDate, setJobStartDate] = useState(dayjs().add(0, 'day'));
+    const [jobEndDate, setJobEndDate] = useState(dayjs().add(0, 'day'));
     const [application_fee_details, setApplication_fee_details] = useState('');
     const [isActive, setIsActive] = useState('Inactive');
     const [isApplyForm, setIsApplyForm] = useState('Inactive');
@@ -36,12 +38,17 @@ const UpdateJobPosted = (props) => {
     const [messageAttachment, setMessageAttachment] = useState('');
     const [messageLogo, setMessageLogo] = useState('');
 
+    const [jobDetails, setJobDetails] = useState('');
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false)
+        actionInModelToUpdate(false);
+    };
     const handleShow = () => setShow(true);
 
     const jobTypeOption = [
@@ -134,20 +141,28 @@ const UpdateJobPosted = (props) => {
             dispatch(setLoader(false));
         }
     }
-
-    const handleActiveChange = (event) => {
-        setIsActive(event.target.value);
-    };
     const handleApplyFormChange = (event) => {
         setIsApplyForm(event.target.value);
     }
-    const jobStartDateChange = (value, dateString) => {
-        setJobStartDate(dateString);
-    };
-
-    const jobEndDateChange = (value, dateString) => {
-        setJobEndDate(dateString);
-    };
+   
+    const fetchJobWithId = async() => {
+        try {
+            const response = await findSingleJobsPosted(jobId);
+            if(response && response.status === 200){
+                setJobDetails(response.data.data);
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate('/admin');
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                let errorMessage = error.response.data.message;
+                navigate('/server/error', { state: { errorMessage } });
+            }
+        }
+    }
 
     const handleSubmit = async () => {
         dispatch(setLoader(true));
@@ -161,21 +176,19 @@ const UpdateJobPosted = (props) => {
             logo: selectedLogoTempUrl,
             description,
             apply_link: applyLink,
-            job_request_status: isActive,
             job_apply_form: isApplyForm,
             job_start_date: jobStartDate,
             job_end_date: jobEndDate,
             fee_details: application_fee_details,
         }
-        console.log(data)
         try {
-            const response = await createNewJob(data);
+            const response = await updateSingleJobsPosted(data,jobId);
             if (response && response.status === 201) {
                 setServerError('');
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass("alert-success");
-                actionInModel(false);
+                actionInModelToUpdate(false);
             }
         } catch (error) {
             dispatch(setLoader(false));
@@ -201,15 +214,40 @@ const UpdateJobPosted = (props) => {
         }
     }
 
+    useEffect(()=>{
+        if(jobDetails){
+            setJobTitle(jobDetails.job_title);
+            setJobType({value:jobDetails.job_type,label:jobDetails.job_type});
+            setJobSector({value:jobDetails.job_sector,label:jobDetails.job_sector});
+            setSubHeading(jobDetails.job_subheading);
+            setLocation(jobDetails.location);
+            setSelectedFileTempUrl(jobDetails.notification_pdf);
+            setPreviewSelectedFile(jobDetails.notification_pdf);
+            setSelectedLogoiTempUrl(jobDetails.logo);
+            setLogoPreview(jobDetails.logo);
+            setApplyLink(jobDetails.apply_link);
+            setDescription(jobDetails.description);
+            setIsApplyForm(jobDetails.job_apply_form);
+            setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date));
+            setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date));
+            setApplication_fee_details(jobDetails.fee_details);
+
+        }
+    },[jobDetails])
+
+    useEffect(()=>{
+        fetchJobWithId();
+    },[]);
+
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton></Modal.Header>
-            <div id="" className="mt-3 container">
+        <Modal show={show} size="lg" onHide={handleClose} className="">
+            <Modal.Header className="bg-info text-light" closeButton>Update Job</Modal.Header>
+            <div id="" className="mt-2 container">
                 <div className="row">
                     <div className="">
 
                         <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
-                            <div className=" card-header bg-primary text-light rounded">Create New Job</div>
+
                             <div className="card-body">
                                 {serverError && <span className='error'>{serverError}</span>}
                                 {message && (
@@ -340,38 +378,6 @@ const UpdateJobPosted = (props) => {
                                                     <span className="error">{errors.description}</span>
                                                 )}
                                             </div>
-                                            <div className="form-check mt-2">
-                                                <p className={`btn ${isActive === 'Active' ? 'btn-success' : 'btn-danger'}`}>
-                                                    {isActive === 'Active' ?
-                                                        (<span>On submission of this job a request will be send to admin to 'active' to show on job search portal.</span>
-                                                        ) : ((<span>On submission of this job a request will be send to admin to 'deactive' and not show on job search portal.
-                                                        </span>))}</p>
-                                                <label className="form-control">
-                                                    <input
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="Active"
-                                                        checked={isActive === 'Active'}
-                                                        onChange={handleActiveChange}
-                                                    />
-                                                    Active
-                                                </label>
-
-                                                <label className="form-control">
-                                                    <input
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="Inactive"
-                                                        checked={isActive === 'Inactive'}
-                                                        onChange={handleActiveChange}
-                                                    />
-                                                    Inactive
-                                                </label>
-
-                                                {errors.job_request_status && (
-                                                    <span className="error">{errors.job_request_status}</span>
-                                                )}
-                                            </div>
 
                                             <div className="form-check mt-2">
                                                 <p>Need a apply form to Apply ?</p>
@@ -442,23 +448,7 @@ const UpdateJobPosted = (props) => {
 
 
                                         </div>
-                                        {/* <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
-                                        {previewSelectedFile && (
-                                            <div >
-                                                <embed src={previewSelectedFile} type="application/pdf" width="100%" height="300px" />
 
-                                            </div>
-                                        )}
-
-                                    </div>
-                                    <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
-                                        {logoPreview && (
-                                            <div >
-                                                <img src={logoPreview} width={150} height={300} />
-
-                                            </div>
-                                        )}
-                                    </div> */}
 
                                         <div className="col-md-6 col-sm-12 mt-2">
                                             <label>Short Information about Application Fee</label>
@@ -471,11 +461,43 @@ const UpdateJobPosted = (props) => {
                                             {errors.fee_details && (
                                                 <span className="error">{errors.fee_details}</span>
                                             )}
+                                            <div className="d-flex">
+
+                                                <div className="col-md-6 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
+                                                    {previewSelectedFile && (
+                                                        <div >
+                                                            <embed src={previewSelectedFile} type="application/pdf" width="100%" height="300px" />
+
+                                                        </div>
+                                                    )}
+
+                                                </div>
+                                                <div className="col-md-6 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
+                                                    {logoPreview && (
+                                                        <div >
+                                                            <img src={logoPreview} width={150} height={300} />
+
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
                                             <div className="col-md-12 col-sm-12 mt-2"><b>सामाजिक भारत</b> <li>एक ही समुदाय के लोगों को आपस में जोड़कर उन्हें सामाजिक रूप से जोड़ता है, जिससे समृद्धि और समर्थन में वृद्धि होती है।</li>
                                                 <li>समुदाय के लोगों को समृद्धि के साथ ही अपने समुदाय से ही जीवनसाथी ढूंढने की सुविधा प्रदान करता है।</li>
                                                 <li> सदस्यों को रोजगार और व्यापार की खोज के लिए एक सामाजिक मंच प्रदान करने से उन्हें अधिक अवसर मिलते हैं।</li>
                                                 <li>समुदाय के सदस्यों के बीच सामूहिक समर्थन बढ़ता है, जिससे आपसी सहारा मिलता है और समस्याओं का समाधान होता है।</li>
-                                                <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li></div>
+                                                <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li>
+                                            </div>
+                                            <div className="col-md-12 col-sm-12 mt-2">
+                                                <b>Social Bharat</b>
+                                                <ul>
+                                                    <li>Brings together people of the same community, fostering social connectivity, leading to growth and support.</li>
+                                                    <li>Provides the community members with the convenience of finding life partners within their community, along with prosperity.</li>
+                                                    <li>By offering a social platform for job and business search, it provides community members with more opportunities.</li>
+                                                    <li>Enhances mutual support among community members, providing a collective solution to problems.</li>
+                                                    <li>By connecting community members through awareness and education, it keeps them informed about social issues.</li>
+                                                </ul>
+                                            </div>
+
                                         </div>
 
                                         <div className="col-3 mx-auto mt-3 submit-btn">

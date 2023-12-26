@@ -1705,3 +1705,7 @@ input[type="number"] {
   background-color: #6cbdbd;
 
 }
+
+.remove-hover-pointer{
+  pointer-events: none;
+}

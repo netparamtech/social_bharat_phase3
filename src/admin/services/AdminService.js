@@ -618,6 +618,26 @@ export const deleteJobsPosted = async (id) => {
     }
 }
 
+//find single job details
+export const findSingleJobsPosted = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/find/${id}/job-posted`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update single job posted
+export const updateSingleJobsPosted = async (data,id) => {
+    try {
+        const response = await apiWithHeaders.put(`/update/${id}/job-posted`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //create new job
 export const createNewJob = async (data) => {
     try {

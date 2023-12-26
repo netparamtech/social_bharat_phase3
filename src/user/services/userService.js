@@ -655,6 +655,16 @@ export const createNewJobPost = async(data) => {
     }
 }
 
+//fetch jobs
+export const fetchAllJobsPosted = async (page,size,jobType)=>{
+    try {
+        const response = await apiWithHeaders.get(`/user/search/jobs?page=${page}&size=${size}&jobType=${jobType}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
 //Chat
 export const sendMessage = async (data) => {
     try {

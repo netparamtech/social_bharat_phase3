@@ -466,7 +466,20 @@ const CreateJob = () => {
                                             <li>समुदाय के लोगों को समृद्धि के साथ ही अपने समुदाय से ही जीवनसाथी ढूंढने की सुविधा प्रदान करता है।</li>
                                             <li> सदस्यों को रोजगार और व्यापार की खोज के लिए एक सामाजिक मंच प्रदान करने से उन्हें अधिक अवसर मिलते हैं।</li>
                                             <li>समुदाय के सदस्यों के बीच सामूहिक समर्थन बढ़ता है, जिससे आपसी सहारा मिलता है और समस्याओं का समाधान होता है।</li>
-                                            <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li></div>
+                                            <li>समुदाय के सदस्यों को जागरूकता और शिक्षा के साधन के रूप में जोड़कर, उन्हें सामाजिक मुद्दों के प्रति जागरूक बनाए रखता है।</li>
+                                        </div>
+                                        <div className="col-md-12 col-sm-12 mt-2">
+                                            <b>Social Bharat</b>
+                                            <ul>
+                                                <li>Brings together people of the same community, fostering social connectivity, leading to growth and support.</li>
+                                                <li>Provides the community members with the convenience of finding life partners within their community, along with prosperity.</li>
+                                                <li>By offering a social platform for job and business search, it provides community members with more opportunities.</li>
+                                                <li>Enhances mutual support among community members, providing a collective solution to problems.</li>
+                                                <li>By connecting community members through awareness and education, it keeps them informed about social issues.</li>
+                                            </ul>
+                                        </div>
+
+
 
                                     </div>
                                     <div className="col-3 mx-auto mt-3 submit-btn">

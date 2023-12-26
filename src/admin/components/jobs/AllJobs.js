@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import {
-  deleteJobsPosted,
-  deleteServiceByID,
-  fetchAllJobsPosted,
-  toggleJobPostStatus,
-  updateToggleStatusForService,
-} from "../../services/AdminService";
+import { deleteJobsPosted, deleteServiceByID, fetchAllJobsPosted, toggleJobPostFeatured, toggleJobPostStatus, updateToggleStatusForService } from "../../services/AdminService";
 import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 import {
@@ -30,7 +24,8 @@ const AllJobs = () => {
   const [activeNavItem, setActiveNavItem] = useState("ALL");
   const [openCreateForm, setOpenCreateForm] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
-  const [jobId, setJobId] = useState("");
+  const [jobId, setJobId] = useState('');
+  const [featured, setFeatured] = useState(false);
 
   const handleNavItemClick = (navItem) => {
     if (navItem === "CREATE JOBS") {
@@ -69,6 +64,23 @@ const AllJobs = () => {
     setPage(1);
     setSearchQuery(e.target.value);
   };
+
+  const handleFeaturedChange = async (id) => {
+    try {
+      const response = await toggleJobPostFeatured(id);
+      if (response && response.status === 200) {
+        fetchData();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    }
+  }
 
   const fetchData = async () => {
     let jobType = activeNavItem;
@@ -273,16 +285,16 @@ const AllJobs = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div>
-          {activeNavItem === "MY JOBS" ? (
-            <a
-              className="collapse-item hover-pointer-admin"
-              onClick={(e) => actionInModelToUpdate(true, record.job_id)}
-            >
-              <i className="fa fa-edit mr-4" title="Edit" />
-            </a>
-          ) : (
-            ""
-          )}
+          {
+            activeNavItem === 'MY JOBS' ? (
+              <a
+                className="collapse-item hover-pointer-admin"
+                onClick={(e) => actionInModelToUpdate(true, record.job_id)}
+              >
+                <i className="fa fa-edit mr-4" title="Edit" />
+              </a>
+            ) : ''
+          }
 
           <a
             className="collapse-item hover-pointer-admin"
@@ -302,6 +314,7 @@ const AllJobs = () => {
           >
             <i className="fas fa-eye"></i>
           </a>
+          <input type="checkbox" id="featuredCheckbox" name="featured" value={featured} onClick={()=>handleFeaturedChange(record.job_id)} />
         </div>
       ),
     },
@@ -440,9 +453,12 @@ const AllJobs = () => {
                     rowKey={(record) => record.id}
                     // onChange={handleSearchChange}
                   />
-                ) : (
-                  <CreateJobs actionInModel={actionInModel} />
-                )}
+                ) : (<CreateJobs actionInModel={actionInModel} />)
+              }
+
+              {
+                openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
+              }
 
                 {openUpdateForm ? (
                   <UpdateJobPosted

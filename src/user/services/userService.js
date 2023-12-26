@@ -666,9 +666,39 @@ export const fetchAllJobsPosted = async (page,size,jobType)=>{
 }
 
 //fetch jobs
-export const fetchAllJobsByLoggedUser = async (page,size)=>{
+export const fetchAllJobsByLoggedUser = async (userId,page,size)=>{
     try {
-        const response = await apiWithHeaders.get(`/user/search/myjobs?page=${page}&size=${size}`);
+        const response = await apiWithHeaders.get(`/user/search/myjobs?userId=${userId}&page=${page}&size=${size}`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//update user job posted
+export const updateUserJobPosted = async (data,id) => {
+    try {
+        const response = await apiWithHeaders.put(`/user/update/${id}/job`,data);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch single job posted
+export const fetchSingleJobPosted = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/find/${id}/job-posted`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//delete user posted single job
+export const deleteUserPostedSingleJob = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/job/${id}/delete`);
         return response;
     } catch(error) {
         throw error;

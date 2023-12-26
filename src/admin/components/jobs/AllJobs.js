@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteJobsPosted, deleteServiceByID, fetchAllJobsPosted, toggleJobPostStatus, updateToggleStatusForService } from "../../services/AdminService";
+import { deleteJobsPosted, deleteServiceByID, fetchAllJobsPosted, toggleJobPostFeatured, toggleJobPostStatus, updateToggleStatusForService } from "../../services/AdminService";
 import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
@@ -17,7 +17,8 @@ const AllJobs = () => {
   const [activeNavItem, setActiveNavItem] = useState('ALL');
   const [openCreateForm, setOpenCreateForm] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
-  const [jobId,setJobId] = useState('');
+  const [jobId, setJobId] = useState('');
+  const [featured, setFeatured] = useState(false);
 
   const handleNavItemClick = (navItem) => {
     if (navItem === 'CREATE JOBS') {
@@ -34,9 +35,9 @@ const AllJobs = () => {
     setOpenCreateForm(value);
   }
 
-  const actionInModelToUpdate = (value,id) => {
+  const actionInModelToUpdate = (value, id) => {
     setOpenUpdateForm(value);
-    if(id){
+    if (id) {
       setJobId(id);
     }
   }
@@ -57,6 +58,23 @@ const AllJobs = () => {
     setPage(1);
     setSearchQuery(e.target.value);
   };
+
+  const handleFeaturedChange = async (id) => {
+    try {
+      const response = await toggleJobPostFeatured(id);
+      if (response && response.status === 200) {
+        fetchData();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    }
+  }
 
   const fetchData = async () => {
     let jobType = activeNavItem;
@@ -258,7 +276,7 @@ const AllJobs = () => {
             activeNavItem === 'MY JOBS' ? (
               <a
                 className="collapse-item hover-pointer-admin"
-                onClick={(e) => actionInModelToUpdate(true,record.job_id)}
+                onClick={(e) => actionInModelToUpdate(true, record.job_id)}
               >
                 <i className="fa fa-edit mr-4" title="Edit" />
               </a>
@@ -280,6 +298,7 @@ const AllJobs = () => {
           }}>
             <i className="fas fa-eye"></i>
           </a>
+          <input type="checkbox" id="featuredCheckbox" name="featured" value={featured} onClick={()=>handleFeaturedChange(record.job_id)} />
         </div>
       ),
 
@@ -289,7 +308,7 @@ const AllJobs = () => {
 
   useEffect(() => {
     fetchData();
-  }, [activeNavItem, searchQuery,openCreateForm,openUpdateForm]);
+  }, [activeNavItem, searchQuery, openCreateForm, openUpdateForm]);
   return (
     <div>
       <div id="" className="">
@@ -356,7 +375,7 @@ const AllJobs = () => {
               }
 
               {
-                openUpdateForm?(<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />):''
+                openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
               }
 
             </div>

@@ -608,6 +608,16 @@ export const toggleJobPostStatus = async (id) => {
     }
 }
 
+//toggle job post featured
+export const toggleJobPostFeatured = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/job/${id}/toggle-featured`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //delete job posted
 export const deleteJobsPosted = async (id) => {
     try {

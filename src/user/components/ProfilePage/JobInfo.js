@@ -73,7 +73,7 @@ const JobInfo = (props) => {
                 jobDetails.map((item, idx) => (
                   <div className="col-md-6" key={idx}>
                     <div className="card shadow mb-2 ">
-                      <div className="edit-icon">
+                      <div className="col-1 ms-auto me-4 mt-2 icon-edit">
                         <a
                           className="hover-pointer"
                           onClick={() =>

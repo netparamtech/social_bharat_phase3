@@ -383,14 +383,13 @@ const Services = () => {
                         <span className="error">{errors.description}</span>
                       )}
                     </div>
-                    <div className="form-group">
-                      <button
-                        className="form-control w-100  btn-primary fs-6"
-                        type="submit"
-                        onClick={handleSubmit}
-                      >
+                   
+                    <div className="row mt-4">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                         Submit
-                      </button>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

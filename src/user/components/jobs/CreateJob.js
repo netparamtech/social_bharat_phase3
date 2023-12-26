@@ -198,10 +198,10 @@ const CreateJob = () => {
     return (
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
-                <div className="col-12 col-sm-8 m-2">
+                <div className="col-12 col-sm-8 ">
 
                     <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
-                        <div className=" card-header bg-primary text-light rounded">Create New Job</div>
+                        <div className=" card-header shadow py-3 fs-6 rounded">Create New Job</div>
                         <div className="card-body">
                             {serverError && <span className='error'>{serverError}</span>}
                             {message && (
@@ -282,7 +282,7 @@ const CreateJob = () => {
                             <div className="form-group">
                                 <div className="row">
                                     <div className="col-md-6 col-sm-12">
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Attachment:</label>
                                             <input type="file"
                                                 className="form-control"
@@ -295,7 +295,7 @@ const CreateJob = () => {
                                                 <span className="error">{errors.attachment}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Logo Image(Optional):</label>
                                             <input type="file"
                                                 className="form-control"
@@ -308,7 +308,7 @@ const CreateJob = () => {
                                                 <span className="error">{errors.logo}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Apply Link</label>
                                             <textarea type="text"
                                                 className="form-control"
@@ -320,7 +320,7 @@ const CreateJob = () => {
                                                 <span className="error">{errors.apply_link}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Description{" "}<span className="text-danger">*</span></label>
                                             <textarea type="text"
                                                 className={`form-control ${errors.description ? 'border-danger' : ''}`}
@@ -393,7 +393,7 @@ const CreateJob = () => {
                                             )}
                                         </div>
                                         <div className="form-check mt-2">
-                                            <label className="row bg-info fs-5 m-2 rounded">
+                                            <label className="row rounded">
                                                 <Space direction="vertical" size={12} className="mt-2">
                                                     <div className="">
                                                         <label className="">Application Start</label>
@@ -482,8 +482,8 @@ const CreateJob = () => {
 
 
                                     </div>
-                                    <div className="col-3 mx-auto mt-3 submit-btn">
-                                        <button type="button" className="btn btn-success border-danger" onClick={handleSubmit}>submit</button>
+                                    <div className="">
+                                        <button type="button" className="btn btn-primary w-100" onClick={handleSubmit}>Submit</button>
                                     </div>
 
 
@@ -495,7 +495,7 @@ const CreateJob = () => {
                     </div>
 
                 </div>
-                <div className="col-12 col-sm-3 m-2">
+                <div className="col-12 col-sm-3 ">
                     <FeaturedJobs />
                 </div>
 

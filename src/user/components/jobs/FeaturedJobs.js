@@ -5,14 +5,14 @@ const FeaturedJobs = () => {
     const dataSource = [
         {
             key: '1',
-            company: 'Netparam',
-            job_title: 'UI & UX developer',
+            company: 'Company Name',
+            job_title: 'Job Title',
             apply_form: true,
             photo: '/user/images/job1.png',
-            location: "747, Janpath, Rani Sati nagar, Nirman nagar, Jaipur-302019",
+            location: "Address",
             age: 32,
             address: '10 Downing Street',
-            description: 'jhvghjvjhvjhvugf  hjbjhjjjjjjjjjjjjjjkjbjk kjhjhkjhbkjbkjbkjbkjb vjhvjhvghvgvjvj vjhvjhvjhvjhvbjhvjhbjhbjhbjhbjhbjhjbj hjbjhbjhbjbjbvjbjbjbkjbkjbkjbkjbkbkjbkjb'
+            description: 'Description'
         },
 
     ];
@@ -23,7 +23,7 @@ const FeaturedJobs = () => {
 
     const columns = [
         {
-            title: 'Featured Jobs', dataIndex: 'title', className: 'mx-auto text-muted',
+            title: 'Featured Jobs', dataIndex: 'title', className: 'mx-auto text-muted shadow fs-6',
             render: (text, record) => (
 
 
@@ -38,7 +38,14 @@ const FeaturedJobs = () => {
                         <p className="text-muted">{record.location}</p>
                         <Divider />
                         <p className="truncate-text-job text-muted">{truncateDescription(record.description, 250)}</p>
-                        <button type="button" className="btn btn-primary btn-sm">Apply</button>
+                        {/* <button type="button" className="btn btn-primary btn-sm">Apply</button> */}
+                        <div className="row mt-4">
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary w-100">
+                        Apply
+                        </button>
+                      </div>
+                    </div>
                     </div>
                 </div>
 

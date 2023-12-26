@@ -119,7 +119,7 @@ const JobBoard = () => {
     <div id="auth-wrapper" className="pt-5 pb-4 container">
       <div className="row">
         <div className="col-12 col-sm-8 mb-3">
-          <div className="card" style={{height:'760px'}}>
+          <div className="card" style={{height:'800px'}}>
             <div className="card-header">
               <Navbar bg="light" expand="lg">
                 <Navbar.Brand>JOB BOARD</Navbar.Brand>

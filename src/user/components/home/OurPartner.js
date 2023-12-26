@@ -70,8 +70,8 @@ function OurPartner() {
   return (
     <section id="partner">
       <div className="container">
-        <div className="row costomer-logos">
-          <div className="card shadow bg-warning  text-white h-100">
+        <div className="row">
+          <div className="card shadow bg-warning  text-white h-100 costomer-logos">
           {serverError && <span className='error'>{serverError}</span>}
             <Slider {...settings}>
               {casts && casts.length > 0 &&

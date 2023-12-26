@@ -189,7 +189,7 @@ const CreateJobs = (props) => {
                 <div className="">
 
                     <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
-                        <div className=" card-header bg-primary text-light rounded">Create New Job</div>
+                        <div className=" card-header  bg-primary text-light rounded">Create New Job</div>
                         <div className="card-body">
                             {serverError && <span className='error'>{serverError}</span>}
                             {message && (
@@ -270,7 +270,7 @@ const CreateJobs = (props) => {
                             <div className="form-group">
                                 <div className="row">
                                     <div className="col-md-6 col-sm-12">
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Attachment:</label>
                                             <input type="file"
                                                 className="form-control"
@@ -283,7 +283,7 @@ const CreateJobs = (props) => {
                                                 <span className="error">{errors.attachment}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Logo Image(Optional):</label>
                                             <input type="file"
                                                 className="form-control"
@@ -296,7 +296,7 @@ const CreateJobs = (props) => {
                                                 <span className="error">{errors.logo}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Apply Link</label>
                                             <textarea type="text"
                                                 className="form-control"
@@ -308,7 +308,7 @@ const CreateJobs = (props) => {
                                                 <span className="error">{errors.apply_link}</span>
                                             )}
                                         </div>
-                                        <div>
+                                        <div className="mb-3">
                                             <label>Description{" "}<span className="text-danger">*</span></label>
                                             <textarea type="text"
                                                 className={`form-control ${errors.description ? 'border-danger' : ''}`}
@@ -321,7 +321,7 @@ const CreateJobs = (props) => {
                                             )}
                                         </div>
 
-                                        <div className="form-check mt-2">
+                                        <div className="form-check mt-2 mb-3">
                                             <p>Need a apply form to Apply ?</p>
                                             <label className="form-control">
                                                 <input
@@ -348,9 +348,9 @@ const CreateJobs = (props) => {
                                                 <span className="error">{errors.job_apply_form}</span>
                                             )}
                                         </div>
-                                        <div className="form-check mt-2">
-                                            <label className="row bg-info fs-5 m-2 rounded">
-                                                <Space direction="vertical" size={12} className="mt-2">
+                                        <div className="form-check">
+                                            <label className="row  bg-info p-3 rounded">
+                                                <Space direction="vertical" size={12} className="">
                                                     <div className="">
                                                         <label className="">Application Start</label>
                                                         <input
@@ -438,8 +438,8 @@ const CreateJobs = (props) => {
 
                                     </div>
 
-                                    <div className="col-3 mx-auto mt-3 submit-btn">
-                                        <button type="button" className="btn btn-success border-danger" onClick={handleSubmit}>submit</button>
+                                    <div className="mt-3">
+                                        <button type="button" className="btn btn-primary w-25" onClick={handleSubmit}>Submit</button>
                                     </div>
 
 

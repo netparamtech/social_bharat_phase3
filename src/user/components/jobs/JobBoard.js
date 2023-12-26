@@ -13,6 +13,100 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Image } from "antd";
 
 const JobBoard = () => {
+<<<<<<< HEAD
+    const [activeNavItem, setActiveNavItem] = useState('ALL');
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState('');
+    const [data, setData] = useState([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [isMyJobsClicked,setIsMyJobsClicked] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [defaultImage, setDefaultImage] = useState(
+        "/user/images/netparamlogo.jpg"
+    );
+
+    const handleNavItemClick = (navItem) => {
+        setActiveNavItem(navItem);
+    };
+
+    const dataSource = [
+        {
+            key: '1',
+            company: 'Netparam',
+            job_title: 'UI & UX developer',
+            apply_form: true,
+            photo: '/user/images/job1.png',
+            location: "747, Janpath, Rani Sati nagar, Nirman nagar, Jaipur-302019",
+            age: 32,
+            address: '10 Downing Street',
+            description: 'jhvghjvjhvjhvugf bvbvjhgvjvj jhvjhvjhvjhvj hjbjhjhbvjbjbjbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjkjbjk kjhjhkjhbkjbkjbkjbkjb vjhvjhvghvgvjvj vjhvjhvjhvjhvbjhvjhbjhbjhbjhbjhbjhjbj hjbjhbjhbjbjbvjbjbjbkjbkjbkjbkjbkbkjbkjb'
+        },
+
+    ];
+
+    const fetchJobs = async (page, size, jobType) => {
+        jobType = '';
+
+        if (activeNavItem === 'PART TIME') {
+            jobType = 'Part Time';
+        } else if (activeNavItem === 'ALL') {
+            jobType = '';
+        } else if (activeNavItem === 'FULL TIME') {
+            jobType = 'Full Time';
+        } else if (activeNavItem === 'FREELANCE') {
+            jobType = 'Freelance';
+        } else if (activeNavItem === 'OTHERS') {
+            jobType = 'Other';
+        }
+        try {
+            const response = await fetchAllJobsPosted(page, size, jobType);
+            if (response && response.status === 200) {
+                setData(response.data.data.jobs);
+                setTotalRows(response.data.data.totalRowsAffected)
+            }
+        } catch (error) {
+
+        }
+
+    }
+    const fetchMoreData = () => {
+        if (!isLoading && data.length < totalRows) {
+            fetchJobs(page + 1, 20, activeNavItem);
+            setPage(page + 1);
+        }
+    };
+    useEffect(() => {
+        if(activeNavItem==='ALL'||activeNavItem==='PART TIME'||activeNavItem==='FULL TIME'||activeNavItem==='FREELANCE'||activeNavItem==='OTHERS'){
+            fetchJobs(page, 20, activeNavItem);
+        } else if(activeNavItem==='MY JOBS'){
+            setIsMyJobsClicked(true);
+        }
+        
+    }, [activeNavItem]);
+
+    const groupedItems = [];
+    for (let i = 0; i < data.length; i += 1) {
+        const pair = data.slice(i, i + 1); // Change 3 to 2 here
+        groupedItems.push(pair);
+    }
+    const calculateTimeDifference = (updatedDate) => {
+        const currentDate = new Date();
+        const updatedDateObj = new Date(updatedDate);
+        const differenceInSeconds = Math.floor(
+            (currentDate - updatedDateObj) / 1000
+        );
+
+        if (differenceInSeconds < 1) {
+            return "now";
+        } else if (differenceInSeconds < 60) {
+            return `${differenceInSeconds} sec ago`;
+        } else if (differenceInSeconds < 3600) {
+            const minutes = Math.floor(differenceInSeconds / 60);
+            return `${minutes} min ago`;
+        } else if (differenceInSeconds < 86400) {
+            const hours = Math.floor(differenceInSeconds / 3600);
+            return `${hours} hour ago`;
+=======
   const [activeNavItem, setActiveNavItem] = useState("ALL");
   const [page, setPage] = useState(1);
   const [size, setSize] = useState("");
@@ -102,6 +196,7 @@ const JobBoard = () => {
         const months = Math.floor(days / 30);
         if (!months) {
           return `${days} day ago`;
+>>>>>>> 14df36dd00202310df81e527e66489637aa6c096
         } else {
           const years = Math.floor(months / 12);
           if (!years) {
@@ -111,6 +206,31 @@ const JobBoard = () => {
           }
           return `${months} months ago`;
         }
+<<<<<<< HEAD
+    };
+    return (
+        <div id="auth-wrapper" className="pt-5 pb-4 container">
+            <div className="row">
+                <div className="card col-12 col-sm-8">
+                    <div className='card-header'>
+                        <Navbar bg="light" expand="lg">
+                            <Navbar.Brand>JOB BOARD</Navbar.Brand>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="mr-auto">
+                                    <Nav.Link href="#" onClick={() => handleNavItemClick('ALL')}
+                                        style={{ color: activeNavItem === 'ALL' ? 'red' : 'inherit' }}>ALL</Nav.Link>
+                                    <Nav.Link href="#" onClick={() => handleNavItemClick('PART TIME')}
+                                        style={{ color: activeNavItem === 'PART TIME' ? 'red' : 'inherit' }}>PART TIME</Nav.Link>
+                                    <Nav.Link href="#" onClick={() => handleNavItemClick('FULL TIME')}
+                                        style={{ color: activeNavItem === 'FULL TIME' ? 'red' : 'inherit' }}>FULL TIME</Nav.Link>
+                                    <Nav.Link href="#" onClick={() => handleNavItemClick('FREELANCE')}
+                                        style={{ color: activeNavItem === 'FREELANCE' ? 'red' : 'inherit' }}>FREELANCE</Nav.Link>
+                                    <Nav.Link href="#" onClick={() => handleNavItemClick('OTHERS')}
+                                        style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
+                                         <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
+                                        style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
+=======
       }
       return `${days} day ago`;
     }
@@ -174,6 +294,7 @@ const JobBoard = () => {
                     >
                       OTHERS
                     </Nav.Link>
+>>>>>>> 14df36dd00202310df81e527e66489637aa6c096
 
                     {/* Remove the following NavDropdown section */}
                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

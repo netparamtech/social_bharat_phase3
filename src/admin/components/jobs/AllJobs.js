@@ -467,18 +467,12 @@ const AllJobs = () => {
                     rowKey={(record) => record.id}
                     // onChange={handleSearchChange}
                   />
-<<<<<<< HEAD
                 ) : (<CreateJobs actionInModel={actionInModel} />)
               }
 
               {
                 openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
               }
-=======
-                ) : (
-                  <CreateJobs actionInModel={actionInModel} />
-                )}
->>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
 
                 {openUpdateForm ? (
                   <UpdateJobPosted

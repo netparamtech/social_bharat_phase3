@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import UpdateJobPosted from './UpdateJobPosted';
 
 const JobBoard = () => {
+<<<<<<< HEAD
     const user = useSelector((state) => state.userAuth);
+=======
+>>>>>>> c2d148e1781076d25e5c802a0c9d4e926ab3b9a1
     const [activeNavItem, setActiveNavItem] = useState('ALL');
     const [page, setPage] = useState(1);
     const [size, setSize] = useState('');
@@ -191,6 +194,7 @@ const JobBoard = () => {
         }
     };
     return (
+      <div>
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
                 <div className="card col-12 col-sm-8">
@@ -212,6 +216,7 @@ const JobBoard = () => {
                                         style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
                                     <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
                                         style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -280,6 +285,8 @@ const JobBoard = () => {
                     </Nav.Link>
 >>>>>>> 14df36dd00202310df81e527e66489637aa6c096
 >>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
+=======
+>>>>>>> c2d148e1781076d25e5c802a0c9d4e926ab3b9a1
 
                                     {/* Remove the following NavDropdown section */}
                                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

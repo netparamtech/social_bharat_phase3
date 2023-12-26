@@ -212,6 +212,74 @@ const JobBoard = () => {
                                         style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
                                     <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
                                         style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
+<<<<<<< HEAD
+=======
+=======
+      }
+      return `${days} day ago`;
+    }
+  };
+  return (
+    <div id="auth-wrapper" className="pt-5 pb-4 container">
+      <div className="row">
+        <div className="col-12 col-sm-8 mb-3">
+          <div className="card" style={{height:'800px'}}>
+            <div className="card-header">
+              <Navbar bg="light" expand="lg">
+                <Navbar.Brand>JOB BOARD</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav" >
+                  <Nav className="ms-auto ">
+                    <Nav.Link
+                      href="#"
+                      onClick={() => handleNavItemClick("ALL")}
+                      style={{
+                        color: activeNavItem === "ALL" ? "red" : "inherit",
+                      }}
+                    >
+                      ALL
+                    </Nav.Link>
+                    <Nav.Link
+                      href="#"
+                      onClick={() => handleNavItemClick("PART TIME")}
+                      style={{
+                        color:
+                          activeNavItem === "PART TIME" ? "red" : "inherit",
+                      }}
+                    >
+                      PART TIME
+                    </Nav.Link>
+                    <Nav.Link
+                      href="#"
+                      onClick={() => handleNavItemClick("FULL TIME")}
+                      style={{
+                        color:
+                          activeNavItem === "FULL TIME" ? "red" : "inherit",
+                      }}
+                    >
+                      FULL TIME
+                    </Nav.Link>
+                    <Nav.Link
+                      href="#"
+                      onClick={() => handleNavItemClick("FREELANCE")}
+                      style={{
+                        color:
+                          activeNavItem === "FREELANCE" ? "red" : "inherit",
+                      }}
+                    >
+                      FREELANCE
+                    </Nav.Link>
+                    <Nav.Link
+                      href="#"
+                      onClick={() => handleNavItemClick("OTHERS")}
+                      style={{
+                        color: activeNavItem === "OTHERS" ? "red" : "inherit",
+                      }}
+                    >
+                      OTHERS
+                    </Nav.Link>
+>>>>>>> 14df36dd00202310df81e527e66489637aa6c096
+>>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
 
                                     {/* Remove the following NavDropdown section */}
                                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">

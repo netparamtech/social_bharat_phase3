@@ -255,10 +255,10 @@ const RequestedForNewService = () => {
 
     return (
         <div>
-            <div className=" card-header bg-success d-sm-flex align-items-center justify-content-between mb-4">
+            <div className=" card-header  d-sm-flex align-items-center mb-4">
                 <h1 className="h3 mb-0 text-gray-800">All New Services</h1>
 
-                <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
+                <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin ms-auto"
                     onClick={(e) => {
                         e.preventDefault();
                         // navigate('/admin/service/create')
@@ -266,7 +266,7 @@ const RequestedForNewService = () => {
                 >
                     Requested Services
                 </a>
-                <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
+                <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin ms-2"
                     onClick={(e) => {
                         e.preventDefault();
                         navigate('/admin/service/index')

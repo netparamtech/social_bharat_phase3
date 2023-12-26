@@ -34,7 +34,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Profile</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Manage Profile <br />
                       प्रोफ़ाइल प्रबंधित करें{" "}
                     </div>
@@ -65,7 +65,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Become Social</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Find People <br />
                       लोग खोजें
                     </div>
@@ -91,7 +91,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Search Life Partner <br />
                       जीवन साथी खोजें
                     </div>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Business</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg">
                       Promote Business <br /> व्यवसाय खोजें
                     </div>
                   </div>
@@ -148,7 +148,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Event</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Manage Event(s) <br />
                       कार्यक्रम जोड़ें{" "}
                     </div>
@@ -175,7 +175,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Job Hiring</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Manage Jobs <br />
                       कार्य जोड़ें
                     </div>
@@ -196,12 +196,12 @@ const Dashboard = () => {
           </div>
 
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classicbrown text-white h-100">
+            <div className="card bg-classicpink text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Services</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Search Services <br /> सेवाएँ खोजें
                     </div>
                   </div>
@@ -228,7 +228,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Jobs</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg">
                       Search Jobs <br /> नौकरी खोजें
                     </div>
                   </div>
@@ -260,7 +260,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Share Your Feedback</div>
-                    <div className="text-lg fw-bold">
+                    <div className="text-lg ">
                       Feedback <br />
                       फ़ीड बैक
                     </div>

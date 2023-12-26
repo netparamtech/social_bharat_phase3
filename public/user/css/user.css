@@ -990,9 +990,12 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 .edit-icon a i,
-.delete-icon a i {
+.delete-icon a i,
+.icon-edit a i {
   color: #008374;
 }
+
+
 
 .delete-icon {
   position: absolute;

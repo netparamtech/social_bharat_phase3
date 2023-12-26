@@ -12,7 +12,7 @@ const FeaturedJobs = () => {
             location: "747, Janpath, Rani Sati nagar, Nirman nagar, Jaipur-302019",
             age: 32,
             address: '10 Downing Street',
-            description: 'jhvghjvjhvjhvugf bvbvjhgvjvj jhvjhvjhvjhvj hjbjhjhbvjbjbjbjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjkjbjk kjhjhkjhbkjbkjbkjbkjb vjhvjhvghvgvjvj vjhvjhvjhvjhvbjhvjhbjhbjhbjhbjhbjhjbj hjbjhbjhbjbjbvjbjbjbkjbkjbkjbkjbkbkjbkjb'
+            description: 'jhvghjvjhvjhvugf  hjbjhjjjjjjjjjjjjjjkjbjk kjhjhkjhbkjbkjbkjbkjb vjhvjhvghvgvjvj vjhvjhvjhvjhvbjhvjhbjhbjhbjhbjhbjhjbj hjbjhbjhbjbjbvjbjbjbkjbkjbkjbkjbkbkjbkjb'
         },
 
     ];
@@ -27,7 +27,7 @@ const FeaturedJobs = () => {
             render: (text, record) => (
 
 
-                <div className="m-2 services-hover hover-pointer"
+                <div className="services-hover hover-pointer"
                 // onClick={() => navigate(`/users-basedOn-services/${record.title}`)}
                 >
                     <p className="text-muted mx-auto"> {record.company}</p>
@@ -38,7 +38,7 @@ const FeaturedJobs = () => {
                         <p className="text-muted">{record.location}</p>
                         <Divider />
                         <p className="truncate-text-job text-muted">{truncateDescription(record.description, 250)}</p>
-                        <button type="button" className="btn btn-success">Apply</button>
+                        <button type="button" className="btn btn-primary btn-sm">Apply</button>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@ const FeaturedJobs = () => {
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} />;
+            <Table dataSource={dataSource} columns={columns} />
         </div>
     );
 }

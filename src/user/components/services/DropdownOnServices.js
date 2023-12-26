@@ -8,26 +8,45 @@ const DropdownOnServices = ({path}) => {
     const navigate = useNavigate();
     const items = [
         {
-            label: <p className={`hover-pointer ${window.location.pathname === path ? "active" : "inactive"
-        }`} onClick={(e) => {
+          label: (
+            <p
+              className={`hover-pointer ${window.location.pathname === path ? "active" : "inactive"
+                }`}
+              style={{ display: 'flex', alignItems: 'center' }}  // Add this style
+              onClick={(e) => {
                 e.preventDefault();
-                navigate('/user/search/service')
-            }}><img src="/user/images/service3.jpg" width="70px" /><br />VIEW ALL SERVICES/CREATE</p>,
-            key: '0',
+                navigate('/user/search/service');
+              }}
+            >
+              <img src="/user/images/service3.jpg" width="30px" className='me-1' alt="Service Image" />
+              <span>VIEW /CREATE</span>
+            </p>
+          ),
+          key: '0',
         },
         {
-            label: <p className={`hover-pointer ${window.location.pathname === path ? "active" : "inactive"
-        }`} onClick={(e) => {
+          label: (
+            <p
+              className={`hover-pointer ${window.location.pathname === path ? "active" : "inactive"
+                }`}
+              style={{ display: 'flex', alignItems: 'center' }}  // Add this style
+              onClick={(e) => {
                 e.preventDefault();
-                navigate('/user/user-registered-services')
-            }}><img src="/user/images/service4.png" width="70px" /><br />MY SERVICES</p>,
-            key: '1',
+                navigate('/user/user-registered-services');
+              }}
+            >
+              <img src="/user/images/service4.png" width="30px" className='me-1' alt="Service Image" />
+              <span>MY SERVICES</span>
+            </p>
+          ),
+          key: '1',
         },
-    ];
-    const dropdownStyle = {
-        width: isAndroidUsed?'60%':'10%',
+      ];
+      const dropdownStyle = {
+        width: isAndroidUsed ? '60%' : '12%',
         height: '300px',
       };
+      
       useEffect(() => {
         const handleResize = () => {
           setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations

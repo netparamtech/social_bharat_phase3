@@ -194,113 +194,6 @@ const JobBoard = () => {
 
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
-<<<<<<< HEAD
-            <div className="col-12 col-sm-8">
-            <div className="card ">
-            <div className='card-header'>
-                <Navbar bg="light" expand="lg">
-                    <Navbar.Brand>JOB BOARD</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="#" onClick={() => handleNavItemClick('ALL')}
-                                style={{ color: activeNavItem === 'ALL' ? 'red' : 'inherit' }}>ALL</Nav.Link>
-                            <Nav.Link href="#" onClick={() => handleNavItemClick('PART TIME')}
-                                style={{ color: activeNavItem === 'PART TIME' ? 'red' : 'inherit' }}>PART TIME</Nav.Link>
-                            <Nav.Link href="#" onClick={() => handleNavItemClick('FULL TIME')}
-                                style={{ color: activeNavItem === 'FULL TIME' ? 'red' : 'inherit' }}>FULL TIME</Nav.Link>
-                            <Nav.Link href="#" onClick={() => handleNavItemClick('FREELANCE')}
-                                style={{ color: activeNavItem === 'FREELANCE' ? 'red' : 'inherit' }}>FREELANCE</Nav.Link>
-                            <Nav.Link href="#" onClick={() => handleNavItemClick('OTHERS')}
-                                style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
-                                 <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
-                                style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
-
-            {/* Remove the following NavDropdown section */}
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                              <NavDropdown.Item href="#">Search By State and City</NavDropdown.Item>
-                              <NavDropdown.Item href="#">Another action</NavDropdown.Item>
-                              <NavDropdown.Divider />
-                              <NavDropdown.Item href="#">Something else here</NavDropdown.Item>
-                          </NavDropdown> */}
-          </Nav>
-          {/* Remove the following Form section */}
-          {/* <Form inline className='d-flex'>
-                          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                          <Button variant="outline-success">Search</Button>
-                      </Form> */}
-        </Navbar.Collapse>
-      </Navbar>
-    </div>
-    <div className="card-body">
-      <div className="row">
-        {/* Repeat the user card structure as needed */}
-        <InfiniteScroll
-          style={{ overflowX: "hidden" }}
-          dataLength={data.length}
-          next={fetchMoreData}
-          hasMore={data.length < totalRows}
-          loader={isLoading && <h4>Loading...</h4>}
-        >
-          <div className="container pw-20">
-            {groupedItems.map((pair, index) => (
-              <div className="row" key={index}>
-                {pair.map((item, innerIndex) => (
-                  <div className="col-md-12" key={innerIndex}>
-                    <div className="card shadow mb-2">
-                      <div className="card-body">
-                        <div className="row wow animate__animated animate__zoomIn">
-                          <div className="col-4">
-                            <Image
-                              src={
-                                item.photo ? item.photo : defaultImage
-                              }
-                              alt={item.name}
-                              title={item.name}
-                              className="avatar img-fluid img-circle"
-                              width={100}
-                            />
-                          </div>
-                          <div className="col-3">
-                            <p>
-                              <b>{item.job_title}</b>
-                            </p>
-                            <p className="text-muted">
-                              {item.job_subheading}
-                            </p>
-                          </div>
-                          <div className="col-3">
-                            <p className="btn btn-success remove-hover-pointer">
-                              {item.job_sector}
-                            </p>
-                            <p>{item.job_type}</p>
-                          </div>
-                          <div className="col-2">
-                            <p>
-                              {calculateTimeDifference(item.updated_at)}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="row wow animate__animated animate__zoomIn">
-                          <p className="col-12">{item.description}</p>
-                        </div>
-                      </div>
-                      <div className="card-footer  ">
-                        <div className="btn btn-primary">Apply</div> 
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </InfiniteScroll>
-      </div>
-    </div>
-  </div>
-            </div>
-                
-=======
                 <div className="card col-12 col-sm-8">
                     <div className='card-header'>
                         <Navbar bg="light" expand="lg">
@@ -419,7 +312,6 @@ const JobBoard = () => {
                 </div>
             </div>
 
->>>>>>> 60cc33a98a7e4388b42db0c6cec3b8b0616a3061
         </div>
     );
 }

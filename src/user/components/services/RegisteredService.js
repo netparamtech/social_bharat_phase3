@@ -139,11 +139,11 @@ const RegisteredService = () => {
         fetchServices();
     }, []);
     return (
-        <div id="searchPeople-section" className="pt-4 mb-4">
+        <div id="service-section" className="pt-4 mb-5">
             <div className="container">
                 <div className="card shadow card-search">
-                    <div className="card-header bg-success">
-                        <div className="d-sm-flex align-items-center justify-content-between text-light">
+                    <div className="card-header bg-darkskyblue">
+                        <div className="d-sm-flex align-items-center justify-content-between ">
                             REGISTERED SERVICES
                            
                             <DropdownOnServices path = {window.location.pathname} />

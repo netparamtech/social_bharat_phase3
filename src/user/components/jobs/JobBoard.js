@@ -9,10 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UpdateJobPosted from './UpdateJobPosted';
 
 const JobBoard = () => {
-<<<<<<< HEAD
     const user = useSelector((state) => state.userAuth);
-=======
->>>>>>> c2d148e1781076d25e5c802a0c9d4e926ab3b9a1
     const [activeNavItem, setActiveNavItem] = useState('ALL');
     const [page, setPage] = useState(1);
     const [size, setSize] = useState('');
@@ -20,10 +17,10 @@ const JobBoard = () => {
     const [totalRows, setTotalRows] = useState(0);
     const [isMyJobsClicked, setIsMyJobsClicked] = useState(false);
     const [userId, setUserId] = useState('');
-    const [jobId,setJobId] = useState('');
+    const [jobId, setJobId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState('');
-    const [isUpdateClicked,setIsUpdateClicked] = useState(false);
+    const [isUpdateClicked, setIsUpdateClicked] = useState(false);
     const [defaultImage, setDefaultImage] = useState(
         "/user/images/netparamlogo.jpg"
     );
@@ -35,9 +32,9 @@ const JobBoard = () => {
         setActiveNavItem(navItem);
     };
 
-    const changeUpdateClickedFlag = (value,jobId) => {
+    const changeUpdateClickedFlag = (value, jobId) => {
         setIsUpdateClicked(value);
-        if(jobId){
+        if (jobId) {
             setJobId(jobId);
         }
     }
@@ -111,7 +108,7 @@ const JobBoard = () => {
         try {
             const response = await deleteUserPostedSingleJob(id);
             if (response && response.status === 200) {
-                fetchMyJobs(page,20);
+                fetchMyJobs(page, 20);
                 setServerError('');
             }
         } catch (error) {
@@ -142,7 +139,7 @@ const JobBoard = () => {
             fetchMyJobs(page, 20);
         }
 
-    }, [activeNavItem,isUpdateClicked]);
+    }, [activeNavItem, isUpdateClicked]);
 
     useEffect(() => {
         if (user) {
@@ -194,7 +191,7 @@ const JobBoard = () => {
         }
     };
     return (
-      <div>
+
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
                 <div className="card col-12 col-sm-8">
@@ -216,77 +213,7 @@ const JobBoard = () => {
                                         style={{ color: activeNavItem === 'OTHERS' ? 'red' : 'inherit' }}>OTHERS</Nav.Link>
                                     <Nav.Link href="#" onClick={() => handleNavItemClick('MY JOBS')}
                                         style={{ color: activeNavItem === 'MY JOBS' ? 'red' : 'inherit' }}>MY JOBS</Nav.Link>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-      }
-      return `${days} day ago`;
-    }
-  };
-  return (
-    <div id="auth-wrapper" className="pt-5 pb-4 container">
-      <div className="row">
-        <div className="col-12 col-sm-8 mb-3">
-          <div className="card" style={{height:'800px'}}>
-            <div className="card-header">
-              <Navbar bg="light" expand="lg">
-                <Navbar.Brand>JOB BOARD</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" >
-                  <Nav className="ms-auto ">
-                    <Nav.Link
-                      href="#"
-                      onClick={() => handleNavItemClick("ALL")}
-                      style={{
-                        color: activeNavItem === "ALL" ? "red" : "inherit",
-                      }}
-                    >
-                      ALL
-                    </Nav.Link>
-                    <Nav.Link
-                      href="#"
-                      onClick={() => handleNavItemClick("PART TIME")}
-                      style={{
-                        color:
-                          activeNavItem === "PART TIME" ? "red" : "inherit",
-                      }}
-                    >
-                      PART TIME
-                    </Nav.Link>
-                    <Nav.Link
-                      href="#"
-                      onClick={() => handleNavItemClick("FULL TIME")}
-                      style={{
-                        color:
-                          activeNavItem === "FULL TIME" ? "red" : "inherit",
-                      }}
-                    >
-                      FULL TIME
-                    </Nav.Link>
-                    <Nav.Link
-                      href="#"
-                      onClick={() => handleNavItemClick("FREELANCE")}
-                      style={{
-                        color:
-                          activeNavItem === "FREELANCE" ? "red" : "inherit",
-                      }}
-                    >
-                      FREELANCE
-                    </Nav.Link>
-                    <Nav.Link
-                      href="#"
-                      onClick={() => handleNavItemClick("OTHERS")}
-                      style={{
-                        color: activeNavItem === "OTHERS" ? "red" : "inherit",
-                      }}
-                    >
-                      OTHERS
-                    </Nav.Link>
->>>>>>> 14df36dd00202310df81e527e66489637aa6c096
->>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
-=======
->>>>>>> c2d148e1781076d25e5c802a0c9d4e926ab3b9a1
+
 
                                     {/* Remove the following NavDropdown section */}
                                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -357,14 +284,14 @@ const JobBoard = () => {
                                                             {
                                                                 isMyJobsClicked ? (
                                                                     <>
-                                                                        <i className="fa fa-edit mr-2 m-2" title='Edit' onClick={()=>changeUpdateClickedFlag(true,item.id)} />
-                                                                        <i className="fa fa-trash m-2" title='Delete' onClick={()=>deleteMyJob(item.id)} />
+                                                                        <i className="fa fa-edit mr-2 m-2" title='Edit' onClick={() => changeUpdateClickedFlag(true, item.id)} />
+                                                                        <i className="fa fa-trash m-2" title='Delete' onClick={() => deleteMyJob(item.id)} />
                                                                         <i className="fa fa-thumbs-down m-2" title="Inactive" />
                                                                     </>
                                                                 ) : ''
                                                             }
                                                             {
-                                                                isUpdateClicked?(<UpdateJobPosted changeUpdateClickedFlag = {changeUpdateClickedFlag} jobId ={jobId} />):''
+                                                                isUpdateClicked ? (<UpdateJobPosted changeUpdateClickedFlag={changeUpdateClickedFlag} jobId={jobId} />) : ''
                                                             }
                                                         </div>
                                                     </div>

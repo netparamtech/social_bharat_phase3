@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-<<<<<<< HEAD
 import { deleteJobsPosted, deleteServiceByID, fetchAllJobsPosted, toggleJobPostFeatured, toggleJobPostStatus, updateToggleStatusForService } from "../../services/AdminService";
-=======
-import {
-  deleteJobsPosted,
-  deleteServiceByID,
-  fetchAllJobsPosted,
-  toggleJobPostStatus,
-  updateToggleStatusForService,
-} from "../../services/AdminService";
->>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
 import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 import {
@@ -34,12 +24,8 @@ const AllJobs = () => {
   const [activeNavItem, setActiveNavItem] = useState("ALL");
   const [openCreateForm, setOpenCreateForm] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
-<<<<<<< HEAD
   const [jobId, setJobId] = useState('');
   const [featured, setFeatured] = useState(false);
-=======
-  const [jobId, setJobId] = useState("");
->>>>>>> 57da489679a34ba77cf7f57d72ca5e94364efc3e
 
   const handleNavItemClick = (navItem) => {
     if (navItem === "CREATE JOBS") {

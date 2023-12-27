@@ -12,7 +12,7 @@ const DropdownOnServices = ({path}) => {
             <p
               className={`hover-pointer ${window.location.pathname === path ? "active" : "inactive"
                 }`}
-              style={{ display: 'flex', alignItems: 'center' }}  // Add this style
+              style={{ display: 'flex', alignItems: 'center' }} 
               onClick={(e) => {
                 e.preventDefault();
                 navigate('/user/search/service');
@@ -73,8 +73,8 @@ const DropdownOnServices = ({path}) => {
             overlayStyle={dropdownStyle}
         >
             <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                    <p className='text-black m-2'>SERVICES</p>
+                <Space className='top-0 end-0 position-absolute service-absolute-p'>
+                    <p className='text-black m-2 '>SERVICES</p>
                     <DownOutlined className='text-black mt-0' />
                 </Space>
             </a>

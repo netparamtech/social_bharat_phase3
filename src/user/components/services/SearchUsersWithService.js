@@ -175,10 +175,10 @@ const SearchUsersWithService = () => {
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
-          <div className="container">
+          <div id="" className="container">
             <div className="card shadow card-search">
-              <div className="card-header bg-success">
-                <div className="d-sm-flex align-items-center justify-content-between text-light">
+              <div className="card-header bg-darkskyblue">
+                <div className="d-sm-flex align-items-center justify-content-between">
                   {title}
                   <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
                     onClick={(e) => {

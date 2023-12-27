@@ -323,7 +323,7 @@ const JobBoard = () => {
     <div id="auth-wrapper" className="pt-5 pb-4 container">
       <div className="row">
         <div className="col-12 col-sm-8">
-          <div className="card ">
+          <div className="card mb-3">
             {serverError && <span className="error">{serverError}</span>}
             <div className="card-header">
               {activeNavItem === "MY JOBS" ? (
@@ -452,15 +452,13 @@ const JobBoard = () => {
                       <div className="row" key={index}>
                         {pair.map((item, innerIndex) => (
                           <div className="col-md-12" key={innerIndex}>
-                            <div className="card shadow mb-2">
+                            <div className="card shadow  mb-3">
                               <div className="card-body">
-                               
-                                    <span className="time-job">
-                                      {calculateTimeDifference(item.updated_at)}
-                                    </span>
-                                  
-                                <div className="row wow animate__animated animate__zoomIn">
-                                  <div className="col-2">
+                                <div className="top-0 job-time-zone text-muted end-0 position-absolute">
+                                  {calculateTimeDifference(item.updated_at)}
+                                </div>
+                                <div className="row wow animate__animated animate__zoomIn ">
+                                  <div className="col-md-3 col-sm-3">
                                     <Image
                                       src={
                                         item.photo ? item.photo : defaultImage
@@ -468,56 +466,29 @@ const JobBoard = () => {
                                       alt={item.name}
                                       title={item.name}
                                       className="avatar img-fluid img-circle"
-                                      width={100}
+                                      width={70}
                                     />
                                   </div>
-                                  <div className="col-5">
-                                    <p className="ps-1">
-                                      <b>Job Title : </b>
-                                      {item.job_title}
-                                    </p>
-                                    <p className="2">
-                                      <b>Company Name : </b> {item.job_subheading}
-                                    </p>
+
+                                  <div className="col-md-7 col-sm-8">
+                                    <div className="row">
+                                      <div className="col-md-12">
+                                        <p className="m-0 ">
+                                          <b>Job Title : </b>
+                                          {item.job_title}
+                                        </p>
+                                      </div>
+                                      <div className="col-md-12">
+                                        <p className="m-0">
+                                          <b>Company Name : </b>{" "}
+                                          {item.job_subheading}
+                                        </p>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div className="col-5">
-                                    <p className="">
-                                      <b>Sector : </b>
-                                      {item.job_sector}
-                                    </p>
-                                    <p>
-                                      {" "}
-                                      <b>Job Type : </b>
-                                      {item.job_type}
-                                    </p>
-                                  </div>
-                                  
                                 </div>
-                                {item.location ? (
-                                  <div className="row wow animate__animated animate__zoomIn">
-                                    <div className="col-6">
-                                      <p>
-                                        <b>Company Address : </b>
-                                        {item.location}
-                                      </p>
-                                    </div>
 
-                                    <div className="col-6">
-                                      <p className="">
-                                        <b>Location : </b>
-                                        {`${
-                                          item.state
-                                            ? `${item.city}(${item.state})`
-                                            : ""
-                                        }`}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-
-                                <div className="row wow animate__animated animate__zoomIn">
+                                <div className="row wow animate__animated animate__zoomIn mt-2">
                                   <p
                                     className="col-12"
                                     dangerouslySetInnerHTML={formatDescription(
@@ -525,11 +496,51 @@ const JobBoard = () => {
                                     )}
                                   ></p>
                                 </div>
+
+                                <div className="row wow animate__animated animate__zoomIn">
+                                  <div className="col-lg-6 col-sm-6 ">
+                                    <p className="">
+                                      <b>Sector : </b>
+                                      {item.job_sector}
+                                    </p>
+                                  </div>
+                                  <div className="col-lg-6 col-sm-6">
+                                    <p>
+                                      {" "}
+                                      <b>Job Type : </b>
+                                      {item.job_type}
+                                    </p>
+                                  </div>
+                                  {item.location ? (
+                                    <>
+                                      <div className="col-lg-6 col-sm-6">
+                                        <p className="">
+                                          <b>Company Address : </b>
+                                          {item.location}
+                                        </p>
+                                      </div>
+
+                                      <div className="col-lg-6 col-sm-6">
+                                        <p className="">
+                                          <b>Location : </b>
+                                          {`${
+                                            item.state
+                                              ? `${item.city}(${item.state})`
+                                              : ""
+                                          }`}
+                                        </p>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
                               </div>
+
                               <div className="card-footer btn btn-success bg-success text-light">
                                 Apply
                                 {isMyJobsClicked ? (
-                                  <>
+                                  <div className="float-right">
                                     <i
                                       className="fa fa-edit mr-2 m-2"
                                       title="Edit"
@@ -546,7 +557,7 @@ const JobBoard = () => {
                                       className="fa fa-thumbs-down m-2"
                                       title="Inactive"
                                     />
-                                  </>
+                                  </div>
                                 ) : (
                                   ""
                                 )}

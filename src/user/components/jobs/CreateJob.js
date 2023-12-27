@@ -282,10 +282,9 @@ const CreateJob = () => {
     }, [selectedState]);
 
     return (
-        <div id="auth-wrapper" className="pt-5 pb-4 container">
+        <div id="auth-wrapper" className="pt-5 pb-4 container ">
             <div className="row">
-                <div className="col-12 col-sm-8 ">
-
+                <div className="col-12 col-sm-8 mb-3">
                     <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
                         <div className=" card-header shadow py-3 fs-6 rounded">Create New Job</div>
                         <div className="card-body">

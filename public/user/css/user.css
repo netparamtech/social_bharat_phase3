@@ -1009,10 +1009,12 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
-.time-job{
-  position: relative;
-  float: right;
+.job-time-zone{
+  margin-top: 10px;
+  margin-right: 10px;
 }
+
+
 
 /* User Photo Edit */
 .container-profilepic {
@@ -1683,6 +1685,8 @@ input[type="number"] {
   border-radius: 20px;
 }
 
+/* Service Section */
+
 #service-section .sevice-item{
   margin-top: 20px;
 }
@@ -1716,4 +1720,13 @@ input[type="number"] {
 
 .remove-hover-pointer{
   pointer-events: none;
+}
+
+.job-time-zone{
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.service-absolute-p{
+  margin-right: 10px;
 }

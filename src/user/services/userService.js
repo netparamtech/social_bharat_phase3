@@ -656,9 +656,9 @@ export const createNewJobPost = async(data) => {
 }
 
 //fetch jobs
-export const fetchAllJobsPosted = async (page,size,jobType)=>{
+export const fetchAllJobsPosted = async (page,size,state,city,jobType)=>{
     try {
-        const response = await apiWithHeaders.get(`/user/search/jobs?page=${page}&size=${size}&jobType=${jobType}`);
+        const response = await apiWithHeaders.get(`/user/search/jobs?page=${page}&size=${size}&state=${state}&city=${city}&jobType=${jobType}`);
         return response;
     } catch(error) {
         throw error;
@@ -699,6 +699,16 @@ export const fetchSingleJobPosted = async (id) => {
 export const deleteUserPostedSingleJob = async (id) => {
     try {
         const response = await apiWithHeaders.delete(`/job/${id}/delete`);
+        return response;
+    } catch(error) {
+        throw error;
+    }
+}
+
+//fetch all featured jobs
+export const fetchFeaturedJobs = async () => {
+    try {
+        const response = await apiWithHeaders.get('/user/search/featured-jobs');
         return response;
     } catch(error) {
         throw error;

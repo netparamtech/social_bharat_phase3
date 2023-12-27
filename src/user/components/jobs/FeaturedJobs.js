@@ -1,29 +1,33 @@
 import { Divider, Table } from "antd";
+import { useEffect, useState } from "react";
+import { fetchFeaturedJobs } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const FeaturedJobs = () => {
-    const defaultImage = '/user/images/job1.png';
-    const dataSource = [
-        {
-            key: '1',
-            company: 'Company Name',
-            job_title: 'Job Title',
-            apply_form: true,
-            photo: '/user/images/job1.png',
-            location: "Address",
-            age: 32,
-            address: '10 Downing Street',
-            description: 'Description'
-        },
+    const defaultImage = '/user/images/netparamlogo.jpg';
+    const [dataSource,setDataSource] = useState([]);
+    const [page,setPage] = useState(1);
+    const [size,setSize] = useState(1);
+    const [totalRows,setTotalRows] = useState(0);
+    const [serverError,setServerError] = useState('');
 
-    ];
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const truncateDescription = (description, maxLength) => {
         return description.length > maxLength ? description.slice(0, maxLength) + "...." : description;
     }
+    const handlePageChange = (page) => {
+        setPage(page);
+      };
+    const handlePageSizeChange = (current, pageSize) => {
+        setSize(pageSize);
+      };
 
     const columns = [
         {
-            title: 'Featured Jobs', dataIndex: 'title', className: 'mx-auto text-muted shadow fs-6',
+            title: 'Featured Jobs', dataIndex: 'job_title', className: 'mx-auto text-muted shadow fs-6',
             render: (text, record) => (
 
 
@@ -53,11 +57,48 @@ const FeaturedJobs = () => {
         },
 
     ];
+    const fetchMyJobs = async () => {
+        try {
+            const response = await fetchFeaturedJobs();
+            if (response && response.status === 200) {
+                setDataSource(response.data.data);
+                console.log(response.data.data)
+                setTotalRows(response.data.data.length);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate('/login');
+            } else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        }
+    }
 
+    useEffect(()=>{
+        fetchMyJobs();
+    },[]);
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} />
+             {serverError && <span className="error">{serverError}</span>}
+             <Table
+                    title={()=>'Featured JOB'}
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={{
+                      current: page,
+                      pageSize: size,
+                      total: totalRows,
+                      onChange: handlePageChange,
+                      onShowSizeChange: handlePageSizeChange,
+                    }}
+                    // onChange={handleTableChange}
+
+                    rowKey={(record) => record.id}
+                    // onChange={handleSearchChange}
+                  />
         </div>
     );
 }

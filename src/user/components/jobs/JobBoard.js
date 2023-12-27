@@ -44,11 +44,13 @@ const JobBoard = () => {
     //state and city change operations
     const handleStateChange = (selectedOption) => {
         setSelectedState(selectedOption);
+        console.log(selectedOption)
 
         if (selectedOption) {
             const selectedStateObject = states.find(
                 (state) => state.name === selectedOption.value
             );
+            console.log(selectedStateObject)
             if (selectedStateObject) {
                 getAllCities(selectedStateObject.id);
             }
@@ -86,6 +88,7 @@ const JobBoard = () => {
 
     const getAllCities = async (stateID) => {
         dispatch(setLoader(true));
+       if(stateID){
         try {
             const response = await fetchAllCitiesByStateID(stateID);
             if (response && response.status === 200) {
@@ -104,6 +107,7 @@ const JobBoard = () => {
         } finally {
             dispatch(setLoader(false));
         }
+       }
     };
 
     const changeUpdateClickedFlag = (value, jobId) => {
@@ -128,7 +132,7 @@ const JobBoard = () => {
 
     ];
 
-    const fetchJobs = async (page, size, jobType) => {
+    const fetchJobs = async (page, size, state, city, jobType) => {
         jobType = '';
 
         if (activeNavItem === 'PART TIME') {
@@ -143,9 +147,10 @@ const JobBoard = () => {
             jobType = 'Other';
         }
         try {
-            const response = await fetchAllJobsPosted(page, size, jobType);
+            const response = await fetchAllJobsPosted(page, size, state, city, jobType);
             if (response && response.status === 200) {
                 setData(response.data.data.jobs);
+                console.log(response.data.data.totalRowsAffected)
                 setTotalRows(response.data.data.totalRowsAffected)
                 setServerError('');
             }
@@ -165,6 +170,7 @@ const JobBoard = () => {
             const response = await fetchAllJobsByLoggedUser(userId, page, size);
             if (response && response.status === 200) {
                 setData(response.data.data.jobs);
+                console.log(response.data.data.totalRowsAffected)
                 setTotalRows(response.data.data.totalRowsAffected)
                 setServerError('');
             }
@@ -198,6 +204,7 @@ const JobBoard = () => {
 
     const fetchMoreData = () => {
         if (!isLoading && data.length < totalRows) {
+            console.log(data.length, totalRows)
             fetchJobs(page + 1, 20, activeNavItem);
             setPage(page + 1);
         }
@@ -205,7 +212,9 @@ const JobBoard = () => {
     useEffect(() => {
         if (activeNavItem === 'ALL' || activeNavItem === 'PART TIME' || activeNavItem === 'FULL TIME' || activeNavItem === 'FREELANCE' || activeNavItem === 'OTHERS') {
             setPage(1);
-            fetchJobs(page, 20, activeNavItem);
+            const state = selectedState && selectedState.label;
+            const city = selectedCity?selectedCity.label:'';
+            fetchJobs(page, 20, state, city, activeNavItem);
             setIsMyJobsClicked(false);
         } else if (activeNavItem === 'MY JOBS') {
             setPage(1);
@@ -213,7 +222,7 @@ const JobBoard = () => {
             fetchMyJobs(page, 20);
         }
 
-    }, [activeNavItem, isUpdateClicked]);
+    }, [activeNavItem, isUpdateClicked, selectedState, selectedCity]);
 
     useEffect(() => {
         if (user) {
@@ -227,6 +236,7 @@ const JobBoard = () => {
     }, []);
 
     useEffect(() => {
+        console.log(selectedState)
         if (selectedState) {
             getAllCities(selectedState.id);
         }
@@ -275,43 +285,60 @@ const JobBoard = () => {
             return `${days} day ago`;
         }
     };
+    const formatDescription = (description) => {
+        // Regular expression to match URLs
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+        // Replace URLs with HTML links
+        const formattedDescription = description.replace(urlRegex, (url) => {
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+        });
+
+        return { __html: formattedDescription };
+    };
     return (
 
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
                 <div className="card col-12 col-sm-8">
-                    <div className='card-header'>
-                        <div className="row">
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                <label className="form-label">State</label>
+                {serverError && <span className="error">{serverError}</span>}
+                    <div className='card-header mt-2'>
+                        {
+                            activeNavItem === 'MY JOBS' ? '' : (
+                                <div className="row">
+                                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                        <label className="form-label">State</label>
 
-                                <Select
-                                    className=""
-                                    options={states.map((state) => ({
-                                        value: state.name,
-                                        label: state.name,
-                                    }))}
-                                    value={selectedState}
-                                    onChange={handleStateChange}
-                                />
+                                        <Select
+                                            className=""
+                                            options={states.map((state) => ({
+                                                value: state.name,
+                                                label: state.name,
+                                            }))}
+                                            value={selectedState}
+                                            onChange={handleStateChange}
+                                        />
 
 
-                            </div>
+                                    </div>
 
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                <label className="form-label">City</label>
+                                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                        <label className="form-label">City</label>
 
-                                <Select
-                                    options={cities.map((city) => ({
-                                        value: city.name,
-                                        label: city.name,
-                                    }))}
-                                    value={selectedCity}
-                                    onChange={handleCityChange}
-                                />
+                                        <Select
+                                            options={cities.map((city) => ({
+                                                value: city.name,
+                                                label: city.name,
+                                            }))}
+                                            value={selectedCity}
+                                            onChange={handleCityChange}
+                                        />
 
-                            </div>
-                        </div>
+                                    </div>
+
+                                </div>
+                            )
+                        }
                         <Navbar bg="light" expand="lg">
                             <Navbar.Brand>JOB BOARD</Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -389,10 +416,16 @@ const JobBoard = () => {
                                                                 </div>
                                                                 <div className="col-2">
                                                                     <p>{calculateTimeDifference(item.updated_at)}</p>
+                                                                    <p>Location-{`${item.state ? `${item.city}(${item.state})` : ''}`}</p>
                                                                 </div>
                                                             </div>
+                                                            {
+                                                                item.location ? (<div className='row wow animate__animated animate__zoomIn'>
+                                                                    <p className='col-12'>{item.location}</p>
+                                                                </div>) : ''
+                                                            }
                                                             <div className='row wow animate__animated animate__zoomIn'>
-                                                                <p className='col-12'>{item.description}</p>
+                                                                <p className='col-12' dangerouslySetInnerHTML={formatDescription(item.description)}></p>
                                                             </div>
                                                         </div>
                                                         <div className='card-footer btn btn-success bg-success text-light'>
@@ -410,6 +443,9 @@ const JobBoard = () => {
                                                                 isUpdateClicked ? (<UpdateJobPosted changeUpdateClickedFlag={changeUpdateClickedFlag} jobId={jobId} />) : ''
                                                             }
                                                         </div>
+                                                        {
+                                                            item.featured==='true'?(<div className='card-footer text-danger'>Featured</div>):''
+                                                        }
                                                     </div>
                                                 </div>
                                             ))}

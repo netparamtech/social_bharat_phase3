@@ -230,19 +230,18 @@ const CreateJob = () => {
             logo: selectedLogoTempUrl,
             description,
             apply_link: applyLink,
-            job_request_status: isActive,
             job_apply_form: isApplyForm,
             job_start_date: jobStartDate,
             job_end_date: jobEndDate,
             fee_details: application_fee_details,
-            state:selectedState.label,
-            city:selectedCity.label,
+            state: selectedState && selectedState.label,
+            city: selectedCity && selectedCity.label,
         }
         console.log(data)
         try {
             const response = await createNewJobPost(data);
             if (response && response.status === 201) {
-                window.scroll(0,0);
+                window.scroll(0, 0);
                 setServerError('');
                 setErrors('');
                 setMessage(response.data.message);
@@ -355,36 +354,42 @@ const CreateJob = () => {
                             </div>
 
                             <div className="row">
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                <label className="form-label">State</label>
+                                <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                    <label className="form-label">State</label>
 
-                                <Select
-                                    className=""
-                                    options={states.map((state) => ({
-                                        value: state.name,
-                                        label: state.name,
-                                    }))}
-                                    value={selectedState}
-                                    onChange={handleStateChange}
-                                />
+                                    <Select
+                                        className=""
+                                        options={states.map((state) => ({
+                                            value: state.name,
+                                            label: state.name,
+                                        }))}
+                                        value={selectedState}
+                                        onChange={handleStateChange}
+                                    />
+                                    {errors.state && (
+                                        <span className="error">{errors.state}</span>
+                                    )}
 
 
+                                </div>
+
+                                <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                    <label className="form-label">City</label>
+
+                                    <Select
+                                        options={cities.map((city) => ({
+                                            value: city.name,
+                                            label: city.name,
+                                        }))}
+                                        value={selectedCity}
+                                        onChange={handleCityChange}
+                                    />
+                                    {errors.city && (
+                                        <span className="error">{errors.city}</span>
+                                    )}
+
+                                </div>
                             </div>
-
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                <label className="form-label">City</label>
-
-                                <Select
-                                    options={cities.map((city) => ({
-                                        value: city.name,
-                                        label: city.name,
-                                    }))}
-                                    value={selectedCity}
-                                    onChange={handleCityChange}
-                                />
-
-                            </div>
-                        </div>
 
                             <div className="form-group">
                                 <label>Address:</label>
@@ -451,7 +456,7 @@ const CreateJob = () => {
                                                 <span className="error">{errors.description}</span>
                                             )}
                                         </div>
-                                        <div className="form-check mt-2">
+                                        {/* <div className="form-check mt-2">
                                             <p className={`btn ${isActive === 'Active' ? 'btn-success' : 'btn-danger'}`}>
                                                 {isActive === 'Active' ?
                                                     (<span>On submission of this job a request will be send to admin to 'active' to show on job search portal.</span>
@@ -482,7 +487,7 @@ const CreateJob = () => {
                                             {errors.job_request_status && (
                                                 <span className="error">{errors.job_request_status}</span>
                                             )}
-                                        </div>
+                                        </div> */}
 
                                         <div className="form-check mt-2">
                                             <p>Need a apply form to Apply ?</p>

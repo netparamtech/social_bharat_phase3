@@ -249,6 +249,8 @@ const UpdateJobPosted = (props) => {
             job_start_date: jobStartDate,
             job_end_date: jobEndDate,
             fee_details: application_fee_details,
+            state: selectedState && selectedState.label,
+            city: selectedCity && selectedCity.label,
         }
         console.log(jobId, "user id")
         try {
@@ -299,13 +301,13 @@ const UpdateJobPosted = (props) => {
             setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date));
             setApplication_fee_details(jobDetails.fee_details);
             setIsActive(jobDetails.job_request_status);
-            if(jobDetails.state){
-                setSelectedState({value:jobDetails.state,label:jobDetails.state});
+            if (jobDetails.state) {
+                setSelectedState({ value: jobDetails.state, label: jobDetails.state });
                 console.log(states)
             }
             console.log(jobDetails.city)
-            if(jobDetails.city){
-                setSelectedCity({value:jobDetails.city,label:jobDetails.city});
+            if (jobDetails.city) {
+                setSelectedCity({ value: jobDetails.city, label: jobDetails.city });
             }
 
         }
@@ -320,8 +322,8 @@ const UpdateJobPosted = (props) => {
         if (selectedState) {
             const selectedStateObject = states.find(
                 (state) => state.name === selectedState.label
-              );
-            getAllCities(selectedStateObject);
+            );
+            getAllCities(selectedStateObject.id);
         }
     }, [selectedState]);
 

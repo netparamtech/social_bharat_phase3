@@ -1009,6 +1009,11 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
+.time-job{
+  position: relative;
+  float: right;
+}
+
 /* User Photo Edit */
 .container-profilepic {
   width: 80px;

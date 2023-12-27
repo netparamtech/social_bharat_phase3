@@ -84,7 +84,7 @@ const FeaturedJobs = () => {
         <div>
              {serverError && <span className="error">{serverError}</span>}
              <Table
-                    title={()=>'Featured JOB'}
+                    // title={()=>'Featured '}
                     dataSource={dataSource}
                     columns={columns}
                     pagination={{

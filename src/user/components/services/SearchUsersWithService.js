@@ -17,6 +17,13 @@ const SearchUsersWithService = () => {
   const { title } = useParams();
   const user = useSelector((state) => state.userAuth);
 
+  const [selectedCountry, setSelectedCountry] = useState("India");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [countryID, setCountryID] = useState(101);
+
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -170,30 +177,30 @@ const SearchUsersWithService = () => {
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
             <div className="card shadow card-search">
-            <div className="card-header bg-success">
-                        <div className="d-sm-flex align-items-center justify-content-between text-light">
-                            {title}
-                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/user/user-registered-services')
-                                }}
-                            >
-                                My Registered Services
-                            </a>
-                            <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/user/search/service')
-                                }}
-                            >
-                                View All Services/Create
-                            </a>
-                        </div>
-                    </div>
+              <div className="card-header bg-success">
+                <div className="d-sm-flex align-items-center justify-content-between text-light">
+                  {title}
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate('/user/user-registered-services')
+                    }}
+                  >
+                    My Registered Services
+                  </a>
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate('/user/search/service')
+                    }}
+                  >
+                    View All Services/Create
+                  </a>
+                </div>
+              </div>
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
-              
+
 
                 {!isSearchingPerformed ? (
                   <span className="error">No Data Available</span>

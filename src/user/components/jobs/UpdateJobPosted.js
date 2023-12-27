@@ -8,7 +8,7 @@ import { setLoader } from "../../actions/loaderAction";
 import Modal from 'react-bootstrap/Modal';
 import { yyyyMmDdFormat } from "../../util/DateConvertor";
 import dayjs from 'dayjs';
-import { fetchSingleJobPosted, updateUserJobPosted, uploadImage, uploadPdf } from "../../services/userService";
+import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchSingleJobPosted, updateUserJobPosted, uploadImage, uploadPdf } from "../../services/userService";
 
 const UpdateJobPosted = (props) => {
     const { changeUpdateClickedFlag, jobId } = props;
@@ -37,6 +37,13 @@ const UpdateJobPosted = (props) => {
     const [alertClass, setAlertClass] = useState("");
     const [messageAttachment, setMessageAttachment] = useState('');
     const [messageLogo, setMessageLogo] = useState('');
+
+    const [selectedCountry, setSelectedCountry] = useState("India");
+    const [selectedState, setSelectedState] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [cities, setCities] = useState([]);
+    const [states, setStates] = useState([]);
+    const [countryID, setCountryID] = useState(101);
 
     const [jobDetails, setJobDetails] = useState('');
 
@@ -159,6 +166,72 @@ const UpdateJobPosted = (props) => {
         }
     }
 
+    //state and city change operations
+    const handleStateChange = (selectedOption) => {
+        setSelectedState(selectedOption);
+        console.log(selectedOption.value);
+
+        if (selectedOption) {
+            const selectedStateObject = states.find(
+                (state) => state.name === selectedOption.value
+            );
+            if (selectedStateObject) {
+                getAllCities(selectedStateObject.id);
+            }
+        }
+
+        // Update selected city to null when state changes
+        setSelectedCity(null);
+    };
+
+    const handleCityChange = (selectedOption) => {
+        setSelectedCity(selectedOption);
+    };
+
+    const getAllStates = async () => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllStatesByCountryID(101);
+            if (response && response.status === 200) {
+                setStates(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
+    const getAllCities = async (stateID) => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllCitiesByStateID(stateID);
+            if (response && response.status === 200) {
+                setCities(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
     const handleSubmit = async () => {
         dispatch(setLoader(true));
         const data = {
@@ -226,9 +299,32 @@ const UpdateJobPosted = (props) => {
             setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date));
             setApplication_fee_details(jobDetails.fee_details);
             setIsActive(jobDetails.job_request_status);
+            if(jobDetails.state){
+                setSelectedState({value:jobDetails.state,label:jobDetails.state});
+                console.log(states)
+            }
+            console.log(jobDetails.city)
+            if(jobDetails.city){
+                setSelectedCity({value:jobDetails.city,label:jobDetails.city});
+            }
 
         }
-    }, [jobDetails])
+    }, [jobDetails]);
+
+    useEffect(() => {
+        // Check if selectedCountry is already set
+        getAllStates();
+    }, []);
+
+    useEffect(() => {
+        if (selectedState) {
+            const selectedStateObject = states.find(
+                (state) => state.name === selectedState.label
+              );
+            getAllCities(selectedStateObject);
+        }
+    }, [selectedState]);
+
 
     useEffect(() => {
         fetchJobWithId();
@@ -308,8 +404,40 @@ const UpdateJobPosted = (props) => {
                                     )}
                                 </div>
 
+                                <div className="row">
+                                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                        <label className="form-label">State</label>
+
+                                        <Select
+                                            className=""
+                                            options={states.map((state) => ({
+                                                value: state.name,
+                                                label: state.name,
+                                            }))}
+                                            value={selectedState}
+                                            onChange={handleStateChange}
+                                        />
+
+
+                                    </div>
+
+                                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                        <label className="form-label">City</label>
+
+                                        <Select
+                                            options={cities.map((city) => ({
+                                                value: city.name,
+                                                label: city.name,
+                                            }))}
+                                            value={selectedCity}
+                                            onChange={handleCityChange}
+                                        />
+
+                                    </div>
+                                </div>
+
                                 <div className="form-group">
-                                    <label>Location:</label>
+                                    <label>Address:</label>
                                     <input type="text"
                                         className="form-control"
                                         placeholder="i.e. company name or organization or other"

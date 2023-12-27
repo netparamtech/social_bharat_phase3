@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import FeaturedJobs from './FeaturedJobs';
-import { deleteUserPostedSingleJob, deleteUserPostedSingleService, fetchAllJobsByLoggedUser, fetchAllJobsPosted } from '../../services/userService';
+import { deleteUserPostedSingleJob, deleteUserPostedSingleService, fetchAllCitiesByStateID, fetchAllJobsByLoggedUser, fetchAllJobsPosted, fetchAllStatesByCountryID } from '../../services/userService';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Image } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import UpdateJobPosted from './UpdateJobPosted';
+import { setLoader } from '../../actions/loaderAction';
+import Select from "react-select";
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -25,11 +27,83 @@ const JobBoard = () => {
         "/user/images/netparamlogo.jpg"
     );
 
+    const [selectedCountry, setSelectedCountry] = useState("India");
+    const [selectedState, setSelectedState] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [cities, setCities] = useState([]);
+    const [states, setStates] = useState([]);
+    const [countryID, setCountryID] = useState(101);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleNavItemClick = (navItem) => {
         setActiveNavItem(navItem);
+    };
+
+    //state and city change operations
+    const handleStateChange = (selectedOption) => {
+        setSelectedState(selectedOption);
+
+        if (selectedOption) {
+            const selectedStateObject = states.find(
+                (state) => state.name === selectedOption.value
+            );
+            if (selectedStateObject) {
+                getAllCities(selectedStateObject.id);
+            }
+        }
+
+        // Update selected city to null when state changes
+        setSelectedCity(null);
+    };
+
+    const handleCityChange = (selectedOption) => {
+        setSelectedCity(selectedOption);
+    };
+
+    const getAllStates = async () => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllStatesByCountryID(101);
+            if (response && response.status === 200) {
+                setStates(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
+    const getAllCities = async (stateID) => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllCitiesByStateID(stateID);
+            if (response && response.status === 200) {
+                setCities(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
     };
 
     const changeUpdateClickedFlag = (value, jobId) => {
@@ -147,6 +221,17 @@ const JobBoard = () => {
         }
     }, [user]);
 
+    useEffect(() => {
+        // Check if selectedCountry is already set
+        getAllStates();
+    }, []);
+
+    useEffect(() => {
+        if (selectedState) {
+            getAllCities(selectedState.id);
+        }
+    }, [selectedState]);
+
     const groupedItems = [];
     for (let i = 0; i < data.length; i += 1) {
         const pair = data.slice(i, i + 1); // Change 3 to 2 here
@@ -196,6 +281,37 @@ const JobBoard = () => {
             <div className="row">
                 <div className="card col-12 col-sm-8">
                     <div className='card-header'>
+                        <div className="row">
+                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                <label className="form-label">State</label>
+
+                                <Select
+                                    className=""
+                                    options={states.map((state) => ({
+                                        value: state.name,
+                                        label: state.name,
+                                    }))}
+                                    value={selectedState}
+                                    onChange={handleStateChange}
+                                />
+
+
+                            </div>
+
+                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                                <label className="form-label">City</label>
+
+                                <Select
+                                    options={cities.map((city) => ({
+                                        value: city.name,
+                                        label: city.name,
+                                    }))}
+                                    value={selectedCity}
+                                    onChange={handleCityChange}
+                                />
+
+                            </div>
+                        </div>
                         <Navbar bg="light" expand="lg">
                             <Navbar.Brand>JOB BOARD</Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />

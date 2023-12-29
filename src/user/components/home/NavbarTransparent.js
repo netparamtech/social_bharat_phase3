@@ -449,9 +449,33 @@ const NavbarTransparent = (props) => {
                     </a>
                   </li>
                   <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleMembersClicked}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      MEMBERS
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleJobsClicked}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      JOBS
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleBusinessClicked}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      BUSINESS
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleMatrimonialClicked}>
+                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      MATRIMONIAL
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleProvidesClick}>
                       <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                      PROVIDES
+                      SERVICES
                     </a>
                   </li>
 

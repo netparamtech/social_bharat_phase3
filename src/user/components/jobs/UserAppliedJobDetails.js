@@ -182,11 +182,9 @@ const UserAppliedJobDetails = () => {
         <div id="service-section" className="pt-4 mb-5">
             <div className="container">
                 <div className="card shadow card-search">
-                    <div className="card-header bg-darkskyblue">
-                        <div className="d-sm-flex align-items-center justify-content-between ">
-                            REGISTERED CONDIDATES
-                            <a className="text-decoration-none hover-pointer" onClick={() => navigate('/user/search/jobs')}>GO BACK</a>
-                        </div>
+                    <div className=" card-header bg-darkskyblue  fs-6 justify-content-between d-flex">
+                        <div> REGISTERED CONDIDATES </div>
+                        <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
                         <div>

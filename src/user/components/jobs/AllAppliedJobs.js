@@ -110,11 +110,10 @@ const AllAppliedJobs = () => {
             <div className="container">
                 <div className="card shadow card-search">
                     {serverError && <span className="error">{serverError}</span>}
-                    <div className="card-header bg-darkskyblue">
-                        <div className="d-sm-flex align-items-center justify-content-between ">
-                            REGISTERED JOBS
-                            <a className="text-decoration-none hover-pointer" onClick={() => navigate('/user/search/jobs')}>GO BACK</a>
-                        </div>
+                    
+                    <div className=" card-header shadow py-3 fs-6 rounded justify-content-between d-flex">
+                        <div> Applied Jobs</div>
+                        <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
                         <div>

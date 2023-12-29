@@ -636,9 +636,9 @@ export const deleteUserRegisteredSingleService = async (id) => {
 }
 
 //search people in service
-export const searchPeopleInService = async (queryString, page, size, title) => {
+export const searchPeopleInService = async (queryString,state,city, page, size, title) => {
     try {
-        const response = await apiWithHeaders.get(`/search/users/service?role=user&searchQuery=${queryString}&page=${page}&size=${size}&title=${title}`);
+        const response = await apiWithHeaders.get(`/search/users/service?role=user&searchQuery=${queryString}&state=${state}&city=${city}&page=${page}&size=${size}&title=${title}`);
         return response;
     } catch (error) {
         throw error;

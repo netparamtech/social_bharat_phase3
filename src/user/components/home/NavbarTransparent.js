@@ -141,6 +141,95 @@ const NavbarTransparent = (props) => {
     }
   };
 
+  const handleMembersClicked = ()=>{
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/user/search");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        navigate("/login");
+      } else {
+        navigate("/login");
+      }
+     
+    }
+  }
+
+  const handleJobsClicked = ()=>{
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/user/search/jobs");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        navigate("/login");
+      } else {
+        navigate("/login");
+      }
+     
+    }
+  }
+
+  const handleBusinessClicked = ()=>{
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/user/search/business");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        navigate("/login");
+      } else {
+        navigate("/login");
+      }
+     
+    }
+  }
+
+  const handleMatrimonialClicked = ()=>{
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+
+    if (isAuthenticUser) {
+      if (isPasswordSet) {
+        navigate("/user/search/partner");
+      } else {
+        navigate("/set-password");
+      }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        navigate("/login");
+      } else {
+        navigate("/login");
+      }
+     
+    }
+  }
+
+
   const showDrawer = () => {
     setVisible(!visible);
   };
@@ -185,7 +274,7 @@ const NavbarTransparent = (props) => {
           </button>
           <div className="collapse navbar-collapse ml-5" id="navbarSupportedContent">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 {" "}
               </li>
               <li className="nav-item">
@@ -196,7 +285,7 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 {" "}
-              </li>
+              </li> */}
 
               <li className="nav-item">
                 <a
@@ -209,6 +298,50 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleMembersClicked}
+                >
+                  MEMBERS
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleJobsClicked}
+                >
+                  JOBS
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/business"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleBusinessClicked}
+                >
+                  BUSINESS
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/partner"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleMatrimonialClicked}
+                >
+                  MATRIMONIAL
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
                   className={`nav-link rounded ${window.location.pathname === "/dashboard" ||
                     window.location.pathname === "/social-bharat-provides"
                     ? "active"
@@ -216,10 +349,10 @@ const NavbarTransparent = (props) => {
                     }`}
                   onClick={handleProvidesClick}
                 >
-                  PROVIDES
+                  SERVICES
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/contact" ? "active" : "inactive"
                     }`}
@@ -227,13 +360,13 @@ const NavbarTransparent = (props) => {
                 >
                   CONTACT
                 </a>
-              </li>
+              </li> */}
 
               {/* <li className="nav-item">
                 {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
               </li> */}
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/service" ||
                     window.location.pathname === "/user/search/service"
@@ -244,7 +377,7 @@ const NavbarTransparent = (props) => {
                 >
                   SERVICES
                 </a>
-              </li>
+              </li> */}
 
               {/* You can add more nav items here */}
             </ul>

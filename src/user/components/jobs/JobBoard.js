@@ -362,6 +362,7 @@ const JobBoard = () => {
             return `${days} day ago`;
         }
     };
+    
     const formatDescription = (description) => {
         // Regular expression to match URLs
         const urlRegex = /(https?:\/\/[^\s]+)/g;

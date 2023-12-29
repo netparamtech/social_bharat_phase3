@@ -58,6 +58,78 @@ const SearchUsersWithService = () => {
     setSelectedUser(item);
   };
 
+  //state and city operations
+  //state and city change operations
+  const handleStateChange = (selectedOption) => {
+    setSelectedState(selectedOption);
+
+    if (selectedOption) {
+      const selectedStateObject = states.find(
+        (state) => state.name === selectedOption.value
+      );
+      console.log(selectedStateObject.id)
+      if (selectedStateObject.id !== undefined) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+
+    // Update selected city to null when state changes
+    setSelectedCity(null);
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption);
+  };
+
+  const getAllStates = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllStatesByCountryID(101);
+      if (response && response.status === 200) {
+        setStates(response.data.data);
+        setServerError('');
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+  const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
+    try {
+      let response;
+      if (stateID) {
+        response = await fetchAllCitiesByStateID(stateID);
+      }
+      if (response && response.status === 200) {
+        setCities(response.data.data);
+        setServerError('');
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+
+
   useEffect(() => {
     if (items.length > 0) {
       setIssearchingPerformed(true);
@@ -66,7 +138,9 @@ const SearchUsersWithService = () => {
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
-      search(page + 1, 20);
+      const state = selectedState ? selectedState.label : '';
+      const city = selectedCity ? selectedCity.label : '';
+      search(page + 1, 20, state, city);
       setPage(page + 1);
     }
   };
@@ -75,67 +149,33 @@ const SearchUsersWithService = () => {
     setSearchText(e.target.value);
   };
 
-  const search = async (page, size) => {
+  const search = async (page, size, state, city) => {
     setIsLoading(true);
     dispatch(setLoader(true));
     try {
       const response = await searchPeopleInService(
         searchText,
+        state,
+        city,
         page,
         size,
         title
       );
 
       if (response && response.status === 200) {
+        setItems(response.data.data.users);
+        setTotalRows(response.data.data.totalRowsAffected);
         setServerError("");
-        setTotalRows(response.data.data.totalRowsFetched);
-        if (response.data.data.users.length === 0) {
-          setIssearchingPerformed(false);
-        }
-        if (searchText) {
-          if (response.data.data.users.length !== 0) {
-            if (page === 1) {
-              setItems([...new Set([...response.data.data.users])]);
-            } else {
-              setItems([...new Set([...items, ...response.data.data.users])]);
-            }
-            setTotalRows(response.data.data.totalRowsFetched);
-          } else {
-            setItems([...response.data.data.users]);
-            setTotalRows(response.data.data.totalRowsFetched);
-          }
-        } else {
-          if (isGoClick) {
-            if (page === 1) {
-              setItems([...new Set([...response.data.data.users])]);
-            } else {
-              setItems([...new Set([...items, ...response.data.data.users])]);
-            }
-          } else {
-            const combinedItems = [...items, ...response.data.data.users];
-            const uniqueItems = [];
-
-            for (const item of combinedItems) {
-              if (!uniqueItems.some((u) => u.id === item.id)) {
-                uniqueItems.push(item);
-              }
-            }
-
-            setItems(uniqueItems);
-          }
-        }
-        dispatch(setLoader(false));
       }
-      setIsLoading(false);
     } catch (error) {
-      dispatch(setLoader(false));
-      setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -144,19 +184,34 @@ const SearchUsersWithService = () => {
   };
 
   useEffect(() => {
-    search(1, 20);
+    const state = selectedState ? selectedState.label : '';
+    const city = selectedCity ? selectedCity.label : '';
+    search(1, 20, state, city);
   }, [user]);
 
   useEffect(() => {
     // Check if the component is not just mounted
     if (page > 1 || searchText || !searchText) {
-      search(page, 20);
+      const state = selectedState ? selectedState.label : '';
+      const city = selectedCity ? selectedCity.label : '';
+      search(page, 20, state, city);
     }
-  }, [searchText, isGoClick, page]);
+  }, [searchText, isGoClick, page, selectedState, selectedCity]);
 
   useEffect(() => {
     setPage(1);
   }, [searchText]);
+
+  useEffect(() => {
+    // Check if selectedCountry is already set
+    getAllStates();
+  }, []);
+
+  useEffect(() => {
+    if (selectedState) {
+      getAllCities(selectedState.id);
+    }
+  }, [selectedState]);
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
@@ -208,6 +263,35 @@ const SearchUsersWithService = () => {
                   ""
                 )}
 
+                <div className="row">
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <label className="form-label">State</label>
+
+                    <Select
+                      className=""
+                      options={states.map((state) => ({
+                        value: state.name,
+                        label: state.name,
+                      }))}
+                      value={selectedState}
+                      onChange={handleStateChange}
+                    />
+                  </div>
+
+                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                    <label className="form-label">City</label>
+
+                    <Select
+                      options={cities.map((city) => ({
+                        value: city.name,
+                        label: city.name,
+                      }))}
+                      value={selectedCity}
+                      onChange={handleCityChange}
+                    />
+                  </div>
+                </div>
+
                 <div className="container-input mb-3">
                   <input
                     type="text"
@@ -258,14 +342,20 @@ const SearchUsersWithService = () => {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-6 user-detail">
+                                    <div className="col-8 user-detail">
 
                                       <div className="col-12 user-detail">
                                         <p>Name-{item.name}</p>
-                                        <p>Service At-{item.location}</p>
+                                        <p className="">
+                                          <b>Location : </b>
+                                          {`${item.state
+                                            ? `${item.city}(${item.state})`
+                                            : ""
+                                            }`}
+                                        </p>
                                         <p>Experience-{item.experience}</p>
                                         {/* <p>{item.state ? `(${item.state})` : ""}</p> */}
-                                        <p className="d-flex">
+                                        <p className="">
                                           Contact Numbers:
                                           <a href={`tel:${item.mobile1}`}>
                                             {item.mobile1}

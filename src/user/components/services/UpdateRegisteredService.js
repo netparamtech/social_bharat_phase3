@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setLoader } from "../../actions/loaderAction";
-import { fetchAllServices, fetchUserRegisteredSingleService, updateUserService } from "../../services/userService";
+import { fetchAllCitiesByStateID, fetchAllServices, fetchAllStatesByCountryID, fetchUserRegisteredSingleService, updateUserService } from "../../services/userService";
 import Select from "react-select";
 
 const UpdateRegisteredService = () => {
@@ -23,6 +23,14 @@ const UpdateRegisteredService = () => {
 
     const [errors, setErrors] = useState('');
     const [serverError, setServerError] = useState('');
+
+    const [selectedCountry, setSelectedCountry] = useState("India");
+    const [selectedState, setSelectedState] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [cities, setCities] = useState([]);
+    const [states, setStates] = useState([]);
+    const [countryID, setCountryID] = useState(101);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,6 +38,73 @@ const UpdateRegisteredService = () => {
 
         setSelectedService(selectedOption);
     }
+
+    //state and city operations
+    //state and city change operations
+    const handleStateChange = (selectedOption) => {
+        setSelectedState(selectedOption);
+
+        if (selectedOption) {
+            const selectedStateObject = states.find(
+                (state) => state.name === selectedOption.value
+            );
+            if (selectedStateObject) {
+                getAllCities(selectedStateObject.id);
+            }
+        }
+
+        // Update selected city to null when state changes
+        setSelectedCity(null);
+    };
+
+    const handleCityChange = (selectedOption) => {
+        setSelectedCity(selectedOption);
+    };
+
+    const getAllStates = async () => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllStatesByCountryID(101);
+            if (response && response.status === 200) {
+                setStates(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
+    const getAllCities = async (stateID) => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchAllCitiesByStateID(stateID);
+            if (response && response.status === 200) {
+                setCities(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            //Unauthorized
+            if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
     const fetchServices = async () => {
         dispatch(setLoader(false));
         try {
@@ -105,7 +180,14 @@ const UpdateRegisteredService = () => {
             setMobile1(data && data[0].mobile1);
             setMobile2(data && data[0].mobile2);
             setExperience(data && data[0].experience);
-            setLocation(data && data[0].location);
+            if (data && data[0].state) {
+                setSelectedState({ value: data && data[0].state, label: data && data[0].state });
+                console.log(states)
+            }
+            if (data && data[0].city) {
+                setSelectedCity({ value: data && data[0].city, label: data && data[0].city });
+            }
+
             setDescription(data && data[0].description);
             setServiceTitle(data && data[0].title);
             setStatus(data && data[0].status);
@@ -131,7 +213,8 @@ const UpdateRegisteredService = () => {
             mobile1,
             mobile2,
             experience,
-            location,
+            state: selectedState&&selectedState.label ? selectedState.label : '',
+            city: selectedCity&&selectedCity.label ? selectedCity.label : '',
             description,
             status,
         };
@@ -157,6 +240,17 @@ const UpdateRegisteredService = () => {
             dispatch(setLoader(false));
         }
     }
+
+    useEffect(() => {
+        // Check if selectedCountry is already set
+        getAllStates();
+    }, []);
+
+    useEffect(() => {
+        if (selectedState) {
+            getAllCities(selectedState.id);
+        }
+    }, [selectedState]);
     return (
         <div id="searchPeople-section" className="pt-4 mb-4">
             <div className="container">
@@ -231,6 +325,45 @@ const UpdateRegisteredService = () => {
                                         <span className="error">{errors.mobile2}</span>
                                     )}
                                 </div>
+                            </div>
+                            <div className="row">
+                                <div className="form-group mb-4 col-6">
+
+                                    <Select
+                                        className="form-control"
+                                        options={states.map((state) => ({
+                                            value: state.name,
+                                            label: state.name,
+                                        }))}
+                                        value={selectedState}
+                                        onChange={handleStateChange}
+                                        placeholder="select state..."
+                                    />
+                                    {errors.state && (
+                                        <span className="error">{errors.state}</span>
+                                    )}
+
+
+                                </div>
+
+                                <div className="form-group mb-4 col-6">
+
+                                    <Select
+                                        className="form-control"
+                                        options={cities.map((city) => ({
+                                            value: city.name,
+                                            label: city.name,
+                                        }))}
+                                        value={selectedCity}
+                                        onChange={handleCityChange}
+                                        placeholder="select city..."
+                                    />
+                                    {errors.city && (
+                                        <span className="error">{errors.city}</span>
+                                    )}
+
+                                </div>
+
                             </div>
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">

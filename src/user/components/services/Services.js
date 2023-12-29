@@ -4,23 +4,17 @@ import { Input, Table } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
 import {
   createUserService,
+  fetchAllCitiesByStateID,
   fetchAllServices,
+  fetchAllStatesByCountryID,
 } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { useNavigate } from "react-router-dom";
 import Search from "antd/es/input/Search";
-import Select from "react-select";
 import DropdownOnServices from "./DropdownOnServices";
+import Select from "react-select";
 
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: "#1677ff",
-    }}
-  />
-);
 const Services = () => {
   const [service, setService] = useState([]);
   const [copyService, setCopyService] = useState([]);
@@ -44,6 +38,13 @@ const Services = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Active");
   const [disableServiceTitle, setDisableServiceTitle] = useState(true);
+
+  const [selectedCountry, setSelectedCountry] = useState("India");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [countryID, setCountryID] = useState(101);
 
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -77,6 +78,73 @@ const Services = () => {
     setAlertClass("");
     setSelectedService(selectedOption);
   };
+
+  //state and city operations
+  //state and city change operations
+  const handleStateChange = (selectedOption) => {
+    setSelectedState(selectedOption);
+
+    if (selectedOption) {
+      const selectedStateObject = states.find(
+        (state) => state.name === selectedOption.value
+      );
+      if (selectedStateObject) {
+        getAllCities(selectedStateObject.id);
+      }
+    }
+
+    // Update selected city to null when state changes
+    setSelectedCity(null);
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption);
+  };
+
+  const getAllStates = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllStatesByCountryID(101);
+      if (response && response.status === 200) {
+        setStates(response.data.data);
+        setServerError('');
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+  const getAllCities = async (stateID) => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllCitiesByStateID(stateID);
+      if (response && response.status === 200) {
+        setCities(response.data.data);
+        setServerError('');
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
 
   const columns = [
     {
@@ -126,9 +194,10 @@ const Services = () => {
       mobile1,
       mobile2,
       experience,
-      location,
       description,
       status,
+      state: selectedState&&selectedState.label ? selectedState.label : '',
+      city: selectedCity&&selectedCity.label ? selectedCity.label : '',
     };
 
     try {
@@ -167,6 +236,17 @@ const Services = () => {
       dispatch(setLoader(false));
     }
   };
+
+  useEffect(() => {
+    // Check if selectedCountry is already set
+    getAllStates();
+  }, []);
+
+  useEffect(() => {
+    if (selectedState) {
+      getAllCities(selectedState.id);
+    }
+  }, [selectedState]);
 
   useEffect(() => {
     // Update the dropdownOptions whenever copyService changes
@@ -262,8 +342,8 @@ const Services = () => {
                   >
                     {service.map((item, index) => (
                       <div className="col-12 col-sm-4" key={index}>
-                        <div className="card card-body mt-2 bg-lightskyblue hover-pointer" 
-                        onClick={() => navigate(`/users-basedOn-services/${item.title}`)}>
+                        <div className="card card-body mt-2 bg-lightskyblue hover-pointer"
+                          onClick={() => navigate(`/users-basedOn-services/${item.title}`)}>
                           {item.title}
                         </div>
                       </div>
@@ -273,9 +353,8 @@ const Services = () => {
               </div>
               <div className="col-12 col-sm-4">
                 <div
-                  className={`card shadow mb-2 ${
-                    errors ? "border-danger" : ""
-                  }`}
+                  className={`card shadow mb-2 ${errors ? "border-danger" : ""
+                    }`}
                 >
                   <div className="card-header bg-all text-light">
                     ADD SERVICE
@@ -360,16 +439,40 @@ const Services = () => {
                       )}
                     </div>
                     <div className="form-group mb-4">
-                      <input
-                        type="text"
+
+                      <Select
                         className="form-control"
-                        placeholder="Service At(i.e.Jaipur(rajasthan))"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
+                        value={selectedState}
+                        onChange={handleStateChange}
+                        placeholder="select state..."
                       />
-                      {errors.location && (
-                        <span className="error">{errors.location}</span>
+                      {errors.state && (
+                        <span className="error">{errors.state}</span>
                       )}
+
+
+                    </div>
+
+                    <div className="form-group mb-4">
+
+                      <Select
+                        className="form-control"
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                        placeholder="select city..."
+                      />
+                      {errors.city && (
+                        <span className="error">{errors.city}</span>
+                      )}
+
                     </div>
                     <div className="form-group mb-4 ">
                       <textarea
@@ -383,11 +486,11 @@ const Services = () => {
                         <span className="error">{errors.description}</span>
                       )}
                     </div>
-                   
+
                     <div className="row mt-4">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                        Submit
+                          Submit
                         </button>
                       </div>
                     </div>

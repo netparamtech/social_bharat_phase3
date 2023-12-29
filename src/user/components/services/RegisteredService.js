@@ -75,7 +75,10 @@ const RegisteredService = () => {
             title: 'Experience', dataIndex: 'experience',
         },
         {
-            title: 'Location', dataIndex: 'location',
+            title: 'State', dataIndex: 'state',
+        },
+        {
+            title: 'City', dataIndex: 'city',
         },
         {
             title: 'Description', dataIndex: 'description',

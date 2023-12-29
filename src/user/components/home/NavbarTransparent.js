@@ -413,7 +413,7 @@ const NavbarTransparent = (props) => {
               closable={true}
               onClose={showDrawer}
               open={visible}
-              height={250}
+              height={450}
               style={{
                 zIndex: 99999,
                 // width: "70%",

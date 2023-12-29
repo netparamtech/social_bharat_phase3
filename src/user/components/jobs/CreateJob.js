@@ -286,7 +286,10 @@ const CreateJob = () => {
             <div className="row">
                 <div className="col-12 col-sm-8 mb-3">
                     <div className={`card shadow mx-auto rounded ${errors ? 'border-danger' : ''}`}>
-                        <div className=" card-header shadow py-3 fs-6 rounded">Create New Job</div>
+                        <div className=" card-header shadow py-3 fs-6 rounded justify-content-between d-flex">
+                            <div>Create New Job</div>
+                            <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}>Search Jobs</div>
+                        </div>
                         <div className="card-body">
                             {serverError && <span className='error'>{serverError}</span>}
                             {message && (

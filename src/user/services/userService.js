@@ -755,6 +755,25 @@ export const jobsApplicantStatistics = async () => {
     }
 }
 
+//get job applicant for respective job
+export const userAppliedForSameJob = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/find/all-users/for/${id}/job/applied`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch all applied jobs
+export const fetchAllAppliedJobs = async () => {
+    try {
+        const response = await apiWithHeaders.get('/users/applied/jobs');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 //Chat
 export const sendMessage = async (data) => {

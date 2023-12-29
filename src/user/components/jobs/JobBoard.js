@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateJobPosted from "./UpdateJobPosted";
 import { setLoader } from "../../actions/loaderAction";
 import Select from "react-select";
+import UserAppliedJobModel from "./UsersAppliedJobModel";
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -61,7 +62,7 @@ const JobBoard = () => {
     const [show, setShow] = useState(true);
     const [jobTitle, setJobTitle] = useState('');
     const [applicationStatus, setApplicationStatus] = useState('');
-    const [appliedStatistics,setAppliedStatistics] = useState([]);
+    const [appliedStatistics, setAppliedStatistics] = useState([]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -118,9 +119,9 @@ const JobBoard = () => {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getJobApplicantStatistics();
-    },[]);
+    }, []);
 
 
     const getAllStates = async () => {
@@ -294,6 +295,10 @@ const JobBoard = () => {
             setPage(1);
             setIsMyJobsClicked(true);
             fetchMyJobs(page, 20);
+        } else if(activeNavItem==='CREATE JOB'){
+            navigate('/user/job/create');
+        } else if(activeNavItem==='APPLIED JOBS'){
+            navigate('/user/all/applied/jobs');
         }
     }, [activeNavItem, isUpdateClicked, selectedState, selectedCity]);
 
@@ -372,10 +377,10 @@ const JobBoard = () => {
         try {
             const response = await ifAlreadyAppliedSameJob(jobId);
             if (response && response.status === 200) {
-               if(response.data.data>0){
-                return 'Hello'
-               } 
-               return ''
+                if (response.data.data > 0) {
+                    return 'Hello'
+                }
+                return ''
             }
             return ''
 
@@ -392,6 +397,7 @@ const JobBoard = () => {
     const applyForAJobPosted = async (appliedJob) => {
         const data = {
             job_id: appliedJob.id,
+            company:appliedJob.job_subheading,
             username: user.user.name,
             job_title: appliedJob.job_title,
             email: user.user.email ? user.user.email : '',
@@ -403,6 +409,7 @@ const JobBoard = () => {
                 setIsApplyClicked(false);
                 setServerError("");
                 setErrors('');
+                getJobApplicantStatistics();
             }
         } catch (error) {
             //Unauthorized
@@ -423,7 +430,6 @@ const JobBoard = () => {
         }
     }
     useEffect(() => {
-        console.log(isApplyClicked)
         if (isApplyClicked && appliedJob) {
             applyForAJobPosted(appliedJob);
         }
@@ -538,6 +544,24 @@ const JobBoard = () => {
                                         >
                                             MY JOBS
                                         </Nav.Link>
+                                        <Nav.Link
+                                            href="#"
+                                            onClick={() => handleNavItemClick("APPLIED JOBS")}
+                                            style={{
+                                                color: activeNavItem === "APPLIED JOBS" ? "red" : "inherit",
+                                            }}
+                                        >
+                                           APPLIED JOBS
+                                        </Nav.Link>
+                                        <Nav.Link
+                                            href="#"
+                                            onClick={() => handleNavItemClick("CREATE JOB")}
+                                            style={{
+                                                color: activeNavItem === "CREATE JOB" ? "red" : "inherit",
+                                            }}
+                                        >
+                                           CREATE JOB
+                                        </Nav.Link>
 
                                         {/* Remove the following NavDropdown section */}
                                         {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -599,6 +623,9 @@ const JobBoard = () => {
                                                                                     <b>Job Title : </b>
                                                                                     {item.job_title}
                                                                                 </p>
+                                                                                {
+
+                                                                                }
                                                                             </div>
                                                                             <div className="col-md-12">
                                                                                 <p className="m-0">
@@ -673,52 +700,73 @@ const JobBoard = () => {
                                                             </div>
 
                                                             <div className="card-footer btn btn-success bg-success text-light">
-                                                                <a className="hover-pointer text-decoration-none text-light fw-bold" onClick={() => handleApplyClicked(true, item)}>Apply</a>
-                                                               
-                                                                {isMyJobsClicked ? (
-                                                                    <div className="float-right">
-                                                                        <i
-                                                                            className="fa fa-edit mr-2 m-2"
-                                                                            title="Edit"
-                                                                            onClick={() =>
-                                                                                changeUpdateClickedFlag(true, item.id)
-                                                                            }
-                                                                        />
-                                                                        <i
-                                                                            className="fa fa-trash m-2"
-                                                                            title="Delete"
-                                                                            onClick={() => deleteMyJob(item.id)}
-                                                                        />
+                                                                <div className="row mx-auto">
+                                                                    <div className="col-2">
                                                                         {
-                                                                            item.job_request_status === 'Active' ? (
-                                                                                <a
-                                                                                    className="m-2"
-                                                                                    href=""
-                                                                                    onClick={(e) => {
-                                                                                        e.preventDefault();
-                                                                                        handleJobToggleStatus(item.id);
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-thumbs-up text-warning m-2" title="Active" />
-                                                                                </a>
-                                                                            ) : (
-                                                                                <a
-                                                                                    className="text-secondary m-2"
-                                                                                    href=""
-                                                                                    onClick={(e) => {
-                                                                                        e.preventDefault();
-                                                                                        handleJobToggleStatus(item.id);
-                                                                                    }}
-                                                                                >
-                                                                                    <i className="fa fa-thumbs-down m-2" title="Inactive" />
-                                                                                </a>
-                                                                            )
+                                                                            appliedStatistics.map((value) => (
+                                                                                value.job_id === item.id ? (<div className="">
+                                                                                    {
+                                                                                        activeNavItem==='MY JOBS'?(
+                                                                                            <b className="d-flex justify-content-between" onClick={()=>navigate(`/user/applied/${item.id}/job-details`)}>Applied<b className="text-warning">-{value.user_count}</b></b>
+                                                                                        ):(
+                                                                                            <b className="d-flex justify-content-between text-gray">Applied<b className="text-warning">-{value.user_count}</b></b>
+                                                                                        )
+                                                                                    }
+                                                                                </div>) : ''
+                                                                            ))
                                                                         }
-
                                                                     </div>
-                                                                ) : (
-                                                                    ""
-                                                                )}
+                                                                    <div className="col-10 col-sm-6">
+                                                                        <a className="hover-pointer text-decoration-none text-light fw-bold" onClick={() => handleApplyClicked(true, item)}>Apply</a>
+                                                                    </div>
+                                                                    <div className="col-12 col-sm-4">
+
+                                                                        {isMyJobsClicked ? (
+                                                                            <div className="float-right">
+                                                                                <i
+                                                                                    className="fa fa-edit mr-2 m-2"
+                                                                                    title="Edit"
+                                                                                    onClick={() =>
+                                                                                        changeUpdateClickedFlag(true, item.id)
+                                                                                    }
+                                                                                />
+                                                                                <i
+                                                                                    className="fa fa-trash m-2"
+                                                                                    title="Delete"
+                                                                                    onClick={() => deleteMyJob(item.id)}
+                                                                                />
+                                                                                {
+                                                                                    item.job_request_status === 'Active' ? (
+                                                                                        <a
+                                                                                            className="m-2"
+                                                                                            href=""
+                                                                                            onClick={(e) => {
+                                                                                                e.preventDefault();
+                                                                                                handleJobToggleStatus(item.id);
+                                                                                            }}
+                                                                                        >
+                                                                                            <i className="fa fa-thumbs-up text-warning m-2" title="Active" />
+                                                                                        </a>
+                                                                                    ) : (
+                                                                                        <a
+                                                                                            className="text-secondary m-2"
+                                                                                            href=""
+                                                                                            onClick={(e) => {
+                                                                                                e.preventDefault();
+                                                                                                handleJobToggleStatus(item.id);
+                                                                                            }}
+                                                                                        >
+                                                                                            <i className="fa fa-thumbs-down m-2" title="Inactive" />
+                                                                                        </a>
+                                                                                    )
+                                                                                }
+
+                                                                            </div>
+                                                                        ) : (
+                                                                            ""
+                                                                        )}
+                                                                    </div>
+                                                                </div>
 
                                                                 {isUpdateClicked ? (
                                                                     <UpdateJobPosted

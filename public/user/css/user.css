@@ -1375,6 +1375,9 @@ input[type="number"] {
 .hover-pointer {
   cursor: pointer;
 }
+.hover-pointer-green:hover{
+  color: #008577;
+}
 
 .drawer-header {
   position: fixed;

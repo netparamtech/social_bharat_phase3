@@ -34,6 +34,8 @@ import SearchUsersWithServicePage from "./pages/SearchUsersWithServicePage";
 import CreateJobPage from "./pages/CreateJobPage";
 import OurSocialBharatProvidesPage from "./pages/OurSocialBharatProvidesPage";
 import JobBoardPage from "./pages/JobBoardPage";
+import UserAppliedJobDetailPage from "./pages/UserAppliedJobDetailPage";
+import AllAppliedJobsPage from "./pages/AllAppliedJobsPage";
 
 const userRoutes = [
     {
@@ -48,7 +50,7 @@ const userRoutes = [
         exact: true
     },
 
-    
+
     {
         path: '/register',
         component: RegisterPage,
@@ -192,7 +194,7 @@ const userRoutes = [
         component: SearchBusinessPage,
         exact: true
     },
-   
+
     {
         path: '/user/block',
         component: BlockUserPage,
@@ -273,6 +275,16 @@ const userRoutes = [
     {
         path: '/user/search/jobs',
         component: JobBoardPage,
+        exact: true
+    },
+    {
+        path: '/user/applied/:id/job-details',
+        component: UserAppliedJobDetailPage,
+        exact: true
+    },
+    {
+        path: '/user/all/applied/jobs',
+        component: AllAppliedJobsPage,
         exact: true
     },
 

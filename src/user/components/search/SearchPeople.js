@@ -433,7 +433,7 @@ const SearchPeople = () => {
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-5 user-detail">
+                                    <div className="col-8 user-detail">
                                       <h6>{item.name}</h6>
                                       <p>
                                         Occupation-

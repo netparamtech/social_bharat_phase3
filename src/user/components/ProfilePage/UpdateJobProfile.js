@@ -15,7 +15,7 @@ const UpdateJobProfile = (props) => {
   const [jobType, setJobType] = useState("");
 
   const [errors, setErrors] = useState("");
-  const [serverError,setServerError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,14 +29,12 @@ const UpdateJobProfile = (props) => {
       jobType === "PART TIME"
         ? "PART_TIME"
         : jobType === "FULL TIME"
-        ? "FULL_TIME"
-        : "";
+          ? "FULL_TIME"
+          : "";
 
     const jobProfileData = {
       company_name: companyName,
       designation,
-      job_start_date: '2023-10-23',
-      job_end_date: '2023-11-23',
       job_type: mappedJobType,
     };
 
@@ -69,8 +67,6 @@ const UpdateJobProfile = (props) => {
     if (jobDetails) {
       setCompanyName(jobDetails.company_name || "N/A");
       setDesignation(jobDetails.designation || "N/A");
-      setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date) || "N/A");
-      setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date) || "N/A");
       setJobType(jobDetails.job_type || "N/A");
 
       // Set jobType based on job_type from jobDetails
@@ -87,11 +83,11 @@ const UpdateJobProfile = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-              {serverError && <span className='error'>{serverError}</span>}
+                {serverError && <span className='error'>{serverError}</span>}
                 <div className="card-title">
                   <h3 className="mb-3">Job Info</h3>
                 </div>
@@ -170,7 +166,6 @@ const UpdateJobProfile = (props) => {
                         aria-label="Default select example"
                         value={jobType}
                         onChange={(e) => setJobType(e.target.value)}
-                        required
                       >
                         <option value="">--- Job Type ---</option>
                         <option value="PART TIME">PART TIME</option>

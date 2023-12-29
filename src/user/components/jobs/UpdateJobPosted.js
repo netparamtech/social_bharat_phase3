@@ -565,7 +565,7 @@ const UpdateJobPosted = (props) => {
                                                 )}
                                             </div>
                                             <div className="form-check mt-2">
-                                                <label className="row bg-info fs-5 m-2 rounded">
+                                                <label className="row  fs-6">
                                                     <Space direction="vertical" size={12} className="mt-2">
                                                         <div className="">
                                                             <label className="">Application Start</label>

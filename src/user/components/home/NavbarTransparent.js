@@ -256,7 +256,7 @@ const NavbarTransparent = (props) => {
         <div className="container">
           
           <a className="navbar-brand m-3" onClick={handleHomeClicked}>
-            <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />
+            <img src={defaultLogo} alt="Logo" />
           </a>
 
           <a>

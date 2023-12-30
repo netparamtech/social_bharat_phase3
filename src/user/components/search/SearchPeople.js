@@ -410,7 +410,7 @@ const SearchPeople = () => {
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
                             <div className="col-md-6" key={innerIndex}>
-                              <div className="card shadow mb-2">
+                              <div className="card shadow mb-2" style={{height:'200px'}}>
                                 <div className="card-body">
                                   <div className="row wow animate__animated animate__zoomIn">
                                     <div className="col-4">

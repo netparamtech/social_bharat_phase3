@@ -441,6 +441,21 @@ const JobBoard = () => {
             applyForAJobPosted(appliedJob);
         }
     }, [isApplyClicked && appliedJob]);
+    const getFileType = (url) => {
+        // Extract the file extension from the URL
+        const extension = url.split(".").pop().toLowerCase();
+
+        // Define mappings of common file types
+        const fileTypeMappings = {
+            pdf: "PDF",
+            doc: "DOC",
+            docx: "DOCX",
+            txt: "TXT",
+            // Add more file types as needed
+        };
+        // Use the mapping or show the extension as-is
+        return fileTypeMappings[extension] || extension.toUpperCase();
+    };
     return (
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
@@ -608,7 +623,7 @@ const JobBoard = () => {
                                             <div className="col-md-6" key={index}>
                                                 {pair.map((item, innerIndex) => (
                                                     <div className="" key={innerIndex}>
-                                                        <div className="card shadow  mb-3" style={{height:'370px'}}>
+                                                        <div className="card shadow  mb-3">
                                                             <div className="card-body">
                                                                 <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                     {formatDate(item.updated_at)}
@@ -617,7 +632,7 @@ const JobBoard = () => {
                                                                     <div className="col-md-3 col-sm-3">
                                                                         <Image
                                                                             src={
-                                                                                item.photo ? item.photo : defaultImage
+                                                                                item.logo ? item.logo : defaultImage
                                                                             }
                                                                             alt={item.name}
                                                                             title={item.name}
@@ -721,6 +736,32 @@ const JobBoard = () => {
                                                                     ) : (
                                                                         ""
                                                                     )}
+
+                                                                    {
+                                                                        item.notification_pdf ? (
+                                                                            <p>Attachment-{
+                                                                                item.notification_pdf &&
+                                                                                <span>
+                                                                                    <a
+                                                                                        href={item.notification_pdf}
+                                                                                        download={`${item.job_title}.pdf`}
+                                                                                        target="_blank"
+                                                                                    >
+                                                                                        <i className="fa-regular fa-file-lines"></i>{" "}
+                                                                                        Download Attachment
+                                                                                    </a>
+                                                                                    &nbsp;(
+                                                                                    {getFileType(
+                                                                                        item.notification_pdf
+                                                                                    )}
+                                                                                    )
+                                                                                </span>
+                                                                            }
+                                                                            </p>
+
+                                                                        ) : ''
+                                                                    }
+
                                                                 </div>
                                                             </div>
 

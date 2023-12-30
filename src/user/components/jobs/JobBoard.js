@@ -608,7 +608,7 @@ const JobBoard = () => {
                                             <div className="col-md-6" key={index}>
                                                 {pair.map((item, innerIndex) => (
                                                     <div className="" key={innerIndex}>
-                                                        <div className="card shadow  mb-3">
+                                                        <div className="card shadow  mb-3" style={{height:'370px'}}>
                                                             <div className="card-body">
                                                                 <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                     {formatDate(item.updated_at)}

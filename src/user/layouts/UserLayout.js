@@ -51,7 +51,7 @@ const UserLayout = ({ children }) => {
       "https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js",
       "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",
       "https://unpkg.com/aos@next/dist/aos.js",
-      "/user/js/userScript.js","/user/js/bootstrap.min.js"
+      "/user/js/userScript.js", "/user/js/bootstrap.min.js"
     ];
 
     // Create script elements for each source and append them to the body
@@ -77,7 +77,7 @@ const UserLayout = ({ children }) => {
 
         <link rel="icon" type="image/x-icon" href="/user/images/logo.png" />
         <link rel="stylesheet" href="/user/css/bootstrap.min.css" />
-         <link rel="stylesheet" href="/user/css/user.css" />
+        <link rel="stylesheet" href="/user/css/user.css" />
         {/* amimate Css CDN */}
         <link
           rel="stylesheet"
@@ -102,6 +102,7 @@ const UserLayout = ({ children }) => {
       <header>
         <NavbarTransparent data={data} />
       </header>
+
       {children}
       <footer id="footer" className="animate__animated animate__fadeInUp">
         <Footer data={data} />

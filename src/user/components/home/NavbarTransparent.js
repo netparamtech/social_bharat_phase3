@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import UserSearchDropdown from "./UserSearchDropdown";
 import { setLoader } from "../../actions/loaderAction";
 import BharatMandirDrawer from "./BharatMandirDrawer";
+import { logout } from "../../actions/userAction";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
@@ -106,7 +107,7 @@ const NavbarTransparent = (props) => {
 
       if (!isHomePage) {
         e.preventDefault();
-        window.scroll(20,20)
+        window.scroll(20, 20)
         navigate("/social-bharat-provides");
         return;
       }
@@ -137,11 +138,11 @@ const NavbarTransparent = (props) => {
       } else {
         navigate("/login");
       }
-     
+
     }
   };
 
-  const handleMembersClicked = ()=>{
+  const handleMembersClicked = () => {
     if (isAndroidUsed) {
       showDrawer();
     }
@@ -159,11 +160,11 @@ const NavbarTransparent = (props) => {
       } else {
         navigate("/login");
       }
-     
+
     }
   }
 
-  const handleJobsClicked = ()=>{
+  const handleJobsClicked = () => {
     if (isAndroidUsed) {
       showDrawer();
     }
@@ -181,11 +182,11 @@ const NavbarTransparent = (props) => {
       } else {
         navigate("/login");
       }
-     
+
     }
   }
 
-  const handleBusinessClicked = ()=>{
+  const handleBusinessClicked = () => {
     if (isAndroidUsed) {
       showDrawer();
     }
@@ -203,11 +204,11 @@ const NavbarTransparent = (props) => {
       } else {
         navigate("/login");
       }
-     
+
     }
   }
 
-  const handleMatrimonialClicked = ()=>{
+  const handleMatrimonialClicked = () => {
     if (isAndroidUsed) {
       showDrawer();
     }
@@ -225,7 +226,7 @@ const NavbarTransparent = (props) => {
       } else {
         navigate("/login");
       }
-     
+
     }
   }
 
@@ -253,6 +254,7 @@ const NavbarTransparent = (props) => {
     <div id='customNavID'>
       <nav className="navbar navbar-transparent  navbar-expand-lg">
         <div className="container">
+          
           <a className="navbar-brand m-3" onClick={handleHomeClicked}>
             <img src={data && data.logo1 && data.logo1 ? data.logo1 : defaultLogo} alt="Logo" />
           </a>
@@ -273,20 +275,8 @@ const NavbarTransparent = (props) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse ml-5" id="navbarSupportedContent">
-            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-              {/* <li className="nav-item">
-                {" "}
-              </li>
-              <li className="nav-item">
-                {" "}
-              </li>
-              <li className="nav-item">
-                {" "}
-              </li>
-              <li className="nav-item">
-                {" "}
-              </li> */}
-
+            <ul className="navbar-nav mb-2 mb-lg-0">
+             
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
@@ -352,32 +342,6 @@ const NavbarTransparent = (props) => {
                   SERVICES
                 </a>
               </li>
-              {/* <li className="nav-item">
-                <a
-                  className={`nav-link rounded ${window.location.pathname === "/contact" ? "active" : "inactive"
-                    }`}
-                  onClick={handleContactClicked}
-                >
-                  CONTACT
-                </a>
-              </li> */}
-
-              {/* <li className="nav-item">
-                {isAuthenticUser && isAuthenticUser ? <UserSearchDropdown /> : ""}
-              </li> */}
-
-              {/* <li className="nav-item">
-                <a
-                  className={`nav-link rounded ${window.location.pathname === "/service" ||
-                    window.location.pathname === "/user/search/service"
-                    ? "active"
-                    : "inactive"
-                    }`}
-                  onClick={handleServiceClick}
-                >
-                  SERVICES
-                </a>
-              </li> */}
 
               {/* You can add more nav items here */}
             </ul>
@@ -426,22 +390,6 @@ const NavbarTransparent = (props) => {
               <div className="customDrawerBody">
                 <ul className="customUl">
 
-                  {/* {
-                    isAuthenticUser ? '' : (
-                      <li className="nav-item mt-2">
-                        <a
-                          className="nav-link active"
-                          aria-current="page"
-                          href=""
-                          onClick={handleHomeClicked}
-                        >
-                          <i className="fa fa-home m-2" aria-hidden="true"></i> HOME
-                        </a>
-                      </li>
-                    )
-                  } */}
-
-
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleHomeClicked}>
                       <i className="fa fa-wrench m-2" aria-hidden="true"></i>
@@ -489,17 +437,6 @@ const NavbarTransparent = (props) => {
                       <i className="fas fa-address-book m-2"></i>SERVICES
                     </a>
                   </li>
-
-                  {/* <li className="nav-item mt-2">
-                    {isAuthenticUser && isAuthenticUser ? (
-                      <a className="nav-link m-2">
-                        <i className="fa fa-search" aria-hidden="true"></i>
-                        <UserSearchDropdown />
-                      </a>
-                    ) : (
-                      ""
-                    )}
-                  </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">

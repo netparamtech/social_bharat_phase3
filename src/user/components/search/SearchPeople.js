@@ -168,52 +168,44 @@ const SearchPeople = () => {
         city
       );
 
-      setIsRefressed(false);
-
       if (response && response.status === 200) {
-        setServerError("");
         setTotalRows(response.data.data.totalFilteredRecords);
-        if (response.data.data.users.length === 0) {
+        setServerError("");
+        if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if (searchText) {
+        if (searchText || state || city) {
           if (response.data.data.users.length !== 0) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
             } else {
               setItems([...new Set([...items, ...response.data.data.users])]);
             }
+
             setTotalRows(response.data.data.totalFilteredRecords);
           } else {
-            setItems([...response.data.data.users]);
-            setTotalRows(response.data.data.totalFilteredRecords);
-          }
-        } else {
-          if (isGoClick) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
-              setCopyItems([...new Set([...response.data.data.users])]);
             } else {
               setItems([...new Set([...items, ...response.data.data.users])]);
             }
-          } else {
-            const combinedItems = [...items, ...response.data.data.users];
-            const uniqueItems = [];
-
-            for (const item of combinedItems) {
-              if (!uniqueItems.some((u) => u.id === item.id)) {
-                uniqueItems.push(item);
-              }
-            }
-
-            setItems(uniqueItems);
+            setTotalRows(response.data.data.totalFilteredRecords);
           }
+        } else {
+          const combinedItems = [...items, ...response.data.data.users];
+          const uniqueItems = [];
+
+          for (const item of combinedItems) {
+            if (!uniqueItems.some((u) => u.id === item.id)) {
+              uniqueItems.push(item);
+            }
+          }
+
+          setItems(uniqueItems);
         }
-        dispatch(setLoader(false));
       }
       setIsLoading(false);
     } catch (error) {
-      dispatch(setLoader(false));
       setIsLoading(false);
       //Unauthorized
       if (error.response && error.response.status === 401) {
@@ -221,6 +213,8 @@ const SearchPeople = () => {
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -262,26 +256,24 @@ const SearchPeople = () => {
   };
 
   useEffect(() => {
-    handleRefress();
-    setState(
-      user && user.user && user.user.native_place_state
-        ? user.user.native_place_state
-        : ""
-    );
-    setCity(
-      user && user.user && user.user.native_place_city
-        ? user.user.native_place_city
-        : ""
-    );
+    // handleRefress();
+    // setState(
+    //   user && user.user && user.user.native_place_state
+    //     ? user.user.native_place_state
+    //     : ""
+    // );
+    // setCity(
+    //   user && user.user && user.user.native_place_city
+    //     ? user.user.native_place_city
+    //     : ""
+    // );
     search("", 1, 20);
   }, [user, isRefressed]);
 
   useEffect(() => {
     // Check if the component is not just mounted
-    if (page > 1 || searchText || isGoClick) {
-      search(searchText, page, 20);
-    }
-  }, [searchText, isGoClick, page]);
+    search(searchText, page, 20);
+  }, [searchText, state, city, page]);
 
   useEffect(() => {
     setPage(1);
@@ -334,66 +326,73 @@ const SearchPeople = () => {
                   ""
                 )}
                 <div className="filter-icon">
-                  <a
+                  {/* <a
                     title="Filter"
                     className="btn btn-primary btn-sm me-2"
                     onClick={handleFilterClicked}
                   >
                     <i className="fas fa-filter me-1"></i>Filter
-                  </a>
-                  <button
+                  </a> */}
+                  {/* <button
                     className="btn btn-primary btn-sm me-2"
                     id="btn-chat"
                     onClick={handleRefressClicked}
                     title="Refresh"
                   >
                     <i className="fa fa-refresh" aria-hidden="true"></i>
-                  </button>
+                  </button> */}
                 </div>
-                <div className="container-input mb-3">
+                <div className="row ms-auto me-auto justify-content-between bg-success">
+                  <div className="mb-3 mt-2 col-12 col-sm-6">
+                    <label className="form-label text-light">
+                      state
+                    </label>
+                    <Select
+                      options={states.map((state) => ({
+                        value: state.name,
+                        label: state.name,
+                      }))}
+                      value={selectedState}
+                      placeholder="Select State...."
+                      onChange={handleStateChange}
+                    />
+                  </div>
+                  <div className="mb-3 mt-2 col-12 col-sm-6">
+                    <label className="form-label text-light">
+                      city
+                    </label>
+                    <Select
+                      options={cities.map((city) => ({
+                        value: city.name,
+                        label: city.name,
+                      }))}
+                      value={selectedCity}
+                      placeholder="Select City...."
+                      onChange={handleCityChange}
+                    />
+                  </div>
+                  {/* <div className="mb-3 mt-2 col-12 col-sm-2">
+                    <a
+                      className="btn btn-set w-100  btn-sm  btn-primary"
+                      onClick={handleGoButtonClick}
+                    >
+                      Go
+                    </a>
+                  </div> */}
+                </div>
+                <div className="container-input mb-3 mt-3">
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search i.e name, mobile,state,city"
                     name="text"
-                    className="input form-control"
+                    className="input form-control border-success"
                     value={searchText}
                     onChange={handleSearchText}
                   />
                   <i className="fas fa-search"></i>
                 </div>
                 <div className="">
-                  <div className={`row ${isFilter ? "" : "d-none"}`}>
-                    <div className="col-5 mb-3 ">
-                      <Select
-                        options={states.map((state) => ({
-                          value: state.name,
-                          label: state.name,
-                        }))}
-                        value={selectedState}
-                        placeholder="State"
-                        onChange={handleStateChange}
-                      />
-                    </div>
-                    <div className="col-5 mb-3 ps-0">
-                      <Select
-                        options={cities.map((city) => ({
-                          value: city.name,
-                          label: city.name,
-                        }))}
-                        value={selectedCity}
-                        placeholder="City"
-                        onChange={handleCityChange}
-                      />
-                    </div>
-                    <div className="col-2 mb-3 ps-0">
-                      <a
-                        className="btn btn-set w-100  btn-sm  btn-primary"
-                        onClick={handleGoButtonClick}
-                      >
-                        Go
-                      </a>
-                    </div>
-                  </div>
+
                 </div>
 
                 <div className="row">
@@ -410,7 +409,7 @@ const SearchPeople = () => {
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
                             <div className="col-md-6" key={innerIndex}>
-                              <div className="card shadow mb-2" style={{height:'200px'}}>
+                              <div className="card shadow mb-2" style={{ height: '200px' }}>
                                 <div className="card-body">
                                   <div className="row wow animate__animated animate__zoomIn">
                                     <div className="col-4">
@@ -465,7 +464,7 @@ const SearchPeople = () => {
                                           </p>
                                         ) : ''
                                       }
-                                     <ViewProfileDrawer id={item.id} />
+                                      <ViewProfileDrawer id={item.id} />
                                     </div>
                                   </div>
                                 </div>

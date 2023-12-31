@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image, Modal } from "antd";
 import NewChat from "../chats/NewChat";
+import ViewProfileDrawer from "./ViewProfileDrawer";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -191,7 +192,7 @@ const SearchPartner = () => {
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if ((searchText && isSaveClicked) || isSaveClicked || searchText) {
+        if (community_id || communityName || searchText || state || city || gender || cast || gotra) {
           if (response.data.data.users.length !== 0) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
@@ -240,7 +241,7 @@ const SearchPartner = () => {
   const fetchCommunities = async () => {
     const response = await fetchAllCommunities();
     if (response && response.status === 200) {
-      const requestedCasts = response.data.data.filter((item)=>item && item.community_archive==='');
+      const requestedCasts = response.data.data.filter((item) => item && item.community_archive === '');
       setCommunities(requestedCasts);
     }
   };
@@ -282,7 +283,7 @@ const SearchPartner = () => {
     setSelectedState(null);
     setSelectedCity(null);
 
-    if(user){
+    if (user) {
       setState(
         user && user.user && user.user.native_place_state
           ? user.user.native_place_state
@@ -399,7 +400,7 @@ const SearchPartner = () => {
         cast
       );
     }
-  }, [searchText, community_id, isSaveClicked]);
+  }, [searchText, community_id, gender, city, state, cast, gotra]);
 
   useEffect(() => {
     setPage(1);
@@ -448,41 +449,87 @@ const SearchPartner = () => {
                       )}
                       <h5 className="fw-3 mb-3 ">Search Partner</h5>
                     </div>
-                    <div className=" col-md-5">
-                      <div className="row">
-                        <div className="col-4 ps-0">
-                          <a
-                            title="Filter"
-                            className="btn btn-primary btn-sm  mb-2 hover-pointer"
+                    <div className="row ms-auto me-auto justify-content-between bg-success">
 
-                            onClick={handlePreferenceClick}
-                          >
-                            <i className="fas fa-filter me-1"></i>Preference
-                          </a>
-                        </div>
-                        <div className="col-7 ps-0">
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label text-light">
+                          Interested In
+                        </label>
+                        <select
+                          className="form-select form-control"
+                          aria-label="Default select example"
+                          value={gender}
+                          onChange={handleGenderChange}
+                        >
+                          <option value="">---Select Gender---</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label text-light">Gotra</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue={gotra}
+                          placeholder="Enter Your Gotra"
+                          onChange={handleGotraChange}
+                        />
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label text-light">State</label>
+                        <Select
+                          className="form-select"
+                          aria-label="Default select example"
+                          options={states && states.map((state) => ({
+                            value: state.name,
+                            label: state.name,
+                          }))}
+                          value={selectedState}
+                          onChange={handleStateChange}
+                        />
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label text-light">City</label>
+                        <Select
+                          className="form-select"
+                          aria-label="Default select example"
+                          options={cities.map((city) => ({
+                            value: city.name,
+                            label: city.name,
+                          }))}
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                        />
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label text-light">Community</label>
+                        <Select
+                          id="community_id"
+                          className="form-select"
+                          aria-label="Default select example"
+                          defaultValue={community_id} // Provide a selected option state
+                          onChange={handleSelectChange} // Your change handler function
+                          options={
+                            communities &&
+                            communities.map((data) => ({
+                              value: data.id,
+                              label: data.name,
+                            }))
+                          }
+                          placeholder="---Select---"
+                        />
+                      </div>
+                      <div className="mb-3 mt-2 col-3 col-sm-1">
+                      <label className="form-label text-light">Add New</label>
                           <a
                             title="Add Business"
                             className="btn btn-primary btn-sm  mb-2"
                             onClick={handlePartnerClick}
                           >
-                            Submit Your Matrimonial Profile
+                            ADD
                           </a>
                         </div>
-                        <div className="col-1 ps-0 ">
-                          <button
-                            className="btn btn-primary btn-sm "
-                            id="btn-chat"
-                            title="Refresh"
-                            onClick={handleRefressClicked}
-                          >
-                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-
-
-
                     </div>
 
                   </div>
@@ -509,121 +556,13 @@ const SearchPartner = () => {
                 ) : (
                   ""
                 )}
-                <Modal title="Preference" open={isModalOpen} onOk={handleSaveClick} onCancel={handleCancel}>
-
-
-                  <div>
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Interested In
-                            </label>
-                            <select
-                              className="form-select form-control"
-                              aria-label="Default select example"
-                              value={gender}
-                              onChange={handleGenderChange}
-                            >
-                              <option value="">---Select Gender---</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Gotra</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              defaultValue={gotra}
-                              placeholder="Enter Your Gotra"
-                              onChange={handleGotraChange}
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">State</label>
-                            <Select
-                              className="form-select"
-                              aria-label="Default select example"
-                              options={states&&states.map((state) => ({
-                                value: state.name,
-                                label: state.name,
-                              }))}
-                              value={selectedState}
-                              onChange={handleStateChange}
-                            />
-                          </div>
-                          {/* <div className="mb-3">
-                            <label className="form-label">Skin Tone</label>
-                            <select
-                              className="form-select form-control"
-                              aria-label="Default select example"
-                              value={skinTone}
-                              onChange={handleSkinToneChange}
-                            >
-                              <option value="">---Select Skin---</option>
-                              <option value="FAIR">FAIR</option>
-                              <option value="DARK">DARK</option>
-                              <option value="WHEATISH">WHEATISH</option>
-                            </select>
-                          </div> */}
-                        </div>
-                        <div className="col-md-6">
-                        <div className="mb-3">
-                            <label className="form-label">City</label>
-                            <Select
-                              className="form-select"
-                              aria-label="Default select example"
-                              options={cities.map((city) => ({
-                                value: city.name,
-                                label: city.name,
-                              }))}
-                              value={selectedCity}
-                              onChange={handleCityChange}
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Cast</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              defaultValue={cast}
-                              placeholder="Enter Your Cast"
-                              onChange={handleCastChange}
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">Community</label>
-                            <Select
-                              id="community_id"
-                              className="form-select"
-                              aria-label="Default select example"
-                              defaultValue={community_id} // Provide a selected option state
-                              onChange={handleSelectChange} // Your change handler function
-                              options={
-                                communities &&
-                                communities.map((data) => ({
-                                  value: data.id,
-                                  label: data.name,
-                                }))
-                              }
-                              placeholder="---Select---"
-                            />
-                          </div>
-                         
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Modal>
 
                 <div className="container-input mb-3 mt-3">
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search By Name"
                     name="text"
-                    className="input form-control"
+                    className="input form-control border-success"
                     onChange={handleSearchText}
                   />
                   <i className="fas fa-search"></i>
@@ -641,7 +580,7 @@ const SearchPartner = () => {
                       <div className="row" key={index}>
                         {pair.map((item, innerIndex) => (
                           <div className="col-md-6" key={innerIndex}>
-                            <div className="card shadow mb-2" style={{height:'200px'}}>
+                            <div className="card shadow mb-2" style={{ height: '230px' }}>
                               <div className="card-body">
                                 <div className="row wow animate__animated animate__zoomIn">
                                   <div className="col-4">
@@ -700,6 +639,7 @@ const SearchPartner = () => {
                                         </a>
                                       ) : ''
                                     }
+                                    <ViewProfileDrawer id={item.id} />
 
                                   </div>
                                 </div>

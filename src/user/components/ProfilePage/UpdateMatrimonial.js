@@ -480,8 +480,8 @@ const UpdateMatrimonial = (props) => {
                         onChange={(e) => setDOB(e.target.value)}
                         disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                       />
-                      {errors && errors.dob && (
-                        <span className="error">{errors.dob}</span>
+                      {errors && errors.matrimonial_profile_dob && (
+                        <span className="error">{errors.matrimonial_profile_dob}</span>
                       )}
                       {/* Add error handling if needed */}
                     </div>

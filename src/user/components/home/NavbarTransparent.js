@@ -392,51 +392,52 @@ const NavbarTransparent = (props) => {
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleHomeClicked}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                      HOME
+                    <i class="fa fa-home me-2" aria-hidden="true"></i>
+                    HOME
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMembersClicked}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
-                      MEMBERS
+                    <i class="fa-solid fa-user me-2"></i>
+                                          MEMBERS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleJobsClicked}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                    <i class="fa-solid fa-business-time me-2"></i>
                       JOBS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleBusinessClicked}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                    <i class="fa-solid fa-business-time me-2"></i>
                       BUSINESS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                    <i class="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleProvidesClick}>
-                      <i className="fa fa-wrench m-2" aria-hidden="true"></i>
+                      <i className="fa fa-wrench me-2" aria-hidden="true"></i>
                       SERVICES
                     </a>
                   </li>
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleContactClicked}>
-                      <i className="fas fa-address-book m-2"></i>CONTACT
+                      <i className="fas fa-address-book me-2"></i>CONTACT
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+
+                {/*  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleServiceClick}>
-                      <i className="fas fa-address-book m-2"></i>SERVICES
+                      <i className="fas fa-address-book me-2"></i>SERVICES 
                     </a>
-                  </li>
+            </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">

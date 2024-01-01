@@ -6,7 +6,7 @@ import {
   uploadImage,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { DatePicker, TimePicker, Button } from "antd";
+import { DatePicker } from "antd";
 import Select from "react-select";
 import moment from "moment";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,6 @@ const EventForm = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
-  const [countryID, setCountryID] = useState(101);
 
   const thumbnailImageRef = useRef(null);
   const bannerImageRef = useRef(null);
@@ -215,10 +214,6 @@ const EventForm = () => {
         // Reset file inputs
         thumbnailImageRef.current.value = null;
         bannerImageRef.current.value = null;
-
-        setTimeout(() => {
-          navigate("/user/event");
-        }, 1000);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

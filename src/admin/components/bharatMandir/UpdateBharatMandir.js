@@ -10,6 +10,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../../user/actions/loaderAction";
 
 const UpdateBharatMandir = () => {
   const { id } = useParams();
@@ -32,6 +34,7 @@ const UpdateBharatMandir = () => {
   const [bannerPreview, setBannerPreview] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
@@ -46,6 +49,7 @@ const UpdateBharatMandir = () => {
     formData.append("image", selectedFile);
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadImage(formData);
       if (response && response.status === 200) {
         setThumbnailImageTempUrl(response.data.data.image);
@@ -63,6 +67,8 @@ const UpdateBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -73,6 +79,7 @@ const UpdateBharatMandir = () => {
     formData.append("image", selectedFile);
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadImage(formData);
       if (response && response.status === 200) {
         setBannerImageTempUrl(response.data.data.image);
@@ -90,6 +97,8 @@ const UpdateBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -101,6 +110,7 @@ const UpdateBharatMandir = () => {
     const htmlContent = draftToHtml(rawContentState);
 
     try {
+      dispatch(setLoader(true));
       const communityData = {
         name,
         status,
@@ -131,11 +141,14 @@ const UpdateBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
   const fetchCommunities = async () => {
     try {
+      dispatch(setLoader(true));
       const response = await fetchCommunityWithId(id);
       if (response && response.status === 200) {
         const communityData = response.data.data[0]; // Assuming the fetched data is in the format { name, thumbnail_image, banner_image, status }
@@ -161,6 +174,8 @@ const UpdateBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -202,7 +217,7 @@ const UpdateBharatMandir = () => {
             <div className="row">
               <div className="col-md-6 col-sm-12 ">
                 <div className="form-group">
-                  <label htmlFor="name"  className="fw-bold">Name</label>
+                  <label htmlFor="name" className="fw-bold">Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -215,7 +230,7 @@ const UpdateBharatMandir = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="status"  className="fw-bold">Status</label>
+                  <label htmlFor="status" className="fw-bold">Status</label>
                   <select
                     className="form-control"
                     id="status"
@@ -236,7 +251,7 @@ const UpdateBharatMandir = () => {
                 <div className="row">
                   <div className="col-sm-10">
                     <div className="form-group">
-                      <label htmlFor="thumbnailImage"  className="fw-bold">Thumbnail Image</label>
+                      <label htmlFor="thumbnailImage" className="fw-bold">Thumbnail Image</label>
                       <div className="input-group ">
                         <div className="custom-file">
                           <input
@@ -274,7 +289,7 @@ const UpdateBharatMandir = () => {
                 <div className="row">
                   <div className="col-sm-10">
                     <div className="form-group">
-                      <label htmlFor="bannerImage"  className="fw-bold">Banner Image</label>
+                      <label htmlFor="bannerImage" className="fw-bold">Banner Image</label>
                       <div className="input-group ">
                         <div className="custom-file">
                           <input

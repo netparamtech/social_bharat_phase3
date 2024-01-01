@@ -11,9 +11,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 import NewChat from "../chats/NewChat";
-import ViewProfileDrawer from "./ViewProfileDrawer";
+import { Carousel } from "react-bootstrap";
 
-const SearchPeople = () => {
+const SearchEvents = () => {
   const user = useSelector((state) => state.userAuth);
 
   const dispatch = useDispatch();
@@ -258,16 +258,42 @@ const SearchPeople = () => {
 
   return (
     <>
+
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
             <div className="card shadow card-search">
+              <Carousel className="">
+                <Carousel.Item>
+                  <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <Carousel.Caption>
+                    <h3>First slide label</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <Carousel.Caption>
+                    <h3>Second slide label</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <Carousel.Caption>
+                    <h3>Third slide label</h3>
+                    <p>
+                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel>
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
                 <div className="d-flex">
-                  <h5 className="fw-3 mb-3">Search People</h5>
+                  <h5 className="fw-3 mb-3">Search Events</h5>
                 </div>
                 <div className="filter-content">
                   {city ? (
@@ -349,7 +375,7 @@ const SearchPeople = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    <div className="container pw-20">
+                    {/* <div className="container pw-20">
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
@@ -409,7 +435,6 @@ const SearchPeople = () => {
                                           </p>
                                         ) : ''
                                       }
-                                      <ViewProfileDrawer id={item.id} />
                                     </div>
                                   </div>
                                 </div>
@@ -418,7 +443,7 @@ const SearchPeople = () => {
                           ))}
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                   </InfiniteScroll>
                 </div>
               </div>
@@ -440,4 +465,4 @@ const SearchPeople = () => {
   );
 };
 
-export default SearchPeople;
+export default SearchEvents;

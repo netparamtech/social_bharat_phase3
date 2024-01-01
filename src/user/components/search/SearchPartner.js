@@ -10,7 +10,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image, Modal } from "antd";
+import { Image } from "antd";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "./ViewProfileDrawer";
 
@@ -86,15 +86,6 @@ const SearchPartner = () => {
   const handleGotraChange = (e) => {
     setGotra(e.target.value);
   };
-
-  const handleSkinToneChange = (e) => {
-    setSkinTone(e.target.value);
-  };
-
-  const handleCastChange = (e) => {
-    setCast(e.target.value);
-  };
-
   const handleSelectChange = (selectedOption) => {
     setCommunity_id(selectedOption.value);
     setCommunityName(selectedOption.label);

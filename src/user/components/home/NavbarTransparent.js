@@ -3,10 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
-import UserSearchDropdown from "./UserSearchDropdown";
 import { setLoader } from "../../actions/loaderAction";
-import BharatMandirDrawer from "./BharatMandirDrawer";
-import { logout } from "../../actions/userAction";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
@@ -22,13 +19,6 @@ const NavbarTransparent = (props) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const showBharatDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
 
   const handleLoginClicked = (e) => {
     e.preventDefault();
@@ -50,32 +40,6 @@ const NavbarTransparent = (props) => {
       navigate("/");
     } else {
       navigate("/");
-    }
-  };
-
-  const handleAboutClick = (e) => {
-    e.preventDefault();
-    if (isAndroidUsed) {
-      showDrawer();
-    }
-    window.scrollTo(0, 0);
-    navigate("/about");
-  };
-
-  const handleEventClick = (e) => {
-    e.preventDefault();
-    if (isAndroidUsed) {
-      showDrawer();
-    }
-    window.scrollTo(0, 0);
-    if (isAuthenticUser) {
-      if (isPasswordSet) {
-        navigate("/event");
-      } else {
-        navigate("/set-password");
-      }
-    } else {
-      navigate("/login");
     }
   };
 
@@ -230,7 +194,6 @@ const NavbarTransparent = (props) => {
     }
   }
 
-
   const showDrawer = () => {
     setVisible(!visible);
   };
@@ -254,7 +217,7 @@ const NavbarTransparent = (props) => {
     <div id='customNavID'>
       <nav className="navbar navbar-transparent  navbar-expand-lg">
         <div className="container">
-          
+
           <a className="navbar-brand m-3" onClick={handleHomeClicked}>
             <img src={defaultLogo} alt="Logo" />
           </a>
@@ -276,7 +239,7 @@ const NavbarTransparent = (props) => {
           </button>
           <div className="collapse navbar-collapse ml-5" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
-             
+
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"

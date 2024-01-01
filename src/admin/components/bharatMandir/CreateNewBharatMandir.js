@@ -5,6 +5,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { useDispatch } from "react-redux";
+import { setLoader } from '../../actions/loaderAction';
 
 
 const CreateNewBharatMandir = () => {
@@ -26,6 +28,7 @@ const CreateNewBharatMandir = () => {
   const [bannerPreview, setBannerPreview] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
@@ -47,6 +50,7 @@ const CreateNewBharatMandir = () => {
     formData.append("image", selectedFile);
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadImage(formData);
       if (response && response.status === 200) {
         setThumbnailImageTempUrl(response.data.data.image);
@@ -64,6 +68,8 @@ const CreateNewBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally{
+      dispatch(setLoader(false));
     }
   };
 
@@ -74,6 +80,7 @@ const CreateNewBharatMandir = () => {
     formData.append("image", selectedFile);
 
     try {
+      dispatch(setLoader(true));
       const response = await uploadImage(formData);
       if (response && response.status === 200) {
         setBannerImageTempUrl(response.data.data.image);
@@ -91,6 +98,8 @@ const CreateNewBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -100,6 +109,7 @@ const CreateNewBharatMandir = () => {
     const rawContentState = convertToRaw(contentState);
     const htmlContent = draftToHtml(rawContentState);
     try {
+      dispatch(setLoader(true));
       const communityData = {
         name,
         status,
@@ -138,6 +148,8 @@ const CreateNewBharatMandir = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 

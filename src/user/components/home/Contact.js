@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { enquiry, fetchAllSiteSettings } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
 
 function Contact() {
-  const user = useSelector((state) => state.userAuth);
-  const isAuthenticUser = user && user.isAuthenticated;
   // State variables to store form input values
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

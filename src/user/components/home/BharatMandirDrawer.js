@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../../pages/css/ourPartner.css';
-import { Button, Drawer, Input } from 'antd';
+import { Drawer, Input } from 'antd';
 import { fetchAllActiveCommunities } from '../../services/userService';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import { useNavigate } from 'react-router-dom';
 const BharatMandirDrawer = () => {

@@ -156,15 +156,20 @@ const Dashboard = () => {
                   <img src="/user/images/placard.png" width="40px" />
                 </div>
               </div>
+             
               <div className="card-footer d-flex align-items-center justify-content-between small">
-
                 <a
-                  className="text-white hover-pointer stretched-link"
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search/events")}
+                >
+                  Search{" "}
+                </a>
+                <a
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/event")}
                 >
-                  Create Event{" "}
+                  Post Job{" "}
                 </a>
-                <i className="fa-solid fa-arrow-right"></i>
               </div>
             </div>
           </div>
@@ -253,6 +258,7 @@ const Dashboard = () => {
 
             </div>
           </div>
+          
 
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-navyblue  text-white h-100">
@@ -279,36 +285,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
-
-
-          {/* <section id="partner">
-            <div className="container">
-              <div className="row costomer-logos">
-                <div className="card shadow bg-warning  text-white h-100">
-                  <Slider {...settings}>
-                    {casts && casts.length > 0 &&
-                      casts.map(
-                        (community) =>
-                          community.thumbnail_image && (
-                            <div className="icon-box d-inline-flex" key={community.id}>
-                              <a className="hover-pointer">
-                                <img
-                                  src={community.thumbnail_image}
-                                  alt={community.name}
-                                  onClick={() => handleImageClick(community.name)}
-                                />
-                              </a>
-                            </div>
-                          )
-                      )}
-                  </Slider>
-                </div>
-              </div>
-            </div>
-          </section> */}
-
-
         </div>
       </div>
     </div >

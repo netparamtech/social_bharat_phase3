@@ -24,7 +24,6 @@ import EventPage from "./pages/EventPage";
 import BusinessInfoPage from "./pages/profile/update/BusinessInfoPage";
 import JobInfoPage from "./pages/profile/update/JobInfoPage";
 import ContactInfoPage from "./pages/profile/update/ContactInfoPage";
-import CommunityContentPage from "./pages/CommunityContentPage";
 import SettingPage from "./pages/SettingPage";
 import ViewCommunityPage from "./pages/ViewCommunityPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -36,6 +35,7 @@ import OurSocialBharatProvidesPage from "./pages/OurSocialBharatProvidesPage";
 import JobBoardPage from "./pages/JobBoardPage";
 import UserAppliedJobDetailPage from "./pages/UserAppliedJobDetailPage";
 import AllAppliedJobsPage from "./pages/AllAppliedJobsPage";
+import SearchEventsPage from "./pages/SearchEventsPage";
 
 const userRoutes = [
     {
@@ -220,12 +220,6 @@ const userRoutes = [
     },
 
     {
-        path: '/community-content',
-        component: CommunityContentPage,
-        exact: true
-    },
-
-    {
         path: '/user/setting',
         component: SettingPage,
         exact: true
@@ -287,6 +281,11 @@ const userRoutes = [
         component: AllAppliedJobsPage,
         exact: true
     },
+    {
+        path: '/user/search/events',
+        component: SearchEventsPage,
+        exact: true
+    }
 
 ]
 

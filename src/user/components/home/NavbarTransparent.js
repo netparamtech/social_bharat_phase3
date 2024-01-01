@@ -398,21 +398,21 @@ const NavbarTransparent = (props) => {
 
                 {/*  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleServiceClick}>
-                      <i className="fas fa-address-book me-2"></i>SERVICES 
+                      <i class="fa-solid fa-truck me-2"></i>SERVICES 
                     </a>
             </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">
                       <a onClick={() => navigate("/login")}>
-                        <i className="fa fa-sign-out m-2" aria-hidden="true"></i>
+                        <i className="fa fa-sign-out me-2" aria-hidden="true"></i>
                         LOG OUT
                       </a>
                     </li>
                   ) : (
                     <li className="nav-item mt-2">
                       <a onClick={handleLoginClicked}>
-                        <i className="fa fa-sign-in m-2" aria-hidden="true"></i>{" "}
+                        <i className="fa fa-sign-in me-2" aria-hidden="true"></i>{" "}
                         LOGIN
                       </a>
                     </li>

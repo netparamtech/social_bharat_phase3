@@ -250,10 +250,10 @@ const RegisteredUsersInService = () => {
 
     return (
         <div>
-            <div className=" card-header bg-success d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">Registered Users In {title}</h1>
-
-                <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
+            <div className=" card-header bg-gray   d-sm-flex align-items-center justify-content-between mb-4">
+   {/* <h4 className="mb-0 text-gray-800">Registered Users In {title}</h4> */}
+                <div className="ms-auto">
+                <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm me-3 hover-pointer-admin"
                     onClick={(e) => {
                         e.preventDefault();
                         navigate('/admin/services/requested')
@@ -261,7 +261,7 @@ const RegisteredUsersInService = () => {
                 >
                     Requested Services
                 </a>
-                <a className="d-sm-inline-block btn btn-sm btn-success shadow-sm hover-pointer-admin"
+                <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer-admin"
                     onClick={(e) => {
                         e.preventDefault();
                         navigate('/admin/service/index')
@@ -269,6 +269,7 @@ const RegisteredUsersInService = () => {
                 >
                     All Services
                 </a>
+                </div>
             </div>
             <Search
                 placeholder="Search"

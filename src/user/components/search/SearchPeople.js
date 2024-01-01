@@ -325,7 +325,7 @@ const SearchPeople = () => {
                     </a>
                   </div> */}
                 </div>
-                <div className="container-input container mb-3 mt-3">
+                <div className="container-input container mb-3 mt-2">
                   <input
                     type="text"
                     placeholder="Search i.e name, mobile,state,city"
@@ -349,7 +349,7 @@ const SearchPeople = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    <div className="container pw-20">
+                    <div className="container pw-20 mt-3">
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (

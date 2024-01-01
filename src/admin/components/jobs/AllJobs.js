@@ -255,10 +255,10 @@ const AllJobs = () => {
       title: "Status",
       dataIndex: "status",
       render: (text, record) => (
-        <div>
+        <div >
           {record.status == "true" ? (
             <a
-              className="collapse-item hover-pointer-admin m-2"
+              className="collapse-item hover-pointer-admin "
               onClick={(e) => {
                 e.preventDefault();
                 handleStatusToggle(record.job_id);
@@ -284,7 +284,7 @@ const AllJobs = () => {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
-        <div>
+        <div className="d-flex justify-content-between" style={{width:'80px'}}>
           {
             activeNavItem === 'MY JOBS' ? (
               <a
@@ -303,16 +303,16 @@ const AllJobs = () => {
               handleDelete(record.job_id);
             }}
           >
-            <i className="fas fa-trash"></i>
+            <i className="fas fa-trash "></i>
           </a>
           <a
-            className="collapse-item m-3 hover-pointer-admin"
+            className="collapse-item hover-pointer-admin"
             onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
               navigate(`/admin/service/in/${record.title}`);
             }}
           >
-            <i className="fas fa-eye"></i>
+            <i className="fas fa-eye "></i>
           </a>
           <input type="checkbox" id="featuredCheckbox" name="featured" value={featured} onClick={()=>handleFeaturedChange(record.job_id)} />
         </div>

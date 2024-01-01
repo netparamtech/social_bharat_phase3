@@ -409,7 +409,7 @@ const JobBoard = () => {
                 setServerError("");
                 setErrors("");
                 getJobApplicantStatistics();
-                alert('SusessFully');
+                alert('Successfully');
             }
         } catch (error) {
             //Unauthorized

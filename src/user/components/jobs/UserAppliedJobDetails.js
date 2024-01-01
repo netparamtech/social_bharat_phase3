@@ -181,17 +181,18 @@ const UserAppliedJobDetails = () => {
     return (
         <div id="service-section" className="pt-4 mb-5">
             <div className="container">
+            
                 <div className="card shadow card-search">
                     <div className=" card-header bg-darkskyblue  fs-6 justify-content-between d-flex">
                         <div> REGISTERED CONDIDATES </div>
                         <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
-                        <div>
+                        <div className="table-responsive">
 
                             <Table
-                                title={() => `Applied Condidates For ${jobTitle}`}  // Set the title to 'Enquiries'
-                                dataSource={data}
+                            dataSource={data}
+                            title={() => `Applied Condidates For ${jobTitle}`}  // Set the title to 'Enquiries'
                                 columns={columns}
                                 pagination={{
                                     current: page,

@@ -287,10 +287,10 @@ const SearchPeople = () => {
                 <div className="filter-icon">
 
                 </div>
-                <div className="row ms-auto me-auto justify-content-between bg-success">
+                <div className="row ms-auto me-auto justify-content-between ">
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">
-                      state
+                    <label className="form-label ">
+                      State
                     </label>
                     <Select
                       options={states.map((state) => ({
@@ -303,8 +303,8 @@ const SearchPeople = () => {
                     />
                   </div>
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">
-                      city
+                    <label className="form-label ">
+                      City
                     </label>
                     <Select
                       options={cities.map((city) => ({
@@ -325,16 +325,16 @@ const SearchPeople = () => {
                     </a>
                   </div> */}
                 </div>
-                <div className="container-input mb-3 mt-3">
+                <div className="container-input container mb-3 mt-3">
                   <input
                     type="text"
                     placeholder="Search i.e name, mobile,state,city"
                     name="text"
-                    className="input form-control border-success"
+                    className="input form-control"
                     value={searchText}
                     onChange={handleSearchText}
                   />
-                  <i className="fas fa-search"></i>
+                  <i className="fas fa-search ps-2"></i>
                 </div>
                 <div className="">
 

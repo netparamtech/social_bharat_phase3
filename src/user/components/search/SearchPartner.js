@@ -440,7 +440,7 @@ const SearchPartner = () => {
                       )}
                       <h5 className="fw-3 mb-3 ">Search Partner</h5>
                     </div>
-                    <div className="row ms-auto me-auto justify-content-between bg-success">
+                    <div className="row ms-auto me-auto justify-content-between bg-all">
 
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label text-light">
@@ -452,7 +452,7 @@ const SearchPartner = () => {
                           value={gender}
                           onChange={handleGenderChange}
                         >
-                          <option value="">---Select Gender---</option>
+                          <option value="">--- Gender---</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                         </select>
@@ -470,7 +470,7 @@ const SearchPartner = () => {
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label text-light">State</label>
                         <Select
-                          className="form-select"
+                          className="form-control"
                           aria-label="Default select example"
                           options={states && states.map((state) => ({
                             value: state.name,
@@ -483,7 +483,7 @@ const SearchPartner = () => {
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label text-light">City</label>
                         <Select
-                          className="form-select"
+                          className="form-control"
                           aria-label="Default select example"
                           options={cities.map((city) => ({
                             value: city.name,
@@ -497,7 +497,7 @@ const SearchPartner = () => {
                         <label className="form-label text-light">Community</label>
                         <Select
                           id="community_id"
-                          className="form-select"
+                          className="form-control"
                           aria-label="Default select example"
                           defaultValue={community_id} // Provide a selected option state
                           onChange={handleSelectChange} // Your change handler function
@@ -515,7 +515,7 @@ const SearchPartner = () => {
                       <label className="form-label text-light">Add New</label>
                           <a
                             title="Add Business"
-                            className="btn btn-primary btn-sm  mb-2"
+                            className="btn  btn-secondary w-100 btn-sm  mb-2"
                             onClick={handlePartnerClick}
                           >
                             ADD

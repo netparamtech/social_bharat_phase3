@@ -774,6 +774,16 @@ export const fetchAllAppliedJobs = async () => {
     }
 }
 
+//fetch all events
+export const fetchAllEvents = async () => {
+    try {
+        const response = await apiWithHeaders.get('/user/all/events');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 //Chat
 export const sendMessage = async (data) => {

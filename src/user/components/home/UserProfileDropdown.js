@@ -235,7 +235,7 @@ const UserProfileDropdown = () => {
             src={userProfile}
             alt={userName}
             size="large"
-            className='m-2 custom-font'
+            className='custom-font'
           />
         ) : (
           <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>

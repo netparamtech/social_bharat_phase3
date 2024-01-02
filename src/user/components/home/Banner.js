@@ -89,14 +89,22 @@ const Banner = () => {
 
       <div id="banners-section" className="">
         <div className="container">
+          <div className="text-success fw-bold fs-6">
+            <marquee className="">"Building Bridges, Creating Bonds: Social Bharat is your gateway to community connections,
+              meaningful relationships, and professional growth. Discover a platform where community thrives,
+              love blossoms, careers take flight, and services unite. Explore Matrimonial Bliss, Career Opportunities,
+              Business Networking, and more. Join us on the journey of empowerment and shared prosperity.
+              Your community, your connection, your Social Bharat. #CommunityConnections #Matrimony #JobSearch #ServiceSearch #SocialBharat 🌐💑👔🛠️"
+            </marquee>
+          </div>
           <div className="jumbotron navbar-scroll" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
             <div className="hero-section">
 
               <div>
                 <Title level={2}>Social Bharat Helps</Title>
-               <h2>
-               <Text className="h2 typed" ref={typedRef}></Text>
-                </h2> 
+                <h2>
+                  <Text className="h2 typed" ref={typedRef}></Text>
+                </h2>
               </div>
               <div className="">
                 <a className="btn btn-banner" onClick={handleBecomeMemberClick}>

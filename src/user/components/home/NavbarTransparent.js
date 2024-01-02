@@ -36,6 +36,15 @@ const NavbarTransparent = (props) => {
       showDrawer();
     }
     window.scrollTo(0, 0);
+    navigate("/");
+  };
+
+  const handleDashboardClicked = (e) => {
+    e.preventDefault();
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+    window.scrollTo(0, 0);
     if (isAuthenticUser) {
       navigate("/dashboard");
     } else {
@@ -237,16 +246,25 @@ const NavbarTransparent = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse ml-5" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
 
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/" || window.location.pathname === "/dashboard" ? "active" : "inactive"
+                  className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
                     }`}
                   onClick={handleHomeClicked}
                 >
                   HOME
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
+                    }`}
+                  onClick={handleDashboardClicked}
+                >
+                  DASHBOARD
                 </a>
               </li>
               <li className="nav-item">

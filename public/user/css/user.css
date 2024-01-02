@@ -1734,3 +1734,14 @@ input[type="number"] {
 .service-absolute-p{
   margin-right: 10px;
 }
+
+@keyframes example {
+  0%   {background-color: red;}
+  25%  {background-color: rgb(141, 39, 93);}
+  50%  {background-color: blue;}
+  100% {background-color: green;}
+}
+
+.marquee-dashboard{
+  animation: example 2s infinite;
+}

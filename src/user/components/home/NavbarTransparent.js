@@ -37,7 +37,7 @@ const NavbarTransparent = (props) => {
     }
     window.scrollTo(0, 0);
     if (isAuthenticUser) {
-      navigate("/");
+      navigate("/dashboard");
     } else {
       navigate("/");
     }
@@ -242,7 +242,7 @@ const NavbarTransparent = (props) => {
 
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
+                  className={`nav-link rounded ${window.location.pathname === "/" || window.location.pathname === "/dashboard" ? "active" : "inactive"
                     }`}
                   onClick={handleHomeClicked}
                 >
@@ -295,12 +295,11 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ||
-                    window.location.pathname === "/social-bharat-provides"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/service"
                     ? "active"
                     : "inactive"
                     }`}
-                  onClick={handleProvidesClick}
+                  onClick={handleServiceClick}
                 >
                   SERVICES
                 </a>
@@ -355,31 +354,31 @@ const NavbarTransparent = (props) => {
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleHomeClicked}>
-                    <i class="fa fa-home me-2" aria-hidden="true"></i>
-                    HOME
+                      <i class="fa fa-home me-2" aria-hidden="true"></i>
+                      HOME
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMembersClicked}>
-                    <i class="fa-solid fa-user me-2"></i>
-                                          MEMBERS
+                      <i class="fa-solid fa-user me-2"></i>
+                      MEMBERS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleJobsClicked}>
-                    <i class="fa-solid fa-business-time me-2"></i>
+                      <i class="fa-solid fa-business-time me-2"></i>
                       JOBS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleBusinessClicked}>
-                    <i class="fa-solid fa-business-time me-2"></i>
+                      <i class="fa-solid fa-business-time me-2"></i>
                       BUSINESS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
-                    <i class="fa fa-ring me-2"></i>
+                      <i class="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>
@@ -396,7 +395,7 @@ const NavbarTransparent = (props) => {
                     </a>
                   </li>
 
-                {/*  <li className="nav-item mt-2">
+                  {/*  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleServiceClick}>
                       <i class="fa-solid fa-truck me-2"></i>SERVICES 
                     </a>

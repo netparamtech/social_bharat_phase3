@@ -229,7 +229,7 @@ const SearchUsersWithService = () => {
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
-        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+        <div id="searchPeoples-section" className="content-wrapper pt-4 mb-4">
           <div id="" className="container">
             <div className="card shadow card-search">
               <div className="card-header bg-darkskyblue">

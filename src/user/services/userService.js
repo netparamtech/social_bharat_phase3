@@ -526,6 +526,8 @@ export const event = async (data) => {
         throw error;
     }
 }
+
+
 //fetch all active qualification
 export const fetchAllActiveQualifications = async () => {
     try {
@@ -764,6 +766,7 @@ export const userAppliedForSameJob = async (id) => {
         throw error;
     }
 }
+
 //fetch all applied jobs
 export const fetchAllAppliedJobs = async () => {
     try {
@@ -775,12 +778,15 @@ export const fetchAllAppliedJobs = async () => {
 }
 
 //fetch all events
-export const fetchAllEvents = async () => {
+export const fetchAllEvents = async (searchText, page, size, state, city) => {
     try {
-        const response = await apiWithHeaders.get('/user/all/events');
+        const response = await apiWithFileHeaders.get(`/user/search/events?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`);
+        console.log("hello1")
         return response;
     } catch (error) {
+        console.log("hello")
         throw error;
+        
     }
 }
 

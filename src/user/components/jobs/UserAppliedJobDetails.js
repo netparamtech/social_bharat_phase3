@@ -88,7 +88,7 @@ const UserAppliedJobDetails = () => {
             dataIndex: 'photo',
             render: (text, record, index) => (
                 <div>
-                   <img className="" src={record.photo?record.photo:defaultImage} width={50}></img>
+                    <img className="" src={record.photo ? record.photo : defaultImage} width={50}></img>
                 </div>
             )
         },
@@ -103,35 +103,6 @@ const UserAppliedJobDetails = () => {
             title: 'email', dataIndex: 'email',
         },
 
-        // {
-        //     title: 'Actions',
-        //     dataIndex: 'actions',
-        //     render: (text, record) => (
-        //         <div>
-        //             <a
-        //                 className="collapse-item hover-pointer-admin"
-        //                 onClick={(e) => {
-        //                     e.preventDefault();
-        //                     navigate(`/user/update/user-registered-service/${record.id}`)
-        //                 }}
-        //             >
-        //                 <i className="fa fa-edit mr-4" title="Edit" />
-        //             </a>
-
-        //             <a
-        //                 className="collapse-item hover-pointer-admin"
-
-        //                 onClick={(e) => {
-        //                     e.preventDefault();
-        //                     handleDelete(record.id);
-        //                 }}
-        //             >
-        //                 <i className="fas fa-trash"></i>
-        //             </a>
-        //         </div>
-        //     ),
-        // },
-        // Rest of the columns definition
     ];
 
     const fetchSearchData = () => {
@@ -148,29 +119,6 @@ const UserAppliedJobDetails = () => {
         return nameArray[0];
     }
 
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
-    //     };
-
-    //     // Listen for window resize events
-    //     window.addEventListener("resize", handleResize);
-    //     handleResize(); // Call initially to set the correct value
-
-    //     // Cleanup the event listener when component is unmounted
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
-
-    // useEffect(() => {
-    //     if (isAndroidUsed) {
-    //         setHorizontalScroll(900);
-    //     } else {
-    //         setHorizontalScroll(0);
-    //     }
-    // }, [isAndroidUsed]);
-
     useEffect(() => {
         fetchSearchData();
     }, [searchQuery]);
@@ -181,18 +129,18 @@ const UserAppliedJobDetails = () => {
     return (
         <div id="service-section" className="pt-4 mb-5">
             <div className="container">
-            
+
                 <div className="card shadow card-search">
                     <div className=" card-header bg-darkskyblue  fs-6 justify-content-between d-flex">
                         <div> REGISTERED CONDIDATES </div>
-                        <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
+                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
 
                             <Table
-                            dataSource={data}
-                            title={() => `Applied Condidates For ${jobTitle}`}  // Set the title to 'Enquiries'
+                                dataSource={data}
+                                title={() => `Applied Condidates For ${jobTitle}`}  // Set the title to 'Enquiries'
                                 columns={columns}
                                 pagination={{
                                     current: page,

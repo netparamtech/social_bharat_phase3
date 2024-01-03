@@ -785,14 +785,7 @@ const JobBoard = () => {
                                                                                                 -{value.user_count}
                                                                                             </span>
                                                                                         </p>
-                                                                                    ) : (
-                                                                                        <p className="m-0 ">
-                                                                                            Applied
-                                                                                            <span className="">
-                                                                                                -{value.user_count}
-                                                                                            </span>
-                                                                                        </p>
-                                                                                    )}
+                                                                                    ) : ""}
                                                                                 </div>
                                                                             ) : (
                                                                                 ""

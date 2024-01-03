@@ -36,10 +36,19 @@ const NavbarTransparent = (props) => {
       showDrawer();
     }
     window.scrollTo(0, 0);
+    navigate("/");
+  };
+
+  const handleDashboardClicked = (e) => {
+    e.preventDefault();
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+    window.scrollTo(0, 0);
     if (isAuthenticUser) {
-      navigate("/");
+      navigate("/dashboard");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   };
 
@@ -237,7 +246,7 @@ const NavbarTransparent = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse ml-5" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
 
               <li className="nav-item">
@@ -247,6 +256,15 @@ const NavbarTransparent = (props) => {
                   onClick={handleHomeClicked}
                 >
                   HOME
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
+                    }`}
+                  onClick={handleDashboardClicked}
+                >
+                  DASHBOARD
                 </a>
               </li>
               <li className="nav-item">
@@ -295,12 +313,11 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ||
-                    window.location.pathname === "/social-bharat-provides"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/service"
                     ? "active"
                     : "inactive"
                     }`}
-                  onClick={handleProvidesClick}
+                  onClick={handleServiceClick}
                 >
                   SERVICES
                 </a>
@@ -355,36 +372,42 @@ const NavbarTransparent = (props) => {
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleHomeClicked}>
-                    <i class="fa fa-home me-2" aria-hidden="true"></i>
-                    HOME
+                      <i class="fa fa-home me-2" aria-hidden="true"></i>
+                      HOME
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleDashboardClicked}>
+                      <i class="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
+                      DASHBOARD
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMembersClicked}>
-                    <i class="fa-solid fa-user me-2"></i>
-                                          MEMBERS
+                      <i class="fa-solid fa-user me-2"></i>
+                      MEMBERS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleJobsClicked}>
-                    <i class="fa-solid fa-business-time me-2"></i>
+                      <i class="fa-solid fa-business-time me-2"></i>
                       JOBS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleBusinessClicked}>
-                    <i class="fa-solid fa-business-time me-2"></i>
+                      <i class="fa-solid fa-business-time me-2"></i>
                       BUSINESS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
-                    <i class="fa fa-ring me-2"></i>
+                      <i class="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>
                   <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleProvidesClick}>
+                    <a className="nav-link" onClick={handleServiceClick}>
                       <i className="fa fa-wrench me-2" aria-hidden="true"></i>
                       SERVICES
                     </a>
@@ -395,12 +418,6 @@ const NavbarTransparent = (props) => {
                       <i className="fas fa-address-book me-2"></i>CONTACT
                     </a>
                   </li>
-
-                {/*  <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleServiceClick}>
-                      <i class="fa-solid fa-truck me-2"></i>SERVICES 
-                    </a>
-            </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">

@@ -25,8 +25,17 @@ const Dashboard = () => {
   return (
 
     <div id="dashboard">
+
       {isShow && isFeedback && <FeedbackModel />}
       <div className="container pt-5 mb-5">
+        <div className="text-light mb-2 fw-bold fs-6">
+          <marquee className="marquee-dashboard">"Building Bridges, Creating Bonds: Social Bharat is your gateway to community connections,
+            meaningful relationships, and professional growth. Discover a platform where community thrives,
+            love blossoms, careers take flight, and services unite. Explore Matrimonial Bliss, Career Opportunities,
+            Business Networking, and more. Join us on the journey of empowerment and shared prosperity.
+            Your community, your connection, your Social Bharat. #CommunityConnections #Matrimony #JobSearch #ServiceSearch #SocialBharat 🌐💑👔🛠️"
+          </marquee>
+        </div>
         <div className="row">
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-peal text-white h-100">
@@ -156,7 +165,7 @@ const Dashboard = () => {
                   <img src="/user/images/placard.png" width="40px" />
                 </div>
               </div>
-             
+
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
                   className="text-white hover-pointer"
@@ -258,7 +267,7 @@ const Dashboard = () => {
 
             </div>
           </div>
-          
+
 
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-navyblue  text-white h-100">

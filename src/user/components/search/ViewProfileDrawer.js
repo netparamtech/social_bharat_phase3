@@ -95,9 +95,9 @@ const ViewProfileDrawer = ({ id }) => {
   };
 
   useEffect(() => {
-   if(visible){
-    getUserProfile();
-   }
+    if (visible) {
+      getUserProfile();
+    }
   }, [visible]);
   useEffect(() => {
     setProfileImage(
@@ -190,7 +190,13 @@ const ViewProfileDrawer = ({ id }) => {
           </p>
           <div className="card p-3">
             <DescriptionItem title="Email" content={user.email} />
-            <DescriptionItem title="D.O.B" content={formatDate(user.dob)} />
+            {
+              user && user.dob !== null ? (
+                <DescriptionItem title="D.O.B" content={formatDate(user.dob)} />
+              ) : (
+                <DescriptionItem title="D.O.B" content="N/A" />
+              )
+            }
             <DescriptionItem
               title="Marital Status"
               content={user.marital_status}

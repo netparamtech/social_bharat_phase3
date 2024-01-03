@@ -48,7 +48,7 @@ const NavbarTransparent = (props) => {
     if (isAuthenticUser) {
       navigate("/dashboard");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   };
 
@@ -377,6 +377,12 @@ const NavbarTransparent = (props) => {
                     </a>
                   </li>
                   <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleDashboardClicked}>
+                      <i class="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
+                      DASHBOARD
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMembersClicked}>
                       <i class="fa-solid fa-user me-2"></i>
                       MEMBERS
@@ -401,7 +407,7 @@ const NavbarTransparent = (props) => {
                     </a>
                   </li>
                   <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleProvidesClick}>
+                    <a className="nav-link" onClick={handleServiceClick}>
                       <i className="fa fa-wrench me-2" aria-hidden="true"></i>
                       SERVICES
                     </a>
@@ -412,12 +418,6 @@ const NavbarTransparent = (props) => {
                       <i className="fas fa-address-book me-2"></i>CONTACT
                     </a>
                   </li>
-
-                  {/*  <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleServiceClick}>
-                      <i class="fa-solid fa-truck me-2"></i>SERVICES 
-                    </a>
-            </li> */}
 
                   {isAuthenticUser && isAuthenticUser ? (
                     <li className="nav-item mt-2">

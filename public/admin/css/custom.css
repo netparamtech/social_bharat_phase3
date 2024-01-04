@@ -210,3 +210,9 @@ div.Table {
 #basic-profile-section .community-img{
   margin-left: 70px;
 }
+.hover-pointer-admin {
+  cursor: pointer;
+}
+.hover-pointer-admin-green:hover{
+  color:red;
+}

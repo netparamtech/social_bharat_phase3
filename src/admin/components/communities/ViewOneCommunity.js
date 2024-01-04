@@ -77,10 +77,10 @@ const ViewOneCommunity = () => {
                 <div>
                   {
                     data.map((item, index) => (
-                     <>
-                      <li key={index} className="hover-pointer-admin hover-pointer-admin-green fs-5 fw-bold" onClick={() => handleSubcastClicked(true, item.subcast_id)}>{item.subcast}</li>
-                      <Divider/>
-                     </>
+                      <>
+                        <li key={index} className="hover-pointer-admin hover-pointer-admin-green fs-5 fw-bold" onClick={() => handleSubcastClicked(true, item.subcast_id)}>{item.subcast}</li>
+                        <Divider />
+                      </>
                     ))
                   }
                 </div>
@@ -114,7 +114,7 @@ const ViewOneCommunity = () => {
                     <button type="submit" className="btn btn-primary w-25 " onClick={handleSubmit}>
                       Submit
                     </button>
-                    <button type="submit" className="btn btn-primary m-2 " onClick={()=>navigate('/admin/communities')}>
+                    <button type="submit" className="btn btn-primary m-2 " onClick={() => navigate('/admin/communities')}>
                       View All Communities
                     </button>
 
@@ -122,7 +122,7 @@ const ViewOneCommunity = () => {
 
                 </div>
               ) : (
-                <UpdateSubcastCommunityForm handleSubcastClicked={handleSubcastClicked} id={id} subcastId = {subcastId} />
+                <UpdateSubcastCommunityForm handleSubcastClicked={handleSubcastClicked} id={id} subcastId={subcastId} />
               )
             }
 

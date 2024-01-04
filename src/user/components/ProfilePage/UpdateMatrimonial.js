@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  fetchAllSubcasts,
   updateMatrimonialInfo,
   uploadMultipleImages,
   uploadPdf,
@@ -33,6 +34,7 @@ const UpdateMatrimonial = (props) => {
     { value: 'Daughter', label: 'Daughter' },
   ];
   const [maritalStatus, setMaritalStatus] = useState('');
+  const [matrimonialProfileName, setMatrimonialProfileName] = useState('');
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
   const [skinTone, setSkinTone] = useState("");
@@ -60,6 +62,10 @@ const UpdateMatrimonial = (props) => {
   const [isSisterDetails, setIsSisterDetails] = useState(true);
   const [community, setCommunity] = useState('');
   const [communityName, setCommunityName] = useState('');
+  const [communityId, setCommunityId] = useState('');
+  const [subcastArray, setSubcastArray] = useState([]);
+  const [subcast_id, setSubcastId] = useState('');
+  const [subcast, setSubcast] = useState('');
 
   const [brotherCount, setBrotherCount] = useState('');
   const [sisterCount, setSisterCount] = useState('');
@@ -78,6 +84,11 @@ const UpdateMatrimonial = (props) => {
   const [serverError, setServerError] = useState("");
 
   const navigate = useNavigate();
+
+  const handleSubcastChange = (selectedOption) => {
+    setSubcast(selectedOption);
+    setSubcastId(selectedOption.value);
+  };
 
   const handleUpdateForChange = (selectedOption) => {
     setUpdateFor(selectedOption);
@@ -237,7 +248,6 @@ const UpdateMatrimonial = (props) => {
       height_in_feet: `${heightFeet}.${heightInch}`,
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
-      cast: cast ? cast : communityName,
       proposal_photos: trimmedTempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
       brother_count: brotherCount ? brotherCount : 0,
@@ -250,6 +260,8 @@ const UpdateMatrimonial = (props) => {
       is_manglik: manglicStatus,
       profile_created_for: updateFor && updateFor.label,
       skin_tone: 'DARK',
+      subcast_id,
+      matrimonial_profile_name:matrimonialProfileName,
     };
 
 
@@ -343,6 +355,9 @@ const UpdateMatrimonial = (props) => {
       setBiodataFile(userMatrimonial.biodata || "");
       setBiodataPreview(userMatrimonial.biodata || "");
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
+      console.log(userMatrimonial, "usermatro")
+      setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
+      setSubcastId(userMatrimonial.subcast_id);
 
       if (userMatrimonial.brothers_details) {
 
@@ -378,11 +393,43 @@ const UpdateMatrimonial = (props) => {
 
   }, [userMatrimonial]);
 
+  //fetch all active subcast communities
+  const fetchSubcastsCommunities = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllSubcasts(communityId);
+      if (response && response.status === 200) {
+        console.log(response.data.data)
+        const requestedCasts = response.data.data.filter((item) => item.status === 'true');
+        console.log(requestedCasts, "subcasts")
+        setSubcastArray(requestedCasts);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
   useEffect(() => {
     if (loggedUser && loggedUser.user) {
+      setCommunityId(loggedUser.user.community_id);
       setMaritalStatus(loggedUser && loggedUser.user.marital_status && loggedUser.user.marital_status);
     }
   }, [loggedUser]);
+
+  useEffect(() => {
+    if (communityId) {
+      fetchSubcastsCommunities();
+    }
+  }, [communityId])
 
   useEffect(() => {
     setServerError('');
@@ -410,6 +457,26 @@ const UpdateMatrimonial = (props) => {
                         placeholder="Select Update For"
                       />
                       {/* Add error handling if needed */}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                      <label className="form-label">Name {" "}<span className="text-danger">*</span></label>
+                      <input
+                        type="text"
+                        name="fatherName"
+                        id="fatherName"
+                        placeholder="Enter Father Name"
+                        className="form-control "
+                        autoFocus
+                        defaultValue={matrimonialProfileName}
+                        onChange={(e) => setMatrimonialProfileName(e.target.value)}
+                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+
+                      />
+                      {errors && errors.matrimonial_profile_name && (
+                        <span className="error">{errors.matrimonial_profile_name}</span>
+                      )}
                     </div>
                   </div>
                   <div className="row">
@@ -488,20 +555,26 @@ const UpdateMatrimonial = (props) => {
                   </div>
 
                   <div className="row">
+
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Cast {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="cast"
-                        id="cast"
-                        placeholder="Enter Cast"
+                      <label className="form-label">Subcast</label>
+                      <Select
+                        id="community_id"
                         className="form-control"
-                        defaultValue={cast ? cast : communityName}
-                        onChange={(e) => setCast(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                        aria-label="Default select example"
+                        value={subcast} // Provide a selected option state
+                        onChange={handleSubcastChange} // Your change handler function
+                        options={
+                          subcastArray &&
+                          subcastArray.map((data) => ({
+                            value: data.subcast_id,
+                            label: data.subcast,
+                          }))
+                        }
+                        placeholder="---Select---"
                       />
-                      {errors && errors.cast && (
-                        <span className="error">{errors.cast}</span>
+                      {errors && errors.subcast_id && (
+                        <span className="error">{errors.subcast_id}</span>
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

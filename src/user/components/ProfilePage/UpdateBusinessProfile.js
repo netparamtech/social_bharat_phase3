@@ -24,7 +24,7 @@ const UpdateBusinessProfile = (props) => {
 
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
-  const [countryID, setCountryID] = useState('');
+  const [countryID, setCountryID] = useState('101');
 
   const [businessCategories, setBusinessCategories] = useState([]);
 
@@ -142,7 +142,7 @@ const UpdateBusinessProfile = (props) => {
       contact3: contact3,
       business_website: businessWebsite,
       business_email: businessEmail,
-      status:status,
+      status: status,
     };
 
 
@@ -251,7 +251,7 @@ const UpdateBusinessProfile = (props) => {
       setBusinessEmail(businessDetails.business_email || '');
       setBusinessWebsite(businessDetails.business_website || '');
       setBusinessPhoto(businessDetails.business_photos || '');
-      setStatus(businessDetails.status||'');
+      setStatus(businessDetails.status || '');
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
           (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (setTempBusinessPhotoUrl([businessDetails.business_photos] || ''))
@@ -269,10 +269,14 @@ const UpdateBusinessProfile = (props) => {
 
   useEffect(() => {
     // Check if selectedCountry is already set
-    if (selectedCountry) {
+    if (countryID) {
       getAllStates();
     }
-  }, [selectedCountry]);
+  }, []);
+
+  useEffect(() => {
+    setSelectedCountry({ value: "India", label: "India" });
+  }, []);
 
   useEffect(() => {
     if (states && businessDetails) {
@@ -287,7 +291,7 @@ const UpdateBusinessProfile = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
@@ -493,7 +497,6 @@ const UpdateBusinessProfile = (props) => {
                         name="status"
                         value={status}
                         onChange={handleStatusChange}
-                        required
                       >
                         <option value="">Select Status</option>
                         <option value="Active">Active</option>

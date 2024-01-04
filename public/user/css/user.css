@@ -1120,20 +1120,20 @@ a.btn.dropdown-toggle.show:focus {
 }
 
 /* ......Search Bar........ */
-#searchPeople-section .container-input {
+#searchPeoples-section .container-input {
   position: relative;
 
 }
 
-#searchPeople-section .card-search {
+#searchPeoples-section .card-search {
   min-height: 400px;
 }
 
-#searchPeople-section .input {
+#searchPeoples-section .input {
   padding-left: 40px !important;
 }
 
-#searchPeople-section .container-input i {
+#searchPeoples-section .container-input i {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -1273,7 +1273,8 @@ a.btn.dropdown-toggle.show:focus {
 #comminity-banners-section,
 #setting-page,
 #chat,
-#service-section {
+#service-section,
+#searchPeoples-section {
   margin-top: 140px;
 }
 

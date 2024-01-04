@@ -443,7 +443,7 @@ const SearchPartner = () => {
                     <div className="row ms-auto me-auto justify-content-between bg-all">
 
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label text-light">
+                        <label className="form-label ">
                           Interested In
                         </label>
                         <select
@@ -458,7 +458,7 @@ const SearchPartner = () => {
                         </select>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label text-light">Gotra</label>
+                        <label className="form-label">Gotra</label>
                         <input
                           type="text"
                           className="form-control"
@@ -468,7 +468,7 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label text-light">State</label>
+                        <label className="form-label">State</label>
                         <Select
                           className="form-control"
                           aria-label="Default select example"
@@ -481,7 +481,7 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label text-light">City</label>
+                        <label className="form-label ">City</label>
                         <Select
                           className="form-control"
                           aria-label="Default select example"
@@ -494,7 +494,7 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label text-light">Community</label>
+                        <label className="form-label">Community</label>
                         <Select
                           id="community_id"
                           className="form-control"
@@ -511,11 +511,11 @@ const SearchPartner = () => {
                           placeholder="---Select---"
                         />
                       </div>
-                      <div className="mb-3 mt-2 col-3 col-sm-1">
-                      <label className="form-label text-light">Add New</label>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <label className="form-label ">Add New</label>
                           <a
                             title="Add Business"
-                            className="btn  btn-secondary w-100 btn-sm  mb-2"
+                            className="btn btn-secondary w-100 btn-sm mb-2"
                             onClick={handlePartnerClick}
                           >
                             ADD

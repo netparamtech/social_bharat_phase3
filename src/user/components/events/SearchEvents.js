@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   fetchAllCitiesByStateID,
+  
+  fetchAllEvents,
+  
   fetchAllStatesByCountryID,
   searchPeopleWithSearchText,
 } from "../../services/userService";
@@ -20,9 +23,7 @@ const SearchEvents = () => {
 
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [defaultImage, setDefaultImage] = useState(
-    "/admin/img/download.jpg"
-  );
+  const [defaultImage, setDefaultImage] = useState("/admin/img/download.jpg");
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
 
@@ -53,6 +54,8 @@ const SearchEvents = () => {
   const [isChat, setIsChat] = useState(false);
   const [isRefressed, setIsRefressed] = useState(false);
   const [copyItems, setCopyItems] = useState([]);
+
+  const [events, setEvents] = useState([]);
 
   const changeChatFlag = (value) => {
     setIsChat(value);
@@ -105,11 +108,12 @@ const SearchEvents = () => {
     setSearchText(e.target.value);
   };
 
-  const getAllStates = async () => {
+  const getAllEvents = async (searchText,page,size) => {
+    
     try {
-      const response = await fetchAllStatesByCountryID(countryID);
+      const response = await fetchAllEvents(searchText,page,size,state,city);
       if (response && response.status === 200) {
-        setStates(response.data.data);
+        setEvents(response.data.data.totalRowsAffected);
         setServerError("");
       }
     } catch (error) {
@@ -221,17 +225,38 @@ const SearchEvents = () => {
     }
   };
 
+  const getAllStates = async () => {
+    try {
+      const response = await fetchAllStatesByCountryID(countryID);
+      if (response && response.status === 200) {
+        setStates(response.data.data);
+        setServerError("");
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    }
+  };
+
   const handleScrollToUp = () => {
     window.scrollTo(0, 0);
   };
 
   useEffect(() => {
     search("", 1, 20);
+    getAllEvents("", 1, 20);
   }, [user, isRefressed]);
 
   useEffect(() => {
     // Check if the component is not just mounted
     search(searchText, page, 20);
+    getAllEvents(searchText, page, 20)
   }, [searchText, state, city, page]);
 
   useEffect(() => {
@@ -258,7 +283,6 @@ const SearchEvents = () => {
 
   return (
     <>
-
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
@@ -267,25 +291,42 @@ const SearchEvents = () => {
             <div className="card shadow card-search">
               <Carousel className="">
                 <Carousel.Item>
-                  <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <img
+                    src="/user/images/matrimonial-0.jpg"
+                    height={500}
+                    width="100%"
+                  ></img>
                   <Carousel.Caption>
                     <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    <p>
+                      Nulla vitae elit libero, a pharetra augue mollis interdum.
+                    </p>
                   </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <img
+                    src="/user/images/matrimonial-0.jpg"
+                    height={500}
+                    width="100%"
+                  ></img>
                   <Carousel.Caption>
                     <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </p>
                   </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                <img src="/user/images/matrimonial-0.jpg" height={500} width="100%"></img>
+                  <img
+                    src="/user/images/matrimonial-0.jpg"
+                    height={500}
+                    width="100%"
+                  ></img>
                   <Carousel.Caption>
                     <h3>Third slide label</h3>
                     <p>
-                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                      Praesent commodo cursus magna, vel scelerisque nisl
+                      consectetur.
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
@@ -310,14 +351,10 @@ const SearchEvents = () => {
                 ) : (
                   ""
                 )}
-                <div className="filter-icon">
-
-                </div>
+                <div className="filter-icon"></div>
                 <div className="row ms-auto me-auto justify-content-between bg-success">
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">
-                      state
-                    </label>
+                    <label className="form-label text-light">state</label>
                     <Select
                       options={states.map((state) => ({
                         value: state.name,
@@ -329,9 +366,7 @@ const SearchEvents = () => {
                     />
                   </div>
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">
-                      city
-                    </label>
+                    <label className="form-label text-light">city</label>
                     <Select
                       options={cities.map((city) => ({
                         value: city.name,
@@ -362,9 +397,7 @@ const SearchEvents = () => {
                   />
                   <i className="fas fa-search"></i>
                 </div>
-                <div className="">
-
-                </div>
+                <div className=""></div>
 
                 <div className="row">
                   {/* Repeat the user card structure as needed */}
@@ -375,12 +408,15 @@ const SearchEvents = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    {/* <div className="container pw-20">
+                    <div className="container pw-20">
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
                             <div className="col-md-6" key={innerIndex}>
-                              <div className="card shadow mb-2" style={{ height: '200px' }}>
+                              <div
+                                className="card shadow mb-2"
+                                style={{ height: "200px" }}
+                              >
                                 <div className="card-body">
                                   <div className="row wow animate__animated animate__zoomIn">
                                     <div className="col-4">
@@ -426,15 +462,15 @@ const SearchEvents = () => {
                                           : ""}
                                       </p>
 
-                                      {
-                                        checkMobileVisibility(item.mobile) ? (
-                                          <p>
-                                            <a href={`tel:${item.mobile}`}>
-                                              {item.mobile}
-                                            </a>
-                                          </p>
-                                        ) : ''
-                                      }
+                                      {checkMobileVisibility(item.mobile) ? (
+                                        <p>
+                                          <a href={`tel:${item.mobile}`}>
+                                            {item.mobile}
+                                          </a>
+                                        </p>
+                                      ) : (
+                                        ""
+                                      )}
                                     </div>
                                   </div>
                                 </div>
@@ -443,7 +479,7 @@ const SearchEvents = () => {
                           ))}
                         </div>
                       ))}
-                    </div> */}
+                    </div>
                   </InfiniteScroll>
                 </div>
               </div>

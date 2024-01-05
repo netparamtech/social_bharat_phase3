@@ -54,8 +54,7 @@ const SearchEvents = () => {
   const [isChat, setIsChat] = useState(false);
   const [isRefressed, setIsRefressed] = useState(false);
   const [copyItems, setCopyItems] = useState([]);
-
-  const [events, setEvents] = useState([]);
+  
 
   const changeChatFlag = (value) => {
     setIsChat(value);
@@ -108,25 +107,7 @@ const SearchEvents = () => {
     setSearchText(e.target.value);
   };
 
-  const getAllEvents = async (searchText,page,size) => {
-    
-    try {
-      const response = await fetchAllEvents(searchText,page,size,state,city);
-      if (response && response.status === 200) {
-        setEvents(response.data.data.totalRowsAffected);
-        setServerError("");
-      }
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    }
-  };
+  
 
   const getAllCities = async (stateID) => {
     try {
@@ -151,7 +132,7 @@ const SearchEvents = () => {
     setIsLoading(true);
     dispatch(setLoader(true));
     try {
-      const response = await searchPeopleWithSearchText(
+      const response = await fetchAllEvents(
         searchText,
         page,
         size,
@@ -160,39 +141,31 @@ const SearchEvents = () => {
       );
 
       if (response && response.status === 200) {
-        setTotalRows(response.data.data.totalFilteredRecords);
+        setTotalRows(response.data.data.totalRowsAffected);
         setServerError("");
-        if (response.data.data.length === 0) {
+        if (response.data.data.events.length === 0) {
           setIssearchingPerformed(false);
         }
         if (searchText || state || city) {
-          if (response.data.data.users.length !== 0) {
+          if (response.data.data.events.length !== 0) {
             if (page === 1) {
-              setItems([...new Set([...response.data.data.users])]);
+              setItems([...new Set([...response.data.data.events])]);
             } else {
-              setItems([...new Set([...items, ...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.events])]);
             }
 
-            setTotalRows(response.data.data.totalFilteredRecords);
+            setTotalRows(response.data.data.totalRowsAffected);
           } else {
             if (page === 1) {
-              setItems([...new Set([...response.data.data.users])]);
+              setItems([...new Set([...response.data.data.events])]);
             } else {
-              setItems([...new Set([...items, ...response.data.data.users])]);
+              setItems([...new Set([...items, ...response.data.data.events])]);
             }
-            setTotalRows(response.data.data.totalFilteredRecords);
+            setTotalRows(response.data.data.totalRowsAffected);
           }
         } else {
-          const combinedItems = [...items, ...response.data.data.users];
-          const uniqueItems = [];
-
-          for (const item of combinedItems) {
-            if (!uniqueItems.some((u) => u.id === item.id)) {
-              uniqueItems.push(item);
-            }
-          }
-
-          setItems(uniqueItems);
+          const combinedItems = [...response.data.data.events];
+          setItems(combinedItems);
         }
       }
       setIsLoading(false);
@@ -250,13 +223,11 @@ const SearchEvents = () => {
 
   useEffect(() => {
     search("", 1, 20);
-    getAllEvents("", 1, 20);
-  }, [user, isRefressed]);
+  }, [user]);
 
   useEffect(() => {
     // Check if the component is not just mounted
     search(searchText, page, 20);
-    getAllEvents(searchText, page, 20)
   }, [searchText, state, city, page]);
 
   useEffect(() => {
@@ -283,16 +254,16 @@ const SearchEvents = () => {
 
   return (
     <>
-      {isChat ? (
-        <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
-      ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
             <div className="card shadow card-search">
-              <Carousel className="">
+            <Carousel className="">
+            {items&&items.map((item, index) => (
+             
                 <Carousel.Item>
-                  <img
-                    src="/user/images/matrimonial-0.jpg"
+               
+                  <img 
+                    src={item.banner_image}
                     height={500}
                     width="100%"
                   ></img>
@@ -303,34 +274,11 @@ const SearchEvents = () => {
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
-                <Carousel.Item>
-                  <img
-                    src="/user/images/matrimonial-0.jpg"
-                    height={500}
-                    width="100%"
-                  ></img>
-                  <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <img
-                    src="/user/images/matrimonial-0.jpg"
-                    height={500}
-                    width="100%"
-                  ></img>
-                  <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>
-                      Praesent commodo cursus magna, vel scelerisque nisl
-                      consectetur.
-                    </p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              </Carousel>
+                
+                
+             ))}
+             </Carousel>
+
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
                 <div className="d-flex">
@@ -354,7 +302,7 @@ const SearchEvents = () => {
                 <div className="filter-icon"></div>
                 <div className="row ms-auto me-auto justify-content-between bg-success">
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">state</label>
+                    <label className="form-label text-light">State</label>
                     <Select
                       options={states.map((state) => ({
                         value: state.name,
@@ -366,7 +314,7 @@ const SearchEvents = () => {
                     />
                   </div>
                   <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">city</label>
+                    <label className="form-label text-light">City</label>
                     <Select
                       options={cities.map((city) => ({
                         value: city.name,
@@ -411,6 +359,7 @@ const SearchEvents = () => {
                     <div className="container pw-20">
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
+                        
                           {pair.map((item, innerIndex) => (
                             <div className="col-md-6" key={innerIndex}>
                               <div
@@ -422,9 +371,9 @@ const SearchEvents = () => {
                                     <div className="col-4">
                                       <Image
                                         src={
-                                          item.photo ? item.photo : defaultImage
+                                          item.thumb_image ? item.thumb_image : defaultImage
                                         }
-                                        alt={item.name}
+                                        alt="Thumb Img"
                                         title={item.name}
                                         className="avatar img-fluid img-circle"
                                       />
@@ -434,33 +383,34 @@ const SearchEvents = () => {
                                         onClick={() => handleChatclick(item)}
                                       >
                                         <img
-                                          src="/user/images/chat-icon.jpg"
-                                          width="40px"
+                                          src={item.banner_image}
+                                          width="100px"
                                         />
                                       </div>
+                                      
                                     </div>
                                     <div className="col-8 user-detail">
-                                      <h6>{item.name}</h6>
+                                    
+                                      <h6>{item.title}</h6>
                                       <p>
-                                        Occupation-
-                                        {item.occupation
-                                          ? item.occupation
+                                      Organizer Name : {item.name}                                      
+                                    </p>
+                                      <p>
+                                      venue-
+                                        {item.venue
+                                          ? item.venue
                                           : "N/A"}
                                       </p>
 
                                       <p>
-                                        Education-
-                                        {item.highest_qualification
-                                          ? item.highest_qualification
+                                        City-
+                                        {item.city
+                                          ? item.city
                                           : "N/A"}
                                       </p>
-                                      <p>Age-{age(item.dob)} Years</p>
-                                      <p>City-{item.native_place_city}</p>
-                                      <p>
-                                        {item.native_place_state
-                                          ? `(${item.native_place_state})`
-                                          : ""}
-                                      </p>
+                                      <p>Start Date/Time{item.start_datetime}</p>
+                                      <p>End Date/Time-{item.end_datetime}</p>
+                                     
 
                                       {checkMobileVisibility(item.mobile) ? (
                                         <p>
@@ -483,20 +433,12 @@ const SearchEvents = () => {
                   </InfiniteScroll>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-      )}
-      <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
-        <a
-          className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
-          id=""
-          onClick={handleScrollToUp}
-          title="Refresh"
-        >
-          <i className="fa fa-arrow-up" aria-hidden="true"></i>
-        </a>
-      </div>
+      
+      
     </>
   );
 };

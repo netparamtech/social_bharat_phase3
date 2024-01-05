@@ -77,14 +77,14 @@ const EducationInfo = (props) => {
                             }
                             title="Edit"
                           >
-                            <i className="fas fa-pencil-alt"></i>
+                            <i className="fas fa-pencil-alt "></i>
                           </a>
                         </div>
-                        <div className="delete-icon" onClick={() =>
+                        <div className="delete-icon " onClick={() =>
                                 deleteUserEducationalDetails(item.id)
                               }>
                           <a className="hover-pointer" title="Delete"  >
-                            <i className="fa-solid fa-trash"></i>
+                            <i className="fa-solid fa-trash ms-1"></i>
                           </a>
                         </div>
                       </div>

@@ -777,16 +777,7 @@ export const fetchAllAppliedJobs = async () => {
     }
 }
 
-//fetch all events
-export const fetchAllEvents = async (searchText, page, size, state, city) => {
-    try {
-        const response = await apiWithFileHeaders.get(`/user/search/events?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`);
-        return response;
-    } catch (error) {
-        throw error;
 
-    }
-}
 
 //fetch all subcasts
 export const fetchAllSubcasts = async (communityId) => {

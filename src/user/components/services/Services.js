@@ -196,8 +196,8 @@ const Services = () => {
       experience,
       description,
       status,
-      state: selectedState&&selectedState.label ? selectedState.label : '',
-      city: selectedCity&&selectedCity.label ? selectedCity.label : '',
+      state: selectedState && selectedState.label ? selectedState.label : '',
+      city: selectedCity && selectedCity.label ? selectedCity.label : '',
     };
 
     try {
@@ -408,6 +408,10 @@ const Services = () => {
                         placeholder="Enter Your Mobile Number 1"
                         className="form-control"
                         value={mobile1}
+                        onInput={(e) => {
+                          // Trim the input to 10 characters
+                          e.target.value = e.target.value.slice(0, 10);
+                        }}
                         onChange={(e) => setMobile1(e.target.value)}
                       />
                       {errors.mobile1 && (
@@ -420,6 +424,10 @@ const Services = () => {
                         placeholder="Enter Your Mobile Number 2"
                         className="form-control"
                         value={mobile2}
+                        onInput={(e) => {
+                          // Trim the input to 10 characters
+                          e.target.value = e.target.value.slice(0, 10);
+                        }}
                         onChange={(e) => setMobile2(e.target.value)}
                       />
                       {errors.mobile2 && (

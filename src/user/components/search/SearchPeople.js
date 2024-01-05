@@ -53,6 +53,7 @@ const SearchPeople = () => {
   const [isChat, setIsChat] = useState(false);
   const [isRefressed, setIsRefressed] = useState(false);
   const [copyItems, setCopyItems] = useState([]);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   const changeChatFlag = (value) => {
     setIsChat(value);
@@ -256,18 +257,36 @@ const SearchPeople = () => {
     return !isHidden;
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+
+
+
           <div className="container">
             <div className="card shadow card-search">
+              <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Members</div>
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
                 <div className="d-flex">
-                  <h5 className="fw-3 mb-3">Search People</h5>
                 </div>
                 <div className="filter-content">
                   {city ? (
@@ -353,63 +372,75 @@ const SearchPeople = () => {
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
-                            <div className="col-md-6" key={innerIndex}>
-                              <div className="card shadow mb-2" style={{ height: '200px' }}>
-                                <div className="card-body">
-                                  <div className="row wow animate__animated animate__zoomIn">
-                                    <div className="col-4">
-                                      <Image
-                                        src={
-                                          item.photo ? item.photo : defaultImage
-                                        }
+
+                            <div className="col-md-6 mt-2" key={innerIndex}>
+                              <div className="card" style={{ borderRadius: '15px' }}>
+                                <div className="card-body p-4">
+                                  <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
+                                    <div className="flex-shrink-0">
+                                      <img
+                                        src={item.photo ? item.photo : defaultImage}
                                         alt={item.name}
-                                        title={item.name}
-                                        className="avatar img-fluid img-circle"
+                                        className="img-fluid"
+                                        style={{ width: '180px', borderRadius: '10px' }}
                                       />
-
-                                      <div
-                                        className="text-start ms-3 mt-2 hover-pointer"
-                                        onClick={() => handleChatclick(item)}
-                                      >
-                                        <img
-                                          src="/user/images/chat-icon.jpg"
-                                          width="40px"
-                                        />
-                                      </div>
                                     </div>
-                                    <div className="col-8 user-detail">
-                                      <h6>{item.name}</h6>
-                                      <p>
-                                        Occupation-
-                                        {item.occupation
-                                          ? item.occupation
-                                          : "N/A"}
+                                    <div className="flex-grow-1 ms-3">
+                                      <h5 className="mb-1">{item.name}</h5>
+                                      <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                        {item.occupation}
                                       </p>
+                                      <div
+                                        className="d-flex justify-content-start rounded-3"
+                                        style={{ backgroundColor: '#efefef' }}
+                                      >
+                                        Education-{item.highest_qualification ? item.highest_qualification : 'N/A'}
+                                      </div>
+                                      <div className="d-flex justify-content-start rounded-3 mt-2"
+                                        style={{ backgroundColor: '#efefef' }}
+                                      >
+                                        Age-{age(item.dob)} Years
+                                      </div>
+                                      <div className="d-flex justify-content-start rounded-3 mt-2"
+                                        style={{ backgroundColor: '#efefef' }}
+                                      >
+                                        <p>City-{item.native_place_city}</p>
+                                        <p>
+                                          {item.native_place_state
+                                            ? `(${item.native_place_state})`
+                                            : ""}
+                                        </p>
+                                      </div>
+                                      <div className="d-flex justify-content-start rounded-3 mt-2"
+                                        style={{ backgroundColor: '#efefef' }}
+                                      >
+                                        {
+                                          checkMobileVisibility(item.mobile) ? (
+                                            <p>
+                                              <a href={`tel:${item.mobile}`}>
+                                                {item.mobile}
+                                              </a>
+                                            </p>
+                                          ) : ''
+                                        }
+                                      </div>
+                                      <div className="d-flex pt-1">
 
-                                      <p>
-                                        Education-
-                                        {item.highest_qualification
-                                          ? item.highest_qualification
-                                          : "N/A"}
-                                      </p>
-                                      <p>Age-{age(item.dob)} Years</p>
-                                      <p>City-{item.native_place_city}</p>
-                                      <p>
-                                        {item.native_place_state
-                                          ? `(${item.native_place_state})`
-                                          : ""}
-                                      </p>
 
-                                      {
-                                        checkMobileVisibility(item.mobile) ? (
-                                          <p>
-                                            <a href={`tel:${item.mobile}`}>
-                                              {item.mobile}
-                                            </a>
-                                          </p>
-                                        ) : ''
-                                      }
-                                      <ViewProfileDrawer id={item.id} />
+                                        <div
+                                          className="text-start ms-3 mt-2 hover-pointer"
+                                          onClick={() => handleChatclick(item)}
+                                        >
+                                          <img
+                                            src="/user/images/chat-icon.jpg"
+                                            width="40px"
+                                          />
+                                        </div>
+
+                                        <button type="button" className="btn me-1 flex-grow-1">
+                                          <ViewProfileDrawer id={item.id} />
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

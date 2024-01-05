@@ -58,6 +58,9 @@ const SearchPartner = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [clearValue, setClearValue] = useState('');
+  const [isClear, setisClear] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -68,6 +71,12 @@ const SearchPartner = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [isChat, setIsChat] = useState(false);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+
+  const handleClear = (value) => {
+    setClearValue(value);
+    setisClear(!isClear);
+  }
 
   const changeChatFlag = (value) => {
     setIsChat(value);
@@ -91,7 +100,7 @@ const SearchPartner = () => {
   };
   const handleSubcastChange = (selectedOption) => {
     setSubcastId(selectedOption.value);
-    setSubcast(selectedOption.label);
+    setSubcast(selectedOption);
   };
 
   const handleStateChange = (selectedOption) => {
@@ -378,6 +387,37 @@ const SearchPartner = () => {
     return !isHidden;
   };
 
+  useEffect(() => {
+    if (clearValue === 'gender') setGender('');
+    if (clearValue === 'gotra') setGotra("");
+    if (clearValue === 'subcast') {
+      setSubcastId("");
+      setSubcast('');
+    }
+    if (clearValue === 'state') {
+      setSelectedState("");
+      setState('');
+      setCity('');
+      setCities([]);
+      setSelectedCity("");
+
+    }
+  }, [isClear]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       {isChat ? (
@@ -386,6 +426,7 @@ const SearchPartner = () => {
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
             <div className="card shadow">
+              <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Partner</div>
               <div className="card-body">
                 <div className="container">
                   <div className="row">
@@ -393,16 +434,16 @@ const SearchPartner = () => {
                       {serverError && (
                         <span className="error">{serverError}</span>
                       )}
-                      <h5 className="fw-3 mb-3 ">Search Partner</h5>
+
                     </div>
                     <div className="row ms-auto me-auto justify-content-between bg-all">
 
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="mb-3 mt-2 col-11 col-sm-2">
                         <label className="form-label ">
                           Interested In
                         </label>
                         <select
-                          className="form-select form-control"
+                          className="form-control"
                           aria-label="Default select example"
                           value={gender}
                           onChange={handleGenderChange}
@@ -411,17 +452,20 @@ const SearchPartner = () => {
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                         </select>
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("gender")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label">Gotra</label>
                         <input
                           type="text"
                           className="form-control"
-                          defaultValue={gotra}
+                          value={gotra}
                           placeholder="Enter Your Gotra"
                           onChange={handleGotraChange}
                         />
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("gotra")}>Clear</p>
                       </div>
+
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label">State</label>
                         <Select
@@ -434,6 +478,7 @@ const SearchPartner = () => {
                           value={selectedState}
                           onChange={handleStateChange}
                         />
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("state")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label ">City</label>
@@ -447,6 +492,7 @@ const SearchPartner = () => {
                           value={selectedCity}
                           onChange={handleCityChange}
                         />
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("city")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label">Subcast</label>
@@ -454,7 +500,7 @@ const SearchPartner = () => {
                           id="community_id"
                           className="form-control"
                           aria-label="Default select example"
-                          defaultValue={subcast_id} // Provide a selected option state
+                          value={subcast} // Provide a selected option state
                           onChange={handleSubcastChange} // Your change handler function
                           options={
                             communities &&
@@ -465,6 +511,7 @@ const SearchPartner = () => {
                           }
                           placeholder="---Select---"
                         />
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("subcast")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label ">Add New</label>
@@ -525,68 +572,75 @@ const SearchPartner = () => {
                     {groupedItems.map((pair, index) => (
                       <div className="row" key={index}>
                         {pair.map((item, innerIndex) => (
-                          <div className="col-md-6" key={innerIndex}>
-                            <div className="card shadow mb-2" style={{ height: '230px' }}>
-                              <div className="card-body">
-                                <div className="row wow animate__animated animate__zoomIn">
-                                  <div className="col-4">
-                                    <Image
-                                      src={
-                                        item.photo ? item.photo : defaultImage
-                                      }
+                         
+                          <div className="col-md-6 mt-2" key={innerIndex}>
+                            <div className="card" style={{ borderRadius: '15px' }}>
+                              <div className="card-body p-4">
+                                <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
+                                  <div className="flex-shrink-0">
+                                    <img
+                                      src={item.photo ? item.photo : defaultImage}
                                       alt={item.name}
-                                      title={item.name}
-                                      className="avatar img-fluid img-circle"
+                                      className="img-fluid"
+                                      style={{ width: '180px', borderRadius: '10px' }}
                                     />
-                                    <div
-                                      className="text-start ms-3 mt-2 hover-pointer"
-                                      onClick={() => handleChatclick(item)}
-                                    >
-                                      {" "}
-                                      <img
-                                        src="/user/images/chat-icon.jpg"
-                                        width="40px"
-                                      />
-                                    </div>
                                   </div>
-                                  <div className="col-8 user-detail">
-                                    <h6>{item.name}</h6>
-                                    <p>
-                                      Occupation-
-                                      {item.occupation
-                                        ? item.occupation
-                                        : "N/A"}
+                                  <div className="flex-grow-1 ms-3">
+                                    <h5 className="mb-1">{item.name}</h5>
+                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                      {item.occupation}
                                     </p>
-                                    <p>
-                                      Education-
-                                      {item.highest_qualification
-                                        ? item.highest_qualification
-                                        : "N/A"}
-                                    </p>
-                                    <p>
-                                      Father Name-
-                                      {item.father_name
-                                        ? item.father_name
-                                        : "N/A"}
-                                    </p>
-                                    <p>Age-{age(item.dob)} Years</p>
-                                    <p>Cast-{item.cast ? item.cast : "N/A"}</p>
-                                    <p>City-{item.native_place_city}</p>
-                                    <p>
-                                      {item.native_place_state
-                                        ? `(${item.native_place_state})`
-                                        : ""}
-                                    </p>
+                                    <div
+                                      className="d-flex justify-content-start rounded-3"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      Education-{item.highest_qualification ? item.highest_qualification : 'N/A'}
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      Age-{age(item.dob)} Years
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      <p>City-{item.native_place_city}</p>
+                                      <p>
+                                        {item.native_place_state
+                                          ? `(${item.native_place_state})`
+                                          : ""}
+                                      </p>
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      {
+                                        checkMobileVisibility(item.mobile) ? (
+                                          <p>
+                                            <a href={`tel:${item.mobile}`}>
+                                              {item.mobile}
+                                            </a>
+                                          </p>
+                                        ) : ''
+                                      }
+                                    </div>
+                                    <div className="d-flex pt-1">
 
-                                    {
-                                      checkMobileVisibility(item.mobile) ? (
-                                        <a href={`tel:${item.mobile}`}>
-                                          {item.mobile}
-                                        </a>
-                                      ) : ''
-                                    }
-                                    <ViewProfileDrawer id={item.id} />
 
+                                      <div
+                                        className="text-start ms-3 mt-2 hover-pointer"
+                                        onClick={() => handleChatclick(item)}
+                                      >
+                                        <img
+                                          src="/user/images/chat-icon.jpg"
+                                          width="40px"
+                                        />
+                                      </div>
+
+                                      <button type="button" className="btn me-1 flex-grow-1">
+                                        <ViewProfileDrawer id={item.id} />
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

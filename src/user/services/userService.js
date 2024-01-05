@@ -780,11 +780,10 @@ export const fetchAllAppliedJobs = async () => {
 //fetch all events
 export const fetchAllEvents = async (searchText, page, size, state, city) => {
     try {
-        const response = await apiWithFileHeaders.get(`/user/search/events?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`);
-        console.log("hello1")
+        const response = await apiWithFileHeaders.get(`/user/events?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`);
+        
         return response;
     } catch (error) {
-        console.log("hello")
         throw error;
         
     }

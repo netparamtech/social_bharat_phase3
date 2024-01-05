@@ -575,6 +575,16 @@ export const event = async (data) => {
   }
 };
 
+//Featured Events
+export const featuredEventsByAdmin = async () => {
+  try {
+    const response = await apiWithHeaders.get("/events/featured/all");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //fetch Event by id
 export const fetchEventByID = async (id) => {
   try {

@@ -458,6 +458,16 @@ export const updateToggleStatusForEvent = async (clickedId) => {
     }
 }
 
+//change toggle-featured of Event by admin
+export const updateToggleFeaturedForEvent = async (clickedId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/events/${clickedId}/toggle-featured`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //fetch All Qualification Categories
 export const fetchAllQualifications = async (page, size, searchQuery, sortField, sortOrder) => {
     try {

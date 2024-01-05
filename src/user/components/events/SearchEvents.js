@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
   fetchAllCitiesByStateID,
-  
+
   fetchAllEvents,
-  
+
   fetchAllStatesByCountryID,
-  searchPeopleWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image } from "antd";
-import NewChat from "../chats/NewChat";
 import { Carousel } from "react-bootstrap";
+import ViewFullEvent from "./ViewFullEvent";
 
 const SearchEvents = () => {
   const user = useSelector((state) => state.userAuth);
@@ -33,6 +31,8 @@ const SearchEvents = () => {
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
+  const [isEventClick, setIsEventClick] = useState(false);
+  const [eventId, setEventId] = useState('');
 
   //to show state and city according to user search
 
@@ -54,16 +54,14 @@ const SearchEvents = () => {
   const [isChat, setIsChat] = useState(false);
   const [isRefressed, setIsRefressed] = useState(false);
   const [copyItems, setCopyItems] = useState([]);
-  
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
-  const changeChatFlag = (value) => {
-    setIsChat(value);
+
+  const changeEventClickFlag = (value, id) => {
+    setIsEventClick(value);
+    setEventId(id);
   };
 
-  const handleChatclick = (item) => {
-    setIsChat(true);
-    setSelectedUser(item);
-  };
 
   useEffect(() => {
     if (items.length > 0) {
@@ -107,7 +105,7 @@ const SearchEvents = () => {
     setSearchText(e.target.value);
   };
 
-  
+
 
   const getAllCities = async (stateID) => {
     try {
@@ -251,194 +249,241 @@ const SearchEvents = () => {
     const isHidden = /\*/.test(mobileNumber);
     return !isHidden;
   };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const formatDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
 
   return (
     <>
-        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
-          <div className="container">
-            <div className="card shadow card-search">
+      <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+        <div className="container">
+          <div className="card shadow card-search">
             <Carousel className="">
-            {items&&items.map((item, index) => (
-             
+              {items && items.map((item, index) => (
+
                 <Carousel.Item>
-               
-                  <img 
-                    src={item.banner_image}
-                    height={500}
-                    width="100%"
-                  ></img>
+
+                  {
+                    item.featured === 'true' && (
+                      <img
+                        src={item.banner_image}
+                        height={500}
+                        width="100%"
+                        onClick={() => changeEventClickFlag(true, item.id)}
+                      ></img>
+                    )
+                  }
                   <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>
-                      Nulla vitae elit libero, a pharetra augue mollis interdum.
-                    </p>
+                    <h3>{item.title}</h3>
+                    <div>
+                      <button type="button" className="fs-3 hover-pointer-green btn me-1 flex-grow-1"
+                        onClick={() => changeEventClickFlag(true, item.id)}>
+                        View
+                      </button>
+                    </div>
                   </Carousel.Caption>
                 </Carousel.Item>
-                
-                
-             ))}
-             </Carousel>
 
-              <div className="card-body">
-                {serverError && <span className="error">{serverError}</span>}
-                <div className="d-flex">
-                  <h5 className="fw-3 mb-3">Search Events</h5>
-                </div>
-                <div className="filter-content">
-                  {city ? (
-                    <p>
-                      {city}
-                      {state && `(${state})`}
-                    </p>
+
+              ))}
+            </Carousel>
+            {
+              !isEventClick ? (
+
+                <div className="card-body">
+                  {serverError && <span className="error">{serverError}</span>}
+                  <div className="d-flex">
+                    <h5 className="fw-3 mb-3">Search Events</h5>
+                  </div>
+                  <div className="filter-content">
+                    {city ? (
+                      <p>
+                        {city}
+                        {state && `(${state})`}
+                      </p>
+                    ) : (
+                      <p>{state && `state - ${state}`}</p>
+                    )}
+                  </div>
+                  {!isSearchingPerformed ? (
+                    <span className="error">No Data Available</span>
                   ) : (
-                    <p>{state && `state - ${state}`}</p>
+                    ""
                   )}
-                </div>
-                {!isSearchingPerformed ? (
-                  <span className="error">No Data Available</span>
-                ) : (
-                  ""
-                )}
-                <div className="filter-icon"></div>
-                <div className="row ms-auto me-auto justify-content-between bg-success">
-                  <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">State</label>
-                    <Select
-                      options={states.map((state) => ({
-                        value: state.name,
-                        label: state.name,
-                      }))}
-                      value={selectedState}
-                      placeholder="Select State...."
-                      onChange={handleStateChange}
-                    />
+                  <div className="filter-icon"></div>
+                  <div className="row ms-auto me-auto justify-content-between bg-success">
+                    <div className="mb-3 mt-2 col-12 col-sm-6">
+                      <label className="form-label text-light">State</label>
+                      <Select
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
+                        value={selectedState}
+                        placeholder="Select State...."
+                        onChange={handleStateChange}
+                      />
+                    </div>
+                    <div className="mb-3 mt-2 col-12 col-sm-6">
+                      <label className="form-label text-light">City</label>
+                      <Select
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
+                        value={selectedCity}
+                        placeholder="Select City...."
+                        onChange={handleCityChange}
+                      />
+                    </div>
+
                   </div>
-                  <div className="mb-3 mt-2 col-12 col-sm-6">
-                    <label className="form-label text-light">City</label>
-                    <Select
-                      options={cities.map((city) => ({
-                        value: city.name,
-                        label: city.name,
-                      }))}
-                      value={selectedCity}
-                      placeholder="Select City...."
-                      onChange={handleCityChange}
+                  <div className="container-input mb-3 mt-3">
+                    <input
+                      type="text"
+                      placeholder="Search i.e name, mobile,state,city"
+                      name="text"
+                      className="input form-control border-success"
+                      value={searchText}
+                      onChange={handleSearchText}
                     />
+                    <i className="fas fa-search"></i>
                   </div>
-                  {/* <div className="mb-3 mt-2 col-12 col-sm-2">
-                    <a
-                      className="btn btn-set w-100  btn-sm  btn-primary"
-                      onClick={handleGoButtonClick}
+                  <div className=""></div>
+
+                  <div className="row">
+                    {/* Repeat the user card structure as needed */}
+                    <InfiniteScroll
+                      style={{ overflowX: "hidden" }}
+                      dataLength={items.length}
+                      next={fetchMoreData}
+                      hasMore={items.length < totalRows}
+                      loader={isLoading && <h4>Loading...</h4>}
                     >
-                      Go
-                    </a>
-                  </div> */}
-                </div>
-                <div className="container-input mb-3 mt-3">
-                  <input
-                    type="text"
-                    placeholder="Search i.e name, mobile,state,city"
-                    name="text"
-                    className="input form-control border-success"
-                    value={searchText}
-                    onChange={handleSearchText}
-                  />
-                  <i className="fas fa-search"></i>
-                </div>
-                <div className=""></div>
+                      <div className="container pw-20">
+                        {groupedItems.map((pair, index) => (
+                          <div className="row" key={index}>
 
-                <div className="row">
-                  {/* Repeat the user card structure as needed */}
-                  <InfiniteScroll
-                    style={{ overflowX: "hidden" }}
-                    dataLength={items.length}
-                    next={fetchMoreData}
-                    hasMore={items.length < totalRows}
-                    loader={isLoading && <h4>Loading...</h4>}
-                  >
-                    <div className="container pw-20">
-                      {groupedItems.map((pair, index) => (
-                        <div className="row" key={index}>
-                        
-                          {pair.map((item, innerIndex) => (
-                            <div className="col-md-6" key={innerIndex}>
-                              <div
-                                className="card shadow mb-2"
-                                style={{ height: "200px" }}
-                              >
-                                <div className="card-body">
-                                  <div className="row wow animate__animated animate__zoomIn">
-                                    <div className="col-4">
-                                      <Image
-                                        src={
-                                          item.thumb_image ? item.thumb_image : defaultImage
-                                        }
-                                        alt="Thumb Img"
-                                        title={item.name}
-                                        className="avatar img-fluid img-circle"
-                                      />
+                            {pair.map((item, innerIndex) => (
 
-                                      <div
-                                        className="text-start ms-3 mt-2 hover-pointer"
-                                        onClick={() => handleChatclick(item)}
-                                      >
-                                        <img
-                                          src={item.banner_image}
-                                          width="100px"
-                                        />
-                                      </div>
-                                      
-                                    </div>
-                                    <div className="col-8 user-detail">
-                                    
-                                      <h6>{item.title}</h6>
-                                      <p>
-                                      Organizer Name : {item.name}                                      
-                                    </p>
-                                      <p>
-                                      venue-
-                                        {item.venue
-                                          ? item.venue
-                                          : "N/A"}
-                                      </p>
+                              <div className="col-md-6 mt-2" key={innerIndex}>
+                                <div className="card" style={{ borderRadius: '15px' }}>
+                                  <div className="card-body p-4">
+                                    <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
+                                      {
+                                        item.banner_image ? (
+                                          <div className="col-12 flex-shrink-0">
+                                            <img
+                                              src={item.banner_image}
+                                              alt={item.name}
+                                              className="img-fluid"
+                                              style={{ width: '100%', borderRadius: '10px' }}
+                                              onClick={() => changeEventClickFlag(true, item.id)}
+                                            />
+                                          </div>
+                                        ) : ''
+                                      }
 
-                                      <p>
-                                        City-
-                                        {item.city
-                                          ? item.city
-                                          : "N/A"}
-                                      </p>
-                                      <p>Start Date/Time{item.start_datetime}</p>
-                                      <p>End Date/Time-{item.end_datetime}</p>
-                                     
-
-                                      {checkMobileVisibility(item.mobile) ? (
-                                        <p>
-                                          <a href={`tel:${item.mobile}`}>
-                                            {item.mobile}
-                                          </a>
+                                      <div className="flex-grow-1 ms-3 mt-2">
+                                        <h5 className="mb-1">{item.title}</h5>
+                                        <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                          Posted By : <b>{item.name}</b>
                                         </p>
-                                      ) : (
-                                        ""
-                                      )}
+                                        <div
+                                          className="d-flex justify-content-start rounded-3"
+                                          style={{ backgroundColor: '#efefef' }}
+                                        >
+                                          <p>
+                                            venue-
+                                            {item.venue
+                                              ? item.venue
+                                              : "N/A"}
+                                          </p>
+                                        </div>
+                                        <div className="d-flex justify-content-start rounded-3 mt-2"
+                                          style={{ backgroundColor: '#efefef' }}
+                                        >
+                                          <p>
+                                            City-
+                                            {item.city
+                                              ? item.city
+                                              : "N/A"}
+                                          </p>
+                                        </div>
+                                        <div className="d-flex justify-content-start rounded-3 mt-2"
+                                          style={{ backgroundColor: '#efefef' }}
+                                        >
+                                          <p>Start Date/Time{" "}-{" "}{formatDate(item.start_datetime)}</p>
+                                        </div>
+                                        <div className="d-flex justify-content-start rounded-3 mt-2"
+                                          style={{ backgroundColor: '#efefef' }}
+                                        >
+                                          <p>End Date/Time{" "}-{" "}{formatDate(item.end_datetime)}</p>
+                                        </div>
+                                        <div className="d-flex justify-content-start rounded-3 mt-2"
+                                          style={{ backgroundColor: '#efefef' }}
+                                        >
+                                          {
+                                            checkMobileVisibility(item.mobile) ? (
+                                              <p>
+                                                <a href={`tel:${item.mobile}`}>
+                                                  {item.mobile}
+                                                </a>
+                                              </p>
+                                            ) : ''
+                                          }
+                                        </div>
+                                        <div>
+                                          <button type="button" className="fs-3 hover-pointer-green btn me-1 flex-grow-1"
+                                            onClick={() => changeEventClickFlag(true, item.id)}>
+                                            View
+                                          </button>
+                                        </div>
+
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </InfiniteScroll>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </InfiniteScroll>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <ViewFullEvent changeEventClickFlag={changeEventClickFlag} id={eventId} />
+              )
+            }
 
-            </div>
           </div>
         </div>
-      
-      
+      </div>
+
+
     </>
   );
 };

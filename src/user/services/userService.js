@@ -575,6 +575,16 @@ export const event = async (data) => {
   }
 };
 
+//fetch Event by id
+export const fetchEventByID = async (id) => {
+  try {
+      const response = await apiWithHeaders.get(`/events/${id}`);
+      return response;
+  } catch (error) {
+      throw error;
+  }
+}
+
 //fetch all active qualification
 export const fetchAllActiveQualifications = async () => {
   try {

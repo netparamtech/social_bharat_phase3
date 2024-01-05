@@ -1381,6 +1381,13 @@ input[type="number"] {
   color: #008577;
 }
 
+.hover-pointer-red:hover{
+  color: white;
+  background-color: red;
+  width: 60px;
+  padding-left: 10px;
+}
+
 .drawer-header {
   position: fixed;
   top: 0;
@@ -1745,4 +1752,9 @@ input[type="number"] {
 
 .marquee-dashboard{
   animation: example 2s infinite;
+}
+
+.remove-btn-custom{
+  margin-left: 94%;
+  margin-top: 0px;
 }

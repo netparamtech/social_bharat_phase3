@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import {
   deleteEventByID,
   fetchEvents,
+  updateToggleFeaturedForEvent,
   updateToggleStatusForEvent,
 } from "../../services/AdminService";
 import { useNavigate } from 'react-router-dom';
@@ -72,6 +73,22 @@ const Event = () => {
   const handleEventToggleStatus = async (id) => {
     try {
       const response = await updateToggleStatusForEvent(id);
+      if (response && response.status === 200) {
+        fetchData();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage} });
+      }
+    }
+  };
+
+  const handleEventToggleFeatured = async (id) => {
+    try {
+      const response = await updateToggleFeaturedForEvent(id);                                                                                                                                                                                                                                                                                                                  
       if (response && response.status === 200) {
         fetchData();
       }
@@ -175,6 +192,34 @@ const Event = () => {
           }}
         >
           <i className="fa fa-thumbs-down" title="Inactive" />
+        </a>
+      )), sorter: true,
+      sortDirections: ['asc', 'desc'],
+      fixed: 'right',
+      width: 100,
+    },
+    {
+      title: 'Featured', dataIndex: 'featured', render: (text, record) => (record.featured === 'true' ? (
+        <a
+          className="collapse-item m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleEventToggleFeatured(record.id);
+          }}
+        >
+          <i class="fa fa-toggle-on" aria-hidden="true"></i>
+        </a>
+      ) : (
+        <a
+          className="collapse-item text-secondary m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleEventToggleFeatured(record.id);
+          }}
+        >
+          <i class="fa fa-toggle-off" aria-hidden="true"></i>
         </a>
       )), sorter: true,
       sortDirections: ['asc', 'desc'],

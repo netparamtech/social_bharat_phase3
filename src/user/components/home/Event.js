@@ -19,6 +19,7 @@ const EventForm = () => {
   const [venue, setVenue] = useState("");
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
+  const [description,setDescription] = useState('');
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
@@ -201,6 +202,7 @@ const EventForm = () => {
       end_datetime: formattedEndDateTime,
       banner_image: bannerImageTempUrl,
       thumb_image: thumbnailImageTempUrl,
+      description,
     };
 
     try {
@@ -412,6 +414,19 @@ const EventForm = () => {
                         />
                         {errors.thumbImage && (
                           <span className="error">{errors.thumbImage}</span>
+                        )}
+                      </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label htmlFor="description">Description</label>
+                      <textarea
+                          type="area"
+                          placeholder="Enter Your Event Details If Any"
+                          className="form-control mt-2"
+                          defaultValue={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                        {errors && errors.description && (
+                          <span className="error">{errors.description}</span>
                         )}
                       </div>
                     </div>

@@ -236,6 +236,13 @@ const MatrimonialInfo = (props) => {
                               </td>
                             </tr>
                           )}
+                           <tr>
+                            <td>Subcast</td>
+                            <td className="text-muted">
+                              {(user?.data?.matrimonial[0].subcast) ||
+                                "N/A"}
+                            </td>
+                          </tr>
                           <tr>
                             <td>Gender</td>
                             <td className="text-muted">

@@ -424,9 +424,9 @@ export const searchBusinessWithCityState = async (queryString) => {
 }
 
 //search partner
-export const searchPartner = async (searchText, page, size, id, state, city, gender, gotra, cast) => {
+export const searchPartner = async (searchText, page, size, id, state, city, gender, gotra, cast,subcastId) => {
     try {
-        const response = await apiWithHeaders.get(`/partner/search?q=${searchText}&page=${page}&size=${size}&community_id=${id}&state=${state}&city=${city}&gender=${gender}&gotra=${gotra}&cast=${cast}`);
+        const response = await apiWithHeaders.get(`/partner/search?q=${searchText}&page=${page}&size=${size}&community_id=${id}&state=${state}&city=${city}&gender=${gender}&gotra=${gotra}&cast=${cast}&subcastId=${subcastId}`);
         return response;
     } catch (error) {
         throw error;
@@ -638,7 +638,7 @@ export const deleteUserRegisteredSingleService = async (id) => {
 }
 
 //search people in service
-export const searchPeopleInService = async (queryString,state,city, page, size, title) => {
+export const searchPeopleInService = async (queryString, state, city, page, size, title) => {
     try {
         const response = await apiWithHeaders.get(`/search/users/service?role=user&searchQuery=${queryString}&state=${state}&city=${city}&page=${page}&size=${size}&title=${title}`);
         return response;
@@ -730,7 +730,7 @@ export const toggleJobRequest = async (jobId) => {
 //apply for a job
 export const applyJob = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/user/apply/job',data);
+        const response = await apiWithHeaders.post('/user/apply/job', data);
         return response;
     } catch (error) {
         throw error;
@@ -777,17 +777,19 @@ export const fetchAllAppliedJobs = async () => {
     }
 }
 
-//fetch all events
-export const fetchAllEvents = async (searchText, page, size, state, city) => {
+
+
+//fetch all subcasts
+export const fetchAllSubcasts = async (communityId) => {
     try {
-        const response = await apiWithFileHeaders.get(`/user/events?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`);
-        
+        const response = await apiWithFileHeaders.get(`/fetch/${communityId}/subcasts`);
         return response;
     } catch (error) {
         throw error;
-        
+
     }
 }
+
 
 
 //Chat

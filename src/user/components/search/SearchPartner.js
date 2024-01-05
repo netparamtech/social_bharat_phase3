@@ -3,6 +3,7 @@ import {
   fetchAllCitiesByStateID,
   fetchAllCommunities,
   fetchAllStatesByCountryID,
+  fetchAllSubcasts,
   searchPartner,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +37,8 @@ const SearchPartner = () => {
   const [gender, setGender] = useState("");
   const [gotra, setGotra] = useState("");
   const [community_id, setCommunity_id] = useState("");
+  const [subcast_id, setSubcastId] = useState('');
+  const [subcast, setSubcast] = useState('');
   const [communityName, setCommunityName] = useState("");
   const [skinTone, setSkinTone] = useState("");
   const [cast, setCast] = useState("");
@@ -86,9 +89,9 @@ const SearchPartner = () => {
   const handleGotraChange = (e) => {
     setGotra(e.target.value);
   };
-  const handleSelectChange = (selectedOption) => {
-    setCommunity_id(selectedOption.value);
-    setCommunityName(selectedOption.label);
+  const handleSubcastChange = (selectedOption) => {
+    setSubcastId(selectedOption.value);
+    setSubcast(selectedOption.label);
   };
 
   const handleStateChange = (selectedOption) => {
@@ -160,7 +163,8 @@ const SearchPartner = () => {
     city,
     gender,
     gotra,
-    cast
+    cast,
+    subcast_id
   ) => {
     setIsLoading(true);
     dispatch(setLoader(true));
@@ -174,7 +178,8 @@ const SearchPartner = () => {
         city,
         gender,
         gotra,
-        cast
+        cast,
+        subcast_id
       );
 
       if (response && response.status === 200) {
@@ -183,7 +188,7 @@ const SearchPartner = () => {
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if (community_id || communityName || searchText || state || city || gender || cast || gotra) {
+        if (community_id || communityName || searchText || state || city || gender || cast || gotra || subcast_id) {
           if (response.data.data.users.length !== 0) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
@@ -227,73 +232,29 @@ const SearchPartner = () => {
     }
   };
 
-  //fetch all active communities
-
-  const fetchCommunities = async () => {
-    const response = await fetchAllCommunities();
-    if (response && response.status === 200) {
-      const requestedCasts = response.data.data.filter((item) => item && item.community_archive === '');
-      setCommunities(requestedCasts);
+  //fetch all active subcast communities
+  const fetchSubcastsCommunities = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllSubcasts(community_id);
+      if (response && response.status === 200) {
+        console.log(response.data.data)
+        const requestedCasts = response.data.data.filter((item) => item.status === 'true');
+        console.log(requestedCasts, "subcasts")
+        setCommunities(requestedCasts);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
     }
-  };
-
-  const handleSaveClick = async () => {
-    setIsSaveClicked(true);
-    setIsModalOpen(false);
-  };
-
-  const handleCancelClick = () => {
-    setCommunity_id(user && user.user && user.user.community_id);
-    setIsSaveClicked(false);
-    setCast("");
-    setGender("");
-    setSelectedState("");
-    setSelectedCity("");
-    setGotra("");
-    setSkinTone("");
-    setSearchText("");
-    setCommunityName("");
-  };
-  const handleCloseClick = () => {
-    handleCancelClick();
-    // Call the search function with appropriate parameters
-    // For example:
-    search(
-      searchText,
-      page,
-      20,
-      community_id,
-      state,
-      city,
-      gender,
-      gotra,
-      cast
-    );
-  };
-  const handlePreferenceClick = () => {
-    setSelectedState(null);
-    setSelectedCity(null);
-
-    if (user) {
-      setState(
-        user && user.user && user.user.native_place_state
-          ? user.user.native_place_state
-          : ""
-      );
-      setCity(
-        user && user.user && user.user.native_place_city
-          ? user.user.native_place_city
-          : ""
-      );
-    }
-
-    !isFilter
-      ? setIsFilter(true)
-      : isFilter
-        ? setIsFilter(false)
-        : setIsFilter(false);
-    setIsSaveClicked(false);
-    showModal();
   };
 
   const fetchMoreData = () => {
@@ -307,7 +268,8 @@ const SearchPartner = () => {
         city,
         gender,
         gotra,
-        cast
+        cast,
+        subcast_id
       );
       setPage(page + 1);
     }
@@ -324,11 +286,6 @@ const SearchPartner = () => {
     );
 
     return ageInYears;
-  };
-
-  const handleRefressClicked = (e) => {
-    e.preventDefault();
-    window.location.href = "/user/search/partner";
   };
 
   const handleScrollToUp = () => {
@@ -388,18 +345,27 @@ const SearchPartner = () => {
         city,
         gender,
         gotra,
-        cast
+        cast,
+        subcast_id
       );
     }
-  }, [searchText, community_id, gender, city, state, cast, gotra]);
+  }, [searchText, community_id, gender, city, state, cast, gotra, subcast_id]);
 
   useEffect(() => {
     setPage(1);
   }, [isFilter]);
 
   useEffect(() => {
-    fetchCommunities();
-  }, []);
+    if (community_id) {
+      fetchSubcastsCommunities();
+    }
+  }, [community_id]);
+
+  useEffect(() => {
+    if (communities) {
+      console.log(communities)
+    }
+  }, [communities]);
 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
@@ -410,17 +376,6 @@ const SearchPartner = () => {
   const checkMobileVisibility = (mobileNumber) => {
     const isHidden = /\*/.test(mobileNumber);
     return !isHidden;
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -494,33 +449,33 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label">Community</label>
+                        <label className="form-label">Subcast</label>
                         <Select
                           id="community_id"
                           className="form-control"
                           aria-label="Default select example"
-                          defaultValue={community_id} // Provide a selected option state
-                          onChange={handleSelectChange} // Your change handler function
+                          defaultValue={subcast_id} // Provide a selected option state
+                          onChange={handleSubcastChange} // Your change handler function
                           options={
                             communities &&
                             communities.map((data) => ({
-                              value: data.id,
-                              label: data.name,
+                              value: data.subcast_id,
+                              label: data.subcast,
                             }))
                           }
                           placeholder="---Select---"
                         />
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                      <label className="form-label ">Add New</label>
-                          <a
-                            title="Add Business"
-                            className="btn btn-secondary w-100 btn-sm mb-2"
-                            onClick={handlePartnerClick}
-                          >
-                            ADD
-                          </a>
-                        </div>
+                        <label className="form-label ">Add New</label>
+                        <a
+                          title="Add Business"
+                          className="btn btn-secondary w-100 btn-sm mb-2"
+                          onClick={handlePartnerClick}
+                        >
+                          ADD
+                        </a>
+                      </div>
                     </div>
 
                   </div>

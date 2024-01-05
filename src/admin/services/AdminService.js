@@ -50,9 +50,9 @@ export const updateProfilePicture = async (formData) => {
 //upload multiple images
 export const uploadMultipleImages = async (formData) => {
     try {
-        const response = await apiWithFileHeaders.post('/upload-multiple-images',formData);  
+        const response = await apiWithFileHeaders.post('/upload-multiple-images', formData);
         return response;
-    } catch(error) {
+    } catch (error) {
         throw error;
     }
 }
@@ -60,9 +60,9 @@ export const uploadMultipleImages = async (formData) => {
 //upload pdf section
 export const uploadPdf = async (formData) => {
     try {
-        const response = await apiWithFileHeaders.post('/upload-pdf',formData);  
+        const response = await apiWithFileHeaders.post('/upload-pdf', formData);
         return response;
-    } catch(error) {
+    } catch (error) {
         throw error;
     }
 }
@@ -77,8 +77,8 @@ export const createCommunity = async (data) => {
 }
 
 //update profile
-export const updateBasicProfile= async (data) => {
-    
+export const updateBasicProfile = async (data) => {
+
     try {
         const response = await apiWithHeaders.put('/update-profile', data);
         return response;
@@ -157,7 +157,7 @@ export const fetchAllBanners = async () => {
 //create banner 
 export const createBanner = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/banners',data);
+        const response = await apiWithHeaders.post('/banners', data);
         return response;
     } catch (error) {
         throw error;
@@ -226,8 +226,8 @@ export const updatePassword = async (password, confirm_password) => {
 }
 
 //fetch All Degrees
-export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder,isEditClicked) => {
-    if(isEditClicked){
+export const fetchAllDegrees = async (page, size, searchQuery, sortField, sortOrder, isEditClicked) => {
+    if (isEditClicked) {
         return;
     }
     try {
@@ -279,9 +279,9 @@ export const fetchDegreeWithId = async (id) => {
 }
 
 //update Degree
-export const updateDegree = async (id,data) => {
+export const updateDegree = async (id, data) => {
     try {
-        const response = await apiWithHeaders.put(`/degrees/${id}`,data);
+        const response = await apiWithHeaders.put(`/degrees/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -319,9 +319,9 @@ export const deleteBusinessCategorie = async (id) => {
 }
 
 //update Business Categories
-export const updateBusinessCategorie = async (id,data) => {
+export const updateBusinessCategorie = async (id, data) => {
     try {
-        const response = await apiWithHeaders.put(`/business-categories/${id}`,data);
+        const response = await apiWithHeaders.put(`/business-categories/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -379,7 +379,7 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
 }
 
 //fetch all testimonials
-export const fetchTestimonials = async (page, size,searchQuery,sortField,sortOrder) => {
+export const fetchTestimonials = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
         const response = await apiWithHeaders.get(`/testimonials?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
@@ -419,7 +419,7 @@ export const updateToggleStatusForTestimonial = async (clickedId) => {
 }
 
 //fetch all Event
-export const fetchEvents = async (page, size, searchQuery,sortField,sortOrder) => {
+export const fetchEvents = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
         const response = await apiWithHeaders.get(`/events?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response;
@@ -499,9 +499,9 @@ export const deleteQualificationsByID = async (id) => {
 }
 
 //update qualifications Categories
-export const updateQualifications = async (id,data) => {
+export const updateQualifications = async (id, data) => {
     try {
-        const response = await apiWithHeaders.put(`/qualifications/${id}`,data);
+        const response = await apiWithHeaders.put(`/qualifications/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -511,7 +511,7 @@ export const updateQualifications = async (id,data) => {
 //create qualifications Categories
 export const createQualification = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/qualifications',data);
+        const response = await apiWithHeaders.post('/qualifications', data);
         return response;
     } catch (error) {
         throw error;
@@ -521,7 +521,7 @@ export const createQualification = async (data) => {
 //create service
 export const createService = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/services',data);
+        const response = await apiWithHeaders.post('/services', data);
         return response;
     } catch (error) {
         throw error;
@@ -569,9 +569,9 @@ export const deleteServiceByID = async (id) => {
 }
 
 //update service Categories
-export const updateService = async (id,data) => {
+export const updateService = async (id, data) => {
     try {
-        const response = await apiWithHeaders.put(`/service/${id}`,data);
+        const response = await apiWithHeaders.put(`/service/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -589,7 +589,7 @@ export const updateToggleStatusForUserRegisteredService = async (clickedUserId) 
 }
 
 //fetch All Jobs
-export const fetchAllJobsPosted = async (is_admin_post,page, size, searchQuery, jobType) => {
+export const fetchAllJobsPosted = async (is_admin_post, page, size, searchQuery, jobType) => {
     try {
         const response = await apiWithHeaders.get(`/search/users/jobs?is_admin_post=${is_admin_post}&page=${page}&size=${size}&searchQuery=${searchQuery}&jobType=${jobType}`);
         return response;
@@ -639,9 +639,9 @@ export const findSingleJobsPosted = async (id) => {
 }
 
 //update single job posted
-export const updateSingleJobsPosted = async (data,id) => {
+export const updateSingleJobsPosted = async (data, id) => {
     try {
-        const response = await apiWithHeaders.put(`/update/${id}/job-posted`,data);
+        const response = await apiWithHeaders.put(`/update/${id}/job-posted`, data);
         return response;
     } catch (error) {
         throw error;
@@ -651,7 +651,7 @@ export const updateSingleJobsPosted = async (data,id) => {
 //create new job
 export const createNewJob = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/create/new-job',data);
+        const response = await apiWithHeaders.post('/create/new-job', data);
         return response;
     } catch (error) {
         throw error;
@@ -671,7 +671,7 @@ export const fetchAdminDashboardStatistics = async () => {
 //update Site Setting 
 export const updateSetting = async (data) => {
     try {
-        const response = await apiWithHeaders.put(`/setting`,data);
+        const response = await apiWithHeaders.put(`/setting`, data);
         return response;
     } catch (error) {
         throw error;
@@ -691,7 +691,7 @@ export const fetchAllSetting = async () => {
 //cms(create or update)
 export const updateCMS = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/cms/create',data);
+        const response = await apiWithHeaders.post('/cms/create', data);
         return response;
     } catch (error) {
         throw error;
@@ -719,22 +719,79 @@ export const fetchAllPagesCMS = async () => {
 }
 
 //fetch all users of respective service title
-export const searchUsersInService = async(queryString,page,size,title) => {
-    try{
+export const searchUsersInService = async (queryString, page, size, title) => {
+    try {
         const response = await apiWithHeaders.get(`/search/users/service?role=admin&searchQuery=${queryString}&page=${page}&size=${size}&title=${title}`);
         return response;
-    } catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
 //fetch all users of respective new service request
-export const UsersRequestedForNewService = async(page,size) => {
-    try{
+export const UsersRequestedForNewService = async (page, size) => {
+    try {
         const response = await apiWithHeaders.get(`/admin/fetch-all-new-services?page=${page}&size=${size}`);
         return response;
-    } catch(error) {
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch all subcasts in one community
+export const fetchAllSubcastsInOneCommunity = async (communityId) => {
+    try {
+        const response = await apiWithHeaders.get(`/fetch/${communityId}/subcasts`);
+        return response;
+    } catch (error) {
         throw error;
     }
 }
 
+//create subcast
+export const createSubcast = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/subcast', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//update subcast
+export const updateSubcast = async (data) => {
+    try {
+        const response = await apiWithHeaders.put('/subcast/update', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//fetch single subcast in one community
+export const fetchSingleSubcast = async (subcastId, communityId) => {
+    try {
+        const response = await apiWithHeaders.get(`/fetch/subcast/${subcastId}/in/${communityId}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete single subcast in one community
+export const deleteSingleSubcast = async (subcastId) => {
+    try {
+        const response = await apiWithHeaders.delete(`/subcast/${subcastId}/delete`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//toggle single subcast toggle in one community
+export const toggleSingleSubcast = async (subcastId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/subcast/${subcastId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}

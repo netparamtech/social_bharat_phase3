@@ -45,6 +45,7 @@ import UpdateServicePage from "./pages/services/UpdateServicePage";
 import RegisteredUsersInServicePage from "./pages/services/RegisteredUsersInServicePage";
 import RequestedForNewServicePage from "./pages/services/RequestedForNewServicePage";
 import AllJobsPostPage from "./pages/jobs/AllJobsPostPage";
+import usersWithCommunity from "./pages/user/UserWithCommuniryPage";
 
 const adminRoutes = [
     {
@@ -147,6 +148,12 @@ const adminRoutes = [
     {
         path: '/admin/users',
         component: UsersIndex,
+        exact: true
+    },
+
+    {
+        path: '/admin/usersWithCommunity',
+        component: usersWithCommunity,
         exact: true
     },
 

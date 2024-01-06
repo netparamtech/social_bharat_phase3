@@ -174,6 +174,16 @@ export const fetchAllUsers = async (page, size, searchQuery, sortField, sortOrde
     }
 };
 
+//fetch all registered users with community
+export const fetchAllUsersWithCommunity = async (page, size, searchQuery, sortField, sortOrder) => {
+    try {
+        const response = await apiWithHeaders.get(`/dashboard-statistics/users/community-wise?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
+        return response; // Assuming your API response contains the data directly
+    } catch (error) {
+        throw error;
+    }
+};
+
 //fetch banner according to page and section
 export const fetchBannerWithPageAndSection = async (page, section) => {
     try {

@@ -281,6 +281,33 @@ const AllJobs = () => {
       ),
     },
     {
+      title: 'Featured', dataIndex: 'featured', render: (text, record) => (record.featured === 'true' ? (
+        <a
+          className="collapse-item m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleFeaturedChange(record.job_id);
+          }}
+        >
+          <i class="fa fa-toggle-on" aria-hidden="true"></i>
+        </a>
+      ) : (
+        <a
+          className="collapse-item text-secondary m-2"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            handleFeaturedChange(record.job_id);
+          }}
+        >
+          <i class="fa fa-toggle-off" aria-hidden="true"></i>
+        </a>
+      )),
+      fixed: 'right',
+      width: 100,
+    },
+    {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
@@ -314,7 +341,6 @@ const AllJobs = () => {
           >
             <i className="fas fa-eye "></i>
           </a>
-          <input type="checkbox" id="featuredCheckbox" name="featured" value={featured} onClick={()=>handleFeaturedChange(record.job_id)} />
         </div>
       ),
     },

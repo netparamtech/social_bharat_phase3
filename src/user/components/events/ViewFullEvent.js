@@ -32,7 +32,6 @@ const ViewFullEvent = (props) => {
         try {
             const response = await fetchEventByID(id);
             if (response && response.status === 200) {
-                console.log(response.data.data)
                 setData(response.data.data);
                 setSelectedCountry(response.data.data.country);
                 setSelectedState(response.data.data.state);
@@ -62,7 +61,8 @@ const ViewFullEvent = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+        window.scroll(0,0);
+    }, [id]);
 
     return (
         <>
@@ -87,7 +87,7 @@ const ViewFullEvent = (props) => {
                     </div>
                 </div>
             </div>
-            
+
             <div id="auth-wrapper" className="mt-0 pb-5">
                 <div id="event-info" className="container">
                     <div className="card">
@@ -197,15 +197,15 @@ const ViewFullEvent = (props) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>
                         </div>
                         {
-                            data && data.description?(
+                            data && data.description ? (
                                 <div className="card-footer">{data.description}</div>
-                            ):''
+                            ) : ''
                         }
                     </div>
                 </div>

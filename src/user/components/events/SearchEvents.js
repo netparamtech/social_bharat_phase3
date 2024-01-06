@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  featuredEventsByAdmin,
   fetchAllCitiesByStateID,
 
   fetchAllEvents,
@@ -55,6 +56,7 @@ const SearchEvents = () => {
   const [isRefressed, setIsRefressed] = useState(false);
   const [copyItems, setCopyItems] = useState([]);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+  const [featuredEvents, setFeaturedEvents] = useState([]);
 
 
   const changeEventClickFlag = (value, id) => {
@@ -125,6 +127,27 @@ const SearchEvents = () => {
       }
     }
   };
+
+  const findFeaturedEvents = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await featuredEventsByAdmin();
+      if (response && response.status === 200) {
+        setServerError("");
+        setFeaturedEvents(response.data.data);
+      }
+
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
 
   const search = async (searchText, page, size) => {
     setIsLoading(true);
@@ -264,6 +287,10 @@ const SearchEvents = () => {
     };
   }, []);
 
+  useEffect(() => {
+    findFeaturedEvents();
+  }, [eventId]);
+
   const formatDate = (dateString) => {
     const options = {
       day: "2-digit",
@@ -281,20 +308,14 @@ const SearchEvents = () => {
         <div className="container">
           <div className="card shadow card-search">
             <Carousel className="">
-              {items && items.map((item, index) => (
-
+              {featuredEvents && featuredEvents.map((item, index) => (
                 <Carousel.Item>
-
-                  {
-                    item.featured === 'true' && (
-                      <img
-                        src={item.banner_image}
-                        height={500}
-                        width="100%"
-                        onClick={() => changeEventClickFlag(true, item.id)}
-                      ></img>
-                    )
-                  }
+                  <img
+                    src={item.banner_image}
+                    height={500}
+                    width="100%"
+                    onClick={() => changeEventClickFlag(true, item.id)}
+                  ></img>
                   <Carousel.Caption>
                     <h3>{item.title}</h3>
                     <div>
@@ -305,8 +326,6 @@ const SearchEvents = () => {
                     </div>
                   </Carousel.Caption>
                 </Carousel.Item>
-
-
               ))}
             </Carousel>
             {

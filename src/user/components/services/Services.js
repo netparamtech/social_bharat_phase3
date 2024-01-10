@@ -31,8 +31,8 @@ const Services = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [selectedService, setSelectedService] = useState("");
   const [serviceTitle, setServiceTitle] = useState("");
-  const [mobile1, setMobile1] = useState("");
-  const [mobile2, setMobile2] = useState("");
+  const [mobile1, setMobile1] = useState('');
+  const [mobile2, setMobile2] = useState('');
   const [experience, setExperience] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
@@ -196,8 +196,8 @@ const Services = () => {
       experience,
       description,
       status,
-      state: selectedState && selectedState.label ? selectedState.label : '',
-      city: selectedCity && selectedCity.label ? selectedCity.label : '',
+      state: selectedState&&selectedState.label ? selectedState.label : '',
+      city: selectedCity&&selectedCity.label ? selectedCity.label : '',
     };
 
     try {
@@ -208,15 +208,7 @@ const Services = () => {
         setErrors("");
         setAlertClass("alert-success");
         setMessage(response.data.message);
-        // setSelectedService("");
-        // setServiceTitle("");
-        // setMobile1("");
-        // setMobile2("");
-        // setLocation("");
-        // setExperience("");
-        // setDescription("");
-        // setStatus('Active');
-        // setDisableServiceTitle(true);
+       
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -226,7 +218,7 @@ const Services = () => {
       } else if (error.response && error.response.status === 401) {
         setMessage("");
         setErrors("");
-        setAlertClass("alert-danger");
+        navigate('/login');
       } else if (error.response && error.response.status === 500) {
         setMessage(error.response.data.message);
         setErrors("");
@@ -408,10 +400,6 @@ const Services = () => {
                         placeholder="Enter Your Mobile Number 1"
                         className="form-control"
                         value={mobile1}
-                        onInput={(e) => {
-                          // Trim the input to 10 characters
-                          e.target.value = e.target.value.slice(0, 10);
-                        }}
                         onChange={(e) => setMobile1(e.target.value)}
                       />
                       {errors.mobile1 && (
@@ -424,10 +412,6 @@ const Services = () => {
                         placeholder="Enter Your Mobile Number 2"
                         className="form-control"
                         value={mobile2}
-                        onInput={(e) => {
-                          // Trim the input to 10 characters
-                          e.target.value = e.target.value.slice(0, 10);
-                        }}
                         onChange={(e) => setMobile2(e.target.value)}
                       />
                       {errors.mobile2 && (

@@ -72,7 +72,7 @@ const LoginWithPassword = (props) => {
         dispatch(login(response.data.data, response.data.token));
 
         if (response.data.data.is_password_set) {
-          navigate("/dashboard");
+          navigate("/");
         } else {
           navigate("/setPassword");
         }
@@ -145,12 +145,8 @@ const LoginWithPassword = (props) => {
                       name="mobile"
                       id="mobile"
                       placeholder="Enter mobile number"
+                      maxLength="10"
                       className="input-height"
-                      maxLength="10" // Limit to 10 characters
-                      onInput={(e) => {
-                        // Trim the input to 10 characters
-                        e.target.value = e.target.value.slice(0, 10);
-                      }}
                       onChange={handleMobileChange}
                       autoFocus
                     />

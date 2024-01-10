@@ -63,7 +63,7 @@ const RegisterWithOtp = (props) => {
         setServerError('');
 
         if (response.data.data.is_password_set) {
-          navigate("/dashboard");
+          navigate("/");
         } else {
           navigate("/set-password");
         }

@@ -61,18 +61,21 @@ const ViewFullEvent = (props) => {
 
     useEffect(() => {
         fetchData();
-        window.scroll(0,0);
+        window.scroll(0, 0);
     }, [id]);
 
     return (
         <>
             <div class="row">
                 {serverError && <span className="error">{serverError}</span>}
-                <span onClick={() => changeEventClickFlag(false)}><i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i></span>
 
                 <div class="col-lg-4 mx-auto mt-2">
                     <div class="card mb-4">
                         <div class="card-body text-center">
+                            <span onClick={() => changeEventClickFlag(false)} class="position-absolute top-0 end-0 mt-2 me-2">
+                                {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                            <button className="btn btn-ternary hover-pointer-red"><i class="fa fa-remove"></i></button>
+                            </span>
                             <img src={data.photo ? data.photo : "/user/images/OIP.jpg"} alt="avatar"
                                 class="rounded-circle img-fluid" width={150} />
                             <h5 class="my-3">{data.name && data.name}</h5>
@@ -204,7 +207,10 @@ const ViewFullEvent = (props) => {
                         </div>
                         {
                             data && data.description ? (
-                                <div className="card-footer">{data.description}</div>
+                                <div className="card-footer">
+                                    <p className="fs-5 fw-bold">{data && data.title}</p>
+                                    
+                                    {data.description}</div>
                             ) : ''
                         }
                     </div>

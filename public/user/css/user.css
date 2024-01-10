@@ -1384,8 +1384,6 @@ input[type="number"] {
 .hover-pointer-red:hover{
   color: white;
   background-color: red;
-  width: 60px;
-  padding-left: 10px;
 }
 
 .drawer-header {
@@ -1754,7 +1752,33 @@ input[type="number"] {
   animation: example 2s infinite;
 }
 
+.your-custom-carousel-class {
+  max-width: 1290px !important; /* Adjust the max-width as needed */
+  margin: auto; /* Center the carousel */
+}
+
+.carousel-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333; /* Adjust the color as needed */
+}
+.custom-carousel-item {
+  border-radius: 15px; /* Adjust the border-radius as needed */
+  border: 0px solid #238457;
+  box-shadow: white;
+  height: 400px;
+  width: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  object-fit: cover;
+}
+
 .remove-btn-custom{
-  margin-left: 94%;
-  margin-top: 0px;
+  margin-right: 10px;
 }

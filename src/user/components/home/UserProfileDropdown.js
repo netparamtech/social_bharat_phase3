@@ -11,7 +11,7 @@ import BharatMandirDrawer from './BharatMandirDrawer';
 
 const UserProfileDropdown = () => {
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   const user = useSelector((state) => state.userAuth);
   const [userId, setUserId] = useState(user && user.user && user.user.id);
@@ -113,6 +113,14 @@ const UserProfileDropdown = () => {
     setOpenSetting(true);
   };
 
+  function shortenName(inputName, maxLength) {
+    if (inputName.length <= maxLength) {
+      return inputName;
+    } else {
+      return inputName.substring(0, maxLength) + "...";
+    }
+  }
+
   const generateMenuItems = () => {
     const items = [
       {
@@ -122,7 +130,7 @@ const UserProfileDropdown = () => {
             <h6 className="dropdown-header d-flex align-items-center menu-font">
               <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
               <div className="dropdown-user-details">
-                <div className="dropdown-user-details-name menu-font">{userName.toUpperCase()}</div>
+                <div className="dropdown-user-details-name menu-font">{shortenName(userName.toUpperCase(), 12)}</div>
                 <div className="dropdown-user-details-email menu-font">{userEmail}</div>
               </div>
             </h6>
@@ -159,8 +167,8 @@ const UserProfileDropdown = () => {
         label: (
           <span onClick={handleProfileClick} className={`menu-font ${window.location.pathname === "/profile" || window.location.pathname === "/user/update-basic-profile" ||
             window.location.pathname === "/update-mobile" || window.location.pathname === "/user/update-matrimonial-profile" ||
-            window.location.pathname === "/user/update-education-profile" || window.location.pathname === "/user/update-business-profile" || window.location.pathname === `/user/update-business-profile/${id}`||
-            window.location.pathname === "/user/update-contact" ||  window.location.pathname === `/user/update-contact/${id}` ||  window.location.pathname === "/user/update-job-profile"
+            window.location.pathname === "/user/update-education-profile" || window.location.pathname === "/user/update-business-profile" || window.location.pathname === `/user/update-business-profile/${id}` ||
+            window.location.pathname === "/user/update-contact" || window.location.pathname === `/user/update-contact/${id}` || window.location.pathname === "/user/update-job-profile"
             || window.location.pathname === `/user/update-job-profile/${id}` || window.location.pathname === `/user/update-contact/:id` ||
             window.location.pathname === `/user/update-education-profile/${id}` ? "custom-active-user" : "inactive"
             }`}>
@@ -183,7 +191,7 @@ const UserProfileDropdown = () => {
         label: (
           <>
             <span onClick={handleSettingClick} className={`menu-font ${window.location.pathname === "/user/setting" ? "custom-active-user" : "inactive"
-            }`}>
+              }`}>
               <i className="fas fa-cog m-2"></i> SETTING
             </span>
 
@@ -196,7 +204,7 @@ const UserProfileDropdown = () => {
 
         label: (
           <>
-           <BharatMandirDrawer />
+            <BharatMandirDrawer />
 
           </>
         ),
@@ -240,7 +248,7 @@ const UserProfileDropdown = () => {
         ) : (
           <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
         )}
-        <span className='custom-font'><span className={isAndroidUsed ? 'd-none' : ''}>Hi</span> {!isAndroidUsed && userName.toUpperCase()}</span>
+        <span className='custom-font'><span className={isAndroidUsed ? 'd-none' : ''}>Hi</span> {!isAndroidUsed && shortenName(userName.toUpperCase(), 8)}</span>
       </span>
     </Dropdown>);
 };

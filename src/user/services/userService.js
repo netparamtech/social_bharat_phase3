@@ -595,6 +595,27 @@ export const featuredEventsByAdmin = async () => {
   }
 };
 
+//Featured Events
+export const featuredEvent = async (id) => {
+  try {
+    const response = await apiWithHeaders.patch(`/event/toggle-featured/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+//delete Event by id
+export const deleteEventByID = async (id) => {
+  try {
+      const response = await apiWithHeaders.delete(`/events/${id}`);
+      return response;
+  } catch (error) {
+      throw error;
+  }
+}
+
 //fetch Event by id
 export const fetchEventByID = async (id) => {
   try {

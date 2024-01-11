@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
 import {
     Navbar,
-    Nav,
-    NavDropdown,
-    Form,
-    FormControl,
-    Button,
-    Alert,
-    Offcanvas,
+    Nav
 } from "react-bootstrap";
-import FeaturedJobs from "./FeaturedJobs";
 import {
     applyJob,
     deleteUserPostedSingleJob,
-    deleteUserPostedSingleService,
     fetchAllCitiesByStateID,
     fetchAllJobsByLoggedUser,
     fetchAllJobsPosted,
     fetchAllStatesByCountryID,
-    ifAlreadyAppliedSameJob,
     jobsApplicantStatistics,
     toggleJobRequest,
 } from "../../services/userService";
@@ -277,7 +268,6 @@ const JobBoard = () => {
         }
     };
     useEffect(() => {
-        console.log("hello")
         if (
             activeNavItem === "ALL" ||
             activeNavItem === "PART TIME" ||
@@ -614,37 +604,6 @@ const JobBoard = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                {errors && errors.job_id ? (
-                                                                    <Offcanvas
-                                                                        show={show}
-                                                                        onHide={handleClose}
-                                                                        placement={"bottom"}
-                                                                    >
-                                                                        <Offcanvas.Header closeButton>
-                                                                            <Offcanvas.Title className="text-danger mx-auto">
-                                                                                <b>{jobTitle}</b>
-                                                                            </Offcanvas.Title>
-                                                                        </Offcanvas.Header>
-                                                                        <Offcanvas.Body className="text-danger mx-auto">
-                                                                            "Application Error: You have already
-                                                                            submitted an application for this job.
-                                                                            Duplicate applications are not allowed. If
-                                                                            you have any questions or concerns, please
-                                                                            contact our support team."
-                                                                            <p className="mx-auto">
-                                                                                <button
-                                                                                    className="btn btn-success mt-3"
-                                                                                    onClick={() => navigate("/contact")}
-                                                                                >
-                                                                                    Contact Us
-                                                                                </button>
-                                                                            </p>
-                                                                        </Offcanvas.Body>
-                                                                    </Offcanvas>
-                                                                ) : (
-                                                                    ""
-                                                                )}
 
                                                                 <div className="row wow animate__animated animate__zoomIn mt-2">
                                                                     <p

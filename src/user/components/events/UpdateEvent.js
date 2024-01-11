@@ -13,6 +13,7 @@ import Select from "react-select";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { toast } from "react-toastify";
 
 const UpdateEvent = () => {
     const { id } = useParams();
@@ -272,10 +273,8 @@ const UpdateEvent = () => {
                 setErrors("");
                 setMessage(response.data.message);
                 setAlertClass("alert-success");
-
-                // Reset file inputs
-                thumbnailImageRef.current.value = null;
-                bannerImageRef.current.value = null;
+                navigate('/user/my-events');
+                toast.success("Successfully updated your event and now is in review process, we will update it soon.")
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {

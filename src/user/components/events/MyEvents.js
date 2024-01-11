@@ -1,20 +1,17 @@
 import { Table } from "antd";
-import { deleteEventByID, updateToggleFeaturedForEvent, updateToggleStatusForEvent } from "../../../admin/services/AdminService";
-import { fetchAllEventsByLoggedUser } from "../../services/userService";
+import { deleteEventByID, featuredEvent, fetchAllEventsByLoggedUser } from "../../services/userService";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLoader } from "../../actions/loaderAction";
-import Search from "antd/es/input/Search";
+import { toast } from 'react-toastify';
 
 const MyEvents = () => {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
     const [totalRows, setTotalRows] = useState(0);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [sortField, setSortField] = useState('');
-    const [sortOrder, setSortOrder] = useState('');
+    const [serverError, setServerError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,11 +27,6 @@ const MyEvents = () => {
         setSize(pageSize);
     };
 
-    const handleSearchChange = (query) => {
-        setPage(1);
-        setSearchQuery(query);
-    };
-
     const fetchData = async () => {
         dispatch(setLoader(true));
         try {
@@ -44,61 +36,60 @@ const MyEvents = () => {
 
             setTotalRows(response.data.totalRecords);
             dispatch(setLoader(false));
+            setServerError("");
+            window.scroll(0, 0);
         } catch (error) {
             dispatch(setLoader(false));
             if (error.response && error.response.status === 401) {
-                navigate("/admin");
+                navigate("/login");
             } else if (error.response && error.response.status === 500) {
-                let errorMessage = error.response.data.message;
-                navigate('/server/error', { state: { errorMessage } });
-            }
-        }
-    };
-
-    const handleEventToggleStatus = async (id) => {
-        try {
-            const response = await updateToggleStatusForEvent(id);
-            if (response && response.status === 200) {
-                fetchData();
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                navigate("/admin");
-            } else if (error.response && error.response.status === 500) {
-                let errorMessage = error.response.data.message;
-                navigate('/server/error', { state: { errorMessage } });
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     };
 
     const handleEventToggleFeatured = async (id) => {
         try {
-            const response = await updateToggleFeaturedForEvent(id);
-            if (response && response.status === 200) {
-                fetchData();
+            // Display a confirmation dialog
+            const userConfirmed = window.confirm("Are you sure you want to toggle the featured status?");
+
+            // Check if the user clicked "OK"
+            if (userConfirmed) {
+                const response = await featuredEvent(id);
+
+                if (response && response.status === 200) {
+                    fetchData();
+                    setServerError("");
+                }
+            } else {
+                // Handle the case where the user clicked "Cancel" or closed the dialog
+                console.log("User canceled the operation.");
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                navigate("/admin");
+                navigate("/login");
             } else if (error.response && error.response.status === 500) {
-                let errorMessage = error.response.data.message;
-                navigate('/server/error', { state: { errorMessage } });
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     };
+    const handleInactiveToggleFeatured = () => {
+        const userConfirmed = window.confirm("Feature Toggle Error: Unauthorized Access You do not have the necessary permissions to feature an event. This action is restricted to administrators only. If you believethis is an error or require additional access, please contact your system administrator for assistance.");
+    }
+
 
     const handleDeleteEvent = async (id) => {
         try {
             const response = await deleteEventByID(id);
             if (response && response.status === 200) {
                 fetchData();
+                setServerError("");
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                navigate("/admin");
+                navigate("/login");
             } else if (error.response && error.response.status === 500) {
-                let errorMessage = error.response.data.message;
-                navigate('/server/error', { state: { errorMessage } });
+                setServerError("Oops! Something went wrong on our server.");
             }
         }
     };
@@ -118,7 +109,7 @@ const MyEvents = () => {
         {
             title: 'S.No',
             dataIndex: 'sno',
-            render: (text, record, index) => index + 1,
+            render: (text, record, index) => (page - 1) * size + index + 1,
             width: 70
         },
 
@@ -150,8 +141,7 @@ const MyEvents = () => {
         {
             title: 'Featured', dataIndex: 'featured', render: (text, record) => (record.featured === 'true' ? (
                 <a
-                    className="collapse-item m-2"
-                    href="#"
+                    className="hover-pointer collapse-item m-2"
                     onClick={(e) => {
                         e.preventDefault();
                         handleEventToggleFeatured(record.id);
@@ -161,12 +151,8 @@ const MyEvents = () => {
                 </a>
             ) : (
                 <a
-                    className="collapse-item text-secondary m-2"
-                    href="#"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        handleEventToggleFeatured(record.id);
-                    }}
+                    className=" hover-pointer collapse-item text-secondary m-2"
+                    onClick={handleInactiveToggleFeatured}
                 >
                     <i class="fa fa-toggle-off" aria-hidden="true"></i>
                 </a>
@@ -183,12 +169,6 @@ const MyEvents = () => {
                         navigate(`/user/my-event/${record.id}/update`);
                     }}>
                         <i className="fa fa-edit mr-2" title='Edit' />
-                    </a>
-                    <a
-                        className="collapse-item"
-                        onClick={() => navigate(`/events/view/${record.id}`)}
-                    >
-                        <i className="fas fa-eye"></i>
                     </a>
 
                     <a
@@ -210,11 +190,11 @@ const MyEvents = () => {
 
     useEffect(() => {
         fetchData();
-    }, [page, size, searchQuery, sortField, sortOrder]);
+    }, [page, size]);
 
     return (
         <div id="service-section" className="pt-4 mb-5 container">
-
+            {serverError && <span className="error">{serverError}</span>}
             <Table
                 title={() => 'My Events'}  // Set the title to 'Enquiries'
                 dataSource={data}

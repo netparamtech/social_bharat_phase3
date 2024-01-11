@@ -49,6 +49,7 @@ const NavbarTransparent = (props) => {
       navigate("/dashboard");
     } else {
       navigate("/login");
+      const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
     }
   };
 
@@ -108,8 +109,10 @@ const NavbarTransparent = (props) => {
       if (isAndroidUsed) {
         showDrawer();
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       } else {
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       }
 
     }
@@ -130,8 +133,10 @@ const NavbarTransparent = (props) => {
       if (isAndroidUsed) {
         showDrawer();
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       } else {
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       }
 
     }
@@ -152,8 +157,10 @@ const NavbarTransparent = (props) => {
       if (isAndroidUsed) {
         showDrawer();
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       } else {
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       }
 
     }
@@ -174,8 +181,10 @@ const NavbarTransparent = (props) => {
       if (isAndroidUsed) {
         showDrawer();
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       } else {
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       }
 
     }
@@ -196,8 +205,10 @@ const NavbarTransparent = (props) => {
       if (isAndroidUsed) {
         showDrawer();
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       } else {
         navigate("/login");
+        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
       }
 
     }
@@ -258,15 +269,19 @@ const NavbarTransparent = (props) => {
                   HOME
                 </a>
               </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
-                    }`}
-                  onClick={handleDashboardClicked}
-                >
-                  DASHBOARD
-                </a>
-              </li>
+              {
+                isAuthenticUser ? (
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
+                        }`}
+                      onClick={handleDashboardClicked}
+                    >
+                      DASHBOARD
+                    </a>
+                  </li>
+                ) : ''
+              }
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/user/search"

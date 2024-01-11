@@ -101,6 +101,17 @@ const ServiceList = () => {
     }
   }
 
+  const formatDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
   const columns = [
     {
       title: 'S.No',
@@ -145,6 +156,16 @@ const ServiceList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
+    {
+      title: 'Created At', dataIndex: 'created_at',
+      render: (text, record) => (formatDate(record.created_at)),
+    },
+    {
+      title: 'Updated At', dataIndex: 'updated_at',
+      render: (text, record) => (formatDate(record.updated_at)),
+    },
+
+
     {
       title: 'Actions',
       dataIndex: 'actions',

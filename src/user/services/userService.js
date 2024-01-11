@@ -565,10 +565,20 @@ export const fetchTestimonialsOnHomePage = async () => {
   }
 };
 
-//Event
+//Create Event
 export const event = async (data) => {
   try {
     const response = await apiWithHeaders.post("/events", data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//Update Event
+export const updateEvent = async (data,id) => {
+  try {
+    const response = await apiWithHeaders.put(`/event/${id}`, data);
     return response;
   } catch (error) {
     throw error;
@@ -588,10 +598,19 @@ export const featuredEventsByAdmin = async () => {
 //fetch Event by id
 export const fetchEventByID = async (id) => {
   try {
-      const response = await apiWithHeaders.get(`/events/${id}`);
-      return response;
+    const response = await apiWithHeaders.get(`/events/${id}`);
+    return response;
   } catch (error) {
-      throw error;
+    throw error;
+  }
+}
+//all events posted by logged user
+export const fetchAllEventsByLoggedUser = async () => {
+  try {
+    const response = await apiWithHeaders.get('/events');
+    return response;
+  } catch (error) {
+    throw error;
   }
 }
 

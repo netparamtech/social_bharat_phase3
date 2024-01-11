@@ -385,6 +385,12 @@ const JobBoard = () => {
         };
         return new Date(dateString).toLocaleDateString("en-US", options);
     };
+    const checkPdf = (pdfString) => {
+        if (pdfString.startsWith("uploads")) {
+            return "";
+        }
+        return pdfString;
+    }
     useEffect(() => {
         if (isApplyClicked && appliedJob) {
             applyForAJobPosted(appliedJob);
@@ -687,7 +693,7 @@ const JobBoard = () => {
                                                                     )}
 
                                                                     {
-                                                                        item.notification_pdf ? (
+                                                                        checkPdf(item.notification_pdf) ? (
                                                                             <p>Attachment-{
                                                                                 item.notification_pdf &&
                                                                                 <span>
@@ -827,7 +833,7 @@ const JobBoard = () => {
                                                                 )}
                                                             </div>
                                                             {item.featured === "true" ? (
-                                                                <div className="card-footer text-danger">
+                                                                <div className="text-danger">
                                                                     Featured
                                                                 </div>
                                                             ) : (

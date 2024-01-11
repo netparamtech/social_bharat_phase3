@@ -1782,3 +1782,7 @@ input[type="number"] {
 .remove-btn-custom{
   margin-right: 10px;
 }
+#auth-wrapper .fixed-height-card-job {
+  height: 400px; /* Adjust the height as needed */
+  overflow: auto; /* Add a scrollbar if content overflows */
+}

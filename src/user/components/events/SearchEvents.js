@@ -107,7 +107,9 @@ const SearchEvents = () => {
     setSearchText(e.target.value);
   };
 
-
+const handleMyEventsClick = () =>{
+  navigate('/user/my-events');
+}
 
   const getAllCities = async (stateID) => {
     try {
@@ -339,8 +341,9 @@ const SearchEvents = () => {
                 <div className="card mt-3">
                   <div className="card-body">
                     {serverError && <span className="error">{serverError}</span>}
-                    <div className="d-flex">
+                    <div className="d-flex justify-content-between">
                       <h5 className="fw-3 mb-3">Search Events</h5>
+                      <h5 className="fw-3 mb-3 hover-pointer hover-pointer-green" onClick={handleMyEventsClick}>My Events</h5>
                     </div>
                     <div className="filter-content">
                       {city ? (

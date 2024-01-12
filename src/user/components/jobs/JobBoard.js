@@ -229,18 +229,21 @@ const JobBoard = () => {
     };
 
     const deleteMyJob = async (id) => {
-        try {
-            const response = await deleteUserPostedSingleJob(id);
-            if (response && response.status === 200) {
-                fetchMyJobs(page, 20);
-                setServerError("");
-            }
-        } catch (error) {
-            //Unauthorized
-            if (error.response && error.response.status === 401) {
-                navigate("/login");
-            } else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
+        const isConfirmed = window.confirm("Are you sure you want to delete?");
+        if (isConfirmed) {
+            try {
+                const response = await deleteUserPostedSingleJob(id);
+                if (response && response.status === 200) {
+                    fetchMyJobs(page, 20);
+                    setServerError("");
+                }
+            } catch (error) {
+                //Unauthorized
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                } else if (error.response && error.response.status === 500) {
+                    setServerError("Oops! Something went wrong on our server.");
+                }
             }
         }
     };

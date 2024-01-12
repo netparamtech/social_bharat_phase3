@@ -85,18 +85,21 @@ const ServiceList = () => {
   }
 
   const handleDelete = async (id) => {
-    try {
-      const response = await deleteServiceByID(id);
-      if (response && response.status === 200) {
-        fetchData();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        navigate('/admin');
-      }
-      else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage } });
+    const isConfirmed = window.confirm("Are you sure you want to delete?");
+    if (isConfirmed) {
+      try {
+        const response = await deleteServiceByID(id);
+        if (response && response.status === 200) {
+          fetchData();
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate('/admin');
+        }
+        else if (error.response && error.response.status === 500) {
+          let errorMessage = error.response.data.message;
+          navigate('/server/error', { state: { errorMessage } });
+        }
       }
     }
   }

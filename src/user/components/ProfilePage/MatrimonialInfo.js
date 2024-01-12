@@ -7,6 +7,7 @@ import { setLoader } from "../../actions/loaderAction";
 const MatrimonialInfo = (props) => {
   const { user } = props;
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
+  const [nameLabel,setNameLabel] = useState('');
 
   const [manglik, setManglik] = useState('');
 
@@ -26,13 +27,13 @@ const MatrimonialInfo = (props) => {
       case "Self":
         return "My Profile";
       case "Sister":
-        return "Profile Created for My Sister";
+        return `Profile Created for My Sister ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
       case "Brother":
-        return "Profile Created for My Brother";
+        return `Profile Created for My Brother ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
       case "Son":
-        return "Profile Created for My Son";
+        return `Profile Created for My Son ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
       case "Daughter":
-        return "Profile Created for My Daughter";
+        return `Profile Created for My Daughter ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
       // Add more cases as needed
       default:
         return "Matrimonial Info";

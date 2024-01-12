@@ -77,6 +77,7 @@ const UpdateMatrimonial = (props) => {
   const [biodataFile, setBiodataFile] = useState("");
   const [tempBiodataFileUrl, setTempBiodataFileUrl] = useState("");
   const [biodataPreview, setBiodataPreview] = useState("");
+  const [nameLabel, setNameLabel] = useState('Name');
 
   const [errors, setErrors] = useState("");
   const [messagePhotos, setMessagePhotos] = useState('');
@@ -256,12 +257,13 @@ const UpdateMatrimonial = (props) => {
       sisters_details: sistersDetails ? sistersDetails : '',
       salary_package: packageValue ? packageValue : '',
       matrimonial_profile_gender: gender,
+      matrimonial_profile_name: matrimonialProfileName,
       matrimonial_profile_dob: dob,
       is_manglik: manglicStatus,
       profile_created_for: updateFor && updateFor.label,
       skin_tone: 'DARK',
       subcast_id,
-      matrimonial_profile_name:matrimonialProfileName,
+      matrimonial_profile_name: matrimonialProfileName,
     };
 
 
@@ -322,6 +324,7 @@ const UpdateMatrimonial = (props) => {
   useEffect(() => {
     // Set default values from userMatrimonial prop when it changes
     if (userMatrimonial) {
+      setMatrimonialProfileName(userMatrimonial.matrimonial_profile_name || "N/A")
       setFatherName(userMatrimonial.father_name || "N/A");
       setMotherName(userMatrimonial.mother_name || "N/A");
       setSkinTone(userMatrimonial.skin_tone || "");
@@ -393,6 +396,23 @@ const UpdateMatrimonial = (props) => {
 
   }, [userMatrimonial]);
 
+  useEffect(() => {
+    if (updateFor && user) {
+      if (updateFor.label === 'Self') {
+        setNameLabel('Your Name');
+        setMatrimonialProfileName(user.user.name);
+      } else if (updateFor.label === 'Brother') {
+        setNameLabel('Name Of Brother');
+      } else if (updateFor.label === 'Sister') {
+        setNameLabel('Name Of Sister');
+      } else if (updateFor.label === 'Son') {
+        setNameLabel('Name Of Son');
+      } else if (updateFor.label === 'Daughter') {
+        setNameLabel('Name Of Daughter');
+      }
+    }
+  }, [updateFor])
+
   //fetch all active subcast communities
   const fetchSubcastsCommunities = async () => {
     dispatch(setLoader(true));
@@ -456,17 +476,20 @@ const UpdateMatrimonial = (props) => {
                         options={updateForOptions}
                         placeholder="Select Update For"
                       />
+                      {errors && errors.profile_created_for && (
+                        <span className="error">{errors.profile_created_for}</span>
+                      )}
                       {/* Add error handling if needed */}
                     </div>
                   </div>
                   <div className="row">
                     <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
-                      <label className="form-label">Name {" "}<span className="text-danger">*</span></label>
+                      <label className="form-label">{nameLabel} {" "}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         name="fatherName"
                         id="fatherName"
-                        placeholder="Enter Father Name"
+                        placeholder="Enter your full name"
                         className="form-control "
                         autoFocus
                         defaultValue={matrimonialProfileName}
@@ -531,8 +554,8 @@ const UpdateMatrimonial = (props) => {
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
-                      {errors && errors.gender && (
-                        <span className="error">{errors.gender}</span>
+                      {errors && errors.matrimonial_profile_gender && (
+                        <span className="error">{errors.matrimonial_profile_gender}</span>
                       )}
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">

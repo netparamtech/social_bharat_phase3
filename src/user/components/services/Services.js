@@ -196,8 +196,8 @@ const Services = () => {
       experience,
       description,
       status,
-      state: selectedState&&selectedState.label ? selectedState.label : '',
-      city: selectedCity&&selectedCity.label ? selectedCity.label : '',
+      state: selectedState && selectedState.label ? selectedState.label : '',
+      city: selectedCity && selectedCity.label ? selectedCity.label : '',
     };
 
     try {
@@ -208,7 +208,7 @@ const Services = () => {
         setErrors("");
         setAlertClass("alert-success");
         setMessage(response.data.message);
-       
+
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -318,15 +318,22 @@ const Services = () => {
             <div className="row">
               <div className="col-12 col-sm-8 rounded mb-3">
                 <div className="card shadow p-3">
-                  <Search
-                    className=""
-                    placeholder="Enter Search Text"
-                    allowClear
-                    enterButton="Search"
-                    size="large"
-                    onChange={handleSearchChange}
-                    autoFocus
-                  />
+                  <div className="row">
+                    <div className="col-sm-3 col-8">
+                      <input type="text"
+                        className="form-control-custom"
+                        placeholder="Enter Search Text"
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onChange={handleSearchChange}
+                        autoFocus
+                      />
+                    </div>
+                    <div className="col-sm-2 col-4">
+                      <button className=" hover-pointer btn-info text-light form-control-custom hover-pointer-green bg-darkskyblue">Search</button>
+                    </div>
+                  </div>
 
                   <div
                     className="row mb-4 sevice-item"

@@ -155,17 +155,20 @@ const AllJobs = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      const response = await deleteJobsPosted(id);
-      if (response && response.status === 200) {
-        fetchData();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        navigate("/admin");
-      } else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate("/server/error", { state: { errorMessage } });
+    const isConfirmed = window.confirm("Are you sure you want to delete?");
+    if (isConfirmed) {
+      try {
+        const response = await deleteJobsPosted(id);
+        if (response && response.status === 200) {
+          fetchData();
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate("/admin");
+        } else if (error.response && error.response.status === 500) {
+          let errorMessage = error.response.data.message;
+          navigate("/server/error", { state: { errorMessage } });
+        }
       }
     }
   };
@@ -311,7 +314,7 @@ const AllJobs = () => {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
-        <div className="d-flex justify-content-between" style={{width:'80px'}}>
+        <div className="d-flex justify-content-between" style={{ width: '80px' }}>
           {
             activeNavItem === 'MY JOBS' ? (
               <a
@@ -477,14 +480,14 @@ const AllJobs = () => {
                     // onChange={handleTableChange}
 
                     rowKey={(record) => record.id}
-                    // onChange={handleSearchChange}
+                  // onChange={handleSearchChange}
                   />
                 ) : (<CreateJobs actionInModel={actionInModel} />)
-              }
+                }
 
-              {
-                openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
-              }
+                {
+                  openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
+                }
 
                 {openUpdateForm ? (
                   <UpdateJobPosted

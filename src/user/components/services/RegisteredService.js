@@ -36,23 +36,30 @@ const RegisteredService = () => {
     };
 
     const handleDelete = async (id) => {
-        dispatch(setLoader(true));
-        try {
-            const response = await deleteUserRegisteredSingleService(id);
-            if (response && response.status === 200) {
-                fetchServices();
+        // Display a confirmation dialog
+        const isConfirmed = window.confirm("Are you sure you want to delete?");
+
+        // If the user confirms the deletion, proceed with the delete operation
+        if (isConfirmed) {
+            dispatch(setLoader(true));
+
+            try {
+                const response = await deleteUserRegisteredSingleService(id);
+                if (response && response.status === 200) {
+                    fetchServices();
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    navigate('/login');
+                } else if (error.response && error.response.status === 500) {
+                    setServerError("Oops! Something went wrong on our server.");
+                }
+            } finally {
+                dispatch(setLoader(false));
             }
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                navigate('/login');
-            }
-            else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
-            }
-        } finally {
-            dispatch(setLoader(false));
         }
-    }
+    };
+
 
 
     const columns = [
@@ -148,8 +155,8 @@ const RegisteredService = () => {
                     <div className="card-header bg-darkskyblue">
                         <div className="d-sm-flex align-items-center justify-content-between ">
                             REGISTERED SERVICES
-                           
-                            <DropdownOnServices path = {window.location.pathname} />
+
+                            <DropdownOnServices path={window.location.pathname} />
                         </div>
                     </div>
                     <div className="card-body">

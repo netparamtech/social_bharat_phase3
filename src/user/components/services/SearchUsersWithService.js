@@ -233,9 +233,9 @@ const SearchUsersWithService = () => {
           <div id="" className="container">
             <div className="card shadow card-search">
               <div className="card-header bg-darkskyblue">
-              {title}
+                {title}
                 <div className="d-sm-flex align-items-center float-right">
-                  
+
                   <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
                     onClick={(e) => {
                       e.preventDefault();
@@ -382,19 +382,6 @@ const SearchUsersWithService = () => {
                                           }
 
                                         </p>{" "}
-                                        <p>
-                                          Occupation-
-                                          {item.occupation
-                                            ? item.occupation
-                                            : "N/A"}
-                                        </p>
-
-                                        <p>
-                                          Education-
-                                          {item.highest_qualification
-                                            ? item.highest_qualification
-                                            : "N/A"}
-                                        </p>
 
                                       </div>
                                     </div>

@@ -1,10 +1,10 @@
-import { Table } from "antd";
+import { Table, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteUserRegisteredSingleService, fetchUserRegisteredServices, userAppliedForSameJob } from "../../services/userService";
+import { userAppliedForSameJob } from "../../services/userService";
 import { useEffect, useState } from "react";
-import { setLoader } from "../../actions/loaderAction";
-import DropdownOnServices from "../services/DropdownOnServices";
+import { Option } from "antd/es/mentions";
+
 
 const UserAppliedJobDetails = () => {
     const { id } = useParams();
@@ -21,6 +21,7 @@ const UserAppliedJobDetails = () => {
     const [defaultImage, setDefaultImage] = useState(
         "/user/images/download.png"
     );
+    const [selectedColor, setSelectedColor] = useState(null);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -76,6 +77,18 @@ const UserAppliedJobDetails = () => {
     //     }
     // }
 
+    useEffect(() => {
+        if (selectedColor) {
+            console.log(`color changed to ${selectedColor}`);
+        }
+    }, [selectedColor]);
+
+    const colorDropdown = [
+        { value: "red", label: "Red" },
+        { value: "blue", label: "Blue" },
+        { value: "green", label: "Green" },
+        { value: "yellow", label: "Yellow" },
+    ];
 
     const columns = [
         {
@@ -102,6 +115,19 @@ const UserAppliedJobDetails = () => {
         {
             title: 'email', dataIndex: 'email',
         },
+        {
+            title: 'Set Color',
+            dataIndex: 'id', // Assuming 'id' is the unique identifier for each row
+            render: (text, record) => (
+                <div className="">
+
+                </div>
+            ), width: 30
+        },
+        {
+            title: 'Remark', dataIndex: 'remark',
+        },
+
 
     ];
 
@@ -133,6 +159,17 @@ const UserAppliedJobDetails = () => {
                 <div className="card shadow card-search">
                     <div className=" card-header bg-darkskyblue  fs-6 justify-content-between d-flex">
                         <div> REGISTERED CONDIDATES </div>
+                        <Select
+                            style={{ width: 120 }}
+                            placeholder="Select Color"
+                            onChange={(color) => setSelectedColor(color)}
+                        >
+                            {colorDropdown.map((option) => (
+                                <Option key={option.value} value={option.value}>
+                                    {option.label}
+                                </Option>
+                            ))}
+                        </Select>
                         <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">

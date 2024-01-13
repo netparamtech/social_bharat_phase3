@@ -576,7 +576,7 @@ export const event = async (data) => {
 };
 
 //Update Event
-export const updateEvent = async (data,id) => {
+export const updateEvent = async (data, id) => {
   try {
     const response = await apiWithHeaders.put(`/event/${id}`, data);
     return response;
@@ -609,10 +609,10 @@ export const featuredEvent = async (id) => {
 //delete Event by id
 export const deleteEventByID = async (id) => {
   try {
-      const response = await apiWithHeaders.delete(`/events/${id}`);
-      return response;
+    const response = await apiWithHeaders.delete(`/events/${id}`);
+    return response;
   } catch (error) {
-      throw error;
+    throw error;
   }
 }
 
@@ -901,6 +901,16 @@ export const fetchAllAppliedJobs = async () => {
     throw error;
   }
 };
+
+//toggle status-inactive for applied jobs
+export const toggleStatusInactiveForIds = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/jobs/status-inactive', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
 
 //fetch all events
 export const fetchAllEvents = async (searchText, page, size, state, city) => {

@@ -48,8 +48,10 @@ const NavbarTransparent = (props) => {
     if (isAuthenticUser) {
       navigate("/dashboard");
     } else {
-      navigate("/login");
-      const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+      const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+      if (userConfirmed) {
+        navigate('/login');
+      }
     }
   };
 
@@ -108,11 +110,15 @@ const NavbarTransparent = (props) => {
     } else {
       if (isAndroidUsed) {
         showDrawer();
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       } else {
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       }
 
     }
@@ -132,11 +138,15 @@ const NavbarTransparent = (props) => {
     } else {
       if (isAndroidUsed) {
         showDrawer();
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       } else {
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       }
 
     }
@@ -156,11 +166,15 @@ const NavbarTransparent = (props) => {
     } else {
       if (isAndroidUsed) {
         showDrawer();
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       } else {
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       }
 
     }
@@ -180,11 +194,15 @@ const NavbarTransparent = (props) => {
     } else {
       if (isAndroidUsed) {
         showDrawer();
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       } else {
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       }
 
     }
@@ -204,11 +222,15 @@ const NavbarTransparent = (props) => {
     } else {
       if (isAndroidUsed) {
         showDrawer();
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       } else {
-        navigate("/login");
-        const userConfirmed = window.confirm("You are not authorized to access this. Please login to access this service.");
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
       }
 
     }
@@ -259,6 +281,9 @@ const NavbarTransparent = (props) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
+              {
+                !isAuthenticUser && <><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li></>
+              }
 
               <li className="nav-item">
                 <a

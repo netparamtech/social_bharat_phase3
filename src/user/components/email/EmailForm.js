@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
+import { sendEmail } from '../../services/userService';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setLoader } from '../../actions/loaderAction';
 
 const EmailForm = () => {
     const [emailData, setEmailData] = useState({
@@ -7,6 +12,10 @@ const EmailForm = () => {
         subject: '',
         message: '',
     });
+    const [errors, setErrors] = useState("");
+    const [serverError, setServerError] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,30 +30,37 @@ const EmailForm = () => {
 
         // Assuming you have a server-side endpoint to handle email sending
         try {
-            const response = await fetch('/api/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(emailData),
-            });
+            dispatch(setLoader(true));
+            const response = await sendEmail(emailData);
+            if (response && response.status === 201) {
+                setErrors('');
+                setServerError('');
+                toast.success("Email sent successfully.")
 
-            if (response.ok) {
-                console.log('Email sent successfully!');
-                // You can handle success feedback here
-            } else {
-                console.error('Error sending email');
-                // You can handle error feedback here
             }
         } catch (error) {
-            console.error('Error sending email', error);
-            // You can handle error feedback here
+            // Handle error
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+            }
+
+            //Unauthorized
+            else if (error.response && error.response.status === 401) {
+                navigate("/login");
+            }
+            //Internal Server Error
+            else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            }
+        } finally {
+            dispatch(setLoader(false));
         }
     };
 
     return (
         <Card>
             <Card.Body>
+                {serverError && <span className='error'>{serverError}</span>}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formTo">
                         <Form.Label>To:</Form.Label>

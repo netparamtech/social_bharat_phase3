@@ -953,6 +953,15 @@ export const fetchAllEvents = async (searchText, page, size, state, city) => {
     throw error;
   }
 };
+//send email
+export const sendEmail = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/send-mail', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
 
 //fetch all subcasts
 export const fetchAllSubcasts = async (communityId) => {

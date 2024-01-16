@@ -1791,3 +1791,24 @@ input[type="number"] {
   border-radius: 10px !important;
   width: fit-content;
 }
+
+.ant-table-row-red{
+  background-color: red;
+}
+.ant-table-row-blue{
+  background-color: blue;
+}
+.ant-table-row-yellow{
+  background-color: yellow;
+}
+.ant-table-row-green{
+  background-color: green;
+}
+#service-section .ant-table-tbody > tr.ant-table-row:hover > td {
+  background-color: initial;
+}
+
+/* If you want to remove the hover effect for the selected row as well */
+#service-section .ant-table-tbody > tr.ant-table-row-selected > td {
+  background-color: initial;
+}

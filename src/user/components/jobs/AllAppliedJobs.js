@@ -105,41 +105,29 @@ const AllAppliedJobs = () => {
         {
             title: 'S.No',
             dataIndex: 'sno',
-            render: (text, record, index) => index + 1,
+            render: (text, record, index) => index + 1,width:70,
         },
         {
             title: 'Company',
-            dataIndex: 'company',
+            dataIndex: 'company',width:200,
         },
         {
-            title: 'Job Title', dataIndex: 'job_title',
+            title: 'Job Title', dataIndex: 'job_title',width:200,
         },
         {
             title: 'Applied Date', dataIndex: 'applied_date', render: (text, record, index) => (
                 <div className="">
                     {formatDate(record.applied_date)}
-                    <input type="checkbox" className="form-check-input m-2" onChange={() => handleCheckboxChange(record.id)} />
                 </div>
-            )
+            ),width:200,
         },
         {
-            title: 'Set Color',
-            dataIndex: 'id', // Assuming 'id' is the unique identifier for each row
-            render: (text, record) => (
-                <div>
-                    {colorDropdown}
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => handleColorChange(record.id, selectedColor)}
-                    >
-                        Apply Color
-                    </button>
+            title: 'Select', dataIndex: 'id', render: (text, record, index) => (
+                <div className="">
+                    <input type="checkbox" className="form-check-input" onChange={() => handleCheckboxChange(record.id)} />
                 </div>
-            ),
-        }
-
-
+            ),width:100,
+        },
     ];
 
     const fetchSearchData = () => {

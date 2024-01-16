@@ -452,9 +452,8 @@ const JobBoard = () => {
                                 </div>
                             )}
 
-                            <Navbar bg="light" expand="lg" >
+                            <Navbar expanded={true} bg="light" expand="lg" >
                                 <Navbar.Brand>JOB BOARD</Navbar.Brand>
-                                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
                                         <Nav.Link
@@ -578,15 +577,19 @@ const JobBoard = () => {
                                                                 </div>
                                                                 <div className="row wow animate__animated animate__zoomIn ">
                                                                     <div className="col-md-3 col-sm-3">
-                                                                        <Image
-                                                                            src={
-                                                                                item.logo ? item.logo : defaultImage
-                                                                            }
-                                                                            alt={item.name}
-                                                                            title={item.name}
-                                                                            className="avatar img-fluid img-circle"
-                                                                            width={70}
-                                                                        />
+                                                                        {
+                                                                            checkPdf(item.logo) ? (
+                                                                                <Image
+                                                                                    src={
+                                                                                        item.logo ? item.logo : defaultImage
+                                                                                    }
+                                                                                    alt={item.name}
+                                                                                    title={item.name}
+                                                                                    className="avatar img-fluid img-circle"
+                                                                                    width={70}
+                                                                                />
+                                                                            ) : ''
+                                                                        }
                                                                     </div>
 
                                                                     <div className="col-md-7 col-sm-8">

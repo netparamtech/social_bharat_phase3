@@ -29,6 +29,12 @@ const FeaturedJobs = () => {
   const handlePageSizeChange = (current, pageSize) => {
     setSize(pageSize);
   };
+  const checkPdf = (pdfString) => {
+    if (pdfString.startsWith("uploads")) {
+      return "";
+    }
+    return pdfString;
+  }
 
   const columns = [
     {
@@ -41,12 +47,16 @@ const FeaturedJobs = () => {
         // onClick={() => navigate(`/users-basedOn-services/${record.title}`)}
         >
           <p className="text-muted mx-auto"> {record.company}</p>
-          <img
-            src={record.photo ? record.photo : defaultImage}
-            className=""
-            width="70"
-            height={70}
-          />
+          {
+            checkPdf(record.logo) ? (
+              <img
+                src={record.logo ? record.logo : defaultImage}
+                className=""
+                width="70"
+                height={70}
+              />
+            ) : ''
+          }
           <div className="text-muted">
             <b>Job Title : </b>
             {record.job_title}
@@ -62,8 +72,8 @@ const FeaturedJobs = () => {
             {/* <button type="button" className="btn btn-primary btn-sm">Apply</button> */}
             <div className="row mt-4">
               <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                <button type="button" className="btn btn-primary w-100" onClick={()=>applyForAJobPosted(record)}
-                  disabled={record.is_job_applied === 'false' ? '' : true}
+                <button type="button" className="btn btn-primary w-100" onClick={() => applyForAJobPosted(record)}
+                  disabled={record.is_job_applied === 'false' ? false : true}
                 >
                   Apply
                 </button>
@@ -106,7 +116,8 @@ const FeaturedJobs = () => {
       dispatch(setLoader(true));
       const response = await applyJob(data);
       if (response && response.status === 201) {
-        toast.success(`You successfully has applied for this job ${appliedJob.job_title}`)
+        toast.success(`You successfully has applied for this job ${appliedJob.job_title}`);
+        fetchMyJobs();
       }
     } catch (error) {
       //Unauthorized

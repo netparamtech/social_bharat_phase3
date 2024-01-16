@@ -912,6 +912,36 @@ export const toggleStatusInactiveForIds = async (data) => {
   }
 }
 
+//toggle u_status-inactive for applied jobs
+export const toggleUStatusInactiveForIds = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/jobs/u_status-inactive', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//chnage row color for user applied to a job
+export const changeRowColorInJobDetails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/job/row-color', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//update remark for user applied to a job
+export const updateRemarkInJobDetails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/job/remark', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 //fetch all events
 export const fetchAllEvents = async (searchText, page, size, state, city) => {
   try {

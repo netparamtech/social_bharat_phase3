@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { changeRowColorInJobDetails, toggleUStatusInactiveForIds, updateRemarkInJobDetails, userAppliedForSameJob } from '../../services/userService';
 import { Option } from 'antd/es/mentions';
+import EmailModel from '../email/EmailModel';
 
 const UserAppliedJobDetails = () => {
     const { id } = useParams();
@@ -137,30 +138,34 @@ const UserAppliedJobDetails = () => {
             title: 'Email',
             dataIndex: 'email',
             render: (text, record, index) => (
-                <div>
-                   <img className='' src='/user/images/mail.png' width={20} /> 
+                <div className='d-flex justify-content-between'>
+                    <EmailModel />
+                    <a className="" href={`tel:${record && record.mobile}`}>
+                        <img className='ml-2' src='/user/images/phone.png' width={20} alt="Phone" />
+                    </a>
+
                 </div>
-            ),
+            ), width: 100,
         },
     ];
 
-    useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            const confirmationMessage = 'Changes you made may not be saved. Are you sure you want to leave?';
+    // useEffect(() => {
+    //     const handleBeforeUnload = (e) => {
+    //         const confirmationMessage = 'Changes you made may not be saved. Are you sure you want to leave?';
 
-            // Standard for most browsers
-            e.returnValue = confirmationMessage;
+    //         // Standard for most browsers
+    //         e.returnValue = confirmationMessage;
 
-            // For some older browsers
-            return confirmationMessage;
-        };
+    //         // For some older browsers
+    //         return confirmationMessage;
+    //     };
 
-        window.addEventListener('beforeunload', handleBeforeUnload);
+    //     window.addEventListener('beforeunload', handleBeforeUnload);
 
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, []); // Run only once on component mount
+    //     return () => {
+    //         window.removeEventListener('beforeunload', handleBeforeUnload);
+    //     };
+    // }, []); // Run only once on component mount
 
     const fetchSearchData = () => {
         if (copiedData) {
@@ -220,7 +225,6 @@ const UserAppliedJobDetails = () => {
     };
 
     const colorChange = (color) => {
-        console.log(color)
         setSelectedColor(color);
         setIsColor(!isColor);
     }
@@ -228,7 +232,6 @@ const UserAppliedJobDetails = () => {
     const handleRemarkChange = (jobId, e) => {
         setRemark(e.target.value);
         setJobId(jobId);
-        console.log(e.target.value, jobId);
     };
 
     const updateRemark = async () => {

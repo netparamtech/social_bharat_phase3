@@ -62,7 +62,7 @@ const LoginWithOtp = (props) => {
         setOtp("");
 
         if (response.data.data.is_password_set) {
-          navigate("/dashboard");
+          navigate("/");
         } else {
           navigate("/set-password");
         }

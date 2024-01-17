@@ -85,21 +85,35 @@ const ServiceList = () => {
   }
 
   const handleDelete = async (id) => {
-    try {
-      const response = await deleteServiceByID(id);
-      if (response && response.status === 200) {
-        fetchData();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        navigate('/admin');
-      }
-      else if (error.response && error.response.status === 500) {
-        let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage } });
+    const isConfirmed = window.confirm("Are you sure you want to delete?");
+    if (isConfirmed) {
+      try {
+        const response = await deleteServiceByID(id);
+        if (response && response.status === 200) {
+          fetchData();
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate('/admin');
+        }
+        else if (error.response && error.response.status === 500) {
+          let errorMessage = error.response.data.message;
+          navigate('/server/error', { state: { errorMessage } });
+        }
       }
     }
   }
+
+  const formatDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
 
   const columns = [
     {
@@ -145,6 +159,16 @@ const ServiceList = () => {
       sorter: true,
       sortDirections: ['asc', 'desc'],
     },
+    {
+      title: 'Created At', dataIndex: 'created_at',
+      render: (text, record) => (formatDate(record.created_at)),
+    },
+    {
+      title: 'Updated At', dataIndex: 'updated_at',
+      render: (text, record) => (formatDate(record.updated_at)),
+    },
+
+
     {
       title: 'Actions',
       dataIndex: 'actions',

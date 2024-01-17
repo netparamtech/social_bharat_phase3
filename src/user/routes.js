@@ -36,6 +36,8 @@ import JobBoardPage from "./pages/JobBoardPage";
 import UserAppliedJobDetailPage from "./pages/UserAppliedJobDetailPage";
 import AllAppliedJobsPage from "./pages/AllAppliedJobsPage";
 import SearchEventsPage from "./pages/SearchEventsPage";
+import MyEventsPage from "./pages/MyEventsPage";
+import UpdateEventPage from "./pages/UpdateEventPage";
 
 const userRoutes = [
     {
@@ -285,7 +287,17 @@ const userRoutes = [
         path: '/user/search/events',
         component: SearchEventsPage,
         exact: true
-    }
+    },
+    {
+        path: '/user/my-events',
+        component: MyEventsPage,
+        exact: true
+    },
+    {
+        path: '/user/my-event/:id/update',
+        component: UpdateEventPage,
+        exact: true
+    },
 
 ]
 

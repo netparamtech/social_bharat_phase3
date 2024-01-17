@@ -8,6 +8,7 @@ import { createNewJobPost, fetchAllCitiesByStateID, fetchAllStatesByCountryID, u
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { toast } from 'react-toastify';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -198,6 +199,7 @@ const CreateJob = () => {
 
     const getAllCities = async (stateID) => {
         dispatch(setLoader(true));
+       if(stateID){
         try {
             const response = await fetchAllCitiesByStateID(stateID);
             if (response && response.status === 200) {
@@ -216,6 +218,7 @@ const CreateJob = () => {
         } finally {
             dispatch(setLoader(false));
         }
+       }
     };
 
     const handleSubmit = async () => {
@@ -246,6 +249,7 @@ const CreateJob = () => {
                 setErrors('');
                 setMessage(response.data.message);
                 setAlertClass("alert-success");
+                toast.success("You have successfully created this job");
             }
         } catch (error) {
             dispatch(setLoader(false));

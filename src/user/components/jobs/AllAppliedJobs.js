@@ -1,10 +1,10 @@
-import { Table } from "antd";
+import { Select, Table } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteUserRegisteredSingleService, fetchAllAppliedJobs, fetchUserRegisteredServices, userAppliedForSameJob } from "../../services/userService";
+import { fetchAllAppliedJobs, toggleStatusInactiveForIds } from "../../services/userService";
 import { useEffect, useState } from "react";
-import { setLoader } from "../../actions/loaderAction";
-import DropdownOnServices from "../services/DropdownOnServices";
+import Search from "antd/es/input/Search";
+import { Option } from "antd/es/mentions";
 
 const AllAppliedJobs = () => {
     const { id } = useParams();
@@ -20,6 +20,9 @@ const AllAppliedJobs = () => {
     const [defaultImage, setDefaultImage] = useState(
         "/user/images/download.png"
     );
+    const [isChecked, setIsChecked] = useState(false);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedColor, setSelectedColor] = useState(null);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,6 +37,7 @@ const AllAppliedJobs = () => {
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
+        console.log(e.target.value)
     };
 
     const fetchMyJobs = async () => {
@@ -65,27 +69,65 @@ const AllAppliedJobs = () => {
         };
         return new Date(dateString).toLocaleDateString("en-US", options);
     };
+    const handleCheckboxChange = (rowId) => {
+
+        const updatedSelectedRowKeys = selectedRowKeys.includes(rowId)
+            ? selectedRowKeys.filter((id) => id !== rowId)
+            : [...selectedRowKeys, rowId];
+        setSelectedRowKeys(updatedSelectedRowKeys);
+    };
+
+    const colorDropdown = (
+        <Select
+            style={{ width: 120 }}
+            placeholder="Select Color"
+            onSelect={(color) => setSelectedColor(color)}
+        >
+            <Option value="red">Red</Option>
+            <Option value="blue">Blue</Option>
+            <Option value="green">Green</Option>
+            {/* Add more color options as needed */}
+        </Select>
+    );
+
+    const handleColorChange = (rowId, color) => {
+        // Handle color change logic here
+        // You may want to store the color in the state or perform any other actions
+        // For now, let's just log the selected color
+        console.log(`Row ID ${rowId} color changed to ${color}`);
+    };
+
+   
+
 
 
     const columns = [
         {
             title: 'S.No',
             dataIndex: 'sno',
-            render: (text, record, index) => index + 1,
+            render: (text, record, index) => index + 1,width:70,
         },
         {
             title: 'Company',
-            dataIndex: 'company',
+            dataIndex: 'company',width:200,
         },
         {
-            title: 'Job Title', dataIndex: 'job_title',
+            title: 'Job Title', dataIndex: 'job_title',width:200,
         },
         {
-            title: 'Applied Date', dataIndex: 'applied_date', render:(text, record, index) => (
-                formatDate(record.applied_date)
-            )
+            title: 'Applied Date', dataIndex: 'applied_date', render: (text, record, index) => (
+                <div className="">
+                    {formatDate(record.applied_date)}
+                </div>
+            ),width:200,
         },
-
+        {
+            title: 'Select', dataIndex: 'id', render: (text, record, index) => (
+                <div className="">
+                    <input type="checkbox" className="form-check-input" onChange={() => handleCheckboxChange(record.id)} />
+                </div>
+            ),width:100,
+        },
     ];
 
     const fetchSearchData = () => {
@@ -98,9 +140,42 @@ const AllAppliedJobs = () => {
         }
     }
 
+    const handleClearClicked = async () => {
+        const data = {
+            ids: selectedRowKeys,
+        }
+        const isConfirmed = window.confirm("Are you certain you wish to proceed with the clearance process? Please note that all cleared items will no longer be visible.");
+        if (isConfirmed) {
+            try {
+                const response = await toggleStatusInactiveForIds(data);
+                if (response && response.status === 200) {
+                    setIsChecked(false);
+                    setSelectedRowKeys([]);
+                    fetchMyJobs();
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+
+                } else if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                } else if (error.response && error.response.status === 500) {
+                    setServerError("Oops! Something went wrong on our server.");
+                }
+            }
+        }
+    }
+
     useEffect(() => {
         fetchSearchData();
     }, [searchQuery]);
+
+    useEffect(() => {
+        if (selectedRowKeys.length > 0) {
+            setIsChecked(true);
+        } else {
+            setIsChecked(false);
+        }
+    }, [selectedRowKeys]);
 
     useEffect(() => {
         fetchMyJobs();
@@ -110,18 +185,29 @@ const AllAppliedJobs = () => {
             <div className="container">
                 <div className="card shadow card-search">
                     {serverError && <span className="error">{serverError}</span>}
-                    
+
                     <div className=" card-header shadow py-3 fs-6 rounded justify-content-between d-flex">
                         <div> Applied Jobs</div>
-                        <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
+                        <div><button type="button" className="rounded border-0" disabled={!isChecked} onClick={handleClearClicked}>Clear</button>
+                        </div>
+                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
                         <div>
+                            <Search
+                                placeholder="Search"
+                                allowClear
+                                onChange={handleSearchChange}
+                                style={{ marginBottom: 20, width: 200 }}
+                            />
 
                             <Table
-                                title={() => 'Applied Jobs'}  // Set the title to 'Enquiries'
                                 dataSource={data}
                                 columns={columns}
+                                scroll={{
+                                    y: 540,
+                                    x: 0,
+                                }}
                                 pagination={{
                                     current: page,
                                     pageSize: size,
@@ -129,10 +215,10 @@ const AllAppliedJobs = () => {
                                     onChange: handlePageChange,
                                     onShowSizeChange: handlePageSizeChange,
                                 }}
-
                                 rowKey={(record) => record.id}
-                            // onChange={handleSearchChange}
+
                             />
+
                         </div>
                     </div>
                 </div>

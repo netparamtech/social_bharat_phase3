@@ -565,10 +565,20 @@ export const fetchTestimonialsOnHomePage = async () => {
   }
 };
 
-//Event
+//Create Event
 export const event = async (data) => {
   try {
     const response = await apiWithHeaders.post("/events", data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//Update Event
+export const updateEvent = async (data, id) => {
+  try {
+    const response = await apiWithHeaders.put(`/event/${id}`, data);
     return response;
   } catch (error) {
     throw error;
@@ -585,13 +595,43 @@ export const featuredEventsByAdmin = async () => {
   }
 };
 
+//Featured Events
+export const featuredEvent = async (id) => {
+  try {
+    const response = await apiWithHeaders.patch(`/event/toggle-featured/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+//delete Event by id
+export const deleteEventByID = async (id) => {
+  try {
+    const response = await apiWithHeaders.delete(`/events/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 //fetch Event by id
 export const fetchEventByID = async (id) => {
   try {
-      const response = await apiWithHeaders.get(`/events/${id}`);
-      return response;
+    const response = await apiWithHeaders.get(`/events/${id}`);
+    return response;
   } catch (error) {
-      throw error;
+    throw error;
+  }
+}
+//all events posted by logged user
+export const fetchAllEventsByLoggedUser = async () => {
+  try {
+    const response = await apiWithHeaders.get('/events');
+    return response;
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -862,6 +902,46 @@ export const fetchAllAppliedJobs = async () => {
   }
 };
 
+//toggle status-inactive for applied jobs
+export const toggleStatusInactiveForIds = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/jobs/status-inactive', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//toggle u_status-inactive for applied jobs
+export const toggleUStatusInactiveForIds = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/jobs/u_status-inactive', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//chnage row color for user applied to a job
+export const changeRowColorInJobDetails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/job/row-color', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//update remark for user applied to a job
+export const updateRemarkInJobDetails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/applied/job/remark', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 //fetch all events
 export const fetchAllEvents = async (searchText, page, size, state, city) => {
   try {
@@ -873,6 +953,15 @@ export const fetchAllEvents = async (searchText, page, size, state, city) => {
     throw error;
   }
 };
+//send email
+export const sendEmail = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/send-mail', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
 
 //fetch all subcasts
 export const fetchAllSubcasts = async (communityId) => {

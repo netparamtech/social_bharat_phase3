@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
 import {
     Navbar,
-    Nav,
-    NavDropdown,
-    Form,
-    FormControl,
-    Button,
-    Alert,
-    Offcanvas,
+    Nav
 } from "react-bootstrap";
-import FeaturedJobs from "./FeaturedJobs";
 import {
     applyJob,
     deleteUserPostedSingleJob,
-    deleteUserPostedSingleService,
     fetchAllCitiesByStateID,
     fetchAllJobsByLoggedUser,
     fetchAllJobsPosted,
     fetchAllStatesByCountryID,
-    ifAlreadyAppliedSameJob,
     jobsApplicantStatistics,
     toggleJobRequest,
 } from "../../services/userService";
@@ -29,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateJobPosted from "./UpdateJobPosted";
 import { setLoader } from "../../actions/loaderAction";
 import Select from "react-select";
-import UserAppliedJobModel from "./UsersAppliedJobModel";
+import { toast } from 'react-toastify';
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -238,18 +229,21 @@ const JobBoard = () => {
     };
 
     const deleteMyJob = async (id) => {
-        try {
-            const response = await deleteUserPostedSingleJob(id);
-            if (response && response.status === 200) {
-                fetchMyJobs(page, 20);
-                setServerError("");
-            }
-        } catch (error) {
-            //Unauthorized
-            if (error.response && error.response.status === 401) {
-                navigate("/login");
-            } else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
+        const isConfirmed = window.confirm("Are you sure you want to delete?");
+        if (isConfirmed) {
+            try {
+                const response = await deleteUserPostedSingleJob(id);
+                if (response && response.status === 200) {
+                    fetchMyJobs(page, 20);
+                    setServerError("");
+                }
+            } catch (error) {
+                //Unauthorized
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                } else if (error.response && error.response.status === 500) {
+                    setServerError("Oops! Something went wrong on our server.");
+                }
             }
         }
     };
@@ -324,44 +318,7 @@ const JobBoard = () => {
         const pair = data.slice(i, i + 1); // Change 3 to 2 here
         groupedItems.push(pair);
     }
-    const calculateTimeDifference = (updatedDate) => {
-        const currentDate = new Date();
-        const updatedDateObj = new Date(updatedDate);
-        const differenceInSeconds = Math.floor(
-            (currentDate - updatedDateObj) / 1000
-        );
 
-        if (differenceInSeconds < 1) {
-            return "now";
-        } else if (differenceInSeconds < 60) {
-            return `${differenceInSeconds} sec ago`;
-        } else if (differenceInSeconds < 3600) {
-            const minutes = Math.floor(differenceInSeconds / 60);
-            return `${minutes} min ago`;
-        } else if (differenceInSeconds < 86400) {
-            const hours = Math.floor(differenceInSeconds / 3600);
-            return `${hours} hour ago`;
-        } else {
-            const days = Math.floor(differenceInSeconds / 86400);
-            if (!days) {
-                return "";
-            } else if (days) {
-                const months = Math.floor(days / 30);
-                if (!months) {
-                    return `${days} day ago`;
-                } else {
-                    const years = Math.floor(months / 12);
-                    if (!years) {
-                        return `${months} months ago`;
-                    } else {
-                        return `${years} years ago`;
-                    }
-                    return `${months} months ago`;
-                }
-            }
-            return `${days} day ago`;
-        }
-    };
     const formatDescription = (description) => {
         // Regular expression to match URLs
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -373,26 +330,7 @@ const JobBoard = () => {
 
         return { __html: formattedDescription };
     };
-    const alreadyAppliedJob = async (jobId) => {
-        try {
-            const response = await ifAlreadyAppliedSameJob(jobId);
-            if (response && response.status === 200) {
-                if (response.data.data > 0) {
-                    return "Hello";
-                }
-                return "";
-            }
-            return "";
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                navigate("/login");
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
-            }
-        }
-    };
+
     const applyForAJobPosted = async (appliedJob) => {
         const data = {
             job_id: appliedJob.id,
@@ -405,15 +343,19 @@ const JobBoard = () => {
         try {
             const response = await applyJob(data);
             if (response && response.status === 201) {
+                const state = selectedState ? selectedState.label : "";
+                const city = selectedCity ? selectedCity.label : "";
                 setIsApplyClicked(false);
                 setServerError("");
                 setErrors("");
                 getJobApplicantStatistics();
-                alert('Successfully');
+                fetchJobs(page, 20, state, city, activeNavItem);
+                toast.success(`You successfully has applied for this job ${appliedJob.job_title}`)
             }
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 400) {
+                toast.error('"Application Error: You have already submitted an application for this job. Duplicate applications are not allowed. If you have any questions or concerns, please contact our support team."')
                 setErrors(error.response.data.errors);
                 setShow(true);
                 setJobTitle(data.job_title);
@@ -436,6 +378,12 @@ const JobBoard = () => {
         };
         return new Date(dateString).toLocaleDateString("en-US", options);
     };
+    const checkPdf = (pdfString) => {
+        if (pdfString.startsWith("uploads")) {
+            return "";
+        }
+        return pdfString;
+    }
     useEffect(() => {
         if (isApplyClicked && appliedJob) {
             applyForAJobPosted(appliedJob);
@@ -504,9 +452,8 @@ const JobBoard = () => {
                                 </div>
                             )}
 
-                            <Navbar bg="light" expand="lg" >
+                            <Navbar expanded={true} bg="light" expand="lg" >
                                 <Navbar.Brand>JOB BOARD</Navbar.Brand>
-                                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
                                         <Nav.Link
@@ -630,15 +577,19 @@ const JobBoard = () => {
                                                                 </div>
                                                                 <div className="row wow animate__animated animate__zoomIn ">
                                                                     <div className="col-md-3 col-sm-3">
-                                                                        <Image
-                                                                            src={
-                                                                                item.logo ? item.logo : defaultImage
-                                                                            }
-                                                                            alt={item.name}
-                                                                            title={item.name}
-                                                                            className="avatar img-fluid img-circle"
-                                                                            width={70}
-                                                                        />
+                                                                        {
+                                                                            checkPdf(item.logo) ? (
+                                                                                <Image
+                                                                                    src={
+                                                                                        item.logo ? item.logo : defaultImage
+                                                                                    }
+                                                                                    alt={item.name}
+                                                                                    title={item.name}
+                                                                                    className="avatar img-fluid img-circle"
+                                                                                    width={70}
+                                                                                />
+                                                                            ) : ''
+                                                                        }
                                                                     </div>
 
                                                                     <div className="col-md-7 col-sm-8">
@@ -659,37 +610,6 @@ const JobBoard = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                {errors && errors.job_id ? (
-                                                                    <Offcanvas
-                                                                        show={show}
-                                                                        onHide={handleClose}
-                                                                        placement={"bottom"}
-                                                                    >
-                                                                        <Offcanvas.Header closeButton>
-                                                                            <Offcanvas.Title className="text-danger mx-auto">
-                                                                                <b>{jobTitle}</b>
-                                                                            </Offcanvas.Title>
-                                                                        </Offcanvas.Header>
-                                                                        <Offcanvas.Body className="text-danger mx-auto">
-                                                                            "Application Error: You have already
-                                                                            submitted an application for this job.
-                                                                            Duplicate applications are not allowed. If
-                                                                            you have any questions or concerns, please
-                                                                            contact our support team."
-                                                                            <p className="mx-auto">
-                                                                                <button
-                                                                                    className="btn btn-success mt-3"
-                                                                                    onClick={() => navigate("/contact")}
-                                                                                >
-                                                                                    Contact Us
-                                                                                </button>
-                                                                            </p>
-                                                                        </Offcanvas.Body>
-                                                                    </Offcanvas>
-                                                                ) : (
-                                                                    ""
-                                                                )}
 
                                                                 <div className="row wow animate__animated animate__zoomIn mt-2">
                                                                     <p
@@ -738,7 +658,7 @@ const JobBoard = () => {
                                                                     )}
 
                                                                     {
-                                                                        item.notification_pdf ? (
+                                                                        checkPdf(item.notification_pdf) ? (
                                                                             <p>Attachment-{
                                                                                 item.notification_pdf &&
                                                                                 <span>
@@ -793,16 +713,24 @@ const JobBoard = () => {
                                                                         )}
                                                                     </div>
                                                                     <div className="col-4 col-sm-4">
-                                                                        <a
-                                                                            className="hover-pointer text-decoration-none text-light fw-bold"
-                                                                            onClick={() =>
-                                                                                handleApplyClicked(true, item)
-
-                                                                            }
-                                                                        >
-                                                                            Apply
-                                                                        </a>
+                                                                        {
+                                                                            item.is_job_applied === 'false' ? (
+                                                                                <a
+                                                                                    className="hover-pointer text-decoration-none text-light fw-bold"
+                                                                                    onClick={() => handleApplyClicked(true, item)}
+                                                                                >
+                                                                                    Apply
+                                                                                </a>
+                                                                            ) : (
+                                                                                <a
+                                                                                    className="text-decoration-none text-secondary fw-bold "
+                                                                                >
+                                                                                    Apply
+                                                                                </a>
+                                                                            )
+                                                                        }
                                                                     </div>
+
                                                                     <div className="col-4 col-sm-4">
                                                                         {isMyJobsClicked ? (
                                                                             <div className="">
@@ -870,7 +798,7 @@ const JobBoard = () => {
                                                                 )}
                                                             </div>
                                                             {item.featured === "true" ? (
-                                                                <div className="card-footer text-danger">
+                                                                <div className="text-danger">
                                                                     Featured
                                                                 </div>
                                                             ) : (

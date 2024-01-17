@@ -48,27 +48,6 @@ const BodyContent = () => {
       {/* <!-- Content Row --> */}
       <div className="row">
 
-<<<<<<< HEAD
-      <div className="col-xl-3 col-md-6 mb-4">
-      <div className="card border-left-danger shadow h-100 py-2">
-        <div className="card-body">
-          <div className="row align-items-center">
-            <div className="col mr-2">
-              <div className="h5 mb-0 font-weight-bold text-gray-800">
-              
-                <Statistic
-                  
-                  title={
-                    <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                    <a href="/admin/users" className="text-danger stretched-link">
-                    ACTIVE USERS
-                    </a> 
-                    </span>
-                  }
-                  value={statistics && statistics.user_count}
-                  formatter={formatter}
-                />
-=======
         <div className="col-xl-3 col-md-6 mb-4">
           <div className="card border-left-primary shadow h-100 py-2">
             <div className="card-body">
@@ -104,7 +83,6 @@ const BodyContent = () => {
                     </svg>
                   </h1>
                 </div>
->>>>>>> a9b7fdf9264ede898509112bd6c83e37f4a9f4eb
               </div>
             </div>
           </div>

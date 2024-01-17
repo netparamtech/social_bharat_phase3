@@ -236,7 +236,7 @@ const SearchUsersWithService = () => {
               {title}
                 <div className="d-sm-flex align-items-center float-right">
                   
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer me-2 mt-2"
                     onClick={(e) => {
                       e.preventDefault();
                       navigate('/user/user-registered-services')
@@ -244,7 +244,7 @@ const SearchUsersWithService = () => {
                   >
                     My Registered Services
                   </a>
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer ms-2"
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer  mt-2"
                     onClick={(e) => {
                       e.preventDefault();
                       navigate('/user/search/service')

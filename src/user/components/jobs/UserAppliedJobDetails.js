@@ -139,7 +139,7 @@ const UserAppliedJobDetails = () => {
             dataIndex: 'email',
             render: (text, record, index) => (
                 <div className='d-flex justify-content-between'>
-                    <EmailModel />
+                    <EmailModel record = {record} />
                     <a className="" href={`tel:${record && record.mobile}`}>
                         <img className='ml-2' src='/user/images/phone.png' width={20} alt="Phone" />
                     </a>
@@ -301,7 +301,7 @@ const UserAppliedJobDetails = () => {
                             </button>
                         </div>
                         <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}>
-                            <i class="fa-solid fa-angles-left"></i> Go Back
+                            <i className="fa-solid fa-angles-left"></i> Go Back
                         </div>
                     </div>
                     <div className="card-body">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import { sendEmail } from '../../services/userService';
 import { toast } from 'react-toastify';
@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setLoader } from '../../actions/loaderAction';
 
-const EmailForm = () => {
+const EmailForm = (props) => {
+    const { record, handleOk } = props;
     const [emailData, setEmailData] = useState({
         to: '',
         subject: '',
@@ -57,6 +58,16 @@ const EmailForm = () => {
         }
     };
 
+    useEffect(() => {
+        if (record) {
+            setEmailData({
+                to: record.email,
+                subject: record.job_title,
+            })
+
+        }
+    }, [record]);
+
     return (
         <Card>
             <Card.Body>
@@ -71,6 +82,9 @@ const EmailForm = () => {
                             value={emailData.to}
                             onChange={handleChange}
                         />
+                        {errors.to && (
+                            <span className="error">{errors.to}</span>
+                        )}
                     </Form.Group>
 
                     <Form.Group controlId="formSubject">
@@ -82,6 +96,9 @@ const EmailForm = () => {
                             value={emailData.subject}
                             onChange={handleChange}
                         />
+                        {errors.subject && (
+                            <span className="error">{errors.subject}</span>
+                        )}
                     </Form.Group>
 
                     <Form.Group controlId="formMessage">
@@ -94,6 +111,9 @@ const EmailForm = () => {
                             value={emailData.message}
                             onChange={handleChange}
                         />
+                        {errors.message && (
+                            <span className="error">{errors.message}</span>
+                        )}
                     </Form.Group>
 
                     <Button className='mt-2 rounded' type="submit">

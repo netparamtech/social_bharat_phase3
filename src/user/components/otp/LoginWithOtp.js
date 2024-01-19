@@ -28,20 +28,29 @@ const LoginWithOtp = (props) => {
   const handleOTPChange = (e, index) => {
     const value = e.target.value;
     const updatedOtp = [...otp];
-  
+
     // Update the OTP array with the new value
     updatedOtp[index] = value;
-  
+
     // Join the OTP array into a string of maximum length 6
     const updatedOtpString = updatedOtp.slice(0, 6).join("");
-  
+
     // Set the updated OTP
     setOtp(updatedOtpString);
-  
+
     // Move the focus to the next OTP box if the current box is filled
     if (value !== "" && index < 5) {
+      console.log("inkey")
       const nextInput = document.getElementById(`otp-${index + 1}`);
       nextInput && nextInput.focus();
+    }
+
+    if (e.key === "Backspace" && index > 0) {
+      if (value === "") {
+        console.log("onKey")
+        const nextInput = document.getElementById(`otp-${index - 1}`);
+        nextInput && nextInput.focus();
+      }
     }
   };
 
@@ -92,7 +101,7 @@ const LoginWithOtp = (props) => {
 
   const resendOTP = async () => {
     setErrors("");
-   
+
     try {
       const response = await resendOtp(mobile);
 
@@ -165,6 +174,7 @@ const LoginWithOtp = (props) => {
                 value={otp[index] || ""}
                 maxLength="1" // Limit the input to one character
                 onChange={(e) => handleOTPChange(e, index)}
+                onKeyDown={(e) => handleOTPChange(e, index)}
                 autoFocus={index === 0}
               />
             ))}

@@ -21,6 +21,8 @@ const UpdateBusinessProfile = (props) => {
   const [businessEmail, setBusinessEmail] = useState('');
   const [businessWebsite, setBusinessWebsite] = useState('');
   const [status, setStatus] = useState('');
+  const [businessId, setBusinessId] = useState('');
+  const [description, setDescription] = useState('');
 
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -131,6 +133,7 @@ const UpdateBusinessProfile = (props) => {
     event.preventDefault();
     dispatch(setLoader(true));
     const businessData = {
+      id: businessId,
       business_name: businessName,
       business_category: businessType.label,
       street_address: streetAddress,
@@ -142,7 +145,9 @@ const UpdateBusinessProfile = (props) => {
       contact3: contact3,
       business_website: businessWebsite,
       business_email: businessEmail,
+      business_photos: tempBusinessPhotoUrl,
       status: status,
+      description,
     };
 
 
@@ -252,6 +257,8 @@ const UpdateBusinessProfile = (props) => {
       setBusinessWebsite(businessDetails.business_website || '');
       setBusinessPhoto(businessDetails.business_photos || '');
       setStatus(businessDetails.status || '');
+      setBusinessId(businessDetails.id);
+      setDescription(businessDetails.description || '');
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
           (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (setTempBusinessPhotoUrl([businessDetails.business_photos] || ''))
@@ -510,8 +517,8 @@ const UpdateBusinessProfile = (props) => {
                   </div>
                   <div className='row'>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Details</label>
-                      <p>(Please add your business details and website link if any.)</p>
+                      <label className="form-label">Business Website</label>
+                      <p>(Please add your business website link if any.)</p>
                       <textarea type="text"
                         name="businessWebsite"
                         id="businessWebsite"
@@ -521,6 +528,19 @@ const UpdateBusinessProfile = (props) => {
                         onChange={(e) => setBusinessWebsite(e.target.value)}
                       />
                       {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                    </div>
+                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <label className="form-label">Description</label>
+                      <p>(Please add your business details and links if any.)</p>
+                      <textarea type="text"
+                        name="businessWebsite"
+                        id="businessWebsite"
+                        placeholder="Enter Business Website Link"
+                        className="form-control"
+                        defaultValue={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                      {errors.description && <span className='error'>{errors.description}</span>}
                     </div>
 
                   </div>

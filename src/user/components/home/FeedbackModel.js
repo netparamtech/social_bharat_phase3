@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import UserRating from '../userRating/UserRating';
+import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setModelAction } from '../../actions/loaderAction';
+import UserRatingModel from '../userRating/userRatingModel';
 
 const FeedbackModel = () => {
   const [visible, setVisible] = useState(true);
@@ -22,10 +22,11 @@ const FeedbackModel = () => {
         onOk={() => handleModelShow()}
         onCancel={() => handleModelShow()}
         width={1000}
-        
+        footer={[]}
+        style={{backgroundColor:'green'}}
       >
-       <div>
-        <UserRating />
+       <div className='bg-success'>
+        <UserRatingModel />
        </div>
       </Modal>
     </>

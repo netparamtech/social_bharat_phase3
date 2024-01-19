@@ -962,6 +962,24 @@ export const sendEmail = async (data) => {
     throw error;
   }
 }
+//save email
+export const saveEmail = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/save-mail', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//fetchMails
+export const fetchMails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/emails', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
 
 //fetch all subcasts
 export const fetchAllSubcasts = async (communityId) => {

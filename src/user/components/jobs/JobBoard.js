@@ -54,6 +54,7 @@ const JobBoard = () => {
     const [jobTitle, setJobTitle] = useState("");
     const [applicationStatus, setApplicationStatus] = useState("");
     const [appliedStatistics, setAppliedStatistics] = useState([]);
+    const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -389,6 +390,20 @@ const JobBoard = () => {
             applyForAJobPosted(appliedJob);
         }
     }, [isApplyClicked && appliedJob]);
+    useEffect(() => {
+        const handleResize = () => {
+            setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+        };
+
+        // Listen for window resize events
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Call initially to set the correct value
+
+        // Cleanup the event listener when component is unmounted
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     const getFileType = (url) => {
         // Extract the file extension from the URL
         const extension = url.split(".").pop().toLowerCase();
@@ -570,7 +585,7 @@ const JobBoard = () => {
                                             <div className="col-md-6" key={index}>
                                                 {pair.map((item, innerIndex) => (
                                                     <div className="" key={innerIndex}>
-                                                        <div className="card shadow  mb-3">
+                                                        <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '430px' }}>
                                                             <div className="card-body">
                                                                 <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                     {formatDate(item.updated_at)}

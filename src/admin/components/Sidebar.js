@@ -187,6 +187,17 @@ function Sidebar() {
               </svg>
               SETTING URLS
             </a>
+            <a
+              className="collapse-item"
+              href=""
+              onClick={(e) => {
+                e.preventDefault(); // Prevent the default anchor tag behavior
+                navigate("/admin/email");
+              }}
+            >
+             <i className="fa fa-envelope" aria-hidden="true"></i>
+              {" "}EMAIL
+            </a>
           </div>
         </div>
       </li>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Select, Image } from 'antd';
+import { Table, Select, Image, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { changeRowColorInJobDetails, toggleUStatusInactiveForIds, updateRemarkInJobDetails, userAppliedForSameJob } from '../../services/userService';
-import { Option } from 'antd/es/mentions';
 import EmailModel from '../email/EmailModel';
+import EmailInbox from './EmailInbox';
 
 const UserAppliedJobDetails = () => {
     const { id } = useParams();
@@ -29,6 +29,8 @@ const UserAppliedJobDetails = () => {
     const [remark, setRemark] = useState('');
     const [selectionType, setSelectionType] = useState('checkbox');
     const [isColor, setIsColor] = useState(false);
+    const [isInboxClicked, setIsInboxClicked] = useState(false);
+    const [selectedUsers,setSelectedUsers] = useState([]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -44,6 +46,10 @@ const UserAppliedJobDetails = () => {
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+    const handleInboxChange = (value) => {
+        setIsInboxClicked(value);
+        setIsChecked(false);
+    }
 
     const fetchMyJobs = async () => {
         try {
@@ -67,7 +73,11 @@ const UserAppliedJobDetails = () => {
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
+            const userIds = [];
             setSelectedRowKeys(selectedRowKeys);
+            console.log(selectedRows)
+            selectedRows.map((item)=>userIds.push(item.user_id));
+            setSelectedUsers(userIds);
         },
         getCheckboxProps: (record) => ({
             disabled: record.name === 'Disabled User',
@@ -97,6 +107,12 @@ const UserAppliedJobDetails = () => {
             // Your logic here when Ctrl + S is pressed
         }
     };
+
+    useEffect(()=>{
+        if(selectedUsers.length>0){
+            console.log(selectedUsers)
+        }
+    },[selectedUsers])
 
     const columns = [
         {
@@ -135,11 +151,11 @@ const UserAppliedJobDetails = () => {
             ),
         },
         {
-            title: 'Email',
+            title: 'Actions',
             dataIndex: 'email',
             render: (text, record, index) => (
                 <div className='d-flex justify-content-between'>
-                    <EmailModel record = {record} />
+                    <EmailModel record={record} />
                     <a className="" href={`tel:${record && record.mobile}`}>
                         <img className='ml-2' src='/user/images/phone.png' width={20} alt="Phone" />
                     </a>
@@ -149,24 +165,21 @@ const UserAppliedJobDetails = () => {
         },
     ];
 
-    // useEffect(() => {
-    //     const handleBeforeUnload = (e) => {
-    //         const confirmationMessage = 'Changes you made may not be saved. Are you sure you want to leave?';
-
-    //         // Standard for most browsers
-    //         e.returnValue = confirmationMessage;
-
-    //         // For some older browsers
-    //         return confirmationMessage;
-    //     };
-
-    //     window.addEventListener('beforeunload', handleBeforeUnload);
-
-    //     return () => {
-    //         window.removeEventListener('beforeunload', handleBeforeUnload);
-    //     };
-    // }, []); // Run only once on component mount
-
+    useEffect(() => {
+        const handleResize = () => {
+          setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+        };
+    
+        // Listen for window resize events
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Call initially to set the correct value
+    
+        // Cleanup the event listener when component is unmounted
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []);
+    
     const fetchSearchData = () => {
         if (copiedData) {
             // Filter the data based on the search query
@@ -277,13 +290,22 @@ const UserAppliedJobDetails = () => {
         fetchMyJobs();
     }, []);
 
+    const customTitle = (
+        <div>
+            <span>Applied Candidates For {jobTitle}</span>
+            <button type="btn" style={{ marginLeft: '10px' }} className='rounded border-0 hover-pointer hover-pointer-green' disabled={!isChecked} onClick={()=>handleInboxChange(true)}>
+                Inbox
+            </button>
+        </div>
+    );
+
     return (
         <div id="service-section" className="pt-4 mb-5">
             <div className="container">
                 <div className="card shadow card-search">
                     <div className=" card-header  fs-6 justify-content-between d-flex">
                         <div className=""> REGISTERED CONDIDATES </div>
-                        <div className="bg-light d-flex rounded">
+                        <div className="bg-light rounded">
                             <Select
                                 className="rounded border-0"
                                 placeholder="Color"
@@ -291,12 +313,12 @@ const UserAppliedJobDetails = () => {
                                 disabled={!isChecked}
                             >
                                 {colorDropdown.map((option) => (
-                                    <Option key={option.value} value={option.value}>
+                                    <Select.Option key={option.value} value={option.value}>
                                         {option.label}
-                                    </Option>
+                                    </Select.Option>
                                 ))}
                             </Select>
-                            <button type="button" className="rounded border-0" disabled={!isChecked} onClick={handleClearClicked}>
+                            <button type="button" className="rounded border-0 hover-pointer hover-pointer-green" disabled={!isChecked} onClick={handleClearClicked}>
                                 Clear
                             </button>
                         </div>
@@ -306,9 +328,10 @@ const UserAppliedJobDetails = () => {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            <Table
+                            {!isInboxClicked?(
+                                <Table
                                 dataSource={data}
-                                title={() => `Applied Condidates For ${jobTitle}`} // Set the title to 'Enquiries'
+                                title={() => customTitle}
                                 columns={columns}
                                 rowClassName={getRowClassName}
                                 rowSelection={{
@@ -324,6 +347,9 @@ const UserAppliedJobDetails = () => {
                                 }}
                                 rowKey={(record) => record.id}
                             />
+                            ):(
+                                <EmailInbox handleInboxChange = {handleInboxChange} ids = {selectedUsers} />
+                            )}
                         </div>
                     </div>
                 </div>

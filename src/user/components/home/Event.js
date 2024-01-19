@@ -19,7 +19,7 @@ const EventForm = () => {
   const [venue, setVenue] = useState("");
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
-  const [description,setDescription] = useState('');
+  const [description, setDescription] = useState('');
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
@@ -36,6 +36,12 @@ const EventForm = () => {
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
+  const [selectedEventType, setSelectedEventType] = useState('');
+
+  const eventsOptions = [
+    { value: "Communited", label: "Only For MY Community" },
+    { value: "General", label: "General(For All Communities)" },
+  ];
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,6 +58,9 @@ const EventForm = () => {
     setTitle(e.target.value);
   };
 
+  const handleEventTypeChange = (option) => {
+    setSelectedEventType(option);
+  }
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
 
@@ -87,7 +96,7 @@ const EventForm = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-       
+
       }
     } finally {
       dispatch(setLoader(false));
@@ -108,7 +117,7 @@ const EventForm = () => {
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
-       
+
       }
     } finally {
       dispatch(setLoader(false));
@@ -137,7 +146,7 @@ const EventForm = () => {
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        
+
       }
     } finally {
       dispatch(setLoader(false));
@@ -161,11 +170,11 @@ const EventForm = () => {
       }
       // Unauthorized
       else if (error.response && error.response.status === 401) {
-         navigate("/login");
+        navigate("/login");
       }
       //handle internal server error
       else if (error.response && error.response.status === 500) {
-        
+
       }
     } finally {
       dispatch(setLoader(false));
@@ -193,6 +202,7 @@ const EventForm = () => {
     }
 
     const data = {
+      event_type: selectedEventType && selectedEventType.value,
       title,
       city: selectedCity && selectedCity.label,
       state: selectedState && selectedState.label, // Update to selectedState
@@ -243,12 +253,26 @@ const EventForm = () => {
     <>
       <div id="auth-wrapper" className="pt-5 pb-5">
         <div className="container">
-          <div className={`card shadow ${errors ? 'border-danger':''}`}>
+          <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
             <div className="card-body">
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                   <div className="card-title mb-5">
-                    <h3 className="mb-1">Create Event </h3>
+                    <div className="justify-content-between">
+                      <h3 className="mb-1">Create Event </h3>
+                      <div className="mb-3">
+                        <label className="form-label">Event Type{" "}<span className="text-danger">*</span></label>
+                        <Select
+                          options={eventsOptions}
+                          value={selectedEventType}
+                          onChange={handleEventTypeChange}
+                          placeholder="Select..."
+                        />
+                        {errors.event_type && (
+                          <span className="error">{errors.event_type}</span>
+                        )}
+                      </div>
+                    </div>
                     <p className="text-muted m-0 p-0">
                       Fill the details below to post events.
                     </p>
@@ -417,8 +441,8 @@ const EventForm = () => {
                         )}
                       </div>
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label htmlFor="description">Description</label>
-                      <textarea
+                        <label htmlFor="description">Description</label>
+                        <textarea
                           type="area"
                           placeholder="Enter Your Event Details If Any"
                           className="form-control mt-2"

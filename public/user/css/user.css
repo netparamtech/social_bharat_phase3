@@ -1812,3 +1812,6 @@ input[type="number"] {
 #service-section .ant-table-tbody > tr.ant-table-row-selected > td {
   background-color: initial;
 }
+.custom-small-btn{
+  height: 40px;
+}

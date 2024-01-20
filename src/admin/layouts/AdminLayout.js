@@ -3,8 +3,8 @@ import '../pages/css/sb-admin-2.min.css'
 import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import Footer from "../components/Footer";
 import { Helmet } from "react-helmet-async";
+import { Footer } from "antd/es/layout/layout";
 
 const AdminLayout = ({ children }) => {
   const handleScrollTopClick = () => {
@@ -65,7 +65,13 @@ const AdminLayout = ({ children }) => {
             </div>
           </div>
           {/* Footer */}
-          <Footer />
+          <Footer
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Copyright &copy; Social Bharat 2023
+            </Footer>
         </div>
       </div>
     </>

@@ -458,432 +458,434 @@ const UpdateMatrimonial = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
-          <div className="card-body">
+        <div className={`card ${errors ? 'border-danger' : ''}`}>
+          <div className="">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                 {serverError && <span className='error'>{serverError}</span>}
-                <div className="card-title">
-                  <h3 className="mb-3">Matrimonial Info</h3>
-                </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-                  <div className="row">
-                    <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
-                      <label className="form-label">For Whom, You are creating profile {" "}<span className="text-danger">*</span></label>
-                      <Select
-                        value={updateFor}
-                        onChange={handleUpdateForChange}
-                        options={updateForOptions}
-                        placeholder="Select Update For"
-                      />
-                      {errors && errors.profile_created_for && (
-                        <span className="error">{errors.profile_created_for}</span>
-                      )}
-                      {/* Add error handling if needed */}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
-                      <label className="form-label">{nameLabel} {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="fatherName"
-                        id="fatherName"
-                        placeholder="Enter your full name"
-                        className="form-control "
-                        autoFocus
-                        defaultValue={matrimonialProfileName}
-                        onChange={(e) => setMatrimonialProfileName(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-
-                      />
-                      {errors && errors.matrimonial_profile_name && (
-                        <span className="error">{errors.matrimonial_profile_name}</span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Father Name {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="fatherName"
-                        id="fatherName"
-                        placeholder="Enter Father Name"
-                        className="form-control "
-                        autoFocus
-                        defaultValue={fatherName}
-                        onChange={(e) => setFatherName(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-
-                      />
-                      {errors && errors.father_name && (
-                        <span className="error">{errors.father_name}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Mother Name {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="motherName"
-                        id="motherName"
-                        placeholder="Enter Mother Name"
-                        className="form-control"
-                        defaultValue={motherName}
-                        onChange={(e) => setMotherName(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {errors && errors.mother_name && (
-                        <span className="error">{errors.mother_name}</span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Gender {" "}<span className="text-danger">*</span></label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Default select example"
-                        value={gender}
-                        onChange={(e) => setGender(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      >
-                        <option value="">---Select Gender---</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                      {errors && errors.matrimonial_profile_gender && (
-                        <span className="error">{errors.matrimonial_profile_gender}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="date"
-                        name="jobStartDate"
-                        id="jobStartDate"
-                        placeholder=""
-                        className="form-control"
-                        defaultValue={dob}
-                        onChange={(e) => setDOB(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {errors && errors.matrimonial_profile_dob && (
-                        <span className="error">{errors.matrimonial_profile_dob}</span>
-                      )}
-                      {/* Add error handling if needed */}
-                    </div>
-                  </div>
-
-                  <div className="row">
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Subcast</label>
-                      <Select
-                        id="community_id"
-                        className="form-control"
-                        aria-label="Default select example"
-                        value={subcast} // Provide a selected option state
-                        onChange={handleSubcastChange} // Your change handler function
-                        options={
-                          subcastArray &&
-                          subcastArray.map((data) => ({
-                            value: data.subcast_id,
-                            label: data.subcast,
-                          }))
-                        }
-                        placeholder="---Select---"
-                      />
-                      {errors && errors.subcast_id && (
-                        <span className="error">{errors.subcast_id}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Paternal Gotra </label>
-                      <input
-                        type="text"
-                        name="gotra"
-                        id="gotra"
-                        placeholder="Enter Gotra"
-                        className="form-control"
-                        defaultValue={paternalGotra}
-                        onChange={(e) => setPaternalGotra(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {errors && errors.gotra && (
-                        <span className="error">{errors.paternal_gotra}</span>
-                      )}
-                    </div>
-
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Maternal Gotra</label>
-                      <input
-                        type="text"
-                        name="maternal"
-                        id="maternal"
-                        placeholder="Enter Maternal Gotra"
-                        className="form-control"
-                        defaultValue={maternalGotra}
-                        onChange={(e) => setMaternalGotra(e.target.value)}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {errors && errors.maternal_gotra && (
-                        <span className="error">{errors.maternal_gotra}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Manglik</label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Manglic select"
-                        value={manglicStatus === 1 ? 'YES' : 'NO'}
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                        onChange={(e) => setManglicStatus(e.target.value === 'YES' ? 1 : 0)}
-                      >
-                        <option value="">---Select Manglic Status---</option>
-                        <option value="YES">YES</option>
-                        <option value="NO">NO</option>
-
-                      </select>
-                      {/* Add error handling if needed */}
-                    </div>
-
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-
-                        <label className="form-label">Number of Brother(s)</label>
-                        <select id="numberDropdown" name="numberDropdown" className="form-control"
-                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={brotherCount} onChange={handleBrotherCount}>
-                          <option value="0" defaultChecked>0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-
-                        </select>
-                        {errors && errors.brother_count && (
-                          <span className="error">{errors.brother_count}</span>
-                        )}
-                        {/* Display the current value */}
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Number of Sister(s)</label>
-                        <select id="numberDropdown" name="numberDropdown" className="form-control"
-                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={sisterCount} onChange={handleSisterCount}>
-                          <option value="0" defaultChecked>0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-
-                        </select>
-                        {errors && errors.sister_count && (
-                          <span className="error">{errors.sister_count}</span>
-                        )}
-                        {/* Display the current value */}
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className={`mb-3 ${isBrotherDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
-                        <label className="form-label">Brothers Details</label>
-
-                        <textarea
-                          type="area"
-                          placeholder="Enter Your Brother(s) details"
-                          className="form-control mt-2"
-                          defaultValue={brothersDetails}
-                          onChange={(e) => setBrothersDetails(e.target.value)}
-                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                        />
-                        {errors && errors.brothers_details && (
-                          <span className="error">{errors.brothers_details}</span>
-                        )}
-                      </div>
-
-                      <div className={`mb-3 ${isSisterDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
-                        <label className="form-label">Sisters Details</label>
-                        <textarea
-                          type="area"
-                          placeholder="Enter Your Sister(s) details"
-                          className="form-control mt-2"
-                          defaultValue={sistersDetails}
-                          onChange={(e) => setSistersDetails(e.target.value)}
-                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                        />
-                        {errors && errors.sisters_details && (
-                          <span className="error">{errors.sisters_details}</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Package</label>
-                      <input
-                        value={packageValue}
-                        className="form-control mt-2"
-                        onChange={handlePackageChange}
-                        placeholder="Enter Your Income..."
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {errors && errors.salary_package && (
-                        <span className="error">{errors.salary_package}</span>
-                      )}
-                      {/* Add error handling if needed */}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Height</label>
-                      <div className="d-flex">
-                        <div>
-                          <label
-                            htmlFor="feet"
-                            className="col-lg-6 col-sm-12 col-xs-12 text-secondary"
-                          >
-                            Feet:
-                          </label>
-                          <input
-                            type="range"
-                            name=""
-                            id=""
-                            min="1"
-                            max="15"
-                            value={heightFeet}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                            onChange={(e) =>
-                              setHeightFeet(parseInt(e.target.value, 10))
-                            }
+                  <fieldset className="shadow">
+                    <legend>Matrimonial Info</legend>
+                    <div className="card p-3">
+                      <div className="row">
+                        <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                          <label className="form-label">For Whom, You are creating profile {" "}<span className="text-danger">*</span></label>
+                          <Select
+                            value={updateFor}
+                            onChange={handleUpdateForChange}
+                            options={updateForOptions}
+                            placeholder="Select Update For"
                           />
-
-                          <span>{heightFeet}</span>{" "}
-                          {/* Display the current value */}
+                          {errors && errors.profile_created_for && (
+                            <span className="error">{errors.profile_created_for}</span>
+                          )}
+                          {/* Add error handling if needed */}
                         </div>
-                        <div>
-                          <label
-                            htmlFor="inch"
-                            className="col-lg-6 col-sm-12 col-xs-12 text-secondary"
-                          >
-                            Inches:
-                          </label>
+                      </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                          <label className="form-label">{nameLabel} {" "}<span className="text-danger">*</span></label>
                           <input
-                            type="range"
-                            name=""
-                            id=""
-                            min="0"
-                            max="12"
-                            value={heightInch}
+                            type="text"
+                            name="fatherName"
+                            id="fatherName"
+                            placeholder="Enter your full name"
+                            className="form-control "
+                            autoFocus
+                            defaultValue={matrimonialProfileName}
+                            onChange={(e) => setMatrimonialProfileName(e.target.value)}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                            onChange={(e) =>
-                              setHeightInch(parseInt(e.target.value, 10))
-                            }
+
                           />
-                          <span>{heightInch}</span>{" "}
-                          {/* Display the current value */}
+                          {errors && errors.matrimonial_profile_name && (
+                            <span className="error">{errors.matrimonial_profile_name}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Father Name {" "}<span className="text-danger">*</span></label>
+                          <input
+                            type="text"
+                            name="fatherName"
+                            id="fatherName"
+                            placeholder="Enter Father Name"
+                            className="form-control "
+                            autoFocus
+                            defaultValue={fatherName}
+                            onChange={(e) => setFatherName(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+
+                          />
+                          {errors && errors.father_name && (
+                            <span className="error">{errors.father_name}</span>
+                          )}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Mother Name {" "}<span className="text-danger">*</span></label>
+                          <input
+                            type="text"
+                            name="motherName"
+                            id="motherName"
+                            placeholder="Enter Mother Name"
+                            className="form-control"
+                            defaultValue={motherName}
+                            onChange={(e) => setMotherName(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {errors && errors.mother_name && (
+                            <span className="error">{errors.mother_name}</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="row">
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Gender {" "}<span className="text-danger">*</span></label>
+                          <select
+                            className="form-select form-control"
+                            aria-label="Default select example"
+                            value={gender}
+                            onChange={(e) => setGender(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          >
+                            <option value="">---Select Gender---</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                          {errors && errors.matrimonial_profile_gender && (
+                            <span className="error">{errors.matrimonial_profile_gender}</span>
+                          )}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
+                          <input
+                            type="date"
+                            name="jobStartDate"
+                            id="jobStartDate"
+                            placeholder=""
+                            className="form-control"
+                            defaultValue={dob}
+                            onChange={(e) => setDOB(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {errors && errors.matrimonial_profile_dob && (
+                            <span className="error">{errors.matrimonial_profile_dob}</span>
+                          )}
+                          {/* Add error handling if needed */}
+                        </div>
+                      </div>
+
+                      <div className="row">
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Subcast</label>
+                          <Select
+                            id="community_id"
+                            className="form-control"
+                            aria-label="Default select example"
+                            value={subcast} // Provide a selected option state
+                            onChange={handleSubcastChange} // Your change handler function
+                            options={
+                              subcastArray &&
+                              subcastArray.map((data) => ({
+                                value: data.subcast_id,
+                                label: data.subcast,
+                              }))
+                            }
+                            placeholder="---Select---"
+                          />
+                          {errors && errors.subcast_id && (
+                            <span className="error">{errors.subcast_id}</span>
+                          )}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Paternal Gotra </label>
+                          <input
+                            type="text"
+                            name="gotra"
+                            id="gotra"
+                            placeholder="Enter Gotra"
+                            className="form-control"
+                            defaultValue={paternalGotra}
+                            onChange={(e) => setPaternalGotra(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {errors && errors.gotra && (
+                            <span className="error">{errors.paternal_gotra}</span>
+                          )}
                         </div>
 
-                        {errors && errors.height_in_feet && (
-                          <span className="error">{errors.height_in_feet}</span>
-                        )}
                       </div>
-                    </div>
 
-                  </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Maternal Gotra</label>
+                          <input
+                            type="text"
+                            name="maternal"
+                            id="maternal"
+                            placeholder="Enter Maternal Gotra"
+                            className="form-control"
+                            defaultValue={maternalGotra}
+                            onChange={(e) => setMaternalGotra(e.target.value)}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {errors && errors.maternal_gotra && (
+                            <span className="error">{errors.maternal_gotra}</span>
+                          )}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Manglik</label>
+                          <select
+                            className="form-select form-control"
+                            aria-label="Manglic select"
+                            value={manglicStatus === 1 ? 'YES' : 'NO'}
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            onChange={(e) => setManglicStatus(e.target.value === 'YES' ? 1 : 0)}
+                          >
+                            <option value="">---Select Manglic Status---</option>
+                            <option value="YES">YES</option>
+                            <option value="NO">NO</option>
 
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Proposal Photo {" "}<span className="text-danger">*</span></label>
-                      <p>Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg formet)</p>
-                      <input
-                        type="file"
-                        className="form-control"
-                        accept="images/*"
-                        id="proposalPhoto"
-                        defaultValue={proposalPhoto}
-                        onChange={handleProposalPhotoChange}
-                        multiple
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {messagePhotos && <span className="error">{messagePhotos}</span>}
-                      {errors && errors.proposal_photos && (
-                        <span className="error">{errors.proposal_photos}</span>
-                      )}
-                      <div className="proposal-Photo d-flex">
-                        {proposalPreview &&
-                          proposalPreview.map((item, idx) => (
-                            <div className="m-2" key={idx}>
-                              {
-                                item.trim() !== '' && (
-                                  <>
-                                    <img src={item} alt={`Photos ${idx + 1}`} />
-                                    <button
-                                      type="button"
-                                      className="btn"
-                                      onClick={() => handleDeleteImage(idx)}
-                                    >
-                                      <i className="fas fa-trash"></i>
-                                    </button>
-                                  </>
-                                )
-                              }
+                          </select>
+                          {/* Add error handling if needed */}
+                        </div>
+
+                        <div className="row">
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+
+                            <label className="form-label">Number of Brother(s)</label>
+                            <select id="numberDropdown" name="numberDropdown" className="form-control"
+                              disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={brotherCount} onChange={handleBrotherCount}>
+                              <option value="0" defaultChecked>0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+
+                            </select>
+                            {errors && errors.brother_count && (
+                              <span className="error">{errors.brother_count}</span>
+                            )}
+                            {/* Display the current value */}
+                          </div>
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Number of Sister(s)</label>
+                            <select id="numberDropdown" name="numberDropdown" className="form-control"
+                              disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} value={sisterCount} onChange={handleSisterCount}>
+                              <option value="0" defaultChecked>0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+
+                            </select>
+                            {errors && errors.sister_count && (
+                              <span className="error">{errors.sister_count}</span>
+                            )}
+                            {/* Display the current value */}
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className={`mb-3 ${isBrotherDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
+                            <label className="form-label">Brothers Details</label>
+
+                            <textarea
+                              type="area"
+                              placeholder="Enter Your Brother(s) details"
+                              className="form-control mt-2"
+                              defaultValue={brothersDetails}
+                              onChange={(e) => setBrothersDetails(e.target.value)}
+                              disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            />
+                            {errors && errors.brothers_details && (
+                              <span className="error">{errors.brothers_details}</span>
+                            )}
+                          </div>
+
+                          <div className={`mb-3 ${isSisterDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
+                            <label className="form-label">Sisters Details</label>
+                            <textarea
+                              type="area"
+                              placeholder="Enter Your Sister(s) details"
+                              className="form-control mt-2"
+                              defaultValue={sistersDetails}
+                              onChange={(e) => setSistersDetails(e.target.value)}
+                              disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            />
+                            {errors && errors.sisters_details && (
+                              <span className="error">{errors.sisters_details}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Package</label>
+                          <input
+                            value={packageValue}
+                            className="form-control mt-2"
+                            onChange={handlePackageChange}
+                            placeholder="Enter Your Income..."
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {errors && errors.salary_package && (
+                            <span className="error">{errors.salary_package}</span>
+                          )}
+                          {/* Add error handling if needed */}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Height</label>
+                          <div className="d-flex">
+                            <div>
+                              <label
+                                htmlFor="feet"
+                                className="col-lg-6 col-sm-12 col-xs-12 text-secondary"
+                              >
+                                Feet:
+                              </label>
+                              <input
+                                type="range"
+                                name=""
+                                id=""
+                                min="1"
+                                max="15"
+                                value={heightFeet}
+                                disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                                onChange={(e) =>
+                                  setHeightFeet(parseInt(e.target.value, 10))
+                                }
+                              />
+
+                              <span>{heightFeet}</span>{" "}
+                              {/* Display the current value */}
                             </div>
-                          ))}
-                      </div>
-                    </div>
+                            <div>
+                              <label
+                                htmlFor="inch"
+                                className="col-lg-6 col-sm-12 col-xs-12 text-secondary"
+                              >
+                                Inches:
+                              </label>
+                              <input
+                                type="range"
+                                name=""
+                                id=""
+                                min="0"
+                                max="12"
+                                value={heightInch}
+                                disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                                onChange={(e) =>
+                                  setHeightInch(parseInt(e.target.value, 10))
+                                }
+                              />
+                              <span>{heightInch}</span>{" "}
+                              {/* Display the current value */}
+                            </div>
 
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Biodata {" "}<span className="text-danger">*</span></label>
-                      <p>upload biodata in pdf format only</p>
-                      <input
-                        type="file"
-                        className="form-control"
-                        accept=".pdf, .doc"
-                        id="biodata"
-                        onChange={handleBiodataFileChange}
-                        multiple
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      />
-                      {messageBiodata && <span className="error">{messageBiodata}</span>}
-                      {errors && errors.biodata && (
-                        <span className="error">{errors.biodata}</span>
-                      )}
-                      <div className="proposal-Photo d-flex">
-                        <span>{biodataPreview ? "file selected" : ""}</span>
+                            {errors && errors.height_in_feet && (
+                              <span className="error">{errors.height_in_feet}</span>
+                            )}
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Proposal Photo {" "}<span className="text-danger">*</span></label>
+                          <p>Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg formet)</p>
+                          <input
+                            type="file"
+                            className="form-control"
+                            accept="images/*"
+                            id="proposalPhoto"
+                            defaultValue={proposalPhoto}
+                            onChange={handleProposalPhotoChange}
+                            multiple
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {messagePhotos && <span className="error">{messagePhotos}</span>}
+                          {errors && errors.proposal_photos && (
+                            <span className="error">{errors.proposal_photos}</span>
+                          )}
+                          <div className="proposal-Photo d-flex">
+                            {proposalPreview &&
+                              proposalPreview.map((item, idx) => (
+                                <div className="m-2" key={idx}>
+                                  {
+                                    item.trim() !== '' && (
+                                      <>
+                                        <img src={item} alt={`Photos ${idx + 1}`} />
+                                        <button
+                                          type="button"
+                                          className="btn"
+                                          onClick={() => handleDeleteImage(idx)}
+                                        >
+                                          <i className="fas fa-trash"></i>
+                                        </button>
+                                      </>
+                                    )
+                                  }
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Biodata {" "}<span className="text-danger">*</span></label>
+                          <p>upload biodata in pdf format only</p>
+                          <input
+                            type="file"
+                            className="form-control"
+                            accept=".pdf, .doc"
+                            id="biodata"
+                            onChange={handleBiodataFileChange}
+                            multiple
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          />
+                          {messageBiodata && <span className="error">{messageBiodata}</span>}
+                          {errors && errors.biodata && (
+                            <span className="error">{errors.biodata}</span>
+                          )}
+                          <div className="proposal-Photo d-flex">
+                            <span>{biodataPreview ? "file selected" : ""}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="row mt-4">
-                    <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary"
-                        disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                      >
-                        Update
-                      </button>
-                      <button type="button" className="btn btn-primary m-2" onClick={(e) => {
-                        e.preventDefault();
-                        navigate('/profile');
-                      }}>
-                        Cancel
-                      </button>
+                    <div className="row mt-4">
+                      <div className="col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary"
+                          disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                        >
+                          Update
+                        </button>
+                        <button type="button" className="btn btn-primary m-2" onClick={(e) => {
+                          e.preventDefault();
+                          navigate('/profile');
+                        }}>
+                          Cancel
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  </fieldset>
                 </form>
               </div>
             </div>

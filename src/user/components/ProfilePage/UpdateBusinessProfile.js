@@ -303,26 +303,26 @@ const UpdateBusinessProfile = (props) => {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                 {serverError && <span className='error'>{serverError}</span>}
-                <div className="card-title">
-                  <h3 className="mb-3">Business Info</h3>
-                </div>
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
+                  <fieldset className="shadow">
+                    <legend>Business Info</legend>
+                    <div className="card p-3">
 
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Name{" "}<span className="text-danger">*</span></label>
-                      <input type="text"
-                        name="businessName"
-                        id="businessName"
-                        placeholder="Enter Business Name"
-                        className="form-control"
-                        autoFocus
-                        defaultValue={businessName}
-                        onChange={(e) => setBusinessName(e.target.value)}
-                      />
-                      {errors.business_name && <span className='error'>{errors.business_name}</span>}
-                    </div>
-                    {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Business Name{" "}<span className="text-danger">*</span></label>
+                          <input type="text"
+                            name="businessName"
+                            id="businessName"
+                            placeholder="Enter Business Name"
+                            className="form-control"
+                            autoFocus
+                            defaultValue={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
+                          />
+                          {errors.business_name && <span className='error'>{errors.business_name}</span>}
+                        </div>
+                        {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                       <label className="form-label">*Business Category</label>
                       <Select
                         id="business_category"
@@ -334,222 +334,224 @@ const UpdateBusinessProfile = (props) => {
                       />
                       {errors.business_category && <span className='error'>{errors.business_category}</span>}
                     </div> */}
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Type{" "}<span className="text-danger">*</span></label>
-                      <Select
-                        options={[
-                          { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
-                          { value: 'Sales', label: 'Sales' },
-                          { value: 'Marketing', label: 'Marketing' },
-                          { value: 'Manufacturing', label: 'Manufacturing' },
-                          { value: 'Service', label: 'Service' },
-                          { value: 'Finance', label: 'Finance' },
-                          { value: 'Real Estate', label: 'Real Estate' },
-                          { value: 'Healthcare', label: 'Healthcare' },
-                          { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
-                          { value: 'Hospitality', label: 'Hospitality' },
-                          { value: 'Education', label: 'Education' },
-                          { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
-                          // Add other country options here
-                        ]}
-                        value={businessType}
-                        onChange={handleBusinessType}
-                      />
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Business Type{" "}<span className="text-danger">*</span></label>
+                          <Select
+                            options={[
+                              { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
+                              { value: 'Sales', label: 'Sales' },
+                              { value: 'Marketing', label: 'Marketing' },
+                              { value: 'Manufacturing', label: 'Manufacturing' },
+                              { value: 'Service', label: 'Service' },
+                              { value: 'Finance', label: 'Finance' },
+                              { value: 'Real Estate', label: 'Real Estate' },
+                              { value: 'Healthcare', label: 'Healthcare' },
+                              { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
+                              { value: 'Hospitality', label: 'Hospitality' },
+                              { value: 'Education', label: 'Education' },
+                              { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+                              // Add other country options here
+                            ]}
+                            value={businessType}
+                            onChange={handleBusinessType}
+                          />
 
-                      {errors.business_category && <span className='error'>{errors.business_category}</span>}
-                    </div>
-                  </div>
+                          {errors.business_category && <span className='error'>{errors.business_category}</span>}
+                        </div>
+                      </div>
 
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Street Address{" "}<span className="text-danger">*</span></label>
-                      <input type="text"
-                        name="stressAddress"
-                        id="stressAddress"
-                        placeholder="Enter Street Address"
-                        className="form-control"
-                        defaultValue={streetAddress}
-                        onChange={(e) => setStreetAddress(e.target.value)}
-                      />
-                      {errors.street_address && <span className='error'>{errors.street_address}</span>}
-                    </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Street Address{" "}<span className="text-danger">*</span></label>
+                          <input type="text"
+                            name="stressAddress"
+                            id="stressAddress"
+                            placeholder="Enter Street Address"
+                            className="form-control"
+                            defaultValue={streetAddress}
+                            onChange={(e) => setStreetAddress(e.target.value)}
+                          />
+                          {errors.street_address && <span className='error'>{errors.street_address}</span>}
+                        </div>
 
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Country{" "}<span className="text-danger">*</span></label>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Country{" "}<span className="text-danger">*</span></label>
 
-                      <Select
-                        options={[
-                          { value: 'India', label: 'India' },
-                          // Add other country options here
-                        ]}
-                        value={selectedCountry}
-                        onChange={handleCountryChange}
-                      />
+                          <Select
+                            options={[
+                              { value: 'India', label: 'India' },
+                              // Add other country options here
+                            ]}
+                            value={selectedCountry}
+                            onChange={handleCountryChange}
+                          />
 
 
-                      {errors.country && <span className='error'>{errors.country}</span>}
-                    </div>
-                  </div>
+                          {errors.country && <span className='error'>{errors.country}</span>}
+                        </div>
+                      </div>
 
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">State{" "}<span className="text-danger">*</span></label>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">State{" "}<span className="text-danger">*</span></label>
 
-                      <Select
-                        options={states.map(state => ({ value: state.name, label: state.name }))}
-                        value={selectedState}
-                        onChange={handleStateChange}
-                      />
+                          <Select
+                            options={states.map(state => ({ value: state.name, label: state.name }))}
+                            value={selectedState}
+                            onChange={handleStateChange}
+                          />
 
-                      {errors.state && <span className='error'>{errors.state}</span>}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">City{" "}<span className="text-danger">*</span></label>
+                          {errors.state && <span className='error'>{errors.state}</span>}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">City{" "}<span className="text-danger">*</span></label>
 
-                      <Select
-                        options={cities.map(city => ({ value: city.name, label: city.name }))}
-                        value={selectedCity}
-                        onChange={handleCityChange}
-                      />
-                      {errors.city && <span className='error'>{errors.city}</span>}
+                          <Select
+                            options={cities.map(city => ({ value: city.name, label: city.name }))}
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                          />
+                          {errors.city && <span className='error'>{errors.city}</span>}
 
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Contact 1{" "}<span className="text-danger">*</span></label>
-                      <input type="text"
-                        name="contact1"
-                        id="contact1"
-                        placeholder="Enter Contact 1"
-                        className="form-control"
-                        defaultValue={contact1}
-                        onChange={(e) => setContact1(e.target.value)}
-                      />
-                      {errors.contact1 && <span className='error'>{errors.contact1}</span>}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Contact 2</label>
-                      <input type="text"
-                        name="contact2"
-                        id="contact2"
-                        placeholder="Enter Contact 2"
-                        className="form-control"
-                        defaultValue={contact2}
-                        onChange={(e) => setContact2(e.target.value)}
-                      />
-                      {errors.contact2 && <span className='error'>{errors.contact2}</span>}
-                    </div>
-                  </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Contact 1{" "}<span className="text-danger">*</span></label>
+                          <input type="text"
+                            name="contact1"
+                            id="contact1"
+                            placeholder="Enter Contact 1"
+                            className="form-control"
+                            defaultValue={contact1}
+                            onChange={(e) => setContact1(e.target.value)}
+                          />
+                          {errors.contact1 && <span className='error'>{errors.contact1}</span>}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Contact 2</label>
+                          <input type="text"
+                            name="contact2"
+                            id="contact2"
+                            placeholder="Enter Contact 2"
+                            className="form-control"
+                            defaultValue={contact2}
+                            onChange={(e) => setContact2(e.target.value)}
+                          />
+                          {errors.contact2 && <span className='error'>{errors.contact2}</span>}
+                        </div>
+                      </div>
 
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Contact 3</label>
-                      <input type="text"
-                        name="contact3"
-                        id="contact3"
-                        placeholder="Enter Contact 3"
-                        className="form-control"
-                        defaultValue={contact3}
-                        onChange={(e) => setContact3(e.target.value)}
-                      />
-                      {errors.contact3 && <span className='error'>{errors.contact3}</span>}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Photos </label>
-                      <input
-                        type="file"
-                        className="form-control"
-                        accept=".png, .jpg, .jpeg"
-                        id="businessPhoto"
-                        defaultValue={businessPhoto}
-                        onChange={handleBusinessPhotoChange}
-                        multiple
-                      />
-                      {errors.business_photos && <span className='error'>{errors.business_photos}</span>}
-                      <div className='proposal-Photo d-flex'>
-                        {businessPreview &&
-                          businessPreview.map((item, idx) => (
-                            <div className='m-2' key={idx}>
-                              <img src={item} alt={`Photos ${idx + 1}`} />
-                              <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
-                                <i className="fas fa-trash"></i>
-                              </button>
-                            </div>
-                          ))}
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Contact 3</label>
+                          <input type="text"
+                            name="contact3"
+                            id="contact3"
+                            placeholder="Enter Contact 3"
+                            className="form-control"
+                            defaultValue={contact3}
+                            onChange={(e) => setContact3(e.target.value)}
+                          />
+                          {errors.contact3 && <span className='error'>{errors.contact3}</span>}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Business Photos </label>
+                          <input
+                            type="file"
+                            className="form-control"
+                            accept=".png, .jpg, .jpeg"
+                            id="businessPhoto"
+                            defaultValue={businessPhoto}
+                            onChange={handleBusinessPhotoChange}
+                            multiple
+                          />
+                          {errors.business_photos && <span className='error'>{errors.business_photos}</span>}
+                          <div className='proposal-Photo d-flex'>
+                            {businessPreview &&
+                              businessPreview.map((item, idx) => (
+                                <div className='m-2' key={idx}>
+                                  <img src={item} alt={`Photos ${idx + 1}`} />
+                                  <button type='button' className='btn' onClick={() => handleDeleteImage(idx)}>
+                                    <i className="fas fa-trash"></i>
+                                  </button>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Business Email</label>
+                          <input type="email"
+                            name="email"
+                            id="email"
+                            placeholder="Enter Contact 1"
+                            className="form-control"
+                            defaultValue={businessEmail}
+                            onChange={(e) => setBusinessEmail(e.target.value)}
+                          />
+                          {errors.business_email && <span className='error'>{errors.business_email}</span>}
+                        </div>
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label htmlFor="status">Status{" "}<span className="text-danger">*</span></label>
+                          <select
+                            className="form-control"
+                            id="status"
+                            name="status"
+                            value={status}
+                            onChange={handleStatusChange}
+                          >
+                            <option value="">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                          {errors.status && (
+                            <span className="error">{errors.status}</span>
+                          )}
+                        </div>
+
+                      </div>
+                      <div className='row'>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Business Website</label>
+                          <p>(Please add your business website link if any.)</p>
+                          <textarea type="text"
+                            name="businessWebsite"
+                            id="businessWebsite"
+                            placeholder="Enter Business Website Link"
+                            className="form-control"
+                            defaultValue={businessWebsite}
+                            onChange={(e) => setBusinessWebsite(e.target.value)}
+                          />
+                          {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Description</label>
+                          <p>(Please add your business details and links if any.)</p>
+                          <textarea type="text"
+                            name="businessWebsite"
+                            id="businessWebsite"
+                            placeholder="Enter Business Website Link"
+                            className="form-control"
+                            defaultValue={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          />
+                          {errors.description && <span className='error'>{errors.description}</span>}
+                        </div>
+
                       </div>
                     </div>
 
-                  </div>
-
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Email</label>
-                      <input type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Enter Contact 1"
-                        className="form-control"
-                        defaultValue={businessEmail}
-                        onChange={(e) => setBusinessEmail(e.target.value)}
-                      />
-                      {errors.business_email && <span className='error'>{errors.business_email}</span>}
+                    <div className="row mt-4">
+                      <div className="col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary">Update</button>
+                      </div>
                     </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label htmlFor="status">Status{" "}<span className="text-danger">*</span></label>
-                      <select
-                        className="form-control"
-                        id="status"
-                        name="status"
-                        value={status}
-                        onChange={handleStatusChange}
-                      >
-                        <option value="">Select Status</option>
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
-                      </select>
-                      {errors.status && (
-                        <span className="error">{errors.status}</span>
-                      )}
-                    </div>
-
-                  </div>
-                  <div className='row'>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Business Website</label>
-                      <p>(Please add your business website link if any.)</p>
-                      <textarea type="text"
-                        name="businessWebsite"
-                        id="businessWebsite"
-                        placeholder="Enter Business Website Link"
-                        className="form-control"
-                        defaultValue={businessWebsite}
-                        onChange={(e) => setBusinessWebsite(e.target.value)}
-                      />
-                      {errors.business_website && <span className='error'>{errors.business_website}</span>}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Description</label>
-                      <p>(Please add your business details and links if any.)</p>
-                      <textarea type="text"
-                        name="businessWebsite"
-                        id="businessWebsite"
-                        placeholder="Enter Business Website Link"
-                        className="form-control"
-                        defaultValue={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      />
-                      {errors.description && <span className='error'>{errors.description}</span>}
-                    </div>
-
-                  </div>
-
-                  <div className="row mt-4">
-                    <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">Update</button>
-                    </div>
-                  </div>
+                  </fieldset>
                 </form>
               </div>
             </div>

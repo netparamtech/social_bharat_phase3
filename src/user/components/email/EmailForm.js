@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
-import { sendEmail } from '../../services/userService';
+import { saveEmail, sendEmail } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ const EmailForm = (props) => {
         subject: '',
         message: '',
     });
+    const [jobId, setJobId] = useState('');
     const [errors, setErrors] = useState("");
     const [serverError, setServerError] = useState("");
     const dispatch = useDispatch();
@@ -28,11 +29,16 @@ const EmailForm = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = {
+            ...emailData,
+            job_id: jobId,
+            receiver_id: record.user_id,
 
-        // Assuming you have a server-side endpoint to handle email sending
+        }
+
         try {
             dispatch(setLoader(true));
-            const response = await sendEmail(emailData);
+            const response = await sendEmail(data);
             if (response && response.status === 201) {
                 setErrors('');
                 setServerError('');
@@ -56,14 +62,18 @@ const EmailForm = (props) => {
         } finally {
             dispatch(setLoader(false));
         }
+        // Assuming you have a server-side endpoint to handle email sending
+
     };
 
     useEffect(() => {
         if (record) {
+            console.log(record)
             setEmailData({
                 to: record.email,
                 subject: record.job_title,
-            })
+            });
+            setJobId(record.job_id);
 
         }
     }, [record]);

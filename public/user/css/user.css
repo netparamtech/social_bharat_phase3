@@ -1812,3 +1812,16 @@ input[type="number"] {
 #service-section .ant-table-tbody > tr.ant-table-row-selected > td {
   background-color: initial;
 }
+.custom-small-btn{
+  height: 40px;
+}
+fieldset {
+  background-color: #eeeeee;
+  padding: 5px 10px;
+}
+
+legend {
+  background-color: gray;
+  color: white;
+  padding: 5px 10px;
+}

@@ -222,7 +222,7 @@ const UpdateBasicProfile = () => {
   }, []);
 
   useEffect(() => {
-    if(user.user&&user.user.dob!==null){
+    if (user.user && user.user.dob !== null) {
       setDOB(yyyyMmDdFormat(user.user.dob));
     }
   }, [user]);
@@ -250,7 +250,7 @@ const UpdateBasicProfile = () => {
     const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     let modifiedOccupation = occupation;
     if (jobType !== null) {
-      if(modifiedOccupation.includes('/')){
+      if (modifiedOccupation.includes('/')) {
         const itemsArray = modifiedOccupation.split('/');
         console.log(itemsArray)
         modifiedOccupation = itemsArray[1];
@@ -268,7 +268,7 @@ const UpdateBasicProfile = () => {
       dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
       marital_status: maritalStatus ? maritalStatus.label : '',
-      occupation:modifiedOccupation,
+      occupation: modifiedOccupation,
       highest_qualification: qualification.label
     };
 
@@ -335,11 +335,11 @@ const UpdateBasicProfile = () => {
       setShowAvailableForMarriage(false)
     }
 
-    if(user && user.user && user.user.occupation){
+    if (user && user.user && user.user.occupation) {
       const itemsArray = user.user.occupation.split('/');
       setJobType({
-        value:itemsArray[0],
-        label:itemsArray[0]
+        value: itemsArray[0],
+        label: itemsArray[0]
       });
       setOccupation(itemsArray[1]);
     }
@@ -434,225 +434,229 @@ const UpdateBasicProfile = () => {
       {contextHolder}
       <div id="auth-wrapper" className="pt-5 pb-5">
         <div className="container">
-          <div className={`card shadow ${errors ? 'border-danger':''}`}>
-            <div className="card-body">
+          <div className={`card ${errors ? 'border-danger' : ''}`}>
+            <div className="">
               {serverError && <span className='error'>{serverError}</span>}
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-                  <div className="card-title">
-                    <h3 className="mb-3">Basic Profile</h3>
-                  </div>
                   <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-                    <div className="row ">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                        <label className="form-label">Name{" "}<span className="text-danger">*</span></label>
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          placeholder="Enter your name. Example: Vipul Sharma"
-                          className="form-control"
-                          defaultValue={name}
-                          onChange={handleNameChange}
-                          autoFocus
-                        />
-                        {errors.name && (
-                          <span className="error">{errors.name}</span>
-                        )}
+                    <fieldset className="shadow">
+                      <legend>Basic Profile</legend>
+                      <div className="card p-3">
+                        <div className="row ">
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                            <label className="form-label">Name{" "}<span className="text-danger">*</span></label>
+
+                            <input
+                              type="text"
+                              name="name"
+                              id="name"
+                              placeholder="Enter your name. Example: Vipul Sharma"
+                              className="form-control"
+                              defaultValue={name}
+                              onChange={handleNameChange}
+                              autoFocus
+                            />
+                            {errors.name && (
+                              <span className="error">{errors.name}</span>
+                            )}
+
+
+                          </div>
+
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Email </label>
+                            <input
+                              type="email"
+                              name="email"
+                              id="email"
+                              placeholder="Enter Email"
+                              className="form-control"
+                              defaultValue={email}
+                              onChange={handleEmailChange}
+                            />
+                            {errors.email && (
+                              <span className="error">{errors.email}</span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Gender{" "}<span className="text-danger">*</span></label>
+                            <select
+                              className="form-select form-control"
+                              aria-label="Default select example"
+                              defaultValue={gender}
+                              onChange={handleGenderChange}
+                            >
+                              <option value="">---Select Gender---</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+                            </select>
+                            {errors.gender && (
+                              <span className="error">{errors.gender}</span>
+                            )}
+                          </div>
+
+
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
+                            <input
+                              type="date"
+                              name="jobStartDate"
+                              id="jobStartDate"
+                              placeholder=""
+                              className="form-control"
+                              value={dob}
+                              onChange={(e) => setDOB(e.target.value)}
+                            />
+                            {errors.dob && (
+                              <span className="error">{errors.dob}</span>
+                            )}
+                            {/* Add error handling if needed */}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">State{" "}<span className="text-danger">*</span></label>
+
+                            <Select
+                              className=""
+                              options={states.map((state) => ({
+                                value: state.name,
+                                label: state.name,
+                              }))}
+                              value={selectedState}
+                              onChange={handleStateChange}
+                            />
+
+                            {errors.native_place_state && (
+                              <span className="error">
+                                {errors.native_place_state}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">City{" "}<span className="text-danger">*</span></label>
+
+                            <Select
+                              options={cities.map((city) => ({
+                                value: city.name,
+                                label: city.name,
+                              }))}
+                              value={selectedCity}
+                              onChange={handleCityChange}
+                            />
+                            {errors.native_place_city && (
+                              <span className="error">
+                                {errors.native_place_city}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="row">
+
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
+                            <Select
+                              id="qualification"
+                              className="form-control"
+                              value={qualification} // Use the degree prop directly as the default value
+                              onChange={handleQualificationChange}
+                              options={
+                                qualificationList &&
+                                qualificationList.map((qualification) => ({
+                                  value: qualification.title,
+                                  label: qualification.title,
+                                }))
+                              }
+                              placeholder="---Select...---"
+                            />
+                          </div>
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
+                            <label className="form-label">Community</label>
+                            <input
+                              type="text"
+                              name="name"
+                              id="name"
+                              placeholder="Enter your name"
+                              className="form-control"
+                              defaultValue={community.name}
+                              disabled
+                            />
+
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Job Type {" "}<span className="text-danger">*</span></label>
+                            <Select
+                              options={occupationOptions}
+                              value={jobType}
+                              onChange={handleJobType}
+                              placeholder="Select..."
+                            />
+                            {/* Add error handling if needed */}
+                          </div>
+                          <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                            <label className="form-label">Job Detail {" "}<span className="text-danger">*</span></label>
+                            <input
+                              type="text"
+                              name="occupation"
+                              id="occupation"
+                              placeholder="Example: Software Engineer, Grocery Shop Owner"
+                              className="form-control"
+                              defaultValue={occupation}
+                              onChange={(e) => setOccupation(e.target.value)}
+
+                            />
+                            {/* Add error handling if needed */}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
+                            <label className="form-label">Marital Status{" "}<span className="text-danger">*</span></label>
+                            <Select
+                              options={maritalStatusOptions}
+                              value={maritalStatus}
+                              onChange={handleMaritalStatusChange}
+                              placeholder="Select..."
+                            />
+                          </div>
+
+
+                        </div>
+
+
+
+                        <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus && showAvailableForMarriage ? '' : 'd-none'}`}>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="marriageCheckbox"
+                              checked={isAvailableForMarriage}
+                              onChange={handleAvailableMarriageCheckboxChange}
+                            />
+                            <label className="form-check-label" htmlFor="marriageCheckbox">
+                              Is Available For Marriage
+                            </label>
+                          </div>
+                        </div>
+
                       </div>
 
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Email </label>
-                        <input
-                          type="email"
-                          name="email"
-                          id="email"
-                          placeholder="Enter Email"
-                          className="form-control"
-                          defaultValue={email}
-                          onChange={handleEmailChange}
-                        />
-                        {errors.email && (
-                          <span className="error">{errors.email}</span>
-                        )}
+                      <div className="row mt-4">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <button type="submit" className="btn btn-primary">
+                            Update
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Gender{" "}<span className="text-danger">*</span></label>
-                        <select
-                          className="form-select form-control"
-                          aria-label="Default select example"
-                          defaultValue={gender}
-                          onChange={handleGenderChange}
-                        >
-                          <option value="">---Select Gender---</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
-                        </select>
-                        {errors.gender && (
-                          <span className="error">{errors.gender}</span>
-                        )}
-                      </div>
-
-                     
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Date of Birth {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="date"
-                        name="jobStartDate"
-                        id="jobStartDate"
-                        placeholder=""
-                        className="form-control"
-                        value={dob}
-                        onChange={(e) => setDOB(e.target.value)}
-                      />
-                      {errors.dob && (
-                        <span className="error">{errors.dob}</span>
-                      )}
-                      {/* Add error handling if needed */}
-                    </div>
-                    </div>
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">State{" "}<span className="text-danger">*</span></label>
-
-                        <Select
-                          className=""
-                          options={states.map((state) => ({
-                            value: state.name,
-                            label: state.name,
-                          }))}
-                          value={selectedState}
-                          onChange={handleStateChange}
-                        />
-
-                        {errors.native_place_state && (
-                          <span className="error">
-                            {errors.native_place_state}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">City{" "}<span className="text-danger">*</span></label>
-
-                        <Select
-                          options={cities.map((city) => ({
-                            value: city.name,
-                            label: city.name,
-                          }))}
-                          value={selectedCity}
-                          onChange={handleCityChange}
-                        />
-                        {errors.native_place_city && (
-                          <span className="error">
-                            {errors.native_place_city}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="row">
-
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
-                        <Select
-                          id="qualification"
-                          className="form-control"
-                          value={qualification} // Use the degree prop directly as the default value
-                          onChange={handleQualificationChange}
-                          options={
-                            qualificationList &&
-                            qualificationList.map((qualification) => ({
-                              value: qualification.title,
-                              label: qualification.title,
-                            }))
-                          }
-                          placeholder="---Select...---"
-                        />
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                      <label className="form-label">Community</label>
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Enter your name"
-                        className="form-control"
-                        defaultValue={community.name}
-                        disabled
-                      />
-
-                    </div>
-                    </div>
-                    <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Job Type {" "}<span className="text-danger">*</span></label>
-                        <Select
-                          options={occupationOptions}
-                          value={jobType}
-                          onChange={handleJobType}
-                          placeholder="Select..."
-                        />
-                        {/* Add error handling if needed */}
-                      </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label className="form-label">Job Detail {" "}<span className="text-danger">*</span></label>
-                        <input
-                          type="text"
-                          name="occupation"
-                          id="occupation"
-                          placeholder="Example: Software Engineer, Grocery Shop Owner"
-                          className="form-control"
-                          defaultValue={occupation}
-                          onChange={(e) => setOccupation(e.target.value)}
-
-                        />
-                        {/* Add error handling if needed */}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
-                        <label className="form-label">Marital Status{" "}<span className="text-danger">*</span></label>
-                        <Select
-                          options={maritalStatusOptions}
-                          value={maritalStatus}
-                          onChange={handleMaritalStatusChange}
-                          placeholder="Select..."
-                        />
-                      </div>
-                     
-
-                    </div>
-
-
-
-                    <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus && showAvailableForMarriage ? '' : 'd-none'}`}>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id="marriageCheckbox"
-                          checked={isAvailableForMarriage}
-                          onChange={handleAvailableMarriageCheckboxChange}
-                        />
-                        <label className="form-check-label" htmlFor="marriageCheckbox">
-                          Is Available For Marriage
-                        </label>
-                      </div>
-                    </div>
-
-
-
-                    <div className="row mt-4">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <button type="submit" className="btn btn-primary">
-                          Update
-                        </button>
-                      </div>
-                    </div>
+                    </fieldset>
                   </form>
                 </div>
               </div>

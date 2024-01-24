@@ -12,11 +12,6 @@ const BusinessInfo = (props) => {
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const businessPhotos =
-    user &&
-    user.data &&
-    user.data.businesses &&
-    user.data.businesses.business_photos;
 
   const deleteBusinessDetails = async (id) => {
     dispatch(setLoader(true));
@@ -41,9 +36,12 @@ const BusinessInfo = (props) => {
   };
 
   useEffect(() => {
-    setBusinessDetails(user?.data?.businesses || []);
-    // Initialize the collapsedItems state with false for each item
-    setCollapsedItems(Array(user?.data?.businesses?.length).fill(true));
+    if (user) {
+      setBusinessDetails(user?.data?.businesses || []);
+      console.log(user)
+      // Initialize the collapsedItems state with false for each item
+      setCollapsedItems(Array(user?.data?.businesses?.length).fill(true));
+    }
   }, [user]);
 
   const toggleCollapse = (value) => {
@@ -106,38 +104,37 @@ const BusinessInfo = (props) => {
                             ></i>
                           </a>
                         </div>
-                          <div className="table-responsive">
-                        <table className="table table-striped">
-                          <tbody>
-                            <tr>
-                              <td>Business Name</td>
-                              <td className="text-muted">
-                                {item.business_name}
-                              </td>
-                              <td  width="50px"></td>
-                            </tr>
-                            <tr>
-                              <td>Business Category</td>
-                              <td className="text-muted">
-                                {item.business_category}
-                              </td>
-                              <td  width="50px"></td>
-                            </tr>
-                            <tr>
-                              <td>Street Address</td>
-                              <td className="text-muted">
-                                {item.street_address}
-                              </td>
-                              <td  width="50px"></td>
-                            </tr>
-                          </tbody>
-                        </table>
+                        <div className="table-responsive">
+                          <table className="table table-striped">
+                            <tbody>
+                              <tr>
+                                <td>Business Name</td>
+                                <td className="text-muted">
+                                  {item.business_name}
+                                </td>
+                                <td width="50px"></td>
+                              </tr>
+                              <tr>
+                                <td>Business Category</td>
+                                <td className="text-muted">
+                                  {item.business_category}
+                                </td>
+                                <td width="50px"></td>
+                              </tr>
+                              <tr>
+                                <td>Street Address</td>
+                                <td className="text-muted">
+                                  {item.street_address}
+                                </td>
+                                <td width="50px"></td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
 
                         <div
-                          className={`pt-0 collapse${
-                            collapsedItems[value] ? "" : " show"
-                          }`}
+                          className={`pt-0 collapse${collapsedItems[value] ? "" : " show"
+                            }`}
                           id={`collapse-${value}`}
                         >
                           <table className="table table-striped">
@@ -179,27 +176,33 @@ const BusinessInfo = (props) => {
                                 </td>
                               </tr>
 
-                             {
-                              item.business_photos && (
-                                <tr>
-                                <td>Business Photo</td>
-                                <td className="proposal-Photo">
-                                  {businessPhotos &&
-                                  Array.isArray(businessPhotos) ? (
-                                    businessPhotos.map((item, idx) => (
-                                      <a href={item} target="_blank">
-                                        <img className="m-1" src={item} />
-                                      </a>
-                                    ))
-                                  ) : (
-                                    <a href={businessPhotos} target="_blank">
-                                      <img src={businessPhotos} />
-                                    </a>
-                                  )}
-                                </td>
-                              </tr>
-                              )
-                             }
+                              {
+                                item.business_photos && Array.isArray(item.business_photos) ? (
+                                  <tr>
+                                    <td>Business Photo</td>
+                                    <td className="proposal-Photo">
+                                      {
+                                        item.business_photos.map((item, idx) => (
+                                          <a href={item} target="_blank">
+                                            <img className="m-1" src={item} />
+                                          </a>
+                                        ))
+                                      }
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  <tr>
+                                    <td>Business Photo</td>
+                                    <td className="proposal-Photo">
+                                      {
+                                        <a href={item} target="_blank">
+                                          <img className="m-1" src={item.business_photos} />
+                                        </a>
+                                      }
+                                    </td>
+                                  </tr>
+                                )
+                              }
                               <tr>
                                 <td>Status</td>
                                 <td className="text-muted">{item.status}</td>

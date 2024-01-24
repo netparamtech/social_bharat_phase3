@@ -688,6 +688,25 @@ export const fetchAdminDashboardStatistics = async () => {
     }
 }
 
+//create email
+export const createMail = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/admin/authorized-email', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//get authorized email
+export const getAuthorizedEmail = async () => {
+    try {
+        const response = await apiWithHeaders.get('/admin/find/authorized-email');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //update Site Setting 
 export const updateSetting = async (data) => {
     try {

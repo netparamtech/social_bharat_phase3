@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import { Carousel } from "react-bootstrap";
 
 const SearchBusiness = () => {
   const user = useSelector((state) => state.userAuth);
@@ -22,6 +23,7 @@ const SearchBusiness = () => {
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   //to show state and city according to user search
 
@@ -172,6 +174,31 @@ const SearchBusiness = () => {
   useEffect(() => {
     setState(selectedState.label);
   }, [city]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  const formatDate = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
   return (
     <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
       <div className="container">
@@ -220,92 +247,151 @@ const SearchBusiness = () => {
               <i className="fas fa-search"></i>
             </div>
             <div className="container">
-            <div className={`row ${isFilter ? "" : "d-none"}`}>
-              <div className="col-5 mb-3 p-0">
-                <Select
-                  options={states.map((state) => ({
-                    value: state.name,
-                    label: state.name,
-                  }))}
-                  value={selectedState}
-                  onChange={handleStateChange}
-                  placeholder="State"
-                />
-              </div>
-              <div className="col-5 mb-3">
-                <Select
-                  options={cities.map((city) => ({
-                    value: city.name,
-                    label: city.name,
-                  }))}
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  placeholder="City"
-                />
-              </div>
-              <div className="col-2 mb-3 p-0">
-                <a
-                  className="btn btn-set w-100 btn-primary  btn-sm hover-pointer"
-                  onClick={handleGoButtonClick}
-                >
-                  Go
-                </a>
+              <div className={`row ${isFilter ? "" : "d-none"}`}>
+                <div className="col-5 mb-3 p-0">
+                  <Select
+                    options={states.map((state) => ({
+                      value: state.name,
+                      label: state.name,
+                    }))}
+                    value={selectedState}
+                    onChange={handleStateChange}
+                    placeholder="State"
+                  />
+                </div>
+                <div className="col-5 mb-3">
+                  <Select
+                    options={cities.map((city) => ({
+                      value: city.name,
+                      label: city.name,
+                    }))}
+                    value={selectedCity}
+                    onChange={handleCityChange}
+                    placeholder="City"
+                  />
+                </div>
+                <div className="col-2 mb-3 p-0">
+                  <a
+                    className="btn btn-set w-100 btn-primary  btn-sm hover-pointer"
+                    onClick={handleGoButtonClick}
+                  >
+                    Go
+                  </a>
+                </div>
               </div>
             </div>
-            </div>
-            
+
             <div className="row wow animate__animated animate__zoomIn">
               {/* User Cards */}
 
               {data &&
                 data.map((item, idx) => (
-                  <div className="col-md-4" key={idx}>
-                    <div className="card shadow mb-2" style={{height:'200px'}}>
-                      <div className="card-body">
-                        <div className="row wow animate__animated animate__zoomIn">
-                          <div className="col-4">
-                            <img
-                              src={item.photo ? item.photo : defaultImage}
-                              alt={item.name}
-                              title={item.name}
-                              className="avatar img-fluid img-circle "
-                            />
-                          </div>
-                          <div className="col-8 user-detail">
+
+                  <div className="col-md-6 mt-2" key={idx}>
+                    <div className="card" style={{ borderRadius: '15px' }}>
+                      <div className="card-body p-4">
+                        <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
+                          <Carousel className="your-custom-carousel-class">
+                            {item.business_photos && Array.isArray(item.business_photos) ?
+                              item.business_photos.map((value, index) => (
+                                <Carousel.Item key={index}>
+                                  <img
+                                    src={value}
+                                    alt={item.business_name}
+                                    className="d-block w-100 custom-carousel-item"
+                                    height={300}
+                                  //onClick={() => changeEventClickFlag(true, item.id)}
+                                  />
+
+                                </Carousel.Item>
+                              )):(
+                                <img
+                                    src={item.business_photos}
+                                    alt={item.business_name}
+                                    className="d-block w-100 custom-carousel-item"
+                                    height={300}
+                                  //onClick={() => changeEventClickFlag(true, item.id)}
+                                  />
+                              )}
+                          </Carousel>
+                          {
+                            item.banner_image ? (
+                              <div className="col-12 flex-shrink-0">
+                                <img
+                                  src={item.business_image}
+                                  alt={item.name}
+                                  className="img-fluid"
+                                  style={{ width: '100%', borderRadius: '10px' }}
+                                // onClick={() => changeEventClickFlag(true, item.id)}
+                                />
+                              </div>
+                            ) : ''
+                          }
+
+                          <div className="flex-grow-1 ms-3 mt-2">
                             <h6>{item.business_name}</h6>
                             <p>Category-{item.business_category}</p>
-                            <p>Street-{item.street_address}</p>
-                            <p>{item.city}</p>
-                            <p>{item.state ? `(${item.state})` : ""}</p>
-                            <p>
-                              Contact Numbers: 
-                              <a href={`tel:${item.contact1 }`}>
-                                {item.contact1}
-                              </a>
-                              {item.contact2 ? (
-                                <>
-                                  ,{" "}
-                                  <a href={`tel:${item.contact2}`}>
-                                    {item.contact2}
-                                  </a>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                              {item.contact3 ? (
-                                <>
-                                  ,{" "}
-                                  <a href={`tel:${item.contact3}`}>
-                                    {item.contact3}
-                                  </a>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                            </p>{" "}
+                            <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                              Posted By : <b>{item.name}</b>
+                            </p>
+                            <div
+                              className="d-flex justify-content-start rounded-3"
+                              style={{ backgroundColor: '#efefef' }}
+                            >
+                              <p>Street-{item.street_address}</p>
+                            </div>
+                            <div className="d-flex justify-content-start rounded-3 mt-2"
+                              style={{ backgroundColor: '#efefef' }}
+                            >
+
+                              <p>{item.city}</p>
+                              <p>{item.state ? `(${item.state})` : ""}</p>
+                            </div>
+                            <div className="d-flex justify-content-start rounded-3 mt-2"
+                              style={{ backgroundColor: '#efefef' }}
+                            >
+                              <p>
+                                Contact Numbers:
+                                <a href={`tel:${item.contact1}`}>
+                                  {item.contact1}
+                                </a>
+                                {item.contact2 ? (
+                                  <>
+                                    ,{" "}
+                                    <a href={`tel:${item.contact2}`}>
+                                      {item.contact2}
+                                    </a>
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                                {item.contact3 ? (
+                                  <>
+                                    ,{" "}
+                                    <a href={`tel:${item.contact3}`}>
+                                      {item.contact3}
+                                    </a>
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                              </p>{" "}
+                            </div>
+                            <div className="d-flex justify-content-start rounded-3 mt-2"
+                              style={{ backgroundColor: '#efefef' }}
+                            >
+                              <p>Created At{" "}-{" "}{formatDate(item.updated_at)}</p>
+                            </div>
+
                           </div>
                         </div>
                       </div>
+                      {
+                        item && item.description ? (
+                          <div className="card-footer">
+                            {item.description}</div>
+                        ) : ''
+                      }
                     </div>
                   </div>
                 ))}

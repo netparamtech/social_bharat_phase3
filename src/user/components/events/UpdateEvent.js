@@ -44,9 +44,15 @@ const UpdateEvent = () => {
     const [alertClass, setAlertClass] = useState("");
     const [thumbnailPreview, setThumbnailPreview] = useState(null);
     const [bannerPreview, setBannerPreview] = useState(null);
+    const [selectedEventType, setSelectedEventType] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const eventsOptions = [
+        { value: "Communited", label: "Only For MY Community" },
+        { value: "General", label: "General(For All Communities)" },
+    ];
 
     const handleStartDateTimeChange = (date, dateString) => {
         setStartDateTime(dateString); // Update startDateTime with the selected date and time
@@ -59,6 +65,10 @@ const UpdateEvent = () => {
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
+
+    const handleEventTypeChange = (option) => {
+        setSelectedEventType(option);
+    }
 
     const handleStateChange = (selectedOption) => {
         setSelectedState(selectedOption);
@@ -180,6 +190,10 @@ const UpdateEvent = () => {
                     value: data.city,
                     label: data.city,
                 });
+                setSelectedEventType({
+                    value: data.event_type,
+                    label: data.event_type==='General'?'General(For All Communities)':'Only For MY Community',
+                });
             }
             setStartDateTime(data.start_datetime);
             setEndDateTime(data.end_datetime);
@@ -254,6 +268,7 @@ const UpdateEvent = () => {
         }
 
         const data = {
+            event_type: selectedEventType && selectedEventType.value,
             title,
             city: selectedCity && selectedCity.label,
             state: selectedState && selectedState.label, // Update to selectedState
@@ -267,7 +282,7 @@ const UpdateEvent = () => {
         };
 
         try {
-            const response = await updateEvent(data,id);
+            const response = await updateEvent(data, id);
 
             if (response && response.status === 200) {
                 setErrors("");
@@ -308,6 +323,18 @@ const UpdateEvent = () => {
                                 <div className="col-md-12 col-sm-12 col-xs-12 p-4">
                                     <div className="card-title mb-5">
                                         <h3 className="mb-1">Update Event - {data && data.title} </h3>
+                                        <div className="mb-3">
+                                            <label className="form-label">Event Type{" "}<span className="text-danger">*</span></label>
+                                            <Select
+                                                options={eventsOptions}
+                                                value={selectedEventType}
+                                                onChange={handleEventTypeChange}
+                                                placeholder="Select..."
+                                            />
+                                            {errors.event_type && (
+                                                <span className="error">{errors.event_type}</span>
+                                            )}
+                                        </div>
                                         <p className="text-muted m-0 p-0">
                                             Fill the details below to post events.
                                         </p>

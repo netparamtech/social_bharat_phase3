@@ -171,92 +171,95 @@ const UpdateContact = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
-          <div className="card-body">
+        <div className={`card ${errors ? 'border-danger' : ''}`}>
+          <div className="">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
-                <div className="card-title">
-                  <h3 className="mb-3">Address</h3>
-                </div>
+                {serverError && <span className='error'>{serverError}</span>}
                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
-                  <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Address Type{" "}<span className="text-danger">*</span></label>
-                      <select className="form-select form-control" aria-label="Default select example" value={addressType} onChange={handleAddressTypeChange}>
-                        <option value="">---Address Type---</option>
-                        <option value="PERMANENT">PERMANENT</option>
-                        <option value="CURRENT">CURRENT</option>
-                      </select>
-                      {errors.address_type && <span className='error'>{errors.address_type}</span>}
+                  <fieldset className="shadow">
+                    <legend>Address</legend>
+                    <div className="card p-3">
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Address Type{" "}<span className="text-danger">*</span></label>
+                          <select className="form-select form-control" aria-label="Default select example" value={addressType} onChange={handleAddressTypeChange}>
+                            <option value="">---Address Type---</option>
+                            <option value="PERMANENT">PERMANENT</option>
+                            <option value="CURRENT">CURRENT</option>
+                          </select>
+                          {errors.address_type && <span className='error'>{errors.address_type}</span>}
+                        </div>
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Country {" "}<span className="text-danger">*</span></label>
+
+                          <Select
+                            options={[
+                              { value: 'India', label: 'India' },
+                              // Add other country options here
+                            ]}
+                            value={selectedCountry}
+                            onChange={handleCountryChange}
+                          />
+
+
+                          {errors.country && <span className='error'>{errors.country}</span>}
+                        </div>
+
+                      </div>
+
+                      <div className="row">
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">State{" "}<span className="text-danger">*</span></label>
+
+                          <Select
+                            options={states.map(state => ({ value: state.name, label: state.name }))}
+                            value={selectedState}
+                            onChange={handleStateChange}
+                          />
+
+                          {errors.state && <span className='error'>{errors.state}</span>}
+                        </div>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">City{" "}<span className="text-danger">*</span></label>
+
+                          <Select
+                            options={cities.map(city => ({ value: city.name, label: city.name }))}
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                          />
+                          {errors.city && <span className='error'>{errors.city}</span>}
+
+                        </div>
+                      </div>
+
+                      <div className='row'>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Address Line{" "}<span className="text-danger">*</span></label>
+                          <textarea
+                            type="text"
+                            name="addressLine"
+                            id="addressLine"
+                            placeholder="Enter Address Line"
+                            className="form-control"
+                            defaultValue={addressLine}
+                            onChange={handleAddressLineChange}
+                            autoFocus
+                          />
+                          {errors.address_line && <span className='error'>{errors.address_line}</span>}
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Country {" "}<span className="text-danger">*</span></label>
-
-                      <Select
-                        options={[
-                          { value: 'India', label: 'India' },
-                          // Add other country options here
-                        ]}
-                        value={selectedCountry}
-                        onChange={handleCountryChange}
-                      />
-
-
-                      {errors.country && <span className='error'>{errors.country}</span>}
+                    <div className="row mt-4">
+                      <div className="col-lg-6 col-sm-12 col-xs-12">
+                        <button type="submit" className="btn btn-primary">
+                          Update
+                        </button>
+                      </div>
                     </div>
-
-                  </div>
-
-                  <div className="row">
-
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">State{" "}<span className="text-danger">*</span></label>
-
-                      <Select
-                        options={states.map(state => ({ value: state.name, label: state.name }))}
-                        value={selectedState}
-                        onChange={handleStateChange}
-                      />
-
-                      {errors.state && <span className='error'>{errors.state}</span>}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">City{" "}<span className="text-danger">*</span></label>
-
-                      <Select
-                        options={cities.map(city => ({ value: city.name, label: city.name }))}
-                        value={selectedCity}
-                        onChange={handleCityChange}
-                      />
-                      {errors.city && <span className='error'>{errors.city}</span>}
-
-                    </div>
-                  </div>
-
-
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label className="form-label">Address Line{" "}<span className="text-danger">*</span></label>
-                    <textarea
-                      type="text"
-                      name="addressLine"
-                      id="addressLine"
-                      placeholder="Enter Address Line"
-                      className="form-control"
-                      defaultValue={addressLine}
-                      onChange={handleAddressLineChange}
-                      autoFocus
-                    />
-                    {errors.address_line && <span className='error'>{errors.address_line}</span>}
-                  </div>
-
-                  <div className="row mt-4">
-                    <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <button type="submit" className="btn btn-primary">
-                        Update
-                      </button>
-                    </div>
-                  </div>
+                  </fieldset>
                 </form>
               </div>
             </div>

@@ -1,14 +1,12 @@
 import React from 'react';
 import AdminProfileDropdown from './AdminProfileDropdown';
 
-function Topbar() {
+function Topbar({ children }) {
 
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
       {/* Sidebar Toggle (Topbar) */}
-      <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
-        <i className="fa fa-bars"></i>
-      </button>
+      {children}
 
       {/* Topbar Navbar */}
       <ul className="navbar-nav ml-auto mb-2 mb-lg-0">

@@ -177,7 +177,7 @@ const BusinessInfo = (props) => {
                               </tr>
 
                               {
-                                item.business_photos && Array.isArray(item.business_photos) && (
+                                item.business_photos && Array.isArray(item.business_photos) ? (
                                   <tr>
                                     <td>Business Photo</td>
                                     <td className="proposal-Photo">
@@ -187,6 +187,17 @@ const BusinessInfo = (props) => {
                                             <img className="m-1" src={item} />
                                           </a>
                                         ))
+                                      }
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  <tr>
+                                    <td>Business Photo</td>
+                                    <td className="proposal-Photo">
+                                      {
+                                        <a href={item} target="_blank">
+                                          <img className="m-1" src={item.business_photos} />
+                                        </a>
                                       }
                                     </td>
                                   </tr>

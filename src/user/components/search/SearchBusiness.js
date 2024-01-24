@@ -292,7 +292,7 @@ const SearchBusiness = () => {
                       <div className="card-body p-4">
                         <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
                           <Carousel className="your-custom-carousel-class">
-                            {item.business_photos &&
+                            {item.business_photos && Array.isArray(item.business_photos) ?
                               item.business_photos.map((value, index) => (
                                 <Carousel.Item key={index}>
                                   <img
@@ -304,7 +304,15 @@ const SearchBusiness = () => {
                                   />
 
                                 </Carousel.Item>
-                              ))}
+                              )):(
+                                <img
+                                    src={item.business_photos}
+                                    alt={item.business_name}
+                                    className="d-block w-100 custom-carousel-item"
+                                    height={300}
+                                  //onClick={() => changeEventClickFlag(true, item.id)}
+                                  />
+                              )}
                           </Carousel>
                           {
                             item.banner_image ? (

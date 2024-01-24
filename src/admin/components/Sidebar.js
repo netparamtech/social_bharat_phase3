@@ -9,29 +9,26 @@ import {
   CommentOutlined,
   HistoryOutlined,
   AppstoreOutlined,
-  ScheduleOutlined,
   BarsOutlined,
-  MailOutlined,
-  FileImageOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar() {
+function Sidebar({ collapsed, onCollapse }) {
   return (
     <Layout style={{
       minHeight: '100vh',
-      // padding: '24px 0',
        backgroundColor: '#4e73d',
-      // borderRadius: borderRadiusLG,
     }}>
-      <Sider className="sidebar" width={200} theme="dark" collapsible collapsedWidth={80} >
-        <div className="logo">
-          {/* Replace with your logo */}
+      <Sider style={{
+            minHeight: '100vh',
+            width: collapsed ? '80px' : '200px',
+        }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+        {/* <div className="logo">
           <img src="/user/images/sb-logo.png" className="img-fluid" alt="Logo" />
-        </div>
+        </div> */}
         <Menu mode="vertical" theme="dark" defaultSelectedKeys={["dashboard"]} >
           <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
             <Link to="/admin/dashboard">DASHBOARD</Link>
@@ -88,7 +85,7 @@ function Sidebar() {
             <Link to="/admin/service/index">SERVICES</Link>
           </Menu.Item>
 
-          <Menu.Item key="jobs" icon={<AppstoreOutlined />}>
+          <Menu.Item key="jobs" icon={<QuestionCircleOutlined />}>
             <Link to="/admin/job-board">JOBS</Link>
           </Menu.Item>
 

@@ -1822,3 +1822,13 @@ legend {
   color: white;
   padding: 5px 10px;
 }
+
+#service-section :where(.css-dev-only-do-not-override-i1mju1).ant-btn-primary {
+  color: #fff;
+  background: #81b5b5;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+#service-section :where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:hover, :where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:focus {
+  border-color: #c5e2e6 ;
+}

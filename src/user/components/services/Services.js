@@ -319,20 +319,19 @@ const Services = () => {
               <div className="col-12 col-sm-8 rounded mb-3">
                 <div className="card shadow p-3">
                   <div className="row">
-                    <div className="col-sm-3 col-8">
-                      <input type="text"
-                        className="form-control-custom"
-                        placeholder="Enter Search Text"
-                        allowClear
-                        enterButton="Search"
-                        size="large"
-                        onChange={handleSearchChange}
-                        autoFocus
-                      />
+                    <div className="">
+                     
+                      <Search
+                      classNames="w-100"
+                      placeholder="input search text"
+                      allowClear
+                      enterButton="Search"
+                      size="large"
+                      onClick={handleSearchChange}
+                      
+                    />
                     </div>
-                    <div className="col-sm-2 col-4">
-                      <button className=" hover-pointer btn-info text-light form-control-custom hover-pointer-green bg-darkskyblue">Search</button>
-                    </div>
+                   
                   </div>
 
                   <div

@@ -1787,10 +1787,7 @@ input[type="number"] {
   overflow: auto; /* Add a scrollbar if content overflows */
 }
 
-#service-section .form-control-custom {
-  border-radius: 10px !important;
-  width: fit-content;
-}
+
 
 .ant-table-row-red{
   background-color: red;

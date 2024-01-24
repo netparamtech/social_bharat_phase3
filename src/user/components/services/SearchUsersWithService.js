@@ -235,13 +235,8 @@ const SearchUsersWithService = () => {
               <div className="card-header bg-darkskyblue">
                 {title}
                 <div className="d-sm-flex align-items-center float-right">
-<<<<<<< HEAD
-                  
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer me-2 mt-2"
-=======
 
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
->>>>>>> 1ab6784005a24d85a9f6d0cbee8f96d92bbb343a
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer me-1 mb-2 mt-2"
                     onClick={(e) => {
                       e.preventDefault();
                       navigate('/user/user-registered-services')
@@ -249,7 +244,7 @@ const SearchUsersWithService = () => {
                   >
                     My Registered Services
                   </a>
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer  mt-2"
+                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       navigate('/user/search/service')

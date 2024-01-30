@@ -1,0 +1,36 @@
+.form-activity {
+  background-image: url("https://images.unsplash.com/photo-1507643179773-3e975d7ac515?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsbGVyeXxlbnwwfHwwfHx8MA%3D%3D");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 400px; /* Default height for larger screens */
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  .form-activity {
+    height: auto; /* Adjust height based on screen size */
+    width: 100%;
+  }
+}
+
+  .img-container{
+    border: 1px groove yellow;
+    padding: 10px;
+    background-color: rgba(128, 128, 128, 0.558);
+    max-width: 500px;
+  }
+  .img-set{
+    max-width: 100%;
+    height: auto;
+  }
+  
+#auth-wrapper .text-area{
+  font-size: 2vw;
+  outline: none;
+  border: 2px groove yellow;
+}
+#auth-wrapper .custom-scroll-activity-images{
+  overflow-y: scroll;
+}
+  

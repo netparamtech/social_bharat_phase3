@@ -87,6 +87,7 @@ function Contact() {
     setIsModalOpen(false);
   };
   const handleCancel = () => {
+    console.log("Hello")
     setIsModalOpen(false);
   };
 

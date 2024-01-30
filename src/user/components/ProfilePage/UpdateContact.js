@@ -14,7 +14,7 @@ const UpdateContact = (props) => {
   const [selectedCity, setSelectedCity] = useState('');
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
-  const [countryID, setCountryID] = useState('');
+  const [countryID, setCountryID] = useState(101);
 
   const [errors, setErrors] = useState('');
   const [serverError, setServerError] = useState("");
@@ -151,12 +151,16 @@ const UpdateContact = (props) => {
     }
   }, [contactDetails]);
 
+  useEffect(()=>{
+    setSelectedCountry({ value: 'India', label: 'India' });
+  },[]);
+
   useEffect(() => {
     // Check if selectedCountry is already set
-    if (selectedCountry) {
+    if (countryID) {
       getAllStates();
     }
-  }, [selectedCountry]);
+  }, []);
 
   useEffect(() => {
     if (states && contactDetails) {

@@ -984,8 +984,65 @@ export const fetchMails = async (data) => {
 //fetch all subcasts
 export const fetchAllSubcasts = async (communityId) => {
   try {
-    const response = await apiWithFileHeaders.get(
+    const response = await apiWithHeaders.get(
       `/fetch/${communityId}/subcasts`
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//post activities
+export const uploadActivity = async (data) => {
+  try {
+    const response = await apiWithHeaders.post("/user/activity/post", data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch all activities
+export const fetchAllActivities = async (searchText, page, size) => {
+  try {
+    const response = await apiWithHeaders.get(
+      `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch one activity
+export const findActivityWithId = async (id, userId) => {
+  try {
+    const response = await apiWithHeaders.get(
+      `/user/activity/${id}/on/${userId}`
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//update single activity
+export const updateSingleActivityById = async (data,id, userId) => {
+  try {
+    const response = await apiWithHeaders.put(
+      `/user/activity/${id}/update/${userId}`,data
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+//update single activity
+export const deleteSingleActivityById = async (id, userId) => {
+  try {
+    const response = await apiWithHeaders.delete(
+      `/user/activity/${id}/delete/${userId}`
     );
     return response;
   } catch (error) {

@@ -47,6 +47,7 @@ import RequestedForNewServicePage from "./pages/services/RequestedForNewServiceP
 import AllJobsPostPage from "./pages/jobs/AllJobsPostPage";
 import usersWithCommunity from "./pages/user/UserWithCommuniryPage";
 import CreateEmailPage from "./pages/CreateEmailPage";
+import ActivitiesPage from "./pages/ActivitiesPage";
 
 const adminRoutes = [
     {
@@ -336,6 +337,11 @@ const adminRoutes = [
     {
         path: '/admin/email',
         component: CreateEmailPage,
+        exact:true
+    },
+    {
+        path: '/admin/activities',
+        component: ActivitiesPage,
         exact:true
     },
 ]

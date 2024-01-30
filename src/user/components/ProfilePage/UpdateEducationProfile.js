@@ -50,7 +50,8 @@ const UpdateEducationProfile = (props) => {
   };
 
   const passingYearOptions = [];
-  const currentYear = new Date().getFullYear();
+  let currentYear = new Date().getFullYear();
+  currentYear = currentYear+5;
   for (let year = currentYear; year >= currentYear - 50; year--) {
     passingYearOptions.push(
       <option key={year} value={year}>

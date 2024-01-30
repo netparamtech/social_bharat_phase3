@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const NavbarTransparent = (props) => {
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   const defaultLogo = '/user/images/sb-logo.png';
 
@@ -320,7 +321,7 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs"|| window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"
                     ? "active"
                     : "inactive"
                     }`}
@@ -353,7 +354,7 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/service"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/service"||window.location.pathname === `/user/user-registered-services`||location.pathname.startsWith("/users-basedOn-services")
                     ? "active"
                     : "inactive"
                     }`}

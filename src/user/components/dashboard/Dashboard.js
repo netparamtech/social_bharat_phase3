@@ -177,7 +177,39 @@ const Dashboard = () => {
                   className="text-white hover-pointer"
                   onClick={() => navigate("/event")}
                 >
-                  Post Job{" "}
+                  Post Event{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card shadow bg-classicbrown text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Event</div>
+                    <div className="text-lg ">
+                      Manage Activities <br />
+                      क्रियाएँ जोड़ें{" "}
+                    </div>
+                  </div>
+                  <img src="/user/images/activity.png" width="40px" />
+                </div>
+              </div>
+
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/users/activities")}
+                >
+                  Search{" "}
+                </a>
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/post-activity")}
+                >
+                  Post Activity{" "}
                 </a>
               </div>
             </div>

@@ -12,7 +12,7 @@ body {
   color: #008374 !important;
 }
 
-.bg-all{
+.bg-all {
   background-color: #008374 !important;
 }
 
@@ -25,13 +25,13 @@ body {
 /* Add custom styles if needed */
 @media (max-width: 767px) {
   #customNavID .navbar-brand img {
-      max-width: 100px;
+    max-width: 100px;
   }
 }
 
 @media (min-width: 768px) {
   #customNavID .navbar-brand img {
-      max-width: 200px;
+    max-width: 200px;
   }
 }
 
@@ -167,8 +167,9 @@ body {
 
 nav .container,
 #banners-section .container {
-max-width: 1290px !important;
+  max-width: 1290px !important;
 }
+
 /* after mobile */
 .drawerStyless {
   z-index: 99999;
@@ -187,6 +188,7 @@ max-width: 1290px !important;
   backdrop-filter: none;
   font-size: 16px;
 }
+
 /* ......... */
 
 /* banner on trans new */
@@ -225,78 +227,80 @@ max-width: 1290px !important;
 
 nav .container,
 #banners-section .container {
-max-width: 1290px !important;
+  max-width: 1290px !important;
 }
 
 #banners-section h2 {
-font-size: 35px;
-color: #ffffff;
+  font-size: 35px;
+  color: #ffffff;
 }
 
 #banners-section h2 span {
-color: yellow;
+  color: yellow;
 }
 
 .overlay {
-/* background-color: rgb(41, 53, 56); */
-background-color: rgb(46, 48, 49);
-bottom: 0;
-left: 0;
-opacity: 0.7;
-position: absolute;
-right: 0;
-top: 0;
-z-index: 0;
+  /* background-color: rgb(41, 53, 56); */
+  background-color: rgb(46, 48, 49);
+  bottom: 0;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 }
 
 .hero-section {
-padding-top: 150px;
-margin-left: 70px;
+  padding-top: 150px;
+  margin-left: 70px;
 }
 
 .hero-btn {
-display: inline-block;
-text-decoration: none;
-color: #fff;
-border: 1px solid #fff;
-padding: 12px 34px;
-font-size: 13px;
-background: transparent;
-position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 12px 34px;
+  font-size: 13px;
+  background: transparent;
+  position: relative;
 }
 
 .hero-btn:hover {
-border: 1px solid #008374 !important;
-background: #008374 !important;
-transition: 1s !important;
-color: #fff;
+  border: 1px solid #008374 !important;
+  background: #008374 !important;
+  transition: 1s !important;
+  color: #fff;
 }
 
 .btn-banner {
-background-color: #50cc14 !important;
-border-color: #50cc14 !important;
-color: #fff;
-cursor: pointer;
+  background-color: #50cc14 !important;
+  border-color: #50cc14 !important;
+  color: #fff;
+  cursor: pointer;
 }
 
 .btn-banner:hover,
 .btn-banner:focus {
-background-color: #51cc14c7 !important;
-border-color: #50cc14 !important;
-/* color: #e7e4e4c9; */
-color: #fff;
+  background-color: #51cc14c7 !important;
+  border-color: #50cc14 !important;
+  /* color: #e7e4e4c9; */
+  color: #fff;
 }
 
 #customNavID .container {
   height: 80px;
+
   @media (max-width: 767px) {
-      height: 60px;
+    height: 60px;
   }
 }
 
 #partner .container {
   max-width: 1278px !important;
 }
+
 /*  */
 
 .dropdown {
@@ -311,6 +315,7 @@ color: #fff;
   display: inline-flex;
   align-items: center;
 }
+
 .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
@@ -321,6 +326,7 @@ color: #fff;
   border-bottom: 0;
   border-left: 0.3em solid transparent;
 }
+
 .navbar .dropdown-menu .dropdown-header {
   color: #a7aeb8;
   font-size: 0.75rem;
@@ -358,7 +364,8 @@ color: #fff;
 }
 
 .community-name {
-  margin-top: 8px; /* Optional: add margin between image and name */
+  margin-top: 8px;
+  /* Optional: add margin between image and name */
 }
 
 /* why-social-section */
@@ -424,6 +431,7 @@ color: #fff;
 #services {
   background-color: #ffffff;
 }
+
 #services .service-item {
   transition: transform 0.3s, box-shadow 0.3s;
   padding: 10px;
@@ -486,8 +494,10 @@ color: #fff;
 }
 
 .card-in-section {
-  height: 400px; /* Set the desired height */
-  overflow-y: auto; /* Add a scrollbar if the content overflows */
+  height: 400px;
+  /* Set the desired height */
+  overflow-y: auto;
+  /* Add a scrollbar if the content overflows */
 }
 
 .ss:hover {
@@ -573,7 +583,7 @@ color: #fff;
   background-size: cover;
   overflow: hidden;
   border-radius: 10px;
- 
+
 }
 
 /* #testimonials::before {
@@ -698,7 +708,7 @@ a.btn.dropdown-toggle.show:focus {
   font-size: 13px;
 }
 
-.btn-check:focus + .btn,
+.btn-check:focus+.btn,
 .btn:focus {
   outline: 0px;
   box-shadow: none !important;
@@ -966,18 +976,23 @@ a.btn.dropdown-toggle.show:focus {
 .bg-lightgreen {
   background-color: #6aa668 !important;
 }
+
 .bg-soil {
   background-color: #634a00 !important;
 }
+
 .bg-lightvoilet {
   background-color: #3f0359 !important;
 }
+
 .bg-pink {
   background-color: #f21d2f !important;
 }
+
 .bg-classicpink {
   background-color: #bf7e6f !important;
 }
+
 .bg-navyblue {
   background-color: #009bce !important;
 }
@@ -1009,7 +1024,7 @@ a.btn.dropdown-toggle.show:focus {
   top: 10px;
 }
 
-.job-time-zone{
+.job-time-zone {
   margin-top: 10px;
   margin-right: 10px;
 }
@@ -1231,21 +1246,24 @@ a.btn.dropdown-toggle.show:focus {
 
 /* Custom CSS for the Typeahead component */
 .custom-typeahead {
+
   /* Add custom styles to the Typeahead input field */
   .rbt-input-main {
     /* Add styles for the input field here */
-    padding-right: 30px; /* Add padding for the dropdown arrow */
+    padding-right: 30px;
+    /* Add padding for the dropdown arrow */
   }
 
   /* Add styles to the dropdown arrow */
   .rbt-input-wrapper .rbt-input {
-    background-image: url("path-to-your-dropdown-icon.png"); /* Replace with your dropdown icon image path */
+    background-image: url("path-to-your-dropdown-icon.png");
+    /* Replace with your dropdown icon image path */
     background-repeat: no-repeat;
     background-position: right center;
   }
 
   /* Open the dropdown on input click */
-  .rbt-input-main:focus + .rbt-menu {
+  .rbt-input-main:focus+.rbt-menu {
     display: block !important;
   }
 }
@@ -1304,9 +1322,9 @@ nav .nav-item {
   font-size: 30px;
 }
 
-.rating input:checked ~ label,
+.rating input:checked~label,
 .rating label:hover,
-.rating label:hover ~ label {
+.rating label:hover~label {
   color: #dfc909;
   transition: color 0.3s;
   transform: scale(1.1);
@@ -1325,6 +1343,7 @@ nav .nav-item {
 .link-grey {
   color: #aaa;
 }
+
 .link-grey:hover {
   color: #00913b;
 }
@@ -1349,13 +1368,16 @@ nav .nav-item {
 
 .fixed-button-container {
   position: fixed;
-  bottom: 20px; /* Adjust the positioning as needed */
-  right: 20px; /* Adjust the positioning as needed */
+  bottom: 20px;
+  /* Adjust the positioning as needed */
+  right: 20px;
+  /* Adjust the positioning as needed */
   z-index: 1000;
 }
 
 .content-container {
-  max-height: calc(100vh - 10px); /* Adjust the max height as needed */
+  max-height: calc(100vh - 10px);
+  /* Adjust the max height as needed */
   overflow-y: auto;
 }
 
@@ -1377,11 +1399,12 @@ input[type="number"] {
 .hover-pointer {
   cursor: pointer;
 }
-.hover-pointer-green:hover{
+
+.hover-pointer-green:hover {
   color: #008577;
 }
 
-.hover-pointer-red:hover{
+.hover-pointer-red:hover {
   color: white;
   background-color: red;
 }
@@ -1390,13 +1413,15 @@ input[type="number"] {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: white; /* Adjust the background color as needed */
+  background-color: white;
+  /* Adjust the background color as needed */
   padding: 0px;
   z-index: 1;
 }
 
 .drawer-content {
-  margin-top: 70px; /* Adjust the margin-top value to accommodate the fixed header */
+  margin-top: 70px;
+  /* Adjust the margin-top value to accommodate the fixed header */
 }
 
 /* ---------------------------- */
@@ -1406,7 +1431,7 @@ input[type="number"] {
   line-height: 0.7cm;
 }
 
-#community-text .community-img img{
+#community-text .community-img img {
   max-height: 500px;
   width: 100%;
 }
@@ -1450,14 +1475,17 @@ input[type="number"] {
 }
 
 .navbar-transparent .nav-link.inactive {
-  color: #008374 !important; /* Change this to your desired color for inactive links */
-  transition: color 0.3s !important; /* Add a transition effect for smooth color change */
+  color: #008374 !important;
+  /* Change this to your desired color for inactive links */
+  transition: color 0.3s !important;
+  /* Add a transition effect for smooth color change */
   opacity: 0.5;
 }
 
 .custom-active-user {
   color: #008374;
 }
+
 /* --------------------------- */
 /* chat */
 
@@ -1519,14 +1547,17 @@ input[type="number"] {
   flex-direction: row-reverse;
   margin-left: auto;
 }
+
 #chat .py-3 {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 }
+
 #chat .px-4 {
   padding-right: 1.5rem !important;
   padding-left: 1.5rem !important;
 }
+
 #chat .flex-grow-0 {
   flex-grow: 0 !important;
 }
@@ -1534,24 +1565,27 @@ input[type="number"] {
 #chat .border-top {
   border-top: 1px solid #dee2e6 !important;
 }
+
 #chat .chat-online,
 .chat-offline {
   font-size: 8px;
 }
+
 #chat .small {
   font-size: 12px;
 }
+
 #chat .offcanvas.offcanvas-start {
   width: 300px !important;
 }
 
-#chat .close-button-chat{
+#chat .close-button-chat {
   color: white !important;
- }
+}
 
- #chat .close-button-chat:hover{
+#chat .close-button-chat:hover {
   color: red !important;
- }
+}
 
 #chat .font-weight-bold {
   font-weight: 600 !important;
@@ -1564,16 +1598,16 @@ input[type="number"] {
   font-family: sans-serif;
 }
 
-#chat .chat-message-right .font-messages{
+#chat .chat-message-right .font-messages {
   color: black;
 }
 
-.flex-shrink-1{
+.flex-shrink-1 {
   max-width: 400px;
 }
 
 @media (max-width: 390px) {
-  .flex-shrink-1{
+  .flex-shrink-1 {
     max-width: 200px;
   }
 }
@@ -1583,13 +1617,15 @@ input[type="number"] {
 
 /* Mobile-first styles */
 .new-chat-container {
-  padding: 10px; /* Add padding for mobile */
+  padding: 10px;
+  /* Add padding for mobile */
 }
 
 /* Media query for larger screens */
 @media (min-width: 768px) {
   .new-chat-container {
-    padding: 20px; /* Increase padding for larger screens */
+    padding: 20px;
+    /* Increase padding for larger screens */
   }
 }
 
@@ -1597,12 +1633,13 @@ input[type="number"] {
 
 .scroll-to-up {
   position: fixed;
-  bottom: 20px; 
-  right: 20px; 
+  bottom: 20px;
+  right: 20px;
   z-index: 999;
   border-radius: 50% !important
 }
-.scroll-to-up-btn{
+
+.scroll-to-up-btn {
   border-radius: 50%;
 }
 
@@ -1615,7 +1652,8 @@ input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-line-clamp: 10;
+    /* Number of lines to show before ellipsis */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     white-space: normal;
@@ -1628,7 +1666,8 @@ input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-line-clamp: 10;
+    /* Number of lines to show before ellipsis */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     white-space: normal;
@@ -1641,7 +1680,8 @@ input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-line-clamp: 10;
+    /* Number of lines to show before ellipsis */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     white-space: normal;
@@ -1654,19 +1694,20 @@ input[type="number"] {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* Number of lines to show before ellipsis */
+    -webkit-line-clamp: 10;
+    /* Number of lines to show before ellipsis */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     white-space: normal;
   }
 }
 
-.card-header-height{
+.card-header-height {
   height: 40px;
   border-bottom: none;
 }
 
-.text-line-none{
+.text-line-none {
   text-decoration: none;
 }
 
@@ -1676,42 +1717,44 @@ input[type="number"] {
 }
 
 .zoom-on-hover:hover {
-  transform: scale(1.1); /* Adjust the scaling factor as needed */
+  transform: scale(1.1);
+  /* Adjust the scaling factor as needed */
 }
 
 .form-check-input {
-  border: 1px solid #000; /* Adjust the color as needed */
+  border: 1px solid #000;
+  /* Adjust the color as needed */
 }
 
 .btn-secondary {
   width: 200px;
 }
 
-#auth-wrapper .btn-secondary{
+#auth-wrapper .btn-secondary {
   width: 100%;
 }
 
-#auth-wrapper .submit-btn{
+#auth-wrapper .submit-btn {
   border-radius: 20px;
 }
 
 /* Service Section */
 
-#service-section .sevice-item{
+#service-section .sevice-item {
   margin-top: 20px;
 }
 
-#service-section .sevice-item .card{
+#service-section .sevice-item .card {
   height: 70px !important;
   /* background-color: #006b5d; */
 }
 
-#service-section .sevice-item .card:hover{
+#service-section .sevice-item .card:hover {
   background-color: #637976 !important;
   color: white;
 }
 
-.bg-darkskyblue{
+.bg-darkskyblue {
   background-color: #81b5b5;
 }
 
@@ -1728,42 +1771,58 @@ input[type="number"] {
 
 }
 
-.remove-hover-pointer{
+.remove-hover-pointer {
   pointer-events: none;
 }
 
-.job-time-zone{
+.job-time-zone {
   margin-top: 10px;
   margin-right: 10px;
 }
 
-.service-absolute-p{
+.service-absolute-p {
   margin-right: 10px;
 }
 
 @keyframes example {
-  0%   {background-color: red;}
-  25%  {background-color: rgb(141, 39, 93);}
-  50%  {background-color: blue;}
-  100% {background-color: green;}
+  0% {
+    background-color: red;
+  }
+
+  25% {
+    background-color: rgb(141, 39, 93);
+  }
+
+  50% {
+    background-color: blue;
+  }
+
+  100% {
+    background-color: green;
+  }
 }
 
-.marquee-dashboard{
+.marquee-dashboard {
   animation: example 2s infinite;
 }
 
 .your-custom-carousel-class {
-  max-width: 1290px !important; /* Adjust the max-width as needed */
-  margin: auto; /* Center the carousel */
+  max-width: 1290px !important;
+  /* Adjust the max-width as needed */
+  margin: auto;
+  /* Center the carousel */
 }
 
 .carousel-title {
   font-size: 24px;
   font-weight: bold;
-  color: #333; /* Adjust the color as needed */
+  color: #333;
+  /* Adjust the color as needed */
 }
+
 .custom-carousel-item {
-  border-radius: 15px; /* Adjust the border-radius as needed */
+  border-radius: 15px;
+  /* Adjust the border-radius as needed */
   border: 0px solid #238457;
   box-shadow: white;
   height: 400px;
@@ -1779,39 +1838,48 @@ input[type="number"] {
   object-fit: cover;
 }
 
-.remove-btn-custom{
+.remove-btn-custom {
   margin-right: 10px;
 }
+
 #auth-wrapper .fixed-height-card-job {
-  height: 400px; /* Adjust the height as needed */
-  overflow: auto; /* Add a scrollbar if content overflows */
+  height: 400px;
+  /* Adjust the height as needed */
+  overflow: auto;
+  /* Add a scrollbar if content overflows */
 }
 
 
 
-.ant-table-row-red{
+.ant-table-row-red {
   background-color: red;
 }
-.ant-table-row-blue{
+
+.ant-table-row-blue {
   background-color: blue;
 }
-.ant-table-row-yellow{
+
+.ant-table-row-yellow {
   background-color: yellow;
 }
-.ant-table-row-green{
+
+.ant-table-row-green {
   background-color: green;
 }
-#service-section .ant-table-tbody > tr.ant-table-row:hover > td {
+
+#service-section .ant-table-tbody>tr.ant-table-row:hover>td {
   background-color: initial;
 }
 
 /* If you want to remove the hover effect for the selected row as well */
-#service-section .ant-table-tbody > tr.ant-table-row-selected > td {
+#service-section .ant-table-tbody>tr.ant-table-row-selected>td {
   background-color: initial;
 }
-.custom-small-btn{
+
+.custom-small-btn {
   height: 40px;
 }
+
 fieldset {
   background-color: #eeeeee;
   padding: 5px 10px;
@@ -1829,6 +1897,33 @@ legend {
   box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
 }
 
-#service-section :where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:hover, :where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:focus {
-  border-color: #c5e2e6 !important ;
+#service-section :where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:hover,
+:where(.css-dev-only-do-not-override-i1mju1).ant-input-search .ant-input:focus {
+  border-color: #c5e2e6 !important;
+}
+
+/* ImageSlider.css */
+
+.ant-btn-primary {
+  background-color: darkcyan;
+  /* Replace with your desired button color */
+  border-color: #ff0000;
+  /* Replace with your desired border color */
+  color: #ffffff;
+  /* Replace with your desired text color */
+}
+
+/* Change search button hover color */
+.ant-btn-primary:hover {
+  background-color: darkcyan;
+  /* Replace with your desired hover color */
+  border-color: #cc0000;
+  /* Replace with your desired border hover color */
+}
+
+#searchPeople-section .btn-post-activity {
+  margin-top: 10px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 10px;
 }

@@ -125,23 +125,25 @@ const Services = () => {
 
   const getAllCities = async (stateID) => {
     dispatch(setLoader(true));
-    try {
-      const response = await fetchAllCitiesByStateID(stateID);
-      if (response && response.status === 200) {
-        setCities(response.data.data);
-        setServerError('');
+    if (stateID) {
+      try {
+        const response = await fetchAllCitiesByStateID(stateID);
+        if (response && response.status === 200) {
+          setCities(response.data.data);
+          setServerError('');
+        }
+      } catch (error) {
+        //Unauthorized
+        if (error.response && error.response.status === 401) {
+          navigate("/login");
+        }
+        //Internal Server Error
+        else if (error.response && error.response.status === 500) {
+          setServerError("Oops! Something went wrong on our server.");
+        }
+      } finally {
+        dispatch(setLoader(false));
       }
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    } finally {
-      dispatch(setLoader(false));
     }
   };
 
@@ -255,6 +257,7 @@ const Services = () => {
     const filteredData = copyService.filter((item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    console.log(filteredData)
     setService(filteredData);
   }, [searchQuery]);
 
@@ -320,18 +323,18 @@ const Services = () => {
                 <div className="card shadow p-3">
                   <div className="row">
                     <div className="">
-                     
+
                       <Search
-                      classNames="w-100"
-                      placeholder="input search text"
-                      allowClear
-                      enterButton="Search"
-                      size="large"
-                      onClick={handleSearchChange}
-                      
-                    />
+                        classNames="w-100"
+                        placeholder="input search text"
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onChange={handleSearchChange}
+
+                      />
                     </div>
-                   
+
                   </div>
 
                   <div
@@ -402,9 +405,12 @@ const Services = () => {
                     </div>
                     <div className="form-group mb-4">
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Enter Your Mobile Number 1"
                         className="form-control"
+                        maxLength="10"
+                        pattern="[0-9]*"
+                        inputMode="numeric"
                         value={mobile1}
                         onChange={(e) => setMobile1(e.target.value)}
                       />
@@ -414,9 +420,12 @@ const Services = () => {
                     </div>
                     <div className="form-group mb-4">
                       <input
-                        type="number"
+                        type="text"
                         placeholder="Enter Your Mobile Number 2"
                         className="form-control"
+                        maxLength="10"
+                        pattern="[0-9]*"
+                        inputMode="numeric"
                         value={mobile2}
                         onChange={(e) => setMobile2(e.target.value)}
                       />

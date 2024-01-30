@@ -834,3 +834,32 @@ export const toggleSingleSubcast = async (subcastId) => {
         throw error;
     }
 }
+//toggle activity post status
+export const toggleActivityPostStatus = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/activity/${id}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//delete single activity
+export const deleteActivity = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/activity/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch all activities
+export const fetchAllActivities = async (searchText, page, size) => {
+    try {
+      const response = await apiWithHeaders.get(
+        `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };

@@ -38,6 +38,9 @@ import AllAppliedJobsPage from "./pages/AllAppliedJobsPage";
 import SearchEventsPage from "./pages/SearchEventsPage";
 import MyEventsPage from "./pages/MyEventsPage";
 import UpdateEventPage from "./pages/UpdateEventPage";
+import ActivityPage from "./pages/ActivityPage";
+import ActivityIndexPage from "./pages/ActivityIndexPage";
+import UpdateActivityPage from "./pages/UpdateActivityPage";
 
 const userRoutes = [
     {
@@ -298,6 +301,21 @@ const userRoutes = [
         component: UpdateEventPage,
         exact: true
     },
+    {
+        path: '/user/post-activity',
+        component: ActivityPage,
+        exact: true
+    },
+    {
+        path: '/users/activities',
+        component: ActivityIndexPage,
+        exact: true
+    },
+    {
+        path: '/user/activity/update/:id',
+        component: UpdateActivityPage,
+        exact: true
+    }
 
 ]
 

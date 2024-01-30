@@ -11,6 +11,7 @@ import Select from "react-select";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { toast } from "react-toastify";
 
 const EventForm = () => {
   // State variables to store form input values
@@ -220,8 +221,7 @@ const EventForm = () => {
 
       if (response && response.status === 200) {
         setErrors("");
-        setMessage(response.data.message);
-        setAlertClass("alert-success");
+        toast.success('Event Created Successfully and in review processing, will be published soon.');
 
         // Reset file inputs
         thumbnailImageRef.current.value = null;
@@ -278,16 +278,6 @@ const EventForm = () => {
                     </p>
                   </div>
                   <form className="w-100 w-lg-75" onSubmit={handleSubmit}>
-                    {message && (
-                      <div className={`alert ${alertClass}`}>
-                        {alertClass === "alert-success" ? (
-                          <i className="fas fa-check-circle"></i>
-                        ) : (
-                          <i className="fas fa-exclamation-triangle"></i>
-                        )}
-                        {" " + message}
-                      </div>
-                    )}
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Event Title {" "}<span className="text-danger">*</span></label>

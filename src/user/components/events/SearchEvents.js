@@ -104,12 +104,13 @@ const SearchEvents = () => {
   };
 
   const handleSearchText = (e) => {
+    setPage(1);
     setSearchText(e.target.value);
   };
 
-const handleMyEventsClick = () =>{
-  navigate('/user/my-events');
-}
+  const handleMyEventsClick = () => {
+    navigate('/user/my-events');
+  }
 
   const getAllCities = async (stateID) => {
     try {
@@ -164,14 +165,17 @@ const handleMyEventsClick = () =>{
       );
 
       if (response && response.status === 200) {
+        console.log(response.data.data.totalRowsAffected, "response.data.data.totalRowsAffected")
         setTotalRows(response.data.data.totalRowsAffected);
         setServerError("");
         if (response.data.data.events.length === 0) {
           setIssearchingPerformed(false);
         }
         if (searchText || state || city) {
+
           if (response.data.data.events.length !== 0) {
             if (page === 1) {
+              console.log("Hello")
               setItems([...new Set([...response.data.data.events])]);
             } else {
               setItems([...new Set([...items, ...response.data.data.events])]);
@@ -183,11 +187,12 @@ const handleMyEventsClick = () =>{
               setItems([...new Set([...response.data.data.events])]);
             } else {
               setItems([...new Set([...items, ...response.data.data.events])]);
+              console.log("else called")
             }
             setTotalRows(response.data.data.totalRowsAffected);
           }
         } else {
-          const combinedItems = [...response.data.data.events];
+          const combinedItems = [...items, ...response.data.data.events];
           setItems(combinedItems);
         }
       }
@@ -245,17 +250,15 @@ const handleMyEventsClick = () =>{
   };
 
   useEffect(() => {
-    search("", 1, 20);
+    if (user) {
+      search("", 1, 20);
+    }
   }, [user]);
 
   useEffect(() => {
     // Check if the component is not just mounted
     search(searchText, page, 20);
-  }, [searchText, state, city, page]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [searchText]);
+  }, [searchText, state, city]);
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -391,7 +394,7 @@ const handleMyEventsClick = () =>{
                     <div className="container-input mb-3 mt-3">
                       <input
                         type="text"
-                        placeholder="Search i.e name, mobile,state,city"
+                        placeholder="search by name, event title, state and city...."
                         name="text"
                         className="input form-control border-success"
                         value={searchText}
@@ -439,6 +442,9 @@ const handleMyEventsClick = () =>{
                                           <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                             Posted By : <b>{item.name}</b>
                                           </p>
+                                          <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                            Event For : <b>{item.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
+                                          </p>
                                           <div
                                             className="d-flex justify-content-start rounded-3"
                                             style={{ backgroundColor: '#efefef' }}
@@ -453,7 +459,13 @@ const handleMyEventsClick = () =>{
                                           <div className="d-flex justify-content-start rounded-3 mt-2"
                                             style={{ backgroundColor: '#efefef' }}
                                           >
-                                            <p>
+                                            <p className="m-2">
+                                              State-
+                                              {item.state
+                                                ? item.state
+                                                : "N/A"}{" ,"}
+                                            </p>
+                                            <p className="m-2">
                                               City-
                                               {item.city
                                                 ? item.city

@@ -312,32 +312,34 @@ const SearchEvents = () => {
       <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
         <div className="container ">
           <div className="card-search">
-            <Carousel className="your-custom-carousel-class">
-              {featuredEvents &&
-                featuredEvents.map((item, index) => (
-                  <Carousel.Item key={index}>
-                    <img
-                      src={item.banner_image}
-                      alt={item.title}
-                      className="d-block w-100 custom-carousel-item"
-                      height={500}
-                      onClick={() => changeEventClickFlag(true, item.id)}
-                    />
-                    <Carousel.Caption>
-                      <h3 className="carousel-title">{item.title}</h3>
-                      <div>
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-lg fs-3 hover-pointer-green"
-                          onClick={() => changeEventClickFlag(true, item.id)}
-                        >
-                          View
-                        </button>
-                      </div>
-                    </Carousel.Caption>
-                  </Carousel.Item>
-                ))}
-            </Carousel>
+            {
+              !isEventClick ? <Carousel className="your-custom-carousel-class">
+                {featuredEvents &&
+                  featuredEvents.map((item, index) => (
+                    <Carousel.Item key={index}>
+                      <img
+                        src={item.banner_image}
+                        alt={item.title}
+                        className="d-block w-100 custom-carousel-item"
+                        height={500}
+                        onClick={() => changeEventClickFlag(true, item.id)}
+                      />
+                      <Carousel.Caption>
+                        <h3 className="carousel-title">{item.title}</h3>
+                        <div>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg fs-3 hover-pointer-green"
+                            onClick={() => changeEventClickFlag(true, item.id)}
+                          >
+                            View
+                          </button>
+                        </div>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+                  ))}
+              </Carousel> : ''
+            }
             {
               !isEventClick ? (
 
@@ -430,8 +432,9 @@ const SearchEvents = () => {
                                                 src={item.banner_image}
                                                 alt={item.name}
                                                 className="img-fluid"
-                                                style={{ width: '100%', borderRadius: '10px' }}
+                                                style={{ width: '100%', borderRadius: '10px',height:'300px' }}
                                                 onClick={() => changeEventClickFlag(true, item.id)}
+
                                               />
                                             </div>
                                           ) : ''

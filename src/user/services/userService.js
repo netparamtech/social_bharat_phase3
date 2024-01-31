@@ -195,12 +195,24 @@ export const deleteContact = async (id) => {
     throw error;
   }
 };
+//create job info
+export const createJobDetail = async (data) => {
+  try {
+    const response = await apiWithHeaders.post(
+      "/profile/create-job-details",
+      data
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 //update job info
-export const updateJobDetail = async (data) => {
+export const updateJobDetail = async (data, jobId) => {
   try {
     const response = await apiWithHeaders.put(
-      "/profile/update-job-details",
+      `/profile/${jobId}/update-job-details`,
       data
     );
     return response;
@@ -1028,10 +1040,10 @@ export const findActivityWithId = async (id, userId) => {
 };
 
 //update single activity
-export const updateSingleActivityById = async (data,id, userId) => {
+export const updateSingleActivityById = async (data, id, userId) => {
   try {
     const response = await apiWithHeaders.put(
-      `/user/activity/${id}/update/${userId}`,data
+      `/user/activity/${id}/update/${userId}`, data
     );
     return response;
   } catch (error) {

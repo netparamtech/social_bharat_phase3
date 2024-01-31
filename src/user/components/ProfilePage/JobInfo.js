@@ -56,7 +56,7 @@ const JobInfo = (props) => {
           <div className="edit-icon add-more-detail">
             <a
               className="hover-pointer"
-              onClick={() => navigate("/user/update-job-profile")}
+              onClick={() => navigate("/user/create-job-profile")}
               title="Add More Detail"
             >
               <i className="btn btn-outline-info fas fa-plus"></i>
@@ -142,6 +142,20 @@ const JobInfo = (props) => {
                               </span>
                             </div>
                           </div>
+                          <div className="mb-2 row">
+                            <label
+                              htmlFor=""
+                              className="col-sm-4 d-inline-flex"
+                            >
+                              Experience
+                            </label>
+                            <div className="col-sm-6">
+                              <span className="text-muted">
+                                {item.experience || "NA"}
+                              </span>
+                            </div>
+                          </div>
+
 
 
 

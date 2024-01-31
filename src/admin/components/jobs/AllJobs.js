@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteJobsPosted, deleteServiceByID, fetchAllJobsPosted, toggleJobPostFeatured, toggleJobPostStatus, updateToggleStatusForService } from "../../services/AdminService";
+import { deleteJobsPosted, fetchAllJobsPosted, toggleJobPostFeatured, toggleJobPostStatus } from "../../services/AdminService";
 import { Table } from "antd";
 import { setLoader } from "../../actions/loaderAction";
 import {
   Navbar,
   Nav,
-  NavDropdown,
   Form,
   FormControl,
-  Button,
 } from "react-bootstrap";
-import CreateJobs from "./CreateJobs";
 import UpdateJobPosted from "./UpdateJobPosted";
 
 const AllJobs = () => {
@@ -20,9 +17,8 @@ const AllJobs = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [activeNavItem, setActiveNavItem] = useState("ALL");
-  const [openCreateForm, setOpenCreateForm] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
   const [jobId, setJobId] = useState('');
   const [featured, setFeatured] = useState(false);
@@ -30,16 +26,10 @@ const AllJobs = () => {
   const handleNavItemClick = (navItem) => {
     if (navItem === "CREATE JOBS") {
       console.log("Hello nav");
-      setOpenCreateForm(true);
       setActiveNavItem(navItem);
     } else {
       setActiveNavItem(navItem);
-      setOpenCreateForm(false);
     }
-  };
-
-  const actionInModel = (value) => {
-    setOpenCreateForm(value);
   };
 
   const actionInModelToUpdate = (value, id) => {
@@ -63,6 +53,7 @@ const AllJobs = () => {
   const handleSearchChange = (e) => {
     setPage(1);
     setSearchQuery(e.target.value);
+    console.log(e.target.value)
   };
 
   const handleFeaturedChange = async (id) => {
@@ -117,7 +108,6 @@ const AllJobs = () => {
         }
         dispatch(setLoader(true));
         const response = await fetchAllJobsPosted(
-          is_admin_post,
           page,
           size,
           searchQuery,
@@ -264,7 +254,7 @@ const AllJobs = () => {
               className="collapse-item hover-pointer-admin "
               onClick={(e) => {
                 e.preventDefault();
-                handleStatusToggle(record.job_id);
+                handleStatusToggle(record.id);
               }}
             >
               <i className="fa fa-thumbs-up text-primary" title="Active" />
@@ -274,7 +264,7 @@ const AllJobs = () => {
               className="collapse-item text-secondary hover-pointer-admin m-2"
               onClick={(e) => {
                 e.preventDefault();
-                handleStatusToggle(record.job_id);
+                handleStatusToggle(record.id);
               }}
             >
               <i className="fa fa-thumbs-down" title="Inactive" />
@@ -290,7 +280,7 @@ const AllJobs = () => {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            handleFeaturedChange(record.job_id);
+            handleFeaturedChange(record.id);
           }}
         >
           <i class="fa fa-toggle-on" aria-hidden="true"></i>
@@ -301,7 +291,7 @@ const AllJobs = () => {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            handleFeaturedChange(record.job_id);
+            handleFeaturedChange(record.id);
           }}
         >
           <i class="fa fa-toggle-off" aria-hidden="true"></i>
@@ -319,7 +309,7 @@ const AllJobs = () => {
             activeNavItem === 'MY JOBS' ? (
               <a
                 className="collapse-item hover-pointer-admin"
-                onClick={(e) => actionInModelToUpdate(true, record.job_id)}
+                onClick={(e) => actionInModelToUpdate(true, record.id)}
               >
                 <i className="fa fa-edit mr-4" title="Edit" />
               </a>
@@ -330,7 +320,7 @@ const AllJobs = () => {
             className="collapse-item hover-pointer-admin"
             onClick={(e) => {
               e.preventDefault();
-              handleDelete(record.job_id);
+              handleDelete(record.id);
             }}
           >
             <i className="fas fa-trash "></i>
@@ -351,8 +341,11 @@ const AllJobs = () => {
   ];
 
   useEffect(() => {
-    fetchData();
-  }, [activeNavItem, searchQuery, openCreateForm, openUpdateForm]);
+    if(activeNavItem||searchQuery||openUpdateForm||page){
+
+      fetchData();
+    }
+  }, [activeNavItem, searchQuery, openUpdateForm, page]);
   return (
     <div>
       <div id="" className="">
@@ -433,16 +426,6 @@ const AllJobs = () => {
                       >
                         MY JOBS
                       </Nav.Link>
-                      <Nav.Link
-                        href="#"
-                        onClick={() => handleNavItemClick("CREATE JOBS")}
-                        style={{
-                          color:
-                            activeNavItem === "CREATE JOBS" ? "red" : "inherit",
-                        }}
-                      >
-                        CREATE JOBS
-                      </Nav.Link>
 
                       {/* Remove the following NavDropdown section */}
                       {/* <NavDropdown title="ACTION" id="basic-nav-dropdown">
@@ -465,8 +448,7 @@ const AllJobs = () => {
                 </Navbar>
               </div>
               <div className="card-body">
-                {!openCreateForm ? (
-                  <Table
+              <Table
                     title={() => `${activeNavItem} JOB`} // Set the title to 'Enquiries'
                     dataSource={data}
                     columns={columns}
@@ -482,8 +464,6 @@ const AllJobs = () => {
                     rowKey={(record) => record.id}
                   // onChange={handleSearchChange}
                   />
-                ) : (<CreateJobs actionInModel={actionInModel} />)
-                }
 
                 {
                   openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''

@@ -32,7 +32,7 @@ const UserRating = () => {
     e.preventDefault();
     const data = {
       message: comment,
-      rating,
+      rating:rating?rating:1,
     };
 
     try {
@@ -54,7 +54,7 @@ const UserRating = () => {
       } else if (error.response && error.response.status === 401) {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
-        navigate("/login");
+        //navigate("/login");
       }
     }
   };
@@ -150,6 +150,7 @@ const UserRating = () => {
                             id="star1"
                             type="radio"
                             onChange={handleRatingChange}
+                            required
                           />
                           <label htmlFor="star1"></label>
                         </div>

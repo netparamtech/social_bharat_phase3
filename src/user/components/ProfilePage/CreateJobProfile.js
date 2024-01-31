@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { updateJobDetail } from '../../services/userService';
-import { ddmmyyyyFormat, yyyyMmDdFormat } from '../../util/DateConvertor';
+import { createJobDetail } from '../../services/userService';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setLoader } from '../../actions/loaderAction';
 import { useDispatch } from 'react-redux';
 import Select from "react-select";
 
-const UpdateJobProfile = (props) => {
-  const {id} = useParams();
-  const { jobDetails } = props;
+const CreateJobProfile = () => {
 
   const [companyName, setCompanyName] = useState("");
   const [designation, setDesignation] = useState("");
-  const [jobStartDate, setJobStartDate] = useState("");
-  const [jobEndDate, setJobEndDate] = useState("");
   const [jobType, setJobType] = useState("");
   const [selectedExperience, setSelectedExperience] = useState('');
   const experienceOptions = [
@@ -59,7 +54,7 @@ const UpdateJobProfile = (props) => {
     };
 
     try {
-      const response = await updateJobDetail(jobProfileData,id);
+      const response = await createJobDetail(jobProfileData);
       if (response && response.status === 200) {
         setErrors('');
         setServerError('');
@@ -81,25 +76,6 @@ const UpdateJobProfile = (props) => {
       }
     }
   };
-
-  useEffect(() => {
-    // Set default values from jobDetails prop when it changes
-    if (jobDetails) {
-      setCompanyName(jobDetails.company_name);
-      setDesignation(jobDetails.designation);
-      setJobType(jobDetails.job_type);
-      setSelectedExperience({value:jobDetails.experience,label:jobDetails.experience});
-
-      // Set jobType based on job_type from jobDetails
-      if (jobDetails.job_type === "PART_TIME") {
-        setJobType("PART TIME");
-      } else if (jobDetails.job_type === "FULL_TIME") {
-        setJobType("FULL TIME");
-      } else {
-        setJobType("");
-      }
-    }
-  }, [jobDetails]);
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -209,7 +185,7 @@ const UpdateJobProfile = (props) => {
                   <div className="row mt-4">
                     <div className="col-lg-6 col-sm-12 col-xs-12">
                       <button type="submit" className="btn btn-primary">
-                        Update
+                        Submit
                       </button>
                     </div>
                   </div>
@@ -223,4 +199,4 @@ const UpdateJobProfile = (props) => {
   );
 };
 
-export default UpdateJobProfile;
+export default CreateJobProfile;

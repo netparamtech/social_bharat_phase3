@@ -41,6 +41,7 @@ import UpdateEventPage from "./pages/UpdateEventPage";
 import ActivityPage from "./pages/ActivityPage";
 import ActivityIndexPage from "./pages/ActivityIndexPage";
 import UpdateActivityPage from "./pages/UpdateActivityPage";
+import CreateJobProfilePage from "./pages/CreateJobProfilePage";
 
 const userRoutes = [
     {
@@ -113,6 +114,11 @@ const userRoutes = [
     {
         path: '/user/update-job-profile',
         component: UpdateJobPage,
+        exact: true
+    },
+    {
+        path: '/user/create-job-profile',
+        component: CreateJobProfilePage,
         exact: true
     },
 

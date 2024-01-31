@@ -70,6 +70,7 @@ const JobBoard = () => {
 
     //state and city change operations
     const handleStateChange = (selectedOption) => {
+        setPage(1);
         setSelectedState(selectedOption);
 
         if (selectedOption) {
@@ -86,6 +87,7 @@ const JobBoard = () => {
     };
 
     const handleCityChange = (selectedOption) => {
+        setPage(1);
         setSelectedCity(selectedOption);
     };
 
@@ -188,6 +190,10 @@ const JobBoard = () => {
         } else if (activeNavItem === "OTHERS") {
             jobType = "Other";
         }
+        if(city===undefined||state===undefined){
+            city = '';
+            state = '';
+        }
         try {
             const response = await fetchAllJobsPosted(
                 page,
@@ -197,7 +203,11 @@ const JobBoard = () => {
                 jobType
             );
             if (response && response.status === 200) {
+            if(page===1){
                 setData(response.data.data.jobs);
+            }else {
+                setData((prevData) => [...prevData, ...response.data.data.jobs]);
+            }
                 setTotalRows(response.data.data.totalRowsAffected);
                 setServerError("");
             }
@@ -325,7 +335,7 @@ const JobBoard = () => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
 
         // Replace URLs with HTML links
-        const formattedDescription = description.replace(urlRegex, (url) => {
+        const formattedDescription = description && description.replace(urlRegex, (url) => {
             return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
         });
 
@@ -380,7 +390,7 @@ const JobBoard = () => {
         return new Date(dateString).toLocaleDateString("en-US", options);
     };
     const checkPdf = (pdfString) => {
-        if (pdfString.startsWith("uploads")) {
+        if (pdfString && pdfString.startsWith("uploads")) {
             return "";
         }
         return pdfString;
@@ -673,12 +683,12 @@ const JobBoard = () => {
                                                                     )}
 
                                                                     {
-                                                                        checkPdf(item.notification_pdf) ? (
+                                                                        checkPdf(item.attachment) ? (
                                                                             <p>Attachment-{
-                                                                                item.notification_pdf &&
+                                                                                item.attachment &&
                                                                                 <span>
                                                                                     <a
-                                                                                        href={item.notification_pdf}
+                                                                                        href={item.attachment}
                                                                                         download={`${item.job_title}.pdf`}
                                                                                         target="_blank"
                                                                                     >
@@ -687,7 +697,7 @@ const JobBoard = () => {
                                                                                     </a>
                                                                                     &nbsp;(
                                                                                     {getFileType(
-                                                                                        item.notification_pdf
+                                                                                        item.attachment
                                                                                     )}
                                                                                     )
                                                                                 </span>

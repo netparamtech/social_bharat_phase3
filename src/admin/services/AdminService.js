@@ -609,9 +609,9 @@ export const updateToggleStatusForUserRegisteredService = async (clickedUserId) 
 }
 
 //fetch All Jobs
-export const fetchAllJobsPosted = async (is_admin_post, page, size, searchQuery, jobType) => {
+export const fetchAllJobsPosted = async (page, size, searchQuery, jobType) => {
     try {
-        const response = await apiWithHeaders.get(`/search/users/jobs?is_admin_post=${is_admin_post}&page=${page}&size=${size}&searchQuery=${searchQuery}&jobType=${jobType}`);
+        const response = await apiWithHeaders.get(`/search/users/jobs?page=${page}&size=${size}&searchQuery=${searchQuery}&jobType=${jobType}`);
         return response;
     } catch (error) {
         throw error;

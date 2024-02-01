@@ -1939,3 +1939,13 @@ legend {
 #activity-custom img .card-img-top{
   height: 70px;
 }
+#auth-wrapper .textShape {
+  display: block;
+  white-space: pre-line; /* Use pre-line to preserve newlines */
+  max-width: 100%;
+}
+.textShape {
+  display: block;
+  white-space: pre-line; /* Use pre-line to preserve newlines */
+  max-width: 100%;
+}

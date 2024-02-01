@@ -1927,3 +1927,7 @@ legend {
   margin-right: 10px;
   border-radius: 10px;
 }
+#activity-custom .card-custom{
+  height: 600px;
+  background-color: #006b5d;
+}

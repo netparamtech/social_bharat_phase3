@@ -25,8 +25,8 @@ root.render(
     </Provider>
     <ToastContainer
       position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
+      autoClose={false}
+      hideProgressBar={true}
       newestOnTop={false}
       closeOnClick
       rtl={false}

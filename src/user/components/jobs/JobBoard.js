@@ -190,7 +190,7 @@ const JobBoard = () => {
         } else if (activeNavItem === "OTHERS") {
             jobType = "Other";
         }
-        if(city===undefined||state===undefined){
+        if (city === undefined || state === undefined) {
             city = '';
             state = '';
         }
@@ -203,11 +203,11 @@ const JobBoard = () => {
                 jobType
             );
             if (response && response.status === 200) {
-            if(page===1){
-                setData(response.data.data.jobs);
-            }else {
-                setData((prevData) => [...prevData, ...response.data.data.jobs]);
-            }
+                if (page === 1) {
+                    setData(response.data.data.jobs);
+                } else {
+                    setData((prevData) => [...prevData, ...response.data.data.jobs]);
+                }
                 setTotalRows(response.data.data.totalRowsAffected);
                 setServerError("");
             }
@@ -361,7 +361,7 @@ const JobBoard = () => {
                 setErrors("");
                 getJobApplicantStatistics();
                 fetchJobs(page, 20, state, city, activeNavItem);
-                toast.success(`You successfully has applied for this job ${appliedJob.job_title}`)
+                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [contact@socialbharat.org].`)
             }
         } catch (error) {
             //Unauthorized
@@ -429,6 +429,19 @@ const JobBoard = () => {
         // Use the mapping or show the extension as-is
         return fileTypeMappings[extension] || extension.toUpperCase();
     };
+    useEffect(() => {
+        if (data.length === 0) {
+            setServerError("No Jobs Available");
+        } else {
+            setServerError('');
+        }
+    }, [data]);
+
+    const handleOnBoardClick = () => {
+        setSelectedCity(null);
+        setSelectedState(null);
+        setActiveNavItem('ALL');
+    }
     return (
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             <div className="row">
@@ -440,7 +453,6 @@ const JobBoard = () => {
 
                 <div className="col-12 col-sm-12  mx-auto">
                     <div className="card mb-3">
-                        {serverError && <span className="error">{serverError}</span>}
 
                         <div className="card-header">
                             {activeNavItem === "MY JOBS" ? (
@@ -478,7 +490,7 @@ const JobBoard = () => {
                             )}
 
                             <Navbar expanded={true} bg="light" expand="lg" >
-                                <Navbar.Brand>JOB BOARD</Navbar.Brand>
+                                <Navbar.Brand className="hover-pointer btn btn-success text-light fw-bold rounded" onClick={handleOnBoardClick}>JOB BOARD</Navbar.Brand>
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
                                         <Nav.Link
@@ -582,6 +594,7 @@ const JobBoard = () => {
                         </div>
                         <div className="card-body">
                             <div className="row">
+                                {serverError && <span className="error">{serverError}</span>}
                                 {/* Repeat the user card structure as needed */}
                                 <InfiniteScroll
                                     style={{ overflowX: "hidden" }}
@@ -592,10 +605,10 @@ const JobBoard = () => {
                                 >
                                     <div className="row">
                                         {groupedItems.map((pair, index) => (
-                                            <div className="col-md-6" key={index}>
+                                            <div className="col-md-4" key={index}>
                                                 {pair.map((item, innerIndex) => (
                                                     <div className="" key={innerIndex}>
-                                                        <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '430px' }}>
+                                                        <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '450px' }}>
                                                             <div className="card-body">
                                                                 <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                     {formatDate(item.updated_at)}
@@ -630,6 +643,20 @@ const JobBoard = () => {
                                                                                 <p className="m-0">
                                                                                     <b>Company Name : </b>{" "}
                                                                                     {item.job_subheading}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div className="col-md-12">
+                                                                                {/* Display Job Start Date */}
+                                                                                <p className="m-0">
+                                                                                    <b>Application Start : </b>
+                                                                                    {formatDate(item.job_start_date)}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div className="col-md-12">
+                                                                                {/* Display Job End Date */}
+                                                                                <p className="m-0">
+                                                                                    <b>Expire Date : </b>
+                                                                                    {formatDate(item.job_end_date)}
                                                                                 </p>
                                                                             </div>
                                                                         </div>
@@ -705,6 +732,14 @@ const JobBoard = () => {
                                                                             </p>
 
                                                                         ) : ''
+                                                                    }
+                                                                    {
+                                                                        item.apply_link ? (
+                                                                            <div className="">
+                                                                                <b>Apply Link : </b>
+                                                                                <a className="" href={item.apply_link}>{item.apply_link}</a>
+                                                                            </div>
+                                                                        ) : ""
                                                                     }
 
                                                                 </div>

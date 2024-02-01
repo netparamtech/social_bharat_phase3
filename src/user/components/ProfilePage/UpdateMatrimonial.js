@@ -809,8 +809,8 @@ const UpdateMatrimonial = (props) => {
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Proposal Photo {" "}<span className="text-danger">*</span></label>
-                          <p>Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg formet)</p>
+                          <label className="form-label">Proposal Photo</label>
+                          <p>Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg format)</p>
                           <input
                             type="file"
                             className="form-control"
@@ -849,7 +849,7 @@ const UpdateMatrimonial = (props) => {
                         </div>
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Biodata {" "}<span className="text-danger">*</span></label>
+                          <label className="form-label">Biodata</label>
                           <p>upload biodata in pdf format only</p>
                           <input
                             type="file"

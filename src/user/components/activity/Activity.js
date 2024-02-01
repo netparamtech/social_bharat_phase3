@@ -137,9 +137,9 @@ const Activity = () => {
 
     return (
         <>
-            <div id="searchPeople-section"
+            <div id="activity-custom"
                 style={{
-                    backgroundImage: `url(${defaultImage})`,
+                    //backgroundImage: `url(${defaultImage})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     height: "100vh",
@@ -149,7 +149,7 @@ const Activity = () => {
                 }}
             >
                
-                <div className="container mt-5" style={{ maxHeight: "600px", overflowY: "auto" }}>
+                <div className="card card-body card-custom container mt-5" style={{ maxHeight: "600px", overflowY: "auto" }}>
 
                     <div className="row">
                         {imagePreview &&
@@ -176,10 +176,10 @@ const Activity = () => {
                             ))}
                     </div>
                 </div>
-                <div id="auth-wrapper" className="form-activity content-wrapper pt-4 mb-4">
+                <div id="auth-wrapper" className="card card-body content-wrapper pt-4 mb-4">
 
                     <div className="d-flex justify-content-between">
-                        <p className="fs-2 fw-2 text-light m-3">Activity</p>
+                        <p className="fs-2 fw-2 text-success m-3">Activity</p>
                         <button className="btn bg-darkskyblue btn-success hover-pointer btn-post-activity" onClick={() => navigate('/users/activities')}>View All Activities</button>
                     </div>
                     <div className="row">

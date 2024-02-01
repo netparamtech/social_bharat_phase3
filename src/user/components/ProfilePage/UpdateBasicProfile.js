@@ -278,6 +278,7 @@ const UpdateBasicProfile = () => {
       if (response && response.status === 200) {
         setErrors("");
         setServerError('');
+        console.log(response.data.data,token)
         dispatch(login(response.data.data, token));
         if (isAvailableForMarriage) {
           openNotification('topLeft')

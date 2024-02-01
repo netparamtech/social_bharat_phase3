@@ -1296,6 +1296,10 @@ a.btn.dropdown-toggle.show:focus {
   margin-top: 140px;
 }
 
+#activity-custom {
+  margin-top: 140px;
+}
+
 nav .nav-item {
   cursor: pointer;
 }
@@ -1931,13 +1935,7 @@ legend {
   height: 600px;
   background-color: #006b5d;
 }
-#auth-wrapper .textShape {
-  display: block;
-  white-space: pre-line; /* Use pre-line to preserve newlines */
-  max-width: 100%;
-}
-.textShape {
-  display: block;
-  white-space: pre-line; /* Use pre-line to preserve newlines */
-  max-width: 100%;
+
+#activity-custom img .card-img-top{
+  height: 70px;
 }

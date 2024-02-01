@@ -48,6 +48,7 @@ import AllJobsPostPage from "./pages/jobs/AllJobsPostPage";
 import usersWithCommunity from "./pages/user/UserWithCommuniryPage";
 import CreateEmailPage from "./pages/CreateEmailPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
+import RegisteredUsersForSameJobPage from "./pages/jobs/RegisteredUsersForSameJobPage";
 
 const adminRoutes = [
     {
@@ -331,6 +332,11 @@ const adminRoutes = [
     {
         path: '/admin/job-board',
         component: AllJobsPostPage,
+        exact:true
+    },
+    {
+        path: '/admin/rgistered-users/:id/job/:title/company/:company',
+        component: RegisteredUsersForSameJobPage,
         exact:true
     },
 

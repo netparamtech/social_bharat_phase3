@@ -1296,6 +1296,10 @@ a.btn.dropdown-toggle.show:focus {
   margin-top: 140px;
 }
 
+#activity-custom {
+  margin-top: 140px;
+}
+
 nav .nav-item {
   cursor: pointer;
 }
@@ -1930,4 +1934,8 @@ legend {
 #activity-custom .card-custom{
   height: 600px;
   background-color: #006b5d;
+}
+
+#activity-custom img .card-img-top{
+  height: 70px;
 }

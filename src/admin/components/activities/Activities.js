@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Table } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Image, Table } from "antd";
 import {
-    deleteActivity,
+  deleteActivity,
   fetchAllActivities,
   fetchEvents,
   toggleActivityPostStatus,
   updateToggleFeaturedForEvent,
   updateToggleStatusForEvent,
 } from "../../services/AdminService";
-import { useNavigate } from 'react-router-dom';
-import Search from 'antd/es/input/Search';
-import { useDispatch } from 'react-redux';
-import { setLoader } from '../../actions/loaderAction';
+import { useNavigate } from "react-router-dom";
+import Search from "antd/es/input/Search";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../actions/loaderAction";
 
 const Activities = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortField, setSortField] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortField, setSortField] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
+  const [defaultImage, setDefaultImage] = useState("img/de-default-1.jpeg");
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -54,7 +54,7 @@ const Activities = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
@@ -70,14 +70,14 @@ const Activities = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
 
   const handleEventToggleFeatured = async (id) => {
     try {
-      const response = await updateToggleFeaturedForEvent(id);                                                                                                                                                                                                                                                                                                                  
+      const response = await updateToggleFeaturedForEvent(id);
       if (response && response.status === 200) {
         fetchData();
       }
@@ -86,7 +86,7 @@ const Activities = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
@@ -102,7 +102,7 @@ const Activities = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate("/server/error", { state: { errorMessage } });
       }
     }
   };
@@ -120,30 +120,42 @@ const Activities = () => {
 
   const columns = [
     {
-      title: 'S.No',
-      dataIndex: 'sno',
+      title: "S.No",
+      dataIndex: "sno",
       render: (text, record, index) => index + 1,
       width: 50,
     },
-   
+
     {
-      title: "Posted By", dataIndex: "name", width: 300,
+      title: "Posted By",
+      dataIndex: "name",
+      width: 300,
       width: 200,
     },
     {
       title: "Activitie(s)",
       dataIndex: "photo",
       render: (text, record) => (
-        <div>{
-            record.photo && Array.isArray(record.photo)?(
-                record.photo.map((item,value)=>(
-                    <Image src={item} width={100}></Image>
-                ))
-            ):<Image src={record.photo} width={100} />
-            }</div>
+        <div>
+          {record.photo && Array.isArray(record.photo) ? (
+            record.photo.map((item, value) => (
+              <Image
+                src={item}
+                width={50}
+                height={50}
+                className="p-1"
+                style={{
+                  objectFit: "contain",
+                }}
+              ></Image>
+            ))
+          ) : (
+            <Image src={record.photo} width={100} />
+          )}
+        </div>
       ),
       sorter: true,
-      sortDirections: ['asc', 'desc'],
+      sortDirections: ["asc", "desc"],
       width: 350,
     },
 
@@ -152,43 +164,46 @@ const Activities = () => {
       dataIndex: "DESCRIPTION",
       render: (text, record) => record.DESCRIPTION,
       width: 150,
-
     },
 
     {
-      title: 'Status', dataIndex: 'status', render: (text, record) => (record.STATUS === 'true' ? (
-        <a
-          className="collapse-item m-2"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            handleActivityToggleStatus(record.id);
-          }}
-        >
-          <i className="fa fa-thumbs-up text-primary" title="Active" />
-        </a>
-      ) : (
-        <a
-          className="collapse-item text-secondary m-2"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            handleActivityToggleStatus(record.id);
-          }}
-        >
-          <i className="fa fa-thumbs-down" title="Inactive" />
-        </a>
-      )), sorter: true,
-      sortDirections: ['asc', 'desc'],
-      fixed: 'right',
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) =>
+        record.STATUS === "true" ? (
+          <a
+            className="collapse-item m-2"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleActivityToggleStatus(record.id);
+            }}
+          >
+            <i className="fa fa-thumbs-up text-primary" title="Active" />
+          </a>
+        ) : (
+          <a
+            className="collapse-item text-secondary m-2"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleActivityToggleStatus(record.id);
+            }}
+          >
+            <i className="fa fa-thumbs-down" title="Inactive" />
+          </a>
+        ),
+      sorter: true,
+      sortDirections: ["asc", "desc"],
+      fixed: "right",
       width: 100,
     },
 
     {
-      title: 'Actions',
-      dataIndex: 'actions',
+      title: "Actions",
+      dataIndex: "actions",
       render: (text, record) => (
-        <div className=''>
+        <div className="">
           <a
             className="collapse-item"
             onClick={() => navigate(`/users/view/${record.user_id}`)}
@@ -206,10 +221,9 @@ const Activities = () => {
           >
             <i className="fas fa-trash"></i>
           </a>
-
         </div>
       ),
-      fixed: 'right',
+      fixed: "right",
       with: 200,
     },
     // Rest of the columns definition
@@ -227,9 +241,9 @@ const Activities = () => {
         onSearch={handleSearchChange}
         style={{ marginBottom: 20, width: 200 }}
       />
-     
+
       <Table
-        title ={() => 'Activities'}  // Set the title to 'Enquiries'
+        title={() => "Activities"} // Set the title to 'Enquiries'
         dataSource={data}
         columns={columns}
         pagination={{
@@ -240,7 +254,7 @@ const Activities = () => {
           onShowSizeChange: handlePageSizeChange,
         }}
         rowKey={(record) => record.id}
-      // onChange={handleSearchChange}
+        // onChange={handleSearchChange}
       />
     </div>
   );

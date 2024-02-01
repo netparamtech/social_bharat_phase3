@@ -618,6 +618,18 @@ export const fetchAllJobsPosted = async (page, size, searchQuery, jobType) => {
     }
 }
 
+//get job applicant for respective job
+export const userAppliedForSameJob = async (id,searchQuery,page,size) => {
+    try {
+      const response = await apiWithHeaders.get(
+        `/find/all-users/for/${id}/job/applied?searchQuery=${searchQuery}&page=${page}&size=${size}`
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
 //toggle job post status
 export const toggleJobPostStatus = async (id) => {
     try {

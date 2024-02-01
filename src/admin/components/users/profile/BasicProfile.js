@@ -45,8 +45,8 @@ const BasicProfile = (props) => {
               </div>
               <div className="card-body ">
                 <p className=" text-center mb-0">
-                  {userDetails?.data?.name}
-                </p><span>Community=</span>
+                  <b>{userDetails?.data?.name.toUpperCase()}</b>
+                </p><span>{userDetails?.data?.community?.name}</span>
                 <Image
                   className="img-fluid community-img ms-2"
                   src={

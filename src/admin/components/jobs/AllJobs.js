@@ -329,7 +329,7 @@ const AllJobs = () => {
             className="collapse-item hover-pointer-admin"
             onClick={(e) => {
               e.preventDefault(); // Prevent the default anchor tag behavior
-              navigate(`/admin/service/in/${record.title}`);
+              navigate(`/admin/rgistered-users/${record.id}/job/${record.job_title}/company/${record.job_subheading}`);
             }}
           >
             <i className="fas fa-eye "></i>

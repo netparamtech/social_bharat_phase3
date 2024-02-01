@@ -5,6 +5,7 @@ import {login as adminlogin, logout} from '../actions/authActions';
 import { useNavigate } from 'react-router';
 import { Input } from 'antd';
 import { setLoader } from '../actions/loaderAction';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
 
@@ -35,10 +36,9 @@ const LoginForm = () => {
 
       if (response && response.status === 200) {
         setErrors('');
-        setMessage(response.data.message);
-        setAlertClass('alert-success');
         dispatch(adminlogin(response.data.user, response.data.token));
         dispatch(setLoader(false));
+        toast.success("You have successfully login");
                 
         setTimeout(() => {
           navigate('/admin/dashboard')

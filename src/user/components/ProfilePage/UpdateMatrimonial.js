@@ -24,7 +24,7 @@ const UpdateMatrimonial = (props) => {
 
   const user = useSelector((state) => state.userAuth);
   const dispatch = useDispatch();
-
+  const [description, setDescription] = useState('');
   const [updateFor, setUpdateFor] = useState(null);
   const updateForOptions = [
     { value: 'Self', label: 'Self' },
@@ -264,6 +264,7 @@ const UpdateMatrimonial = (props) => {
       skin_tone: 'DARK',
       subcast_id,
       matrimonial_profile_name: matrimonialProfileName,
+      description,
     };
 
 
@@ -339,6 +340,7 @@ const UpdateMatrimonial = (props) => {
       setBrotherCount(userMatrimonial.brother_count);
       setSisterCount(userMatrimonial.sister_count);
       setPackageValue(userMatrimonial.salary_package);
+      setDescription(userMatrimonial.description || "");
       {
         userMatrimonial &&
           userMatrimonial.proposal_photos &&
@@ -868,6 +870,18 @@ const UpdateMatrimonial = (props) => {
                             <span>{biodataPreview ? "file selected" : ""}</span>
                           </div>
                         </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-12">
+                          <textarea
+                            className="text-area form-control mt-2"
+                            placeholder="Enter Other Details If Any..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          >
+                          </textarea>
+                        </div>
+
                       </div>
                     </div>
                     <div className="row mt-4">

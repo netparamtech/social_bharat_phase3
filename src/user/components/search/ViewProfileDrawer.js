@@ -403,6 +403,22 @@ const ViewProfileDrawer = ({ id }) => {
                                 </div>
                               </div>
                             </div>
+                            <div className="mb-2 col-lg-6 col-sm-12 col-xs-12">
+                              <div className="row">
+                                <div className="col-6">
+                                  <label htmlFor="status" className="m-2 fw-bold">
+                                    Other Details :
+                                  </label>
+                                </div>
+                                <div className="col-6">
+                                  <label className="textShape">
+                                    {user &&
+                                      user.matrimonial[0] &&
+                                      user.matrimonial[0].description}{" "}
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </form>

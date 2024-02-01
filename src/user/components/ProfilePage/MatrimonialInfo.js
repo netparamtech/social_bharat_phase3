@@ -306,6 +306,13 @@ const MatrimonialInfo = (props) => {
                               )}
                             </td>
                           </tr>
+                          <tr>
+                            <td>Other Details</td>
+                            <td className="text-muted">
+                              {(user?.data?.matrimonial[0].description) ||
+                                "N/A"}
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>

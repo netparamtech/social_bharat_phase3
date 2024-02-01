@@ -1931,3 +1931,13 @@ legend {
   height: 600px;
   background-color: #006b5d;
 }
+#auth-wrapper .textShape {
+  display: block;
+  white-space: pre-line; /* Use pre-line to preserve newlines */
+  max-width: 100%;
+}
+.textShape {
+  display: block;
+  white-space: pre-line; /* Use pre-line to preserve newlines */
+  max-width: 100%;
+}

@@ -199,26 +199,26 @@ const CreateJob = () => {
 
     const getAllCities = async (stateID) => {
         dispatch(setLoader(true));
-       if(stateID){
-        try {
-            const response = await fetchAllCitiesByStateID(stateID);
-            if (response && response.status === 200) {
-                setCities(response.data.data);
-                setServerError('');
+        if (stateID) {
+            try {
+                const response = await fetchAllCitiesByStateID(stateID);
+                if (response && response.status === 200) {
+                    setCities(response.data.data);
+                    setServerError('');
+                }
+            } catch (error) {
+                //Unauthorized
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                }
+                //Internal Server Error
+                else if (error.response && error.response.status === 500) {
+                    setServerError("Oops! Something went wrong on our server.");
+                }
+            } finally {
+                dispatch(setLoader(false));
             }
-        } catch (error) {
-            //Unauthorized
-            if (error.response && error.response.status === 401) {
-                navigate("/login");
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
-            }
-        } finally {
-            dispatch(setLoader(false));
         }
-       }
     };
 
     const handleSubmit = async () => {
@@ -290,9 +290,11 @@ const CreateJob = () => {
             <div className="row">
                 <div className="col-12 col-sm-12 mb-3">
                     <div className={`card mx-auto rounded ${errors ? 'border-danger' : ''}`}>
-                        <div className=" card-header shadow py-3 fs-6 rounded justify-content-between d-flex">
-                            <div>Create New Job</div>
-                            <div className="hover-pointer-green hover-pointer" onClick={()=>navigate('/user/search/jobs')}>Search Jobs</div>
+                        <div className=" card-header shadow">
+                            <div className="d-flex">
+                                <div className="m-2 fs-6 ">Create New Job</div>
+                                <div className="m-2 fs-6 hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}>JOB BOARD</div>
+                            </div>
                         </div>
                         <div className="card-body shadow">
                             {serverError && <span className='error'>{serverError}</span>}

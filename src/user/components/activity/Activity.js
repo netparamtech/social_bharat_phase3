@@ -139,13 +139,14 @@ const Activity = () => {
         <>
             <div id="activity-custom"
                 style={{
-                    //backgroundImage: `url(${defaultImage})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     height: "100vh",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginTop:'20px',
+                    backgroundColor:'green'
                 }}
             >
                
@@ -165,10 +166,10 @@ const Activity = () => {
                                         <div className="card-body">
                                             <button
                                                 type="button"
-                                                className="btn btn-danger"
+                                                className="btn"
                                                 onClick={() => handleDeleteImage(idx)}
                                             >
-                                                <i className="fas fa-trash"></i> Delete
+                                                <i className="text-danger fas fa-trash"></i>
                                             </button>
                                         </div>
                                     </div>

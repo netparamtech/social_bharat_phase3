@@ -21,6 +21,7 @@ import UpdateJobPosted from "./UpdateJobPosted";
 import { setLoader } from "../../actions/loaderAction";
 import Select from "react-select";
 import { toast } from 'react-toastify';
+import { Card, Form, Button } from "react-bootstrap";
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -55,14 +56,23 @@ const JobBoard = () => {
     const [applicationStatus, setApplicationStatus] = useState("");
     const [appliedStatistics, setAppliedStatistics] = useState([]);
     const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+    const [isResume, setIsResume] = useState(false);
+    const [isUploadResumeClicked, setIsUploadResumeClicked] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleClose = () => {
-        setShow(false);
-        setIsApplyClicked(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
     };
+
+    const handleUploadResume = (value) => {
+        setIsUploadResumeClicked(value);
+        window.scroll(0,0);
+    }
 
     const handleNavItemClick = (navItem) => {
         setActiveNavItem(navItem);
@@ -275,6 +285,16 @@ const JobBoard = () => {
         }
     };
 
+    const handleResumeSubmit = () => {
+        if (selectedFile) {
+            console.log("File submitted:", selectedFile);
+            // Add your logic for submitting the file here
+        } else {
+            console.log("Please select a file before submitting.");
+            // You can display an error message or take appropriate action
+        }
+    };
+
     const fetchMoreData = () => {
         if (!isLoading && data.length < totalRows) {
             fetchJobs(page + 1, 20, activeNavItem);
@@ -444,14 +464,58 @@ const JobBoard = () => {
     }
     return (
         <div id="auth-wrapper" className="pt-5 pb-4 container">
+
             <div className="row">
                 {/* <div className="col-12 col-sm-2">
                     <div className="card">
                         <FeaturedJobs />
                     </div>
                 </div> */}
+                {
+                    isUploadResumeClicked ? (
+                        <div className="col-12 col-sm-4 mx-auto">
+                            <Card className="mb-3">
+                                <Card.Header as="h5">Upload Resume</Card.Header>
+                                <Card.Body className="shadow">
+                                    {/* Select PDF container */}
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Select PDF File</Form.Label>
+                                        <Form.Control
+                                            type="file"
+                                            id="resumeFile"
+                                            accept=".pdf"
+                                            onChange={handleFileChange}
+                                        />
+                                    </Form.Group>
 
-                <div className="col-12 col-sm-12  mx-auto">
+                                    {/* Preview container (optional) */}
+                                    {selectedFile && (
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Preview</Form.Label>
+                                            <div>{selectedFile.name}</div>
+                                        </Form.Group>
+                                    )}
+
+                                    {/* Description */}
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Description (optional)</Form.Label>
+                                        <Form.Control as="textarea" rows={3} />
+                                    </Form.Group>
+
+                                    {/* Submit button */}
+                                    <Button variant="primary" onClick={handleResumeSubmit}>
+                                        Submit
+                                    </Button>
+                                    <Button variant="primary m-2" onClick={() => handleUploadResume(false)}>
+                                        Cancel
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ) : ''
+                }
+
+                <div className={`col-12 mx-auto ${isUploadResumeClicked ? 'col-sm-8' : 'col-sm-12'}`}>
                     <div className="card mb-3">
 
                         <div className="card-header">
@@ -488,6 +552,7 @@ const JobBoard = () => {
                                     </div>
                                 </div>
                             )}
+                            {!isResume && <p className="error col-12 col-sm-6">You haven't uploaded your resume yet. Please upload your resume to proceed.</p>}
 
                             <Navbar expanded={true} bg="light" expand="lg" >
                                 <Navbar.Brand className="hover-pointer btn btn-success text-light fw-bold rounded" onClick={handleOnBoardClick}>JOB BOARD</Navbar.Brand>
@@ -571,6 +636,19 @@ const JobBoard = () => {
                                             CREATE JOB
                                         </Nav.Link>
 
+                                        <Nav.Link
+                                            className="hover-pointer-red rounded"
+                                            //onClick={() => handleNavItemClick("UPLOAD RESUME")}
+                                            style={{
+                                                color:
+                                                    activeNavItem === "UPLOAD RESUME" ? "red" : "inherit",
+                                            }}
+                                            onClick={() => handleUploadResume(true)}
+                                        >
+                                            UPLOAD RESUME
+                                        </Nav.Link>
+
+
                                         {/* Remove the following NavDropdown section */}
                                         {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                         <NavDropdown.Item href="#">Search By State and City</NavDropdown.Item>
@@ -585,6 +663,7 @@ const JobBoard = () => {
                                     <Button variant="outline-success">Search</Button>
                                 </Form> */}
                                 </Navbar.Collapse>
+
                             </Navbar>
                             <div className="text-light bg-info">
                                 You are searching for-{activeNavItem} jobs in state-

@@ -913,6 +913,24 @@ export const fetchAllAppliedJobs = async () => {
     throw error;
   }
 };
+//upload-resume
+export const updateResume = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/upload/resume',data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+//find user other-details
+export const findOtherdetails = async () => {
+  try {
+    const response = await apiWithHeaders.get('/user/other-details');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 //toggle status-inactive for applied jobs
 export const toggleStatusInactiveForIds = async (data) => {

@@ -321,7 +321,7 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs"|| window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs" || window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"
                     ? "active"
                     : "inactive"
                     }`}
@@ -354,7 +354,7 @@ const NavbarTransparent = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/service"||window.location.pathname === `/user/user-registered-services`||location.pathname.startsWith("/users-basedOn-services")
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/service" || window.location.pathname === `/user/user-registered-services` || location.pathname.startsWith("/users-basedOn-services")
                     ? "active"
                     : "inactive"
                     }`}

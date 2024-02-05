@@ -3,11 +3,12 @@ import { deleteMatrimonial } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import GenerateBiodata from "./GenerateBiodata";
 
 const MatrimonialInfo = (props) => {
   const { user } = props;
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
-  const [nameLabel,setNameLabel] = useState('');
+  const [nameLabel, setNameLabel] = useState('');
 
   const [manglik, setManglik] = useState('');
 
@@ -137,13 +138,14 @@ const MatrimonialInfo = (props) => {
           ) : (
             ""
           )}
-          <div className="card-header">
-          <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
+          <div className="card-header d-flex justify-content-between">
+            <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
+            <GenerateBiodata userData={user} />
           </div>
 
           <div className="card-body">
-            
-          
+
+
             {matrimonialDetails && matrimonialDetails.length > 0 ? (
               <div className="row wow animate__animated animate__zoomIn">
                 <div id="section-1" className="col-md-6 card-in-section">
@@ -237,7 +239,7 @@ const MatrimonialInfo = (props) => {
                               </td>
                             </tr>
                           )}
-                           <tr>
+                          <tr>
                             <td>Subcast</td>
                             <td className="text-muted">
                               {(user?.data?.matrimonial[0].subcast) ||
@@ -290,7 +292,7 @@ const MatrimonialInfo = (props) => {
                           <tr>
                             <td>Proposal Photo</td>
                             <td className="proposal-Photo">
-                              {proposalPhotos && proposalPhotos.length>0 &&
+                              {proposalPhotos && proposalPhotos.length > 0 &&
                                 Array.isArray(proposalPhotos) ? (
                                 proposalPhotos.map((item, idx) => (
                                   <a href={item} target="_blank" key={idx}>
@@ -299,9 +301,9 @@ const MatrimonialInfo = (props) => {
                                 ))
                               ) : (
                                 <a href={proposalPhotos} target="_blank">
-                                 {
-                                  proposalPhotos && proposalPhotos.length>0 &&  <img src={proposalPhotos} />
-                                 }
+                                  {
+                                    proposalPhotos && proposalPhotos.length > 0 && <img src={proposalPhotos} />
+                                  }
                                 </a>
                               )}
                             </td>

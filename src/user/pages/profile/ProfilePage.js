@@ -10,6 +10,7 @@ import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import GenerateBiodata from '../../components/ProfilePage/GenerateBiodata';
 
 
 const ProfilePage = () => {
@@ -31,7 +32,6 @@ const ProfilePage = () => {
             if (error.response && error.response.status === 401) {
                 navigate('/login');
             } else if (error.response && error.response.status === 404) {
-                navigate('/login');
             }
             //Internal Server Error
             else if (error.response && error.response.status === 500) {
@@ -50,6 +50,11 @@ const ProfilePage = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+    useEffect(() => {
+        if(user){
+            console.log(user)
+        }
+    }, [user]);
 
     return (
         <UserLayout>

@@ -30,7 +30,7 @@ const UserAppliedJobDetails = () => {
     const [selectionType, setSelectionType] = useState('checkbox');
     const [isColor, setIsColor] = useState(false);
     const [isInboxClicked, setIsInboxClicked] = useState(false);
-    const [selectedUsers,setSelectedUsers] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -76,7 +76,7 @@ const UserAppliedJobDetails = () => {
             const userIds = [];
             setSelectedRowKeys(selectedRowKeys);
             console.log(selectedRows)
-            selectedRows.map((item)=>userIds.push(item.user_id));
+            selectedRows.map((item) => userIds.push(item.user_id));
             setSelectedUsers(userIds);
         },
         getCheckboxProps: (record) => ({
@@ -108,11 +108,11 @@ const UserAppliedJobDetails = () => {
         }
     };
 
-    useEffect(()=>{
-        if(selectedUsers.length>0){
+    useEffect(() => {
+        if (selectedUsers.length > 0) {
             console.log(selectedUsers)
         }
-    },[selectedUsers])
+    }, [selectedUsers])
 
     const columns = [
         {
@@ -142,6 +142,14 @@ const UserAppliedJobDetails = () => {
             dataIndex: 'email',
         },
         {
+            title: 'Resume',
+            dataIndex: 'resume',
+            render: (text, record, index) => (
+                record.resume ? <a href={record.resume} target='_blank'>Download</a>:<a href='#' style={{ pointerEvents: 'none', color: 'gray' }}>Unavailable</a>
+
+            )
+        },
+        {
             title: 'Remark',
             dataIndex: 'remark',
             render: (text, record, index) => (
@@ -167,19 +175,19 @@ const UserAppliedJobDetails = () => {
 
     useEffect(() => {
         const handleResize = () => {
-          setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+            setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
         };
-    
+
         // Listen for window resize events
         window.addEventListener("resize", handleResize);
         handleResize(); // Call initially to set the correct value
-    
+
         // Cleanup the event listener when component is unmounted
         return () => {
-          window.removeEventListener("resize", handleResize);
+            window.removeEventListener("resize", handleResize);
         };
-      }, []);
-    
+    }, []);
+
     const fetchSearchData = () => {
         if (copiedData) {
             // Filter the data based on the search query
@@ -293,7 +301,7 @@ const UserAppliedJobDetails = () => {
     const customTitle = (
         <div>
             <span>Applied Candidates For {jobTitle}</span>
-            <button type="btn" style={{ marginLeft: '10px' }} className='rounded border-0 hover-pointer hover-pointer-green' disabled={!isChecked} onClick={()=>handleInboxChange(true)}>
+            <button type="btn" style={{ marginLeft: '10px' }} className='rounded border-0 hover-pointer hover-pointer-green' disabled={!isChecked} onClick={() => handleInboxChange(true)}>
                 Inbox
             </button>
         </div>
@@ -328,27 +336,27 @@ const UserAppliedJobDetails = () => {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            {!isInboxClicked?(
+                            {!isInboxClicked ? (
                                 <Table
-                                dataSource={data}
-                                title={() => customTitle}
-                                columns={columns}
-                                rowClassName={getRowClassName}
-                                rowSelection={{
-                                    type: selectionType,
-                                    ...rowSelection,
-                                }}
-                                pagination={{
-                                    current: page,
-                                    pageSize: size,
-                                    total: totalRows,
-                                    onChange: handlePageChange,
-                                    onShowSizeChange: handlePageSizeChange,
-                                }}
-                                rowKey={(record) => record.id}
-                            />
-                            ):(
-                                <EmailInbox handleInboxChange = {handleInboxChange} ids = {selectedUsers} />
+                                    dataSource={data}
+                                    title={() => customTitle}
+                                    columns={columns}
+                                    rowClassName={getRowClassName}
+                                    rowSelection={{
+                                        type: selectionType,
+                                        ...rowSelection,
+                                    }}
+                                    pagination={{
+                                        current: page,
+                                        pageSize: size,
+                                        total: totalRows,
+                                        onChange: handlePageChange,
+                                        onShowSizeChange: handlePageSizeChange,
+                                    }}
+                                    rowKey={(record) => record.id}
+                                />
+                            ) : (
+                                <EmailInbox handleInboxChange={handleInboxChange} ids={selectedUsers} />
                             )}
                         </div>
                     </div>

@@ -1949,3 +1949,9 @@ legend {
   white-space: pre-line; /* Use pre-line to preserve newlines */
   max-width: 100%;
 }
+#job-board-resume .card{
+  border-radius: 10px;
+}
+#auth-wrapper .custom-small-search{
+  height: 40px;
+}

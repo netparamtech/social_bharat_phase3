@@ -140,7 +140,7 @@ const MatrimonialInfo = (props) => {
           )}
           <div className="card-header d-flex justify-content-between">
             <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
-            <GenerateBiodata userData={user} />
+            {matrimonialDetails && matrimonialDetails.length > 0 && <GenerateBiodata userData={user} />}
           </div>
 
           <div className="card-body">

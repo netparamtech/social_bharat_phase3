@@ -285,7 +285,8 @@ const SearchPartner = () => {
   };
 
   const age = (dob) => {
-    const dobDate = new Date(dob);
+    if(dob!==null){
+      const dobDate = new Date(dob);
     const currentDate = new Date();
 
     // Calculate the age in years
@@ -295,6 +296,8 @@ const SearchPartner = () => {
     );
 
     return ageInYears;
+    }
+    return "N/A";
   };
 
   const handleScrollToUp = () => {
@@ -599,7 +602,7 @@ const SearchPartner = () => {
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}
                                     >
-                                      Age-{age(item.dob)} Years
+                                      Age-{age(item.matrimonial_profile_dob)} Years
                                     </div>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}

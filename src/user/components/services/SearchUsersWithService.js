@@ -12,6 +12,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 import NewChat from "../chats/NewChat";
+import ViewProfileDrawer from "../search/ViewProfileDrawer";
+import ServiceRating from "./ServiceRating";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -31,8 +33,10 @@ const SearchUsersWithService = () => {
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/download.jpg"
   );
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
+  const [isFeedbackClicked, setIsFeedbackClicked] = useState(false);
 
   //to show state and city according to user search
 
@@ -52,6 +56,10 @@ const SearchUsersWithService = () => {
   const changeChatFlag = (value) => {
     setIsChat(value);
   };
+
+  const handleFeedbackFlag = (value) => {
+    setIsFeedbackClicked(value);
+  }
 
   const handleChatclick = (item) => {
     setIsChat(true);
@@ -223,6 +231,20 @@ const SearchUsersWithService = () => {
     const isHidden = /\*/.test(mobileNumber);
     return !isHidden;
   };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -314,24 +336,102 @@ const SearchUsersWithService = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    <div className="container pw-20">
-                      {groupedItems.map((pair, index) => (
-                        <div className="row" key={index}>
-                          {pair.map((item, innerIndex) => (
-                            <div className="col-md-6" key={innerIndex}>
-                              <div className="card shadow mb-2">
-                                <div className="card-header">{item.title}</div>
-                                <div className="card-body">
-                                  <div className="row wow animate__animated animate__zoomIn">
-                                    <div className="col-4">
-                                      <Image
-                                        src={
-                                          item.photo ? item.photo : defaultImage
+                    {groupedItems.map((pair, index) => (
+                      <div className="row" key={index}>
+                        {pair.map((item, innerIndex) => (
+
+                          <div className="col-md-6 mt-2" key={innerIndex}>
+                            <div className="card" style={{ borderRadius: '15px' }}>
+                              <div className="card-body p-4">
+                                {
+                                  !isFeedbackClicked?(
+                                    <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
+                                  <div className="flex-shrink-0">
+                                    <img
+                                      src={item.photo ? item.photo : defaultImage}
+                                      alt={item.name}
+                                      className="img-fluid"
+                                      style={{ width: '180px', borderRadius: '10px' }}
+                                    />
+                                  </div>
+                                  <div className="flex-grow-1 ms-3">
+                                    <h5 className="mb-1">{item.name}</h5>
+                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                      {item.occupation}
+                                    </p>
+                                    <div
+                                      className="d-flex justify-content-start rounded-3"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      Experience-{item.experience ? item.experience : 'N/A'}
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      {/* Age-{age(item.matrimonial_profile_dob)} Years */}
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      <p>Service At - {item.city}</p>
+                                      <p>
+                                        {item.state
+                                          ? `(${item.state})`
+                                          : ""}
+                                      </p>
+                                    </div>
+                                    <div
+                                      className="d-flex justify-content-start rounded-3"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      <p className="">
+                                        Contact Numbers:
+                                        <a href={`tel:${item.mobile1}`}>
+                                          {item.mobile1}
+                                        </a>
+                                        {item.mobile2 ? (
+                                          <>
+                                            ,{" "}
+                                            <a href={`tel:${item.mobile2}`}>
+                                              {item.mobile2}
+                                            </a>
+                                          </>
+                                        ) : (
+                                          ""
+                                        )}
+                                        {
+                                          checkMobileVisibility(item.masked_mobile) ? (
+                                            <p>
+                                              <a href={`tel:${item.masked_mobile}`}>
+                                                ,{item.masked_mobile}
+                                              </a>
+                                            </p>
+                                          ) : ''
                                         }
-                                        alt={item.name}
-                                        title={item.name}
-                                        className="avatar img-fluid img-circle"
-                                      />
+
+                                      </p>{" "}
+                                    </div>
+                                    <div className=" comment-text" style={{ width: isAndroidUsed ? '250px' : '300px', overflow: 'scroll' }}>
+                                      Description :
+                                      <p
+                                      >{item.description}</p>
+
+                                    </div>
+                                    <div className="d-flex justify-content-start rounded-3 mt-2"
+                                      style={{ backgroundColor: '#efefef' }}
+                                    >
+                                      {
+                                        checkMobileVisibility(item.mobile) ? (
+                                          <p>
+                                            <a href={`tel:${item.mobile}`}>
+                                              {item.mobile}
+                                            </a>
+                                          </p>
+                                        ) : ''
+                                      }
+                                    </div>
+                                    <div className="d-flex pt-1">
+
 
                                       <div
                                         className="text-start ms-3 mt-2 hover-pointer"
@@ -342,59 +442,28 @@ const SearchUsersWithService = () => {
                                           width="40px"
                                         />
                                       </div>
-                                    </div>
-                                    <div className="col-8 user-detail">
 
-                                      <div className="col-12 user-detail">
-                                        <p>Name-{item.name}</p>
-                                        <p className="">
-                                          <b>Location : </b>
-                                          {`${item.state
-                                            ? `${item.city}(${item.state})`
-                                            : ""
-                                            }`}
-                                        </p>
-                                        <p>Experience-{item.experience}</p>
-                                        {/* <p>{item.state ? `(${item.state})` : ""}</p> */}
-                                        <p className="">
-                                          Contact Numbers:
-                                          <a href={`tel:${item.mobile1}`}>
-                                            {item.mobile1}
-                                          </a>
-                                          {item.mobile2 ? (
-                                            <>
-                                              ,{" "}
-                                              <a href={`tel:${item.mobile2}`}>
-                                                {item.mobile2}
-                                              </a>
-                                            </>
-                                          ) : (
-                                            ""
-                                          )}
-                                          {
-                                            checkMobileVisibility(item.masked_mobile) ? (
-                                              <p>
-                                                <a href={`tel:${item.masked_mobile}`}>
-                                                  ,{item.masked_mobile}
-                                                </a>
-                                              </p>
-                                            ) : ''
-                                          }
-
-                                        </p>{" "}
-
-                                      </div>
+                                      <button type="button" className="btn me-1 flex-grow-1">
+                                        <ViewProfileDrawer id={item.id} />
+                                      </button>
+                                      <button type="button" className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline" onClick={()=>handleFeedbackFlag(true)} >
+                                        FEEDBACK
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="card-footer">Description-{item.description}</div>
+                                  ):(
+                                    <ServiceRating handleFeedbackFlag = {handleFeedbackFlag} />
+                                  )
+                                }
                               </div>
                             </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
                   </InfiniteScroll>
+
                 </div>
               </div>
             </div>

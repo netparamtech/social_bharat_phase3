@@ -139,6 +139,7 @@ const UpdateMatrimonial = (props) => {
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
     setProposalPhoto(selectedFiles); // Set the selected files
+    console.log(tempProposalPhotoUrl.length,selectedFiles.length)
 
     const totalFiles = tempProposalPhotoUrl.length + selectedFiles.length;
     if (totalFiles > 5) {
@@ -341,13 +342,17 @@ const UpdateMatrimonial = (props) => {
       setSisterCount(userMatrimonial.sister_count);
       setPackageValue(userMatrimonial.salary_package);
       setDescription(userMatrimonial.description || "");
+      console.log(userMatrimonial.proposal_photos,"photos")
       {
-        userMatrimonial &&
-          userMatrimonial.proposal_photos &&
-          Array.isArray(userMatrimonial.proposal_photos)
-          ? setTempProposalPhotoUrl(userMatrimonial.proposal_photos || "")
-          : setTempProposalPhotoUrl([userMatrimonial.proposal_photos] || "");
+        userMatrimonial && userMatrimonial.proposal_photos && (
+          setTempProposalPhotoUrl(
+            Array.isArray(userMatrimonial.proposal_photos)
+              ? userMatrimonial.proposal_photos
+              : [userMatrimonial.proposal_photos]
+          )
+        )
       }
+      
 
       {
         userMatrimonial &&

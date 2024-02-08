@@ -81,7 +81,7 @@ const JobBoard = () => {
 
     const handleIsCreateClicked = (value) => {
         setIsCreateJob(value);
-        setIsUploadResumeClicked(!value);
+        setIsUploadResumeClicked(false);
     }
 
     const handleSearchQuery = (e) => {
@@ -602,6 +602,8 @@ const JobBoard = () => {
         setSelectedState(null);
         setActiveNavItem('ALL');
     }
+    const backgroundImageUrl = '/user/images/admin4.png';
+    const whiteBackgroundImageUrl = 'url(/user/images/white2.jpg)';
     return (
         <div id="auth-wrapper" className="pt-5 pb-4 container">
             {
@@ -849,8 +851,8 @@ const JobBoard = () => {
                                                     <div className={`${isUploadResumeClicked ? 'col-md-6' : 'col-md-4'}`} key={index}>
                                                         {pair.map((item, innerIndex) => (
                                                             <div className="" key={innerIndex}>
-                                                                <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '500px' }}>
-                                                                    <div className="card-body">
+                                                                <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '550px' }}>
+                                                                    <div className="card-body" style={{backgroundImage:whiteBackgroundImageUrl}}>
                                                                         <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                             {formatDate(item.updated_at)}
                                                                         </div>
@@ -984,9 +986,19 @@ const JobBoard = () => {
                                                                             }
 
                                                                         </div>
+                                                                        {
+                                                                            item.role === 'admin' ? (
+                                                                                <div className="mt-2">
+                                                                                    {/* <p className="text-danger btn">Posted By Admin</p> */}
+                                                                                    <img src={backgroundImageUrl} width='70px'></img>
+                                                                                </div>
+                                                                            ) : ''
+                                                                        }
                                                                     </div>
 
+
                                                                     <div className="card-footer btn btn-success bg-success text-light">
+
                                                                         <div className="row">
                                                                             <div className="col-4 col-sm-4">
                                                                                 {appliedStatistics.map((value) =>

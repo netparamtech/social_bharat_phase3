@@ -74,7 +74,7 @@ const ViewFullEvent = (props) => {
                         <div class="card-body text-center">
                             <span onClick={() => changeEventClickFlag(false)} class="position-absolute top-0 end-0 mt-2 me-2">
                                 {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
-                            <button className="btn btn-ternary hover-pointer-red"><i class="fa fa-remove"></i></button>
+                            <button className="hover-pointer-red round-button-delete"><i class="fa fa-remove"></i></button>
                             </span>
                             <img src={data.photo ? data.photo : "/user/images/OIP.jpg"} alt="avatar"
                                 class="rounded-circle img-fluid" width={150} />

@@ -1955,3 +1955,17 @@ legend {
 #auth-wrapper .custom-small-search{
   height: 40px;
 }
+
+#searchPeoples-section .comment-text {
+  width: 40%;
+}
+.round-button-delete {
+  border-radius: 10%;
+  width: 40px;  /* Set the desired width */
+  height: 40px; /* Set the desired height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

@@ -778,6 +778,16 @@ export const searchPeopleInService = async (
   }
 };
 
+//service-rating
+export const serviceRating = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/service/ratings', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 //create new job post
 export const createNewJobPost = async (data) => {
   try {
@@ -916,7 +926,7 @@ export const fetchAllAppliedJobs = async () => {
 //upload-resume
 export const updateResume = async (data) => {
   try {
-    const response = await apiWithHeaders.post('/user/upload/resume',data);
+    const response = await apiWithHeaders.post('/user/upload/resume', data);
     return response;
   } catch (error) {
     throw error;

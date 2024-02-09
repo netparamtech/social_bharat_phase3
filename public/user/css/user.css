@@ -1967,5 +1967,21 @@ legend {
   align-items: center;
   justify-content: center;
 }
+.round-button-delete-small {
+  border-radius: 10%;
+  width: 30px;  /* Set the desired width */
+  height: 30px; /* Set the desired height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#auth-wrapper .round-button-delete {
+  border-radius: 10%;
+  width: 30px;  /* Set the desired width */
+  height: 30px; /* Set the desired height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

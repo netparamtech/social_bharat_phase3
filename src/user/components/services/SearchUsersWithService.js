@@ -3,17 +3,15 @@ import {
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
   searchPeopleInService,
-  searchPeopleWithSearchText,
 } from "../../services/userService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image } from "antd";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "../search/ViewProfileDrawer";
-import ServiceRating from "./ServiceRating";
+import Comment from "./Comment";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -453,7 +451,7 @@ const SearchUsersWithService = () => {
                                   </div>
                                 </div>
                                   ):(
-                                    <ServiceRating handleFeedbackFlag = {handleFeedbackFlag} />
+                                    <Comment handleFeedbackFlag = {handleFeedbackFlag} data = {item} />
                                   )
                                 }
                               </div>

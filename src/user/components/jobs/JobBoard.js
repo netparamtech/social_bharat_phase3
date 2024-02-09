@@ -617,7 +617,10 @@ const JobBoard = () => {
                                             <div>
                                                 Upload Resume
                                             </div>
-                                            <i className="fa fa-solid fa-x hover-pointer hover-pointer-red btn rounded" aria-hidden="true" onClick={() => setIsUploadResumeClicked(false)}></i>
+                                            <span onClick={() => setIsUploadResumeClicked(false)} className="position-absolute top-0 end-0 me-2 mt-1">
+                                                {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                                                <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
+                                            </span>
                                         </Card.Header>
                                         {serverErrorPdf && <span className="m-2 error">{serverErrorPdf}</span>}
                                         {messageAttachment && <span className="m-2 error">{messageAttachment}</span>}
@@ -852,7 +855,7 @@ const JobBoard = () => {
                                                         {pair.map((item, innerIndex) => (
                                                             <div className="" key={innerIndex}>
                                                                 <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '550px' }}>
-                                                                    <div className="card-body" style={{backgroundImage:whiteBackgroundImageUrl}}>
+                                                                    <div className="card-body" style={{ backgroundImage: whiteBackgroundImageUrl }}>
                                                                         <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                             {formatDate(item.updated_at)}
                                                                         </div>

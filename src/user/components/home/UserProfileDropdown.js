@@ -31,6 +31,7 @@ const UserProfileDropdown = () => {
   const [openSetting, setOpenSetting] = useState(false);
 
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   useEffect(() => {
     if (user && user.user) {
@@ -98,8 +99,14 @@ const UserProfileDropdown = () => {
         navigate('/login');
       }
     } catch (error) {
-      navigate('/login');
       handleFetchError(error);
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+      
     } finally {
       dispatch(setLoader(false));
     }

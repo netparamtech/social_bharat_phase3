@@ -580,9 +580,10 @@ nav .container,
   padding: 40px 0;
   background-position: center;
   object-fit: cover;
-  background-size: cover;
+  background-size: 100% 100%;
   overflow: hidden;
   border-radius: 10px;
+
 
 }
 

@@ -106,11 +106,13 @@ const Banner = () => {
                   <Text className="h2 typed" ref={typedRef}></Text>
                 </h2>
               </div>
-              <div className="">
-                <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
-                  Become a member
-                </a>
-              </div>
+              {
+                !isAuthenticUser && <div className="">
+                  <a className="btn btn-banner" onClick={handleBecomeMemberClick}>
+                    Become a member
+                  </a>
+                </div>
+              }
 
             </div>
           </div>

@@ -37,6 +37,7 @@ const Testimonials = () => {
         const updatedBannerUrls = [activeBanners[0].banner_urls];
         activeBanners[0].banner_urls = updatedBannerUrls;
       }
+      console.log(activeBanners)
       setStatsBg(activeBanners);
       dispatch(setLoader(false));
     } catch (error) {

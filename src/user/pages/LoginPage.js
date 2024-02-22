@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
     const user = useSelector((state) => state.userAuth);
     const isAuthenticUser = user && user.isAuthenticated;
+    const tokenExpireDate = user && user.token && user.token.expire_at;
     const [isOtpLogin, setIsOtpLogin] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,14 +23,16 @@ const LoginPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (isAuthenticUser) {
-            console.log("hello", isAuthenticUser)
-            navigate('/')
-        } else {
-            console.log("hello in ekse")
-            navigate('/login')
+        if (user) {
+            const expireDate = new Date(tokenExpireDate);
+            const currentDate = new Date();
+            if (expireDate > currentDate) {
+                navigate('/')
+            } else {
+                navigate('/login')
+            }
         }
-    }, [isAuthenticUser]);
+    }, [user]);
 
     return (
         <UserLayout>

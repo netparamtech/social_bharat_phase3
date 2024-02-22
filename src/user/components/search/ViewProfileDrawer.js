@@ -49,6 +49,7 @@ const ViewProfileDrawer = ({ id }) => {
       const response = await getSearchedUserFullProfile(id);
       if (response && response.status === 200) {
         setUser(response.data.data);
+        console.log(response.data.data)
         setServerError('');
       }
     } catch (error) {

@@ -12,6 +12,7 @@ import { setLoader } from "../../actions/loaderAction";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "../search/ViewProfileDrawer";
 import Comment from "./Comment";
+import { Rate } from "antd";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -26,7 +27,7 @@ const SearchUsersWithService = () => {
 
   const dispatch = useDispatch();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState('');
   const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/download.jpg"
@@ -35,6 +36,7 @@ const SearchUsersWithService = () => {
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
   const [isFeedbackClicked, setIsFeedbackClicked] = useState(false);
+  const [index, setIndex] = useState(0);
 
   //to show state and city according to user search
 
@@ -55,9 +57,17 @@ const SearchUsersWithService = () => {
     setIsChat(value);
   };
 
-  const handleFeedbackFlag = (value) => {
+  const handleFeedbackFlag = (value, index, item) => {
+    console.log(index)
+    setIndex(index);
+    setData(item);
     setIsFeedbackClicked(value);
   }
+  useEffect(() => {
+    if (index) {
+      setIndex(index)
+    }
+  }, [index])
 
   const handleChatclick = (item) => {
     setIsChat(true);
@@ -146,7 +156,7 @@ const SearchUsersWithService = () => {
     if (!isLoading && items.length < totalRows) {
       const state = selectedState ? selectedState.label : '';
       const city = selectedCity ? selectedCity.label : '';
-      search(page + 1, 20, state, city);
+      search(page + 1, 200, state, city);
       setPage(page + 1);
     }
   };
@@ -192,7 +202,7 @@ const SearchUsersWithService = () => {
   useEffect(() => {
     const state = selectedState ? selectedState.label : '';
     const city = selectedCity ? selectedCity.label : '';
-    search(1, 20, state, city);
+    search(1, 200, state, city);
   }, [user]);
 
   useEffect(() => {
@@ -200,7 +210,7 @@ const SearchUsersWithService = () => {
     if (page > 1 || searchText || !searchText) {
       const state = selectedState ? selectedState.label : '';
       const city = selectedCity ? selectedCity.label : '';
-      search(page, 20, state, city);
+      search(page, 200, state, city);
     }
   }, [searchText, isGoClick, page, selectedState, selectedCity]);
 
@@ -243,6 +253,116 @@ const SearchUsersWithService = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const UserCard = ({ item, isAndroidUsed, handleChatclick, handleFeedbackFlag, innerIndex }) => {
+    return (
+      <div className={`text-black${isAndroidUsed ? '' : 'd-flex'}`}>
+
+        <div className="col-md-4 col-sm-12 mb-4">
+          <img
+            src={item.photo ? item.photo : defaultImage}
+            alt={item.name}
+            className="img-fluid"
+            style={{ width: '100%', borderRadius: '10px' }}
+          />
+        </div>
+        <div className="row">
+          <div className="col-md-8 col-sm-12">
+            <p className="fs-4 m-2">{item.name.toUpperCase()}</p>
+            <Rate className="m-2" allowHalf defaultValue={parseFloat(item.avg_rating)} disabled />
+            <p className="fw-bold fs-4 m-2">{item.avg_rating}</p>
+            <h5 className="m-2">Rating</h5>
+            <p className="m-2">Total Participate - {item.total_participating}</p>
+            {/* ... other content ... */}
+            <div className=" comment-text m-2" style={{ width: isAndroidUsed ? '250px' : '300px' }}>
+              Description :
+              <p
+              >{item.description}</p>
+
+            </div>
+
+          </div>
+          <div className="col-md-4 col-sm-12">
+            <div className="flex-grow-1 ms-3">
+              <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                {item.occupation}
+              </p>
+              <div
+                className="d-flex justify-content-start rounded-3"
+                style={{ backgroundColor: '#efefef' }}
+              >
+                Experience-{item.experience ? item.experience : 'N/A'}
+              </div>
+              <div className="d-flex justify-content-start rounded-3 mt-2"
+                style={{ backgroundColor: '#efefef' }}
+              >
+                {/* Age-{age(item.matrimonial_profile_dob)} Years */}
+              </div>
+              <div className="d-flex justify-content-start rounded-3 mt-2"
+                style={{ backgroundColor: '#efefef' }}
+              >
+                <p>Service At - {item.city}</p>
+                <p>
+                  {item.state
+                    ? `(${item.state})`
+                    : ""}
+                </p>
+              </div>
+              <div
+                className="d-flex justify-content-start rounded-3"
+                style={{ backgroundColor: '#efefef' }}
+              >
+                <p className="">
+                  Contact Numbers:
+                  <a href={`tel:${item.mobile1}`}>
+                    {item.mobile1}
+                  </a>
+                  {item.mobile2 ? (
+                    <>
+                      ,{" "}
+                      <a href={`tel:${item.mobile2}`}>
+                        {item.mobile2}
+                      </a>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {
+                    checkMobileVisibility(item.masked_mobile) ? (
+                      <p>
+                        <a href={`tel:${item.masked_mobile}`}>
+                          ,{item.masked_mobile}
+                        </a>
+                      </p>
+                    ) : ''
+                  }
+
+                </p>{" "}
+              </div>
+            </div>
+
+
+            <div className="d-flex justify-content-start rounded-3 mt-2"
+              style={{ backgroundColor: '#efefef' }}
+            >
+              {
+                checkMobileVisibility(item.mobile) ? (
+                  <p>
+                    <a href={`tel:${item.mobile}`}>
+                      {item.mobile}
+                    </a>
+                  </p>
+                ) : ''
+              }
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    );
+  };
+
+
 
   return (
     <>
@@ -326,7 +446,6 @@ const SearchUsersWithService = () => {
                 </div>
 
                 <div className="row">
-                  {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
                     style={{ overflowX: "hidden" }}
                     dataLength={items.length}
@@ -334,135 +453,44 @@ const SearchUsersWithService = () => {
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
                   >
-                    {groupedItems.map((pair, index) => (
-                      <div className="row" key={index}>
-                        {pair.map((item, innerIndex) => (
+                    {items.map((item, innerIndex) => (
+                      <div className="col-md-6 mt-2 mx-auto" key={innerIndex}>
+                        <div className="card" style={{ borderRadius: '15px' }}>
+                          <div className="card-body p-4">
+                            {isFeedbackClicked && innerIndex === index ? (
+                              <Comment handleFeedbackFlag={handleFeedbackFlag} data={data} />
+                            ) : (
+                              <UserCard
+                                item={item}
+                                isAndroidUsed={isAndroidUsed}
+                                handleChatclick={handleChatclick}
+                                handleFeedbackFlag={handleFeedbackFlag}
+                                innerIndex={innerIndex}
+                              />
 
-                          <div className="col-md-6 mt-2" key={innerIndex}>
-                            <div className="card" style={{ borderRadius: '15px' }}>
-                              <div className="card-body p-4">
-                                {
-                                  !isFeedbackClicked?(
-                                    <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={item.photo ? item.photo : defaultImage}
-                                      alt={item.name}
-                                      className="img-fluid"
-                                      style={{ width: '180px', borderRadius: '10px' }}
-                                    />
-                                  </div>
-                                  <div className="flex-grow-1 ms-3">
-                                    <h5 className="mb-1">{item.name}</h5>
-                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      {item.occupation}
-                                    </p>
-                                    <div
-                                      className="d-flex justify-content-start rounded-3"
-                                      style={{ backgroundColor: '#efefef' }}
-                                    >
-                                      Experience-{item.experience ? item.experience : 'N/A'}
-                                    </div>
-                                    <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
-                                    >
-                                      {/* Age-{age(item.matrimonial_profile_dob)} Years */}
-                                    </div>
-                                    <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
-                                    >
-                                      <p>Service At - {item.city}</p>
-                                      <p>
-                                        {item.state
-                                          ? `(${item.state})`
-                                          : ""}
-                                      </p>
-                                    </div>
-                                    <div
-                                      className="d-flex justify-content-start rounded-3"
-                                      style={{ backgroundColor: '#efefef' }}
-                                    >
-                                      <p className="">
-                                        Contact Numbers:
-                                        <a href={`tel:${item.mobile1}`}>
-                                          {item.mobile1}
-                                        </a>
-                                        {item.mobile2 ? (
-                                          <>
-                                            ,{" "}
-                                            <a href={`tel:${item.mobile2}`}>
-                                              {item.mobile2}
-                                            </a>
-                                          </>
-                                        ) : (
-                                          ""
-                                        )}
-                                        {
-                                          checkMobileVisibility(item.masked_mobile) ? (
-                                            <p>
-                                              <a href={`tel:${item.masked_mobile}`}>
-                                                ,{item.masked_mobile}
-                                              </a>
-                                            </p>
-                                          ) : ''
-                                        }
-
-                                      </p>{" "}
-                                    </div>
-                                    <div className=" comment-text" style={{ width: isAndroidUsed ? '250px' : '300px', overflow: 'scroll' }}>
-                                      Description :
-                                      <p
-                                      >{item.description}</p>
-
-                                    </div>
-                                    <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
-                                    >
-                                      {
-                                        checkMobileVisibility(item.mobile) ? (
-                                          <p>
-                                            <a href={`tel:${item.mobile}`}>
-                                              {item.mobile}
-                                            </a>
-                                          </p>
-                                        ) : ''
-                                      }
-                                    </div>
-                                    <div className="d-flex pt-1">
-
-
-                                      <div
-                                        className="text-start ms-3 mt-2 hover-pointer"
-                                        onClick={() => handleChatclick(item)}
-                                      >
-                                        <img
-                                          src="/user/images/chat-icon.jpg"
-                                          width="40px"
-                                        />
-                                      </div>
-
-                                      <button type="button" className="btn me-1 flex-grow-1">
-                                        <ViewProfileDrawer id={item.id} />
-                                      </button>
-                                      <button type="button" className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline" onClick={()=>handleFeedbackFlag(true)} >
-                                        FEEDBACK
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                                  ):(
-                                    <Comment handleFeedbackFlag = {handleFeedbackFlag} data = {item} />
-                                  )
-                                }
+                            )}
+                            <div className="d-flex pt-1">
+                              <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}>
+                                <img src="/user/images/chat-icon.jpg" width="40px" />
                               </div>
+                              <button type="button" className="btn me-1 flex-grow-1">
+                                <ViewProfileDrawer id={item.id} />
+                              </button>
+                              <button
+                                type="button"
+                                className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
+                                onClick={() => handleFeedbackFlag(true, innerIndex, item)}
+                              >
+                                FEEDBACK
+                              </button>
                             </div>
                           </div>
-                        ))}
+                        </div>
                       </div>
                     ))}
                   </InfiniteScroll>
-
                 </div>
+
               </div>
             </div>
           </div>

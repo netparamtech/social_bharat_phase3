@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
 
 const UserProtectedRoute = ({ element: Component, path }) => {
   const isAuthenticated = useSelector((state) => state.userAuth.isAuthenticated && state.userAuth.token !== null);
@@ -22,6 +23,9 @@ const UserProtectedRoute = ({ element: Component, path }) => {
 
   if (isAuthenticated) {
     if (isPasswordSet || path === "/dashboard") {
+      if(path==='/login'){
+        return <HomePage />
+      }
       // User is authenticated, and either the password is set or the route is "/dashboard".
       return <Component />;
     } else {

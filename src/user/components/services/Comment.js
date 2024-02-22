@@ -8,6 +8,7 @@ export default function Comment(props) {
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(1);
     const [serviceId, setServiceId] = useState('');
+    const [providerId, setProviderId] = useState('');
 
     const [errors, setErrors] = useState("");
     const [message, setMessage] = useState("");
@@ -36,6 +37,7 @@ export default function Comment(props) {
             comment,
             rating,
             service_id: serviceId,
+            service_provider_id: providerId,
         };
 
         try {
@@ -76,9 +78,10 @@ export default function Comment(props) {
 
     useEffect(() => {
         if (data) {
-            const { photo, service_id } = data;
+            const { photo, service_id, id } = data;
             setUserProfile(photo || defaultPhoto);
             setServiceId(service_id);
+            setProviderId(id);
         }
     }, [data]);
 
@@ -87,7 +90,7 @@ export default function Comment(props) {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <div className="card  border-secondary">
-                        <div className="card-header form-control  d-flex bg-success justify-content-between align-items-center mb-0 p-5" style={{height:'70px'}}>
+                        <div className="card-header form-control  d-flex bg-success justify-content-between align-items-center mb-0 p-5" style={{ height: '70px' }}>
                             <span onClick={() => handleFeedbackFlag(false)} className="position-absolute top-0 end-0 mt-3 me-2">
                                 <button className="hover-pointer-red round-button-delete-small"><i className="fa fa-remove"></i></button>
                             </span>
@@ -119,11 +122,11 @@ export default function Comment(props) {
                                 <span className="error">{errors.comment}</span>
                             )}
                             <div className="d-flex justify-content-between mt-3">
-                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                                Send{" "}
-                                <i className="fas fa-long-arrow-alt-right ms-1"></i>
-                            </button>
-                        </div>
+                                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                                    Send{" "}
+                                    <i className="fas fa-long-arrow-alt-right ms-1"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -38,10 +38,10 @@ const Dashboard = () => {
         </div>
         <div className="row">
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card shadow bg-peal text-white h-100">
+            <div className="card shadow bg-peal text-white h-100 ">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
+                  <div className="me-3 ">
                     <div className="text-white-75 small">Profile</div>
                     <div className="text-lg ">
                       Manage Profile <br />

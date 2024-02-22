@@ -370,15 +370,25 @@ const NavbarTransparent = (props) => {
               {isAuthenticUser && isAuthenticUser ? (
                 ""
               ) : (
-                <li className="nav-item">
-                  <a
-                    className="text-decoration-none btn-primary login-btn rounded"
-                    href=""
-                    onClick={handleLoginClicked}
-                  >
-                    LOGIN
-                  </a>
-                </li>
+                // <li className="nav-item">
+                //   <a
+                //     className="text-decoration-none btn-primary login-btn rounded"
+                //     href=""
+                //     onClick={handleLoginClicked}
+                //   >
+                //     LOGIN
+                //   </a>
+                // </li>
+                <div className="button-container">
+                  <button className={`default-button fw-bold ${window.location.pathname === "/login"
+                    ? "custom-login-clicked"
+                    : ''
+                    }`} onClick={handleLoginClicked}>Login</button>
+                  <button className={`custom-button fw-bold ${window.location.pathname === "/register"
+                    ? "custom-sineUp-clicked"
+                    : ''
+                    }`} onClick={() => navigate("/register")}>Sign Up</button>
+                </div>
               )}
             </ul>
 

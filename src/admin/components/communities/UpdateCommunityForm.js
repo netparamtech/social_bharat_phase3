@@ -309,11 +309,11 @@ const CommunityUpdateForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="row ps-3 mb-3">
+              {/* <div className="row ps-3 mb-3">
                 <div className="col-md-12">
                   <label className="fw-bold">Community Archieve</label>
                 </div>
-                {/* <div className="col-md-12">
+                <div className="col-md-12">
 
                   <Editor
                     editorState={editorState}
@@ -322,8 +322,8 @@ const CommunityUpdateForm = () => {
                     editorClassName="editor-class custom-editor-height editor-border p-2"
                     toolbarClassName="toolbar-class toolbar-border"
                   />
-                </div> */}
-              </div>
+                </div>
+              </div> */}
             </div>
 
             <button type="submit" className="btn btn-primary w-25">

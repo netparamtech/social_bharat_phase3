@@ -46,7 +46,7 @@ const UserLayout = ({ children }) => {
       // "https://code.jquery.com/jquery-3.6.0.min.js",
       "https://code.jquery.com/jquery-1.12.4.min.js",
       "https://cdn.jsdelivr.net/npm/typed.js@2.0.12",
-      "http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js",
       "https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js",
       "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",

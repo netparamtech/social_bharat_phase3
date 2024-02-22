@@ -195,17 +195,17 @@ nav .container,
 /* banner on trans new */
 .jumbotron {
   background-image: url("/public/user/images/banner-1.jpg");
-  height: 400px;
-  width: auto;
+  height: 400px; /* Adjust this as needed */
+  width: 100%; /* Set to a specific width or keep auto for full width */
   background-position: center;
-  background-size: cover;
+  background-size: 100% 100%; /* Use this to cover the entire container without cropping */
   background-repeat: no-repeat;
   color: #ffffff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  object-fit: cover;
+  object-fit: cover; /* This property is not applicable for background images */
 }
 
 #banners-section {
@@ -1810,6 +1810,27 @@ input[type="number"] {
   animation: example 2s infinite;
 }
 
+@keyframes card-custom-dashboard {
+  0% {
+    background-color: red;
+  }
+
+  25% {
+    background-color: rgb(141, 39, 93);
+  }
+
+  50% {
+    background-color: rgba(0, 255, 64, 0.024);
+  }
+
+  100% {
+    background-color: green;
+  }
+}
+.card-custom-dashboard-class {
+  animation: card-custom-dashboard 2s infinite;
+}
+
 .your-custom-carousel-class {
   max-width: 1290px !important;
   /* Adjust the max-width as needed */
@@ -1982,6 +2003,53 @@ legend {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.button-container {
+  position: relative;
+  margin-left: 20%;
+}
+
+
+.default-button {
+  background-color: #006b5d;
+  border-color: #006b5d;
+  color: #fff;
+  z-index: 3;
+  position: absolute;
+  width: 100px;
+  border-radius: 40px;
+  transform: translateX(-70%); /* Center the custom button horizontally */
+  
+}
+.custom-button:hover{
+  background-color: #81b5b5;
+  color: black;
+}
+.default-button:hover{
+  background-color: #81b5b5;
+  color: black;
+}
+.button-container .custom-sineUp-clicked{
+  background-color: #fff;
+  color: black;
+}
+.custom-login-clicked{
+  background-color: #fff;
+  color: black;
+}
+
+.custom-button {
+  background-color: #006b5d;
+  border-color: #006b5d;
+  color: #fff;
+  width: 100px;
+  z-index: 2;
+  left: 50%;
+  border-radius: 40px;
+  text-align: end;
+  margin-right: 10px;
+  
 }
 
 /* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

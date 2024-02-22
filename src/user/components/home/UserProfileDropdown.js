@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOneCommunity, userLogout } from '../../services/userService';
 import { setLoader } from '../../actions/loaderAction';
 import BharatMandirDrawer from './BharatMandirDrawer';
+import { logout } from '../../actions/userAction';
 
 // ...
 
@@ -93,6 +94,7 @@ const UserProfileDropdown = () => {
     try {
       const response = await userLogout(userId);
       if (response.status === 200) {
+        dispatch(logout());
         navigate('/login');
       }
     } catch (error) {

@@ -163,7 +163,7 @@ const BasicProfile = (props) => {
                     title=""
                   />
                 ) : (
-                  <span>{community.name || "N/A"}</span>
+                  <span>{community && community.name || "N/A"}</span>
                 )}
                 {/* {
                   community && <span>{community.name || ""}</span>

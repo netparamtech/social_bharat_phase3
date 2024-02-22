@@ -585,7 +585,7 @@ const UpdateBasicProfile = () => {
                               id="name"
                               placeholder="Enter your name"
                               className="form-control"
-                              defaultValue={community.name}
+                              defaultValue={community && community.name}
                               disabled
                             />
 

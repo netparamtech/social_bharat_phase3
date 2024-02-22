@@ -457,17 +457,7 @@ const SearchPartner = () => {
                         </select>
                         <p className="text-light fw-bold btn" onClick={() => handleClear("gender")}>Clear</p>
                       </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label">Gotra</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={gotra}
-                          placeholder="Enter Your Gotra"
-                          onChange={handleGotraChange}
-                        />
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("gotra")}>Clear</p>
-                      </div>
+                    
 
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label">State</label>
@@ -517,13 +507,24 @@ const SearchPartner = () => {
                         <p className="text-light fw-bold btn" onClick={() => handleClear("subcast")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
+                        <label className="form-label">Gotra</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={gotra}
+                          placeholder="Search Gotra .."
+                          onChange={handleGotraChange}
+                        />
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("gotra")}>Clear</p>
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label ">Add New</label>
                         <a
                           title="Add Business"
                           className="btn btn-secondary w-100 btn-sm mb-2"
                           onClick={handlePartnerClick}
                         >
-                          ADD
+                          ADD MATRIMONIAL
                         </a>
                       </div>
                     </div>

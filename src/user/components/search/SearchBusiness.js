@@ -204,6 +204,7 @@ const SearchBusiness = () => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
+           
             {serverError && <span className="error">{serverError}</span>}
 
             <div>
@@ -304,14 +305,14 @@ const SearchBusiness = () => {
                                   />
 
                                 </Carousel.Item>
-                              )):(
+                              )) : (
                                 <img
-                                    src={item.business_photos}
-                                    alt={item.business_name}
-                                    className="d-block w-100 custom-carousel-item"
-                                    height={300}
-                                  //onClick={() => changeEventClickFlag(true, item.id)}
-                                  />
+                                  src={item.business_photos}
+                                  alt={item.business_name}
+                                  className="d-block w-100 custom-carousel-item"
+                                  height={300}
+                                //onClick={() => changeEventClickFlag(true, item.id)}
+                                />
                               )}
                           </Carousel>
                           {

@@ -215,7 +215,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          {/* <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-darkyellow text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -239,7 +239,7 @@ const Dashboard = () => {
                 <i className="fa-solid fa-arrow-right"></i>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card bg-classicpink text-white h-100">

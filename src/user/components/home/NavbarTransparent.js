@@ -4,11 +4,13 @@ import UserProfileDropdown from "./UserProfileDropdown";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { setLoader } from "../../actions/loaderAction";
+import { logout } from "../../actions/userAction";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
   const user = useSelector((state) => state.userAuth);
-  const isAuthenticUser = user && user.isAuthenticated;
+  const tokenExpireDate = user && user.token && user.token.expire_at;
+  const [isAuthenticUser, setIsAuthenticatedUser] = useState(user && user.isAuthenticated)
   const isPasswordSet = user && user.user && user.user.is_password_set;
 
   const [visible, setVisible] = useState(false);
@@ -20,6 +22,21 @@ const NavbarTransparent = (props) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (tokenExpireDate) {
+      const expireDate = new Date(tokenExpireDate);
+      const currentDate = new Date();
+      if (expireDate < currentDate && window.location.pathname !== '/' && window.location.pathname !== '/register') {
+        dispatch(logout())
+        setIsAuthenticatedUser(false);
+        navigate('/login')
+      } else if (expireDate < currentDate) {
+        dispatch(logout())
+      }
+    }
+  }, [tokenExpireDate]);
 
   const handleLoginClicked = (e) => {
     e.preventDefault();

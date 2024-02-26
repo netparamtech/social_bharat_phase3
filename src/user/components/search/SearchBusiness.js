@@ -24,6 +24,7 @@ const SearchBusiness = () => {
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+  const [defaultMap, setDefaultMap] = useState("/user/images/location.png");
 
   //to show state and city according to user search
 
@@ -204,7 +205,7 @@ const SearchBusiness = () => {
       <div className="container">
         <div className="card shadow">
           <div className="card-body">
-           
+
             {serverError && <span className="error">{serverError}</span>}
 
             <div>
@@ -306,13 +307,13 @@ const SearchBusiness = () => {
 
                                 </Carousel.Item>
                               )) : (
-                                <img
+                                item.business_photos ? (<img
                                   src={item.business_photos}
                                   alt={item.business_name}
                                   className="d-block w-100 custom-carousel-item"
                                   height={300}
                                 //onClick={() => changeEventClickFlag(true, item.id)}
-                                />
+                                />) : ''
                               )}
                           </Carousel>
                           {
@@ -330,11 +331,25 @@ const SearchBusiness = () => {
                           }
 
                           <div className="flex-grow-1 ms-3 mt-2">
-                            <h6>{item.business_name}</h6>
-                            <p>Category-{item.business_category}</p>
-                            <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                              Posted By : <b>{item.name}</b>
-                            </p>
+                            <div className="row">
+                              <div className="col-6">
+                                <h6>{item.business_name}</h6>
+                                <p>Category-{item.business_category}</p>
+                                <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                  Posted By : <b>{item.name}</b>
+                                </p>
+                              </div>
+                              {
+                                item.google_map_link ? (
+                                  <div className="col-6">
+                                    <a href={item.google_map_link} target="_blank">
+                                      <img className="rounded" src={defaultMap} alt="Google Map" width={50} />
+                                    </a>
+                                  </div>
+                                ) : ''
+                              }
+
+                            </div>
                             <div
                               className="d-flex justify-content-start rounded-3"
                               style={{ backgroundColor: '#efefef' }}

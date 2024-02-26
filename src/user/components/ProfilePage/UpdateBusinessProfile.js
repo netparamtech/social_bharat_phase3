@@ -7,7 +7,6 @@ import { setLoader } from '../../actions/loaderAction';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
-
   const [businessName, setBusinessName] = useState('');
   const [businessCategory, setBusinessCategory] = useState('');
   const [businessType, SetBusinessType] = useState('');
@@ -33,6 +32,7 @@ const UpdateBusinessProfile = (props) => {
   const [businessPhoto, setBusinessPhoto] = useState([]);
   const [tempBusinessPhotoUrl, setTempBusinessPhotoUrl] = useState([]);
   const [businessPreview, setBusinessPreview] = useState([]);
+  const [googleMapLink, setGoogleMapLink] = useState('');
 
   const [errors, setErrors] = useState('');
   const [serverError, setServerError] = useState('');
@@ -133,7 +133,7 @@ const UpdateBusinessProfile = (props) => {
     event.preventDefault();
     dispatch(setLoader(true));
     const businessData = {
-      id: businessId,
+      id: parseInt(businessId),
       business_name: businessName,
       business_category: businessType.label,
       street_address: streetAddress,
@@ -148,11 +148,12 @@ const UpdateBusinessProfile = (props) => {
       business_photos: tempBusinessPhotoUrl,
       status: status,
       description,
+      google_map_link: googleMapLink,
     };
 
 
     try {
-      const response = await updateBusinessInfo(businessData);
+      const response = await updateBusinessInfo(businessData, businessId);
       if (response && response.status === 200) {
         setErrors('');
         setServerError('');
@@ -243,6 +244,7 @@ const UpdateBusinessProfile = (props) => {
   useEffect(() => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
+      console.log(businessDetails)
       setBusinessName(businessDetails.business_name || '');
       SetBusinessType({ value: businessDetails.business_category, label: businessDetails.business_category })
       setStreetAddress(businessDetails.street_address || '');
@@ -258,6 +260,7 @@ const UpdateBusinessProfile = (props) => {
       setBusinessPhoto(businessDetails.business_photos || '');
       setStatus(businessDetails.status || '');
       setBusinessId(businessDetails.id);
+      setGoogleMapLink(businessDetails.google_map_link||'');
       setDescription(businessDetails.description || '');
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
@@ -544,7 +547,23 @@ const UpdateBusinessProfile = (props) => {
                         </div>
 
                       </div>
+                      <div className='row'>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <label className="form-label">Set Google Map</label>
+                          <p>(Please add your business location  link.)</p>
+                          <textarea type="text"
+                            name="businessWebsite"
+                            id="businessWebsite"
+                            placeholder="Enter Business Website Link"
+                            className="form-control"
+                            defaultValue={googleMapLink}
+                            onChange={(e) => setGoogleMapLink(e.target.value)}
+                          />
+                          {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                        </div>
+                      </div>
                     </div>
+
 
                     <div className="row mt-4">
                       <div className="col-lg-6 col-sm-12 col-xs-12">

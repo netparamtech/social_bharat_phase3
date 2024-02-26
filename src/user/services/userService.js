@@ -306,12 +306,21 @@ export const updateMatrimonialInfo = async (data) => {
 
 //update business profile
 
-export const updateBusinessInfo = async (data) => {
+export const updateBusinessInfo = async (data,id) => {
   try {
-    const response = await apiWithHeaders.put(
-      "/profile/update-business-details",
-      data
-    );
+    let response = null;
+    if(id){
+      response = await apiWithHeaders.put(
+        `/profile/${id}/update-business-details`,
+        data
+      );
+    } else {
+      response = await apiWithHeaders.post(
+        "/profile/create-business-details",
+        data
+      );
+    }
+    
     return response;
   } catch (error) {
     throw error;

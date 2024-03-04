@@ -393,11 +393,7 @@ const SearchBusiness = () => {
                                 )}
                               </p>{" "}
                             </div>
-                            <div className="d-flex justify-content-start rounded-3 mt-2"
-                              style={{ backgroundColor: '#efefef' }}
-                            >
-                              <p>Created At{" "}-{" "}{formatDate(item.updated_at)}</p>
-                            </div>
+                           
 
                           </div>
                         </div>

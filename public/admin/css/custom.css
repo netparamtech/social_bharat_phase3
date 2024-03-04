@@ -216,3 +216,9 @@ div.Table {
 .hover-pointer-admin-green:hover{
   color:red;
 }
+
+.scrollable-container {
+  max-height: 300px; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Add a border for styling */
+}

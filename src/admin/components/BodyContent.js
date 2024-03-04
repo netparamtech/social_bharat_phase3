@@ -4,18 +4,28 @@ import { useEffect, useState } from "react";
 import { fetchAdminDashboardStatistics } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import UsersChart from "./charts/UsersChart";
+import ServiceChart from "./charts/ServiceChart";
+import JobChart from "./charts/JobChart";
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 const BodyContent = () => {
   const [statistics, setStatistics] = useState("");
+  const [companese, setCompanese] = useState([]);
+  const [isView, setIsView] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleIsView = () => {
+    setIsView(!isView);
+  }
 
   const fetchDashboardStatistics = async () => {
     try {
       const response = await fetchAdminDashboardStatistics();
       if (response && response.status === 200) {
         setStatistics(response.data.data);
+
+        console.log(response.data.data)
       }
     } catch (error) {
       // Unauthorized
@@ -27,6 +37,14 @@ const BodyContent = () => {
       }
     }
   };
+  useEffect(() => {
+    if (statistics) {
+      if (statistics.companesePosted.length > 0) {
+        console.log(statistics.companesePosted)
+        setCompanese(statistics.companesePosted);
+      }
+    }
+  }, [statistics])
 
   useEffect(() => {
     fetchDashboardStatistics();
@@ -243,10 +261,151 @@ const BodyContent = () => {
           </div>
         </div>
 
+        <div className="col-xl-12 col-md-12 mb-4">
+          <div className="card border-left-warning shadow h-100 py-2">
+            <div className="card-body">
+              <div className="row align-items-center">
+                <div className="col mr-2">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      <div className="col-12 card-header fs-4">Job Statistic</div>
+                      <div className="row">
+                        <div className="col-xl-2">
+                          <Statistic
+                            title={
+                              <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                                <a className="text-danger stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                  Total Jobs
+                                </a>
+                              </span>
+                            }
+                            value={statistics && statistics.job_statistics[0].totalCount + statistics.job_statistics[1].totalCount}
+                            formatter={formatter}
+                          />
+                        </div>
+                        <div className="col-xl-2">
+                          <Statistic
+                            title={
+                              <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                                <a className="text-primary stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                  Total Unexpired Jobs
+                                </a>
+                              </span>
+                            }
+                            value={statistics && statistics.jobLiveStatistics.totalCount}
+                            formatter={formatter}
+                          />
+                        </div>
+                        <div className="col-xl-2">
+                          <Statistic
+                            title={
+                              <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                                <a className="text-warning stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                  Total Featured Jobs
+                                </a>
+                              </span>
+                            }
+                            value={statistics && statistics.featuredJob.totalCount}
+                            formatter={formatter}
+                          />
+                        </div>
+                        <div className="col-xl-3">
+                          <Statistic
+                            title={
+                              <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                                <a className="text-info stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                  Total UnExpired Featured Job
+                                </a>
+                              </span>
+                            }
+                            value={statistics && statistics.unexpiredFeaturedJob.totalCount}
+                            formatter={formatter}
+                          />
+                        </div>
+                        <div className="col-xl-3 text-success">
+                          Companese Contribution<br></br>
+                          <button type="button" onClick={handleIsView} className="btn btn-success" disabled = {!companese&&companese.length>0}>{isView ? 'Hide' : 'View'}</button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div className="col-auto">
+
+                  <i class="fa fa-calendar fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          {
+            isView && companese && companese.length > 0 && (
+              <table className="table table-striped table-hover table-bordered m-2 btn">
+                <thead>
+                  <tr className="">
+                    <th>Company</th>
+                    <th>Jobs Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    companese.map((item) => (
+                      <tr>
+                        <td>{item.job_subheading}</td>
+                        <td>{item.totalCount}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            )
+          }
+
+        </div>
+
+
 
 
       </div>
-      <UsersChart />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
+            {/* Service Chart */}
+            <div className="card">
+              <div className="card-body shadow">
+                <h5 className="card-title">Service Chart</h5>
+                <ServiceChart statistics={statistics} />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-6 ">
+            {/* Users Chart */}
+            <div className="card">
+              <div className="card-body shadow">
+                <h5 className="card-title">Users Chart</h5>
+                <UsersChart statistics={statistics} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-md-12">
+          {/* Service Chart */}
+          <div className="card">
+            <div className="card-body shadow">
+              <h5 className="card-title">Job Chart</h5>
+              <JobChart statistics={statistics} />
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

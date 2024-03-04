@@ -309,6 +309,7 @@ export const updateMatrimonialInfo = async (data) => {
 export const updateBusinessInfo = async (data,id) => {
   try {
     let response = null;
+    
     if(id){
       response = await apiWithHeaders.put(
         `/profile/${id}/update-business-details`,

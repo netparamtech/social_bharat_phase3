@@ -54,8 +54,8 @@ const WhySocial = (props) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-6 col-md-6 mt-5  what-social-bharat wow animate__animated animate__fadeInUp">
-            <h1>{aboutCMS && aboutCMS.title && aboutCMS.title}</h1>
-            <h5>{aboutCMS && aboutCMS.subtitle && aboutCMS.subtitle}</h5>
+            <h1 className='text-success'>{aboutCMS && aboutCMS.title && aboutCMS.title}</h1>
+            <h5 className='text-primary'>{aboutCMS && aboutCMS.subtitle && aboutCMS.subtitle}</h5>
             <ul>
              <li
               dangerouslySetInnerHTML={{

@@ -379,9 +379,10 @@ export const fetchAllActiveCommunities = async () => {
 };
 
 //find one community
-export const fetchOneCommunity = async () => {
+export const fetchOneCommunity = async (id) => {
+  console.log(id,"idddd")
   try {
-    const response = await apiWithHeaders.get("/community");
+    const response = await apiConfig.get(`/communityBYId/${id}`);
     return response;
   } catch (error) {
     throw error;

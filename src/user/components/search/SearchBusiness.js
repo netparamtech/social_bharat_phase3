@@ -6,9 +6,10 @@ import {
   searchBusinessWithSearchText,
 } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { Carousel } from "react-bootstrap";
+import { logout } from "../../actions/userAction";
 
 const SearchBusiness = () => {
   const user = useSelector((state) => state.userAuth);
@@ -39,6 +40,7 @@ const SearchBusiness = () => {
   const [isFilter, setIsFilter] = useState(true);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePromoteBusinessClick = (e) => {
     e.preventDefault();
@@ -125,13 +127,14 @@ const SearchBusiness = () => {
         setServerError("");
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      } else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     }
   };
@@ -144,13 +147,14 @@ const SearchBusiness = () => {
         setServerError("");
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      } else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     }
   };
@@ -393,7 +397,7 @@ const SearchBusiness = () => {
                                 )}
                               </p>{" "}
                             </div>
-                           
+
 
                           </div>
                         </div>

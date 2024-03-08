@@ -14,6 +14,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "./ViewProfileDrawer";
+import { logout } from "../../actions/userAction";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -133,13 +134,14 @@ const SearchPartner = () => {
         setServerError("");
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      }else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     }
   };
@@ -152,13 +154,14 @@ const SearchPartner = () => {
         setServerError("");
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      }else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     }
   };
@@ -230,11 +233,14 @@ const SearchPartner = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      }else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     } finally {
       dispatch(setLoader(false));
@@ -253,13 +259,14 @@ const SearchPartner = () => {
         setCommunities(requestedCasts);
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      }else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     } finally {
       dispatch(setLoader(false));

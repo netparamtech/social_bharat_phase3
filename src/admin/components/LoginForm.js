@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { Input } from 'antd';
 import { setLoader } from '../actions/loaderAction';
 import { toast } from 'react-toastify';
+import { successOptions } from '../../toastOption';
 
 const LoginForm = () => {
 
@@ -38,7 +39,7 @@ const LoginForm = () => {
         setErrors('');
         dispatch(adminlogin(response.data.user, response.data.token));
         dispatch(setLoader(false));
-        toast.success("You have successfully login");
+        toast.success("You have successfully login",successOptions);
                 
         setTimeout(() => {
           navigate('/admin/dashboard')

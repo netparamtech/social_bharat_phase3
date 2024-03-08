@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
+import { errorOptions, successOptions } from "../../../toastOption";
 
 const UpdateActivity = () => {
   const { id } = useParams();
@@ -137,7 +138,7 @@ const UpdateActivity = () => {
         if (response && response.status === 201) {
           setErrors("");
           setServerError("");
-          toast.success("Updated Activity Successfully");
+          toast.success("Updated Activity Successfully",successOptions);
           navigate("/users/activities");
         }
       } catch (error) {
@@ -152,7 +153,7 @@ const UpdateActivity = () => {
         dispatch(setLoader(false));
       }
     } else {
-      toast.error("Nothing Is Uploaded");
+      toast.error("Nothing Is Uploaded",errorOptions);
     }
   };
 

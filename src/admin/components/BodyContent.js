@@ -11,7 +11,9 @@ const formatter = (value) => <CountUp end={value} separator="," />;
 const BodyContent = () => {
   const [statistics, setStatistics] = useState("");
   const [companese, setCompanese] = useState([]);
+  const [jobStatic, setJobStatic] = useState([]);
   const [isView, setIsView] = useState(false);
+  const [totalJobs, setTotalJobs] = useState(0);
 
   const navigate = useNavigate();
 
@@ -40,11 +42,25 @@ const BodyContent = () => {
   useEffect(() => {
     if (statistics) {
       if (statistics.companesePosted.length > 0) {
-        console.log(statistics.companesePosted)
         setCompanese(statistics.companesePosted);
       }
+      console.log(statistics.job_statistics)
+
+      setJobStatic(statistics.job_statistics);
+
     }
   }, [statistics])
+  useEffect(() => {
+    if (jobStatic.length > 0) {
+      if (jobStatic.length > 1) {
+        console.log("Hello")
+        setTotalJobs(jobStatic[0].totalCount + jobStatic[1].totalCount)
+      } else {
+        console.log("Rahul")
+        setTotalJobs(jobStatic[0].totalCount)
+      }
+    }
+  }, [jobStatic])
 
   useEffect(() => {
     fetchDashboardStatistics();
@@ -274,12 +290,12 @@ const BodyContent = () => {
                           <Statistic
                             title={
                               <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                                <a className="text-danger stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                <a className="text-danger stretched-link">
                                   Total Jobs
                                 </a>
                               </span>
                             }
-                            value={statistics && statistics.job_statistics[0].totalCount + statistics.job_statistics[1].totalCount}
+                            value={totalJobs}
                             formatter={formatter}
                           />
                         </div>
@@ -287,12 +303,12 @@ const BodyContent = () => {
                           <Statistic
                             title={
                               <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                                <a className="text-primary stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                <a className="text-primary stretched-link">
                                   Total Unexpired Jobs
                                 </a>
                               </span>
                             }
-                            value={statistics && statistics.jobLiveStatistics.totalCount}
+                            value={statistics && statistics.jobLiveStatistics && statistics.jobLiveStatistics.totalCount}
                             formatter={formatter}
                           />
                         </div>
@@ -300,7 +316,7 @@ const BodyContent = () => {
                           <Statistic
                             title={
                               <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                                <a className="text-warning stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                <a className="text-warning stretched-link">
                                   Total Featured Jobs
                                 </a>
                               </span>
@@ -313,7 +329,7 @@ const BodyContent = () => {
                           <Statistic
                             title={
                               <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                                <a className="text-info stretched-link" onClick={() => navigate('/admin/event/index')}>
+                                <a className="text-info stretched-link">
                                   Total UnExpired Featured Job
                                 </a>
                               </span>
@@ -324,7 +340,7 @@ const BodyContent = () => {
                         </div>
                         <div className="col-xl-3 text-success">
                           Companese Contribution<br></br>
-                          <button type="button" onClick={handleIsView} className="btn btn-success" disabled = {!companese&&companese.length>0}>{isView ? 'Hide' : 'View'}</button>
+                          <button type="button" onClick={handleIsView} className="btn btn-success" disabled={companese && companese.length === 0}>{isView ? 'Hide' : 'View'}</button>
 
                         </div>
 
@@ -367,9 +383,6 @@ const BodyContent = () => {
           }
 
         </div>
-
-
-
 
       </div>
       <div className="container">

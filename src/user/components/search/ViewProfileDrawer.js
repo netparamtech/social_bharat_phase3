@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getSearchedUserFullProfile } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import { logout } from "../../actions/userAction";
 
 const DescriptionItem = ({ title, content }) => (
   <Row>
@@ -53,13 +54,14 @@ const ViewProfileDrawer = ({ id }) => {
         setServerError('');
       }
     } catch (error) {
-      //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
+      } else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
       }
     } finally {
       dispatch(setLoader(false));

@@ -15,27 +15,15 @@ const root = createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <Provider store={adminStore}>
-      <StyleSheetManager shouldForwardProp={(prop) => prop !== 'sortActive'}>
+      <StyleSheetManager >
         <HelmetProvider>
+          <ToastContainer />
           <App />
           {/* Same as */}
-          <ToastContainer />
         </HelmetProvider>
       </StyleSheetManager>
     </Provider>
-    <ToastContainer
-      position="top-right"
-      autoClose={10000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-      bodyClassName="toast-body"
-    />
+
   </React.StrictMode>
 
 );

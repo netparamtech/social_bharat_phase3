@@ -1,15 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCommunityWithNAME } from "../../services/userService";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../actions/userAction";
 
 const ViewCommunity = () => {
   const user = useSelector((state) => state.userAuth);
   const isAuthenticUser = user && user.isAuthenticated;
   const { name } = useParams();
   const [data, setData] = useState({});
+  const [serverError,setServerError] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleHomeClick = () => {
     if (isAuthenticUser) {
@@ -23,20 +26,31 @@ const ViewCommunity = () => {
       const response = await fetchCommunityWithNAME(name);
       if (response && response.status === 200) {
         setData(response.data.data);
+        setServerError('');
       }
-    } catch (error) { }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
+      }
+     }
   };
   useEffect(() => {
+    console.log(name)
     fetchCommunity();
   }, [name]);
-  const bannerStyle = {
-    
-  }
+ 
   return (
     <div id="auth-wrapper" className="pt-3">
       <div className="container" id="community-text">
         <div className="row">
           <div className="col-lg-12">
+            {serverError && <p>{serverError}</p>}
             <div className="mb-5 community-img">
               <img src={data.banner_image} className=" img-fluid rounded-2" alt="Banner" />
             </div>
@@ -47,7 +61,9 @@ const ViewCommunity = () => {
                 />
               )}
               <div>
-                <a className="btn btn-primary hover-pointer" onClick={handleHomeClick}>Go Back</a>
+               {
+                isAuthenticUser? <a className="btn btn-primary hover-pointer" onClick={handleHomeClick}>Go Back</a>:''
+               }
               </div>
             </div>
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
+import { errorOptions, successOptions } from "../../../toastOption";
 
 const Activity = () => {
   const imageInputRef = useRef(null);
@@ -111,7 +112,7 @@ const Activity = () => {
         if (response && response.status === 201) {
           setErrors("");
           setServerError("");
-          toast.success("Uploaded Activity Successfully");
+          toast.success("Uploaded Activity Successfully",successOptions);
           setDescription("");
           setImagePreview([]);
           setImageTempUrl([]);
@@ -129,7 +130,7 @@ const Activity = () => {
         dispatch(setLoader(false));
       }
     } else {
-      toast.error("Nothing Is Uploaded");
+      toast.error("Nothing Is Uploaded",errorOptions);
     }
   };
 

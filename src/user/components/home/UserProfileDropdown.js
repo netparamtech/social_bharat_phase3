@@ -15,6 +15,7 @@ const UserProfileDropdown = () => {
   const { id } = useParams();
 
   const user = useSelector((state) => state.userAuth);
+  const [communityId, setCommunityId] = useState('');
   const [userId, setUserId] = useState(user && user.user && user.user.id);
   const [loggedUserFirstLatter, setLoggedUserFirstLatter] = useState('');
   const isPasswordSet = user && user.user && user.user.is_password_set;
@@ -35,11 +36,12 @@ const UserProfileDropdown = () => {
 
   useEffect(() => {
     if (user && user.user) {
-      const { id, name, email, photo, is_password_set } = user.user;
+      const { id, name, email, photo, is_password_set, community_id } = user.user;
       setUserId(id);
       setUserName(name || '');
       setUserEmail(email || '');
       setUserProfile(photo || '');
+      setCommunityId(community_id)
       setLoggedUserFirstLatter(name.charAt(0).toUpperCase());
     }
   }, [user]);
@@ -74,27 +76,41 @@ const UserProfileDropdown = () => {
 
   const fetchLoggedUserCommunity = async () => {
     dispatch(setLoader(true));
-    try {
-      const response = await fetchOneCommunity();
-      if (response && response.status === 200) {
-        setCommunity(response.data.data);
+    if (communityId) {
+      console.log(typeof communityId)
+      try {
+        const response = await fetchOneCommunity(communityId);
+        if (response && response.status === 200) {
+          console.log(response.data.data)
+          setCommunity(response.data.data);
+        }
+      } catch (error) {
+        //handleFetchError(error);
+        if (error.response && error.response.status === 401) {
+          dispatch(logout());
+          navigate("/login");
+        } else if (error.response && error.response.status === 500) {
+          setServerError("Oops! Something went wrong on our server.");
+        } else if (error.response && error.response.status === 404) {
+          dispatch(logout());
+          navigate('/');
+        }
+      } finally {
+        dispatch(setLoader(false));
       }
-    } catch (error) {
-      handleFetchError(error);
-    } finally {
-      dispatch(setLoader(false));
     }
   };
 
   useEffect(() => {
     fetchLoggedUserCommunity();
-  }, []);
+  }, [communityId]);
 
   const handleLogOutClick = async () => {
     dispatch(setLoader(true));
     try {
       const response = await userLogout(userId);
       if (response.status === 200) {
+        localStorage.removeItem("userAuth")
         dispatch(logout());
         navigate('/login');
       }
@@ -106,7 +122,7 @@ const UserProfileDropdown = () => {
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
-      
+
     } finally {
       dispatch(setLoader(false));
     }

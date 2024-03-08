@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage';
 
 const UserProtectedRoute = ({ element: Component, path }) => {
   const isAuthenticated = useSelector((state) => state.userAuth.isAuthenticated && state.userAuth.token !== null);
+  const user = useSelector((state) => state.userAuth);
   const isPasswordSet = useSelector((state) => state.userAuth.user?.is_password_set && state.userAuth.token !== null);
 
 

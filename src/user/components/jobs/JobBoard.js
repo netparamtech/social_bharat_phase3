@@ -27,6 +27,8 @@ import { toast } from 'react-toastify';
 import { Card, Form, Button } from "react-bootstrap";
 import CreateJob from "./CreateJob";
 import Search from "antd/es/input/Search";
+import { infoOptions, successOptions } from "../../../toastOption";
+import { logout } from "../../actions/userAction";
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -130,6 +132,7 @@ const JobBoard = () => {
 
             //Unauthorized
             else if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             }
             //Internal Server Error
@@ -184,6 +187,7 @@ const JobBoard = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             }
             //Internal Server Error
@@ -210,6 +214,7 @@ const JobBoard = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             }
             //Internal Server Error
@@ -233,6 +238,7 @@ const JobBoard = () => {
             } catch (error) {
                 //Unauthorized
                 if (error.response && error.response.status === 401) {
+                    dispatch(logout());
                     navigate("/login");
                 }
                 //Internal Server Error
@@ -296,6 +302,7 @@ const JobBoard = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             } else if (error.response && error.response.status === 500) {
                 setServerError("Oops! Something went wrong on our server.");
@@ -316,6 +323,7 @@ const JobBoard = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             } else if (error.response && error.response.status === 500) {
                 setServerError("Oops! Something went wrong on our server.");
@@ -335,6 +343,7 @@ const JobBoard = () => {
             } catch (error) {
                 //Unauthorized
                 if (error.response && error.response.status === 401) {
+                    dispatch(logout());
                     navigate("/login");
                 } else if (error.response && error.response.status === 500) {
                     setServerError("Oops! Something went wrong on our server.");
@@ -352,6 +361,7 @@ const JobBoard = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
             } else if (error.response && error.response.status === 500) {
                 setServerError("Oops! Something went wrong on our server.");
@@ -369,7 +379,7 @@ const JobBoard = () => {
                 dispatch(setLoader(true));
                 const response = await updateResume(data);
                 if (response && response.status === 201) {
-                    toast.success("Resume Uploaded Successfully");
+                    toast.success("Resume Uploaded Successfully",successOptions);
                     setMessageAttachment('');
                     setServerErrorPdf('');
                     setIsResume(true);
@@ -383,6 +393,7 @@ const JobBoard = () => {
 
                 //Unauthorized
                 else if (error.response && error.response.status === 401) {
+                    dispatch(logout());
                     navigate("/login");
                 }
                 //Internal Server Error
@@ -409,12 +420,14 @@ const JobBoard = () => {
 
         } catch (error) {
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate("/login");
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                setServerErrorPdf("Oops! Something went wrong on our server.");
-            }
+              } else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+              }else if (error.response && error.response.status === 404) {
+                dispatch(logout());
+                navigate('/');
+              }
         } finally {
             dispatch(setLoader(false));
         }
@@ -521,7 +534,7 @@ const JobBoard = () => {
                 setErrors("");
                 getJobApplicantStatistics();
                 fetchJobs(page, 20, state, city, activeNavItem);
-                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [contact@socialbharat.org].`)
+                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [contact@socialbharat.org].`,infoOptions)
             }
         } catch (error) {
             //Unauthorized

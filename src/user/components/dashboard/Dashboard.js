@@ -10,7 +10,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(isFeedback)
+    console.log(user)
     if (user) {
       if (user.user.count % 5 === 0 && user.user.count !== 0) {
         setIsShow(true);
@@ -45,7 +45,6 @@ const Dashboard = () => {
                     <div className="text-white-75 small">Profile</div>
                     <div className="text-lg ">
                       Manage Profile <br />
-                      प्रोफ़ाइल प्रबंधित करें{" "}
                     </div>
                   </div>
                   <img src="/user/images/activities.png" width="40px" />
@@ -75,8 +74,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Become Social</div>
                     <div className="text-lg ">
-                      Find People <br />
-                      लोग खोजें
+                     Search Members <br />
                     </div>
                   </div>
                   <img src="/user/images/searchPeople.png" width="40px" />
@@ -101,8 +99,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Matrimonial</div>
                     <div className="text-lg ">
-                      Search Life Partner <br />
-                      जीवन साथी खोजें
+                      Matrimonial <br />
                     </div>
                   </div>
                   <img src="/user/images/wedding.png" width="40px" />
@@ -128,7 +125,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Business</div>
                     <div className="text-lg">
-                      Promote Business <br /> व्यवसाय खोजें
+                      Business Promotion <br />
                     </div>
                   </div>
                   <img src="/user/images/financial-profit.png" width="40px" />
@@ -158,8 +155,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Event</div>
                     <div className="text-lg ">
-                      Manage Event(s) <br />
-                      कार्यक्रम जोड़ें{" "}
+                      Event(s)<br />
                     </div>
                   </div>
                   <img src="/user/images/placard.png" width="40px" />
@@ -190,8 +186,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Event</div>
                     <div className="text-lg ">
-                      Manage Activities <br />
-                      क्रियाएँ जोड़ें{" "}
+                      Social Activities <br />
                     </div>
                   </div>
                   <img src="/user/images/activity.png" width="40px" />
@@ -248,7 +243,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Services</div>
                     <div className="text-lg ">
-                      Search Services <br /> सेवाएँ खोजें
+                      Services <br />
                     </div>
                   </div>
                   <img src="/user/images/service3.jpg" width="40px" />
@@ -275,7 +270,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Jobs</div>
                     <div className="text-lg">
-                      Search Jobs <br /> नौकरी खोजें
+                      Jobs <br />
                     </div>
                   </div>
                   <img src="/user/images/jobs.jpg" width="40px" />
@@ -309,7 +304,6 @@ const Dashboard = () => {
                     <div className="text-white-75 small">Share Your Feedback</div>
                     <div className="text-lg ">
                       Feedback <br />
-                      फ़ीड बैक
                     </div>
                   </div>
                   <img src="/user/images/fe.png" width="40px" />

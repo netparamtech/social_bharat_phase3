@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Search from "antd/es/input/Search";
 import DropdownOnServices from "./DropdownOnServices";
 import Select from "react-select";
+import { logout } from "../../actions/userAction";
 
 const Services = () => {
   const [service, setService] = useState([]);
@@ -112,6 +113,7 @@ const Services = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
       }
       //Internal Server Error
@@ -135,6 +137,7 @@ const Services = () => {
       } catch (error) {
         //Unauthorized
         if (error.response && error.response.status === 401) {
+          dispatch(logout());
           navigate("/login");
         }
         //Internal Server Error
@@ -181,6 +184,7 @@ const Services = () => {
     } catch (error) {
       //Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
@@ -218,6 +222,7 @@ const Services = () => {
         setMessage("");
         setAlertClass("alert-danger");
       } else if (error.response && error.response.status === 401) {
+        dispatch(logout());
         setMessage("");
         setErrors("");
         navigate('/login');

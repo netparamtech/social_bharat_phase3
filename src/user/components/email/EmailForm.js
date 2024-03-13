@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setLoader } from '../../actions/loaderAction';
+import { successOptions } from '../../../toastOption';
 
 const EmailForm = (props) => {
     const { record, handleOk } = props;
@@ -42,7 +43,7 @@ const EmailForm = (props) => {
             if (response && response.status === 201) {
                 setErrors('');
                 setServerError('');
-                toast.success("Email sent successfully.")
+                toast.success("Email sent successfully.",successOptions);
 
             }
         } catch (error) {

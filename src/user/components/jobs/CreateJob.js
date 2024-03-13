@@ -108,7 +108,6 @@ const CreateJob = (props) => {
 
     const handleLogoChange = async (e) => {
         const file = e.target.files[0];
-        console.log(file)
         const formData = new FormData();
         formData.append("image", file);
 
@@ -241,7 +240,6 @@ const CreateJob = (props) => {
             state: selectedState && selectedState.label,
             city: selectedCity && selectedCity.label,
         }
-        console.log(data)
         try {
             const response = await createNewJobPost(data);
             if (response && response.status === 201) {

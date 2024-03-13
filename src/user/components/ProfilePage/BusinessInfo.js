@@ -38,7 +38,6 @@ const BusinessInfo = (props) => {
   useEffect(() => {
     if (user) {
       setBusinessDetails(user?.data?.businesses || []);
-      console.log(user)
       // Initialize the collapsedItems state with false for each item
       setCollapsedItems(Array(user?.data?.businesses?.length).fill(true));
     }
@@ -183,7 +182,7 @@ const BusinessInfo = (props) => {
                                     <td className="proposal-Photo">
                                       {
                                         item.business_photos.map((item, idx) => (
-                                          <a href={item} target="_blank">
+                                          <a href={item} target="_blank" key={idx}>
                                             <img className="m-1" src={item} />
                                           </a>
                                         ))

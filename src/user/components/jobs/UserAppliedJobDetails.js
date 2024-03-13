@@ -75,7 +75,6 @@ const UserAppliedJobDetails = () => {
         onChange: (selectedRowKeys, selectedRows) => {
             const userIds = [];
             setSelectedRowKeys(selectedRowKeys);
-            console.log(selectedRows)
             selectedRows.map((item) => userIds.push(item.user_id));
             setSelectedUsers(userIds);
         },
@@ -107,12 +106,6 @@ const UserAppliedJobDetails = () => {
             // Your logic here when Ctrl + S is pressed
         }
     };
-
-    useEffect(() => {
-        if (selectedUsers.length > 0) {
-            console.log(selectedUsers)
-        }
-    }, [selectedUsers])
 
     const columns = [
         {

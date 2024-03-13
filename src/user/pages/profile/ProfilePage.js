@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import GenerateBiodata from '../../components/ProfilePage/GenerateBiodata';
+import { logout } from '../../actions/userAction';
 
 
 const ProfilePage = () => {
@@ -30,6 +31,7 @@ const ProfilePage = () => {
         } catch (error) {
             //Unauthorized
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
                 navigate('/login');
             } else if (error.response && error.response.status === 404) {
             }
@@ -46,15 +48,6 @@ const ProfilePage = () => {
         getUserProfile();
         window.scrollTo(0, 0);
     }, [])
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-    useEffect(() => {
-        if(user){
-            console.log(user)
-        }
-    }, [user]);
 
     return (
         <UserLayout>

@@ -58,7 +58,6 @@ const SearchUsersWithService = () => {
   };
 
   const handleFeedbackFlag = (value, index, item) => {
-    console.log(index)
     setIndex(index);
     setData(item);
     setIsFeedbackClicked(value);
@@ -83,7 +82,6 @@ const SearchUsersWithService = () => {
       const selectedStateObject = states.find(
         (state) => state.name === selectedOption.value
       );
-      console.log(selectedStateObject.id)
       if (selectedStateObject.id !== undefined) {
         getAllCities(selectedStateObject.id);
       }

@@ -534,7 +534,7 @@ const JobBoard = () => {
                 setErrors("");
                 getJobApplicantStatistics();
                 fetchJobs(page, 20, state, city, activeNavItem);
-                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [contact@socialbharat.org].`,infoOptions)
+                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [support@socialbharat.org].`,infoOptions)
             }
         } catch (error) {
             //Unauthorized

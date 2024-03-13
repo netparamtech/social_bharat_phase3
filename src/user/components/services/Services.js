@@ -262,7 +262,6 @@ const Services = () => {
     const filteredData = copyService.filter((item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    console.log(filteredData)
     setService(filteredData);
   }, [searchQuery]);
 

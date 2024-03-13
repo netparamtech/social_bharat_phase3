@@ -89,12 +89,13 @@ const BharatMandirDrawer = () => {
     return (
         <div id='bharatmatamandir'>
 
-            <li className='nav-link nav-item'>
+            <li className='nav-item'>
                 <i className="fa fa-history m-2" fill="currentColor" aria-hidden="true"></i>
                 <a className='nav-link hover-pointer d-inline' onClick={showDrawer}>
                     BHARAT MANDIR
                 </a>
             </li>
+
             <Drawer title="भारत माता मंदिर" placement="right" onClose={onClose} open={open} width={300} className='bg-success'>
 
                 <div className="container-input mb-3 d-flex">
@@ -113,7 +114,7 @@ const BharatMandirDrawer = () => {
                     casts.map(
                         (community, index) =>
                             community.thumbnail_image && (
-                                <div className={`mt-2 card ${index % 2 === 0 ? 'bg-secondary bg-gradient' : 'bg-light bg-gradient'} shadow d-flex`} style={cardStyles} key={community.id}>
+                                <div className={`mt-2 card ${index % 2 === 0 ? 'bg-secondary bg-gradient' : 'bg-light bg-gradient'} shadow d-flex`} style={cardStyles} key={index}>
                                     <a className="hover-pointer">
                                         <img
                                             src={community.thumbnail_image}

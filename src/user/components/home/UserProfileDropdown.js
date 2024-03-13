@@ -66,7 +66,7 @@ const UserProfileDropdown = () => {
   };
 
   const handleChangePasswordClick = async () => {
-    navigate(isPasswordSet ? '/change-password' : '/set-password');
+    navigate(isPasswordSet ? '/change/password' : '/set-password');
   };
 
   const handleSettingClick = (e) => {
@@ -76,28 +76,24 @@ const UserProfileDropdown = () => {
 
   const fetchLoggedUserCommunity = async () => {
     dispatch(setLoader(true));
-    if (communityId) {
-      console.log(typeof communityId)
-      try {
-        const response = await fetchOneCommunity(communityId);
-        if (response && response.status === 200) {
-          console.log(response.data.data)
-          setCommunity(response.data.data);
-        }
-      } catch (error) {
-        //handleFetchError(error);
-        if (error.response && error.response.status === 401) {
-          dispatch(logout());
-          navigate("/login");
-        } else if (error.response && error.response.status === 500) {
-          setServerError("Oops! Something went wrong on our server.");
-        } else if (error.response && error.response.status === 404) {
-          dispatch(logout());
-          navigate('/');
-        }
-      } finally {
-        dispatch(setLoader(false));
+    try {
+      const response = await fetchOneCommunity();
+      if (response && response.status === 200) {
+        setCommunity(response.data.data);
       }
+    } catch (error) {
+      //handleFetchError(error);
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      } else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+        navigate('/');
+      }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -204,7 +200,7 @@ const UserProfileDropdown = () => {
       {
         key: '4',
         label: (
-          <span onClick={handleChangePasswordClick} className={`menu-font ${window.location.pathname === "/change-password" ? "custom-active-user" : "inactive"
+          <span onClick={handleChangePasswordClick} className={`menu-font ${window.location.pathname === "/change/password" ? "custom-active-user" : "inactive"
             }`}>
             <i className="fas fa-key m-2"></i> CHANGE PASSWORD
           </span>

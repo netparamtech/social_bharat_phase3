@@ -253,9 +253,7 @@ const SearchPartner = () => {
     try {
       const response = await fetchAllSubcasts(community_id);
       if (response && response.status === 200) {
-        console.log(response.data.data)
         const requestedCasts = response.data.data.filter((item) => item.status === 'true');
-        console.log(requestedCasts, "subcasts")
         setCommunities(requestedCasts);
       }
     } catch (error) {
@@ -380,12 +378,7 @@ const SearchPartner = () => {
     }
   }, [community_id]);
 
-  useEffect(() => {
-    if (communities) {
-      console.log(communities)
-    }
-  }, [communities]);
-
+ 
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
     const pair = items.slice(i, i + 2); // Change 3 to 2 here

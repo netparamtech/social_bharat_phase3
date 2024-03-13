@@ -18,25 +18,24 @@ const UserProtectedRoute = ({ element: Component, path }) => {
       // User is not authenticated, redirect to the login page.
       return <Navigate to="/login" />;
     }
-  }
-
-  // For all other routes, including the dashboard, check password status.
-
-  if (isAuthenticated) {
-    if (isPasswordSet || path === "/dashboard") {
-      if(path==='/login'){
-        return <HomePage />
-      }
-      // User is authenticated, and either the password is set or the route is "/dashboard".
-      return <Component />;
-    } else {
-      // User is authenticated, but password is not set, redirect to the set password route.
-      return <Navigate to="/set-password" />;
-    }
   } else {
-    // User is not authenticated, redirect to the login page.
-    return <Navigate to="/login" />;
+    if (isAuthenticated) {
+      if (isPasswordSet || path === "/dashboard") {
+        if (path === '/login') {
+          return <HomePage />
+        }
+        // User is authenticated, and either the password is set or the route is "/dashboard".
+        return <Component />;
+      } else {
+        // User is authenticated, but password is not set, redirect to the set password route.
+        return <Navigate to="/set-password" />;
+      }
+    } else {
+      // User is not authenticated, redirect to the login page.
+      return <Navigate to="/login" />;
+    }
   }
+
 };
 
 export default UserProtectedRoute;

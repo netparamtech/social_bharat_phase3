@@ -37,7 +37,6 @@ const AllAppliedJobs = () => {
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        console.log(e.target.value)
     };
 
     const fetchMyJobs = async () => {
@@ -89,17 +88,6 @@ const AllAppliedJobs = () => {
             {/* Add more color options as needed */}
         </Select>
     );
-
-    const handleColorChange = (rowId, color) => {
-        // Handle color change logic here
-        // You may want to store the color in the state or perform any other actions
-        // For now, let's just log the selected color
-        console.log(`Row ID ${rowId} color changed to ${color}`);
-    };
-
-   
-
-
 
     const columns = [
         {

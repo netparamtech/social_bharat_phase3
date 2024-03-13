@@ -10,7 +10,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user)
     if (user) {
       if (user.user.count % 5 === 0 && user.user.count !== 0) {
         setIsShow(true);

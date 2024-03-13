@@ -116,7 +116,6 @@ const UpdateJobPosted = (props) => {
 
     const handleLogoChange = async (e) => {
         const file = e.target.files[0];
-        console.log(file)
         const formData = new FormData();
         formData.append("image", file);
 
@@ -169,7 +168,6 @@ const UpdateJobPosted = (props) => {
     //state and city change operations
     const handleStateChange = (selectedOption) => {
         setSelectedState(selectedOption);
-        console.log(selectedOption.value);
 
         if (selectedOption) {
             const selectedStateObject = states.find(
@@ -252,7 +250,6 @@ const UpdateJobPosted = (props) => {
             state: selectedState && selectedState.label,
             city: selectedCity && selectedCity.label,
         }
-        console.log(jobId, "user id")
         try {
             const response = await updateUserJobPosted(data, jobId);
             if (response && response.status === 201) {
@@ -303,9 +300,7 @@ const UpdateJobPosted = (props) => {
             setIsActive(jobDetails.job_request_status);
             if (jobDetails.state) {
                 setSelectedState({ value: jobDetails.state, label: jobDetails.state });
-                console.log(states)
             }
-            console.log(jobDetails.city)
             if (jobDetails.city) {
                 setSelectedCity({ value: jobDetails.city, label: jobDetails.city });
             }

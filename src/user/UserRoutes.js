@@ -71,7 +71,7 @@ const UserRoutes = () => {
         },
 
         {
-            path: '/change-password',
+            path: '/change/password',
             component: ChangePasswordPage,
             exact: true
         },

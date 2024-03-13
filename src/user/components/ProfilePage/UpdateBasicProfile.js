@@ -252,9 +252,7 @@ const UpdateBasicProfile = () => {
     if (jobType !== null) {
       if (modifiedOccupation.includes('/')) {
         const itemsArray = modifiedOccupation.split('/');
-        console.log(itemsArray)
         modifiedOccupation = itemsArray[1];
-        console.log(modifiedOccupation)
       }
       modifiedOccupation = `${jobType.label}/${modifiedOccupation}`;
     }
@@ -278,7 +276,6 @@ const UpdateBasicProfile = () => {
       if (response && response.status === 200) {
         setErrors("");
         setServerError('');
-        console.log(response.data.data,token)
         dispatch(login(response.data.data, token));
         if (isAvailableForMarriage) {
           openNotification('topLeft')

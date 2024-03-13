@@ -182,7 +182,6 @@ const UpdateRegisteredService = () => {
             setExperience(data && data[0].experience);
             if (data && data[0].state) {
                 setSelectedState({ value: data && data[0].state, label: data && data[0].state });
-                console.log(states)
             }
             if (data && data[0].city) {
                 setSelectedCity({ value: data && data[0].city, label: data && data[0].city });

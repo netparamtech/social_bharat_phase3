@@ -61,9 +61,7 @@ const DropdownOnServices = ({path}) => {
           window.removeEventListener("resize", handleResize);
         };
       }, []);
-    useEffect(()=>{
-        console.log(path);
-    },[]);
+  
     return (
         <Dropdown
             menu={{

@@ -139,7 +139,6 @@ const UpdateMatrimonial = (props) => {
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
     setProposalPhoto(selectedFiles); // Set the selected files
-    console.log(tempProposalPhotoUrl.length,selectedFiles.length)
 
     const totalFiles = tempProposalPhotoUrl.length + selectedFiles.length;
     if (totalFiles > 5) {
@@ -342,7 +341,6 @@ const UpdateMatrimonial = (props) => {
       setSisterCount(userMatrimonial.sister_count);
       setPackageValue(userMatrimonial.salary_package);
       setDescription(userMatrimonial.description || "");
-      console.log(userMatrimonial.proposal_photos,"photos")
       {
         userMatrimonial && userMatrimonial.proposal_photos && (
           setTempProposalPhotoUrl(
@@ -365,7 +363,6 @@ const UpdateMatrimonial = (props) => {
       setBiodataFile(userMatrimonial.biodata || "");
       setBiodataPreview(userMatrimonial.biodata || "");
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
-      console.log(userMatrimonial, "usermatro")
       setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
       setSubcastId(userMatrimonial.subcast_id);
 
@@ -426,9 +423,7 @@ const UpdateMatrimonial = (props) => {
     try {
       const response = await fetchAllSubcasts(communityId);
       if (response && response.status === 200) {
-        console.log(response.data.data)
         const requestedCasts = response.data.data.filter((item) => item.status === 'true');
-        console.log(requestedCasts, "subcasts")
         setSubcastArray(requestedCasts);
       }
     } catch (error) {

@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import UserProfileDropdown from "./UserProfileDropdown";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
+import { getToken } from "../../services/userService";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
@@ -16,12 +17,39 @@ const NavbarTransparent = (props) => {
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isValidUser, setIsValidUser] = useState(false);
   const location = useLocation();
 
   const defaultLogo = '/user/images/sb-logo.png';
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const checkTokenValid = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await getToken();
+      if (response && response.status === 200) {
+        setIsValidUser(true);
+      }
+    } catch (error) {
+      //handleFetchError(error);
+      if (error.response && error.response.status === 401) {
+        setIsAuthenticatedUser(false)
+        setIsValidUser(false);
+        dispatch(logout());
+        navigate('/login');
+      } else if (error.response && error.response.status === 500) {
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
+  useEffect(() => {
+    if (user && isAuthenticUser) {
+      checkTokenValid();
+    }
+  }, [user, isAuthenticUser]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,21 +85,33 @@ const NavbarTransparent = (props) => {
     navigate("/");
   };
 
-  const handleDashboardClicked = (e) => {
-    e.preventDefault();
+  const handleDashboardClicked = () => {
     if (isAndroidUsed) {
       showDrawer();
     }
-    window.scrollTo(0, 0);
+
     if (isAuthenticUser) {
-      navigate("/dashboard");
-    } else {
-      const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
-      if (userConfirmed) {
-        navigate('/login');
+      if (isPasswordSet) {
+        navigate("/dashboard");
+      } else {
+        navigate("/set-password");
       }
+    } else {
+      if (isAndroidUsed) {
+        showDrawer();
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
+      } else {
+        const userConfirmed = window.confirm("Access unauthorized. To access this service, please log in.");
+        if (userConfirmed) {
+          navigate('/login');
+        }
+      }
+
     }
-  };
+  }
 
   const handleContactClicked = (e) => {
     e.preventDefault();
@@ -440,37 +480,37 @@ const NavbarTransparent = (props) => {
 
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleHomeClicked}>
-                      <i class="fa fa-home me-2" aria-hidden="true"></i>
+                      <i className="fa fa-home me-2" aria-hidden="true"></i>
                       HOME
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleDashboardClicked}>
-                      <i class="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
+                      <i className="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
                       DASHBOARD
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMembersClicked}>
-                      <i class="fa-solid fa-user me-2"></i>
+                      <i className="fa-solid fa-user me-2"></i>
                       MEMBERS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleJobsClicked}>
-                      <i class="fa-solid fa-business-time me-2"></i>
+                      <i className="fa-solid fa-business-time me-2"></i>
                       JOBS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleBusinessClicked}>
-                      <i class="fa-solid fa-business-time me-2"></i>
+                      <i className="fa-solid fa-business-time me-2"></i>
                       BUSINESS
                     </a>
                   </li>
                   <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
-                      <i class="fa fa-ring me-2"></i>
+                      <i className="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>

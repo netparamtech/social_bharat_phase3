@@ -343,6 +343,17 @@ const SearchBusiness = () => {
                                   Posted By : <b>{item.name}</b>
                                 </p>
                               </div>
+                              {/* <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.564711619239!2d75.73843147233465!3d26.885567509702245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dc9787b6e8159%3A0x7162ee3f35dc8f5a!2sNetparam%20Technologies%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin "
+                                width="100%"
+                                height="300"
+                                className="mt-2"
+                                style={{ border: 0 }}
+                                allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                              ></iframe> */}
+
                               {
                                 item.google_map_link ? (
                                   <div className="col-6">
@@ -424,7 +435,7 @@ const SearchBusiness = () => {
           onClick={handleScrollToUp}
           title="Refresh"
         >
-          <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          <i className="fa fa-arrow-up" aria-hidden="true"></i>
         </a>
       </div>
     </div>

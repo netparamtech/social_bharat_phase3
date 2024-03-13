@@ -244,7 +244,6 @@ const UpdateBusinessProfile = (props) => {
   useEffect(() => {
     // Set default values from businessDetails prop when it changes
     if (businessDetails) {
-      console.log(businessDetails)
       setBusinessName(businessDetails.business_name || '');
       SetBusinessType({ value: businessDetails.business_category, label: businessDetails.business_category })
       setStreetAddress(businessDetails.street_address || '');

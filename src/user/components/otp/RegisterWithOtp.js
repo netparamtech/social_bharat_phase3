@@ -36,14 +36,12 @@ const RegisterWithOtp = (props) => {
 
     // Move the focus to the next OTP box if the current box is filled
     if (value !== "" && index < 5) {
-      console.log("inkey")
       const nextInput = document.getElementById(`otp-${index + 1}`);
       nextInput && nextInput.focus();
     }
 
     if (e.key === "Backspace" && index > 0) {
       if (value === "") {
-        console.log("onKey")
         const nextInput = document.getElementById(`otp-${index - 1}`);
         nextInput && nextInput.focus();
       }

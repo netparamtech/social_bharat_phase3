@@ -73,6 +73,16 @@ export const loginWithPassword = async (mobile, password) => {
   }
 };
 
+//getToken
+export const getToken = async () => {
+  try {
+    const response = await apiWithHeaders.get("/get-token");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //user logout
 
 export const userLogout = async (id) => {
@@ -379,10 +389,9 @@ export const fetchAllActiveCommunities = async () => {
 };
 
 //find one community
-export const fetchOneCommunity = async (id) => {
-  console.log(id,"idddd")
+export const fetchOneCommunity = async () => {
   try {
-    const response = await apiConfig.get(`/communityBYId/${id}`);
+    const response = await apiWithHeaders.get("/communityBYId");
     return response;
   } catch (error) {
     throw error;

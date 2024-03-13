@@ -89,7 +89,6 @@ const FeaturedJobs = () => {
       const response = await fetchFeaturedJobs();
       if (response && response.status === 200) {
         setDataSource(response.data.data);
-        console.log(response.data.data);
         setTotalRows(response.data.data.length);
         setServerError("");
       }

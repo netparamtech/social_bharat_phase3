@@ -139,7 +139,7 @@ const SearchPartner = () => {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
-      }else if (error.response && error.response.status === 404) {
+      } else if (error.response && error.response.status === 404) {
         dispatch(logout());
         navigate('/');
       }
@@ -159,7 +159,7 @@ const SearchPartner = () => {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
-      }else if (error.response && error.response.status === 404) {
+      } else if (error.response && error.response.status === 404) {
         dispatch(logout());
         navigate('/');
       }
@@ -238,7 +238,7 @@ const SearchPartner = () => {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
-      }else if (error.response && error.response.status === 404) {
+      } else if (error.response && error.response.status === 404) {
         dispatch(logout());
         navigate('/');
       }
@@ -262,7 +262,7 @@ const SearchPartner = () => {
         navigate("/login");
       } else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
-      }else if (error.response && error.response.status === 404) {
+      } else if (error.response && error.response.status === 404) {
         dispatch(logout());
         navigate('/');
       }
@@ -290,17 +290,17 @@ const SearchPartner = () => {
   };
 
   const age = (dob) => {
-    if(dob!==null){
+    if (dob !== null) {
       const dobDate = new Date(dob);
-    const currentDate = new Date();
+      const currentDate = new Date();
 
-    // Calculate the age in years
-    const ageInMilliseconds = currentDate - dobDate;
-    const ageInYears = Math.floor(
-      ageInMilliseconds / (1000 * 60 * 60 * 24 * 365)
-    );
+      // Calculate the age in years
+      const ageInMilliseconds = currentDate - dobDate;
+      const ageInYears = Math.floor(
+        ageInMilliseconds / (1000 * 60 * 60 * 24 * 365)
+      );
 
-    return ageInYears;
+      return ageInYears;
     }
     return "N/A";
   };
@@ -378,7 +378,7 @@ const SearchPartner = () => {
     }
   }, [community_id]);
 
- 
+
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
     const pair = items.slice(i, i + 2); // Change 3 to 2 here
@@ -457,7 +457,7 @@ const SearchPartner = () => {
                         </select>
                         <p className="text-light fw-bold btn" onClick={() => handleClear("gender")}>Clear</p>
                       </div>
-                    
+
 
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label">State</label>
@@ -576,7 +576,7 @@ const SearchPartner = () => {
                     {groupedItems.map((pair, index) => (
                       <div className="row" key={index}>
                         {pair.map((item, innerIndex) => (
-                         
+
                           <div className="col-md-6 mt-2" key={innerIndex}>
                             <div className="card" style={{ borderRadius: '15px' }}>
                               <div className="card-body p-4">
@@ -586,7 +586,7 @@ const SearchPartner = () => {
                                       src={item.photo ? item.photo : defaultImage}
                                       alt={item.name}
                                       className="img-fluid"
-                                      style={{ width: '180px', borderRadius: '10px' }}
+                                      style={{ width: '180px', height: '150px', borderRadius: '10px' }}
                                     />
                                   </div>
                                   <div className="flex-grow-1 ms-3">

@@ -178,7 +178,7 @@ const AllAppliedJobs = () => {
                         <div> Applied Jobs</div>
                         <div><button type="button" className="rounded border-0" disabled={!isChecked} onClick={handleClearClicked}>Clear</button>
                         </div>
-                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}><i class="fa-solid fa-angles-left"></i> Go Back</div>
+                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate(-1)}><i class="fa-solid fa-angles-left"></i> Go Back</div>
                     </div>
                     <div className="card-body">
                         <div>

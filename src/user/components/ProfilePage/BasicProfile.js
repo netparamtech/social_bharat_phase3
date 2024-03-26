@@ -97,6 +97,7 @@ const BasicProfile = (props) => {
   };
 
   useEffect(() => {
+    console.log(loggedUser)
     setProfileImage(
       (user && user.data && user.data.photo) || "/user/images/OIP.jpg"
     );

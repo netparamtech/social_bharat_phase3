@@ -89,11 +89,9 @@ const BharatMandirDrawer = () => {
     return (
         <div id='bharatmatamandir'>
 
-            <li className='nav-item'>
+            <li className='' onClick={showDrawer}>
                 <i className="fa fa-history m-2" fill="currentColor" aria-hidden="true"></i>
-                <a className='nav-link hover-pointer d-inline' onClick={showDrawer}>
-                    BHARAT MANDIR
-                </a>
+                BHARAT MANDIR
             </li>
 
             <Drawer title="भारत माता मंदिर" placement="right" onClose={onClose} open={open} width={300} className='bg-success'>

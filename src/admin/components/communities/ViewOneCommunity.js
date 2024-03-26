@@ -74,7 +74,7 @@ const ViewOneCommunity = () => {
             <div className="card">
               <div className="card-header text-light bg-success fs-5 fw-bold">Registered Subcasts</div>
               <div className="card-body">
-                <div>
+                <div className="" style={{height:'500px',overflow:"scroll"}}>
                   {
                     data.map((item, index) => (
                       <>

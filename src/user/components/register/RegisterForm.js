@@ -9,6 +9,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import EnquiryModel from "./EnquiryModel";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -23,7 +24,8 @@ const RegisterForm = () => {
   const [serverError, setServerError] = useState("");
 
   const [imageUrls, setImageUrls] = useState([]);
-  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
+  const [defaultImage, setDefaultImage] = useState("/user/images/signup.png");
+  const [isEnquiry, setIsEnquiry] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,6 +45,9 @@ const RegisterForm = () => {
   const tempUserCreated = () => {
     setIsTempUserCreated(true);
   };
+  const toggleEnquiry = () => {
+    setIsEnquiry(!isEnquiry);
+  }
 
   //fetch all active communities
 
@@ -51,7 +56,7 @@ const RegisterForm = () => {
     try {
       const response = await fetchAllCommunities();
       if (response && response.status === 200) {
-        const requestedCasts = response.data.data.filter((item)=>item && item.community_archive==='');
+        const requestedCasts = response.data.data.filter((item) => item && item.community_archive === '');
         setCasts(requestedCasts);
         setServerError('');
         dispatch(setLoader(false));
@@ -149,7 +154,7 @@ const RegisterForm = () => {
             <div className="row">
               <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
                 <img
-                  src={imageUrls&&imageUrls[0]?imageUrls[0]:defaultImage}
+                  src={imageUrls && imageUrls[0] ? imageUrls[0] : defaultImage}
                   className="img-fluid"
                   alt="Sign Up"
                 />
@@ -235,6 +240,31 @@ const RegisterForm = () => {
                         .
                       </p>
                     </div>
+                    <p className="fw-lighter fs-6">
+                      If you encounter any issues during the registration process, please{" "}
+                      <a
+                        className="text-primary text-decoration-none hover-pointer"
+                        onClick={() => toggleEnquiry()} // Add onClick event handler
+                      >
+                        click here
+                      </a>{" "}
+                      for assistance with your queries.
+                    </p>
+                    {
+                      isEnquiry && <div className="row mx-auto">
+                        <div className="col-12 col-md-5 card bg-info scale-on-hover m-2 hover-pointer" onClick={()=>navigate('/contact')}>
+                          <div className="card-body text-light">
+                            General Enquiry
+                          </div>
+                        </div>
+                        <div className="col-12 col-md-5 card bg-lightorange scale-on-hover m-2 hover-pointer">
+                          <div className="card-body ">
+                            <EnquiryModel />
+                          </div>
+                        </div>
+
+                      </div>
+                    }
                   </form>
                 ) : (
                   <RegisterWithOtp

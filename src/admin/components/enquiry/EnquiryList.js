@@ -60,7 +60,7 @@ const EnquiryList = () => {
         navigate('/admin');
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -76,7 +76,7 @@ const EnquiryList = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -92,7 +92,7 @@ const EnquiryList = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -157,26 +157,36 @@ const EnquiryList = () => {
     {
       title: 'Name', dataIndex: 'name', sorter: true,
       sortDirections: ['asc', 'desc'],
-      with:150,
+      with: 150,
     },
-    { title: 'Email', dataIndex: 'email',sorter: true,
-    sortDirections: ['asc', 'desc'], },
-    { title: 'Mobile', dataIndex: 'mobile', sorter: true,
-    sortDirections: ['asc', 'desc'], },
-    { title: 'Message', dataIndex: 'message',sorter: true,
-    sortDirections: ['asc', 'desc'], },
-   
+    {
+      title: 'Email', dataIndex: 'email',
+      render: (text, record) => (
+        !record.email ? "Not Available" : record.email
+      ),
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+    {
+      title: 'Mobile', dataIndex: 'mobile', sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+    {
+      title: 'Message', dataIndex: 'message', sorter: true,
+      sortDirections: ['asc', 'desc'],
+    },
+
     {
       title: "Last Modified At",
       dataIndex: "updated_at",
       render: (text, record) => calculateTimeDifference(record.updated_at),
     },
-  {
-    title:"Status",
-    dataIndex:'status',
-    render: (text, record) => (
-      <div>
-         {record.status === 'Active' ? (
+    {
+      title: "Status",
+      dataIndex: 'status',
+      render: (text, record) => (
+        <div>
+          {record.status === 'Active' ? (
             <a
               className="collapse-item m-2"
               href="#"
@@ -199,18 +209,18 @@ const EnquiryList = () => {
               <i className="fa fa-thumbs-down" title="Inactive" />
             </a>
           )}
-      </div>
-    ),
-    sorter: true,
-    sortDirections: ['asc', 'desc'],
-    width:100,
-  },
+        </div>
+      ),
+      sorter: true,
+      sortDirections: ['asc', 'desc'],
+      width: 100,
+    },
     {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
         <div>
-         
+
           <a
             className="collapse-item"
             href="#"
@@ -224,7 +234,7 @@ const EnquiryList = () => {
         </div>
       ),
       fixed: 'right',
-      width:100,
+      width: 100,
     },
     // Rest of the columns definition
   ];

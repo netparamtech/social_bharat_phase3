@@ -138,7 +138,7 @@ const UserAppliedJobDetails = () => {
             title: 'Resume',
             dataIndex: 'resume',
             render: (text, record, index) => (
-                record.resume ? <a href={record.resume} target='_blank'>Download</a>:<a href='#' style={{ pointerEvents: 'none', color: 'gray' }}>Unavailable</a>
+                record.resume ? <a href={record.resume} target='_blank'>Download</a> : <a href='#' style={{ pointerEvents: 'none', color: 'gray' }}>Unavailable</a>
 
             )
         },
@@ -323,7 +323,7 @@ const UserAppliedJobDetails = () => {
                                 Clear
                             </button>
                         </div>
-                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate('/user/search/jobs')}>
+                        <div className="hover-pointer-green hover-pointer" onClick={() => navigate(-1)}>
                             <i className="fa-solid fa-angles-left"></i> Go Back
                         </div>
                     </div>

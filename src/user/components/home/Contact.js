@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
+import { toast } from "react-toastify";
+import { errorOptions, successOptions } from "../../../toastOption";
 
 function Contact() {
   // State variables to store form input values
@@ -57,6 +59,7 @@ function Contact() {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
+        toast.success("Enquiry successfully sent.",successOptions);
         setName('');
         setEmail('');
         setMobile('');
@@ -67,6 +70,7 @@ function Contact() {
         setMessage("");
         setErrors(error.response.data.errors);
         setAlertClass("alert-danger");
+        toast.error("Failed to send enquiry. Please try again later.",errorOptions);
       } else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setAlertClass("alert-danger");
@@ -156,9 +160,16 @@ function Contact() {
                                       +91-{settings && settings.phone1}
                                     </a>
                                     <br />
-                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone2}`}>
-                                      +91-{settings && settings.phone2}
-                                    </a>
+                                    {settings && settings.phone2 &&
+
+                                      (
+                                        <a className="text-dark text-line-none" href={`tel:${settings && settings.phone2}`}>
+                                          +91-{settings && settings.phone2}
+                                        </a>
+                                      )
+
+                                    }
+
                                   </span>
                                 </div>
                               </Modal>
@@ -167,7 +178,11 @@ function Contact() {
                               <span className="text-muted hover-pointer" onClick={showModal}>
                                 +91-{settings && settings.phone1}
                                 <br />
-                                +91-{settings && settings.phone2}
+                                {
+                                  settings && settings.phone2 && (
+                                    <p> +91-{settings && settings.phone2}</p>
+                                  )
+                                }
                               </span>
                             </div>
                           </div>
@@ -219,7 +234,7 @@ function Contact() {
 
               {/* Contact form */}
               <div className="col-md-6 user-auth-form-container">
-                <div className={`card shadow ${errors ? 'border-danger':''}`}>
+                <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
                   <div className="card-body p-4">
                     <form
                       className="user-auth-form-contact"

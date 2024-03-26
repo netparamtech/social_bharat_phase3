@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import UserProfileDropdown from "./UserProfileDropdown";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
-import { getToken } from "../../services/userService";
+import UserNavDropdown from "./UserNavDropdown";
 
 const NavbarTransparent = (props) => {
   const { data, community } = props;
@@ -16,40 +15,12 @@ const NavbarTransparent = (props) => {
 
   const [visible, setVisible] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [isValidUser, setIsValidUser] = useState(false);
   const location = useLocation();
 
   const defaultLogo = '/user/images/sb-logo.png';
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const checkTokenValid = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await getToken();
-      if (response && response.status === 200) {
-        setIsValidUser(true);
-      }
-    } catch (error) {
-      //handleFetchError(error);
-      if (error.response && error.response.status === 401) {
-        setIsAuthenticatedUser(false)
-        setIsValidUser(false);
-        dispatch(logout());
-        navigate('/login');
-      } else if (error.response && error.response.status === 500) {
-      }
-    } finally {
-      dispatch(setLoader(false));
-    }
-  }
-  useEffect(() => {
-    if (user && isAuthenticUser) {
-      checkTokenValid();
-    }
-  }, [user, isAuthenticUser]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -324,7 +295,7 @@ const NavbarTransparent = (props) => {
 
           <a>
             {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-              <UserProfileDropdown community={community} />
+              <UserNavDropdown />
             ) : (
               ""
             )}
@@ -427,15 +398,7 @@ const NavbarTransparent = (props) => {
               {isAuthenticUser && isAuthenticUser ? (
                 ""
               ) : (
-                // <li className="nav-item">
-                //   <a
-                //     className="text-decoration-none btn-primary login-btn rounded"
-                //     href=""
-                //     onClick={handleLoginClicked}
-                //   >
-                //     LOGIN
-                //   </a>
-                // </li>
+               
                 <div className="button-container">
                   <button className={`default-button fw-bold ${window.location.pathname === "/login"
                     ? "custom-login-clicked"
@@ -452,7 +415,7 @@ const NavbarTransparent = (props) => {
             <ul className="navbar-nav ml-auto  mb-2 mb-lg-0">
               <li className="">
                 {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
-                  <UserProfileDropdown />
+                  <UserNavDropdown />
                 ) : (
                   ""
                 )}
@@ -528,7 +491,7 @@ const NavbarTransparent = (props) => {
                   </li>
 
                   {isAuthenticUser && isAuthenticUser ? (
-                   ""
+                    ""
                   ) : (
                     <li className="nav-item mt-2">
                       <a onClick={handleLoginClicked}>

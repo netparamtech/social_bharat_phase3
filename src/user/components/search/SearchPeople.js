@@ -383,12 +383,12 @@ const SearchPeople = () => {
                               <div className="card" style={{ borderRadius: '15px' }}>
                                 <div className="card-body p-4">
                                   <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
-                                    <div className="flex-shrink-0">
+                                    <div className="flex-shrink-0 m-3">
                                       <img
                                         src={item.photo ? item.photo : defaultImage}
                                         alt={item.name}
                                         className="img-fluid"
-                                        style={{ width: '180px', borderRadius: '10px' }}
+                                        style={{ width: '180px',height:'150px', borderRadius: '10px' }}
                                       />
                                     </div>
                                     <div className="flex-grow-1 ms-3">

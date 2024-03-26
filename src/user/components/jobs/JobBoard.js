@@ -379,7 +379,7 @@ const JobBoard = () => {
                 dispatch(setLoader(true));
                 const response = await updateResume(data);
                 if (response && response.status === 201) {
-                    toast.success("Resume Uploaded Successfully",successOptions);
+                    toast.success("Resume Uploaded Successfully", successOptions);
                     setMessageAttachment('');
                     setServerErrorPdf('');
                     setIsResume(true);
@@ -422,12 +422,12 @@ const JobBoard = () => {
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
                 navigate("/login");
-              } else if (error.response && error.response.status === 500) {
+            } else if (error.response && error.response.status === 500) {
                 setServerError("Oops! Something went wrong on our server.");
-              }else if (error.response && error.response.status === 404) {
+            } else if (error.response && error.response.status === 404) {
                 dispatch(logout());
                 navigate('/');
-              }
+            }
         } finally {
             dispatch(setLoader(false));
         }
@@ -534,7 +534,7 @@ const JobBoard = () => {
                 setErrors("");
                 getJobApplicantStatistics();
                 fetchJobs(page, 20, state, city, activeNavItem);
-                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [support@socialbharat.org].`,infoOptions)
+                toast.info(`Success! Your application for this job ${appliedJob.job_title} has been submitted successfully. Thank you for your interest. You will be notified of the status of your application once it has been reviewed. If you have any questions or concerns, please contact our support team at [support@socialbharat.org].`, infoOptions)
             }
         } catch (error) {
             //Unauthorized
@@ -867,7 +867,7 @@ const JobBoard = () => {
                                                     <div className={`${isUploadResumeClicked ? 'col-md-6' : 'col-md-4'}`} key={index}>
                                                         {pair.map((item, innerIndex) => (
                                                             <div className="" key={innerIndex}>
-                                                                <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '550px' }}>
+                                                                <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '700px' }}>
                                                                     <div className="card-body" style={{ backgroundImage: whiteBackgroundImageUrl }}>
                                                                         <div className="top-0 job-time-zone text-muted end-0 position-absolute">
                                                                             {formatDate(item.updated_at)}
@@ -890,7 +890,7 @@ const JobBoard = () => {
                                                                             </div>
 
                                                                             <div className="col-md-7 col-sm-8">
-                                                                                <div className="row">
+                                                                                <div className="row mt-2">
                                                                                     <div className="col-md-12">
                                                                                         <p className="m-0 ">
                                                                                             <b>Job Title : </b>
@@ -970,34 +970,42 @@ const JobBoard = () => {
 
                                                                             {
                                                                                 checkPdf(item.attachment) ? (
-                                                                                    <p>Attachment-{
-                                                                                        item.attachment &&
-                                                                                        <span>
-                                                                                            <a
-                                                                                                href={item.attachment}
-                                                                                                download={`${item.job_title}.pdf`}
-                                                                                                target="_blank"
-                                                                                            >
-                                                                                                <i className="fa-regular fa-file-lines"></i>{" "}
-                                                                                                Download Attachment
-                                                                                            </a>
-                                                                                            &nbsp;(
-                                                                                            {getFileType(
-                                                                                                item.attachment
-                                                                                            )}
-                                                                                            )
+                                                                                    <p className="row col-12">
+                                                                                        <span className="col-5">
+                                                                                            Attachment-
                                                                                         </span>
-                                                                                    }
+                                                                                        {item.attachment && (
+                                                                                            <span className="col-7">
+                                                                                                <a
+                                                                                                    href={item.attachment}
+                                                                                                    download={`${item.job_title}.pdf`}
+                                                                                                    target="_blank"
+                                                                                                >
+                                                                                                    <i className="fa-regular fa-file-lines"></i> Download Attachment
+                                                                                                </a>
+                                                                                                &nbsp;(
+                                                                                                {getFileType(item.attachment)}
+                                                                                                )
+                                                                                            </span>
+                                                                                        )}
                                                                                     </p>
+
 
                                                                                 ) : ''
                                                                             }
                                                                             {
                                                                                 item.apply_link ? (
-                                                                                    <div className="">
-                                                                                        <b>Apply Link : </b>
-                                                                                        <a className="" href={item.apply_link}>{item.apply_link}</a>
+                                                                                    <div className="row col-12">
+                                                                                        <div className="col-3">
+                                                                                            <b>Apply Link:</b>
+                                                                                        </div>
+                                                                                        <div className="col-9">
+                                                                                            <a className="d-block" href={item.apply_link} target="_blank" rel="noopener noreferrer">
+                                                                                                {item.apply_link}
+                                                                                            </a>
+                                                                                        </div>
                                                                                     </div>
+
                                                                                 ) : ""
                                                                             }
 
@@ -1052,9 +1060,9 @@ const JobBoard = () => {
                                                                                         </a>
                                                                                     ) : (
                                                                                         <a
-                                                                                            className="text-decoration-none text-secondary fw-bold "
+                                                                                            className="text-decoration-none text-info fw-bold "
                                                                                         >
-                                                                                            Apply
+                                                                                            Applied
                                                                                         </a>
                                                                                     )
                                                                                 }
@@ -1127,7 +1135,7 @@ const JobBoard = () => {
                                                                         )}
                                                                     </div>
                                                                     {item.featured === "true" ? (
-                                                                        <div className="text-danger">
+                                                                        <div className="text-danger m-2">
                                                                             Featured
                                                                         </div>
                                                                     ) : (

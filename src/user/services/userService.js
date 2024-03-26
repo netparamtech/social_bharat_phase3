@@ -316,11 +316,11 @@ export const updateMatrimonialInfo = async (data) => {
 
 //update business profile
 
-export const updateBusinessInfo = async (data,id) => {
+export const updateBusinessInfo = async (data, id) => {
   try {
     let response = null;
-    
-    if(id){
+
+    if (id) {
       response = await apiWithHeaders.put(
         `/profile/${id}/update-business-details`,
         data
@@ -331,7 +331,7 @@ export const updateBusinessInfo = async (data,id) => {
         data
       );
     }
-    
+
     return response;
   } catch (error) {
     throw error;
@@ -690,7 +690,7 @@ export const fetchAllSiteSettings = async () => {
 //fetch community with id given
 export const fetchCommunityWithNAME = async (name) => {
   try {
-    const response = await apiConfig.get(`/community/${name}`);
+    const response = await apiConfig.get(`/bharat-mandir/${name}`);
     return response;
   } catch (error) {
     throw error;

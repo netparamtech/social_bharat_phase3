@@ -2053,4 +2053,12 @@ legend {
   
 }
 
+.scale-on-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.scale-on-hover:hover {
+  transform: scale(1.1);
+}
+
 /* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

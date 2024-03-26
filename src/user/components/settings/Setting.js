@@ -44,7 +44,7 @@ const Setting = () => {
       const response = await toggleMobile();
       if (response && response.status === 200) {
         setMessage(response.data.message);
-        
+
       }
     } catch (error) {
       //Unauthorized
@@ -74,12 +74,12 @@ const Setting = () => {
     <>
       <div id="setting-page">
         <div className="container mb-5">
-          <div className="card shadow p-4 border border-info rounded">
+          <div className="card shadow p-4 border border-success rounded">
             <div className="card-body">
-              <div className="card-header bg-primary rounded">
-              <h5 className="text-light">Settings</h5>
+              <div className="card-header bg-success rounded">
+                <h5 className="text-light">Settings</h5>
               </div>
-             
+
               <ol className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">

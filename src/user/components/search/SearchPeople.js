@@ -68,6 +68,8 @@ const SearchPeople = () => {
   useEffect(() => {
     if (items.length > 0) {
       setIssearchingPerformed(true);
+    } else {
+      setIssearchingPerformed(false);
     }
   }, [items]);
 
@@ -304,11 +306,7 @@ const SearchPeople = () => {
                     <p>{state && `state - ${state}`}</p>
                   )}
                 </div>
-                {!isSearchingPerformed ? (
-                  <span className="error">No Data Available</span>
-                ) : (
-                  ""
-                )}
+
                 <div className="filter-icon">
 
                 </div>
@@ -375,6 +373,13 @@ const SearchPeople = () => {
                     loader={isLoading && <h4>Loading...</h4>}
                   >
                     <div className="container pw-20 mt-3">
+                      {!isSearchingPerformed ? (
+                       <div className="mx-auto" style={{width:'300px'}}>
+                         <span className="text-danger fs-5" >No Data Available</span>
+                       </div>
+                      ) : (
+                        ""
+                      )}
                       {groupedItems.map((pair, index) => (
                         <div className="row" key={index}>
                           {pair.map((item, innerIndex) => (
@@ -388,7 +393,7 @@ const SearchPeople = () => {
                                         src={item.photo ? item.photo : defaultImage}
                                         alt={item.name}
                                         className="img-fluid"
-                                        style={{ width: '180px',height:'150px', borderRadius: '10px' }}
+                                        style={{ width: '180px', height: '150px', borderRadius: '10px' }}
                                       />
                                     </div>
                                     <div className="flex-grow-1 ms-3">
@@ -431,8 +436,6 @@ const SearchPeople = () => {
                                         }
                                       </div>
                                       <div className="d-flex pt-1">
-
-
                                         <div
                                           className="text-start ms-3 mt-2 hover-pointer"
                                           onClick={() => handleChatclick(item)}

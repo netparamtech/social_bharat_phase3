@@ -155,6 +155,7 @@ const RegisteredService = () => {
                     <div className="card-header bg-darkskyblue">
                         <div className="d-sm-flex align-items-center justify-content-between ">
                             REGISTERED SERVICES
+                            <a className="text-decoration-none hover-pointer" onClick={()=>navigate(-1)}>GO BACK</a>
 
                             <DropdownOnServices path={window.location.pathname} />
                         </div>

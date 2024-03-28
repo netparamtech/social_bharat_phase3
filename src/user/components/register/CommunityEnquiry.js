@@ -101,89 +101,69 @@ function CommunityEnquiry(props) {
     }, []);
 
     return (
-        <div>
-            {/* Address Banner */}
+        <form
+            className="user-auth-form-contact"
+            onSubmit={handleSubmit}
+        >
 
-
-            {/* Contact */}
-            <div id="user-auth-section">
-                <div className="container">
-                    <div className="user-auth-panel">
-                        <div className="user-auth-form-container">
-                            <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
-                                <div className="card-body p-4">
-                                    <form
-                                        className="user-auth-form-contact"
-                                        onSubmit={handleSubmit}
-                                    >
-
-                                        <div className="form-group mb-4">
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Name"
-                                                className="form-control"
-                                                value={name}
-                                                onChange={(e) => setName(e.target.value)}
-                                            />
-                                            {errors.name && (
-                                                <span className="error">{errors.name}</span>
-                                            )}
-                                        </div>
-                                        <div className="form-group mb-4">
-                                            <input
-                                                type="email"
-                                                placeholder="Enter Email"
-                                                className="form-control"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            />
-                                            {errors.email && (
-                                                <span className="error">{errors.email}</span>
-                                            )}
-                                        </div>
-                                        <div className="form-group mb-4">
-                                            <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Enter Mobile"
-                                                value={mobile}
-                                                onChange={(e) => setMobile(e.target.value)}
-                                            />
-                                            {errors.mobile && (
-                                                <span className="error">{errors.mobile}</span>
-                                            )}
-                                        </div>
-                                        <div className="form-group mb-4 ">
-                                            <textarea
-                                                className="form-control"
-                                                style={{ height: '200px' }}
-                                                placeholder="Please provide a comprehensive description of the community you intend to add, including any sub-communities, if applicable"
-                                                id="floatingTextarea"
-                                                value={userQuery}
-                                                onChange={(e) => setUserQuery(e.target.value)}
-                                            ></textarea>
-                                            {errors.message && (
-                                                <span className="error">{errors.message}</span>
-                                            )}
-                                        </div>
-                                        <div className="form-group">
-                                            <button
-                                                className="form-control w-100 btn-primary"
-                                                type="submit"
-                                            >
-                                                Submit
-                                            </button>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div className="form-group mb-4">
+                <input
+                    type="text"
+                    placeholder="Enter Name"
+                    className="form-control"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                {errors.name && (
+                    <span className="error">{errors.name}</span>
+                )}
             </div>
-        </div>
+            <div className="form-group mb-4">
+                <input
+                    type="email"
+                    placeholder="Enter Email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                {errors.email && (
+                    <span className="error">{errors.email}</span>
+                )}
+            </div>
+            <div className="form-group mb-4">
+                <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Enter Mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                />
+                {errors.mobile && (
+                    <span className="error">{errors.mobile}</span>
+                )}
+            </div>
+            <div className="form-group mb-4 ">
+                <textarea
+                    className="form-control"
+                    style={{ height: '200px' }}
+                    placeholder="Please provide a comprehensive description of the community you intend to add, including any sub-communities, if applicable"
+                    id="floatingTextarea"
+                    value={userQuery}
+                    onChange={(e) => setUserQuery(e.target.value)}
+                ></textarea>
+                {errors.message && (
+                    <span className="error">{errors.message}</span>
+                )}
+            </div>
+            <div className="form-group">
+                <button
+                    className="form-control w-100 btn-primary"
+                    type="submit"
+                >
+                    Submit
+                </button>
+            </div>
+        </form>
     );
 }
 

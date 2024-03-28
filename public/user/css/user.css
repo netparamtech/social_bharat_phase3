@@ -1413,6 +1413,9 @@ input[type="number"] {
   color: white;
   background-color: red;
 }
+.hover-red:hover {
+  color: red;
+}
 
 .drawer-header {
   position: fixed;

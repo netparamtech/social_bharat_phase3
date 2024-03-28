@@ -29,6 +29,7 @@ import CreateJob from "./CreateJob";
 import Search from "antd/es/input/Search";
 import { infoOptions, successOptions } from "../../../toastOption";
 import { logout } from "../../actions/userAction";
+import ContactUsPage from "./ContactUsPage";
 
 const JobBoard = () => {
     const user = useSelector((state) => state.userAuth);
@@ -67,6 +68,7 @@ const JobBoard = () => {
     const [isAndroidUsed, setIsAndroidUsed] = useState(false);
     const [isResume, setIsResume] = useState(false);
     const [isUploadResumeClicked, setIsUploadResumeClicked] = useState(false);
+    const [isContactUsClicked, setIsContactUsClicked] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -145,7 +147,13 @@ const JobBoard = () => {
     };
 
     const handleUploadResume = (value) => {
+        handleNavItemClick("UPLOAD RESUME");
         setIsUploadResumeClicked(value);
+        window.scroll(0, 0);
+    }
+    const handleContactUs = (value) => {
+        handleNavItemClick("CONTACT US");
+        setIsContactUsClicked(value);
         window.scroll(0, 0);
     }
 
@@ -475,6 +483,10 @@ const JobBoard = () => {
             navigate("/user/job/create");
         } else if (activeNavItem === "APPLIED JOBS") {
             navigate("/user/all/applied/jobs");
+        }else if (activeNavItem === "UPLOAD RESUME") {
+            setIsContactUsClicked(false);
+        }else if (activeNavItem === "CONTACT US") {
+            setIsUploadResumeClicked(false);
         }
     }, [activeNavItem, isUpdateClicked, selectedState, selectedCity]);
 
@@ -684,8 +696,30 @@ const JobBoard = () => {
                                 </div>
                             ) : ''
                         }
+                         {
+                            isContactUsClicked ? (
+                                <div className="col-12 col-sm-4 mx-auto">
+                                    <Card className="mb-3">
+                                        <Card.Header as="h5" className="d-flex justify-content-between">
+                                            <div>
+                                                Contact Us
+                                            </div>
+                                            <span onClick={() => setIsContactUsClicked(false)} className="position-absolute top-0 end-0 me-2 mt-1">
+                                                {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                                                <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
+                                            </span>
+                                        </Card.Header>
+                                       
+                                        <Card.Body className="shadow">
+                                           <ContactUsPage />
+                                        </Card.Body>
+                                    </Card>
 
-                        <div className={`col-12 mx-auto ${isUploadResumeClicked ? 'col-sm-8' : 'col-sm-12'}`}>
+                                </div>
+                            ) : ''
+                        }
+
+                        <div className={`col-12 mx-auto ${isUploadResumeClicked||isContactUsClicked ? 'col-sm-8' : 'col-sm-12'}`}>
                             <div className="card mb-3">
 
                                 <div className="card-header">
@@ -817,15 +851,26 @@ const JobBoard = () => {
                                                 </Nav.Link>
 
                                                 <Nav.Link
-                                                    className="hover-pointer-red rounded"
+                                                    className="hover-red rounded"
                                                     //onClick={() => handleNavItemClick("UPLOAD RESUME")}
                                                     style={{
                                                         color:
-                                                            activeNavItem === "UPLOAD RESUME" ? "red" : "inherit",
+                                                            isUploadResumeClicked ? "red" : "inherit",
                                                     }}
                                                     onClick={() => handleUploadResume(true)}
                                                 >
                                                     UPLOAD RESUME
+                                                </Nav.Link>
+                                                <Nav.Link
+                                                    className="hover-red rounded"
+                                                    //onClick={() => handleNavItemClick("UPLOAD RESUME")}
+                                                    style={{
+                                                        color:
+                                                            isContactUsClicked ? "red" : "inherit",
+                                                    }}
+                                                    onClick={() => handleContactUs(true)}
+                                                >
+                                                    CONTACT US
                                                 </Nav.Link>
 
 
@@ -864,7 +909,7 @@ const JobBoard = () => {
                                         >
                                             <div className="row">
                                                 {groupedItems.map((pair, index) => (
-                                                    <div className={`${isUploadResumeClicked ? 'col-md-6' : 'col-md-4'}`} key={index}>
+                                                    <div className={`${isUploadResumeClicked||isContactUsClicked ? 'col-md-6' : 'col-md-4'}`} key={index}>
                                                         {pair.map((item, innerIndex) => (
                                                             <div className="" key={innerIndex}>
                                                                 <div className="card shadow  mb-3" style={{ height: isAndroidUsed ? '' : '700px' }}>

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchSinglePageCMS } from "../services/userService";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../actions/loaderAction";
+import CarousalBanner from '../components/home/CarousalBanner';
 
 const HomePage = () => {
 
@@ -45,7 +46,8 @@ const HomePage = () => {
         <>
             <div id="home">
                 <UserLayout>
-                    <Banner />
+                    {/* <Banner /> */}
+                    <CarousalBanner />
                     <OurPartner />
                     <WhySocial aboutCMS = {homeCms&&homeCms.about} />
                     <section id="services">

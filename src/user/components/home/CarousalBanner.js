@@ -18,6 +18,7 @@ function CarousalBanner() {
     const [imageUrls, setImageUrls] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isMultiBanner, setIsMultiBanner] = useState(false);
+    const [buttonText, setButtonText] = useState("Become a member");
     const typedRef = useRef(null); // Use a single ref for Typed instance
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -100,12 +101,23 @@ function CarousalBanner() {
         setIndex(selectedIndex);
     };
 
+    const options = {
+        strings: ["Become a member"],
+        typeSpeed: 80,
+        backSpeed: 80,
+        loop: false,
+        onTypingPaused: (arrayPos, self) => {
+            const text = self.strings[arrayPos];
+            setButtonText(text);
+        }
+    };
+
     return (
         <>
             {
                 isMultiBanner ? (
 
-                    <div id="banners-section" className="">
+                    <div id="banners-section" className="" >
                         <div className="container">
                             <div className="text-success fw-bold fs-6">
                                 <marquee className="">"Building Bridges, Creating Bonds: Social Bharat is your gateway to community connections,
@@ -115,50 +127,49 @@ function CarousalBanner() {
                                     Your community, your connection, your Social Bharat. #CommunityConnections #Matrimony #JobSearch #ServiceSearch #SocialBharat 🌐💑👔🛠️"
                                 </marquee>
                             </div>
-                            <Carousel activeIndex={index} onSelect={handleSelect}>
-                                {
-                                    imageUrls && imageUrls.length > 0 && imageUrls.map((item, index) => (
+                            <div className='' style={{ objectFit: 'cover', height: '400px', width: '100%' }}>
+                                <Carousel activeIndex={index} onSelect={handleSelect}>
+                                    {
+                                        imageUrls && imageUrls.length > 0 && imageUrls.map((item, index) => (
 
-                                        <Carousel.Item>
-                                            <div style={{ position: 'relative', width: '100%', height: '400px' }}>
-                                                <img src={item} style={{ width: '100%', height: '100%', objectFit: 'cover',borderRadius:'10px' }} />
-                                                {/* <button style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>Your Button</button> */}
-                                            </div>
-                                            <Carousel.Caption>
-                                                <div className="hero-section">
-
-
-                                                    {
-                                                        !isAuthenticUser && <div className="">
-                                                            <a
-                                                                className="btn"
-                                                                onClick={handleBecomeMemberClick}
-                                                                style={{
-                                                                    color: '',
-                                                                    fontSize: '20px',
-                                                                    fontWeight: 'bold',
-                                                                    backgroundColor: 'transparent',
-                                                                    border: '2px solid yellow',
-                                                                    transition: 'transform 0.3s ease', // Add transition for smooth scaling
-                                                                    display: 'inline-block' // Ensure that the button respects the scaling transform
-                                                                }}
-                                                                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'} // Scale up on hover
-                                                                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} // Scale back to normal on hover out
-                                                            >
-                                                                Become a member
-                                                            </a>
-
-                                                        </div>
-                                                    }
+                                            <Carousel.Item key={index}>
+                                                <div style={{ position: 'relative', width: '100%', height: '400px', objectFit: 'cover' }}>
+                                                    <img src={item} style={{ width: '100%', height: '100%', borderRadius: '10px' }} />
 
                                                 </div>
-                                            </Carousel.Caption>
-                                        </Carousel.Item>
+                                                <Carousel.Caption>
+                                                    <div className="hero-section">
+                                                        {!isAuthenticUser && (
+                                                            <div className="">
+                                                                <a
+                                                                    className="btn"
+                                                                    onClick={handleBecomeMemberClick}
+                                                                    style={{
+                                                                        color: '',
+                                                                        fontSize: '20px',
+                                                                        fontWeight: 'bold',
+                                                                        backgroundColor: 'transparent',
+                                                                        border: '2px solid yellow',
+                                                                        transition: 'transform 0.3s ease',
+                                                                        display: 'inline-block'
+                                                                    }}
+                                                                    onMouseEnter={(e) => e.target.style.transform = 'scale(2)'}
+                                                                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                                                >
+                                                                    Become a member
+                                                                </a>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </Carousel.Caption>
+                                            </Carousel.Item>
 
 
-                                    ))
-                                }
-                            </Carousel>
+
+                                        ))
+                                    }
+                                </Carousel>
+                            </div>
 
                         </div>
                     </div>

@@ -20,7 +20,7 @@ const HomePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const fetchCMS = async () => {
-        dispatch(setLoader(true));
+       // dispatch(setLoader(true));
         try {
             const response = await fetchSinglePageCMS("home");
             if (response && response.status === 200) {
@@ -31,7 +31,7 @@ const HomePage = () => {
 
             }
         } finally {
-            dispatch(setLoader(false));
+           // dispatch(setLoader(false));
         }
     }
 

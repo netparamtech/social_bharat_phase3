@@ -6,7 +6,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
 import UserNavDropdown from "./UserNavDropdown";
 
-const NavbarTransparent = (props) => {
+const NavbarCustom = (props) => {
   const { data, community } = props;
   const user = useSelector((state) => state.userAuth);
   const tokenExpireDate = user && user.token && user.token.expire_at;
@@ -285,14 +285,14 @@ const NavbarTransparent = (props) => {
   }, []);
 
   return (
-    <div id='customNavID'>
-      <nav className="navbar navbar-transparent  navbar-expand-lg ">
+    <div id="customNavID">
+      <nav className="navbar navbar-transparent navbar-expand-lg">
         <div className="container">
-
           <a className="navbar-brand" onClick={handleHomeClicked}>
             <img src={defaultLogo} alt="Logo" />
           </a>
 
+          {/* Toggle button for small screens */}
           <a>
             {isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
               <UserNavDropdown />
@@ -300,20 +300,22 @@ const NavbarTransparent = (props) => {
               ""
             )}
           </a>
-
           <button
-            className={`navbar-toggler m-3 ${isAndroidUsed ? "" : "d-none"}`}
+            className={`navbar-toggler ${isAndroidUsed ? "" : "d-none"}`}
             type="button"
             onClick={showDrawer}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          
-            <ul className="navbar-nav mb-2 mb-lg-0">
+
+          {/* Navbar items */}
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               {
-                !isAuthenticUser && <><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li></>
+                !isAuthenticUser && <><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li></>
               }
 
+              {/* Navbar links */}
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/" ? "active" : "inactive"
@@ -392,35 +394,30 @@ const NavbarTransparent = (props) => {
                 </a>
               </li>
 
-              {/* You can add more nav items here */}
             </ul>
 
+            {/* Login and signup buttons */}
+            {!isAuthenticUser && (
+              <div className="button-container">
+                <button
+                  className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
+                    }`}
+                  onClick={handleLoginClicked}
+                >
+                  Login
+                </button>
+                <button
+                  className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ""
+                    }`}
+                  onClick={() => navigate("/register")}
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
 
-            <ul className="navbar-nav mb-2 mb-lg-0" >
-              <li className="">
-                {isAuthenticUser && isAuthenticUser ? (
-                  ""
-                ) : (
-                  <div className="button-container">
-                    <button
-                      className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ''}`}
-                      onClick={handleLoginClicked}
-                    >
-                      Login
-                    </button>
-                    <button
-                      className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ''}`}
-                      onClick={() => navigate("/register")}
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                )}
-              </li>
-            </ul>
-
-
-            <ul className="navbar-nav ml-auto  mb-2 mb-lg-0" style={{width:'200px'}}>
+            {/* User dropdown for authenticated users */}
+            <ul className="navbar-nav ml-auto  mb-2 mb-lg-0" style={{ width: isAuthenticUser ? '200px' : '' }}>
               <li className="">
                 {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
                   <UserNavDropdown />
@@ -430,8 +427,9 @@ const NavbarTransparent = (props) => {
               </li>
             </ul>
 
+            {/* Drawer for small screens */}
             <Drawer
-              title={"Menu"}
+              title="Menu"
               placement="top"
               closable={true}
               onClose={showDrawer}
@@ -439,13 +437,12 @@ const NavbarTransparent = (props) => {
               height={450}
               style={{
                 zIndex: 99999,
-                // width: "70%",
                 background: "rgba(255, 255, 255, 0.8)",
                 borderBottomLeftRadius: "3%",
                 borderBottomRightRadius: "3%",
-                // height:"70%"
               }}
             >
+              {/* Drawer content */}
               <div className="customDrawerBody">
                 <ul className="customUl">
 
@@ -511,10 +508,11 @@ const NavbarTransparent = (props) => {
                 </ul>
               </div>
             </Drawer>
+          </div>
         </div>
       </nav>
     </div>
   );
 };
 
-export default NavbarTransparent;
+export default NavbarCustom;

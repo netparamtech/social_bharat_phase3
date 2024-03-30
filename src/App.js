@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";
 import UserProtectedRoute from "./user/util/UserProtectedRoute";
@@ -8,7 +8,7 @@ import { Spin } from "antd";
 import UserRoutes from "./user/UserRoutes";
 import { logout } from "./user/actions/userAction";
 import NotFound from "./NotFound";
-
+const LazyUserRoutes = React.lazy(() => import("./user/UserRoutes"));
 function App() {
 
   const isLoading = useSelector((state) => state.loader.isLoaderSet);
@@ -23,7 +23,7 @@ function App() {
         }
       }
     }
-  }, [user])
+  }, [user]);
 
   return (
     <div className="">
@@ -44,8 +44,8 @@ function App() {
                         )
                       } />
                     <Route
-                      path="/*"
-                      element={<NotFound />}
+                      path="/"
+                      element={<LazyUserRoutes />}
                     />
                   </>
                 ))
@@ -54,14 +54,21 @@ function App() {
 
               {
                 adminRoutes.map((route, index) => (
-                  <Route key={index} path={route.path}
-                    element={
-                      route.path !== '/admin' ? (
-                        <ProtectedRoute element={route.component} />
-                      ) : (
-                        <route.component />
-                      )
-                    } />
+                  <>
+                    <Route key={index} path={route.path}
+                      element={
+                        route.path !== '/admin' ? (
+                          <ProtectedRoute element={route.component} />
+                        ) : (
+                          <route.component />
+                        )
+                      } />
+                    <Route
+                      path="/*"
+                      element={<NotFound />}
+                    />
+                  </>
+
 
                 ))
               }

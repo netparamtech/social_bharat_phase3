@@ -152,6 +152,114 @@ nav .container,
   max-width: 1290px !important;
 }
 
+#customNavID .button-container {
+    position: relative;
+    margin-left: 20%;
+  }
+  
+  
+  #customNavID .default-button {
+    background-color: #006b5d;
+    border-color: #006b5d;
+    color: #fff;
+    z-index: 3;
+    position: absolute;
+    width: 100px;
+    border-radius: 40px;
+    transform: translateX(-70%); /* Center the custom button horizontally */
+    
+  }
+  #customNavID .custom-button:hover{
+    background-color: #81b5b5;
+    color: black;
+  }
+  #customNavID .default-button:hover{
+    background-color: #81b5b5;
+    color: black;
+  }
+  #customNavID .button-container .custom-signup-clicked{
+    background-color: #fff;
+    color: black;
+  }
+  #customNavID .custom-login-clicked{
+    background-color: #fff;
+    color: black;
+  }
+  
+  #customNavID .custom-button {
+    background-color: #006b5d;
+    border-color: #006b5d;
+    color: #fff;
+    width: 100px;
+    z-index: 2;
+    left: 50%;
+    border-radius: 40px;
+    text-align: end;
+    margin-right: 10px;
+    
+  }
+
+  #customNavID .dropdown {
+    position: relative;
+  }
+  
+  #customNavID .dropdown-toggle {
+    white-space: nowrap;
+  }
+  
+  #customNavID .dropdown .dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  #customNavID .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+  }
+  
+  #customNavID .navbar .dropdown-menu .dropdown-header {
+    color: #a7aeb8;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  
+  #customNavID .dropdown-user-img-letter {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100% !important;
+    background-color: #6387a6 !important;
+    border: 1px solid rgb(247, 240, 240) !important;
+    color: #fff !important;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  #customNavID .dropdown-user-img {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 1rem;
+    border-radius: 100%;
+  }
+  #customNavID a.btn.dropdown-toggle.show:focus {
+    outline: 0;
+    box-shadow: none;
+    text-decoration: none;
+  }
+  
+  #customNavID .dropdown-toggle::after {
+    content: none;
+    display: none;
+    border: none;
+  }
+
+
+  
+
 /* #customNavID .container {
     height: 80px;
     @media (max-width: 767px) {

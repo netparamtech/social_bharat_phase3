@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../pages/css/ourPartner.css';
 import { Drawer, Input } from 'antd';
-import { fetchAllActiveCommunities } from '../../services/userService';
+import { fetchAllActiveBharatMandir, fetchAllActiveCommunities } from '../../services/userService';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import { useNavigate } from 'react-router-dom';
@@ -33,11 +33,10 @@ const BharatMandirDrawer = () => {
     const fetchCommunities = async () => {
         dispatch(setLoader(false));
         try {
-            const response = await fetchAllActiveCommunities();
+            const response = await fetchAllActiveBharatMandir();
             if (response && response.status === 200) {
-                const filteredFetch = response.data.data.filter((item) => item && item.community_archive !== '');
-                setCasts(filteredFetch);
-                setCopyCasts(filteredFetch);
+                setCasts(response.data.data);
+                setCopyCasts(response.data.data);
                 setServerError('');
             }
         } catch (error) {

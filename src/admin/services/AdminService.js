@@ -700,6 +700,16 @@ export const fetchAdminDashboardStatistics = async () => {
     }
 }
 
+//fetch stats for activities
+export const fetchAdminDashboardStatisticsForActivities = async () => {
+    try {
+        const response = await apiWithHeaders.get('/dashboard-statistics/activity-statistics');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //create email
 export const createMail = async (data) => {
     try {

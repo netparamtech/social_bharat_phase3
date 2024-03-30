@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllActiveCommunities } from "../../services/userService";
+import { fetchAllActiveBharatMandir } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -45,10 +45,9 @@ function OurPartner() {
   const fetchCommunities = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await fetchAllActiveCommunities();
+      const response = await fetchAllActiveBharatMandir();
       if (response && response.status === 200) {
-        const filteredFetch = response.data.data.filter((item) => item && item.community_archive !== '');
-        setCasts(filteredFetch);
+        setCasts(response.data.data);
         setServerError('');
         dispatch(setLoader(false));
       }

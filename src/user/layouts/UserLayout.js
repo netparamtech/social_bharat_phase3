@@ -11,6 +11,7 @@ import { fetchAllSiteSettings } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import '../pages/css/navbar.css';
+import NavbarCustom from '../components/home/NavbarCustom';
 
 const UserLayout = ({ children }) => {
 
@@ -100,7 +101,7 @@ const UserLayout = ({ children }) => {
       </Helmet>
 
       <header>
-        <NavbarTransparent data={data} />
+        <NavbarCustom data={data} />
       </header>
 
       {children}

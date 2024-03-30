@@ -378,10 +378,29 @@ export const fetchAllCommunities = async () => {
     throw error;
   }
 };
+// //fetch all active communities
+// export const fetchAllActiveCommunities = async () => {
+//   try {
+//     const response = await apiConfig.get("/communities/1");
+//     return response;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 //fetch all active communities
 export const fetchAllActiveCommunities = async () => {
   try {
-    const response = await apiConfig.get("/communities/1");
+    const response = await apiConfig.get("/all-active-communities");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch all active bharat-mandir
+export const fetchAllActiveBharatMandir = async () => {
+  try {
+    const response = await apiConfig.get("/all-active-bharatMandir");
     return response;
   } catch (error) {
     throw error;

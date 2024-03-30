@@ -1,11 +1,13 @@
 import CountUp from "react-countup";
 import { Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
-import { fetchAdminDashboardStatistics } from "../services/AdminService";
+import { fetchAdminDashboardStatistics, fetchAdminDashboardStatisticsForActivities } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import UsersChart from "./charts/UsersChart";
 import ServiceChart from "./charts/ServiceChart";
 import JobChart from "./charts/JobChart";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 const BodyContent = () => {
@@ -14,11 +16,17 @@ const BodyContent = () => {
   const [jobStatic, setJobStatic] = useState([]);
   const [isView, setIsView] = useState(false);
   const [totalJobs, setTotalJobs] = useState(0);
+  const [isActivityShow, setIsActivityShow] = useState(false);
+  const [activities, setActivities] = useState([]);
+  const socialActivityIcon = '/admin/img/social-activity.png';
 
   const navigate = useNavigate();
 
   const handleIsView = () => {
     setIsView(!isView);
+  }
+  const handleActivityShow = () => {
+    setIsActivityShow(!isActivityShow);
   }
 
   const fetchDashboardStatistics = async () => {
@@ -28,6 +36,22 @@ const BodyContent = () => {
         setStatistics(response.data.data);
 
         console.log(response.data.data)
+      }
+    } catch (error) {
+      // Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate("/server/error", { state: { errorMessage } });
+      }
+    }
+  };
+  const fetchActivitiesStatistics = async () => {
+    try {
+      const response = await fetchAdminDashboardStatisticsForActivities();
+      if (response && response.status === 200) {
+        setActivities(response.data.result);
       }
     } catch (error) {
       // Unauthorized
@@ -49,7 +73,12 @@ const BodyContent = () => {
       setJobStatic(statistics.job_statistics);
 
     }
-  }, [statistics])
+  }, [statistics]);
+  useEffect(() => {
+    if (isActivityShow) {
+      fetchActivitiesStatistics();
+    }
+  }, [isActivityShow])
   useEffect(() => {
     if (jobStatic.length > 0) {
       if (jobStatic.length > 1) {
@@ -275,6 +304,71 @@ const BodyContent = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <div className="card border-left-warning shadow h-100 py-2">
+            <div className="card-body">
+              <div className="row align-items-center">
+                <div className="col mr-2">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      <Statistic
+                        title={
+                          <span className="text-xs font-weight-bold  text-uppercase mb-1 d-flex">
+                            <a className="text-success stretched-link"
+                            // onClick={() => navigate('/admin/event/index')}
+                            >
+                              Total Social Activities
+                            </a>
+                            <a className="text-primary stretched-link"
+                              onClick={() => handleActivityShow()}
+                            >
+                              View More
+                            </a>
+                          </span>
+                        }
+                        value={statistics && statistics.activity_count}
+                        formatter={formatter}
+                      />
+
+                    </div>
+                  </div>
+                </div>
+                <div className="col-auto">
+                  <img src={socialActivityIcon} width={50} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+          {
+            isActivityShow && (
+              <div className="card card-body shadow col-xl-11 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999 }}>
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Profile</th>
+                      <th>Name</th>
+                      <th>Total Activity Posted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      activities && activities.length > 0 && activities.map((item) => (
+
+                        <tr>
+                          <td><img src = {item.photo} width={50} height={50}></img></td>
+                          <td>{item.name}</td>
+                          <td>{item.totalCount}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+
+              </div>
+            )
+          }
         </div>
 
         <div className="col-xl-12 col-md-12 mb-4">

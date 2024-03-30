@@ -7,6 +7,9 @@ body {
   background-color: #e7efef;
   font-size: 16px;
 }
+#customNavID .container{
+  max-width: 98% !important;
+}
 
 .text-primary {
   color: #008374 !important;

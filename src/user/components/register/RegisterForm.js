@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   createTempUser,
+  fetchAllActiveCommunities,
   fetchAllCommunities,
   fetchBannerWithPageAndSection,
 } from "../../services/userService";
@@ -54,10 +55,10 @@ const RegisterForm = () => {
   const fetchCommunities = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await fetchAllCommunities();
+      const response = await fetchAllActiveCommunities();
       if (response && response.status === 200) {
-        const requestedCasts = response.data.data.filter((item) => item && item.community_archive === '');
-        setCasts(requestedCasts);
+
+        setCasts(response.data.data);
         setServerError('');
         dispatch(setLoader(false));
       }
@@ -252,7 +253,7 @@ const RegisterForm = () => {
                     </p>
                     {
                       isEnquiry && <div className="row mx-auto">
-                        <div className="col-12 col-md-5 card bg-info scale-on-hover m-2 hover-pointer" onClick={()=>navigate('/contact')}>
+                        <div className="col-12 col-md-5 card bg-info scale-on-hover m-2 hover-pointer" onClick={() => navigate('/contact')}>
                           <div className="card-body text-light">
                             General Enquiry
                           </div>

@@ -1,13 +1,11 @@
 import CountUp from "react-countup";
-import { Col, Row, Statistic } from "antd";
+import { Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { fetchAdminDashboardStatistics, fetchAdminDashboardStatisticsForActivities } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import UsersChart from "./charts/UsersChart";
 import ServiceChart from "./charts/ServiceChart";
 import JobChart from "./charts/JobChart";
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 const BodyContent = () => {
@@ -18,6 +16,8 @@ const BodyContent = () => {
   const [totalJobs, setTotalJobs] = useState(0);
   const [isActivityShow, setIsActivityShow] = useState(false);
   const [activities, setActivities] = useState([]);
+  const [copyActivity, setCopyActivity] = useState([]);
+  const [activityInput, setActivityInput] = useState('');
   const socialActivityIcon = '/admin/img/social-activity.png';
 
   const navigate = useNavigate();
@@ -27,6 +27,13 @@ const BodyContent = () => {
   }
   const handleActivityShow = () => {
     setIsActivityShow(!isActivityShow);
+  }
+  const handleActivityChange = (e) => {
+    setActivityInput(e.target.value);
+    const filteredResults = copyActivity.filter((item) =>
+      item.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setActivities(filteredResults);
   }
 
   const fetchDashboardStatistics = async () => {
@@ -52,6 +59,7 @@ const BodyContent = () => {
       const response = await fetchAdminDashboardStatisticsForActivities();
       if (response && response.status === 200) {
         setActivities(response.data.result);
+        setCopyActivity(response.data.result);
       }
     } catch (error) {
       // Unauthorized
@@ -341,9 +349,16 @@ const BodyContent = () => {
             </div>
 
           </div>
+
           {
             isActivityShow && (
-              <div className="card card-body shadow col-xl-11 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999 }}>
+              <div className="card card-body shadow col-xl-11 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s', overflow: 'scroll' }}>
+                <div className="input-group rounded">
+                  <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={handleActivityChange} />
+                  <span className="input-group-text border-0" id="search-addon">
+                    <i className="fas fa-search"></i>
+                  </span>
+                </div>
                 <table className="table table-striped">
                   <thead>
                     <tr>
@@ -357,7 +372,7 @@ const BodyContent = () => {
                       activities && activities.length > 0 && activities.map((item) => (
 
                         <tr>
-                          <td><img src = {item.photo} width={50} height={50}></img></td>
+                          <td><img src={item.photo} width={50} height={50}></img></td>
                           <td>{item.name}</td>
                           <td>{item.totalCount}</td>
                         </tr>

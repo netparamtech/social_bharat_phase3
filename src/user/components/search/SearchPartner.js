@@ -15,11 +15,12 @@ import { Image } from "antd";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "./ViewProfileDrawer";
 import { logout } from "../../actions/userAction";
+import GenerateBiodata from "../ProfilePage/GenerateBiodata";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
     e.preventDefault();
-    navigate("/user/update-matrimonial-profile");
+    navigate("/user/create-matrimonial-profile");
   };
 
   const user = useSelector((state) => state.userAuth);
@@ -316,19 +317,6 @@ const SearchPartner = () => {
   }, [items]);
 
   useEffect(() => {
-    setState(
-      user && user.user && user.user.native_place_state
-        ? user.user.native_place_state
-        : ""
-    );
-    setCity(
-      user && user.user && user.user.native_place_city
-        ? user.user.native_place_city
-        : ""
-    );
-  }, [user]);
-
-  useEffect(() => {
     // Check if selectedCountry is already set
     if (selectedCountry) {
       getAllStates();
@@ -582,23 +570,43 @@ const SearchPartner = () => {
                               <div className="card-body p-4">
                                 <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                   <div className="flex-shrink-0">
-                                    <img
-                                      src={item.photo ? item.photo : defaultImage}
-                                      alt={item.name}
-                                      className="img-fluid"
-                                      style={{ width: '180px', height: '150px', borderRadius: '10px' }}
-                                    />
+
+                                    {
+                                      item.proposal_photos && item.proposal_photos.length > 0 ?
+                                        (
+                                          Array.isArray(item.proposal_photos) ? <img
+                                            src={item.proposal_photos[0]}
+                                            alt={item.matrimonial_profile_name}
+                                            className="img-fluid"
+                                            style={{ width: '180px', height: '150px', borderRadius: '10px' }}
+                                          /> : <img
+                                            src={item.proposal_photos}
+                                            alt={item.matrimonial_profile_name}
+                                            className="img-fluid"
+                                            style={{ width: '180px', height: '150px', borderRadius: '10px' }}
+                                          />
+                                        ) : <img
+                                          src={defaultImage}
+                                          alt={item.matrimonial_profile_name}
+                                          className="img-fluid"
+                                          style={{ width: '180px', height: '150px', borderRadius: '10px' }}
+                                        />
+                                    }
+                                    
                                   </div>
                                   <div className="flex-grow-1 ms-3">
-                                    <h5 className="mb-1">{item.name}</h5>
+                                 <div className="m-2">
+                                 {item&& <GenerateBiodata userData={item} />}
+                                 </div>
+                                    <h5 className="mb-1">{item.matrimonial_profile_name}</h5>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      {item.occupation}
+                                      Job Profile-{item.matrimonial_profile_occupation ?( item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation):'N/A'}
                                     </p>
                                     <div
                                       className="d-flex justify-content-start rounded-3"
                                       style={{ backgroundColor: '#efefef' }}
                                     >
-                                      Education-{item.highest_qualification ? item.highest_qualification : 'N/A'}
+                                      Education-{item.education ? item.education : 'N/A'}
                                     </div>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}
@@ -608,10 +616,10 @@ const SearchPartner = () => {
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}
                                     >
-                                      <p>City-{item.native_place_city}</p>
+                                      <p>City-{item.city}</p>
                                       <p>
-                                        {item.native_place_state
-                                          ? `(${item.native_place_state})`
+                                        {item.state
+                                          ? `(${item.state})`
                                           : ""}
                                       </p>
                                     </div>
@@ -642,7 +650,7 @@ const SearchPartner = () => {
                                       </div>
 
                                       <button type="button" className="btn me-1 flex-grow-1">
-                                        <ViewProfileDrawer id={item.id} />
+                                        <ViewProfileDrawer id={item.userId} profileFor={item.profile_created_for} name={item.name} />
                                       </button>
                                     </div>
                                   </div>

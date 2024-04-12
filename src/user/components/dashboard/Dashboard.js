@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const Dashboard = () => {
   const user = useSelector((state) => state.userAuth);
   const isFeedback = useSelector((state) => state.loader.isShowSet);
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const Dashboard = () => {
                   <div className="me-3">
                     <div className="text-white-75 small">Become Social</div>
                     <div className="text-lg ">
-                     Search Members <br />
+                      Search Members <br />
                     </div>
                   </div>
                   <img src="/user/images/searchPeople.png" width="40px" />

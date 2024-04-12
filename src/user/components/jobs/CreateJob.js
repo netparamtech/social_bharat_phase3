@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from 'react-toastify';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -33,6 +37,8 @@ const CreateJob = (props) => {
     const [application_fee_details, setApplication_fee_details] = useState('');
     const [isActive, setIsActive] = useState('Inactive');
     const [isApplyForm, setIsApplyForm] = useState('Inactive');
+
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const [errors, setErrors] = useState('');
     const [message, setMessage] = useState('');
@@ -65,6 +71,9 @@ const CreateJob = (props) => {
         { value: "Other", label: "Other" },
     ];
 
+    const onEditorStateChange = (editorState) => {
+        setEditorState(editorState);
+    };
 
     const handleJobTypeChange = (selectedOption) => {
         setJobType(selectedOption);
@@ -223,6 +232,10 @@ const CreateJob = (props) => {
 
     const handleSubmit = async () => {
         dispatch(setLoader(true));
+
+        const contentState = editorState.getCurrentContent();
+        const rawContentState = convertToRaw(contentState);
+        const htmlContent = draftToHtml(rawContentState);
         const data = {
             job_title: jobTitle.toUpperCase(),
             job_sector: jobSector.label,
@@ -231,7 +244,7 @@ const CreateJob = (props) => {
             location,
             attachment: selectedFileTempUrl,
             logo: selectedLogoTempUrl,
-            description,
+            description: htmlContent,
             apply_link: applyLink,
             job_apply_form: isApplyForm,
             job_start_date: jobStartDate,
@@ -456,20 +469,24 @@ const CreateJob = (props) => {
                                                 )}
                                             </div>
                                             <div className="mb-3">
-                                                <label>Description{" "}<span className="text-danger">*</span></label>
-                                                <textarea type="text"
-                                                    className={`form-control ${errors.description ? 'border-danger' : ''}`}
-                                                    placeholder="Enter Description"
-                                                    defaultValue={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
-                                                />
+
+                                                <div className="">
+
+                                                    <Editor
+                                                        editorState={editorState}
+                                                        onEditorStateChange={onEditorStateChange}
+                                                        wrapperClassName="wrapper-class"
+                                                        editorClassName="editor-class custom-editor-height editor-border p-2"
+                                                        toolbarClassName="toolbar-class toolbar-border"
+                                                    />
+                                                </div>
                                                 {errors.description && (
                                                     <span className="error">{errors.description}</span>
                                                 )}
                                             </div>
 
                                             <div className="form-check mt-2">
-                                                <p>Need a apply form to Apply ?</p>
+                                                <p>Apply From URL ?</p>
                                                 <label className="form-control">
                                                     <input
                                                         type="radio"

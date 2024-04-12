@@ -39,6 +39,7 @@ const ActivityIndex = () => {
   };
 
   const fetchMoreData = () => {
+    console.log(items.length,totalRows)
     if (!isLoading && items.length < totalRows) {
       search(searchText, page + 1, 20);
       setPage(page + 1);
@@ -81,6 +82,7 @@ const ActivityIndex = () => {
       if (response && response.status === 200) {
         console.log(response.data.data.totalRowsAffected);
         setTotalRows(response.data.data.totalRowsAffected);
+        setIsLoading(false);
         setServerError("");
 
         if (searchText) {
@@ -256,8 +258,8 @@ const ActivityIndex = () => {
                           <div className=" position-relative">
                             <div className="">
                               <Card
-                                className=" bg-darkskyblue mb-1"
-                                style={{ height: "375px" }}
+                                className="  mb-1"
+                                style={{ height: item.photo?'500px':'' }}
                               >
                                 <div className="d-flex justify-content-between">
                                   <Meta
@@ -332,6 +334,7 @@ const ActivityIndex = () => {
                                     </NavDropdown.Item>
                                   </NavDropdown>
                                 </div>
+                                <div className="fs-4 m-2 ">{item.title}</div>
 
                                 {item.photo &&
                                 Array.isArray(item.photo) &&
@@ -350,7 +353,7 @@ const ActivityIndex = () => {
                                             alt={`Photos ${photoIdx + 1}`}
                                             className="carousel-image"
                                             style={{
-                                              height: "200px",
+                                              height: "300px",
                                               width: "100%",
                                               objectFit: "contain",
                                             }}
@@ -371,7 +374,7 @@ const ActivityIndex = () => {
                                     }}
                                   />
                                 ) : (
-                                  <p className="fs-4 m-2 text-light">
+                                  <p className="fs-5 m-2">
                                     {item.DESCRIPTION}
                                   </p>
                                 )}

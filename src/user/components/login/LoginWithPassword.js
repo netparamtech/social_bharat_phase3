@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
 import { Input } from "antd";
-import { setLoader } from "../../actions/loaderAction";
+import { setLoader, setModelAction } from "../../actions/loaderAction";
 
 const LoginWithPassword = (props) => {
   
@@ -70,6 +70,7 @@ const LoginWithPassword = (props) => {
         setMessage('');
 
         dispatch(login(response.data.data, response.data.token));
+        dispatch(setModelAction(true));
 
         if (response.data.data.is_password_set) {
           navigate("/");

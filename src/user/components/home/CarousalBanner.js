@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import Typed from "typed.js";
-import ExampleCarouselImage from './ExampleCarouselImage';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
-import { Button, Typography } from "antd";
 import Banner from './Banner';
-
-const { Title, Text } = Typography;
+import { toast } from 'react-toastify';
+import { generalMessage, infoOptions } from '../../../toastOption';
+import BannerContent from './BannerContent';
 
 function CarousalBanner() {
     const [index, setIndex] = useState(0);
     const user = useSelector((state) => state.userAuth);
     const isAuthenticUser = user && user.isAuthenticated;
+    const [isAndroidUsed, setIsAndroidUsed] = useState(false);
+    const [isCardShow, setIsCardShow] = useState(true);
     const [imageUrls, setImageUrls] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isMultiBanner, setIsMultiBanner] = useState(false);
@@ -28,6 +28,9 @@ function CarousalBanner() {
     const handleBecomeMemberClick = () => {
         navigate('/register');
     };
+    const handleIsCardShow = () => {
+        setIsCardShow(false);
+    }
 
     const fetchBanners = async () => {
         dispatch(setLoader(true));
@@ -70,46 +73,22 @@ function CarousalBanner() {
     }, []);
 
     useEffect(() => {
-        const options = {
-            strings: ["Growing Community ", "Business Growth ", "Search Partner"],
-            typeSpeed: 80,
-            backSpeed: 80,
-            loop: true,
+        const handleResize = () => {
+            setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
         };
 
-        if (typedRef.current) {
-            const typedInstance = new Typed(typedRef.current, options);
-            return () => {
-                typedInstance.destroy();
-            };
-        }
+        // Listen for window resize events
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Call initially to set the correct value
+
+        // Cleanup the event listener when component is unmounted
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) =>
-                (prevIndex + 1) % imageUrls.length
-            );
-        }, 5000); // Change image every 5 seconds
-
-        return () => clearInterval(interval);
-    }, [imageUrls]);
-
-
 
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
-    };
-
-    const options = {
-        strings: ["Become a member"],
-        typeSpeed: 80,
-        backSpeed: 80,
-        loop: false,
-        onTypingPaused: (arrayPos, self) => {
-            const text = self.strings[arrayPos];
-            setButtonText(text);
-        }
     };
 
     return (
@@ -118,7 +97,7 @@ function CarousalBanner() {
                 isMultiBanner ? (
 
                     <div id="banners-section" className="" >
-                        <div className="container">
+                        <div className="">
                             <div className="text-success fw-bold fs-6">
                                 <marquee className="">"Building Bridges, Creating Bonds: Social Bharat is your gateway to community connections,
                                     meaningful relationships, and professional growth. Discover a platform where community thrives,
@@ -127,6 +106,23 @@ function CarousalBanner() {
                                     Your community, your connection, your Social Bharat. #CommunityConnections #Matrimony #JobSearch #ServiceSearch #SocialBharat 🌐💑👔🛠️"
                                 </marquee>
                             </div>
+                            {
+                                isCardShow && !isAuthenticUser && <div className="card card-body bg-info col-12 col-md-3 shadow" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s' }}>
+                                    <span className="position-absolute top-0 end-0" onClick={handleIsCardShow}>
+                                        {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                                        <button className="hover-pointer-red "><i className="fa fa-remove"></i></button>
+                                    </span>
+                                    <div>
+                                        <div className='col-12'>
+                                            A comprehensive and impactful project aimed at fostering community engagement,
+                                            facilitating connections, and providing valuable services to users.
+                                        </div>
+                                        <BannerContent />
+                                        <button className='btn btn-success' onClick={() => navigate('/register')}>Become A Member</button>
+                                    </div>
+
+                                </div>
+                            }
                             <div className='' style={{ objectFit: 'cover', height: '400px', width: '100%' }}>
                                 <Carousel activeIndex={index} onSelect={handleSelect}>
                                     {
@@ -137,34 +133,8 @@ function CarousalBanner() {
                                                     <img src={item} style={{ width: '100%', height: '100%', borderRadius: '10px' }} />
 
                                                 </div>
-                                                <Carousel.Caption>
-                                                    <div className="hero-section">
-                                                        {!isAuthenticUser && (
-                                                            <div className="">
-                                                                <a
-                                                                    className="btn"
-                                                                    onClick={handleBecomeMemberClick}
-                                                                    style={{
-                                                                        color: '',
-                                                                        fontSize: '20px',
-                                                                        fontWeight: 'bold',
-                                                                        backgroundColor: 'transparent',
-                                                                        border: '2px solid yellow',
-                                                                        transition: 'transform 0.3s ease',
-                                                                        display: 'inline-block'
-                                                                    }}
-                                                                    onMouseEnter={(e) => e.target.style.transform = 'scale(2)'}
-                                                                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                                                                >
-                                                                    Become a member
-                                                                </a>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </Carousel.Caption>
+
                                             </Carousel.Item>
-
-
 
                                         ))
                                     }

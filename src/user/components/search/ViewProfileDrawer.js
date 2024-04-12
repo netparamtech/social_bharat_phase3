@@ -21,7 +21,7 @@ const DescriptionItem = ({ title, content }) => (
 );
 const { Panel } = Collapse;
 
-const ViewProfileDrawer = ({ id }) => {
+const ViewProfileDrawer = ({ id, profileFor, name }) => {
   const [visible, setVisible] = useState(false);
   const [user, setUser] = useState({});
   const [profileImage, setProfileImage] = useState("");
@@ -122,7 +122,9 @@ const ViewProfileDrawer = ({ id }) => {
   return (
     <div>
       <a className='nav-link text-success hover-pointer d-inline' onClick={showDrawer}>
-        VIEW
+        {
+          profileFor==="Self"?'VIEW':`Upload By-${name}`
+        }
       </a>
       <Drawer
         width={640}

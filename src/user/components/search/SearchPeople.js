@@ -9,10 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image } from "antd";
 import NewChat from "../chats/NewChat";
-import ViewProfileDrawer from "./ViewProfileDrawer";
 import { logout } from "../../actions/userAction";
+import ViewProfileDrawerForMembers from "./ViewProfileDrawerForMembers";
 
 const SearchPeople = () => {
   const user = useSelector((state) => state.userAuth);
@@ -447,7 +446,7 @@ const SearchPeople = () => {
                                         </div>
 
                                         <button type="button" className="btn me-1 flex-grow-1">
-                                          <ViewProfileDrawer id={item.id} />
+                                          <ViewProfileDrawerForMembers id={item.id} />
                                         </button>
                                       </div>
                                     </div>

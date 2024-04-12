@@ -12,10 +12,13 @@ import { errorOptions, successOptions } from "../../../toastOption";
 const Activity = () => {
   const imageInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState([]);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [activityPhotos, setActivityPhotos] = useState([]);
   const [imageTempUrl, setImageTempUrl] = useState([]);
+  const [title, setTitle] = useState('');
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState("");
+  const [message, setMessage] = useState('');
   const [defaultImage] = useState(
     "https://images.unsplash.com/photo-1477586957327-847a0f3f4fe3?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8amFpcHVyfGVufDB8fDB8fHww"
   );
@@ -27,10 +30,12 @@ const Activity = () => {
   const handleImageClick = () => {
     imageInputRef.current.click();
   };
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  }
 
   const handleImageChange = async (e) => {
     const selectedFiles = e.target.files;
-    setActivityPhotos(selectedFiles); // Set the selected files
 
     const totalFiles = selectedFiles.length;
     if (totalFiles > 5) {
@@ -46,11 +51,7 @@ const Activity = () => {
       const previewUrl = URL.createObjectURL(file);
       previewUrls.push(previewUrl);
     }
-
     const combinedUrls = [...previewUrls];
-    console.log(combinedUrls);
-    setImagePreview(combinedUrls);
-
     const formData = new FormData();
 
     // Append each file to the FormData
@@ -61,14 +62,18 @@ const Activity = () => {
     try {
       const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
       if (response.status === 200) {
+        setActivityPhotos(selectedFiles); // Set the selected files
+        setImagePreview(combinedUrls);
         const combineTempUrls = [...response.data.data.files];
         setImageTempUrl(combineTempUrls);
         setServerError("");
+        setMessage('');
       }
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setMessage(error.response.data.message);
       }
 
       //Unauthorized
@@ -102,9 +107,11 @@ const Activity = () => {
     const data = {
       photo: imageTempUrl,
       description,
+      title,
     };
+    console.log(title)
 
-    if (imageTempUrl.length > 0 || description) {
+    if (imageTempUrl.length > 0 || description|| title) {
       dispatch(setLoader(true));
       try {
         const response = await uploadActivity(data);
@@ -112,10 +119,11 @@ const Activity = () => {
         if (response && response.status === 201) {
           setErrors("");
           setServerError("");
-          toast.success("Uploaded Activity Successfully",successOptions);
+          toast.success("Uploaded Activity Successfully", successOptions);
           setDescription("");
           setImagePreview([]);
           setImageTempUrl([]);
+          setTitle('');
           window.scroll(0, 0);
         }
       } catch (error) {
@@ -130,12 +138,26 @@ const Activity = () => {
         dispatch(setLoader(false));
       }
     } else {
-      toast.error("Nothing Is Uploaded",errorOptions);
+      toast.error("Nothing Is Uploaded", errorOptions);
     }
   };
 
   useEffect(() => {
     window.scroll(0, 0);
+  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -145,50 +167,53 @@ const Activity = () => {
       >
         <div className="container">
           <div className="row">
-          {imagePreview.length > 0 ? ( <div className="col-4  mb-5">
-          <div
-            className="card"
-            style={{height: "375px" , maxHeight: "700px", overflowY:"scroll" }}
-          >
-            <div className="card-body">
-              <div className="row">
-                {imagePreview &&
-                  imagePreview.map((item, idx) => (
-                    <div className="col-md-4 col-sm-6 col-12" key={idx}>
-                      <div className="card mb-3"
-                      style={{height: "130px" }}
-                      >
-                      <div>
-                        <img
-                          src={item}
-                          alt={`Photos ${idx + 1}`}
-                          className="card-img-top"
-                          style={{objectFit:"contain", height: "95px" }}
-                        />
-                        </div>
-                        <div className="mx-auto">
-                          <button
-                            type="button"
-                            className="btn"
-                            onClick={() => handleDeleteImage(idx)}
+            {imagePreview.length > 0 ? (<div className="col-4  mb-5">
+              <div
+                className="card"
+                style={{ height: "375px", maxHeight: "700px", overflowY: "scroll" }}
+              >
+                <div className="card-body">
+                  <div className="row">
+                    {imagePreview &&
+                      imagePreview.map((item, idx) => (
+                        <div className="col-md-4 col-sm-6 col-12" key={idx}>
+                          <div className="card mb-3"
+                            style={{ height: "130px" }}
                           >
-                            <i className="text-danger fas fa-trash"></i>
-                          </button>
+                            <div>
+                              <img
+                                src={item}
+                                alt={`Photos ${idx + 1}`}
+                                className="card-img-top"
+                                style={{ objectFit: "contain", height: "95px" }}
+                              />
+                            </div>
+                            <div className="mx-auto">
+                              <button
+                                type="button"
+                                className="btn"
+                                onClick={() => handleDeleteImage(idx)}
+                              >
+                                <i className="text-danger fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>) : ""}
-           
-            <div className="col-8 mx-auto">
+            </div>) : ""}
+
+            <div className={imagePreview && imagePreview.length > 0 ? 'col-8 mx-auto' : 'col-12 mx-auto'}>
               <div
                 id=""
                 className="card  content-wrapper pt-4 mb-4"
               >
                 <div className="card-body">
+                  {message && (
+                    <span className="error">{message}</span>
+                  )}
                   <div className="d-flex justify-content-between mb-3">
                     <p className="fs-4 fw-2 text-success m-3">Activity</p>
                     <button
@@ -199,6 +224,15 @@ const Activity = () => {
                     </button>
                   </div>
                   <div className="row">
+                    <div className="input-group input-group-sm mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-sm" >Title</span>
+                      </div>
+                      <input type="text" className="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" value={title} onChange={handleTitleChange} />
+                      {errors && errors.title && (
+                        <span className="error">{errors.title}</span>
+                      )}
+                    </div>
                     <div className="col-sm-4 col-11 mx-auto">
                       <div className="">
                         <div className="img-container card card-block-md overflow-hidden">
@@ -221,22 +255,22 @@ const Activity = () => {
                           </div>
 
                           {imagePreview.length > 0 ? (
-                        
-                              
-                              <img
-                                src={imagePreview[imagePreview.length - 1]}
-                                className="img-thumbnail img-fluid"
-                                alt=""
-                                // style={{objectFit:"cover", height: "95px", width:"200px" }}
-                              />
-                        
+
+
+                            <img
+                              src={imagePreview[imagePreview.length - 1]}
+                              className="img-thumbnail img-fluid"
+                              alt=""
+                            // style={{objectFit:"cover", height: "95px", width:"200px" }}
+                            />
+
                           ) : (
                             <img
                               src={defaultImage}
                               className="img-thumbnail img-fluid"
                               alt=""
-                              
-                                // style={{objectFit:"cover", height: "95px", width:"200px" }}
+
+                            // style={{objectFit:"cover", height: "95px", width:"200px" }}
                             />
                           )}
                         </div>
@@ -249,7 +283,7 @@ const Activity = () => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       ></textarea>
-                      {errors.description && (
+                      {errors && errors.description && (
                         <span className="error">{errors.description}</span>
                       )}
                     </div>
@@ -257,6 +291,7 @@ const Activity = () => {
                       <button
                         className="btn-md btn w-100 btn-primary mt-4 "
                         onClick={handleSubmit}
+                        disabled={message}
                       >
                         Submit
                       </button>

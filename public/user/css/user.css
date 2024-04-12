@@ -7,7 +7,8 @@ body {
   background-color: #e7efef;
   font-size: 16px;
 }
-#customNavID .container{
+
+#customNavID .container {
   max-width: 98% !important;
 }
 
@@ -168,9 +169,8 @@ body {
   font-size: 16px;
 }
 
-nav .container,
 #banners-section .container {
-  max-width: 1290px !important;
+  max-width: 100% !important;
 }
 
 /* after mobile */
@@ -198,17 +198,21 @@ nav .container,
 /* banner on trans new */
 .jumbotron {
   background-image: url("/public/user/images/banner-1.jpg");
-  height: 400px; /* Adjust this as needed */
-  width: 100%; /* Set to a specific width or keep auto for full width */
+  height: 400px;
+  /* Adjust this as needed */
+  width: 100%;
+  /* Set to a specific width or keep auto for full width */
   background-position: center;
-  background-size: 100% 100%; /* Use this to cover the entire container without cropping */
+  background-size: 100% 100%;
+  /* Use this to cover the entire container without cropping */
   background-repeat: no-repeat;
   color: #ffffff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  object-fit: cover; /* This property is not applicable for background images */
+  object-fit: cover;
+  /* This property is not applicable for background images */
 }
 
 #banners-section {
@@ -227,10 +231,8 @@ nav .container,
   }
 }
 
-
-nav .container,
 #banners-section .container {
-  max-width: 1290px !important;
+  max-width: 100% !important;
 }
 
 #banners-section h2 {
@@ -301,7 +303,7 @@ nav .container,
 }
 
 #partner .container {
-  max-width: 1278px !important;
+  max-width: 100% !important;
 }
 
 /*  */
@@ -1416,6 +1418,7 @@ input[type="number"] {
   color: white;
   background-color: red;
 }
+
 .hover-red:hover {
   color: red;
 }
@@ -1834,6 +1837,7 @@ input[type="number"] {
     background-color: green;
   }
 }
+
 .card-custom-dashboard-class {
   animation: card-custom-dashboard 2s infinite;
 }
@@ -1959,54 +1963,70 @@ legend {
   margin-right: 10px;
   border-radius: 10px;
 }
-#activity-custom .card-custom{
+
+#activity-custom .card-custom {
   height: 600px;
   background-color: #006b5d;
 }
 
-#activity-custom img .card-img-top{
-  height: 70px;
+#activity-custom img .card-img-top {
+  height: 100%;
 }
+
 #auth-wrapper .textShape {
   display: block;
-  white-space: pre-line; /* Use pre-line to preserve newlines */
+  white-space: pre-line;
+  /* Use pre-line to preserve newlines */
   max-width: 100%;
 }
+
 .textShape {
   display: block;
-  white-space: pre-line; /* Use pre-line to preserve newlines */
+  white-space: pre-line;
+  /* Use pre-line to preserve newlines */
   max-width: 100%;
 }
-#job-board-resume .card{
+
+#job-board-resume .card {
   border-radius: 10px;
 }
-#auth-wrapper .custom-small-search{
+
+#auth-wrapper .custom-small-search {
   height: 40px;
 }
 
 #searchPeoples-section .comment-text {
   width: 40%;
 }
+
 .round-button-delete {
   border-radius: 10%;
-  width: 40px;  /* Set the desired width */
-  height: 40px; /* Set the desired height */
+  width: 40px;
+  /* Set the desired width */
+  height: 40px;
+  /* Set the desired height */
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .round-button-delete-small {
   border-radius: 10%;
-  width: 30px;  /* Set the desired width */
-  height: 30px; /* Set the desired height */
+  width: 30px;
+  /* Set the desired width */
+  height: 30px;
+  /* Set the desired height */
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 #auth-wrapper .round-button-delete {
   border-radius: 10%;
-  width: 30px;  /* Set the desired width */
-  height: 30px; /* Set the desired height */
+  width: 30px;
+  /* Set the desired width */
+  height: 30px;
+  /* Set the desired height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2026,22 +2046,27 @@ legend {
   position: absolute;
   width: 100px;
   border-radius: 40px;
-  transform: translateX(-70%); /* Center the custom button horizontally */
-  
+  transform: translateX(-70%);
+  /* Center the custom button horizontally */
+
 }
-.custom-button:hover{
+
+.custom-button:hover {
   background-color: #81b5b5;
   color: black;
 }
-.default-button:hover{
+
+.default-button:hover {
   background-color: #81b5b5;
   color: black;
 }
-.button-container .custom-sineUp-clicked{
+
+.button-container .custom-sineUp-clicked {
   background-color: #fff;
   color: black;
 }
-.custom-login-clicked{
+
+.custom-login-clicked {
   background-color: #fff;
   color: black;
 }
@@ -2056,7 +2081,7 @@ legend {
   border-radius: 40px;
   text-align: end;
   margin-right: 10px;
-  
+
 }
 
 .scale-on-hover {
@@ -2066,5 +2091,64 @@ legend {
 .scale-on-hover:hover {
   transform: scale(1.1);
 }
+
+.Toastify__toast-body .Toastify__toast-icon--info {
+  display: none;
+}
+
+.custom-editor-height {
+  height: 200px;
+}
+
+.editor-border {
+  border: 1px solid #ccc;
+  /* Add your desired border style here */
+}
+
+.toolbar-border {
+  border: 1px solid #ccc;
+  /* Add your desired border style here */
+  border-radius: 4px;
+  /* Optional: Add rounded corners */
+}
+
+#auth-wrapper .over-pointer-g-effect {
+  display: flex;
+  /* Use flexbox */
+  justify-content: center;
+  /* Center the button horizontally */
+  align-items: center;
+  /* Center the button vertically */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Transition property for smooth color change */
+  width: 200px;
+  border: 0px;
+  border-radius: 20px;
+  /* Border radius of 20px */
+  border: 1px solid;
+}
+
+#auth-wrapper .over-pointer-g-effect:hover {
+  background-color: rgba(144, 238, 144, 0.8);
+  /* Light green with higher transparency on hover */
+  border-radius: 20px;
+  /* Border radius of 20px */
+  border: 1px solid;
+}
+
+@keyframes colorAnimation {
+  0% { color: red; }
+  25% { color: blue; }
+  50% { color: green; }
+  75% { color: yellow; }
+  100% { color: red; }
+}
+
+.infinite-color-animation {
+  animation: colorAnimation 5s infinite; /* Change the duration (5s) as needed */
+}
+
+
 
 /* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

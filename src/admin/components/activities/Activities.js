@@ -123,7 +123,7 @@ const Activities = () => {
       title: "S.No",
       dataIndex: "sno",
       render: (text, record, index) => index + 1,
-      width: 50,
+      width: 100,
     },
 
     {
@@ -131,6 +131,16 @@ const Activities = () => {
       dataIndex: "name",
       width: 300,
       width: 200,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      render: (text, record) => (
+        <div className="description-cell">
+          {record.title}
+        </div>
+      ),
+      ellipsis: true,
     },
     {
       title: "Activitie(s)",
@@ -162,9 +172,14 @@ const Activities = () => {
     {
       title: "Description",
       dataIndex: "DESCRIPTION",
-      render: (text, record) => record.DESCRIPTION,
-      width: 150,
+      render: (text, record) => (
+        <div className="description-cell">
+          {record.DESCRIPTION}
+        </div>
+      ),
+      ellipsis: true,
     },
+    
 
     {
       title: "Status",
@@ -195,7 +210,6 @@ const Activities = () => {
         ),
       sorter: true,
       sortDirections: ["asc", "desc"],
-      fixed: "right",
       width: 100,
     },
 
@@ -223,7 +237,6 @@ const Activities = () => {
           </a>
         </div>
       ),
-      fixed: "right",
       with: 200,
     },
     // Rest of the columns definition

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import {
   deleteCommunity,
+  fetchAllBharatMandirForAdmin,
   fetchAllCommunity,
   updateCommunityStatus,
 } from "../../services/AdminService";
@@ -61,12 +62,11 @@ const BharatMataMandirIndex = () => {
   const fetchData = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await fetchAllCommunity();
-      const fetchedData = response.data.data.filter((item) => item && item.community_archive!=='');
+      const response = await fetchAllBharatMandirForAdmin();
 
-      setData(fetchedData);
-      setSearchData(fetchedData);
-      setTotalRows(fetchedData.length);
+      setData(response.data.data);
+      setSearchData(response.data.data);
+      setTotalRows(response.data.data.length);
       dispatch(setLoader(false));
     } catch (error) {
       dispatch(setLoader(false));

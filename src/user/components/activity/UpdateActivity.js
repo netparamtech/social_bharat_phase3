@@ -16,10 +16,13 @@ const UpdateActivity = () => {
   const user = useSelector((state) => state.userAuth.user);
   const imageInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState([]);
+  const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [activityPhotos, setActivityPhotos] = useState([]);
   const [imageTempUrl, setImageTempUrl] = useState([]);
+  const [title, setTitle] = useState('');
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState("");
+  const [message, setMessage] = useState('');
   const [defaultImage] = useState(
     "https://images.unsplash.com/photo-1477586957327-847a0f3f4fe3?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8amFpcHVyfGVufDB8fDB8fHww"
   );
@@ -32,10 +35,12 @@ const UpdateActivity = () => {
   const handleImageClick = () => {
     imageInputRef.current.click();
   };
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  }
 
   const handleImageChange = async (e) => {
     const selectedFiles = e.target.files;
-    setActivityPhotos(selectedFiles); // Set the selected files
 
     const totalFiles = selectedFiles.length;
     if (totalFiles > 5) {
@@ -51,11 +56,7 @@ const UpdateActivity = () => {
       const previewUrl = URL.createObjectURL(file);
       previewUrls.push(previewUrl);
     }
-
     const combinedUrls = [...previewUrls];
-    console.log(combinedUrls);
-    setImagePreview(combinedUrls);
-
     const formData = new FormData();
 
     // Append each file to the FormData
@@ -66,14 +67,18 @@ const UpdateActivity = () => {
     try {
       const response = await uploadMultipleImages(formData); // Make an API call to get temporary URL
       if (response.status === 200) {
+        setActivityPhotos(selectedFiles); // Set the selected files
+        setImagePreview(combinedUrls);
         const combineTempUrls = [...response.data.data.files];
         setImageTempUrl(combineTempUrls);
         setServerError("");
+        setMessage('');
       }
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
+        setMessage(error.response.data.message);
       }
 
       //Unauthorized
@@ -126,6 +131,7 @@ const UpdateActivity = () => {
     const data = {
       photo: imageTempUrl,
       description,
+      title,
     };
     console.log(data);
 
@@ -138,7 +144,7 @@ const UpdateActivity = () => {
         if (response && response.status === 201) {
           setErrors("");
           setServerError("");
-          toast.success("Updated Activity Successfully",successOptions);
+          toast.success("Updated Activity Successfully", successOptions);
           navigate("/users/activities");
         }
       } catch (error) {
@@ -153,10 +159,9 @@ const UpdateActivity = () => {
         dispatch(setLoader(false));
       }
     } else {
-      toast.error("Nothing Is Uploaded",errorOptions);
+      toast.error("Nothing Is Uploaded", errorOptions);
     }
   };
-
   useEffect(() => {
     if (user && id) {
       fetchSingleActivity(id, user.id);
@@ -166,132 +171,180 @@ const UpdateActivity = () => {
   useEffect(() => {
     if (activityDetails) {
       setDescription(activityDetails.DESCRIPTION);
-      setImagePreview(activityDetails.photo);
-      setImageTempUrl(activityDetails.photo);
+      setTitle(activityDetails.title);
+
+      // Convert photo to array if it's not already an array
+    if(activityDetails.photo){
+      console.log(activityDetails.photo,"hhh")
+      if (Array.isArray(activityDetails.photo)) {
+        setImagePreview(activityDetails.photo);
+        setImageTempUrl(activityDetails.photo);
+      } else {
+        setImagePreview([activityDetails.photo]);
+        setImageTempUrl([activityDetails.photo]);
+      }
+    }else {
+      setImagePreview([]);
+        setImageTempUrl([]);
+    }
     }
   }, [activityDetails]);
 
+
   useEffect(() => {
     window.scroll(0, 0);
+  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+    };
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call initially to set the correct value
+
+    // Cleanup the event listener when component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
     <>
       <div
-        id="searchPeople-section"
-        style={{
-          backgroundImage: `url(${defaultImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        id="activity-custom"
       >
-        <div
-          className="container"
-          //   style={{ maxHeight: "600px", overflowY: "auto" }}
-        >
-          <div className="row" >
-            <div className="col-4" style={{height: "375px" , maxHeight: "700px", overflowY:"scroll" }}>
-              {" "}
-              <div className="row">
-                {imagePreview &&
-                  imagePreview.map((item, idx) => (
-                    <div className="col-md-4 col-sm-6 col-12" key={idx}>
-                      <div
-                        className="card mb-3"
-                        style={{ height: "142px" }}
-                      >
-                        <img
-                          src={item}
-                          alt={`Photos ${idx + 1}`}
-                          className="card-img-top"
-                          // style={{ height: "200px", width: "100%", objectFit: "cover" }}
-                          style={{ objectFit: "contain", height: "95px" }}
-                        />
-                        <div className="mx-auto">
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-danger mt-2 "
-                            onClick={() => handleDeleteImage(idx)}
+        <div className="container">
+          <div className="row">
+            {imagePreview&&imagePreview.length > 0 ? (<div className="col-4  mb-5">
+              <div
+                className="card"
+                style={{ height: "375px", maxHeight: "700px", overflowY: "scroll" }}
+              >
+                <div className="card-body">
+                  <div className="row">
+                    {imagePreview && Array.isArray(imagePreview) &&
+                      imagePreview.map((item, idx) => (
+                        <div className="col-md-4 col-sm-6 col-12" key={idx}>
+                          <div className="card mb-3"
+                            style={{ height: "130px" }}
                           >
-                            <i className="fas fa-trash"></i> Delete
-                          </button>
+                            <div>
+                              <img
+                                src={item}
+                                alt={`Photos ${idx + 1}`}
+                                className="card-img-top"
+                                style={{ objectFit: "contain", height: "95px" }}
+                              />
+                            </div>
+                            <div className="mx-auto">
+                              <button
+                                type="button"
+                                className="btn"
+                                onClick={() => handleDeleteImage(idx)}
+                              >
+                                <i className="text-danger fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-            <div className="col-8">
-              {" "}
-              <div id="" className="card content-wrapper p-2">
-                <div className="d-flex justify-content-between">
-                  <p className="fs-2 fw-2  m-3">Activity</p>
-                  <button
-                    className="btn bg-darkskyblue btn-success hover-pointer btn-post-activity"
-                    onClick={() => navigate("/users/activities")}
-                  >
-                    View All Activities
-                  </button>
+                      ))}
+                  </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-4 col-11 mx-auto">
-                    <div className="">
-                      <div className="img-container card card-block-md overflow-hidden">
-                        <input
-                          type="file"
-                          ref={imageInputRef}
-                          style={{ display: "none" }}
-                          className="form-control"
-                          accept=".png, .jpg, .jpeg"
-                          id="businessPhoto"
-                          defaultValue={activityPhotos}
-                          onChange={handleImageChange}
-                          multiple
-                        />
-                        <div className="text-profilepic hover-pointer hover-pointer-green">
-                          <i
-                            className="fas fa-edit fs-6"
-                            onClick={handleImageClick}
-                          ></i>
-                        </div>
+              </div>
+            </div>) : ''}
 
-                        {imagePreview.length > 0 ? (
-                          <p>
-                            {" "}
+            <div className={imagePreview && imagePreview.length > 0 ? 'col-8 mx-auto' : 'col-12 mx-auto'}>
+              <div
+                id=""
+                className="card  content-wrapper pt-4 mb-4"
+              >
+                <div className="card-body">
+                  {message && (
+                    <span className="error">{message}</span>
+                  )}
+                  <div className="d-flex justify-content-between mb-3">
+                    <p className="fs-4 fw-2 text-success m-3">Activity</p>
+                    <button
+                      className=" btn-md btn btn-success hover-pointer btn-post-activity"
+                      onClick={() => navigate("/users/activities")}
+                    >
+                      View All Activities
+                    </button>
+                  </div>
+                  <div className="row">
+                    <div className="input-group input-group-sm mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-sm" >Title</span>
+                      </div>
+                      <input type="text" className="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" value={title} onChange={handleTitleChange} />
+                      {errors && errors.title && (
+                        <span className="error">{errors.title}</span>
+                      )}
+                    </div>
+                    <div className="col-sm-4 col-11 mx-auto">
+                      <div className="">
+                        <div className="img-container card card-block-md overflow-hidden">
+                          <input
+                            type="file"
+                            ref={imageInputRef}
+                            style={{ display: "none" }}
+                            className="form-control"
+                            accept=".png, .jpg, .jpeg"
+                            id="businessPhoto"
+                            defaultValue={activityPhotos}
+                            onChange={handleImageChange}
+                            multiple
+                          />
+                          <div className="text-profilepic hover-pointer hover-pointer-green">
+                            <i
+                              className="fas fa-edit fs-6"
+                              onClick={handleImageClick}
+                            ></i>
+                          </div>
+
+                          {imagePreview.length > 0 ? (
+
+
                             <img
                               src={imagePreview[imagePreview.length - 1]}
-                              className="img-set"
+                              className="img-thumbnail img-fluid"
                               alt=""
+                            // style={{objectFit:"cover", height: "95px", width:"200px" }}
                             />
-                          </p>
-                        ) : (
-                          <img src={defaultImage} className="img-set" alt="" />
-                        )}
+
+                          ) : (
+                            <img
+                              src={defaultImage}
+                              className="img-thumbnail img-fluid"
+                              alt=""
+
+                            // style={{objectFit:"cover", height: "95px", width:"200px" }}
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-sm-6 col-11 mx-auto">
-                    <textarea
-                      className="text-area form-control mt-2"
-                      placeholder="Enter Description..."
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                    {errors.description && (
-                      <span className="error">{errors.description}</span>
-                    )}
-                  </div>
-                  <div className="mx-auto">
-                    <button
-                      className="btn-md btn w-100 btn-primary mt-4 mb-2"
-                      onClick={handleSubmit}
-                    >
-                      Submit
-                    </button>
+                    <div className="col-sm-6 col-11 mx-auto">
+                      <textarea
+                        className="text-area form-control h-100 mt-2 fs-5"
+                        placeholder="Enter Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      ></textarea>
+                      {errors && errors.description && (
+                        <span className="error">{errors.description}</span>
+                      )}
+                    </div>
+                    <div className="mx-auto">
+                      <button
+                        className="btn-md btn w-100 btn-primary mt-4 "
+                        onClick={handleSubmit}
+                        disabled={message}
+                      >
+                        Update
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

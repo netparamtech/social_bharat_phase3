@@ -111,6 +111,7 @@ function UserNavDropdown() {
                 dispatch(logout());
                 navigate("/login");
             } else if (error.response && error.response.status === 500) {
+                dispatch(logout());
                 setServerError("Oops! Something went wrong on our server.");
             }
 

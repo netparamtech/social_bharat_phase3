@@ -32,10 +32,9 @@
     } 
   }
 
-  nav .container,
-#banners-section .container {
-  max-width: 1290px !important;
-}
+  #banners-section .container {
+    max-width: 100% !important;
+  }
   
 #banners-section h2 {
   font-size: 35px;

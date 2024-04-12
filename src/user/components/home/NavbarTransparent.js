@@ -265,6 +265,8 @@ const NavbarTransparent = (props) => {
     }
   }
 
+  
+
   const showDrawer = () => {
     setVisible(!visible);
   };

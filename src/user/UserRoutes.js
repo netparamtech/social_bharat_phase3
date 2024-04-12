@@ -42,6 +42,7 @@ import ActivityPage from "./pages/ActivityPage";
 import ActivityIndexPage from "./pages/ActivityIndexPage";
 import UpdateActivityPage from "./pages/UpdateActivityPage";
 import CreateJobProfilePage from "./pages/CreateJobProfilePage";
+import CreateMatrimonialPage from "./pages/profile/update/CreateMatrimonialPage";
 
 const UserRoutes = () => {
     return [
@@ -107,7 +108,12 @@ const UserRoutes = () => {
         },
 
         {
-            path: '/user/update-matrimonial-profile',
+            path: '/user/create-matrimonial-profile',
+            component: CreateMatrimonialPage,
+            exact: true
+        },
+        {
+            path: '/user/update-matrimonial-profile/:id',
             component: UpdateMatrimonialPage,
             exact: true
         },

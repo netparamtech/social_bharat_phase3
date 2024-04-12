@@ -11,7 +11,7 @@ const initialState = {
           ...state,
           isLoaderSet: action.payload,
         };
-        case 'SET_MODEL_SHOW':
+        case 'SET_MODEL_SHOW': 
           return {
             ...state,
             isShowSet: action.payload,

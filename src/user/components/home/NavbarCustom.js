@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
 import UserNavDropdown from "./UserNavDropdown";
+import { getToken } from "../../services/userService";
 
 const NavbarCustom = (props) => {
   const { data, community } = props;
@@ -264,6 +265,30 @@ const NavbarCustom = (props) => {
 
     }
   }
+
+  const getUserTokenExistance = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await getToken();
+
+    } catch (error) {
+      //handleFetchError(error);
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+      } else if (error.response && error.response.status === 500) {
+        dispatch(logout());
+      } else if (error.response && error.response.status === 404) {
+        dispatch(logout());
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+  useEffect(() => {
+    getUserTokenExistance();
+  }, []);
+
 
   const showDrawer = () => {
     setVisible(!visible);

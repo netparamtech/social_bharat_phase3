@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setModelAction } from '../../actions/loaderAction';
@@ -8,7 +8,8 @@ const FeedbackModel = () => {
   const [visible, setVisible] = useState(true);
   const dispatch = useDispatch();
   const handleModelShow = () =>{
-    setVisible(false);
+    console.log("Hello")
+    setVisible(!visible);
     dispatch(setModelAction(false));
   }
 

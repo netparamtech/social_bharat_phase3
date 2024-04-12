@@ -75,6 +75,25 @@ export const createCommunity = async (data) => {
         throw error;
     }
 }
+//fetch all active communities
+export const fetchAllCommunitiesForAdmin = async () => {
+    try {
+      const response = await apiConfig.get("/all-communities");
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  //fetch all active bharat-mandir
+  export const fetchAllBharatMandirForAdmin = async () => {
+    try {
+      const response = await apiConfig.get("/all-bharatMandir");
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
 
 //update profile
 export const updateBasicProfile = async (data) => {

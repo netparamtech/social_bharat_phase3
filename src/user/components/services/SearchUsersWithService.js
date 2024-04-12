@@ -10,9 +10,9 @@ import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import NewChat from "../chats/NewChat";
-import ViewProfileDrawer from "../search/ViewProfileDrawer";
 import Comment from "./Comment";
 import { Rate } from "antd";
+import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -472,7 +472,7 @@ const SearchUsersWithService = () => {
                                 <img src="/user/images/chat-icon.jpg" width="40px" />
                               </div>
                               <button type="button" className="btn me-1 flex-grow-1">
-                                <ViewProfileDrawer id={item.id} />
+                                <ViewProfileDrawerForMembers id={item.id} />
                               </button>
                               <button
                                 type="button"

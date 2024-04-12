@@ -8,6 +8,10 @@ import { setLoader } from "../../actions/loaderAction";
 import Modal from 'react-bootstrap/Modal';
 import { yyyyMmDdFormat } from "../../util/DateConvertor";
 import dayjs from 'dayjs';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 import { fetchAllCitiesByStateID, fetchAllStatesByCountryID, fetchSingleJobPosted, updateUserJobPosted, uploadImage, uploadPdf } from "../../services/userService";
 
 const UpdateJobPosted = (props) => {
@@ -46,11 +50,16 @@ const UpdateJobPosted = (props) => {
     const [countryID, setCountryID] = useState(101);
 
     const [jobDetails, setJobDetails] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [show, setShow] = useState(true);
+    const onEditorStateChange = (editorState) => {
+        setEditorState(editorState);
+    };
+
 
     const handleClose = () => {
         setShow(false)
@@ -232,6 +241,9 @@ const UpdateJobPosted = (props) => {
 
     const handleSubmit = async () => {
         dispatch(setLoader(true));
+        const contentState = editorState.getCurrentContent();
+        const rawContentState = convertToRaw(contentState);
+        const htmlContent = draftToHtml(rawContentState);
         const data = {
             job_title: jobTitle.toUpperCase(),
             job_sector: jobSector.label,
@@ -240,7 +252,7 @@ const UpdateJobPosted = (props) => {
             location,
             attachment: selectedFileTempUrl,
             logo: selectedLogoTempUrl,
-            description,
+            description: htmlContent,
             job_request_status: isActive,
             apply_link: applyLink,
             job_apply_form: isApplyForm,
@@ -292,7 +304,12 @@ const UpdateJobPosted = (props) => {
             setSelectedLogoiTempUrl(jobDetails.logo);
             setLogoPreview(jobDetails.logo);
             setApplyLink(jobDetails.apply_link);
-            setDescription(jobDetails.description);
+            if (jobDetails.description) {
+                const blocksFromHTML = convertFromHTML(jobDetails.description);
+                const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+                const editorStateFromFetchedData = EditorState.createWithContent(contentState);
+                setEditorState(editorStateFromFetchedData);
+            }
             setIsApplyForm(jobDetails.job_apply_form);
             setJobStartDate(yyyyMmDdFormat(jobDetails.job_start_date));
             setJobEndDate(yyyyMmDdFormat(jobDetails.job_end_date));
@@ -487,12 +504,13 @@ const UpdateJobPosted = (props) => {
                                                 )}
                                             </div>
                                             <div>
-                                                <label>Description{" "}<span className="text-danger">*</span></label>
-                                                <textarea type="text"
-                                                    className={`form-control ${errors.description ? 'border-danger' : ''}`}
-                                                    placeholder="Enter Description"
-                                                    defaultValue={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
+                                              
+                                                <Editor
+                                                    editorState={editorState}
+                                                    onEditorStateChange={onEditorStateChange}
+                                                    wrapperClassName="wrapper-class"
+                                                    editorClassName="editor-class custom-editor-height editor-border p-2"
+                                                    toolbarClassName="toolbar-class toolbar-border"
                                                 />
                                                 {errors.description && (
                                                     <span className="error">{errors.description}</span>
@@ -533,7 +551,7 @@ const UpdateJobPosted = (props) => {
                                             </div>
 
                                             <div className="form-check mt-2">
-                                                <p>Need a apply form to Apply ?</p>
+                                                <p>Apply From URL ?</p>
                                                 <label className="form-control">
                                                     <input
                                                         type="radio"

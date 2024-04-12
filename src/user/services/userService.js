@@ -300,12 +300,12 @@ export const deleteSingleEducationDetails = async (id) => {
   }
 };
 
-//update matrimonial profile
+//create matrimonial profile
 
-export const updateMatrimonialInfo = async (data) => {
+export const createMatrimonialInfo = async (data) => {
   try {
-    const response = await apiWithHeaders.put(
-      "/profile/update-matrimonial-details",
+    const response = await apiWithHeaders.post(
+      "/profile/create-matrimonial-details",
       data
     );
     return response;
@@ -313,6 +313,57 @@ export const updateMatrimonialInfo = async (data) => {
     throw error;
   }
 };
+
+//update matrimonial info
+export const updateMatrimonialInfo = async (data,id) => {
+  try {
+    const response = await apiWithHeaders.post(
+      `/profile/update-matrimonial-details/${id}`,
+      data
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetchMatrimonial details
+export const fetchMatrimonialInfo = async () => {
+  try {
+    const response = await apiWithHeaders.get('/profile/matrimonials');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//fetchMatrimonial details
+export const fetchMatrimonialById = async (id) => {
+  try {
+    const response = await apiWithHeaders.get(`/profile/matrimonial/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//toggle status for matrimonial
+export const toggleMatrimonial = async (id) => {
+  try {
+    const response = await apiWithHeaders.patch(`/profile/matrimonial/toggle-status/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//delete matrimonial
+export const deleteMatrimonialDetailsById = async (id) => {
+  try {
+    const response = await apiWithHeaders.delete(`/profile/matrimonial/delete/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 //update business profile
 

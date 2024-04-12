@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchOldTestimonials, userFeedback } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FetchAllFeedback from "./FetchAllFeedback";
+import { setModelAction } from "../../actions/loaderAction";
 
 const UserRatingModel = () => {
   const user = useSelector((state) => state.userAuth);
@@ -19,6 +20,7 @@ const UserRatingModel = () => {
   const defaultPhoto = "/user/images/OIP.jpg";
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMessageChange = (e) => {
     setComment(e.target.value);
@@ -43,6 +45,7 @@ const UserRatingModel = () => {
         setAlertClass("alert-success");
 
         setTimeout(() => {
+          dispatch(setModelAction(false));
           navigate("/dashboard");
         }, 1000);
       }

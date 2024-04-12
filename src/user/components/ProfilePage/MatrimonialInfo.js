@@ -1,76 +1,73 @@
 import { useEffect, useState } from "react";
-import { deleteMatrimonial } from "../../services/userService";
+import { deleteMatrimonialDetailsById, fetchMatrimonialInfo, toggleMatrimonial } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import GenerateBiodata from "./GenerateBiodata";
+import { logout } from "../../actions/userAction";
+import MatrimonialCard from "./MatrimonialCard";
+import { Image } from 'antd';
 
-const MatrimonialInfo = (props) => {
-  const { user } = props;
+
+const MatrimonialInfo = () => {
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
-  const [nameLabel, setNameLabel] = useState('');
-
-  const [manglik, setManglik] = useState('');
-
+  const [data, setData] = useState('');
+  const [isShowMatrimonial, setIsShowMatrimonial] = useState(true);
+  const [serverError, setServerError] = useState('');
+  const [defaultImage, setDefaultImage] = useState(
+    "/admin/img/download.jpg"
+  );
+  const colorMap = [
+    'bg-primary',
+    'bg-secondary',
+    'bg-success',
+    'bg-danger',
+    'bg-warning',
+    'bg-info',
+    'bg-light',
+    'bg-dark',
+    'bg-lightgreen', // Custom color class
+    // Add more Bootstrap color classes as needed
+  ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const matrimonialData = user?.data?.matrimonial[0] || {};
 
-  const proposalPhotos = user?.data?.matrimonial[0]?.proposal_photos;
+  const handleMatrimonialShow = () => {
+    setIsShowMatrimonial(!isShowMatrimonial);
+  }
 
-  const brothersDetails = user?.data?.matrimonial[0]?.brothers_details;
-
-  const sistersDetails = user?.data?.matrimonial[0]?.sisters_details;
-
-  const getProfileHeading = () => {
-    const profileFor = matrimonialData.profile_created_for;
-    switch (profileFor) {
-      case "Self":
-        return "My Profile";
-      case "Sister":
-        return `Profile Created for My Sister ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
-      case "Brother":
-        return `Profile Created for My Brother ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
-      case "Son":
-        return `Profile Created for My Son ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
-      case "Daughter":
-        return `Profile Created for My Daughter ${matrimonialData.matrimonial_profile_name.toUpperCase()}`;
-      // Add more cases as needed
-      default:
-        return "Matrimonial Info";
+  const deleteMatrimonialDetails = async (id) => {
+    dispatch(setLoader(true));
+    try {
+      const response = await deleteMatrimonialDetailsById(id);
+      if (response && response.status === 200) {
+        fetchMatrimonialDetails();
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
 
-  const getFileType = (url) => {
-    // Extract the file extension from the URL
-    const extension = url.split(".").pop().toLowerCase();
 
-    // Define mappings of common file types
-    const fileTypeMappings = {
-      pdf: "PDF",
-      doc: "DOC",
-      docx: "DOCX",
-      txt: "TXT",
-      // Add more file types as needed
-    };
-    // Use the mapping or show the extension as-is
-    return fileTypeMappings[extension] || extension.toUpperCase();
-  };
-  const deleteMatrimonialDetails = async () => {
-    dispatch(setLoader(true));
+  const fetchMatrimonialDetails = async () => {
     try {
-      const response = await deleteMatrimonial();
+      dispatch(setLoader(true));
+      const response = await fetchMatrimonialInfo();
       if (response && response.status === 200) {
-        setMatrimonialDetails((prevDetails) =>
-          prevDetails.filter(
-            (detail) => detail.id !== user?.data?.matrimonial[0].id
-          )
-        );
-        dispatch(setLoader(false));
+        setMatrimonialDetails(response.data.data);
       }
+
     } catch (error) {
-      dispatch(setLoader(false));
       //Unauthorized
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -79,259 +76,236 @@ const MatrimonialInfo = (props) => {
       else if (error.response && error.response.status === 500) {
         navigate("/login");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const [month, day, year] = new Date(dateString)
-      .toLocaleDateString('en-GB', options)
-      .split('/');
-    return `${month}-${day}-${year}`;
+  }
+  const handleMatrimonialToggleStatus = async (id) => {
+    try {
+      const response = await toggleMatrimonial(id);
+      if (response && response.status === 200) {
+        fetchMatrimonialDetails();
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+      } else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    }
   };
 
   useEffect(() => {
-    setMatrimonialDetails(user?.data?.matrimonial || "");
-    if (user?.data?.matrimonial[0]?.is_manglik) {
-      setManglik('YES');
-    } else {
-      setManglik('NO');
-    }
-  }, [user]);
+    fetchMatrimonialDetails()
+  }, []);
+
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
+
         <div className="card shadow">
-          {matrimonialDetails && matrimonialDetails.length > 0 ? (
-            <div className="edit-icon">
-              <a
-                className="hover-pointer"
-                onClick={() => navigate("/user/update-matrimonial-profile")}
-                title="Edit"
-              >
-                <i className="fas fa-pencil-alt"></i>
-              </a>
-            </div>
-          ) : (
-            <div className="edit-icon add-more-detail">
-              <a
-                className="hover-pointer"
-                title="Add More Detail"
-                onClick={() => navigate("/user/update-matrimonial-profile")}
-              >
-                <i className="btn btn-outline-info fas fa-plus"></i>
-              </a>
-            </div>
-          )}
-          {matrimonialDetails && matrimonialDetails.length > 0 ? (
-            <div className="delete-icon">
-              <a title="Delete" className="hover-pointer">
-                <i
-                  className="fa-solid fa-trash "
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteMatrimonialDetails();
-                  }}
-                ></i>
-              </a>
-            </div>
-          ) : (
-            ""
-          )}
-          <div className="card-header d-flex justify-content-between">
+
+
+          <div className="card-header d-flex flex-wrap justify-content-between align-items-center">
             <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
-            {matrimonialDetails && matrimonialDetails.length > 0 && <GenerateBiodata userData={user} />}
-          </div>
+            {/* {matrimonialDetails && matrimonialDetails.length > 0 && <GenerateBiodata userData={matrimonialDetails} />} */}
+            {isShowMatrimonial && matrimonialDetails.length > 0 && (
+              <div className="d-flex align-items-center">
+                {/* Add a button to trigger PDF generation */}
+                <button className='me-3 mb-3 rounded bg-secondary text-light mt-2' onClick={handleMatrimonialShow}>Hide Matrimonial Info</button>
 
-          <div className="card-body">
-
-
-            {matrimonialDetails && matrimonialDetails.length > 0 ? (
-              <div className="row wow animate__animated animate__zoomIn">
-                <div id="section-1" className="col-md-6 card-in-section">
-                  <div className="card shadow">
-                    <div className="card-body">
-                      <h5 className="m-2 mb-2">{getProfileHeading() || "N/A"}</h5>
-                      <table className="table table-striped mb-2">
-                        <tbody>
-                          <tr>
-                            <td>Father Name</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].father_name) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Mother Name</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].mother_name) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Manglic</td>
-                            <td className="text-muted">
-                              {manglik ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Height</td>
-                            <td className="text-muted">
-                              {user?.data?.matrimonial[0].height_in_feet}{" "}
-                              ft
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Package/Salary</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].salary_package ? (user?.data?.matrimonial[0].salary_package === 'none') ? "N/A" : user.data.matrimonial[0].salary_package : "N/A")}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Date Of Birth</td>
-                            <td className="text-muted">
-                              {formatDate(user?.data?.matrimonial[0].matrimonial_profile_dob) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Brother Count</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].brother_count) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          {brothersDetails && (
-                            <tr>
-                              <td>Brothers Details</td>
-                              <td className="text-muted">
-                                <div className="truncate-text">
-                                  {brothersDetails}
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div id="section-2" className="col-md-6 card-in-section">
-                  <div className="card shadow">
-                    <div className="card-body ">
-                      <table className="table table-striped">
-                        <tbody>
-                          <tr>
-                            <td>Sister Count</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].sister_count) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          {sistersDetails && (
-                            <tr>
-                              <td>Sisters Details</td>
-                              <td className="text-muted">
-                                <div className="truncate-text">
-                                  {sistersDetails}
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                          <tr>
-                            <td>Subcast</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].subcast) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Gender</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].matrimonial_profile_gender) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Paternal Gotra</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].paternal_gotra) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Maternal Gotra</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].maternal_gotra) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Biodata</td>
-                            <td className="text-muted">
-                              {user?.data?.matrimonial[0].biodata && (
-                                <span>
-                                  <a
-                                    href={user.data.matrimonial[0].biodata}
-                                    download="biodata.pdf"
-                                    target="_blank"
-                                  >
-                                    <i className="fa-regular fa-file-lines"></i>{" "}
-                                    Download Biodata
-                                  </a>
-                                  &nbsp;(
-                                  {getFileType(
-                                    user.data.matrimonial[0].biodata
-                                  )}
-                                  )
-                                </span>
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Proposal Photo</td>
-                            <td className="proposal-Photo">
-                              {proposalPhotos && proposalPhotos.length > 0 &&
-                                Array.isArray(proposalPhotos) ? (
-                                proposalPhotos.map((item, idx) => (
-                                  <a href={item} target="_blank" key={idx}>
-                                    <img className="m-1" src={item} />
-                                  </a>
-                                ))
-                              ) : (
-                                <a href={proposalPhotos} target="_blank">
-                                  {
-                                    proposalPhotos && proposalPhotos.length > 0 && <img src={proposalPhotos} />
-                                  }
-                                </a>
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Other Details</td>
-                            <td className="text-muted">
-                              {(user?.data?.matrimonial[0].description) ||
-                                "N/A"}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="add-more-info ">
-                <a
-                  className="btn btn-secondary hover-pointer"
-                  onClick={() => navigate("/user/update-matrimonial-profile")}
-                >
-                  Add Matrimonial Info
-                </a>
               </div>
             )}
+            <a className="hover-pointer" title="Add More Detail" onClick={() => navigate("/user/create-matrimonial-profile")}>
+              <i className="btn btn-outline-info fas fa-plus"></i>
+            </a>
           </div>
+          {serverError && <p className="fs-4 text-danger">{serverError}</p>}
+          <div className="row">
+            {
+              matrimonialDetails && matrimonialDetails.length > 0 && (
+
+                matrimonialDetails && matrimonialDetails.length > 0 && isShowMatrimonial ? matrimonialDetails.map((item, index) => (
+
+                  // <div className="col-md-6 wow animate__animated animate__zoomIn" key={index}>
+                  //   <div className="card shadow mb-2">
+                  //     <div className="card-body">
+                  //     {item&& <GenerateBiodata userData={item} />}
+                  //       <div className="edit-icon">
+                  //         <a className='hover-pointer' onClick={() => navigate(`/user/update-matrimonial-profile/${item.id}`)} title="Edit">
+                  //           <i className="fas fa-pencil-alt"></i>
+                  //         </a>
+                  //         <a className='hover-pointer m-2' onClick={() => handleMatrimonialToggleStatus(item.id)} title="Edit">
+
+                  //           {
+                  //             item.STATUS === 'Active' ? (
+                  //               <i
+                  //                 className="fa fa-thumbs-up"
+                  //                 title="Active"
+                  //               />
+                  //             ) : (
+                  //               <i
+                  //                 className="fa fa-thumbs-down  text-danger"
+                  //                 title="Inactive"
+                  //               />
+                  //             )
+                  //           }
+                  //         </a>
+                  //         <a className='hover-pointer' onClick={() => deleteMatrimonialDetails(item.id)} title="Edit">
+                  //           <i className="fas fa-trash"></i>
+                  //         </a>
+                  //       </div>
+                  //       <h5 className="card-header m-2 mb-2">{getProfileHeading(item.profile_created_for,item.matrimonial_profile_name) || "N/A"}</h5>
+                  //       <p>Father Name: <span className="text-muted">{(item.father_name) || "N/A"}</span></p>
+                  //       <p>Mother Name: <span className="text-muted">{(item.mother_name) || "N/A"}</span></p>
+                  //       <p>Manglic: <span className="text-muted">{item.is_manglik || "N/A"}</span></p>
+                  //       <p>Height: <span className="text-muted">{item.height_in_feet} ft</span></p>
+                  //       <p>Package/Salary: <span className="text-muted">{(item.salary_package ? (item.salary_package === 'none') ? "N/A" : item.salary_package : "N/A")}</span></p>
+                  //       <p>Date Of Birth: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
+                  //       <p>Education: <span className="text-muted">{(item.education) || "N/A"}</span></p>
+                  //       <p>Job Profile: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
+                  //       <p>Brother Count: <span className="text-muted">{(item.brother_count) || "N/A"}</span></p>
+                  //       {item.brothers_details && (
+                  //         <p>Brothers Details: <span className="text-muted truncate-text">{item.brothers_details}</span></p>
+                  //       )}
+                  //       <p>Sister Count: <span className="text-muted">{(item.sister_count) || "N/A"}</span></p>
+                  //       {item.sisters_details && (
+                  //         <p>Sisters Details: <span className="text-muted truncate-text">{item.sisters_details}</span></p>
+                  //       )}
+                  //       <p>Subcast: <span className="text-muted">{(item.subcast) || "N/A"}</span></p>
+                  //       <p>Gender: <span className="text-muted">{(item.matrimonial_profile_gender) || "N/A"}</span></p>
+                  //       <p>Paternal Gotra: <span className="text-muted">{(item.paternal_gotra) || "N/A"}</span></p>
+                  //       <p>Maternal Gotra: <span className="text-muted">{(item.maternal_gotra) || "N/A"}</span></p>
+                  //       <p>Biodata: <span className="text-muted">{item.biodata && (
+                  //         <a href={item.biodata} download="biodata.pdf" target="_blank">
+                  //           <i className="fa-regular fa-file-lines"></i> Download Biodata
+                  //         </a>
+                  //       )}</span></p>
+                  //       <p>Proposal Photo: <span className="text-muted">
+                  //       <Image.PreviewGroup>
+                  //       {
+                  //           item.proposal_photos && Array.isArray(item.proposal_photos) ? (
+                  //             item.proposal_photos.map((photo, idx) => (
+                  //               <Image className="m-1" src={photo} alt={`Proposal Photo ${idx}`} width={50} />
+                  //             ))
+
+                  //           ) : (
+                  //             item.proposal_photos ? (
+                  //               <Image className="m-1" src={item.proposal_photos} alt="proposal photo" width={50} />
+                  //             ) : ''
+                  //           )
+                  //         }
+                  //       </Image.PreviewGroup>
+
+
+
+                  //       </span></p>
+                  //       <p>Other Details: <span className="text-muted">{(item.DESCRIPTION) || "N/A"}</span></p>
+
+                  //     </div>
+                  //   </div>
+                  // </div>
+                  <div className="col-11 col-md-3 mb-4 mx-auto mt-2">
+                    <div className={`card text-white h-100 ${colorMap[index]}`}>
+                      <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div className="me-3">
+                            <div className="text-white-75 fs-4">{item.matrimonial_profile_name}</div>
+
+
+
+                          </div>
+                          {/* <img src="/user/images/searchPeople.png" width="40px" /> */}
+                          {
+                            item.proposal_photos && item.proposal_photos.length > 0 ?
+                              (
+                                Array.isArray(item.proposal_photos) ? <Image
+                                  src={item.proposal_photos[0]}
+                                  alt={item.matrimonial_profile_name}
+                                  className="img-fluid"
+                                  style={{ width: '40px', height: '40px', borderRadius: '10px' }}
+                                /> : <Image
+                                  src={item.proposal_photos}
+                                  alt={item.matrimonial_profile_name}
+                                  className="img-fluid"
+                                  style={{ width: '40px', height: '40px', borderRadius: '10px' }}
+                                />
+                              ) : <img
+                                src={defaultImage}
+                                alt={item.matrimonial_profile_name}
+                                className="img-fluid"
+                                style={{ width: '40px', height: '40px', borderRadius: '10px' }}
+                              />
+                          }
+
+                        </div>
+
+                      </div>
+                      <div className="card-footer d-flex align-items-center justify-content-between small">
+                        {item && <GenerateBiodata userData={item} />}
+                        <div className="">
+                          <MatrimonialCard item={item} />
+                          <a className='hover-pointer' onClick={() => navigate(`/user/update-matrimonial-profile/${item.id}`)} title="Edit">
+                            <i className="text-light fas fa-pencil-alt"></i>
+                          </a>
+                          <a className='hover-pointer m-2' onClick={() => handleMatrimonialToggleStatus(item.id)} title="Edit">
+
+                            {
+                              item.STATUS === 'Active' ? (
+                                <i
+                                  className="text-warning fa fa-thumbs-up"
+                                  title="Active"
+                                />
+                              ) : (
+                                <i
+                                  className="fa fa-thumbs-down  text-danger"
+                                  title="Inactive"
+                                />
+                              )
+                            }
+                          </a>
+                          <a className='hover-pointer' onClick={() => deleteMatrimonialDetails(item.id)} title="Edit">
+                            <i className="text-danger fas fa-trash"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                )) : (
+                  <div className="card-body">
+                    <div className="add-more-info ">
+                      <a
+                        className="btn btn-secondary hover-pointer"
+                        onClick={handleMatrimonialShow}
+                      >
+                        Show Matrimonial Info
+                      </a>
+                    </div>
+                  </div>
+                )
+
+              )
+            }
+          </div>
+
+          {
+            matrimonialDetails && matrimonialDetails.length === 0 && (
+              <div className="card-body">
+                <div className="add-more-info ">
+                  <a
+                    className="btn btn-secondary hover-pointer"
+                    onClick={() => navigate("/user/create-matrimonial-profile")}
+                  >
+                    Add Matrimonial Info
+                  </a>
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

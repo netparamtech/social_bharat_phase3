@@ -289,7 +289,7 @@ const CreateNewBharatMandir = () => {
                 </div>
                 <div className="col-md-12">
 
-                  <Editor
+                  <Editor 
                     editorState={editorState}
                     onEditorStateChange={onEditorStateChange}
                     wrapperClassName="wrapper-class"

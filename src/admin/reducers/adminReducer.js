@@ -6,7 +6,7 @@ import loaderReducer from "../../user/reducers/loaderReducer";
 const rootReducer = combineReducers({
     auth: authReducer,
     userAuth: userAuthReducer,
-    loader: loaderReducer,
+    loader: loaderReducer, 
 });
 
 export default rootReducer;

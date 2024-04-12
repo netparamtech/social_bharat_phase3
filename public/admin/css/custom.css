@@ -222,3 +222,15 @@ div.Table {
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ddd; /* Optional: Add a border for styling */
 }
+.description-cell {
+  overflow: hidden;
+  white-space: nowrap; /* Prevent line breaks */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflowed content */
+}
+.hover-pointer-red:hover {
+  color: red;
+  border-radius: 20px;
+  padding: 2px;
+  scale: 1.1;
+}
+

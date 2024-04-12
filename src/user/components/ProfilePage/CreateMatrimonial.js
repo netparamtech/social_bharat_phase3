@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import {
+  createMatrimonialInfo,
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
   fetchAllSubcasts,
-  fetchMatrimonialById,
   updateMatrimonialInfo,
   uploadMultipleImages,
   uploadPdf,
 } from "../../services/userService";
 import { getFeet, getInches } from "../../util/Conversion";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "antd";
@@ -19,10 +19,9 @@ import { setLoader } from "../../actions/loaderAction";
 
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
-const UpdateMatrimonial = () => {
-  const { id } = useParams();
+const CreateMatrimonial = () => {
   const loggedUser = useSelector((state) => state.userAuth);
-  const [userData, setUserData] = useState('');
+
   const [userMatrimonial, setUserMatrimonial] = useState();
 
   const user = useSelector((state) => state.userAuth);
@@ -83,6 +82,12 @@ const UpdateMatrimonial = () => {
   const [nameLabel, setNameLabel] = useState('Name');
   const [matrimonialOccupation, setMatrimonialOccupation] = useState('');
   const [education, setEducation] = useState('');
+
+  const [errors, setErrors] = useState("");
+  const [messagePhotos, setMessagePhotos] = useState('');
+  const [messageBiodata, setMessageBiodata] = useState('');
+  const [serverError, setServerError] = useState("");
+
   //state and city
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState("");
@@ -90,12 +95,6 @@ const UpdateMatrimonial = () => {
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
-
-  const [errors, setErrors] = useState("");
-  const [messagePhotos, setMessagePhotos] = useState('');
-  const [messageBiodata, setMessageBiodata] = useState('');
-  const [serverError, setServerError] = useState("");
-  const [slectedPhotos, setSelectedPhotos] = useState([]);
 
   const navigate = useNavigate();
 
@@ -127,10 +126,10 @@ const UpdateMatrimonial = () => {
   const handleMatrimonialOccupation = (e) => {
     setMatrimonialOccupation(e.target.value);
   }
+
   const handleEducationChange = (e) => {
     setEducation(e.target.value);
   }
-
   const handlePackageChange = (e) => {
     setPackageValue(e.target.value);
   };
@@ -158,8 +157,6 @@ const UpdateMatrimonial = () => {
 
   }
 
-
-
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
     setProposalPhoto(selectedFiles); // Set the selected files
@@ -168,11 +165,6 @@ const UpdateMatrimonial = () => {
     if (totalFiles > 5) {
       alert("Total files (including existing ones) cannot exceed 5.");
       e.target.value = null; // Clear the input field
-      return;
-    }
-    if (totalFiles <= 1) {
-      alert("Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg format)");
-      e.target.value = null;
       return;
     }
 
@@ -184,7 +176,7 @@ const UpdateMatrimonial = () => {
       previewUrls.push(previewUrl);
     }
 
-    const combinedUrls = [...previewUrls, ...proposalPreview];
+    const combinedUrls = [...previewUrls, ...tempProposalPhotoUrl];
 
     const formData = new FormData();
 
@@ -225,6 +217,7 @@ const UpdateMatrimonial = () => {
       }
     }
   };
+
   const handleBiodataFileChange = async (e) => {
     const selectedFiles = e.target.files[0];
     if (!(selectedFiles instanceof File)) {
@@ -265,33 +258,12 @@ const UpdateMatrimonial = () => {
     }
   };
 
-  const fetchMatrimonial = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await fetchMatrimonialById(id);
-      if (response && response.status === 200) {
-        setUserMatrimonial(response.data.data);
-      }
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    } finally {
-      dispatch(setLoader(false));
-    }
-  };
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(setLoader(true));
 
     const trimmedTempProposalPhotoUrl = tempProposalPhotoUrl.map(item => item.trim()).filter((item) => item !== '');
+    console.log(trimmedTempProposalPhotoUrl.length, "Check create length")
 
     const matrimonialData = {
       father_name: fatherName,
@@ -299,7 +271,7 @@ const UpdateMatrimonial = () => {
       height_in_feet: `${heightFeet}.${heightInch}`,
       maternal_gotra: maternalGotra,
       paternal_gotra: paternalGotra,
-      proposal_photos: trimmedTempProposalPhotoUrl.length > 0 ? trimmedTempProposalPhotoUrl : '', // Use the temporary URL
+      proposal_photos: trimmedTempProposalPhotoUrl, // Use the temporary URL
       biodata: tempBiodataFileUrl, // Use the temporary URL
       brother_count: brotherCount ? brotherCount : 0,
       sister_count: sisterCount ? sisterCount : 0,
@@ -308,10 +280,10 @@ const UpdateMatrimonial = () => {
       salary_package: packageValue ? packageValue : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_name: matrimonialProfileName,
-      matrimonial_profile_occupation: matrimonialOccupation,
-      education,
       matrimonial_profile_dob: dob,
       is_manglik: manglicStatus,
+      matrimonial_profile_occupation: matrimonialOccupation,
+      education,
       profile_created_for: updateFor && updateFor.label,
       skin_tone: 'DARK',
       subcast_id,
@@ -323,7 +295,7 @@ const UpdateMatrimonial = () => {
 
 
     try {
-      const response = await updateMatrimonialInfo(matrimonialData, id);
+      const response = await createMatrimonialInfo(matrimonialData);
       if (response && response.status === 200) {
         dispatch(setLoader(false));
         setErrors("");
@@ -363,156 +335,6 @@ const UpdateMatrimonial = () => {
     setTempProposalPhotoUrl(updatedProposalTempUrl);
   };
 
-  useEffect(() => {
-    if (userData) {
-      setCommunity(userData && userData.community && userData.community);
-      setUserMatrimonial(userData && userData.matrimonial && userData.matrimonial[0]);
-    }
-  }, [userData]);
-
-
-
-  useEffect(() => {
-    if (community) {
-      setCommunityName(community && community.name);
-    }
-  }, [community]);
-
-  useEffect(() => {
-    // Set default values from userMatrimonial prop when it changes
-    if (userMatrimonial) {
-      setMatrimonialProfileName(userMatrimonial.matrimonial_profile_name || "N/A")
-      setFatherName(userMatrimonial.father_name || "N/A");
-      setMotherName(userMatrimonial.mother_name || "N/A");
-      setSkinTone(userMatrimonial.skin_tone || "");
-      setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
-      setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
-      setWeight(userMatrimonial.weight_in_kg || "N/A");
-      setCast(userMatrimonial.cast || communityName);
-      setGotraSelf(userMatrimonial.gotra || "N/A");
-      setMaternalGotra(userMatrimonial.maternal_gotra || "N/A");
-      setPaternalGotra(userMatrimonial.paternal_gotra || "N/A");
-      setProposalPhoto(userMatrimonial.proposal_photos || "N/A");
-      setBrotherCount(userMatrimonial.brother_count);
-      setEducation(userMatrimonial.education);
-      setSisterCount(userMatrimonial.sister_count);
-      setPackageValue(userMatrimonial.salary_package);
-      setMatrimonialOccupation(userMatrimonial.matrimonial_profile_occupation);
-      setDescription(userMatrimonial.description || "");
-      setManglicStatus(userMatrimonial.is_manglik || 'No');
-      {
-        userMatrimonial && userMatrimonial.proposal_photos && (
-          setTempProposalPhotoUrl(
-            Array.isArray(userMatrimonial.proposal_photos)
-              ? userMatrimonial.proposal_photos
-              : [userMatrimonial.proposal_photos]
-          )
-        )
-      }
-
-
-      {
-        userMatrimonial &&
-          userMatrimonial.proposal_photos &&
-          Array.isArray(userMatrimonial.proposal_photos)
-          ? setProposalPreview(userMatrimonial.proposal_photos || "")
-          : setProposalPreview([userMatrimonial.proposal_photos] || "");
-      }
-
-
-      setBiodataFile(userMatrimonial.biodata || "");
-      setBiodataPreview(userMatrimonial.biodata || "");
-      setTempBiodataFileUrl(userMatrimonial.biodata || "");
-      setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
-      setSubcastId(userMatrimonial.subcast_id);
-
-      if (userMatrimonial.brothers_details) {
-
-        setBrothersDetails(userMatrimonial.brothers_details);
-        setShowBrotherDetail(true);
-      } else {
-        setIsBrotherDetails(false);
-      }
-      if (userMatrimonial.sisters_details) {
-        setSistersDetails(userMatrimonial.sisters_details);
-        setShowSisterDetail(true);
-      } else {
-        setIsSisterDetails(false);
-      }
-
-      console.log(userMatrimonial, "Chack date")
-
-      if (userMatrimonial.profile_created_for !== null) {
-        setUpdateFor({
-          value: userMatrimonial.profile_created_for,
-          label: userMatrimonial.profile_created_for,
-        });
-        if (userMatrimonial.profile_created_for === 'Self') {
-          setGender(user.user.gender);
-
-          setDOB(yyyyMmDdFormat(user.user.dob));
-        } else {
-          setGender(userMatrimonial.matrimonial_profile_gender);
-          console.log(userMatrimonial, "Heeel")
-          setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
-        }
-      }
-      if (userMatrimonial.state) {
-        setSelectedState({ value: userMatrimonial.state, label: userMatrimonial.state });
-      }
-      if (userMatrimonial.city) {
-        setSelectedCity({ value: userMatrimonial.city, label: userMatrimonial.city });
-      }
-
-      // You can similarly handle the proposalPhoto and biodataFile values here if needed
-    }
-
-  }, [userMatrimonial]);
-  useEffect(() => {
-    if (proposalPreview) {
-      console.log(proposalPreview)
-    }
-  }, [proposalPreview]);
-
-  useEffect(() => {
-    if (updateFor && user) {
-      if (updateFor.label === 'Self') {
-        setNameLabel('Your Name');
-        setMatrimonialProfileName(user.user.name);
-      } else if (updateFor.label === 'Brother') {
-        setNameLabel('Name Of Brother');
-      } else if (updateFor.label === 'Sister') {
-        setNameLabel('Name Of Sister');
-      } else if (updateFor.label === 'Son') {
-        setNameLabel('Name Of Son');
-      } else if (updateFor.label === 'Daughter') {
-        setNameLabel('Name Of Daughter');
-      }
-    }
-  }, [updateFor])
-
-  //fetch all active subcast communities
-  const fetchSubcastsCommunities = async () => {
-    dispatch(setLoader(true));
-    try {
-      const response = await fetchAllSubcasts(communityId);
-      if (response && response.status === 200) {
-        const requestedCasts = response.data.data.filter((item) => item.status === 'true');
-        setSubcastArray(requestedCasts);
-      }
-    } catch (error) {
-      //Unauthorized
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-      //Internal Server Error
-      else if (error.response && error.response.status === 500) {
-        setServerError("Oops! Something went wrong on our server.");
-      }
-    } finally {
-      dispatch(setLoader(false));
-    }
-  };
   const ageCalculate = (dob) => {
     if (dob !== null) {
       const dobDate = new Date(dob);
@@ -531,7 +353,6 @@ const UpdateMatrimonial = () => {
 
   const handleDateChange = (e) => {
     let dateValue = e.target.value;
-    console.log(dateValue)
     if (!isNaN(Date.parse(dateValue))) {
       const age = ageCalculate(dateValue);
       if (age < 18) {
@@ -545,18 +366,6 @@ const UpdateMatrimonial = () => {
     }
   }
 
-  useEffect(() => {
-    if (loggedUser && loggedUser.user) {
-      setCommunityId(loggedUser.user.community_id);
-      setMaritalStatus(loggedUser && loggedUser.user.marital_status && loggedUser.user.marital_status);
-    }
-  }, [loggedUser]);
-
-  useEffect(() => {
-    if (communityId) {
-      fetchSubcastsCommunities();
-    }
-  }, [communityId])
   //state and city change operations
   const handleStateChange = (selectedOption) => {
     setSelectedState(selectedOption);
@@ -602,7 +411,6 @@ const UpdateMatrimonial = () => {
 
   const getAllCities = async (stateID) => {
     dispatch(setLoader(true));
-    console.log(stateID, "stateId")
     if (stateID) {
       try {
         const response = await fetchAllCitiesByStateID(stateID);
@@ -624,25 +432,155 @@ const UpdateMatrimonial = () => {
       }
     }
   };
-  useEffect(() => {
-    // Check if selectedCountry is already set
-    getAllStates();
-  }, []);
 
   useEffect(() => {
     if (selectedState) {
-      const selectedStateObject = states.find(
-        (state) => state.name === selectedState.label
-      );
-      getAllCities(selectedStateObject.id);
+      getAllCities(selectedState.id);
     }
   }, [selectedState]);
 
+
+
   useEffect(() => {
-    fetchMatrimonial();
+    if (community) {
+      setCommunityName(community && community.name);
+    }
+  }, [community]);
+
+  //   useEffect(() => {
+  //     // Set default values from userMatrimonial prop when it changes
+  //     if (userMatrimonial) {
+  //       setMatrimonialProfileName(userMatrimonial.matrimonial_profile_name || "N/A")
+  //       setFatherName(userMatrimonial.father_name || "N/A");
+  //       setMotherName(userMatrimonial.mother_name || "N/A");
+  //       setSkinTone(userMatrimonial.skin_tone || "");
+  //       setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
+  //       setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
+  //       setWeight(userMatrimonial.weight_in_kg || "N/A");
+  //       setCast(userMatrimonial.cast || communityName);
+  //       setGotraSelf(userMatrimonial.gotra || "N/A");
+  //       setMaternalGotra(userMatrimonial.maternal_gotra || "N/A");
+  //       setPaternalGotra(userMatrimonial.paternal_gotra || "N/A");
+  //       setProposalPhoto(userMatrimonial.proposal_photos || "N/A");
+  //       setBrotherCount(userMatrimonial.brother_count);
+  //       setSisterCount(userMatrimonial.sister_count);
+  //       setPackageValue(userMatrimonial.salary_package);
+  //       setDescription(userMatrimonial.description || "");
+  //       {
+  //         userMatrimonial && userMatrimonial.proposal_photos && (
+  //           setTempProposalPhotoUrl(
+  //             Array.isArray(userMatrimonial.proposal_photos)
+  //               ? userMatrimonial.proposal_photos
+  //               : [userMatrimonial.proposal_photos]
+  //           )
+  //         )
+  //       }
+
+
+  //       {
+  //         userMatrimonial &&
+  //           userMatrimonial.proposal_photos &&
+  //           Array.isArray(userMatrimonial.proposal_photos)
+  //           ? setProposalPreview(userMatrimonial.proposal_photos || "")
+  //           : setProposalPreview([userMatrimonial.proposal_photos] || "");
+  //       }
+
+  //       setBiodataFile(userMatrimonial.biodata || "");
+  //       setBiodataPreview(userMatrimonial.biodata || "");
+  //       setTempBiodataFileUrl(userMatrimonial.biodata || "");
+  //       setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
+  //       setSubcastId(userMatrimonial.subcast_id);
+
+  //       if (userMatrimonial.brothers_details) {
+
+  //         setBrothersDetails(userMatrimonial.brothers_details);
+  //         setShowBrotherDetail(true);
+  //       } else {
+  //         setIsBrotherDetails(false);
+  //       }
+  //       if (userMatrimonial.sisters_details) {
+  //         setSistersDetails(userMatrimonial.sisters_details);
+  //         setShowSisterDetail(true);
+  //       } else {
+  //         setIsSisterDetails(false);
+  //       }
+
+  //       if (userMatrimonial.profile_created_for !== null) {
+  //         setUpdateFor({
+  //           value: userMatrimonial.profile_created_for,
+  //           label: userMatrimonial.profile_created_for,
+  //         });
+  //         if (userMatrimonial.profile_created_for === 'Self') {
+  //           setGender(user.user.gender);
+
+  //           setDOB(yyyyMmDdFormat(user.user.dob));
+  //         } else {
+  //           setGender(userMatrimonial.matrimonial_profile_gender);
+  //           setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
+  //         }
+  //       }
+
+  //       // You can similarly handle the proposalPhoto and biodataFile values here if needed
+  //     }
+
+  //   }, [userMatrimonial]);
+
+  useEffect(() => {
+    if (updateFor && user) {
+      if (updateFor.label === 'Self') {
+        setNameLabel('Your Name');
+      } else if (updateFor.label === 'Brother') {
+        setNameLabel('Name Of Brother');
+      } else if (updateFor.label === 'Sister') {
+        setNameLabel('Name Of Sister');
+      } else if (updateFor.label === 'Son') {
+        setNameLabel('Name Of Son');
+      } else if (updateFor.label === 'Daughter') {
+        setNameLabel('Name Of Daughter');
+      }
+    }
+  }, [updateFor])
+
+  //fetch all active subcast communities
+  const fetchSubcastsCommunities = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchAllSubcasts(communityId);
+      if (response && response.status === 200) {
+        const requestedCasts = response.data.data.filter((item) => item.status === 'true');
+        setSubcastArray(requestedCasts);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
+
+  useEffect(() => {
+    if (loggedUser && loggedUser.user) {
+      setCommunityId(loggedUser.user.community_id);
+      setMaritalStatus(loggedUser && loggedUser.user.marital_status && loggedUser.user.marital_status);
+    }
+  }, [loggedUser]);
+
+  useEffect(() => {
+    if (communityId) {
+      fetchSubcastsCommunities();
+    }
+  }, [communityId])
+
+  useEffect(() => {
+    getAllStates();
     setServerError('');
   }, []);
-
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -758,6 +696,7 @@ const UpdateMatrimonial = () => {
                             defaultValue={dob}
                             onChange={handleDateChange}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+
                           />
                           {errors && errors.matrimonial_profile_dob && (
                             <span className="error">{errors.matrimonial_profile_dob}</span>
@@ -782,6 +721,7 @@ const UpdateMatrimonial = () => {
                             <span className="error">{errors.state}</span>
                           )}
 
+
                         </div>
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -801,7 +741,6 @@ const UpdateMatrimonial = () => {
 
                         </div>
                       </div>
-
 
                       <div className="row">
 
@@ -872,8 +811,8 @@ const UpdateMatrimonial = () => {
                             onChange={(e) => setManglicStatus(e.target.value)}
                           >
                             <option value="">---Select Manglic Status---</option>
-                            <option value="Yes">YES</option>
-                            <option value="No">NO</option>
+                            <option value="YES">YES</option>
+                            <option value="NO">NO</option>
 
                           </select>
                           {/* Add error handling if needed */}
@@ -994,6 +933,7 @@ const UpdateMatrimonial = () => {
                           )}
                         </div>
                       </div>
+
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -1168,4 +1108,4 @@ const UpdateMatrimonial = () => {
   );
 };
 
-export default UpdateMatrimonial;
+export default CreateMatrimonial;

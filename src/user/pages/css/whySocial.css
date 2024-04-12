@@ -3,6 +3,10 @@
     font-weight: 600;
     font-size: 30px;
   }
+
+  #why-social-section container {
+    max-width: 100% !important;
+  }
   
   #why-social-section .what-social-bharat ul {
     list-style: none;

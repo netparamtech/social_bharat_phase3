@@ -11,6 +11,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import UpdateJobPosted from "./UpdateJobPosted";
+import CurrentOpenings from "./CurrentOpenings";
 
 const AllJobs = () => {
   const [data, setData] = useState([]);
@@ -22,6 +23,7 @@ const AllJobs = () => {
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
   const [jobId, setJobId] = useState('');
   const [featured, setFeatured] = useState(false);
+  const [isCurrentOpnings, setIsCurrentOpenings] = useState(false);
 
   const handleNavItemClick = (navItem) => {
     if (navItem === "CREATE JOBS") {
@@ -31,6 +33,10 @@ const AllJobs = () => {
       setActiveNavItem(navItem);
     }
   };
+  const toggleCurrentOpening = () => {
+    setActiveNavItem(isCurrentOpnings?'ALL':'')
+    setIsCurrentOpenings(!isCurrentOpnings)
+  }
 
   const actionInModelToUpdate = (value, id) => {
     setOpenUpdateForm(value);
@@ -341,7 +347,7 @@ const AllJobs = () => {
   ];
 
   useEffect(() => {
-    if(activeNavItem||searchQuery||openUpdateForm||page){
+    if (activeNavItem || searchQuery || openUpdateForm || page) {
 
       fetchData();
     }
@@ -355,6 +361,7 @@ const AllJobs = () => {
               <div className="card-header shadow p-0">
                 <Navbar bg="" expand="lg" className="text-green">
                   <Navbar.Brand>JOB BOARD</Navbar.Brand>
+                  <Navbar.Brand className={`hover-pointer hover-pointer-red ${isCurrentOpnings?'text-danger':'inherit'}`} onClick={toggleCurrentOpening}>CURRENT OPENING</Navbar.Brand>
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto ">
@@ -448,23 +455,29 @@ const AllJobs = () => {
                 </Navbar>
               </div>
               <div className="card-body">
-              <Table
-                    title={() => `${activeNavItem} JOB`} // Set the title to 'Enquiries'
-                    dataSource={data}
-                    columns={columns}
-                    pagination={{
-                      current: page,
-                      pageSize: size,
-                      total: totalRows,
-                      onChange: handlePageChange,
-                      onShowSizeChange: handlePageSizeChange,
-                    }}
-                    // onChange={handleTableChange}
+                {
+                  isCurrentOpnings ? (
+                    <CurrentOpenings />
+                  ) : (
+                    <Table
+                      title={() => `${activeNavItem} JOB`} // Set the title to 'Enquiries'
+                      dataSource={data}
+                      columns={columns}
+                      pagination={{
+                        current: page,
+                        pageSize: size,
+                        total: totalRows,
+                        onChange: handlePageChange,
+                        onShowSizeChange: handlePageSizeChange,
+                      }}
+                      // onChange={handleTableChange}
 
-                    rowKey={(record) => record.id}
-                  // onChange={handleSearchChange}
-                  />
+                      rowKey={(record) => record.id}
+                    // onChange={handleSearchChange}
+                    />
 
+                  )
+                }
                 {
                   openUpdateForm ? (<UpdateJobPosted actionInModelToUpdate={actionInModelToUpdate} jobId={jobId} />) : ''
                 }

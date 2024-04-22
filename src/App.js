@@ -8,11 +8,15 @@ import { Spin } from "antd";
 import UserRoutes from "./user/UserRoutes";
 import { logout } from "./user/actions/userAction";
 import NotFound from "./NotFound";
+import CreateCurrentJobPage from "./user/pages/CreateCurrentJobPage";
+import UpdateCurrentOpeningPage from "./user/pages/UpdateCurrentOpeningPage";
 const LazyUserRoutes = React.lazy(() => import("./user/UserRoutes"));
 function App() {
 
   const isLoading = useSelector((state) => state.loader.isLoaderSet);
   const user = useSelector((state) => state.userAuth);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [haveJobPermission, setHaveJobPermission] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +24,14 @@ function App() {
       if (user.token !== null) {
         if (new Date(user.token.expire_at) < new Date()) {
           dispatch(logout());
+        } else {
+          setIsAdmin(user.user.is_admin);
+          if (user.user.is_admin) {
+            setHaveJobPermission(user.user.permissions.have_job_permission);
+          }
         }
+      } else {
+        dispatch(logout());
       }
     }
   }, [user]);
@@ -71,6 +82,18 @@ function App() {
 
 
                 ))
+              }
+              {
+                isAdmin ? (
+                  haveJobPermission &&
+                  <>
+                    <Route path="/user/create/current-job" element={<CreateCurrentJobPage />} />
+                    <Route path="/user/update/current-job/:id" element={<UpdateCurrentOpeningPage />} />
+                  </>
+                ) : <Route
+                  path="/*"
+                  element={<NotFound />}
+                />
               }
 
             </Routes>

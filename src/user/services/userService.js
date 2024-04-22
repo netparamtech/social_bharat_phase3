@@ -315,7 +315,7 @@ export const createMatrimonialInfo = async (data) => {
 };
 
 //update matrimonial info
-export const updateMatrimonialInfo = async (data,id) => {
+export const updateMatrimonialInfo = async (data, id) => {
   try {
     const response = await apiWithHeaders.post(
       `/profile/update-matrimonial-details/${id}`,
@@ -573,13 +573,13 @@ export const searchPartner = async (
   state,
   city,
   gender,
-  gotra,
+  occupation,
   cast,
   subcastId
 ) => {
   try {
     const response = await apiWithHeaders.get(
-      `/partner/search?q=${searchText}&page=${page}&size=${size}&community_id=${id}&state=${state}&city=${city}&gender=${gender}&gotra=${gotra}&cast=${cast}&subcastId=${subcastId}`
+      `/partner/search?q=${searchText}&page=${page}&size=${size}&community_id=${id}&state=${state}&city=${city}&gender=${gender}&occupation=${occupation}&cast=${cast}&subcastId=${subcastId}`
     );
     return response;
   } catch (error) {
@@ -889,10 +889,10 @@ export const createNewJobPost = async (data) => {
 };
 
 //fetch jobs
-export const fetchAllJobsPosted = async (page, size, state, city, jobType) => {
+export const fetchAllJobsPosted = async (page, size, state, city, searchText, jobType) => {
   try {
     const response = await apiWithHeaders.get(
-      `/user/search/jobs?page=${page}&size=${size}&state=${state}&city=${city}&jobType=${jobType}`
+      `/user/search/jobs?page=${page}&size=${size}&state=${state}&city=${city}&search=${searchText}&jobType=${jobType}`
     );
     return response;
   } catch (error) {
@@ -1066,6 +1066,52 @@ export const changeRowColorInJobDetails = async (data) => {
 export const updateRemarkInJobDetails = async (data) => {
   try {
     const response = await apiWithHeaders.post('/user/applied/job/remark', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//create current job
+export const createCurrentJob = async (data) => {
+  try {
+    const response = await apiWithHeaders.post('/user/create/current-job', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//update current job
+export const updateCurrentJob = async (data, id) => {
+  console.log(data, id)
+  try {
+    const response = await apiWithHeaders.put(`/user/update/current-job/${id}`, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//delete current job
+export const deleteCurrentJob = async (id) => {
+  try {
+    const response = await apiWithHeaders.delete(`/user/current-job/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//current jobs
+export const currentJobs = async (size,page, state, city,searchText) => {
+  try {
+    const response = await apiWithHeaders.get(`/user/current-jobs?page=${page}&size=${size}&state=${state}&city=${city}&searchText=${searchText}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+//current job by id
+export const currentJobById = async (id) => {
+  try {
+    const response = await apiWithHeaders.get(`/user/current-job/${id}`);
     return response;
   } catch (error) {
     throw error;

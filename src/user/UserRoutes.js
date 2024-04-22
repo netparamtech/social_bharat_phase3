@@ -328,7 +328,7 @@ const UserRoutes = () => {
             path: '/user/activity/update/:id',
             component: UpdateActivityPage,
             exact: true
-        }
+        },
 
     ];
 }

@@ -98,6 +98,16 @@ const CreateMatrimonial = () => {
 
   const navigate = useNavigate();
 
+  const jobProfile = [
+    "Government",
+    "Private",
+    "Doctor",
+    "Engineer",
+    "Sales",
+    "Marketing",
+    // Add more job profiles as needed
+  ];
+
   const handleSubcastChange = (selectedOption) => {
     setSubcast(selectedOption);
     setSubcastId(selectedOption.value);
@@ -176,7 +186,7 @@ const CreateMatrimonial = () => {
       previewUrls.push(previewUrl);
     }
 
-    const combinedUrls = [...previewUrls, ...tempProposalPhotoUrl];
+    const combinedUrls = [...previewUrls, ...proposalPreview];
 
     const formData = new FormData();
 
@@ -837,16 +847,18 @@ const CreateMatrimonial = () => {
                         </div>
                         <div className="mb-3 col-12 col-md-6">
                           <label className="form-label">Job Profile </label>
-                          <input
-                            type="text"
-                            name="occupation"
-                            id="occupation"
-                            placeholder="Enter Your Job Profile"
-                            className="form-control"
-                            defaultValue={matrimonialOccupation}
-                            onChange={handleMatrimonialOccupation}
+
+                          <select id="jobProfile" name="jobProfile" className="form-select form-control"
+                            aria-label="job profile select" value={matrimonialOccupation} onChange={handleMatrimonialOccupation}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                          />
+                          >
+                            <option value="">Select</option>
+                            {
+                              jobProfile && jobProfile.map((item, index) => (
+                                <option value={item}>{item}</option>
+                              ))
+                            }
+                          </select>
                           {errors && errors.matrimonial_profile_occupation && (
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}
@@ -1087,7 +1099,7 @@ const CreateMatrimonial = () => {
                         <button type="submit" className="btn btn-primary"
                           disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                         >
-                          Update
+                          Submit
                         </button>
                         <button type="button" className="btn btn-primary m-2" onClick={(e) => {
                           e.preventDefault();

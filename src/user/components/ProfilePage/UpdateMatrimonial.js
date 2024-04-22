@@ -99,6 +99,16 @@ const UpdateMatrimonial = () => {
 
   const navigate = useNavigate();
 
+  const jobProfile = [
+    "Government",
+    "Private",
+    "Doctor",
+    "Engineer",
+    "Sales",
+    "Marketing",
+    // Add more job profiles as needed
+  ];
+
   const handleSubcastChange = (selectedOption) => {
     setSubcast(selectedOption);
     setSubcastId(selectedOption.value);
@@ -883,7 +893,8 @@ const UpdateMatrimonial = () => {
                         <div className="mb-3 col-12 col-md-6">
                           <label className="form-label">Select Education </label>
 
-                          <select className="form-control" placeholder="Select Education..." value={education} onChange={handleEducationChange}>
+                          <select className="form-select form-control"
+                            aria-label="Education select" placeholder="Select Education..." value={education} onChange={handleEducationChange}>
                             <option value="">Select..</option>
                             <option value="10th">10th</option>
                             <option value="12th">12th</option>
@@ -898,16 +909,18 @@ const UpdateMatrimonial = () => {
                         </div>
                         <div className="mb-3 col-12 col-md-6">
                           <label className="form-label">Job Profile </label>
-                          <input
-                            type="text"
-                            name="occupation"
-                            id="occupation"
-                            placeholder="Enter Your Job Profile"
-                            className="form-control"
-                            defaultValue={matrimonialOccupation}
-                            onChange={handleMatrimonialOccupation}
+                        
+                          <select id="jobProfile" name="jobProfile" className="form-select form-control"
+                            aria-label="job profile select" value={matrimonialOccupation} onChange={handleMatrimonialOccupation}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                          />
+                          >
+                            <option value="">Select</option>
+                            {
+                              jobProfile && jobProfile.map((item, index) => (
+                                <option value={item}>{item}</option>
+                              ))
+                            }
+                          </select>
                           {errors && errors.matrimonial_profile_occupation && (
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}

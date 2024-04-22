@@ -23,7 +23,7 @@ const MatrimonialCard = ({ item, index }) => {
   
     return (
         <>
-            <a className="text-dark m-2 hover-pointer-admin" onClick={handleShow}>
+            <a className="text-dark m-2 hover-pointer-admin" onClick={handleShow} title='View'>
                 <i className="fas fa-eye"></i>
             </a>
             <Modal

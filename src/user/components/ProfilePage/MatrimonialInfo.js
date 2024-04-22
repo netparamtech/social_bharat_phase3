@@ -7,28 +7,50 @@ import GenerateBiodata from "./GenerateBiodata";
 import { logout } from "../../actions/userAction";
 import MatrimonialCard from "./MatrimonialCard";
 import { Image } from 'antd';
+import { SearchOutlined, FileSearchOutlined } from '@ant-design/icons';
 
 
 const MatrimonialInfo = () => {
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
-  const [data, setData] = useState('');
+  const [copyData, setCopyData] = useState([]);
   const [isShowMatrimonial, setIsShowMatrimonial] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [isSearch, setIsSearch] = useState(false);
   const [serverError, setServerError] = useState('');
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/download.jpg"
   );
-  const colorMap = [
-    'bg-primary',
-    'bg-secondary',
-    'bg-success',
-    'bg-danger',
-    'bg-warning',
-    'bg-info',
-    'bg-light',
-    'bg-dark',
-    'bg-lightgreen', // Custom color class
-    // Add more Bootstrap color classes as needed
-  ];
+
+  const searchIcon = "/user/images/search-icon.png";
+
+  const handleIsSearchClicked = () => {
+    setIsSearch(!isSearch);
+  }
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value);
+  }
+  
+  useEffect(() => {
+    if (searchText || !searchText) {
+      const filteredData = copyData.filter(item =>
+        item.matrimonial_profile_name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setMatrimonialDetails(filteredData);
+    }
+  }, [searchText]);
+
+  function getRandomColor() {
+    const characters = "123456ABCDEF";
+    let color = "#";
+
+    // Generate six random characters from the 'characters' string
+    for (let i = 0; i < 6; i++) {
+      color += characters[Math.floor(Math.random() * characters.length)];
+    }
+
+    return color;
+  }
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -65,6 +87,7 @@ const MatrimonialInfo = () => {
       const response = await fetchMatrimonialInfo();
       if (response && response.status === 200) {
         setMatrimonialDetails(response.data.data);
+        setCopyData(response.data.data);
       }
 
     } catch (error) {
@@ -98,6 +121,12 @@ const MatrimonialInfo = () => {
   };
 
   useEffect(() => {
+    if (!isSearch) {
+      setSearchText('');
+    }
+  }, [isSearch]);
+
+  useEffect(() => {
     fetchMatrimonialDetails()
   }, []);
 
@@ -109,21 +138,38 @@ const MatrimonialInfo = () => {
 
 
           <div className="card-header d-flex flex-wrap justify-content-between align-items-center">
+
             <h5 className="fw-3 mb-3 text-primary">Matrimonial Info</h5>
+            <div className="hover-pointer" style={{ border: isSearch ? '1px solid black' : '' }} onClick={handleIsSearchClicked}>
+              <img src={searchIcon} width={40}></img>
+            </div>
             {/* {matrimonialDetails && matrimonialDetails.length > 0 && <GenerateBiodata userData={matrimonialDetails} />} */}
-            {isShowMatrimonial && matrimonialDetails.length > 0 && (
+            {isShowMatrimonial && copyData.length > 0 && (
               <div className="d-flex align-items-center">
                 {/* Add a button to trigger PDF generation */}
                 <button className='me-3 mb-3 rounded bg-secondary text-light mt-2' onClick={handleMatrimonialShow}>Hide Matrimonial Info</button>
 
               </div>
             )}
+
             <a className="hover-pointer" title="Add More Detail" onClick={() => navigate("/user/create-matrimonial-profile")}>
               <i className="btn btn-outline-info fas fa-plus"></i>
             </a>
           </div>
           {serverError && <p className="fs-4 text-danger">{serverError}</p>}
           <div className="row">
+            {
+              isSearch && (
+                <div className="col-xl-3 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s' }}>
+                  <div className="input-group rounded">
+                    <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={handleSearchText} />
+                    <span className="input-group-text border-0" id="search-addon">
+                      <i className="fas fa-search"></i>
+                    </span>
+                  </div>
+                </div>
+              )
+            }
             {
               matrimonialDetails && matrimonialDetails.length > 0 && (
 
@@ -208,7 +254,8 @@ const MatrimonialInfo = () => {
                   //   </div>
                   // </div>
                   <div className="col-11 col-md-3 mb-4 mx-auto mt-2">
-                    <div className={`card text-white h-100 ${colorMap[index]}`}>
+
+                    <div className={`card text-white h-100`} style={{ backgroundColor: getRandomColor() }}>
                       <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                           <div className="me-3">
@@ -253,7 +300,7 @@ const MatrimonialInfo = () => {
                           <a className='hover-pointer m-2' onClick={() => handleMatrimonialToggleStatus(item.id)} title="Edit">
 
                             {
-                              item.STATUS === 'Active' ? (
+                              item.status === 'Active' ? (
                                 <i
                                   className="text-warning fa fa-thumbs-up"
                                   title="Active"
@@ -266,7 +313,7 @@ const MatrimonialInfo = () => {
                               )
                             }
                           </a>
-                          <a className='hover-pointer' onClick={() => deleteMatrimonialDetails(item.id)} title="Edit">
+                          <a className='hover-pointer' onClick={() => deleteMatrimonialDetails(item.id)} title="Delete">
                             <i className="text-danger fas fa-trash"></i>
                           </a>
                         </div>
@@ -293,7 +340,7 @@ const MatrimonialInfo = () => {
           </div>
 
           {
-            matrimonialDetails && matrimonialDetails.length === 0 && (
+            copyData && copyData.length === 0 && (
               <div className="card-body">
                 <div className="add-more-info ">
                   <a

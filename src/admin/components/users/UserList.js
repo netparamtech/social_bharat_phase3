@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import { fetchAllUsers, updateToggleStatus } from '../../services/AdminService';
+import { fetchAllUsers, permissionById, updateToggleStatus } from '../../services/AdminService';
 
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
@@ -9,6 +9,7 @@ import { setLoader } from '../../actions/loaderAction';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { Modal, Button } from 'react-bootstrap';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -18,8 +19,27 @@ const UserList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
+  const [show, setShow] = useState(false);
+  const [permissionId, setPermissionId] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [permissions, setPermissions] = useState({
+    jobPermission: false,
+    servicePermission: false,
+    eventPermission: false,
+    matrimonialPermission: false,
+    businessPermission: false
+  });
+  const [permissionData, setPermissionData] = useState('');
+
+  const handlePermissionChange = (permission) => {
+    setPermissions({
+      ...permissions,
+      [permission]: !permissions[permission]
+    });
+  };
+
 
   const [defaultImage, setDefaultImage] = useState('img/de-default.png');
 
@@ -35,6 +55,13 @@ const UserList = () => {
     setPage(1);
     setSearchQuery(query);
   };
+  const handleShowChange = (id) => {
+    setPermissionId(id);
+    setShow(!show);
+  }
+  const handleClose = () => {
+    setShow(!show);
+  }
 
   const handleTableChange = (pagination, filters, sorter) => {
     const newSortField = sorter.field || '';
@@ -48,6 +75,25 @@ const UserList = () => {
     setSortField(newSortField);
     setSortOrder(newSortOrder);
   };
+
+  const fetchPermission = async (id) => {
+    dispatch(setLoader(true));
+    try {
+      const response = await permissionById(id);
+      setPermissionData(response.data.data);
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
 
   const fetchData = async () => {
     dispatch(setLoader(true));
@@ -98,6 +144,23 @@ const UserList = () => {
     fetchData();
   }, [page, size, searchQuery, sortField, sortOrder]);
 
+  useEffect(()=>{
+    if(permissionId){
+      fetchPermission(permissionId)
+    }
+  },[permissionId]);
+  useEffect(()=>{
+    if(permissionData){
+      setPermissions({
+        jobPermission: permissionData.job_permission,
+        servicePermission: permissionData.sevice_permission,
+        eventPermission: permissionData.event_permission,
+        matrimonialPermission: permissionData.matrimonial_permission,
+        businessPermission: permissionData.business_permission
+      })
+    }
+  },[permissionData]);
+
   const columns = [
     {
       title: 'S.No',
@@ -114,10 +177,11 @@ const UserList = () => {
             alt={record.name}
             title={record.name}
             className='small-img-user-list'
+            width={30} height={40}
           />
         </a>
       ),
-      width: 100,
+
     },
     {
       title: 'Name',
@@ -167,7 +231,6 @@ const UserList = () => {
         </a>
       )), sorter: true,
       sortDirections: ['asc', 'desc'],
-      fixed: 'right',
       width: 100,
     },
     {
@@ -181,7 +244,22 @@ const UserList = () => {
 
         </div>
       ),
-      fixed: 'right',
+      width: 100
+    },
+    {
+      title: 'Role',
+      dataIndex: 'is_admin',
+      render: (text, record) => (
+        <div>
+          <a className="collapse-item hover-pointer-admin"
+            onClick={() => handleShowChange(record.permission_id)}
+          >
+            {
+              record.is_admin ? <p className='text-danger'>ADMIN</p> : <p className='text-secondary'>USER</p>
+            }
+          </a>
+        </div>
+      ),
       width: 100
     },
     // Rest of the columns definition
@@ -265,6 +343,72 @@ const UserList = () => {
   return (
     <div>
       <div className='d-sm-flex align-items-center justify-content-between mb-4'>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Permissions Controller</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className='m-2'>
+              <label>
+                <input
+                  className='m-2'
+                  type="checkbox"
+                  checked={permissions.jobPermission}
+                  onChange={() => handlePermissionChange('jobPermission')}
+                />
+                Job Permission
+              </label>
+              <br />
+              <label>
+                <input
+                  className='m-2'
+                  type="checkbox"
+                  checked={permissions.servicePermission}
+                  onChange={() => handlePermissionChange('servicePermission')}
+                />
+                Service Permission
+              </label>
+              <br />
+              <label>
+                <input
+                  className='m-2'
+                  type="checkbox"
+                  checked={permissions.eventPermission}
+                  onChange={() => handlePermissionChange('eventPermission')}
+                />
+                Event Permission
+              </label>
+              <br />
+              <label>
+                <input
+                  className='m-2'
+                  type="checkbox"
+                  checked={permissions.matrimonialPermission}
+                  onChange={() => handlePermissionChange('matrimonialPermission')}
+                />
+                Matrimonial Permission
+              </label>
+              <br />
+              <label>
+                <input
+                  className='m-2'
+                  type="checkbox"
+                  checked={permissions.businessPermission}
+                  onChange={() => handlePermissionChange('businessPermission')}
+                />
+                Business Permission
+              </label>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Search
           placeholder="Search"
           allowClear

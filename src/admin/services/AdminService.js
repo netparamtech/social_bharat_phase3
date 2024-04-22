@@ -212,6 +212,15 @@ export const fetchBannerWithPageAndSection = async (page, section) => {
         throw error;
     }
 };
+//fetch permissions by id
+export const permissionById = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/permission/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //update Banner Status
 export const updateBannerToggleStatus = async (id) => {

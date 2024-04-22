@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import { useSpring, animated } from "react-spring";
+import { Result } from 'antd';
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -15,19 +16,14 @@ const NotFound = () => {
     };
 
     return (
-        <animated.div style={{ ...styles.container, ...props }}>
-            <Card style={styles.card}>
-                <Card.Body>
-                    <h1 style={styles.heading}>404 - Page Not Found</h1>
-                    <p style={styles.text}>
-                        Oops! The page you are looking for might be in another castle.
-                    </p>
-                    <Button variant="success" className="mx-auto" onClick={goBack} style={styles.link}>
-                        Go back to the previous page
-                    </Button>
-                </Card.Body>
-            </Card>
-        </animated.div>
+        <Result
+            status="404"
+            title="404"
+            subTitle="Sorry, the page you visited does not exist."
+            extra={<Button variant="success" className="mx-auto" onClick={goBack} style={styles.link}>
+                Go back to the previous page
+            </Button>}
+        />
     );
 };
 

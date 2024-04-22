@@ -284,11 +284,11 @@ const SearchPeople = () => {
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
-        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4" style={{ overflow: 'hidden' }}>
 
 
 
-          <div className="container">
+          <div className="container" >
             <div className="card shadow card-search">
               <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Members</div>
               <div className="card-body">
@@ -362,7 +362,7 @@ const SearchPeople = () => {
 
                 </div>
 
-                <div className="row">
+                <div className="row" style={{ height:'500px', overflow: 'scroll' }} id="scrollableDiv">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
                     style={{ overflowX: "hidden" }}
@@ -370,8 +370,9 @@ const SearchPeople = () => {
                     next={fetchMoreData}
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
+                    scrollableTarget="scrollableDiv"
                   >
-                    <div className="container pw-20 mt-3">
+                    <div className="pw-20 mt-3" >
                       {!isSearchingPerformed ? (
                        <div className="mx-auto" style={{width:'300px'}}>
                          <span className="text-danger fs-5" >No Data Available</span>

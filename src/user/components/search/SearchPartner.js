@@ -37,12 +37,11 @@ const SearchPartner = () => {
   const [isFilter, setIsFilter] = useState(false);
 
   const [gender, setGender] = useState("");
-  const [gotra, setGotra] = useState("");
   const [community_id, setCommunity_id] = useState("");
   const [subcast_id, setSubcastId] = useState('');
   const [subcast, setSubcast] = useState('');
   const [communityName, setCommunityName] = useState("");
-  const [skinTone, setSkinTone] = useState("");
+  const [occupation, setOccupation] = useState('');
   const [cast, setCast] = useState("");
 
   const [selectedCountry, setSelectedCountry] = useState("India");
@@ -75,6 +74,15 @@ const SearchPartner = () => {
   const [isChat, setIsChat] = useState(false);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
 
+  const occupationOptions = [
+    "Government",
+    "Private",
+    "Doctor",
+    "Engineer",
+    "Sales",
+    "Marketing",
+  ]
+
   const handleClear = (value) => {
     setClearValue(value);
     setisClear(!isClear);
@@ -97,8 +105,8 @@ const SearchPartner = () => {
     setGender(e.target.value);
   };
 
-  const handleGotraChange = (e) => {
-    setGotra(e.target.value);
+  const handleOccupationChange = (e) => {
+    setOccupation(e.target.value);
   };
   const handleSubcastChange = (selectedOption) => {
     setSubcastId(selectedOption.value);
@@ -175,7 +183,7 @@ const SearchPartner = () => {
     state,
     city,
     gender,
-    gotra,
+    occupation,
     cast,
     subcast_id
   ) => {
@@ -190,18 +198,19 @@ const SearchPartner = () => {
         state,
         city,
         gender,
-        gotra,
+        occupation,
         cast,
         subcast_id
       );
 
       if (response && response.status === 200) {
+        setIsLoading(false);
         setTotalRows(response.data.data.totalFilteredRecords);
         setServerError("");
         if (response.data.data.length === 0) {
           setIssearchingPerformed(false);
         }
-        if (community_id || communityName || searchText || state || city || gender || cast || gotra || subcast_id) {
+        if (community_id || searchText || state || city || gender || cast || occupation || subcast_id) {
           if (response.data.data.users.length !== 0) {
             if (page === 1) {
               setItems([...new Set([...response.data.data.users])]);
@@ -231,9 +240,7 @@ const SearchPartner = () => {
           setItems(uniqueItems);
         }
       }
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       if (error.response && error.response.status === 401) {
         dispatch(logout());
         navigate("/login");
@@ -282,7 +289,7 @@ const SearchPartner = () => {
         state,
         city,
         gender,
-        gotra,
+        occupation,
         cast,
         subcast_id
       );
@@ -349,12 +356,12 @@ const SearchPartner = () => {
         state,
         city,
         gender,
-        gotra,
+        occupation,
         cast,
         subcast_id
       );
     }
-  }, [searchText, community_id, gender, city, state, cast, gotra, subcast_id]);
+  }, [searchText, community_id, gender, city, state, cast, occupation, subcast_id]);
 
   useEffect(() => {
     setPage(1);
@@ -380,7 +387,7 @@ const SearchPartner = () => {
 
   useEffect(() => {
     if (clearValue === 'gender') setGender('');
-    if (clearValue === 'gotra') setGotra("");
+    if (clearValue === 'occupation') setOccupation('');
     if (clearValue === 'subcast') {
       setSubcastId("");
       setSubcast('');
@@ -429,13 +436,13 @@ const SearchPartner = () => {
                     </div>
                     <div className="row ms-auto me-auto justify-content-between bg-all">
 
-                      <div className="mb-3 mt-2 col-11 col-sm-2">
+                      <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label ">
                           Interested In
                         </label>
                         <select
-                          className="form-control"
-                          aria-label="Default select example"
+                          className="form-select form-control"
+                          aria-label="job profile select"
                           value={gender}
                           onChange={handleGenderChange}
                         >
@@ -495,15 +502,19 @@ const SearchPartner = () => {
                         <p className="text-light fw-bold btn" onClick={() => handleClear("subcast")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label">Gotra</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={gotra}
-                          placeholder="Search Gotra .."
-                          onChange={handleGotraChange}
-                        />
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("gotra")}>Clear</p>
+                        <label className="form-label">Occupation</label>
+
+                        <select id="jobProfile" name="jobProfile" className="form-select form-control"
+                          aria-label="job profile select" value={occupation} onChange={handleOccupationChange}
+                        >
+                          <option value="">Select</option>
+                          {
+                            occupationOptions && occupationOptions.map((item, index) => (
+                              <option value={item}>{item}</option>
+                            ))
+                          }
+                        </select>
+                        <p className="text-light fw-bold btn" onClick={() => handleClear("occupation")}>Clear</p>
                       </div>
                       <div className="mb-3 mt-2 col-12 col-sm-2">
                         <label className="form-label ">Add New</label>
@@ -527,7 +538,7 @@ const SearchPartner = () => {
                       {isSaveClicked && "Searching for "}
                       {gender && `Gender-${gender}, `}
                       {communityName && `Community-${communityName}, `}
-                      {gotra && `Gotra-${gotra}, `}
+                      {occupation && `Occupation-${occupation}, `}
                       {cast && `Cast-${cast}, `}{" "}
                       {(selectedCity && "in") || (selectedState && "in")}
                       {selectedCity && selectedCity.label && ` ${selectedCity.label}`}
@@ -592,15 +603,15 @@ const SearchPartner = () => {
                                           style={{ width: '180px', height: '150px', borderRadius: '10px' }}
                                         />
                                     }
-                                    
+
                                   </div>
                                   <div className="flex-grow-1 ms-3">
-                                 <div className="m-2">
-                                 {item&& <GenerateBiodata userData={item} />}
-                                 </div>
+                                    <div className="m-2">
+                                      {item && <GenerateBiodata userData={item} />}
+                                    </div>
                                     <h5 className="mb-1">{item.matrimonial_profile_name}</h5>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      Job Profile-{item.matrimonial_profile_occupation ?( item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation):'N/A'}
+                                      Job Profile-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
                                     </p>
                                     <div
                                       className="d-flex justify-content-start rounded-3"

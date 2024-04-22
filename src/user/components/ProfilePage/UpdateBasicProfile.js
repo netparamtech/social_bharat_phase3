@@ -280,7 +280,7 @@ const UpdateBasicProfile = () => {
         if (isAvailableForMarriage) {
           openNotification('topLeft')
           setTimeout(() => {
-            navigate("/user/update-matrimonial-profile")
+            navigate("/user/create-matrimonial-profile")
           }, 2000);
         } else {
           openNotification('topLeft')

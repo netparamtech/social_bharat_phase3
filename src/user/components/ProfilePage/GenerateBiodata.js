@@ -97,7 +97,7 @@ const GenerateBiodata = (props) => {
     return (
         <div>
             {/* Add a button to trigger PDF generation */}
-            <button className='me-5 rounded bg-success text-light' onClick={() => generatePDF(userData)}>Download Biodata</button>
+            <button className='me-3 rounded bg-success text-light' onClick={() => generatePDF(userData)}>Download Biodata</button>
         </div>
     );
 };

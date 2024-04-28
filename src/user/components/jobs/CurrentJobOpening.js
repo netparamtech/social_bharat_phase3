@@ -164,9 +164,8 @@ const CurrentJobOpening = () => {
         try {
             const response = await deleteCurrentJob(id);
             if (response && response.status === 200) {
-                const state = selectedState ? selectedState.label : "";
-                const city = selectedCity ? selectedCity.label : "";
-                fetchJobs(state, city);
+                const filteredData = dataStatic.filter(item => item.id !== id);
+                setDataStatic(filteredData);
             }
         } catch (error) {
             //Unauthorized
@@ -194,7 +193,7 @@ const CurrentJobOpening = () => {
             setIsAdmin(user.user.is_admin);
         }
     }, [user]);
-   
+
     useEffect(() => {
         loadMoreData();
     }, []);
@@ -210,12 +209,10 @@ const CurrentJobOpening = () => {
         }
     }, [selectedState]);
     return (
-
-        <div
-           
+        <div id="ghg" className=""
         >
             {
-                jobPermission && <Navbar bg="light" data-bs-theme="dark">
+                jobPermission ? <Navbar bg="light" data-bs-theme="dark">
                     <Container>
                         <Nav className="me-auto">
                             <Nav.Link onClick={handleViewAll}>View All</Nav.Link>
@@ -223,7 +220,7 @@ const CurrentJobOpening = () => {
                             <Nav.Link onClick={handleActionClicked}>Action</Nav.Link>
                         </Nav>
                     </Container>
-                </Navbar>
+                </Navbar> : ''
             }
             {serverError && <span className="fs-5 text-danger">{serverError}</span>}
             <div className="row">
@@ -269,17 +266,17 @@ const CurrentJobOpening = () => {
             </div>
 
             <div className="" id="scrollableDiv"
-            style={{
-                height: 400,
-                overflow: 'auto',
-                padding: '0 16px',
-                border: '1px solid rgba(140, 140, 140, 0.35)',
-            }}>
+                style={{
+                    height: 400,
+                    overflow: 'auto',
+                    padding: '0 16px',
+                    border: '1px solid rgba(140, 140, 140, 0.35)',
+                }}>
 
                 <InfiniteScroll
                     dataLength={dataStatic.length}
                     next={loadMoreData}
-                    hasMore={dataStatic.length<totalRows}
+                    hasMore={dataStatic.length < totalRows}
                     loader={
                         <Skeleton
                             avatar
@@ -292,7 +289,7 @@ const CurrentJobOpening = () => {
                     endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                     scrollableTarget="scrollableDiv"
                 >
-                    <table className="table table-striped" style={{ fontSize: '12px' }}>
+                    <table className="table table-striped table-hover" style={{ fontSize: '12px' }}>
                         <thead>
                             <tr>
                                 <th>Sr.No.</th>

@@ -18,7 +18,7 @@ const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 
 const CreateJob = (props) => {
-    const { handleIsCreateClicked } = props;
+    const { handleIsCreateJob } = props;
     const [jobTitle, setJobTitle] = useState('');
     const [jobSector, setJobSector] = useState('');
     const [jobType, setJobType] = useState("");
@@ -300,19 +300,22 @@ const CreateJob = (props) => {
     return (
 
         <div id="" className="">
-            <div className="container">
+            <div className="">
 
 
                 <div className="row">
-                    <div className="col-12 col-sm-12 mb-3">
-                        <div className={`card mx-auto rounded ${errors ? 'border-danger' : ''}`}>
+                    <div className="mb-3">
+                        <div className={`card mx-auto rounded ${errors ? 'border-danger' : ''}`} style={{ flexDirection: 'column' }}>
                             <div className=" card-header shadow">
                                 <div className="d-flex">
                                     <div className="m-2 fs-6 ">Create New Job</div>
-                                    <div className="m-2 fs-6 hover-pointer-green hover-pointer" onClick={() => handleIsCreateClicked(false)}>JOB BOARD</div>
+                                    <span onClick={() => handleIsCreateJob(false)} className="position-absolute top-0 end-0 me-2 mt-1">
+                                        {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                                        <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
+                                    </span>
                                 </div>
                             </div>
-                            <div className="card-body shadow">
+                            <div className="card-body shadow" style={{ display: 'flow' }}>
                                 {serverError && <span className='error'>{serverError}</span>}
                                 {message && (
                                     <div className={`alert ${alertClass}`}>

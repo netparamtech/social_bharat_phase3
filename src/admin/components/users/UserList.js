@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { Table } from 'antd';
-import { fetchAllUsers, permissionById, updateToggleStatus } from '../../services/AdminService';
+import { deleteUser, fetchAdmin, fetchAllUsers, permissionById, toggelAdmin, updatePermissions, updateToggleStatus } from '../../services/AdminService';
 
 import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { Modal, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { successOptions } from '../../../toastOption';
 
 const UserList = () => {
   const [data, setData] = useState([]);
@@ -20,7 +21,13 @@ const UserList = () => {
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [show, setShow] = useState(false);
+  const [uId, setUid] = useState('');
   const [permissionId, setPermissionId] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userType, setUserType] = useState(false);
+  const [userPhoto, setUserPhoto] = useState('');
+  const [searchAdmin, setSearchAdmin] = useState(0);
+  const [name, setName] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,16 +58,23 @@ const UserList = () => {
     setSize(pageSize);
   };
 
+  const handleSearchAdmin = () => {
+    setSearchAdmin(searchAdmin === 0 ? 1 : 0);
+  }
+
   const handleSearchChange = (query) => {
     setPage(1);
     setSearchQuery(query);
   };
-  const handleShowChange = (id) => {
-    setPermissionId(id);
-    setShow(!show);
+  const handleShowChange = (pId, uId, photo, name) => {
+    setPermissionId(pId);
+    setUid(uId);
+    setShow(true);
+    setUserPhoto(photo);
+    setName(name);
   }
   const handleClose = () => {
-    setShow(!show);
+    setShow(false);
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -75,11 +89,50 @@ const UserList = () => {
     setSortField(newSortField);
     setSortOrder(newSortOrder);
   };
+  const toggleAdminStatus = async () => {
+    console.log("Hello", uId)
+    if (uId) {
+      try {
+        const response = await toggelAdmin(uId);
+        setUserType(response.data.is_admin);
+        setIsAdmin(response.data.is_admin);
+        fetchData();
 
-  const fetchPermission = async (id) => {
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate('/admin');
+        }
+        else if (error.response && error.response.status === 500) {
+          let errorMessage = error.response.data.message;
+          navigate('/server/error', { state: { errorMessage } });
+        }
+      }
+    }
+  }
+  const fetchAdminStatus = async (id) => {
+    console.log("Hello")
+    try {
+      const response = await fetchAdmin(id);
+      setIsAdmin(response.data.is_admin);
+      setUserType(response.data.is_admin)
+      setShow(true);
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    }
+  }
+
+
+  const fetchPermission = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await permissionById(id);
+      const response = await permissionById(permissionId);
       setPermissionData(response.data.data);
 
     } catch (error) {
@@ -98,7 +151,7 @@ const UserList = () => {
   const fetchData = async () => {
     dispatch(setLoader(true));
     try {
-      const response = await fetchAllUsers(page, size, searchQuery, sortField, sortOrder);
+      const response = await fetchAllUsers(page, size, searchQuery, searchAdmin, sortField, sortOrder);
 
       setData(response.data.data);
 
@@ -113,6 +166,33 @@ const UserList = () => {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
       }
+    }
+  };
+
+  const deleteUserFromAll = async (id) => {
+    dispatch(setLoader(true));
+    try {
+      const isConfirmed = window.confirm("If you proceed with deleting the user, their presence will be completely removed from all modules within the system. This action is irreversible and will result in the permanent deletion of all associated data and records related to the user.")
+      if (isConfirmed) {
+        const isConfirmed = window.confirm("Are You Confirmed ?");
+        if (isConfirmed) {
+          const response = await deleteUser(id);
+          const afterDelete = data.filter(item => item.id !== id);
+          setData(afterDelete);
+        }
+
+      }
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    } finally {
+      dispatch(setLoader(false));
     }
   };
 
@@ -133,6 +213,33 @@ const UserList = () => {
       }
     }
   }
+  const handlePermissionSubmit = async () => {
+    console.log(permissions, "onSub,it")
+    dispatch(setLoader(true));
+    const data = {
+      job_permission: permissions.jobPermission,
+      service_permission: permissions.servicePermission,
+      event_permission: permissions.eventPermission,
+      matrimonial_permission: permissions.matrimonialPermission,
+      business_permission: permissions.businessPermission,
+    }
+    try {
+      const response = await updatePermissions(data, permissionId);
+      toast.success("Successfully Assigned Permissions", successOptions);
+      setShow(false);
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate('/admin');
+      }
+      else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
 
   const formatDate = (dateString) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -142,24 +249,40 @@ const UserList = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, size, searchQuery, sortField, sortOrder]);
+  }, [page, size, searchQuery, searchAdmin, sortField, sortOrder]);
 
-  useEffect(()=>{
-    if(permissionId){
-      fetchPermission(permissionId)
+  useEffect(() => {
+    if (show) {
+      fetchAdminStatus(uId);
+      fetchPermission();
     }
-  },[permissionId]);
-  useEffect(()=>{
-    if(permissionData){
+  }, [show]);
+  useEffect(() => {
+
+  }, [userType]);
+
+  useEffect(() => {
+    if (permissionData) {
       setPermissions({
         jobPermission: permissionData.job_permission,
-        servicePermission: permissionData.sevice_permission,
+        servicePermission: permissionData.service_permission,
         eventPermission: permissionData.event_permission,
         matrimonialPermission: permissionData.matrimonial_permission,
         businessPermission: permissionData.business_permission
       })
     }
-  },[permissionData]);
+  }, [permissionData]);
+  useEffect(() => {
+    if (!isAdmin) {
+      setPermissions({
+        jobPermission: 0,
+        servicePermission: 0,
+        eventPermission: 0,
+        matrimonialPermission: 0,
+        businessPermission: 0
+      })
+    }
+  }, [isAdmin]);
 
   const columns = [
     {
@@ -241,6 +364,12 @@ const UserList = () => {
           <a className="collapse-item hover-pointer-admin" onClick={() => navigate(`/users/view/${record.id}`)}>
             <i className="fas fa-eye"></i>
           </a>
+          <a className="collapse-item m-2" onClick={(e) => {
+            e.preventDefault(); // Prevent the default anchor tag behavior
+            deleteUserFromAll(record.id);
+          }}>
+            <i className="fa fa-trash" title='Delete' />
+          </a>
 
         </div>
       ),
@@ -252,7 +381,7 @@ const UserList = () => {
       render: (text, record) => (
         <div>
           <a className="collapse-item hover-pointer-admin"
-            onClick={() => handleShowChange(record.permission_id)}
+            onClick={() => handleShowChange(record.permission_id, record.id, record.photo, record.name)}
           >
             {
               record.is_admin ? <p className='text-danger'>ADMIN</p> : <p className='text-secondary'>USER</p>
@@ -343,68 +472,113 @@ const UserList = () => {
   return (
     <div>
       <div className='d-sm-flex align-items-center justify-content-between mb-4'>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
+        <Modal show={show} onHide={handleClose} className=''>
+          <Modal.Header closeButton className='bg-secondary text-light'>
             <Modal.Title>Permissions Controller</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <div className='m-2'>
-              <label>
-                <input
-                  className='m-2'
-                  type="checkbox"
-                  checked={permissions.jobPermission}
-                  onChange={() => handlePermissionChange('jobPermission')}
-                />
-                Job Permission
-              </label>
-              <br />
-              <label>
-                <input
-                  className='m-2'
-                  type="checkbox"
-                  checked={permissions.servicePermission}
-                  onChange={() => handlePermissionChange('servicePermission')}
-                />
-                Service Permission
-              </label>
-              <br />
-              <label>
-                <input
-                  className='m-2'
-                  type="checkbox"
-                  checked={permissions.eventPermission}
-                  onChange={() => handlePermissionChange('eventPermission')}
-                />
-                Event Permission
-              </label>
-              <br />
-              <label>
-                <input
-                  className='m-2'
-                  type="checkbox"
-                  checked={permissions.matrimonialPermission}
-                  onChange={() => handlePermissionChange('matrimonialPermission')}
-                />
-                Matrimonial Permission
-              </label>
-              <br />
-              <label>
-                <input
-                  className='m-2'
-                  type="checkbox"
-                  checked={permissions.businessPermission}
-                  onChange={() => handlePermissionChange('businessPermission')}
-                />
-                Business Permission
-              </label>
+          <Modal.Body className='bg-secondary'>
+            <div className='row text-light'>
+              <div className='col-6'>
+                <div className='m-2'>
+                  <div className='m-2'>
+                    <label>
+                      <input
+                        type="radio"
+                        value={userType}
+                        checked={userType}
+                        onClick={toggleAdminStatus}
+                        className="red-radio-button" // Apply custom CSS class
+                      />
+                      Admin
+                    </label>
+                  </div>
+                  <label>
+                    <input
+                      className='m-2'
+                      type="checkbox"
+                      checked={permissions.jobPermission}
+                      onChange={() => handlePermissionChange('jobPermission')}
+                      disabled={isAdmin ? false : true}
+                    />
+                    Job Permission
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      className='m-2'
+                      type="checkbox"
+                      checked={permissions.servicePermission}
+                      onChange={() => handlePermissionChange('servicePermission')}
+                      disabled={isAdmin ? false : true}
+                    />
+                    Service Permission
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      className='m-2'
+                      type="checkbox"
+                      checked={permissions.eventPermission}
+                      onChange={() => handlePermissionChange('eventPermission')}
+                      disabled={isAdmin ? false : true}
+                    />
+                    Event Permission
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      className='m-2'
+                      type="checkbox"
+                      checked={permissions.matrimonialPermission}
+                      onChange={() => handlePermissionChange('matrimonialPermission')}
+                      disabled={isAdmin ? false : true}
+                    />
+                    Matrimonial Permission
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      className='m-2'
+                      type="checkbox"
+                      checked={permissions.businessPermission}
+                      onChange={() => handlePermissionChange('businessPermission')}
+                      disabled={isAdmin ? false : true}
+                    />
+                    Business Permission
+                  </label>
+                </div>
+              </div>
+              <div className='col-6' style={{ border: '1px solid' }}>
+                <div className='row'>
+                  <div className='col-8'>
+                    <h4 className='text-info'>Permissions Assigned</h4>
+                    <p>{permissions.jobPermission ? 'Job Permission' : ''}</p>
+                    <p>{permissions.servicePermission ? 'Service Permission' : ''}</p>
+                    <p>{permissions.eventPermission ? 'Event Permission' : ''}</p>
+                    <p>{permissions.businessPermission ? 'Business Permission' : ''}</p>
+                    <p>{permissions.matrimonialPermission ? 'Matrimonial Permission' : ''}</p>
+
+                  </div>
+                  <div className='col-4 mt-2'>
+                    <img
+                      src={userPhoto ? userPhoto : defaultImage}
+                      className='small-img-user-list'
+                      width={40} height={40}
+                      style={{ borderRadius: '50%' }}
+                    />
+                    <p className='fw-bold mt-2' style={{ fontSize: '8px' }}>{name}</p>
+                  </div>
+                </div>
+
+
+              </div>
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className='bg-secondary'>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handlePermissionSubmit}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -416,6 +590,7 @@ const UserList = () => {
           style={{ marginBottom: 20, width: 200 }}
         />
         {/* <button className='btn btn-primary' onClick={generatePDF}>Export to PDF</button> */}
+        <button className='btn btn-primary' onClick={handleSearchAdmin}>{searchAdmin ? 'All Users' : 'Only Admins'}</button>
         <button className='btn btn-primary' onClick={exportToExcel}>Export to Excel</button>
       </div>
 

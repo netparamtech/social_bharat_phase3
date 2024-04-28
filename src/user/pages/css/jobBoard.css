@@ -1,0 +1,91 @@
+#job-board-section {
+    margin-top: 90px;
+
+    .card {
+        max-width: 50em;
+        flex-direction: row;
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+
+        img {
+            max-width: 25%;
+        }
+
+        .card-body {
+            display: flex;
+        }
+    }
+
+    .rotate-card {
+        transform: rotateY(360deg);
+    }
+
+    .section1 {
+        max-width: 60%;
+    }
+
+    .section1 .btn {
+        border: 1px solid;
+        border-radius: 10px !important;
+    }
+
+    .section2 {
+        max-width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .section2 .btn {
+        padding: 0.3em 0.5em;
+        background-color: #898989;
+        border-color: #898989;
+        border-radius: 10px !important;
+    }
+
+    @media screen and (max-width:475px) {
+        .card {
+            font-size: 0.9em;
+        }
+
+        .section2 .btn {
+            font-size: 0.9em;
+        }
+    }
+
+    .current-job-card {
+        /* Styles for current job card */
+        display: block;
+        background-color: aliceblue;
+
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .over-pointer-g-effect {
+        display: flex;
+        /* Use flexbox */
+        justify-content: center;
+        /* Center the button horizontally */
+        align-items: center;
+        /* Center the button vertically */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* Transition property for smooth color change */
+        width: 200px;
+        border: 0px;
+        border-radius: 20px;
+        /* Border radius of 20px */
+    }
+
+    .btn {
+        padding: 0.3em 0.5em;
+        background-color: #898989;
+        border-color: #898989;
+        border-radius: 10px !important;
+    }
+
+}

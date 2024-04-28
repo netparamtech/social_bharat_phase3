@@ -188,7 +188,7 @@ const NavbarTransparent = (props) => {
 
     if (isAuthenticUser) {
       if (isPasswordSet) {
-        navigate("/user/search/jobs");
+        navigate("/user/search/job");
       } else {
         navigate("/set-password");
       }

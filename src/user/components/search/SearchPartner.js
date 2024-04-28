@@ -16,6 +16,7 @@ import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "./ViewProfileDrawer";
 import { logout } from "../../actions/userAction";
 import GenerateBiodata from "../ProfilePage/GenerateBiodata";
+import MatrimonialCard from "../ProfilePage/MatrimonialCard";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -415,7 +416,7 @@ const SearchPartner = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+ 
   return (
     <>
       {isChat ? (
@@ -423,6 +424,7 @@ const SearchPartner = () => {
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
           <div className="container">
+           
             <div className="card shadow">
               <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Partner</div>
               <div className="card-body">
@@ -556,7 +558,7 @@ const SearchPartner = () => {
                 <div className="container-input mb-3 mt-3">
                   <input
                     type="text"
-                    placeholder="Search By Name"
+                    placeholder="Search By Name, Occupation, Father Name, State, City"
                     name="text"
                     className="input form-control border-success"
                     onChange={handleSearchText}
@@ -659,10 +661,11 @@ const SearchPartner = () => {
                                           width="40px"
                                         />
                                       </div>
+                                      <MatrimonialCard item={item} />
 
-                                      <button type="button" className="btn me-1 flex-grow-1">
+                                      {/* <button type="button" className="btn me-1 flex-grow-1">
                                         <ViewProfileDrawer id={item.userId} profileFor={item.profile_created_for} name={item.name} />
-                                      </button>
+                                      </button> */}
                                     </div>
                                   </div>
                                 </div>

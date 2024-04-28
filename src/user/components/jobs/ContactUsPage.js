@@ -7,7 +7,8 @@ import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
 
-function ContactUsPage() {
+function ContactUsPage(props) {
+    const { handleIsContactUs } = props;
     // State variables to store form input values
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -67,10 +68,9 @@ function ContactUsPage() {
 
 
     return (
-        <div>
-            <form
-                className="user-auth-form-contact"
-                onSubmit={handleSubmit}
+        <div className="card mx-auto" style={{ borderRadius: '30px', backgroundColor: '#12abf6' }}>
+            <div
+                className="mx-auto"
             >
                 {message && (
                     <div className={`alert ${alertClass}`}>
@@ -84,6 +84,12 @@ function ContactUsPage() {
                 )}
                 <h4 className="mb-4 ">Send message for enquiry</h4>
                 <div>(All fields are required to fill.)</div>
+                <span
+                    onClick={()=>handleIsContactUs()}
+                    className="position-absolute top-0 end-0 me-2 mt-3">
+                    {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
+                    <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
+                </span>
                 <div className="form-group mb-4">
                     <input
                         type="text"
@@ -134,13 +140,14 @@ function ContactUsPage() {
                 </div>
                 <div className="form-group">
                     <button
-                        className="form-control w-100 btn-primary"
-                        type="submit"
+                        className="mx-auto over-pointer-g-effect bg-success text-light"
+                        type="button"
+                        onClick={handleSubmit}
                     >
                         Submit
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

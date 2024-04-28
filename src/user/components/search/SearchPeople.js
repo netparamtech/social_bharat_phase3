@@ -285,10 +285,7 @@ const SearchPeople = () => {
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeople-section" className="content-wrapper pt-4 mb-4" style={{ overflow: 'hidden' }}>
-
-
-
-          <div className="container" >
+          <div className="" >
             <div className="card shadow card-search">
               <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Members</div>
               <div className="card-body">
@@ -310,7 +307,23 @@ const SearchPeople = () => {
 
                 </div>
                 <div className="row ms-auto me-auto justify-content-between ">
-                  <div className="mb-3 mt-2 col-12 col-sm-6">
+                <div className="mb-3 mt-2 col-12 col-sm-4">
+                    <label className="form-label ">
+                      Search
+                    </label>
+                <div className="d-flex">
+                <input
+                    type="text"
+                    placeholder="Search i.e name, mobile,state,city"
+                    name="text"
+                    className="input form-control"
+                    value={searchText}
+                    onChange={handleSearchText}
+                  />
+                  <i className="mb-3 mt-2 fas fa-search ps-2"></i>
+                </div>
+                </div>
+                  <div className="mb-3 mt-2 col-12 col-sm-4">
                     <label className="form-label ">
                       State
                     </label>
@@ -324,7 +337,7 @@ const SearchPeople = () => {
                       onChange={handleStateChange}
                     />
                   </div>
-                  <div className="mb-3 mt-2 col-12 col-sm-6">
+                  <div className="mb-3 mt-2 col-12 col-sm-4">
                     <label className="form-label ">
                       City
                     </label>
@@ -338,28 +351,7 @@ const SearchPeople = () => {
                       onChange={handleCityChange}
                     />
                   </div>
-                  {/* <div className="mb-3 mt-2 col-12 col-sm-2">
-                    <a
-                      className="btn btn-set w-100  btn-sm  btn-primary"
-                      onClick={handleGoButtonClick}
-                    >
-                      Go
-                    </a>
-                  </div> */}
-                </div>
-                <div className="container-input container mb-3 mt-2">
-                  <input
-                    type="text"
-                    placeholder="Search i.e name, mobile,state,city"
-                    name="text"
-                    className="input form-control"
-                    value={searchText}
-                    onChange={handleSearchText}
-                  />
-                  <i className="fas fa-search ps-2"></i>
-                </div>
-                <div className="">
-
+               
                 </div>
 
                 <div className="row" style={{ height:'500px', overflow: 'scroll' }} id="scrollableDiv">
@@ -466,16 +458,6 @@ const SearchPeople = () => {
           </div>
         </div>
       )}
-      <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
-        <a
-          className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
-          id=""
-          onClick={handleScrollToUp}
-          title="Refresh"
-        >
-          <i className="fa fa-arrow-up" aria-hidden="true"></i>
-        </a>
-      </div>
     </>
   );
 };

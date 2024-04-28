@@ -58,7 +58,7 @@ const UpdateBusinessProfile = (props) => {
       previewUrls.push(previewUrl);
     }
 
-    const combinedUrls = [...previewUrls, ...tempBusinessPhotoUrl];
+    const combinedUrls = [...previewUrls, ...businessPreview];
     setBusinessPreview(combinedUrls);
 
     const formData = new FormData();
@@ -490,7 +490,7 @@ const UpdateBusinessProfile = (props) => {
                           <input type="email"
                             name="email"
                             id="email"
-                            placeholder="Enter Contact 1"
+                            placeholder="Enter Email"
                             className="form-control"
                             defaultValue={businessEmail}
                             onChange={(e) => setBusinessEmail(e.target.value)}

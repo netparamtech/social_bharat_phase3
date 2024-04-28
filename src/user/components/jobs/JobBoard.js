@@ -89,47 +89,20 @@ const JobBoard = () => {
     const [otherDetails, setOtherDetails] = useState('');
     const [isCreateJob, setIsCreateJob] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [jobPermission, setJobPermission] = useState(false);
-    const [top, setTop] = useState(100);
 
-    const dataStatic = [
-        {
-            jobRole: "Full Stack",
-            companyName: "DevOps Center",
-            city: "Default City",
-            state: "Default State",
-            applyUrl: "https://www.linkedin.com/jobs/search/?currentJobId=3865770191&distance=25&f_E=2&geoId=102713980&keywords=java%20developer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true"
-        },
-        {
-            jobRole: "Full Stack Java Developer",
-            companyName: "DevOps Center",
-            city: "Default City",
-            state: "Default State",
-            applyUrl: "https://www.linkedin.com/jobs/search/?currentJobId=3870873191&distance=25&f_E=2&geoId=102713980&keywords=java%20developer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true"
-        },
-        {
-            jobRole: "Java Developer",
-            companyName: "SS&C Technologies",
-            city: "Default City",
-            state: "Default State",
-            applyUrl: "https://www.linkedin.com/jobs/search/?currentJobId=3625495295&distance=25&f_E=2&geoId=102713980&keywords=java%20developer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true"
-        },
-        // Add other job objects here with city and state properties
-    ];
-
-
-    const toggleCurrentOpening = () => {
-        setIsCurrentOpening(!isCurrentOpening)
+    const toggleCurrentOpening = (value) => {
+        setIsCurrentOpening(!isCurrentOpening);
+        setActiveNavItem(value);
     }
 
     const toggleDescription = (index) => {
         setSelectedIndex(selectedIndex === index ? null : index);
     };
 
-    const handleIsCreateClicked = (value) => {
-        setIsCreateJob(value);
+    const handleIsCreateClicked = () => {
+        setIsCreateJob(!isCreateJob);
         setIsUploadResumeClicked(false);
+        setActiveNavItem('');
     }
 
     const handleSearchQuery = (e) => {
@@ -207,6 +180,8 @@ const JobBoard = () => {
 
     const handleNavItemClick = (navItem) => {
         setActiveNavItem(navItem);
+        setIsCreateJob(false);
+        setIsContactUsClicked(false)
     };
 
     //state and city change operations
@@ -649,7 +624,9 @@ const JobBoard = () => {
         };
     }, []);
     useEffect(() => {
-        window.scrollTo(0, 0);
+        if (activeNavItem === "CURRENT OPENING") {
+            window.scrollTo(0, 0);
+        }
     }, [isCurrentOpening]);
     const getFileType = (url) => {
         // Extract the file extension from the URL
@@ -707,8 +684,8 @@ const JobBoard = () => {
 
 
                         </div>
-                    ):''
-               }
+                    ) : ''
+                }
                 <div className={isCurrentOpening ? 'col-12 col-md-2' : 'col-12 col-sm-5'}>
                     <div className="card">
                         <div className="card-body">
@@ -786,10 +763,10 @@ const JobBoard = () => {
                                         <Nav.Link
                                             href="#"
                                             //onClick={() => handleNavItemClick("CREATE JOB")}
-                                            onClick={() => handleIsCreateClicked(true)}
+                                            onClick={() => handleIsCreateClicked()}
                                             style={{
                                                 color:
-                                                    activeNavItem === "CREATE JOB" ? "red" : "inherit",
+                                                    isCreateJob ? "red" : "inherit",
                                             }}
                                         >
                                             CREATE JOB
@@ -823,7 +800,7 @@ const JobBoard = () => {
                                                 color:
                                                     isCurrentOpening ? "red" : "inherit",
                                             }}
-                                            onClick={() => toggleCurrentOpening()}
+                                            onClick={() => toggleCurrentOpening("CURRENT OPENING")}
                                         >
                                             CURRENT OPENING
                                         </Nav.Link>
@@ -1244,11 +1221,7 @@ const JobBoard = () => {
                                                                                                             )
                                                                                                         }
                                                                                                     />
-                                                                                                    {/* <i
-                                                                                            className="fa fa-trash ms-2"
-                                                                                            title="Delete"
-                                                                                            onClick={() => deleteMyJob(item.id)}
-                                                                                        /> */}
+                                                                                                   
                                                                                                     {item.job_request_status ===
                                                                                                         "Active" ? (
                                                                                                         <a

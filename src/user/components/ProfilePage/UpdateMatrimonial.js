@@ -408,7 +408,7 @@ const UpdateMatrimonial = () => {
       setSisterCount(userMatrimonial.sister_count);
       setPackageValue(userMatrimonial.salary_package);
       setMatrimonialOccupation(userMatrimonial.matrimonial_profile_occupation);
-      setDescription(userMatrimonial.description || "");
+      setDescription(userMatrimonial.DESCRIPTION || "");
       setManglicStatus(userMatrimonial.is_manglik || 'No');
       {
         userMatrimonial && userMatrimonial.proposal_photos && (

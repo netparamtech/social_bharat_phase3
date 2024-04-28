@@ -17,6 +17,14 @@ export const logout = async () => {
         throw error;
     }
 }
+export const updatePermissions = async (data,id) => {
+    try {
+        const response = await apiWithHeaders.put(`/user/update/permissions/${id}`,data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export const updateProfile = async (formData) => {
     try {
@@ -78,22 +86,22 @@ export const createCommunity = async (data) => {
 //fetch all active communities
 export const fetchAllCommunitiesForAdmin = async () => {
     try {
-      const response = await apiConfig.get("/all-communities");
-      return response;
+        const response = await apiConfig.get("/all-communities");
+        return response;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
-  
-  //fetch all active bharat-mandir
-  export const fetchAllBharatMandirForAdmin = async () => {
+};
+
+//fetch all active bharat-mandir
+export const fetchAllBharatMandirForAdmin = async () => {
     try {
-      const response = await apiConfig.get("/all-bharatMandir");
-      return response;
+        const response = await apiConfig.get("/all-bharatMandir");
+        return response;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
+};
 
 //update profile
 export const updateBasicProfile = async (data) => {
@@ -184,9 +192,9 @@ export const createBanner = async (data) => {
 }
 
 //fetch all registered users
-export const fetchAllUsers = async (page, size, searchQuery, sortField, sortOrder) => {
+export const fetchAllUsers = async (page, size, searchQuery,searchAdmin, sortField, sortOrder) => {
     try {
-        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}&sortField=${sortField}&sortOrder=${sortOrder}`);
+        const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}&isAdmin=${searchAdmin}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response; // Assuming your API response contains the data directly
     } catch (error) {
         throw error;
@@ -212,6 +220,34 @@ export const fetchBannerWithPageAndSection = async (page, section) => {
         throw error;
     }
 };
+//fetch admin by id
+export const fetchAdmin = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/user/isAdmin/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//delete user
+export const deleteUser = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/user/delete/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch admin by id
+export const toggelAdmin = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/user/updateAdmin/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 //fetch permissions by id
 export const permissionById = async (id) => {
     try {
@@ -647,16 +683,16 @@ export const fetchAllJobsPosted = async (page, size, searchQuery, jobType) => {
 }
 
 //get job applicant for respective job
-export const userAppliedForSameJob = async (id,searchQuery,page,size) => {
+export const userAppliedForSameJob = async (id, searchQuery, page, size) => {
     try {
-      const response = await apiWithHeaders.get(
-        `/find/all-users/for/${id}/job/applied?searchQuery=${searchQuery}&page=${page}&size=${size}`
-      );
-      return response;
+        const response = await apiWithHeaders.get(
+            `/find/all-users/for/${id}/job/applied?searchQuery=${searchQuery}&page=${page}&size=${size}`
+        );
+        return response;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
+};
 
 //toggle job post status
 export const toggleJobPostStatus = async (id) => {
@@ -905,11 +941,11 @@ export const deleteActivity = async (id) => {
 //fetch all activities
 export const fetchAllActivities = async (searchText, page, size) => {
     try {
-      const response = await apiWithHeaders.get(
-        `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
-      );
-      return response;
+        const response = await apiWithHeaders.get(
+            `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
+        );
+        return response;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
+};

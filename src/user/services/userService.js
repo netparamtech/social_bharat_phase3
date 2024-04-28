@@ -363,6 +363,15 @@ export const deleteMatrimonialDetailsById = async (id) => {
     throw error;
   }
 }
+//fetch self-matrimonial
+export const fetchSelfMatrimonialById = async (id) => {
+  try {
+    const response = await apiConfig.get(`/user/self-profile/matrimonial/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
 
 
 //update business profile
@@ -889,7 +898,7 @@ export const createNewJobPost = async (data) => {
 };
 
 //fetch jobs
-export const fetchAllJobsPosted = async (page, size, state, city, searchText, jobType) => {
+export const fetchAllJobsPosted = async (size, page, state, city, searchText, jobType) => {
   try {
     const response = await apiWithHeaders.get(
       `/user/search/jobs?page=${page}&size=${size}&state=${state}&city=${city}&search=${searchText}&jobType=${jobType}`

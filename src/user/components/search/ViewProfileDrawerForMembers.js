@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Col, Row, Divider, Image, Collapse } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getSearchedUserFullProfile } from "../../services/userService";
+import { fetchSelfMatrimonialById, getSearchedUserFullProfile } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
@@ -30,6 +30,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
     const [educationDetails, setEducationDetails] = useState([]);
     const [businessDetails, setBusinessDetails] = useState([]);
     const [businessPhotos, setBusinessPhotos] = useState([]);
+    const [matrimonial,setMatrimonial] = useState('');
 
     const [serverError, setServerError] = useState("");
 
@@ -43,6 +44,29 @@ const ViewProfileDrawerForMembers = ({ id }) => {
     const onClose = () => {
         setVisible(false);
     };
+
+    const getSelfMatrimonial = async(id) => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchSelfMatrimonialById(id);
+            if (response && response.status === 200) {
+                setMatrimonial(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                navigate("/login");
+            } else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            } else if (error.response && error.response.status === 404) {
+                dispatch(logout());
+                navigate('/');
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    }
 
     const getUserProfile = async () => {
         dispatch(setLoader(true));
@@ -99,17 +123,13 @@ const ViewProfileDrawerForMembers = ({ id }) => {
     useEffect(() => {
         if (visible) {
             getUserProfile();
+            getSelfMatrimonial(id)
         }
     }, [visible]);
+   
     useEffect(() => {
         setProfileImage(
             (user && user.photo && user.photo) || "/user/images/OIP.jpg"
-        );
-        setProposalPhotos(
-            user &&
-            user.matrimonial &&
-            user.matrimonial[0] &&
-            user.matrimonial[0].proposal_photos
         );
         setContactDetails(user?.contacts);
         setEducationDetails(user?.education);
@@ -118,6 +138,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
             user && user.businesses && user.businesses.business_photos
         );
     }, [user]);
+
 
     return (
         <div>
@@ -227,7 +248,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                         <label className="mb-2 fw-bold fs-6 ">Matrimonial Info</label>
                                     </div>
                                     <div className="card-body">
-                                        {user && user.matrimonial && user.matrimonial[0] ? (
+                                        {matrimonial ? (
                                             <form className="mb-2 ">
                                                 <div className="row">
                                                     <div className="mb-2 col-md-6  col-sm-12 col-xs-12 ">
@@ -237,9 +258,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].father_name}
+                                                                    {matrimonial.father_name}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -252,9 +271,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].mother_name}
+                                                                    {matrimonial.mother_name}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -265,28 +282,11 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                     <div className="mb-2 col-md-6 col-sm-12 col-xs-12">
                                                         <div className="row">
                                                             <div className="col-6">
-                                                                <label className="fw-bold">Skin Tone:</label>
-                                                            </div>
-                                                            <div className="col-6">
-                                                                <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].skin_tone}
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mb-2 col-md-6 col-sm-12 col-xs-12">
-                                                        <div className="row">
-                                                            <div className="col-6">
                                                                 <label className="fw-bold">Height :</label>
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].height_in_feet}
+                                                                    {matrimonial.height_in_feet}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -303,9 +303,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].is_manglik === 1
+                                                                    {matrimonial.is_manglik === 1
                                                                         ? "YES"
                                                                         : "NO"}
                                                                 </label>
@@ -322,9 +320,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].paternal_gotra}{" "}
+                                                                    {matrimonial.paternal_gotra}{" "}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -341,9 +337,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].maternal_gotra}
+                                                                    {matrimonial.maternal_gotra}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -358,19 +352,17 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             </div>
                                                             <div className="col-6">
                                                                 <label className="">
-                                                                    {user &&
-                                                                        user.matrimonial[0] &&
-                                                                        user.matrimonial[0].biodata && (
+                                                                    {matrimonial.biodata && (
                                                                             <span>
                                                                                 <a
-                                                                                    href={user.matrimonial[0].biodata}
+                                                                                    href={matrimonial.biodata}
                                                                                     download="biodata.pdf"
                                                                                 >
                                                                                     <i className="fa-regular fa-file-lines"></i>{" "}
                                                                                     Download Biodata
                                                                                 </a>
                                                                                 &nbsp;(
-                                                                                {getFileType(user.matrimonial[0].biodata)}
+                                                                                {getFileType(matrimonial.biodata)}
                                                                                 )
                                                                             </span>
                                                                         )}
@@ -389,16 +381,16 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                                 </div>
                                                                 <div className="col-6">
                                                                     <label className="proposal-Photo">
-                                                                        {proposalPhotos &&
-                                                                            Array.isArray(proposalPhotos) ? (
-                                                                            proposalPhotos.map((item, idx) => (
+                                                                        {matrimonial &&  matrimonial.proposal_photos&&
+                                                                            Array.isArray( matrimonial.proposal_photos) ? (
+                                                                                matrimonial.proposal_photos.map((item, idx) => (
                                                                                 <a href={item} target="_blank">
                                                                                     <img className="m-1" src={item} />{" "}
                                                                                 </a>
                                                                             ))
                                                                         ) : (
-                                                                            <a href={proposalPhotos} target="_blank">
-                                                                                <img src={proposalPhotos} />
+                                                                            <a href={ matrimonial.proposal_photos} target="_blank">
+                                                                                <img src={ matrimonial.proposal_photos} />
                                                                             </a>
                                                                         )}
                                                                     </label>
@@ -414,9 +406,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                                 </div>
                                                                 <div className="col-6">
                                                                     <label className="textShape">
-                                                                        {user &&
-                                                                            user.matrimonial[0] &&
-                                                                            user.matrimonial[0].description}{" "}
+                                                                        {matrimonial.DESCRIPTION}{" "}
                                                                     </label>
                                                                 </div>
                                                             </div>

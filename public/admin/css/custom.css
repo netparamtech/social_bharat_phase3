@@ -233,4 +233,9 @@ div.Table {
   padding: 2px;
   scale: 1.1;
 }
+.red-radio-button {
+  border-color: red; /* Change border color */
+  color: red;
+}
+
 

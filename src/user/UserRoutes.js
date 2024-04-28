@@ -43,6 +43,7 @@ import ActivityIndexPage from "./pages/ActivityIndexPage";
 import UpdateActivityPage from "./pages/UpdateActivityPage";
 import CreateJobProfilePage from "./pages/CreateJobProfilePage";
 import CreateMatrimonialPage from "./pages/profile/update/CreateMatrimonialPage";
+import JobsPage from "./pages/JobsPage";
 
 const UserRoutes = () => {
     return [
@@ -329,6 +330,11 @@ const UserRoutes = () => {
             component: UpdateActivityPage,
             exact: true
         },
+        {
+            path: '/user/search/job',
+            component: JobsPage,
+            exact: true
+        }
 
     ];
 }

@@ -2148,6 +2148,10 @@ legend {
 .infinite-color-animation {
   animation: colorAnimation 5s infinite; /* Change the duration (5s) as needed */
 }
+.description {
+  max-width: 100%; /* Ensures the paragraph doesn't exceed its container's width */
+  word-wrap: break-word; /* Allows long words to break and wrap onto the next line */
+}
 
 
 

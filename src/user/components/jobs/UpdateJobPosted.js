@@ -291,6 +291,12 @@ const UpdateJobPosted = (props) => {
             dispatch(setLoader(false));
         }
     }
+    const checkUrl = (url) => {
+        if (url.startsWith("uploads\\users\\jobs")) {
+            return false;
+        }
+        return true;
+    }
 
     useEffect(() => {
         if (jobDetails) {
@@ -299,9 +305,9 @@ const UpdateJobPosted = (props) => {
             setJobSector({ value: jobDetails.job_sector, label: jobDetails.job_sector });
             setSubHeading(jobDetails.job_subheading);
             setLocation(jobDetails.location);
-            setSelectedFileTempUrl(jobDetails.notification_pdf);
+            setSelectedFileTempUrl(checkUrl(jobDetails.notification_pdf)?jobDetails.notification_pdf:'');
             setPreviewSelectedFile(jobDetails.notification_pdf);
-            setSelectedLogoiTempUrl(jobDetails.logo);
+            setSelectedLogoiTempUrl(checkUrl(jobDetails.logo)?jobDetails.logo:'');
             setLogoPreview(jobDetails.logo);
             setApplyLink(jobDetails.apply_link);
             if (jobDetails.description) {

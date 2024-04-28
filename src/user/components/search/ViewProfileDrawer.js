@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Col, Row, Divider, Image, Collapse } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getSearchedUserFullProfile } from "../../services/userService";
+import { fetchSelfMatrimonialById, getSearchedUserFullProfile } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
@@ -30,6 +30,7 @@ const ViewProfileDrawer = ({ id, profileFor, name }) => {
   const [educationDetails, setEducationDetails] = useState([]);
   const [businessDetails, setBusinessDetails] = useState([]);
   const [businessPhotos, setBusinessPhotos] = useState([]);
+  const [matrimonial,setMatrimonial] = useState('');
 
   const [serverError, setServerError] = useState("");
 
@@ -43,6 +44,28 @@ const ViewProfileDrawer = ({ id, profileFor, name }) => {
   const onClose = () => {
     setVisible(false);
   };
+  const getSelfMatrimonial = async(id) => {
+    dispatch(setLoader(true));
+    try {
+        const response = await fetchSelfMatrimonialById(id);
+        if (response && response.status === 200) {
+            setMatrimonial(response.data.data);
+            setServerError('');
+        }
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            dispatch(logout());
+            navigate("/login");
+        } else if (error.response && error.response.status === 500) {
+            setServerError("Oops! Something went wrong on our server.");
+        } else if (error.response && error.response.status === 404) {
+            dispatch(logout());
+            navigate('/');
+        }
+    } finally {
+        dispatch(setLoader(false));
+    }
+}
 
   const getUserProfile = async () => {
     dispatch(setLoader(true));

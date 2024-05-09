@@ -27,7 +27,7 @@ function App() {
         } else {
           setIsAdmin(user.user.is_admin);
           if (user.user.is_admin) {
-            setHaveJobPermission(user.user.permissions.have_job_permission);
+              
           }
         }
       } else {
@@ -35,6 +35,11 @@ function App() {
       }
     }
   }, [user]);
+  useEffect(()=>{
+    if(isAdmin){
+      setHaveJobPermission(user.user.permissions&&user.user.permissions.have_job_permission);
+    }
+  },[isAdmin]);
 
   return (
     <div className="">

@@ -14,6 +14,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import { Carousel } from "react-bootstrap";
 import ViewFullEvent from "./ViewFullEvent";
+import { Divider } from "antd";
 
 const SearchEvents = () => {
   const user = useSelector((state) => state.userAuth);
@@ -40,7 +41,6 @@ const SearchEvents = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
 
-  const [isFilter, setIsFilter] = useState(true);
   const [isGoClick, setIsGoClick] = useState(false);
   const navigate = useNavigate();
 
@@ -57,12 +57,17 @@ const SearchEvents = () => {
   const [copyItems, setCopyItems] = useState([]);
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [featuredEvents, setFeaturedEvents] = useState([]);
+  const [isFilter, setIsFilter] = useState(!isAndroidUsed ? false : true);
 
 
   const changeEventClickFlag = (value, id) => {
     setIsEventClick(value);
     setEventId(id);
   };
+
+  const handleIsFilterChange = () => {
+    setIsFilter(!isFilter);
+  }
 
 
   useEffect(() => {
@@ -309,11 +314,11 @@ const SearchEvents = () => {
 
   return (
     <>
-      <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
-        <div className="container ">
-          <div className="card-search">
+      <div id="searchPeople-section" className="content-wrapper">
+        <div className="">
+          <div className="card-search ">
             {
-              !isEventClick ? <Carousel className="your-custom-carousel-class">
+              !isEventClick && featuredEvents.length > 0 ? <Carousel className="your-custom-carousel-class">
                 {featuredEvents &&
                   featuredEvents.map((item, index) => (
                     <Carousel.Item key={index}>
@@ -343,7 +348,7 @@ const SearchEvents = () => {
             {
               !isEventClick ? (
 
-                <div className="card mt-3">
+                <div className="card">
                   <div className="card-body">
                     {serverError && <span className="error">{serverError}</span>}
                     <div className="d-flex justify-content-between">
@@ -365,48 +370,72 @@ const SearchEvents = () => {
                     ) : (
                       ""
                     )}
-                    <div className="filter-icon"></div>
-                    <div className="row ms-auto me-auto justify-content-between bg-success">
-                      <div className="mb-3 mt-2 col-12 col-sm-6">
-                        <label className="form-label text-light">State</label>
-                        <Select
-                          options={states.map((state) => ({
-                            value: state.name,
-                            label: state.name,
-                          }))}
-                          value={selectedState}
-                          placeholder="Select State...."
-                          onChange={handleStateChange}
-                        />
-                      </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-6">
-                        <label className="form-label text-light">City</label>
-                        <Select
-                          options={cities.map((city) => ({
-                            value: city.name,
-                            label: city.name,
-                          }))}
-                          value={selectedCity}
-                          placeholder="Select City...."
-                          onChange={handleCityChange}
-                        />
-                      </div>
+                    {
+                      !isFilter ? (
+                        <div className="row ">
+                          <div className="mb-3 mt-2 col-12 col-sm-4">
+                            <label className="form-label text-light">State</label>
+                            <Select
+                              options={states.map((state) => ({
+                                value: state.name,
+                                label: state.name,
+                              }))}
+                              value={selectedState}
+                              placeholder="Select State...."
+                              onChange={handleStateChange}
+                            />
+                          </div>
+                          <div className="mb-3 mt-2 col-12 col-sm-4">
+                            <label className="form-label text-light">City</label>
+                            <Select
+                              options={cities.map((city) => ({
+                                value: city.name,
+                                label: city.name,
+                              }))}
+                              value={selectedCity}
+                              placeholder="Select City...."
+                              onChange={handleCityChange}
+                            />
+                          </div>
+                          <div className="mb-3 mt-2 col-12 col-sm-4 position-relative">
+                            <label className="form-label text-light">Search</label>
+                            <div className="input-group">
+                              <input
+                                type="text"
+                                placeholder="search by name, event title, state and city...."
+                                name="text"
+                                className="input form-control border-success"
+                                value={searchText}
+                                onChange={handleSearchText}
+                              />
+                              <span className="input-group-text">
+                                <i className="fas fa-search"></i>
+                              </span>
+                            </div>
+                          </div>
 
-                    </div>
-                    <div className="container-input mb-3 mt-3">
-                      <input
-                        type="text"
-                        placeholder="search by name, event title, state and city...."
-                        name="text"
-                        className="input form-control border-success"
-                        value={searchText}
-                        onChange={handleSearchText}
-                      />
-                      <i className="fas fa-search"></i>
-                    </div>
+
+                        </div>
+                      ) : ''
+                    }
+                    {
+                      isAndroidUsed ? (
+                        <div className="mx-auto">
+                          <button className="btn mb-2 btn-success" onClick={handleIsFilterChange}>{!isFilter ? 'Hide Filter' : 'Filter'}</button>
+                        </div>
+                      ) : ''
+                    }
+
                     <div className=""></div>
 
-                    <div className="row">
+                    <div className="" id="scrollableDiv"
+                      style={{
+                        height: 400,
+                        overflow: 'auto',
+                        fontSize: ''
+
+
+                      }}>
                       {/* Repeat the user card structure as needed */}
                       <InfiniteScroll
                         style={{ overflowX: "hidden" }}
@@ -414,6 +443,8 @@ const SearchEvents = () => {
                         next={fetchMoreData}
                         hasMore={items.length < totalRows}
                         loader={isLoading && <h4>Loading...</h4>}
+                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                        scrollableTarget="scrollableDiv"
                       >
                         <div className="container pw-20">
                           {groupedItems.map((pair, index) => (
@@ -424,21 +455,23 @@ const SearchEvents = () => {
                                 <div className="col-md-6 mt-2" key={innerIndex}>
                                   <div className="card" style={{ borderRadius: '15px' }}>
                                     <div className="card-body p-4">
-                                      <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
-                                        {
-                                          item.banner_image ? (
-                                            <div className="col-12 flex-shrink-0">
-                                              <img
-                                                src={item.banner_image}
-                                                alt={item.name}
-                                                className="img-fluid"
-                                                style={{ width: '100%', borderRadius: '10px',height:'300px' }}
-                                                onClick={() => changeEventClickFlag(true, item.id)}
+                                      <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'row', display: isAndroidUsed ? '' : 'flex' }}>
+                                        <div className="">
+                                          {
+                                            item.banner_image ? (
+                                              <div className="col-12 flex-shrink-0">
+                                                <img
+                                                  src={item.banner_image}
+                                                  alt={item.name}
+                                                  className="img-fluid"
+                                                  style={{ width: '100%', borderRadius: '10px', height: '300px' }}
+                                                  onClick={() => changeEventClickFlag(true, item.id)}
 
-                                              />
-                                            </div>
-                                          ) : ''
-                                        }
+                                                />
+                                              </div>
+                                            ) : ''
+                                          }
+                                        </div>
 
                                         <div className="flex-grow-1 ms-3 mt-2">
                                           <h5 className="mb-1">{item.title}</h5>

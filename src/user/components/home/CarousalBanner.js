@@ -16,12 +16,21 @@ function CarousalBanner() {
     const [isAndroidUsed, setIsAndroidUsed] = useState(false);
     const [isCardShow, setIsCardShow] = useState(true);
     const [imageUrls, setImageUrls] = useState([]);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isMultiBanner, setIsMultiBanner] = useState(false);
     const [buttonText, setButtonText] = useState("Become a member");
     const typedRef = useRef(null); // Use a single ref for Typed instance
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const nextSlide = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(nextSlide, 3000);
+        return () => clearInterval(intervalId);
+    }, []);
 
     const defaultImageUrl = '/user/images/banner-1.jpg'
 
@@ -123,21 +132,15 @@ function CarousalBanner() {
 
                                 </div>
                             }
-                            <div className='' style={{ objectFit: 'cover', height: '400px', width: '100%' }}>
+                            <div className='' style={{ position: 'relative', height: '400px', width: '100%' }}>
                                 <Carousel activeIndex={index} onSelect={handleSelect}>
-                                    {
-                                        imageUrls && imageUrls.length > 0 && imageUrls.map((item, index) => (
-
-                                            <Carousel.Item key={index}>
-                                                <div style={{ position: 'relative', width: '100%', height: '400px', objectFit: 'cover' }}>
-                                                    <img src={item} style={{ width: '100%', height: '100%', borderRadius: '10px' }} />
-
-                                                </div>
-
-                                            </Carousel.Item>
-
-                                        ))
-                                    }
+                                    {imageUrls && imageUrls.length > 0 && imageUrls.map((item, index) => (
+                                        <Carousel.Item key={index}>
+                                            <div style={{ top: '0', left: '0', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                                                <img src={item} style={{ width: '100%', height: '400px' }} />
+                                            </div>
+                                        </Carousel.Item>
+                                    ))}
                                 </Carousel>
                             </div>
 

@@ -550,6 +550,7 @@ const JobBoard = () => {
     };
 
     const applyForAJobPosted = async (appliedJob) => {
+       
         const data = {
             job_id: appliedJob.id,
             company: appliedJob.job_subheading,
@@ -561,6 +562,14 @@ const JobBoard = () => {
         };
 
         try {
+            console.log(appliedJob,"ffffffff")
+            if(!appliedJob.resume_apply){
+                const isConfirm = window.confirm("Before proceeding to apply for this job, please ensure that you have uploaded your resume. Would you like to upload it now?");
+                if(isConfirm){
+                    setIsUploadResumeClicked(true);
+                    return;
+                }
+            }
             const response = await applyJob(data);
             if (response && response.status === 201) {
                 const state = selectedState ? selectedState.label : "";

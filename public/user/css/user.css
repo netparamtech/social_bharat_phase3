@@ -6,9 +6,16 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: #e7efef;
   font-size: 16px;
+  overflow: ;
 }
 
+body::-webkit-scrollbar {
+  width: 0px; /* Adjust the width as per your preference */
+}
 #customNavID .container {
+  max-width: 98% !important;
+}
+#job-board-section .container {
   max-width: 98% !important;
 }
 
@@ -2152,6 +2159,68 @@ legend {
   max-width: 100%; /* Ensures the paragraph doesn't exceed its container's width */
   word-wrap: break-word; /* Allows long words to break and wrap onto the next line */
 }
+
+.carousel-image-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%; 
+}
+
+.carousel-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.carousel-control-next-icon {
+  background-image: url(''); /* Replace 'your-next-arrow-image-url.png' with your image URL */
+  width: 30px; /* Adjust width as needed */
+  height: 30px; /* Adjust height as needed */
+}
+.carousel-control-prev-icon {
+  background-image: url(''); /* Replace 'your-next-arrow-image-url.png' with your image URL */
+  width: 30px; /* Adjust width as needed */
+  height: 30px; /* Adjust height as needed */
+}
+.carousel-item {
+  position: relative;
+  width: 100%;
+  margin-right: -100%;
+  transition: transform .6s ease-in-out;
+  
+}
+#businesses-section .over-pointer-g-effect {
+  display: flex;
+  /* Use flexbox */
+  justify-content: center;
+  /* Center the button horizontally */
+  align-items: center;
+  /* Center the button vertically */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Transition property for smooth color change */
+  width: 200px;
+  border: 0px;
+  border-radius: 20px !important;
+  /* Border radius of 20px */
+}
+
+#businesses-section .btn-toggle {
+  padding: 0.3em 0.5em;
+  /* background-color: #898989; */
+  background-color: lightgreen;
+  border-color: #898989;
+  border: 1px solid;
+  border-radius: 10px !important;
+}
+#searchPeople-section .btn{
+  border-radius: 20px !important;
+}
+
 
 
 

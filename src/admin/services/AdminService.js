@@ -17,9 +17,9 @@ export const logout = async () => {
         throw error;
     }
 }
-export const updatePermissions = async (data,id) => {
+export const updatePermissions = async (data, id) => {
     try {
-        const response = await apiWithHeaders.put(`/user/update/permissions/${id}`,data);
+        const response = await apiWithHeaders.put(`/user/update/permissions/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -150,6 +150,15 @@ export const fetchCommunityWithId = async (id) => {
         throw error;
     }
 }
+//fetch community with id given
+export const fetchBharatMandirWithId = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/bharatMandir/2/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //update Community Status
 export const updateCommunityStatus = async (id) => {
@@ -192,7 +201,7 @@ export const createBanner = async (data) => {
 }
 
 //fetch all registered users
-export const fetchAllUsers = async (page, size, searchQuery,searchAdmin, sortField, sortOrder) => {
+export const fetchAllUsers = async (page, size, searchQuery, searchAdmin, sortField, sortOrder) => {
     try {
         const response = await apiWithHeaders.get(`/users?page=${page}&size=${size}&q=${searchQuery}&isAdmin=${searchAdmin}&sortField=${sortField}&sortOrder=${sortOrder}`);
         return response; // Assuming your API response contains the data directly
@@ -446,6 +455,15 @@ export const deleteEnquiry = async (id) => {
 export const updateToggleStatusForEnquiry = async (clickedUserId) => {
     try {
         const response = await apiWithHeaders.patch(`/enquiries/${clickedUserId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//set remark
+export const setRemarkForEnquiry = async (id, data) => {
+    try {
+        const response = await apiWithHeaders.put(`/admin/enquiry/remark/${id}`, data);
         return response;
     } catch (error) {
         throw error;
@@ -943,6 +961,84 @@ export const fetchAllActivities = async (searchText, page, size) => {
     try {
         const response = await apiWithHeaders.get(
             `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+//fetch cms by page and section
+export const fetchAllCmsByPageSection = async (page, section) => {
+    try {
+        const response = await apiWithHeaders.get(
+            `/cms/${page}/${section}`
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//fetch cms
+export const fetchAllCms = async () => {
+    try {
+        const response = await apiWithHeaders.get(
+            '/cms'
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//create new cms
+export const createCms = async (data) => {
+    try {
+        const response = await apiWithHeaders.post(
+            '/cms',data
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//update cms
+export const updateCmsById = async (id,data) => {
+    try {
+        const response = await apiWithHeaders.post(
+            `/cms/${id}`,data
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//fetch cms by id
+export const fetchCmsById = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(
+            `/cms/${id}`
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//fetch toggle status
+export const toggleStatusForCms = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(
+            `/cms/${id}`
+        );
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+//delete cms by id
+export const deleteCmsById = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(
+            `/cms/${id}`
         );
         return response;
     } catch (error) {

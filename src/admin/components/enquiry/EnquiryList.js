@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import {
   deleteEnquiry,
   fetchAllEnquiries,
+  setRemarkForEnquiry,
   updateToggleStatusForEnquiry,
 } from '../../services/AdminService';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +19,7 @@ const EnquiryList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortField, setSortField] = useState('');
   const [sortOrder, setSortOrder] = useState('');
+  const [remark, setRemark] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,6 +35,9 @@ const EnquiryList = () => {
     setPage(1);
     setSearchQuery(query);
   };
+  const handleRemarkChange = (id, e) => {
+    setRemark(e.target.value);
+  }
 
   const handleTableChange = (pagination, filters, sorter) => {
     const newSortField = sorter.field || '';
@@ -58,6 +63,25 @@ const EnquiryList = () => {
       dispatch(setLoader(false));
       if (error.response && error.response.status === 401) {
         navigate('/admin');
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate('/server/error', { state: { errorMessage } });
+      }
+    }
+  };
+
+  const submitRemark = async (id) => {
+    try {
+      const data = {
+        remark
+      }
+      const response = await setRemarkForEnquiry(id, data);
+      if (response && response.status === 201) {
+        fetchData();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
         navigate('/server/error', { state: { errorMessage } });
@@ -174,6 +198,19 @@ const EnquiryList = () => {
     {
       title: 'Message', dataIndex: 'message', sorter: true,
       sortDirections: ['asc', 'desc'],
+    },
+    {
+      title: 'Remark', dataIndex: 'remark',
+      render: (text, record, index) => (
+        <div>
+          <select type='select' className='form-select' defaultValue={record.remark} onChange={(e) => handleRemarkChange(record.id, e)} onBlur={() => submitRemark(record.id)}>
+            <option value="">Select</option>
+            <option value="done">Done</option>
+            <option value="pending">Pending</option>
+            <option value="inProgress">In Progress</option>
+          </select>
+        </div>
+      ),
     },
 
     {

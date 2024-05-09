@@ -224,12 +224,7 @@ const BharatMataMandirIndex = () => {
           }}>
             <i className="fa fa-trash" title='Delete' />
           </a>
-          <a className="collapse-item m-2 hover-pointer-admin" onClick={(e) => {
-            e.preventDefault(); // Prevent the default anchor tag behavior
-            navigate(`/admin/bharat-mandir/view/${record.id}`);
-          }}>
-            <i className="fas fa-eye"></i>
-          </a>
+
         </div>
       ),
       fixed: 'right',

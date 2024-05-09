@@ -11,7 +11,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Image } from "antd";
+import { Divider, Image } from "antd";
 import NewChat from "../chats/NewChat";
 import ViewProfileDrawer from "./ViewProfileDrawer";
 import { logout } from "../../actions/userAction";
@@ -416,15 +416,15 @@ const SearchPartner = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
- 
+
   return (
     <>
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
-        <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+        <div id="searchPeople-section" className="content-wrapper">
           <div className="container">
-           
+
             <div className="card shadow">
               <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Partner</div>
               <div className="card-body">
@@ -566,13 +566,21 @@ const SearchPartner = () => {
                   <i className="fas fa-search"></i>
                 </div>
 
-                <div className="row">
+                <div className="" id="scrollableDiv"
+                  style={{
+                    height: 400,
+                    overflow: 'auto',
+
+
+                  }}>
                   <InfiniteScroll
                     style={{ overflowX: "hidden" }}
                     dataLength={items.length}
                     next={fetchMoreData}
                     hasMore={items.length < totalRows}
                     loader={isLoading && <h4>Loading...</h4>}
+                    endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                    scrollableTarget="scrollableDiv"
                   >
                     {groupedItems.map((pair, index) => (
                       <div className="row" key={index}>

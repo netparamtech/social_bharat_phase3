@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
-  fetchCommunityWithId,
+  fetchBharatMandirWithId,
   updateCommunity,
   uploadImage,
 } from "../../services/AdminService";
@@ -17,13 +17,10 @@ const UpdateBharatMandir = () => {
   const { id } = useParams();
 
   const [name, setName] = useState("");
-  const [thumbnailImage, setThumbnailImage] = useState("");
-  const [bannerImage, setBannerImage] = useState("");
   const [status, setStatus] = useState("");
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
-  const [communityArchive, setCommunityArchive] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [errors, setErrors] = useState("");
@@ -149,7 +146,7 @@ const UpdateBharatMandir = () => {
   const fetchCommunities = async () => {
     try {
       dispatch(setLoader(true));
-      const response = await fetchCommunityWithId(id);
+      const response = await fetchBharatMandirWithId(id);
       if (response && response.status === 200) {
         const communityData = response.data.data[0]; // Assuming the fetched data is in the format { name, thumbnail_image, banner_image, status }
         setName(communityData.name);

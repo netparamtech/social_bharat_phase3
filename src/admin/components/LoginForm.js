@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { login } from '../services/AdminService';
 import { useDispatch } from 'react-redux';
-import {login as adminlogin, logout} from '../actions/authActions';
+import { login as adminlogin, logout } from '../actions/authActions';
 import { useNavigate } from 'react-router';
 import { Input } from 'antd';
 import { setLoader } from '../actions/loaderAction';
@@ -27,33 +27,30 @@ const LoginForm = () => {
     setPassword(event.target.value);
   }
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(setLoader(true));
-   
-    try{
 
-      const response = await login(email,password);
+    try {
+
+      const response = await login(email, password);
 
       if (response && response.status === 200) {
         setErrors('');
         dispatch(adminlogin(response.data.user, response.data.token));
         dispatch(setLoader(false));
-        toast.success("You have successfully login",successOptions);
-                
-        setTimeout(() => {
-          navigate('/admin/dashboard')
-        }, 1000);
+        toast.success("You have successfully login", successOptions);
+        navigate('/admin/dashboard')
       }
-    } catch(error) {
+    } catch (error) {
       dispatch(setLoader(false));
-      
+
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
       }
-      
+
       else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setErrors('');
@@ -68,13 +65,13 @@ const LoginForm = () => {
         setMessage(error.response.data.message);
         setAlertClass('alert-danger');
       }
-     
+
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(logout());
-  },[]);
+  }, []);
   return (
     <form className="user" onSubmit={handleSubmit}>
       {message && <div className={`alert ${alertClass}`}>

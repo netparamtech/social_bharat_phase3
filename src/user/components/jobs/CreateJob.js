@@ -37,6 +37,7 @@ const CreateJob = (props) => {
     const [application_fee_details, setApplication_fee_details] = useState('');
     const [isActive, setIsActive] = useState('Inactive');
     const [isApplyForm, setIsApplyForm] = useState('Inactive');
+    const [isResumeApply, setIsResumeApply] = useState(false);
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -46,7 +47,7 @@ const CreateJob = (props) => {
     const [alertClass, setAlertClass] = useState("");
     const [messageAttachment, setMessageAttachment] = useState('');
     const [messageLogo, setMessageLogo] = useState('');
-
+    const [applyWithResume, setApplyWithResume] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState("India");
     const [selectedState, setSelectedState] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
@@ -162,6 +163,9 @@ const CreateJob = (props) => {
     const jobEndDateChange = (value, dateString) => {
         setJobEndDate(dateString);
     };
+    const handleApplyWithResume = () => {
+        setApplyWithResume(!applyWithResume);
+    }
 
     //state and city change operations
     const handleStateChange = (selectedOption) => {
@@ -252,6 +256,7 @@ const CreateJob = (props) => {
             fee_details: application_fee_details,
             state: selectedState && selectedState.label,
             city: selectedCity && selectedCity.label,
+            resume_apply: applyWithResume ? 1 : 0
         }
         try {
             const response = await createNewJobPost(data);
@@ -418,17 +423,64 @@ const CreateJob = (props) => {
                                     </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label>Address:</label>
-                                    <input type="text"
-                                        className="form-control"
-                                        placeholder="i.e. company place or organization address"
-                                        defaultValue={location}
-                                        onChange={(e) => setLocation(e.target.value)}
-                                    />
-                                    {errors.location && (
-                                        <span className="error">{errors.location}</span>
-                                    )}
+                                <div className="row">
+                                    <div className="col-12 col-md-6">
+                                        <label>Address:</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            placeholder="i.e. company place or organization address"
+                                            defaultValue={location}
+                                            onChange={(e) => setLocation(e.target.value)}
+                                        />
+                                        {errors.location && (
+                                            <span className="error">{errors.location}</span>
+                                        )}
+                                    </div>
+                                    <div className="col-12 col-md-6">
+                                        <label>Short Information about Application Fee</label>
+                                        <textarea type="text"
+                                            className={`form-control ${errors.fee_details ? 'border-danger' : ''}`}
+                                            placeholder="Enter application fee details or details about fee..."
+                                            defaultValue={application_fee_details}
+                                            onChange={(e) => setApplication_fee_details(e.target.value)}
+                                        />
+                                        {errors.fee_details && (
+                                            <span className="error">{errors.fee_details}</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12 col-md-6">
+                                        <label className="">Application Start</label>
+                                        <input
+                                            type="date"
+                                            name="jobStartDate"
+                                            id="jobStartDate"
+                                            placeholder=""
+                                            className={`form-control ${errors.job_start_date ? 'border-danger' : ''}`}
+                                            value={jobStartDate}
+                                            onChange={(e) => setJobStartDate(e.target.value)}
+                                        />
+                                        {errors.job_start_date && (
+                                            <span className="error">{errors.job_start_date}</span>
+                                        )}
+                                    </div>
+
+                                    <div className="col-12 col-md-6">
+                                        <label className="">Application End</label>
+                                        <input
+                                            type="date"
+                                            name="jobStartDate"
+                                            id="jobStartDate"
+                                            placeholder=""
+                                            className={`form-control ${errors.job_end_date ? 'border-danger' : ''}`}
+                                            value={jobEndDate}
+                                            onChange={(e) => setJobEndDate(e.target.value)}
+                                        />
+                                        {errors.job_end_date && (
+                                            <span className="error">{errors.job_end_date}</span>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <div className="row">
@@ -515,76 +567,43 @@ const CreateJob = (props) => {
                                                     <span className="error">{errors.job_apply_form}</span>
                                                 )}
                                             </div>
-                                            <div className="form-check mt-2">
-                                                <label className="row rounded">
-                                                    <Space direction="vertical" size={12} className="mt-2">
-                                                        <div className="">
-                                                            <label className="">Application Start</label>
-                                                            <input
-                                                                type="date"
-                                                                name="jobStartDate"
-                                                                id="jobStartDate"
-                                                                placeholder=""
-                                                                className={`form-control ${errors.job_start_date ? 'border-danger' : ''}`}
-                                                                value={jobStartDate}
-                                                                onChange={(e) => setJobStartDate(e.target.value)}
-                                                            />
-                                                        </div>
-                                                        {errors.job_start_date && (
-                                                            <span className="error">{errors.job_start_date}</span>
-                                                        )}
-                                                        <div className="">
-                                                            <label className="">Application End</label>
-                                                            <input
-                                                                type="date"
-                                                                name="jobStartDate"
-                                                                id="jobStartDate"
-                                                                placeholder=""
-                                                                className={`form-control ${errors.job_end_date ? 'border-danger' : ''}`}
-                                                                value={jobEndDate}
-                                                                onChange={(e) => setJobEndDate(e.target.value)}
-                                                            />
-                                                        </div>
-                                                        {errors.job_end_date && (
-                                                            <span className="error">{errors.job_end_date}</span>
-                                                        )}
-                                                    </Space>
-
-
+                                            <div className="m-3">
+                                                <label>
+                                                    Apply With Resume?
                                                 </label>
+                                                <div>
+                                                    <label className="form-control">
+                                                        <input
+                                                            type="radio"
+                                                            className="form-check-input"
+                                                            value="yes"
+                                                            checked={applyWithResume}
+                                                            onChange={handleApplyWithResume}
+                                                        />
+                                                        Yes
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <label className="form-control">
+                                                        <input
+                                                            type="radio"
+                                                            className="form-check-input"
+                                                            value="no"
+                                                            checked={!applyWithResume}
+                                                            onChange={handleApplyWithResume}
+                                                        />
+                                                        No
+                                                    </label>
+                                                </div>
                                             </div>
+
 
 
                                         </div>
-                                        {/* <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
-                                        {previewSelectedFile && (
-                                            <div >
-                                                <embed src={previewSelectedFile} type="application/pdf" width="100%" height="300px" />
 
-                                            </div>
-                                        )}
-
-                                    </div>
-                                    <div className="col-md-3 col-sm-12 mt-2" style={{ height: '300px', border: '1px solid #ccc' }}>
-                                        {logoPreview && (
-                                            <div >
-                                                <img src={logoPreview} width={150} height={300} />
-
-                                            </div>
-                                        )}
-                                    </div> */}
 
                                         <div className="col-md-6 col-sm-12 mt-2">
-                                            <label>Short Information about Application Fee</label>
-                                            <textarea type="text"
-                                                className={`form-control ${errors.fee_details ? 'border-danger' : ''}`}
-                                                placeholder="Enter application fee details or details about fee..."
-                                                defaultValue={application_fee_details}
-                                                onChange={(e) => setApplication_fee_details(e.target.value)}
-                                            />
-                                            {errors.fee_details && (
-                                                <span className="error">{errors.fee_details}</span>
-                                            )}
+
                                             <div className="col-md-12 col-sm-12 mt-2"><b>सामाजिक भारत</b> <li>एक ही समुदाय के लोगों को आपस में जोड़कर उन्हें सामाजिक रूप से जोड़ता है, जिससे समृद्धि और समर्थन में वृद्धि होती है।</li>
                                                 <li>समुदाय के लोगों को समृद्धि के साथ ही अपने समुदाय से ही जीवनसाथी ढूंढने की सुविधा प्रदान करता है।</li>
                                                 <li> सदस्यों को रोजगार और व्यापार की खोज के लिए एक सामाजिक मंच प्रदान करने से उन्हें अधिक अवसर मिलते हैं।</li>
@@ -605,6 +624,7 @@ const CreateJob = (props) => {
 
 
                                         </div>
+
                                         <div className="">
                                             <button type="button" className="btn btn-primary w-100" onClick={handleSubmit}>Submit</button>
                                         </div>

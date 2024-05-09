@@ -292,7 +292,7 @@ const UpdateJobPosted = (props) => {
         }
     }
     const checkUrl = (url) => {
-        if (url.startsWith("uploads\\users\\jobs")) {
+        if (url.startsWith("uploads\\users\\jobs")||url.startsWith("uploads/users/jobs")) {
             return false;
         }
         return true;

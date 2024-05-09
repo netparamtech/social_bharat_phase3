@@ -49,6 +49,8 @@ import usersWithCommunity from "./pages/user/UserWithCommuniryPage";
 import CreateEmailPage from "./pages/CreateEmailPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
 import RegisteredUsersForSameJobPage from "./pages/jobs/RegisteredUsersForSameJobPage";
+import CreateCms from "./components/cms/CreateCms";
+import UpCms from "./components/cms/UpCms";
 
 const adminRoutes = [
     {
@@ -348,6 +350,16 @@ const adminRoutes = [
     {
         path: '/admin/activities',
         component: ActivitiesPage,
+        exact:true
+    },
+    {
+        path: '/admin/create/cms',
+        component: CreateCms,
+        exact:true
+    },
+    {
+        path: '/admin/update/cms/:id',
+        component: UpCms,
         exact:true
     },
 ]

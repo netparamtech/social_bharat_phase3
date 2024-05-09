@@ -1,7 +1,7 @@
 #job-board-section {
     margin-top: 90px;
 
-    .card {
+    /* .card {
         max-width: 50em;
         flex-direction: row;
         transform-style: preserve-3d;
@@ -14,7 +14,7 @@
         .card-body {
             display: flex;
         }
-    }
+    } */
 
     .rotate-card {
         transform: rotateY(360deg);

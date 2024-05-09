@@ -899,6 +899,7 @@ const UpdateMatrimonial = () => {
                             <option value="10th">10th</option>
                             <option value="12th">12th</option>
                             <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate</option>
                             <option value="Under Graduate">Under Graduate</option>
                             <option value="Diploma">Diploma</option>
                             <option value="Under Diploma">Under Diploma</option>
@@ -909,7 +910,7 @@ const UpdateMatrimonial = () => {
                         </div>
                         <div className="mb-3 col-12 col-md-6">
                           <label className="form-label">Job Profile </label>
-                        
+
                           <select id="jobProfile" name="jobProfile" className="form-select form-control"
                             aria-label="job profile select" value={matrimonialOccupation} onChange={handleMatrimonialOccupation}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}

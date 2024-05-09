@@ -528,28 +528,6 @@ function CreateNewJob(props) {
                     </Form.Control.Feedback>
                     <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
                 </Form.Group>
-
-
-
-
-
-                {/* <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Username</Form.Label>
-                    <InputGroup hasValidation>
-                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                        <Form.Control
-                            type="text"
-                            placeholder="Username"
-                            aria-describedby="inputGroupPrepend"
-                            onChange={handleEmailChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {emailError && emailError }
-                        </Form.Control.Feedback>
-                        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group> */}
             </Row>
             <Row className="mb-3">
                 <Form.Group as={Col} md="6" controlId="validationCustom03">

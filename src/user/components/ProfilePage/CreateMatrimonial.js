@@ -121,13 +121,13 @@ const CreateMatrimonial = () => {
     } else if (selectedOption.label === 'Self') {
       setGender(user.user.gender);
 
-      setDOB(yyyyMmDdFormat(user.user.dob));
+      setDOB(user.user.dob ? yyyyMmDdFormat(user.user.dob) : '');
       setMatrimonialProfileName(user.user.name);
       setMatrimonialOccupation(user.user.occupation);
 
     } else {
       setGender('');
-      setDOB(dayjs().add(0, 'day'));
+      setDOB('');
       setMatrimonialProfileName('');
       setMatrimonialOccupation('');
     }
@@ -832,15 +832,17 @@ const CreateMatrimonial = () => {
                         <div className="mb-3 col-12 col-md-6">
                           <label className="form-label">Select Education </label>
 
-                          <select className="form-control" placeholder="Select Education..." value={education} onChange={handleEducationChange}>
+                          <select className="form-select form-control" aria-label="Education select" placeholder="Select Education..." value={education} onChange={handleEducationChange}>
                             <option value="">Select..</option>
                             <option value="10th">10th</option>
                             <option value="12th">12th</option>
                             <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate</option>
                             <option value="Under Graduate">Under Graduate</option>
                             <option value="Diploma">Diploma</option>
                             <option value="Under Diploma">Under Diploma</option>
                           </select>
+
                           {errors && errors.matrimonial_profile_occupation && (
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}

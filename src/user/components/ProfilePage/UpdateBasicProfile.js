@@ -520,7 +520,9 @@ const UpdateBasicProfile = () => {
                             <label className="form-label">State{" "}<span className="text-danger">*</span></label>
 
                             <Select
-                              className=""
+                              className="form-control"
+                              aria-label="Default select example"
+                             
                               options={states.map((state) => ({
                                 value: state.name,
                                 label: state.name,
@@ -537,9 +539,12 @@ const UpdateBasicProfile = () => {
                           </div>
 
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">City{" "}<span className="text-danger">*</span></label>
+                            <label className="">City{" "}<span className="text-danger">*</span></label>
 
                             <Select
+                             className="form-control"
+                             aria-label="Default select example"
+                              placeholder="Select City"
                               options={cities.map((city) => ({
                                 value: city.name,
                                 label: city.name,

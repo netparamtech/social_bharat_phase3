@@ -307,22 +307,26 @@ const SearchPeople = () => {
 
                 </div>
                 <div className="row ms-auto me-auto justify-content-between ">
-                <div className="mb-3 mt-2 col-12 col-sm-4">
+                  <div className="mb-3 mt-2 col-12 col-sm-4">
                     <label className="form-label ">
                       Search
                     </label>
-                <div className="d-flex">
-                <input
-                    type="text"
-                    placeholder="Search i.e name, mobile,state,city"
-                    name="text"
-                    className="input form-control"
-                    value={searchText}
-                    onChange={handleSearchText}
-                  />
-                  <i className="mb-3 mt-2 fas fa-search ps-2"></i>
-                </div>
-                </div>
+                    <div className="position-relative">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search i.e name, mobile,state,city"
+                          name="text"
+                          className="input form-control"
+                          value={searchText}
+                          onChange={handleSearchText}
+                        />
+                        <span className="input-group-text">
+                          <i className="fas fa-search ps-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <div className="mb-3 mt-2 col-12 col-sm-4">
                     <label className="form-label ">
                       State
@@ -351,10 +355,10 @@ const SearchPeople = () => {
                       onChange={handleCityChange}
                     />
                   </div>
-               
+
                 </div>
 
-                <div className="row" style={{ height:'500px', overflow: 'scroll' }} id="scrollableDiv">
+                <div className="row" style={{ height: '500px', overflow: 'scroll' }} id="scrollableDiv">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
                     style={{ overflowX: "hidden" }}
@@ -366,9 +370,9 @@ const SearchPeople = () => {
                   >
                     <div className="pw-20 mt-3" >
                       {!isSearchingPerformed ? (
-                       <div className="mx-auto" style={{width:'300px'}}>
-                         <span className="text-danger fs-5" >No Data Available</span>
-                       </div>
+                        <div className="mx-auto" style={{ width: '300px' }}>
+                          <span className="text-danger fs-5" >No Data Available</span>
+                        </div>
                       ) : (
                         ""
                       )}

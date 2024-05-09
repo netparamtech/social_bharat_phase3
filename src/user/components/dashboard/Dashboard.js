@@ -279,7 +279,7 @@ const Dashboard = () => {
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
                   className="text-white hover-pointer"
-                  onClick={() => navigate("/user/search/jobs")}
+                  onClick={() => navigate("/user/search/job")}
                 >
                   Search{" "}
                 </a>

@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userAction";
 import { setLoader } from "../../actions/loaderAction";
 import Select from "react-select";
-import { Avatar, Divider, List, Skeleton } from 'antd';
+import { Avatar, Divider, List, Skeleton, Statistic } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
     Navbar,
     Nav, Container
 } from "react-bootstrap";
+import CountUp from "react-countup";
 
+const formatter = (value) => <CountUp end={value} separator="," />;
 const CurrentJobOpening = () => {
     const user = useSelector((state) => state.userAuth);
     const [selectedCountry, setSelectedCountry] = useState("India");
@@ -87,7 +89,6 @@ const CurrentJobOpening = () => {
         try {
             const response = await currentJobs(size, page, state, city, searchText);
             if (response && response.status === 200) {
-                console.log(dataStatic)
                 setTotalRows(response.data.data.totalRowsAffected);
                 setDataStatic([...new Set([...dataStatic, ...response.data.data.jobs])]);
                 setCopyData(response.data.data);
@@ -182,7 +183,7 @@ const CurrentJobOpening = () => {
     };
     useEffect(() => {
         if (isAdmin) {
-            setJobPermission(user.user.permissions.have_job_permission);
+            setJobPermission(user.user.permissions && user.user.permissions.have_job_permission);
         }
     }, [isAdmin]);
 
@@ -209,8 +210,9 @@ const CurrentJobOpening = () => {
         }
     }, [selectedState]);
     return (
-        <div id="ghg" className=""
+        <div id="" className=""
         >
+           
             {
                 jobPermission ? <Navbar bg="light" data-bs-theme="dark">
                     <Container>
@@ -222,6 +224,7 @@ const CurrentJobOpening = () => {
                     </Container>
                 </Navbar> : ''
             }
+           
             {serverError && <span className="fs-5 text-danger">{serverError}</span>}
             <div className="row">
                 <div className="mb-3 col-lg-4 col-sm-12 col-xs-12">
@@ -331,7 +334,18 @@ const CurrentJobOpening = () => {
                 </InfiniteScroll>
 
             </div>
+            <div className="mt-2" style={{ position: 'fixed', zIndex: 1000, marginLeft: '100px' }}>
+                <Statistic
+                    title={
+                        <span className="text-xs font-weight-bold  text-uppercase mb-1">
 
+                            Total Result
+                        </span>
+                    }
+                    value={totalRows}
+                    formatter={formatter}
+                />
+            </div>
         </div>
     );
 }

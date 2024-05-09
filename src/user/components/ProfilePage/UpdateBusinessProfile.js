@@ -259,17 +259,18 @@ const UpdateBusinessProfile = (props) => {
       setBusinessPhoto(businessDetails.business_photos || '');
       setStatus(businessDetails.status || '');
       setBusinessId(businessDetails.id);
-      setGoogleMapLink(businessDetails.google_map_link||'');
+      setGoogleMapLink(businessDetails.google_map_link || '');
       setDescription(businessDetails.description || '');
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
-          (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (setTempBusinessPhotoUrl([businessDetails.business_photos] || ''))
+          (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (businessDetails.business_photos ? setTempBusinessPhotoUrl([businessDetails.business_photos]) : setTempBusinessPhotoUrl([]))
       }
 
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ? (setBusinessPreview(businessDetails.business_photos || ''))
           :
-          (setBusinessPreview([businessDetails.business_photos] || ''))
+          (businessDetails.business_photos ?
+            setBusinessPreview([businessDetails.business_photos]) : setBusinessPreview([]))
       }
 
       // You can similarly handle the proposalPhoto and biodataFile values here if needed
@@ -470,7 +471,7 @@ const UpdateBusinessProfile = (props) => {
                           />
                           {errors.business_photos && <span className='error'>{errors.business_photos}</span>}
                           <div className='proposal-Photo d-flex'>
-                            {businessPreview &&
+                            {businessPreview && businessPreview.length > 0 &&
                               businessPreview.map((item, idx) => (
                                 <div className='m-2' key={idx}>
                                   <img src={item} alt={`Photos ${idx + 1}`} />

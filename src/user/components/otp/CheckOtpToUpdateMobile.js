@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { resendOtp, updateMobile } from "../../services/userService";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userAction";
 
 const CheckOtpToUpdateMobile = (props) => {
   const { mobile, message } = props;
+  const user = useSelector((state) => state.userAuth);
 
   const [otp, setOtp] = useState("");
 
@@ -14,6 +17,7 @@ const CheckOtpToUpdateMobile = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const otpBoxes = Array.from({ length: 6 }, (_, index) => index);
 
@@ -58,6 +62,11 @@ const CheckOtpToUpdateMobile = (props) => {
       const response = await updateMobile(mobile, truncatedOtp);
 
       if (response && response.status === 200) {
+        const modifiedData = {
+          ...user.user,
+          mobile: mobile // Update the mobile number
+        };
+        dispatch(login(modifiedData, user.token));
         setOtp("");
         navigate("/profile");
       }

@@ -7,11 +7,18 @@ import { setLoader } from "../../actions/loaderAction";
 const BusinessInfo = (props) => {
   const { user } = props;
   const [businessDetails, setBusinessDetails] = useState([]);
-  const [collapsedItems, setCollapsedItems] = useState([]); // State to control collapse/expand
+  const [isDetails, setIsDetails] = useState(false);
 
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleIsDetailsClicked = (index) => {
+    setIsDetails(prevState => ({
+        ...prevState,
+        [index]: !prevState[index]
+    }));
+}
 
   const deleteBusinessDetails = async (id) => {
     dispatch(setLoader(true));
@@ -38,16 +45,8 @@ const BusinessInfo = (props) => {
   useEffect(() => {
     if (user) {
       setBusinessDetails(user?.data?.businesses || []);
-      // Initialize the collapsedItems state with false for each item
-      setCollapsedItems(Array(user?.data?.businesses?.length).fill(true));
     }
   }, [user]);
-
-  const toggleCollapse = (value) => {
-    const newCollapsedItems = [...collapsedItems];
-    newCollapsedItems[value] = !newCollapsedItems[value];
-    setCollapsedItems(newCollapsedItems);
-  };
 
   return (
     <div id="businesses-section" className="content-wrapper pt-4">
@@ -127,17 +126,7 @@ const BusinessInfo = (props) => {
                                 </td>
                                 <td width="50px"></td>
                               </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-                        <div
-                          className={`pt-0 collapse${collapsedItems[value] ? "" : " show"
-                            }`}
-                          id={`collapse-${value}`}
-                        >
-                          <table className="table table-striped">
-                            <tbody>
+                          
                               <tr>
                                 <td>City</td>
                                 <td className="text-muted">{item.city}</td>
@@ -146,7 +135,9 @@ const BusinessInfo = (props) => {
                                 <td>State</td>
                                 <td className="text-muted">{item.state}</td>
                               </tr>
-                              <tr>
+                            {isDetails[value]?(
+                              <>
+                                <tr>
                                 <td>Country</td>
                                 <td className="text-muted">{item.country}</td>
                               </tr>
@@ -169,7 +160,7 @@ const BusinessInfo = (props) => {
                                 </td>
                               </tr>
                               <tr>
-                                <td>Business Details (or Website)</td>
+                                <td>Business Details <br />(or Website)</td>
                                 <td className="truncate-text text-muted">
                                   {item.business_website}
                                 </td>
@@ -191,14 +182,19 @@ const BusinessInfo = (props) => {
                                   </tr>
                                 ) : (
                                   <tr>
-                                    <td>Business Photo</td>
-                                    <td className="proposal-Photo">
-                                      {
-                                        <a href={item} target="_blank">
-                                          <img className="m-1" src={item.business_photos} />
-                                        </a>
-                                      }
-                                    </td>
+                                    {
+                                      item.business_photos ? (
+                                        <>
+                                          <td>Business Photo</td>
+                                          <td className="proposal-Photo">
+                                            {
+                                              <a href={item} target="_blank">
+                                                <img className="m-1" src={item.business_photos} />
+                                              </a>
+                                            }
+                                          </td></>
+                                      ) : ''
+                                    }
                                   </tr>
                                 )
                               }
@@ -206,19 +202,13 @@ const BusinessInfo = (props) => {
                                 <td>Status</td>
                                 <td className="text-muted">{item.status}</td>
                               </tr>
+                              </>
+                            ):''}
                             </tbody>
                           </table>
                         </div>
-                        <button
-                          onClick={() => toggleCollapse(value)}
-                          className="btn-primary mb-2"
-                          type="button"
-                          data-toggle="collapse"
-                          data-target={`#collapse-${value}`} // Add a unique ID for each collapse element
-                          aria-expanded={!collapsedItems[value]} // Use the negation of collapsed state
-                        >
-                          {collapsedItems[value] ? "Show More" : "Show Less"}
-                        </button>
+                        <a className="btn over-pointer-g-effect mx-auto m-2 btn-toggle" onClick={() => handleIsDetailsClicked(value)}>{!isDetails[value] ? "Show More" : "Show Less"}</a>
+                       
                       </div>
                     </div>
                   ))}

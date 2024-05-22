@@ -1347,11 +1347,11 @@ function Jobs() {
                                                                     <p
                                                                         className=""
                                                                         dangerouslySetInnerHTML={{
-                                                                            __html: selectedIndex === index ? item.DESCRIPTION : `${item && item.DESCRIPTION && item.DESCRIPTION.slice(0, 300)}<span style='color: gray;'>${item.DESCRIPTION.length > 300 ? '...' : ''}</span>`
+                                                                            __html: selectedIndex === index ? item.description : `${item && item.description && item.description.slice(0, 300)}<span style='color: gray;'>${item.description.length > 300 ? '...' : ''}</span>`
                                                                         }}
                                                                     ></p>
                                                                     {
-                                                                        item.DESCRIPTION.length > 300 && <button className="mx-auto over-pointer-g-effect" onClick={() => toggleDescription(index)}>
+                                                                        item.description.length > 300 && <button className="mx-auto over-pointer-g-effect" onClick={() => toggleDescription(index)}>
                                                                             {selectedIndex === index ? 'Show Less' : 'Show More'}
                                                                         </button>
                                                                     }

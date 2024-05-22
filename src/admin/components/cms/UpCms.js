@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate,useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { createCms, createCommunity, fetchCmsById, updateCmsById, uploadImage, uploadMultipleImages } from "../../services/AdminService";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -199,8 +199,35 @@ const UpCms = () => {
         setCmsImageTempUrl(updatedTempUrl);
     };
     useEffect(() => {
+        if (cms) {
+            setPage(cms.page);
+            setSection(cms.section);
+            setSubheading(cms.section_subheading);
+            setIcon(cms.icons);
+            setSectionArchive(cms.section_archives);
+            {
+                cms && cms.photos && (
+                  setCmsImageTempUrl(
+                    Array.isArray(cms.photos)
+                      ? cms.photos
+                      : [cms.photos]
+                  )
+                )
+              }
+        
+        
+              {
+                cms &&
+                  cms.photos &&
+                  Array.isArray(cms.photos)
+                  ? setPhotosPreview(cms.photos || "")
+                  : setPhotosPreview([cms.photos] || "");
+              }
+        }
+    }, [cms])
+    useEffect(() => {
         fetchCms();
-    },[])
+    }, [])
 
     return (
         <AdminLayout>

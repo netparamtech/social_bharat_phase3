@@ -273,6 +273,7 @@ const UpdateRegisteredService = () => {
                             {!isUpdate && <p className="col-12 error">You cannot update until admin approves it.</p>}
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">
+                                    <label>Service</label>
 
                                     <Select
                                         className="form-control"
@@ -286,6 +287,7 @@ const UpdateRegisteredService = () => {
 
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
+                                <label>Service Title</label>
                                     <input
                                         type="text"
                                         placeholder="Enter Service Title"
@@ -301,6 +303,7 @@ const UpdateRegisteredService = () => {
                             </div>
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">
+                                <label>Mobile 1</label>
                                     <input
                                         type="number"
                                         placeholder="Enter Your Mobile Number 1"
@@ -313,6 +316,7 @@ const UpdateRegisteredService = () => {
                                     )}
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
+                                <label>Mobile 2</label>
                                     <input
                                         type="number"
                                         placeholder="Enter Your Mobile Number 2"
@@ -327,7 +331,7 @@ const UpdateRegisteredService = () => {
                             </div>
                             <div className="row">
                                 <div className="form-group mb-4 col-6">
-
+                                <label>State</label>
                                     <Select
                                         className="form-control"
                                         options={states.map((state) => ({
@@ -346,6 +350,7 @@ const UpdateRegisteredService = () => {
                                 </div>
 
                                 <div className="form-group mb-4 col-6">
+                                <label>City</label>
 
                                     <Select
                                         className="form-control"
@@ -366,6 +371,7 @@ const UpdateRegisteredService = () => {
                             </div>
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">
+                                <label>Experience</label>
                                     <input
                                         type="text"
                                         placeholder="Enter Experience"
@@ -378,6 +384,7 @@ const UpdateRegisteredService = () => {
                                     )}
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
+                                <label>Service Provides At</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -391,6 +398,7 @@ const UpdateRegisteredService = () => {
                                 </div>
                             </div>
                             <div className="form-group mb-4 ">
+                            <label>Description</label>
                                 <textarea
                                     className="form-control"
                                     placeholder="Enter details"

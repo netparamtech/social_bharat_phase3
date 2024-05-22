@@ -97,6 +97,10 @@ const UpdateMatrimonial = () => {
   const [serverError, setServerError] = useState("");
   const [slectedPhotos, setSelectedPhotos] = useState([]);
 
+  const [isMyNumber, setIsMyNumber] = useState(false);
+  const [mobile, setMobile] = useState('');
+  const [jobProfileDesc, setJobProfileDesc] = useState('');
+
   const navigate = useNavigate();
 
   const jobProfile = [
@@ -168,7 +172,15 @@ const UpdateMatrimonial = () => {
 
   }
 
-
+  const handleIsMyNumberClicked = () => {
+    setIsMyNumber(!isMyNumber);
+  }
+  const handleMobileNumberClicked = (e) => {
+    setMobile(e.target.value);
+  }
+  const handleJobProfileDes = (e) => {
+    setJobProfileDesc(e.target.value);
+  }
 
   const handleProposalPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -178,11 +190,6 @@ const UpdateMatrimonial = () => {
     if (totalFiles > 5) {
       alert("Total files (including existing ones) cannot exceed 5.");
       e.target.value = null; // Clear the input field
-      return;
-    }
-    if (totalFiles <= 1) {
-      alert("Add atleast 2 and maximum 5 photos(should be in png, jpg, jpeg format)");
-      e.target.value = null;
       return;
     }
 
@@ -327,6 +334,8 @@ const UpdateMatrimonial = () => {
       subcast_id,
       matrimonial_profile_name: matrimonialProfileName,
       description,
+      contact_number: mobile,
+      job_profile_description: jobProfileDesc,
       state: selectedState && selectedState.label,
       city: selectedCity && selectedCity.label,
     };
@@ -435,6 +444,8 @@ const UpdateMatrimonial = () => {
       setTempBiodataFileUrl(userMatrimonial.biodata || "");
       setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
       setSubcastId(userMatrimonial.subcast_id);
+      setMobile(userMatrimonial.contact_number);
+      setJobProfileDesc(userMatrimonial.job_profile_description);
 
       if (userMatrimonial.brothers_details) {
 
@@ -462,8 +473,8 @@ const UpdateMatrimonial = () => {
 
           setDOB(yyyyMmDdFormat(user.user.dob));
         } else {
+          console.log("khjjhgkjh")
           setGender(userMatrimonial.matrimonial_profile_gender);
-          console.log(userMatrimonial, "Heeel")
           setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
         }
       }
@@ -647,6 +658,13 @@ const UpdateMatrimonial = () => {
       getAllCities(selectedStateObject.id);
     }
   }, [selectedState]);
+  useEffect(() => {
+    if (isMyNumber) {
+      setMobile(loggedUser && loggedUser.user.mobile);
+    } else {
+      setMobile('');
+    }
+  }, [isMyNumber]);
 
   useEffect(() => {
     fetchMatrimonial();
@@ -925,6 +943,20 @@ const UpdateMatrimonial = () => {
                           {errors && errors.matrimonial_profile_occupation && (
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}
+                        </div>
+                        <div className="mb-3 col-12">
+                          <label className="form-label">Job Description </label>
+                          <textarea className="form-control" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
+                        </div>
+                        <div class="mb-3 col-12">
+                          <label className="form-label">Contact Detail</label>
+                          <div className="form-check">
+                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked} />
+                            <label className="form-check-label" for="useMyNumber">Use My Number</label>
+                          </div>
+                          <div>
+                            <input type="text" className="form-control" placeholder="Enter Mobile Number.." value={mobile} onChange={handleMobileNumberClicked} />
+                          </div>
                         </div>
                       </div>
 

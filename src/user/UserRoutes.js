@@ -43,6 +43,7 @@ import UpdateActivityPage from "./pages/UpdateActivityPage";
 import CreateJobProfilePage from "./pages/CreateJobProfilePage";
 import CreateMatrimonialPage from "./pages/profile/update/CreateMatrimonialPage";
 import JobsPage from "./pages/JobsPage";
+import UserServiceInfoPage from "./pages/UserServiceInfoPage";
 
 const UserRoutes = () => {
     return [
@@ -328,6 +329,11 @@ const UserRoutes = () => {
             path: '/user/search/job',
             component: JobsPage,
             exact: true
+        },
+        {
+            path:'/user/service/info/:id',
+            component: UserServiceInfoPage,
+            exact:true
         }
 
     ];

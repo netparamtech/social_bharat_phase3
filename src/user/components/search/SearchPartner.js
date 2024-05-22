@@ -623,6 +623,9 @@ const SearchPartner = () => {
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                       Job Profile-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
                                     </p>
+                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                                      Job Description-{item.job_profile_description ? item.job_profile_description : ''}
+                                    </p>
                                     <div
                                       className="d-flex justify-content-start rounded-3"
                                       style={{ backgroundColor: '#efefef' }}
@@ -648,7 +651,11 @@ const SearchPartner = () => {
                                       style={{ backgroundColor: '#efefef' }}
                                     >
                                       {
-                                        checkMobileVisibility(item.mobile) ? (
+                                        item.contact_number ? (
+                                          <a href={`tel:${item.contact_number}`}>
+                                            {item.contact_number}
+                                          </a>
+                                        ) : checkMobileVisibility(item.mobile) ? (
                                           <p>
                                             <a href={`tel:${item.mobile}`}>
                                               {item.mobile}
@@ -656,6 +663,8 @@ const SearchPartner = () => {
                                           </p>
                                         ) : ''
                                       }
+
+
                                     </div>
                                     <div className="d-flex pt-1">
 

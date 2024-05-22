@@ -96,6 +96,10 @@ const CreateMatrimonial = () => {
   const [states, setStates] = useState([]);
   const [countryID, setCountryID] = useState(101);
 
+  const [isMyNumber, setIsMyNumber] = useState(false);
+  const [mobile, setMobile] = useState('');
+  const [jobProfileDesc, setJobProfileDesc] = useState('');
+
   const navigate = useNavigate();
 
   const jobProfile = [
@@ -165,6 +169,15 @@ const CreateMatrimonial = () => {
       setShowSisterDetail(true);
     }
 
+  }
+  const handleIsMyNumberClicked = () => {
+    setIsMyNumber(!isMyNumber);
+  }
+  const handleMobileNumberClicked = (e) => {
+    setMobile(e.target.value);
+  }
+  const handleJobProfileDes = (e) => {
+    setJobProfileDesc(e.target.value);
   }
 
   const handleProposalPhotoChange = async (e) => {
@@ -299,6 +312,8 @@ const CreateMatrimonial = () => {
       subcast_id,
       matrimonial_profile_name: matrimonialProfileName,
       description,
+      contact_number: mobile,
+      job_profile_description: jobProfileDesc,
       state: selectedState && selectedState.label,
       city: selectedCity && selectedCity.label,
     };
@@ -585,7 +600,14 @@ const CreateMatrimonial = () => {
     if (communityId) {
       fetchSubcastsCommunities();
     }
-  }, [communityId])
+  }, [communityId]);
+  useEffect(() => {
+    if (isMyNumber) {
+      setMobile(loggedUser && loggedUser.user.mobile);
+    } else {
+      setMobile('');
+    }
+  }, [isMyNumber]);
 
   useEffect(() => {
     getAllStates();
@@ -865,6 +887,22 @@ const CreateMatrimonial = () => {
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}
                         </div>
+                        <div className="mb-3 col-12">
+                          <label className="form-label">Job Description </label>
+                          <textarea className="form-control" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
+                        </div>
+                        <div class="mb-3 col-12">
+                          <label className="form-label">Contact Detail</label>
+                          <div className="form-check">
+                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked} />
+                            <label className="form-check-label" for="useMyNumber">Use My Number</label>
+                          </div>
+                          <div>
+                            <input type="text" className="form-control" placeholder="Enter Mobile Number.." value={mobile} onChange={handleMobileNumberClicked} />
+                          </div>
+                        </div>
+
+
                       </div>
 
                       <div className="row">

@@ -14,6 +14,10 @@ const MatrimonialCard = ({ item, index }) => {
     const handleShow = () => {
         setShow(true)
     };
+    const checkMobileVisibility = (mobileNumber) => {
+        const isHidden = /\*/.test(mobileNumber);
+        return !isHidden;
+    };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -64,14 +68,27 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>Date Of Birth: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>Education: <span className="text-muted">{(item.education) || "N/A"}</span></p>
                                                 <p>Job Profile: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
-                                                <p>Brother Count: <span className="text-muted">{(item.brother_count) || "N/A"}</span></p>
-                                                {item.brothers_details && (
-                                                    <p>Brothers Details: <span className="text-muted truncate-text">{item.brothers_details}</span></p>
-                                                )}
-                                                <p>Sister Count: <span className="text-muted">{(item.sister_count) || "N/A"}</span></p>
-                                                {item.sisters_details && (
-                                                    <p>Sisters Details: <span className="text-muted truncate-text">{item.sisters_details}</span></p>
-                                                )}
+                                                {
+                                                    item.brother_count ? (
+                                                        <>
+                                                            <p>Brother Count: <span className="text-muted">{item.brother_count || "N/A"}</span></p>
+                                                            {item.brothers_details && (
+                                                                <p>Brothers Details: <span className="text-muted truncate-text">{item.brothers_details}</span></p>
+                                                            )}
+                                                        </>
+                                                    ) : ''
+                                                }
+
+                                                {
+                                                    item.sister_count ? (
+                                                        <>
+                                                            <p>Sister Count: <span className="text-muted">{item.sister_count || "N/A"}</span></p>
+                                                            {item.sisters_details && (
+                                                                <p>Sisters Details: <span className="text-muted truncate-text">{item.sisters_details}</span></p>
+                                                            )}
+                                                        </>
+                                                    ) : ''
+                                                }
                                                 <p>Subcast: <span className="text-muted">{(item.subcast) || "N/A"}</span></p>
                                                 <p>Gender: <span className="text-muted">{(item.matrimonial_profile_gender) || "N/A"}</span></p>
                                                 <p>Paternal Gotra: <span className="text-muted">{(item.paternal_gotra) || "N/A"}</span></p>
@@ -81,6 +98,19 @@ const MatrimonialCard = ({ item, index }) => {
                                                         <i className="fa-regular fa-file-lines"></i> Download Biodata
                                                     </a>
                                                 )}</span></p>
+                                                {
+                                                    item.contact_number ? (
+                                                        <a href={`tel:${item.contact_number}`}>
+                                                            {item.contact_number}
+                                                        </a>
+                                                    ) : checkMobileVisibility(item.mobile) ? (
+                                                        <p>
+                                                            <a href={`tel:${item.mobile}`}>
+                                                                {item.mobile}
+                                                            </a>
+                                                        </p>
+                                                    ) : ''
+                                                }
 
                                             </>
                                         ) : (
@@ -93,14 +123,26 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>जन्म तिथि: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>शिक्षा: <span className="text-muted">{(item.education) || "N/A"}</span></p>
                                                 <p>नौकरी की प्रोफाइल: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
-                                                <p>भाई की संख्या: <span className="text-muted">{(item.brother_count) || "N/A"}</span></p>
-                                                {item.brothers_details && (
-                                                    <p>भाइयों का विवरण: <span className="text-muted truncate-text">{item.brothers_details}</span></p>
-                                                )}
-                                                <p>बहन की संख्या: <span className="text-muted">{(item.sister_count) || "N/A"}</span></p>
-                                                {item.sisters_details && (
-                                                    <p>बहनों का विवरण: <span className="text-muted truncate-text">{item.sisters_details}</span></p>
-                                                )}
+                                                {
+                                                    item.brother_count ? (
+                                                        <>
+                                                            <p>भाई की संख्या: <span className="text-muted">{(item.brother_count) || "N/A"}</span></p>
+                                                            {item.brothers_details && (
+                                                                <p>भाइयों का विवरण: <span className="text-muted truncate-text">{item.brothers_details}</span></p>
+                                                            )}
+                                                        </>
+                                                    ) : ''
+                                                }
+                                                {
+                                                    item.sister_count ? (
+                                                        <>
+                                                            <p>बहन की संख्या: <span className="text-muted">{(item.sister_count) || "N/A"}</span></p>
+                                                            {item.sisters_details && (
+                                                                <p>बहनों का विवरण: <span className="text-muted truncate-text">{item.sisters_details}</span></p>
+                                                            )}
+                                                        </>
+                                                    ) : ''
+                                                }
                                                 <p>उप-जाति: <span className="text-muted">{(item.subcast) || "N/A"}</span></p>
                                                 <p>लिंग: <span className="text-muted">{(item.matrimonial_profile_gender) || "N/A"}</span></p>
                                                 <p>पिता का गोत्र: <span className="text-muted">{(item.paternal_gotra) || "N/A"}</span></p>
@@ -110,20 +152,34 @@ const MatrimonialCard = ({ item, index }) => {
                                                         <i className="fa-regular fa-file-lines"></i> Download Biodata
                                                     </a>
                                                 )}</span></p>
+                                                  {
+                                                    item.contact_number ? (
+                                                        <a href={`tel:${item.contact_number}`}>
+                                                            {item.contact_number}
+                                                        </a>
+                                                    ) : checkMobileVisibility(item.mobile) ? (
+                                                        <p>
+                                                            <a href={`tel:${item.mobile}`}>
+                                                                {item.mobile}
+                                                            </a>
+                                                        </p>
+                                                    ) : ''
+                                                }
                                             </>
                                         )
                                     }
                                 </div>
                                 <div className='col-6'>
-                                    <Carousel className="your-custom-carousel-class">
+                                    <Carousel className="your-custom-carousel-class" style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
                                         {item.proposal_photos && Array.isArray(item.proposal_photos) ?
                                             item.proposal_photos.map((value, index) => (
-                                                <Carousel.Item key={index}>
+                                                <Carousel.Item key={index} style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
                                                     <img
                                                         src={value}
                                                         alt={`Proposal Photo ${index + 1}`}
                                                         className="d-block w-100 custom-carousel-item"
                                                         height={300}
+                                                        style={{ objectFit: 'cover', height: '100%', width: '100%' }}
                                                     //onClick={() => changeEventClickFlag(true, item.id)}
                                                     />
 
@@ -133,7 +189,7 @@ const MatrimonialCard = ({ item, index }) => {
                                                     src={item.proposal_photos}
                                                     alt="Proposal Photo"
                                                     className="d-block w-100 custom-carousel-item"
-                                                    height={300}
+                                                    style={{ objectFit: 'cover', height: '100%', width: '100%' }}
                                                 //onClick={() => changeEventClickFlag(true, item.id)}
                                                 />) : ''
                                             )}

@@ -57,6 +57,11 @@ const SearchUsersWithService = () => {
     setIsChat(value);
   };
 
+  const handleViewClick = (item) => {
+    localStorage.setItem("data", JSON.stringify(item));
+    navigate(`/user/service/info/${item.id}`);
+  }
+
   const handleFeedbackFlag = (value, index, item) => {
     setIndex(index);
     setData(item);
@@ -471,8 +476,15 @@ const SearchUsersWithService = () => {
                               <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}>
                                 <img src="/user/images/chat-icon.jpg" width="40px" />
                               </div>
-                              <button type="button" className="btn me-1 flex-grow-1">
+                              {/* <button type="button" className="btn me-1 flex-grow-1">
                                 <ViewProfileDrawerForMembers id={item.id} />
+                              </button> */}
+                              <button
+                                type="button"
+                                className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
+                                onClick={()=>handleViewClick(item)}
+                              >
+                                VIEW
                               </button>
                               <button
                                 type="button"

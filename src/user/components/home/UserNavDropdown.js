@@ -65,8 +65,7 @@ function UserNavDropdown() {
     };
 
     const handleSettingClick = (e) => {
-        e.preventDefault();
-        navigate('/user/setting');
+        navigate(isPasswordSet ? '/user/setting' : '/set-password');
     }
 
     const fetchLoggedUserCommunity = async () => {

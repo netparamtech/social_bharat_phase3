@@ -56,6 +56,14 @@ const NavbarCustom = (props) => {
     window.scrollTo(0, 0);
     navigate("/");
   };
+  const handleContClicked = (e) => {
+    e.preventDefault();
+    if (isAndroidUsed) {
+      showDrawer();
+    }
+    window.scrollTo(0, 0);
+    navigate("/contact");
+  };
 
   const handleDashboardClicked = () => {
     if (isAndroidUsed) {
@@ -376,7 +384,7 @@ const NavbarCustom = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/jobs" || window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/job" || window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"
                     ? "active"
                     : "inactive"
                     }`}
@@ -416,6 +424,15 @@ const NavbarCustom = (props) => {
                   onClick={handleServiceClick}
                 >
                   SERVICES
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/contact" ? "active" : "inactive"
+                    }`}
+                  onClick={handleContClicked}
+                >
+                  CONTACT
                 </a>
               </li>
 

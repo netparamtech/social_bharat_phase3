@@ -82,6 +82,7 @@ const SearchPartner = () => {
     "Engineer",
     "Sales",
     "Marketing",
+    "Business"
   ]
 
   const handleClear = (value) => {
@@ -621,7 +622,7 @@ const SearchPartner = () => {
                                     </div>
                                     <h5 className="mb-1">{item.matrimonial_profile_name}</h5>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      Job Profile-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
+                                      Job Type-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
                                     </p>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                       Job Description-{item.job_profile_description ? item.job_profile_description : ''}
@@ -672,10 +673,11 @@ const SearchPartner = () => {
                                       <div
                                         className="text-start ms-3 mt-2 hover-pointer"
                                         onClick={() => handleChatclick(item)}
+                                        style={{flex:1,justifyContent:'space-between'}}
                                       >
                                         <img
                                           src="/user/images/chat-icon.jpg"
-                                          width="40px"
+                                          width="50px"
                                         />
                                       </div>
                                       <MatrimonialCard item={item} />

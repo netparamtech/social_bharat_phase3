@@ -110,6 +110,7 @@ const UpdateMatrimonial = () => {
     "Engineer",
     "Sales",
     "Marketing",
+    "Business"
     // Add more job profiles as needed
   ];
 
@@ -957,6 +958,9 @@ const UpdateMatrimonial = () => {
                           <div>
                             <input type="text" className="form-control" placeholder="Enter Mobile Number.." value={mobile} onChange={handleMobileNumberClicked} />
                           </div>
+                          {errors && errors.contact_number && (
+                            <span className="error">{errors.contact_number}</span>
+                          )}
                         </div>
                       </div>
 

@@ -97,35 +97,40 @@ const Footer = (props) => {
             </div>
             <div className=" social-links  ms-2">
               <a
-                href={data && data.social_twitter_link && data.social_twitter_link}
+                // href={data && data.social_twitter_link && data.social_twitter_link}
+                onClick={()=>navigate('/page-not-exist/404')}
                 className="twitter"
                 target="_blank"
               >
                 <i className="fa-brands fa-twitter"></i>
               </a>
               <a
-                href={data && data.social_facebook_link && data.social_facebook_link}
+                // href={data && data.social_facebook_link && data.social_facebook_link}
+                onClick={()=>navigate('/page-not-exist/404')}
                 className="facebook"
                 target="_blank"
               >
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
               <a
-                href={data && data.social_insta_link && data.social_insta_link}
+                // href={data && data.social_insta_link && data.social_insta_link}
+                onClick={()=>navigate('/page-not-exist/404')}
                 className="instagram"
                 target="_blank"
               >
                 <i className="fa-brands fa-instagram"></i>
               </a>
               <a
-                href={data && data.social_linkedin_link && data.social_linkedin_link}
+                // href={data && data.social_linkedin_link && data.social_linkedin_link}
+                onClick={()=>navigate('/page-not-exist/404')}
                 className="linkedin"
                 target="_blank"
               >
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
               <a
-                href={data && data.social_youtube_link && data.social_youtube_link}
+                // href={data && data.social_youtube_link && data.social_youtube_link}
+                onClick={()=>navigate('/page-not-exist/404')}
                 className="youtube"
                 target="_blank"
               >
@@ -134,10 +139,10 @@ const Footer = (props) => {
             </div>
           </div>
 
-          <div className="col-lg-3 col-md-6 col-sm-12 useful-links mb-md-5  ps-sm-0 ps-xs-0 ps-lg-5 ps-md-5">
+          <div className="col-lg-3 col-md-6 col-sm-12 mb-md-5  ps-sm-0 ps-xs-0 ps-lg-5 ps-md-5">
             <h4>Useful Links</h4>
             <ul className="list-inline ms-2">
-              <li className="green-ever-hover">
+              <li className="green-ever-hover useful-links ">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -147,7 +152,7 @@ const Footer = (props) => {
                   Home
                 </a>{" "}
               </li>
-              <li className="green-ever-hover">
+              <li className="green-ever-hover useful-links">
                 <a
                   className="text-decoration-none gray-color hover-pointer"
                   onClick={handleEventClick}
@@ -156,7 +161,7 @@ const Footer = (props) => {
                   Events
                 </a>
               </li>
-              <li className="green-ever-hover">
+              <li className="green-ever-hover useful-links">
                 <a
                   className="text-decoration-none gray-color hover-pointer"
                   onClick={handleSearchClick}
@@ -165,7 +170,7 @@ const Footer = (props) => {
                   Search
                 </a>
               </li>
-              <li className="green-ever-hover">
+              <li className="green-ever-hover useful-links">
                 <a
                   className="text-decoration-none gray-color hover-pointer"
                   onClick={handleContactClick}
@@ -174,7 +179,7 @@ const Footer = (props) => {
                   Contact
                 </a>
               </li>
-              <li className="green-ever-hover">
+              <li className="green-ever-hover useful-links">
                 <a
                   className="text-decoration-none gray-color hover-pointer"
                   onClick={handleFeedbackClick}
@@ -189,7 +194,7 @@ const Footer = (props) => {
           <div className="our-services  col-lg-3 col-md-6 col-sm-12  mb-md-5  ps-lg-5">
             <h4>Our Services</h4>
             <ul className="list-inline  ms-2">
-              <li>
+              <li className="green-ever-hover useful-links">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -199,7 +204,7 @@ const Footer = (props) => {
                   Search People/Chat
                 </a>{" "}
               </li>
-              <li>
+              <li className="green-ever-hover useful-links">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -209,7 +214,7 @@ const Footer = (props) => {
                   Business Promotion
                 </a>{" "}
               </li>
-              <li>
+              <li className="green-ever-hover useful-links">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -219,7 +224,7 @@ const Footer = (props) => {
                   Find Life Partner/Chat
                 </a>
               </li>
-              <li>
+              <li className="green-ever-hover useful-links">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -229,7 +234,7 @@ const Footer = (props) => {
                   Create Event/Search
                 </a>
               </li>
-              <li>
+              <li className="green-ever-hover useful-links">
                 {" "}
                 <a
                   className="text-decoration-none gray-color hover-pointer"
@@ -243,14 +248,14 @@ const Footer = (props) => {
           </div>
 
           <div className="col-lg-3 col-md-6 col-sm-12  ">
-            <h3>Contact Us</h3>
+            <h3 className="hover-pointer hover-pointer-green" onClick={()=>navigate('/contact')}>Contact Us</h3>
             <div className="ms-2">
               {data && data.address}
               <br />
               <div className="row">
                 <div className="col-1">
-                  {data && data.phone1 && (<a className="text-dark text-line-none" href={`tel:${data && data.phone1}`}>
-                    <i className="fa-solid fa-phone-volume text-primary"></i>
+                  {data && data.phone1 && (<a className="text-dark text-line-none box-custom" href={`tel:${data && data.phone1}`}>
+                    <i className="fa-solid fa-phone-volume text-primary "></i>
                   </a>)}
 
                 </div>
@@ -281,7 +286,7 @@ const Footer = (props) => {
               <div className="row">
                 <div className="col-1">
                   {data && data.email1 && (
-                    <a className="text-dark text-line-none" href={`mailto:${data && data.email1}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
+                    <a className="text-dark text-line-none box-custom" href={`mailto:${data && data.email1}`}> <i className="fa-solid fa-envelope text-primary"></i></a>
                   )}
 
                 </div>

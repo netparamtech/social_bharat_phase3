@@ -149,7 +149,7 @@ function Contact() {
                             <div className="d-inline-flex">
 
 
-                              <Button type="" onClick={showModal}>
+                              <Button type="btn" onClick={showModal}>
                                 <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
                               </Button>
                               <h4 className="ms-3">Call Us</h4>

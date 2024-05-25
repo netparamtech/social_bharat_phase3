@@ -26,7 +26,7 @@ import { Card, Form, Button } from "react-bootstrap";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-const formatter = (value) => <CountUp end={value} separator="," />;
+const formatter = (value) => <CountUp end={value} separator="," style={{ color: 'blue', fontSize: '100px', }} />;
 
 function Jobs() {
     const user = useSelector((state) => state.userAuth);
@@ -897,11 +897,25 @@ function Jobs() {
                             <Menu.Item key="services" icon={<QuestionCircleOutlined />}>
                                 <Link onClick={() => handleIsContactUs()}>CONTACT US</Link>
                             </Menu.Item>
+
                         </Menu>
                         <div className="text-info fs-5 text-decoration-none m-2 ms-2">
                             <img src="/user/images/appliedJob.jpg" width={30} ></img>
                             <Link className="text-info fw-bold m-2" to="/user/all/applied/jobs">APPLIED JOBS</Link>
                         </div>
+                        {
+                            isAndroidUsed ? (
+                               ""
+                            ) : <div className="card" style={{ height: '100px' }}>
+                                <div className="card-body " style={{ backgroundImage: 'url("/user/images/J.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+                                    <Statistic
+                                        title=""
+                                        value={totalRows}
+                                        formatter={formatter}
+                                    />
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div className="mt-5" style={{ maxHeight: '600px', width: '700px', overflow: 'scroll', position: 'absolute', zIndex: 1000, display: isJobCreate ? '' : 'none' }}>
                         <CreateJob handleIsCreateJob={handleIsCreateJob} />
@@ -973,18 +987,6 @@ function Jobs() {
                             <div className="">
                                 <div className="d-flex justify-content-between">
                                     <h4>Job Board</h4>
-                                    <div className="" style={{ position: 'fixed', zIndex: 1000, marginLeft: '400px' }}>
-                                        <Statistic
-                                            title={
-                                                <span className="text-xs font-weight-bold  text-uppercase mb-1">
-
-                                                    Total Result
-                                                </span>
-                                            }
-                                            value={totalRows}
-                                            formatter={formatter}
-                                        />
-                                    </div>
                                 </div>
                                 <p className="">You are searching {searchText ? [searchText] : ''} for-{activeNavItem} jobs in state-
                                     {selectedState ? selectedState.label : "All"} and city-

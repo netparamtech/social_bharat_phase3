@@ -334,18 +334,7 @@ const CurrentJobOpening = () => {
                 </InfiniteScroll>
 
             </div>
-            <div className="mt-2" style={{ position: 'fixed', zIndex: 1000, marginLeft: '100px' }}>
-                <Statistic
-                    title={
-                        <span className="text-xs font-weight-bold  text-uppercase mb-1">
-
-                            Total Result
-                        </span>
-                    }
-                    value={totalRows}
-                    formatter={formatter}
-                />
-            </div>
+           
         </div>
     );
 }

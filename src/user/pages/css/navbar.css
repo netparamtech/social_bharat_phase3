@@ -200,6 +200,9 @@ nav .container,
   }
 
   #customNavID .dropdown {
+    @media (max-width: 767px) {
+      margin-left: 80px !important;
+    }
     position: relative;
   }
   

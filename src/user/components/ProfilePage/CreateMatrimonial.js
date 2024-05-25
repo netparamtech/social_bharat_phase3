@@ -109,6 +109,7 @@ const CreateMatrimonial = () => {
     "Engineer",
     "Sales",
     "Marketing",
+    "Business"
     // Add more job profiles as needed
   ];
 
@@ -892,7 +893,7 @@ const CreateMatrimonial = () => {
                           <textarea className="form-control" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
                         </div>
                         <div class="mb-3 col-12">
-                          <label className="form-label">Contact Detail</label>
+                          <label className="form-label">Contact Detail {" "}<span className="text-danger">*</span></label>
                           <div className="form-check">
                             <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked} />
                             <label className="form-check-label" for="useMyNumber">Use My Number</label>
@@ -900,6 +901,9 @@ const CreateMatrimonial = () => {
                           <div>
                             <input type="text" className="form-control" placeholder="Enter Mobile Number.." value={mobile} onChange={handleMobileNumberClicked} />
                           </div>
+                          {errors && errors.contact_number && (
+                            <span className="error">{errors.contact_number}</span>
+                          )}
                         </div>
 
 

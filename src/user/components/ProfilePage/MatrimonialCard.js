@@ -29,8 +29,11 @@ const MatrimonialCard = ({ item, index }) => {
 
     return (
         <>
-            <a className="text-dark m-2 hover-pointer-admin" onClick={handleShow} title='View'>
-                <i className="fas fa-eye"></i>
+            <a className="text-dark m-2 hover-pointer-admin" onClick={handleShow} title='View' >
+                <img
+                    src="/user/images/eye.png"
+                    width="40px"
+                />
             </a>
             <Modal
                 show={show}
@@ -152,7 +155,7 @@ const MatrimonialCard = ({ item, index }) => {
                                                         <i className="fa-regular fa-file-lines"></i> Download Biodata
                                                     </a>
                                                 )}</span></p>
-                                                  {
+                                                {
                                                     item.contact_number ? (
                                                         <a href={`tel:${item.contact_number}`}>
                                                             {item.contact_number}

@@ -8,7 +8,7 @@ import {
   uploadMultipleImages,
   uploadPdf,
 } from "../../services/userService";
-import { getFeet, getInches } from "../../util/Conversion";
+import { getDecimalPartAsInteger, getFeet, getInches } from "../../util/Conversion";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from 'react-select';
 import { useDispatch, useSelector } from "react-redux";
@@ -406,7 +406,7 @@ const UpdateMatrimonial = () => {
       setMotherName(userMatrimonial.mother_name || "N/A");
       setSkinTone(userMatrimonial.skin_tone || "");
       setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
-      setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
+      setHeightInch(getDecimalPartAsInteger(userMatrimonial.height_in_feet) || 0);
       setWeight(userMatrimonial.weight_in_kg || "N/A");
       setCast(userMatrimonial.cast || communityName);
       setGotraSelf(userMatrimonial.gotra || "N/A");
@@ -474,7 +474,6 @@ const UpdateMatrimonial = () => {
 
           setDOB(yyyyMmDdFormat(user.user.dob));
         } else {
-          console.log("khjjhgkjh")
           setGender(userMatrimonial.matrimonial_profile_gender);
           setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
         }

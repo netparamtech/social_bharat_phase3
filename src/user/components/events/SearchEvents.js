@@ -454,7 +454,7 @@ const SearchEvents = () => {
 
                                 <div className="col-md-6 mt-2" key={innerIndex}>
                                   <div className="card" style={{ borderRadius: '15px' }}>
-                                    <div className="card-body p-4">
+                                    <div className="card-body p-4 search-partner-cards">
                                       <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'row', display: isAndroidUsed ? '' : 'flex' }}>
                                         <div className="">
                                           {

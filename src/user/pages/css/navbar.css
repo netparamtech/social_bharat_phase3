@@ -147,14 +147,13 @@
     font-size: 16px;
 }
 
-nav .container,
+/* nav .container,
 #banners-section .container {
-  max-width: 1290px !important;
-}
+  max-width: 1 !important;
+} */
 
 #customNavID .button-container {
     position: relative;
-    margin-left: 20%;
   }
   
   

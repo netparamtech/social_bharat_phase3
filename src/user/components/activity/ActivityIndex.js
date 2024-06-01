@@ -39,7 +39,7 @@ const ActivityIndex = () => {
   };
 
   const fetchMoreData = () => {
-    console.log(items.length,totalRows)
+    console.log(items.length, totalRows)
     if (!isLoading && items.length < totalRows) {
       search(searchText, page + 1, 20);
       setPage(page + 1);
@@ -198,7 +198,7 @@ const ActivityIndex = () => {
 
   const customTitle = (
     <div className="fs-2 text-light hover-pointer" onClick={showModal}>
-      <i className="fas fa-ellipsis-v"></i>
+      <i className="fas fa-ellipsis-v text-danger"></i>
     </div>
   );
   const searchIcon = (
@@ -207,40 +207,76 @@ const ActivityIndex = () => {
     </div>
   );
 
+  const parseDescription = (description) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const phoneRegex = /[0789]\d{9,}/g;
+
+    // Split the description by URLs and phone numbers, maintaining delimiters
+    const parts = description.split(new RegExp(`(${urlRegex.source}|${phoneRegex.source})`, 'g'));
+
+    return parts.map((part, index) => {
+        if (part && urlRegex.test(part)) {
+            return (
+                <a key={index} href={part} style={{ color: "blue" }} target="_blank" rel="noopener noreferrer">
+                    {part}
+                </a>
+            );
+        } else if (part && phoneRegex.test(part)) {
+            return (
+                <a key={index} href={`tel:${part}`} style={{ color: "green" }}>
+                    {part}
+                </a>
+            );
+        } else {
+            return part;
+        }
+    });
+};
+
+
+
+
+
   return (
-    <div id="searchPeople-section" className="content-wrapper  mb-4">
-      <div className="container" id="service-section">
+    <div id="activity-post-section" className="content-wrapper  mb-4">
+      <div className="" id="">
         <div className="card shadow card-search">
           <div className="card-header mx-auto mt-2 fs-3 fw-bold mb-3">
             ACTIVITIES
           </div>
 
           <div className=" container">
-          <div className="row d-flex justify-content-between">
-          <div className="mt-2 col-lg-10 col-12">
-            <Search
-              classNames="w-100"
-              placeholder="input search text"
-              allowClear
-              enterButton={searchIcon}
-              size="large"
-              onChange={handleSearchText}
-            />
-          </div>
-          <div className="col-lg-2 col-12 mt-2 mt-lg-0">
-            <button
-              className="btn bg-darkskyblue btn-success btn-sm small hover-pointer btn-post-activity"
-              onClick={() => navigate("/user/post-activity")}
-            >
-              Post Your Activity
-            </button>
-          </div>
-        </div>
-        
+            <div className="row d-flex justify-content-between">
+              <div className="mt-2 col-lg-10 col-12">
+                <Search
+                  classNames="w-100"
+                  placeholder="input search text"
+                  allowClear
+                  enterButton={searchIcon}
+                  size="large"
+                  onChange={handleSearchText}
+                />
+              </div>
+              <div className="col-lg-2 col-12 mt-2">
+                <button
+                  className="btn bg-darkskyblue btn-success btn-sm small hover-pointer btn-post-activity"
+                  onClick={() => navigate("/user/post-activity")}
+                >
+                  Post Your Activity
+                </button>
+              </div>
+            </div>
+
           </div>
           {serverError && <span className="error">{serverError}</span>}
 
-          <div className="row">
+          <div className="scrollableDiv" id="scrollableDiv"
+              style={{
+                height: 500,
+                overflow: 'auto',
+
+
+              }}>
             {/* Repeat the user card structure as needed */}
             <InfiniteScroll
               style={{ overflowX: "hidden" }}
@@ -248,6 +284,7 @@ const ActivityIndex = () => {
               next={fetchMoreData}
               hasMore={items.length < totalRows}
               loader={isLoading && <h4>Loading...</h4>}
+              scrollableTarget="scrollableDiv"
             >
               <div className="container pw-20 mt-3">
                 {groupedItems.map((pair, index) => (
@@ -256,10 +293,10 @@ const ActivityIndex = () => {
                       pair.map((item, idx) => (
                         <div className="col-md-6 col-sm-6 col-12" key={idx}>
                           <div className=" position-relative">
-                            <div className="">
+                            <div className="search-partner-cards">
                               <Card
                                 className="  mb-1"
-                                style={{ height: item.photo?'500px':'' }}
+                                style={{ height: item.photo ? '500px' : '' }}
                               >
                                 <div className="d-flex justify-content-between">
                                   <Meta
@@ -276,7 +313,7 @@ const ActivityIndex = () => {
                                           type="button"
                                           className="dropdown-user-img-letter m-2"
                                         >
-                                          {user.user.name
+                                          {item.name
                                             .charAt(0)
                                             .toUpperCase()}
                                         </button>
@@ -337,8 +374,8 @@ const ActivityIndex = () => {
                                 <div className="fs-4 m-2 ">{item.title}</div>
 
                                 {item.photo &&
-                                Array.isArray(item.photo) &&
-                                item.photo.length > 0 ? (
+                                  Array.isArray(item.photo) &&
+                                  item.photo.length > 0 ? (
                                   <div className="photo-container mt-2 dotted-border-carousel">
                                     <Carousel
                                       className="photo-carousel"
@@ -352,11 +389,7 @@ const ActivityIndex = () => {
                                             src={photo}
                                             alt={`Photos ${photoIdx + 1}`}
                                             className="carousel-image"
-                                            style={{
-                                              height: "300px",
-                                              width: "100%",
-                                              objectFit: "contain",
-                                            }}
+                                            style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
                                           />
                                         </div>
                                       ))}
@@ -374,23 +407,29 @@ const ActivityIndex = () => {
                                     }}
                                   />
                                 ) : (
-                                  <p className="fs-5 m-2">
-                                    {item.DESCRIPTION}
-                                  </p>
-                                )}
-                                <div className="">
-                                  {item.photo ? (
+                                  <div className="card card-body mt-2 border-0 mb-2">
                                     <p
-                                      className=" text-justify"
+                                      className=" text-justify custom-activity-description"
                                       style={{ overflowY: "scroll" }}
                                     >
-                                      {item.DESCRIPTION}
+                                      {parseDescription(item.description)}
                                     </p>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
+                                  </div>
+                                )}
+
                               </Card>
+                              <div className="card card-body mt-2 border-0 mb-2">
+                                {item.photo ? (
+                                  <p
+                                    className=" text-justify custom-activity-description"
+                                    style={{ overflowY: "scroll" }}
+                                  >
+                                    {parseDescription(item.description)}
+                                  </p>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>

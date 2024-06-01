@@ -170,7 +170,7 @@ const UpdateActivity = () => {
 
   useEffect(() => {
     if (activityDetails) {
-      setDescription(activityDetails.DESCRIPTION);
+      setDescription(activityDetails.description);
       setTitle(activityDetails.title);
 
       // Convert photo to array if it's not already an array

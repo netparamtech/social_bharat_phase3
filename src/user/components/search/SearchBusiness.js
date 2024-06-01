@@ -13,6 +13,7 @@ import { logout } from "../../actions/userAction";
 import { Divider, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { setLoader } from "../../actions/loaderAction";
+import BusinessCard from "./BusinessCard";
 
 const SearchBusiness = () => {
   const user = useSelector((state) => state.userAuth);
@@ -264,7 +265,7 @@ const SearchBusiness = () => {
   };
 
   return (
-    <div id="searchPeople-section" className="content-wrapper pt-4 mb-4">
+    <div id="service-section" className="content-wrapper pt-4 mb-4">
       <div className="">
         <div className="card shadow">
           <div className="card-body">
@@ -346,7 +347,7 @@ const SearchBusiness = () => {
               </div>
             </div>
 
-            <div className="" id="scrollableDiv"
+            <div className="scrollableDiv" id="scrollableDiv"
               style={{
                 height: 500,
                 overflow: 'auto',
@@ -371,13 +372,15 @@ const SearchBusiness = () => {
                 scrollableTarget="scrollableDiv"
               >
 
-                <div className="row">
+                <div className="row ">
                   {data &&
                     data.map((item, idx) => (
 
-                      <div className="col-md-4" key={idx} >
-                        <div className="card" style={{ borderRadius: '15px' }}>
+                      <div className="col-md-4 m-2 mx-auto" key={idx} >
+                        <div className="card" style={{ borderRadius: '15px', height: '500px' }}>
                           <div className="card-body p-4">
+                            <h4 className="text-primary">{item.business_name}</h4>
+                            <p className='text-info'>({item.business_category})</p>
                             <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
                               {
                                 item.business_photos && <Carousel className="your-custom-carousel-class">
@@ -398,92 +401,35 @@ const SearchBusiness = () => {
                                 </Carousel>
                               }
                               <div className="flex-grow-1 ms-3 mt-2">
-                                <div className="row">
-                                  <div className="col-6">
-                                    <h6>{item.business_name}</h6>
-                                    <p>Category-{item.business_category}</p>
-                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      Posted By : <b>{item.name}</b>
-                                    </p>
-                                  </div>
 
-
-                                  {
-                                    item.google_map_link ? (
-                                      <div className="col-6">
-                                        <a href={item.google_map_link} target="_blank">
-                                          <img className="rounded" src={defaultMap} alt="Google Map" width={50} />
-                                        </a>
-                                      </div>
-                                    ) : ''
-                                  }
-
-                                </div>
+                                <p>Location : <span className="text-muted">{item.city}{" "}({item.state}){", "}{item.country}</span></p>
                                 <div
                                   className="d-flex justify-content-start rounded-3"
-                                  style={{ backgroundColor: '#efefef' }}
-                                >
-                                  <p>Street-{item.street_address}</p>
-                                </div>
-                                <div className="d-flex justify-content-start rounded-3 mt-2"
-                                  style={{ backgroundColor: '#efefef' }}
-                                >
 
-                                  <p>{item.city}</p>
-                                  <p>{item.state ? `(${item.state})` : ""}</p>
-                                </div>
-                                <div className="d-flex justify-content-start rounded-3 mt-2"
-                                  style={{ backgroundColor: '#efefef' }}
                                 >
-                                  <p>
-                                    Contact Numbers:
-                                    <a href={`tel:${item.contact1}`}>
-                                      {item.contact1}
-                                    </a>
-                                    {
-                                      isDetails[idx] ? (<>
-                                        {item.contact2 ? (
-                                          <>
-                                            ,{" "}
-                                            <a href={`tel:${item.contact2}`}>
-                                              {item.contact2}
-                                            </a>
-                                          </>
-                                        ) : (
-                                          ""
-                                        )}
-                                        {item.contact3 ? (
-                                          <>
-                                            ,{" "}
-                                            <a href={`tel:${item.contact3}`}>
-                                              {item.contact3}
-                                            </a>
-                                          </>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </>) : ''
-                                    }
-                                  </p>{" "}
+                                  <p>Street Address-{item.street_address}</p>
                                 </div>
-
 
                               </div>
+                              
                             </div>
                           </div>
-                          {
-                            isDetails[idx] ? (
-                              <>
+                          <div className="card-footer bg-light d-flex justify-content-between rounded-3" style={{ flexDirection: 'row',height:'60px',marginTop:'10px' }}>
+                                <BusinessCard item={item} />
                                 {
-                                  item && item.description ? (
-                                    <div className="card-footer">
-                                      {item.description}</div>
-                                  ) : ''
+                                  item.google_map_link ? (
+                                    <div className="">
+                                      <a href={item.google_map_link} target="_blank">
+                                        <img className="rounded" src={defaultMap} alt="Google Map" width={30} height={40} />
+                                      </a>
+                                    </div>
+                                  ) : <img className="rounded" style={{ opacity: 0.5 }} src={defaultMap} alt="Google Map" width={30} height={40} />
                                 }
-                              </>
-                            ) : ''
-                          }
-                          <a className="btn over-pointer-g-effect mx-auto m-2 btn-toggle" onClick={() => handleIsDetailsClicked(idx)}>{!isDetails[idx] ? "Show More" : "Show Less"}</a>
+
+                              </div>
+
+
+                          {/* <a className="btn over-pointer-g-effect mx-auto m-2 btn-toggle" onClick={() => handleIsDetailsClicked(idx)}>{!isDetails[idx] ? "Show More" : "Show Less"}</a> */}
                         </div>
                       </div>
                     ))}

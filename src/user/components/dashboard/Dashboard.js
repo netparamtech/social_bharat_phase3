@@ -36,7 +36,7 @@ const Dashboard = () => {
           </marquee>
         </div>
         <div className="row">
-          <div className="col-lg-6 col-xl-3 mb-4">
+        <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-peal text-white h-100 ">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -65,55 +65,35 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
           <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-lightgreen text-white h-100">
+            <div className="card bg-secondary text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
-                    <div className="text-white-75 small">Become Social</div>
-                    <div className="text-lg ">
-                      Search Members <br />
+                    <div className="text-white-75 small">Jobs</div>
+                    <div className="text-lg">
+                      Jobs <br />
                     </div>
                   </div>
-                  <img src="/user/images/searchPeople.png" width="40px" />
+                  <img src="/user/images/jobs.jpg" width="40px" />
                 </div>
               </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small ">
+
+              <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white hover-pointer stretched-link"
-                  onClick={() => navigate("/user/search")}
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search/job")}
                 >
                   Search{" "}
                 </a>
-                <i className="fa-solid fa-arrow-right "></i>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-lightorange text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg ">
-                      Matrimonial <br />
-                    </div>
-                  </div>
-                  <img src="/user/images/wedding.png" width="40px" />
-                </div>
-              </div>
-              <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white hover-pointer stretched-link"
-                  onClick={() => navigate("/user/search/partner")}
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/job/create")}
                 >
-                  Search
+                  Post Job{" "}
                 </a>
-
-                <i className="fa-solid fa-arrow-right"></i>
               </div>
+
             </div>
           </div>
 
@@ -146,6 +126,89 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-classicpink text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Services</div>
+                    <div className="text-lg ">
+                      Services <br />
+                    </div>
+                  </div>
+                  <img src="/user/images/service3.jpg" width="40px" />
+                </div>
+              </div>
+
+              <div className="card-footer d-flex align-items-center justify-content-between small ">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search/service")}
+                >
+                  Search{" "}
+                </a>
+                <i className="fa-solid fa-arrow-right "></i>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-lightorange text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Matrimonial</div>
+                    <div className="text-lg ">
+                      Matrimonial <br />
+                    </div>
+                  </div>
+                  <img src="/user/images/wedding.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search/partner")}
+                >
+                  Search
+                </a>
+
+                <i className="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="col-lg-6 col-xl-3 mb-4">
+            <div className="card bg-lightgreen text-white h-100">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="me-3">
+                    <div className="text-white-75 small">Become Social</div>
+                    <div className="text-lg ">
+                      Search Members <br />
+                    </div>
+                  </div>
+                  <img src="/user/images/searchPeople.png" width="40px" />
+                </div>
+              </div>
+              <div className="card-footer d-flex align-items-center justify-content-between small ">
+                <a
+                  className="text-white hover-pointer"
+                  onClick={() => navigate("/user/search")}
+                >
+                  Search{" "}
+                </a>
+                <i className="fa-solid fa-arrow-right "></i>
+              </div>
+            </div>
+          </div>
+
+
+
+
 
           <div className="col-lg-6 col-xl-3 mb-4">
             <div className="card shadow bg-soil text-white h-100">
@@ -235,64 +298,9 @@ const Dashboard = () => {
             </div>
           </div> */}
 
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-classicpink text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Services</div>
-                    <div className="text-lg ">
-                      Services <br />
-                    </div>
-                  </div>
-                  <img src="/user/images/service3.jpg" width="40px" />
-                </div>
-              </div>
 
-              <div className="card-footer d-flex align-items-center justify-content-between small ">
-                <a
-                  className="text-white hover-pointer stretched-link"
-                  onClick={() => navigate("/user/search/service")}
-                >
-                  Search{" "}
-                </a>
-                <i className="fa-solid fa-arrow-right "></i>
-              </div>
 
-            </div>
-          </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
-            <div className="card bg-secondary text-white h-100">
-              <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="me-3">
-                    <div className="text-white-75 small">Jobs</div>
-                    <div className="text-lg">
-                      Jobs <br />
-                    </div>
-                  </div>
-                  <img src="/user/images/jobs.jpg" width="40px" />
-                </div>
-              </div>
-
-              <div className="card-footer d-flex align-items-center justify-content-between small">
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/search/job")}
-                >
-                  Search{" "}
-                </a>
-                <a
-                  className="text-white hover-pointer"
-                  onClick={() => navigate("/user/job/create")}
-                >
-                  Post Job{" "}
-                </a>
-              </div>
-
-            </div>
-          </div>
 
 
           <div className="col-lg-6 col-xl-3 mb-4">
@@ -310,7 +318,7 @@ const Dashboard = () => {
               </div>
               <div className="card-footer d-flex align-items-center justify-content-between small">
                 <a
-                  className="text-white hover-pointer stretched-link"
+                  className="text-white hover-pointer"
                   onClick={() => navigate("/user/rating")}
                 >
                   Give Feedback

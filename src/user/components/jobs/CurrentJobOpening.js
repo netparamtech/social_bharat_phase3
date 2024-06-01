@@ -38,6 +38,7 @@ const CurrentJobOpening = () => {
 
     const loadMoreData = () => {
         setLoading(false);
+        console.log(dataStatic.length, totalRows)
         if (dataStatic.length < totalRows) {
             if (loading) {
                 return;
@@ -89,6 +90,7 @@ const CurrentJobOpening = () => {
         try {
             const response = await currentJobs(size, page, state, city, searchText);
             if (response && response.status === 200) {
+                console.log(response.data.data.totalRowsAffected, response.data.data.jobs)
                 setTotalRows(response.data.data.totalRowsAffected);
                 setDataStatic([...new Set([...dataStatic, ...response.data.data.jobs])]);
                 setCopyData(response.data.data);
@@ -209,10 +211,36 @@ const CurrentJobOpening = () => {
             getAllCities(selectedState.id);
         }
     }, [selectedState]);
+
+    function isDateMoreThan15DaysOld(dateString) {
+        const givenDate = new Date(dateString);
+        const currentDate = new Date();
+
+        // Calculate the difference in time (milliseconds)
+        const timeDifference = currentDate - givenDate;
+
+        // Convert time difference to days
+        const differenceInDays = timeDifference / (1000 * 3600 * 24);
+
+        // Check if the difference is more than 15 days
+        if (differenceInDays > 15) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Example usage
+    const date1 = "2023-05-01";
+    const date2 = "2024-05-10";
+
+    console.log(isDateMoreThan15DaysOld(date1)); // Output: true (if current date is after 2023-05-16)
+    console.log(isDateMoreThan15DaysOld(date2)); // Output: false (if current date is 2024-05-25)
+
     return (
         <div id="" className=""
         >
-           
+
             {
                 jobPermission ? <Navbar bg="light" data-bs-theme="dark">
                     <Container>
@@ -224,7 +252,7 @@ const CurrentJobOpening = () => {
                     </Container>
                 </Navbar> : ''
             }
-           
+
             {serverError && <span className="fs-5 text-danger">{serverError}</span>}
             <div className="row">
                 <div className="mb-3 col-lg-4 col-sm-12 col-xs-12">
@@ -268,7 +296,7 @@ const CurrentJobOpening = () => {
                 </div>
             </div>
 
-            <div className="" id="scrollableDiv"
+            <div className="" id="scrollableDiv1"
                 style={{
                     height: 400,
                     overflow: 'auto',
@@ -290,9 +318,9 @@ const CurrentJobOpening = () => {
                         />
                     }
                     endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                    scrollableTarget="scrollableDiv"
+                    scrollableTarget="scrollableDiv1"
                 >
-                    <table className="table table-striped table-hover" style={{ fontSize: '12px' }}>
+                    <table className="table table-striped" style={{ fontSize: '12px' }}>
                         <thead>
                             <tr>
                                 <th>Sr.No.</th>
@@ -310,10 +338,15 @@ const CurrentJobOpening = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.role}</td>
-                                        <td>{item.company}</td>
+                                        <td>{item.company}<br />{item.city}({item.state})</td>
                                         <td>
-                                            <a href={item.apply_url} className="d-block">{item.apply_url && item.apply_url.slice(0, 20)}</a>
-                                            <p className="infinite-color-animation d-inline-block">new</p>
+                                            {
+                                                isDateMoreThan15DaysOld(item.updated_at) ? '' : <p className="infinite-color-animation d-inline-block" style={{marginBottom:'-10px',marginLeft:'30px'}}>new</p>
+                                            }
+                                            <a href={item.apply_url} target="_blank">
+                                                <button className="current-job-apply" style={{ borderRadius: '20px', border: 'none', padding: '5px', width: '80px' }} type="button">Apply</button>
+                                            </a>
+
                                         </td>
                                         {
                                             jobPermission && isAction && <td>
@@ -334,7 +367,7 @@ const CurrentJobOpening = () => {
                 </InfiniteScroll>
 
             </div>
-           
+
         </div>
     );
 }

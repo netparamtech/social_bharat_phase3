@@ -2,7 +2,6 @@ import './css/mainBanner.css';
 import './css/ourPartner.css';
 import './css/whySocial.css';
 import { useEffect, useState } from "react";
-import Banner from "../components/home/Banner";
 import OurPartner from "../components/home/OurPartner";
 import Services from "../components/home/Services";
 import Testimonials from "../components/home/Testimonial";
@@ -11,7 +10,6 @@ import UserLayout from "../layouts/UserLayout";
 import { useNavigate } from "react-router-dom";
 import { fetchSinglePageCMS } from "../services/userService";
 import { useDispatch } from "react-redux";
-import { setLoader } from "../actions/loaderAction";
 import CarousalBanner from '../components/home/CarousalBanner';
 
 const HomePage = () => {

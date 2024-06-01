@@ -85,10 +85,14 @@ const UserRating = () => {
   return (
     <>
       <div id="rating-authpage">
-        <div className="container text-dark">
+        <div className="text-dark">
           <div className="row d-flex justify-content-center">
-            <div className="col-md-6 col-lg-12 col-xl-12">
+            
+            <div className="col-md-6 col-lg-12 col-xl-12 mt-2">
               <div className="card">
+                <div className="card-header mx-auto">
+                  <h3>Feedback</h3>
+                </div>
                 <div className="card-body p-4">
                   <form onSubmit={handleSubmit}>
                     {message && (

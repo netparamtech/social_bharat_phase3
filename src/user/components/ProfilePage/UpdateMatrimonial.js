@@ -100,6 +100,7 @@ const UpdateMatrimonial = () => {
   const [isMyNumber, setIsMyNumber] = useState(false);
   const [mobile, setMobile] = useState('');
   const [jobProfileDesc, setJobProfileDesc] = useState('');
+  const [educaDetails, setEducaDetails] = useState('');
 
   const navigate = useNavigate();
 
@@ -113,6 +114,9 @@ const UpdateMatrimonial = () => {
     "Business"
     // Add more job profiles as needed
   ];
+  const handleEdcacDetails = (e) => {
+    setEducaDetails(e.target.value);
+  }
 
   const handleSubcastChange = (selectedOption) => {
     setSubcast(selectedOption);
@@ -336,6 +340,7 @@ const UpdateMatrimonial = () => {
       matrimonial_profile_name: matrimonialProfileName,
       description,
       contact_number: mobile,
+      educational_details: educaDetails,
       job_profile_description: jobProfileDesc,
       state: selectedState && selectedState.label,
       city: selectedCity && selectedCity.label,
@@ -419,6 +424,7 @@ const UpdateMatrimonial = () => {
       setPackageValue(userMatrimonial.salary_package);
       setMatrimonialOccupation(userMatrimonial.matrimonial_profile_occupation);
       setDescription(userMatrimonial.DESCRIPTION || "");
+      setEducaDetails(userMatrimonial.educational_details || "");
       setManglicStatus(userMatrimonial.is_manglik || 'No');
       {
         userMatrimonial && userMatrimonial.proposal_photos && (
@@ -944,9 +950,15 @@ const UpdateMatrimonial = () => {
                             <span className="error">{errors.matrimonial_profile_occupation}</span>
                           )}
                         </div>
-                        <div className="mb-3 col-12">
-                          <label className="form-label">Job Description </label>
-                          <textarea className="form-control" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
+                        <div className="row">
+                          <div className="mb-3 col-12 col-md-6">
+                            <label className="form-label">Job Description </label>
+                            <textarea className="form-control" placeholder="Enter Your Job Details" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
+                          </div>
+                          <div className="mb-3 col-12 col-md-6">
+                            <label className="form-label">Educational Details </label>
+                            <textarea className="form-control" placeholder="Enter Your Educational Details" value={educaDetails} onChange={handleEdcacDetails}></textarea>
+                          </div>
                         </div>
                         <div class="mb-3 col-12">
                           <label className="form-label">Contact Detail</label>

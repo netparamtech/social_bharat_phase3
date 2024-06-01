@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu, Statistic } from "antd";
+import { Layout, Menu, Modal, Statistic } from "antd";
 import Select from "react-select";
 import CountUp from "react-countup";
 import {
@@ -196,6 +196,7 @@ function Jobs() {
                     setMessageAttachment('');
                     setServerErrorPdf('');
                     setIsResume(true);
+                    setIsUploadResumeClicked(false);
                 }
             } catch (error) {
                 // Handle error
@@ -856,11 +857,39 @@ function Jobs() {
     //     // Add more objects as needed
     // ];
 
+    const showModal = () => {
+        setIsJobCreate(true);
+    };
+    const handleOk = () => {
+        setIsJobCreate(false);
+    };
+    const handleCancel = () => {
+        setIsJobCreate(false);
+    };
+
+    const showModalForResume = () => {
+        setIsUploadResumeClicked(true);
+    };
+    const handleOkForResume = () => {
+        setIsUploadResumeClicked(false);
+    };
+    const handleCancelForResume = () => {
+        setIsUploadResumeClicked(false);
+    };
+    const showModalForContact = () => {
+        setIsContactUsClicked(true);
+    };
+    const handleOkForContact = () => {
+        setIsContactUsClicked(false);
+    };
+    const handleCancelForContact = () => {
+        setIsContactUsClicked(false);
+    };
     return (
         <div id="job-board-section" className="pt-2">
-            <Layout className="container card mx-auto">
-                <div className="row d-flex">
-                    <div className="col-md-2 col-12 " >
+            <Layout className="container card mx-auto ">
+                <div className="row d-flex search-partner-cards">
+                    <div className="col-md-2 col-12  " >
                         {/* <div className="logo">
           <img src="/user/images/sb-logo.png" className=" alt="Logo" />
         </div> */}
@@ -889,10 +918,10 @@ function Jobs() {
                             </Menu.Item>
 
                             <Menu.Item key="testimonials" icon={<img src="/user/images/createNewJob.png" width={15} ></img>}>
-                                <Link onClick={() => handleIsCreateJob()}>CREATE NEW</Link>
+                                <Link onClick={() => showModal()}>CREATE NEW</Link>
                             </Menu.Item>
                             <Menu.Item key="bharatMataMandir" icon={<HistoryOutlined />}>
-                                <Link onClick={handleUploadResumeClicked}>UPLOAD RESUME</Link>
+                                <Link onClick={showModalForResume}>UPLOAD RESUME</Link>
                             </Menu.Item>
                             <Menu.Item key="services" icon={<QuestionCircleOutlined />}>
                                 <Link onClick={() => handleIsContactUs()}>CONTACT US</Link>
@@ -905,7 +934,7 @@ function Jobs() {
                         </div>
                         {
                             isAndroidUsed ? (
-                               ""
+                                ""
                             ) : <div className="card" style={{ height: '100px' }}>
                                 <div className="card-body " style={{ backgroundImage: 'url("/user/images/J.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
                                     <Statistic
@@ -917,23 +946,19 @@ function Jobs() {
                             </div>
                         }
                     </div>
-                    <div className="mt-5" style={{ maxHeight: '600px', width: '700px', overflow: 'scroll', position: 'absolute', zIndex: 1000, display: isJobCreate ? '' : 'none' }}>
+
+                    <Modal title="Create New Job" open={isJobCreate} onOk={handleOk} onCancel={handleCancel} width={1000} footer={null}>
                         <CreateJob handleIsCreateJob={handleIsCreateJob} />
-                    </div>
-                    <div className="mt-5" style={{ maxHeight: '600px', width: '700px', position: 'absolute', zIndex: 1000, display: isContactUsClicked ? '' : 'none' }}>
+                    </Modal>
+                    <Modal title="Contact Us" open={isContactUsClicked} onOk={handleOkForContact} onCancel={handleCancelForContact} footer={null}>
                         <ContactUsPage handleIsContactUs={handleIsContactUs} />
+                    </Modal>
+                    <div className="mt-5" style={{ maxHeight: '600px', width: '700px', position: 'absolute', zIndex: 1000, display: isContactUsClicked ? '' : 'none' }}>
+
                     </div>
-                    <div className="mt-5" style={{ maxHeight: '600px', overflow: 'scroll', width: '700px', position: 'absolute', zIndex: 1000, display: isUploadResumeClicked ? '' : 'none' }}>
-                        <Card className="mb-3 mx-auto" style={{ borderRadius: '30px', flexDirection: 'column', display: 'flow' }}>
-                            <Card.Header as="h5" className="d-flex justify-content-between">
-                                <div>
-                                    Upload Resume
-                                </div>
-                                <span onClick={() => setIsUploadResumeClicked(false)} className="position-absolute top-0 end-0 me-2 mt-3">
-                                    {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
-                                    <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
-                                </span>
-                            </Card.Header>
+                    <Modal title="Upload Resume" open={isUploadResumeClicked} onOk={handleOkForResume} onCancel={handleCancelForResume} width={1000} footer={null}>
+                        <Card className="mb-3 mx-auto" >
+
                             {serverErrorPdf && <span className="m-2 fs-5 text-danger">{serverErrorPdf}</span>}
                             {messageAttachment && <span className="m-2 error">{messageAttachment}</span>}
                             <Card.Body className="shadow" style={{ display: 'flow' }}>
@@ -981,8 +1006,11 @@ function Jobs() {
                                 </Button>
                             </Card.Body>
                         </Card>
+                    </Modal>
+                    <div className="mt-5 job-upload-resume" style={{ maxHeight: '600px', overflow: 'scroll', width: '700px', position: 'absolute', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', display: isUploadResumeClicked ? '' : 'none' }}>
+
                     </div>
-                    <div className="col-12 col-md-5 mx-auto">
+                    <div className="col-12 col-md-5 mx-auto search-partner-cards">
                         <div className="container">
                             <div className="">
                                 <div className="d-flex justify-content-between">
@@ -992,7 +1020,7 @@ function Jobs() {
                                     {selectedState ? selectedState.label : "All"} and city-
                                     {selectedCity ? selectedCity.label : "All"}</p>
 
-                                <div className="row">
+                                <div className="row mb-4">
 
                                     <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
                                         <label className="form-label">Search</label>
@@ -1043,7 +1071,7 @@ function Jobs() {
                             {!selectedFileTempUrl && <p className="error col-12 col-sm-12">You haven't uploaded your resume yet. Please upload your resume to proceed.</p>}
 
 
-                            <div className="" id="scrollableDiv"
+                            <div className="scrollableDiv" id="scrollableDiv"
                                 style={{
                                     height: 400,
                                     overflow: 'auto',
@@ -1239,18 +1267,19 @@ function Jobs() {
                                                         <div className="col-md-7 col-sm-8" style={{ alignItems: 'center' }}>
                                                             <div className="row mt-2">
                                                                 <div className="col-md-12">
+                                                                    <p className="m-0">
+                                                                        <b>Company Name : </b>{" "}
+                                                                        {item.job_subheading}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="col-md-12">
                                                                     <p className="m-0 ">
                                                                         <b>Job Title : </b>
                                                                         {item.job_title}
                                                                     </p>
                                                                     { }
                                                                 </div>
-                                                                <div className="col-md-12">
-                                                                    <p className="m-0">
-                                                                        <b>Company Name : </b>{" "}
-                                                                        {item.job_subheading}
-                                                                    </p>
-                                                                </div>
+
                                                                 <div className="col-md-12">
                                                                     {/* Display Job Start Date */}
                                                                     <p className="m-0">
@@ -1305,7 +1334,7 @@ function Jobs() {
                                                             )}
 
                                                             {
-                                                                item.attachment ? (
+                                                                checkUrl(item.attachment) ? (
                                                                     <p className="row col-12">
                                                                         <span className="col-5">
                                                                             <b> Attachment :</b>
@@ -1374,7 +1403,7 @@ function Jobs() {
                         </div>
                     </div>
                     <div id="current-job-section" className="col-12 col-md-5 mt-2">
-                        <div className="col-12 mb-3" >
+                        <div className="col-12 mb-3 search-partner-cards" >
                             <div className="">
                                 <h4 className="text-danger">Current Openings</h4>
                                 <div className="">

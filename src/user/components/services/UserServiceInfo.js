@@ -31,7 +31,7 @@ const UserServiceInfo = () => {
         };
     }, []);
     return (
-        <div id="auth-wrapper" className="border border-dark rounded-4 bg-warning-subtle">
+        <div id="auth-wrapper" className="border border-dark rounded-4 " style={{backgroundColor:"#DAFFA4"}}>
             {/* Heading */}
             <div className="text-center fs-3 fw-bold mt-3 text-danger">Transportation Service</div>
             <div className="row g-0 px-4 py-2 m-4 mt-0 shadow-lg rounded-4 mt-2"  >
@@ -40,7 +40,7 @@ const UserServiceInfo = () => {
                     {/* Profile Card */}
                     <div class="col-md-8">
                         <div class="">
-                            <div className="bg-warning-subtle mb-3">
+                            <div className=" mb-3">
                                 <div className="row g-0">
                                     <div className="col-md-4">
                                         <img

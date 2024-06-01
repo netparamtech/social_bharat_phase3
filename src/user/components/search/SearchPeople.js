@@ -358,7 +358,7 @@ const SearchPeople = () => {
 
                 </div>
 
-                <div className="row" style={{ height: '500px', overflow: 'scroll' }} id="scrollableDiv">
+                <div className="scrollableDiv row" style={{ height: '500px', overflow: 'scroll' }} id="scrollableDiv">
                   {/* Repeat the user card structure as needed */}
                   <InfiniteScroll
                     style={{ overflowX: "hidden" }}
@@ -382,7 +382,7 @@ const SearchPeople = () => {
 
                             <div className="col-md-6 mt-2" key={innerIndex}>
                               <div className="card" style={{ borderRadius: '15px' }}>
-                                <div className="card-body p-4">
+                                <div className="card-body p-4 search-partner-cards">
                                   <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                     <div className="flex-shrink-0 m-3">
                                       <img

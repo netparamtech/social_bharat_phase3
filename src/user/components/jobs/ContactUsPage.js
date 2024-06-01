@@ -68,7 +68,7 @@ function ContactUsPage(props) {
 
 
     return (
-        <div className="card mx-auto" style={{ borderRadius: '30px', backgroundColor: '#12abf6' }}>
+        <div className="card mx-auto" style={{ borderRadius: '30px', backgroundColor: '#E2EAF4' }}>
             <div
                 className="mx-auto"
             >
@@ -82,14 +82,9 @@ function ContactUsPage(props) {
                         {" " + message}
                     </div>
                 )}
-                <h4 className="mb-4 ">Send message for enquiry</h4>
+               
                 <div>(All fields are required to fill.)</div>
-                <span
-                    onClick={()=>handleIsContactUs()}
-                    className="position-absolute top-0 end-0 me-2 mt-3">
-                    {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
-                    <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
-                </span>
+               
                 <div className="form-group mb-4">
                     <input
                         type="text"
@@ -140,9 +135,10 @@ function ContactUsPage(props) {
                 </div>
                 <div className="form-group">
                     <button
-                        className="mx-auto over-pointer-g-effect bg-success text-light"
+                        className="mx-auto over-pointer-g-effect bg-success text-light btn-custon-contact"
                         type="button"
                         onClick={handleSubmit}
+                        style={{width:'100px',height:'40px'}}
                     >
                         Submit
                     </button>

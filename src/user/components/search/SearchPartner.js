@@ -424,10 +424,20 @@ const SearchPartner = () => {
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeople-section" className="content-wrapper">
-          <div className="container">
+          <div className="container mt-2">
 
             <div className="card shadow">
-              <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Partner</div>
+              <div className={`card-header mt-2 fs-3 fw-bold d-flex justify-content-between ${isAndroidUsed ? '' : 'mx-auto'}`}>
+                {isAndroidUsed ? (
+                  <>
+                    <img src="/user/images/matri.jpg" width={40} height={40} />
+                    <h4 className="text-info fw-bold">Search Partner</h4>
+                    <img src="/user/images/addicon.png" width={30} height={30} onClick={handlePartnerClick} />
+                  </>
+                ) :
+                  <h3 className="text-info fw-bold">Search Partner</h3>
+                }
+              </div>
               <div className="card-body">
                 <div className="container">
                   <div className="row">
@@ -437,9 +447,9 @@ const SearchPartner = () => {
                       )}
 
                     </div>
-                    <div className="row ms-auto me-auto justify-content-between bg-all">
+                    <div className="row ms-auto me-auto justify-content-between">
 
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="mt-3 col-11 col-sm-2 custom-bottom-margin-search-partner">
                         <label className="form-label ">
                           Interested In
                         </label>
@@ -453,11 +463,14 @@ const SearchPartner = () => {
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                         </select>
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("gender")}>Clear</p>
+
+                      </div>
+                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("gender")} />
                       </div>
 
 
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label">State</label>
                         <Select
                           className="form-control"
@@ -469,9 +482,11 @@ const SearchPartner = () => {
                           value={selectedState}
                           onChange={handleStateChange}
                         />
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("state")}>Clear</p>
                       </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("state")} />
+                      </div>
+                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label ">City</label>
                         <Select
                           className="form-control"
@@ -483,9 +498,11 @@ const SearchPartner = () => {
                           value={selectedCity}
                           onChange={handleCityChange}
                         />
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("city")}>Clear</p>
                       </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("city")} />
+                      </div>
+                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label">Subcast</label>
                         <Select
                           id="community_id"
@@ -500,11 +517,13 @@ const SearchPartner = () => {
                               label: data.subcast,
                             }))
                           }
-                          placeholder="---Select---"
+                          placeholder="Subcast"
                         />
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("subcast")}>Clear</p>
                       </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
+                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("subcast")} />
+                      </div>
+                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label">Occupation</label>
 
                         <select id="jobProfile" name="jobProfile" className="form-select form-control"
@@ -517,18 +536,26 @@ const SearchPartner = () => {
                             ))
                           }
                         </select>
-                        <p className="text-light fw-bold btn" onClick={() => handleClear("occupation")}>Clear</p>
                       </div>
-                      <div className="mb-3 mt-2 col-12 col-sm-2">
-                        <label className="form-label ">Add New</label>
-                        <a
-                          title="Add Business"
-                          className="btn btn-secondary w-100 btn-sm mb-2"
-                          onClick={handlePartnerClick}
-                        >
-                          ADD MATRIMONIAL
-                        </a>
+                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("occupation")} />
                       </div>
+                      {
+                        !isAndroidUsed && (
+                          <div className="mt-5" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                            <a
+                              title="Add Business"
+                              className="btn btn-secondary w-100 btn-sm mb-2"
+                              onClick={handlePartnerClick}
+                              style={{ width: '100%', maxWidth: '200px', height: '40px' }}
+                            >
+                              ADD MATRIMONIAL
+                            </a>
+                          </div>
+                        )
+                      }
+
+
                     </div>
 
                   </div>
@@ -567,7 +594,7 @@ const SearchPartner = () => {
                   <i className="fas fa-search"></i>
                 </div>
 
-                <div className="" id="scrollableDiv"
+                <div className="scrollableDiv" id="scrollableDiv"
                   style={{
                     height: 400,
                     overflow: 'auto',
@@ -589,7 +616,7 @@ const SearchPartner = () => {
 
                           <div className="col-md-6 mt-2" key={innerIndex}>
                             <div className="card" style={{ borderRadius: '15px' }}>
-                              <div className="card-body p-4">
+                              <div className="card-body p-4 search-partner-cards">
                                 <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                   <div className="flex-shrink-0">
 
@@ -633,6 +660,9 @@ const SearchPartner = () => {
                                     >
                                       Education-{item.education ? item.education : 'N/A'}
                                     </div>
+                                    <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
+                                      Education Details-{item.educational_details ? item.educational_details : ''}
+                                    </p>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}
                                     >
@@ -673,7 +703,7 @@ const SearchPartner = () => {
                                       <div
                                         className="text-start ms-3 mt-2 hover-pointer"
                                         onClick={() => handleChatclick(item)}
-                                        style={{flex:1,justifyContent:'space-between'}}
+                                        style={{ flex: 1, justifyContent: 'space-between' }}
                                       >
                                         <img
                                           src="/user/images/chat-icon.jpg"
@@ -681,10 +711,6 @@ const SearchPartner = () => {
                                         />
                                       </div>
                                       <MatrimonialCard item={item} />
-
-                                      {/* <button type="button" className="btn me-1 flex-grow-1">
-                                        <ViewProfileDrawer id={item.userId} profileFor={item.profile_created_for} name={item.name} />
-                                      </button> */}
                                     </div>
                                   </div>
                                 </div>

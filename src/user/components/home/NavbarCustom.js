@@ -322,7 +322,7 @@ const NavbarCustom = (props) => {
       <nav className="navbar navbar-transparent navbar-expand-lg">
         <div className="container">
           <a className="navbar-brand" onClick={handleHomeClicked}>
-            <img src={defaultLogo} alt="Logo" />
+            <img src={defaultLogo} alt="Logo" width={200} />
           </a>
 
           {/* Toggle button for small screens */}
@@ -343,10 +343,8 @@ const NavbarCustom = (props) => {
 
           {/* Navbar items */}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-              {
-                !isAuthenticUser && <><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li><li className="nav-item">{" "}</li></>
-              }
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0" style={{width:isAuthenticUser?'873px':'320px'}}>
+            
 
               {/* Navbar links */}
               <li className="nav-item">
@@ -356,30 +354,6 @@ const NavbarCustom = (props) => {
                   onClick={handleHomeClicked}
                 >
                   HOME
-                </a>
-              </li>
-              {
-                isAuthenticUser ? (
-                  <li className="nav-item">
-                    <a
-                      className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
-                        }`}
-                      onClick={handleDashboardClicked}
-                    >
-                      DASHBOARD
-                    </a>
-                  </li>
-                ) : ''
-              }
-              <li className="nav-item">
-                <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search"
-                    ? "active"
-                    : "inactive"
-                    }`}
-                  onClick={handleMembersClicked}
-                >
-                  MEMBERS
                 </a>
               </li>
               <li className="nav-item">
@@ -406,17 +380,6 @@ const NavbarCustom = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link rounded ${window.location.pathname === "/user/search/partner"
-                    ? "active"
-                    : "inactive"
-                    }`}
-                  onClick={handleMatrimonialClicked}
-                >
-                  MATRIMONIAL
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
                   className={`nav-link rounded ${window.location.pathname === "/user/search/service" || window.location.pathname === `/user/user-registered-services` || location.pathname.startsWith("/users-basedOn-services")
                     ? "active"
                     : "inactive"
@@ -428,6 +391,42 @@ const NavbarCustom = (props) => {
               </li>
               <li className="nav-item">
                 <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search/partner"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleMatrimonialClicked}
+                >
+                  MATRIMONIAL
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link rounded ${window.location.pathname === "/user/search"
+                    ? "active"
+                    : "inactive"
+                    }`}
+                  onClick={handleMembersClicked}
+                >
+                  MEMBERS
+                </a>
+              </li>
+              {
+                isAuthenticUser ? (
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link rounded ${window.location.pathname === "/dashboard" ? "active" : "inactive"
+                        }`}
+                      onClick={handleDashboardClicked}
+                    >
+                      DASHBOARD
+                    </a>
+                  </li>
+                ) : ''
+              }
+
+              <li className="nav-item">
+                <a
                   className={`nav-link rounded ${window.location.pathname === "/contact" ? "active" : "inactive"
                     }`}
                   onClick={handleContClicked}
@@ -435,11 +434,8 @@ const NavbarCustom = (props) => {
                   CONTACT
                 </a>
               </li>
-
-            </ul>
-
-            {/* Login and signup buttons */}
-            {!isAuthenticUser && (
+              <li>
+              {!isAuthenticUser && (
               <div className="button-container">
                 <button
                   className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
@@ -457,6 +453,12 @@ const NavbarCustom = (props) => {
                 </button>
               </div>
             )}
+              </li>
+
+            </ul>
+
+            {/* Login and signup buttons */}
+           
 
             {/* User dropdown for authenticated users */}
             <ul className="navbar-nav ml-auto  mb-2 mb-lg-0" style={{ width: isAuthenticUser ? '200px' : '' }}>
@@ -495,18 +497,6 @@ const NavbarCustom = (props) => {
                     </a>
                   </li>
                   <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleDashboardClicked}>
-                      <i className="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
-                      DASHBOARD
-                    </a>
-                  </li>
-                  <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleMembersClicked}>
-                      <i className="fa-solid fa-user me-2"></i>
-                      MEMBERS
-                    </a>
-                  </li>
-                  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleJobsClicked}>
                       <i className="fa-solid fa-business-time me-2"></i>
                       JOBS
@@ -519,15 +509,28 @@ const NavbarCustom = (props) => {
                     </a>
                   </li>
                   <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleServiceClick}>
+                      <i className="fa fa-wrench me-2" aria-hidden="true"></i>
+                      SERVICES
+                    </a>
+                  </li>
+                  <li className="nav-item mt-2">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
                       <i className="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>
                   <li className="nav-item mt-2">
-                    <a className="nav-link" onClick={handleServiceClick}>
-                      <i className="fa fa-wrench me-2" aria-hidden="true"></i>
-                      SERVICES
+                    <a className="nav-link" onClick={handleMembersClicked}>
+                      <i className="fa-solid fa-user me-2"></i>
+                      MEMBERS
+                    </a>
+                  </li>
+
+                  <li className="nav-item mt-2">
+                    <a className="nav-link" onClick={handleDashboardClicked}>
+                      <i className="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
+                      DASHBOARD
                     </a>
                   </li>
 

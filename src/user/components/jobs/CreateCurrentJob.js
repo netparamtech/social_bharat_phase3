@@ -127,6 +127,11 @@ const CreateCurrentJob = () => {
             if (response && response.status === 201) {
                 setErrors('');
                 setServerError('');
+                setRole('');
+                setSelectedCity(null);
+                setSelectedState(null);
+                setCompany('');
+                setApplyUrl('');
                 toast.success("Successfully Created Job", successOptions);
                 dispatch(setLoader(false));
             }
@@ -184,7 +189,7 @@ const CreateCurrentJob = () => {
                                                     <label className="form-label">Job Role{" "}<span className="text-danger">*</span></label>
                                                     <input
                                                         className="form-control"
-                                                        defaultValue={role}
+                                                        value={role}
                                                         onChange={handleJobRole}
                                                         placeholder='Enter Job Role'
                                                     />
@@ -194,7 +199,7 @@ const CreateCurrentJob = () => {
                                                     <label className="form-label">Company Name{" "}<span className="text-danger">*</span></label>
                                                     <input
                                                         className="form-control"
-                                                        defaultValue={company}
+                                                        value={company}
                                                         onChange={handleCompanyName}
                                                         placeholder='Enter Company Name'
                                                     />
@@ -244,7 +249,7 @@ const CreateCurrentJob = () => {
                                                         id="addressLine"
                                                         placeholder="Enter Address Line"
                                                         className="form-control"
-                                                        defaultValue={applyUrl}
+                                                        value={applyUrl}
                                                         onChange={handleApplyUrl}
                                                         autoFocus
                                                     />

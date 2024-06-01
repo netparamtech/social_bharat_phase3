@@ -171,10 +171,10 @@ const Activities = () => {
 
     {
       title: "Description",
-      dataIndex: "DESCRIPTION",
+      dataIndex: "description",
       render: (text, record) => (
         <div className="description-cell">
-          {record.DESCRIPTION}
+          {record.description}
         </div>
       ),
       ellipsis: true,

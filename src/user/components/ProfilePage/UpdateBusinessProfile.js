@@ -145,7 +145,7 @@ const UpdateBusinessProfile = (props) => {
       contact3: contact3,
       business_website: businessWebsite,
       business_email: businessEmail,
-      business_photos: tempBusinessPhotoUrl,
+      business_photos: tempBusinessPhotoUrl.length>0?tempBusinessPhotoUrl:'',
       status: status,
       description,
       google_map_link: googleMapLink,

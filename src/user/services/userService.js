@@ -1189,10 +1189,10 @@ export const uploadActivity = async (data) => {
 };
 
 //fetch all activities
-export const fetchAllActivities = async (searchText, page, size) => {
+export const fetchAllActivities = async (searchText,category, page, size) => {
   try {
     const response = await apiWithHeaders.get(
-      `/users/activities?searchQuery=${searchText}&page=${page}&size=${size}`
+      `/users/activities?searchQuery=${searchText}&category=${category}&page=${page}&size=${size}`
     );
     return response;
   } catch (error) {

@@ -86,6 +86,12 @@ const SearchPartner = () => {
   ]
 
   const handleClear = (value) => {
+    if (value === 'city') {
+      setSelectedCity(null);
+    }
+    if (value === 'search') {
+      setSearchText('');
+    }
     setClearValue(value);
     setisClear(!isClear);
   }
@@ -423,8 +429,8 @@ const SearchPartner = () => {
       {isChat ? (
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
-        <div id="searchPeople-section" className="content-wrapper">
-          <div className="container mt-2">
+        <div id="searchPeoples-section" className="content-wrapper">
+          <div className="mt-3">
 
             <div className="card shadow">
               <div className={`card-header mt-2 fs-3 fw-bold d-flex justify-content-between ${isAndroidUsed ? '' : 'mx-auto'}`}>
@@ -435,7 +441,7 @@ const SearchPartner = () => {
                     <img src="/user/images/addicon.png" width={30} height={30} onClick={handlePartnerClick} />
                   </>
                 ) :
-                  <h3 className="text-info fw-bold">Search Partner</h3>
+                  <h5 className="text-info fw-bold">Search Partner</h5>
                 }
               </div>
               <div className="card-body">
@@ -466,7 +472,9 @@ const SearchPartner = () => {
 
                       </div>
                       <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("gender")} />
+                        {
+                          gender && <img className="hover-pointer" src="/user/images/clear.jpg" style={{ marginLeft: '-10px' }} width={40} onClick={() => handleClear("gender")} />
+                        }
                       </div>
 
 
@@ -484,7 +492,9 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("state")} />
+                        {
+                          selectedState && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("state")} />
+                        }
                       </div>
                       <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label ">City</label>
@@ -500,7 +510,9 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("city")} />
+                        {
+                          selectedCity && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("city")} />
+                        }
                       </div>
                       <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label">Subcast</label>
@@ -521,7 +533,9 @@ const SearchPartner = () => {
                         />
                       </div>
                       <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("subcast")} />
+                        {
+                          subcast && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("subcast")} />
+                        }
                       </div>
                       <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
                         <label className="form-label">Occupation</label>
@@ -538,24 +552,33 @@ const SearchPartner = () => {
                         </select>
                       </div>
                       <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        <img className="hover-pointer" src="/user/images/clear.jpg" width={40} onClick={() => handleClear("occupation")} />
+                        {
+                          occupation && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("occupation")} />
+                        }
+                      </div>
+
+                    </div>
+                    <div className="row ms-auto me-auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', marginTop: '30px' }}>
+                      <div className="col-11 col-md-6 d-flex position-relative">
+                        <input type="text" className="form-control" name="search" value={searchText} autoFocus onChange={handleSearchText} />
+
+                        <button type="button" style={{ borderRadius: '0px 10px 10px 0px', borderWidth: '0px 0px 0px 0px' }}>Search</button>
+                        {
+                          searchText && <img src="/user/images/Xicon.png" width={15}
+                            style={{ position: 'absolute', right: '100px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                            onClick={() => handleClear("search")}
+                          />}
                       </div>
                       {
-                        !isAndroidUsed && (
-                          <div className="mt-5" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                            <a
-                              title="Add Business"
-                              className="btn btn-secondary w-100 btn-sm mb-2"
-                              onClick={handlePartnerClick}
-                              style={{ width: '100%', maxWidth: '200px', height: '40px' }}
-                            >
-                              ADD MATRIMONIAL
-                            </a>
-                          </div>
-                        )
+                        !isAndroidUsed && <a
+                          title="Add Business"
+                          className="btn btn-secondary w-100 btn-sm mb-2"
+                          onClick={handlePartnerClick}
+                          style={{ width: '100%', maxWidth: '200px', height: '40px' }}
+                        >
+                          ADD MATRIMONIAL
+                        </a>
                       }
-
-
                     </div>
 
                   </div>
@@ -582,17 +605,6 @@ const SearchPartner = () => {
                 ) : (
                   ""
                 )}
-
-                <div className="container-input mb-3 mt-3">
-                  <input
-                    type="text"
-                    placeholder="Search By Name, Occupation, Father Name, State, City"
-                    name="text"
-                    className="input form-control border-success"
-                    onChange={handleSearchText}
-                  />
-                  <i className="fas fa-search"></i>
-                </div>
 
                 <div className="scrollableDiv" id="scrollableDiv"
                   style={{

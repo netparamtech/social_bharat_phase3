@@ -275,77 +275,83 @@ const SearchBusiness = () => {
             <div>
               <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
             </div>
-            <div className="filter-content pt-5 d-md-block">
-              {city ? (
-                <p>
-                  {city}
-                  {state && `(${state})`}
-                </p>
-              ) : (
-                <p>{state && `state - ${state}`}</p>
-              )}
-            </div>
-            <div className="filter-icon">
-              <a
-                title="Filter"
-                className="btn btn-primary btn-sm me-2 hover-pointer"
-                onClick={handleFilterClicked}
-              >
-                <i className="fas fa-filter me-1"></i>Filter
-              </a>
-              <a
-                title="Add Business"
-                className="btn btn-primary"
-                onClick={handlePromoteBusinessClick}
-              >
-                Promote Your Business{" "}
-              </a>
-            </div>
 
-
-            <div className="">
-              <div className={`row ${isFilter ? "" : "d-none"}`}>
-                <div className="col-12 col-md-3 mb-3">
-                  <Select
-                    options={states.map((state) => ({
-                      value: state.name,
-                      label: state.name,
-                    }))}
-                    value={selectedState}
-                    onChange={handleStateChange}
-                    placeholder="State"
-                  />
+            <div className="col-12">
+              <div className="col-md-6 col-12">
+                <div className="filter-content pt-5 d-md-block">
+                  {city ? (
+                    <p>
+                      {city}
+                      {state && `(${state})`}
+                    </p>
+                  ) : (
+                    <p>{state && `state - ${state}`}</p>
+                  )}
                 </div>
-                <div className="col-12 col-md-3 mb-3">
-                  <Select
-                    options={cities.map((city) => ({
-                      value: city.name,
-                      label: city.name,
-                    }))}
-                    value={selectedCity}
-                    onChange={handleCityChange}
-                    placeholder="City"
-                  />
+                <div className="filter-icon">
+                  <a
+                    title="Filter"
+                    className="btn btn-primary btn-sm me-2 hover-pointer"
+                    onClick={handleFilterClicked}
+                  >
+                    <i className="fas fa-filter me-1"></i>Filter
+                  </a>
+                  <a
+                    title="Add Business"
+                    className="btn btn-primary"
+                    onClick={handlePromoteBusinessClick}
+                  >
+                    Promote Your Business{" "}
+                  </a>
                 </div>
+                <div className="">
+                  <div className={`row ${isFilter ? "" : "d-none"}`}>
+                    <div className="col-12 col-md-3 mb-3">
+                      <Select
+                        options={states.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        }))}
+                        value={selectedState}
+                        onChange={handleStateChange}
+                        placeholder="State"
+                      />
+                    </div>
+                    <div className="col-12 col-md-3 mb-3">
+                      <Select
+                        options={cities.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        }))}
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                        placeholder="City"
+                      />
+                    </div>
 
-                <div className="col-12 col-md-6 mb-3 position-relative">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      placeholder="Search Business by name, category, state, city, user name, address, google map"
-                      name="text"
-                      className="input form-control"
-                      value={searchText}
-                      onChange={handleSearchText}
-                    />
-                    <span className="input-group-text">
-                      <i className="fas fa-search ps-2"></i>
-                    </span>
+                    <div className="col-12 col-md-6 mb-3 position-relative">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search Business by name, category, state, city, user name, address, google map"
+                          name="text"
+                          className="input form-control"
+                          value={searchText}
+                          onChange={handleSearchText}
+                        />
+                        <span className="input-group-text">
+                          <i className="fas fa-search ps-2"></i>
+                        </span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-
               </div>
+              <div className="col-md-6 col-12">Hellow</div>
             </div>
+
+
 
             <div className="scrollableDiv" id="scrollableDiv"
               style={{
@@ -411,22 +417,22 @@ const SearchBusiness = () => {
                                 </div>
 
                               </div>
-                              
+
                             </div>
                           </div>
-                          <div className="card-footer bg-light d-flex justify-content-between rounded-3" style={{ flexDirection: 'row',height:'60px',marginTop:'10px' }}>
-                                <BusinessCard item={item} />
-                                {
-                                  item.google_map_link ? (
-                                    <div className="">
-                                      <a href={item.google_map_link} target="_blank">
-                                        <img className="rounded" src={defaultMap} alt="Google Map" width={30} height={40} />
-                                      </a>
-                                    </div>
-                                  ) : <img className="rounded" style={{ opacity: 0.5 }} src={defaultMap} alt="Google Map" width={30} height={40} />
-                                }
+                          <div className="card-footer bg-light d-flex justify-content-between rounded-3" style={{ flexDirection: 'row', height: '60px', marginTop: '10px' }}>
+                            <BusinessCard item={item} />
+                            {
+                              item.google_map_link ? (
+                                <div className="">
+                                  <a href={item.google_map_link} target="_blank">
+                                    <img className="rounded" src={defaultMap} alt="Google Map" width={30} height={40} />
+                                  </a>
+                                </div>
+                              ) : <img className="rounded" style={{ opacity: 0.5 }} src={defaultMap} alt="Google Map" width={30} height={40} />
+                            }
 
-                              </div>
+                          </div>
 
 
                           {/* <a className="btn over-pointer-g-effect mx-auto m-2 btn-toggle" onClick={() => handleIsDetailsClicked(idx)}>{!isDetails[idx] ? "Show More" : "Show Less"}</a> */}

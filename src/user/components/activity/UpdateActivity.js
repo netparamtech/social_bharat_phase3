@@ -10,6 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
+import Select from 'react-select';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const UpdateActivity = () => {
   const { id } = useParams();
@@ -20,6 +25,8 @@ const UpdateActivity = () => {
   const [activityPhotos, setActivityPhotos] = useState([]);
   const [imageTempUrl, setImageTempUrl] = useState([]);
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState('');
@@ -32,11 +39,17 @@ const UpdateActivity = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
   const handleImageClick = () => {
     imageInputRef.current.click();
   };
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
+  }
+  const handleCategoryChange = (selectedOption) => {
+    setCategory(selectedOption);
   }
 
   const handleImageChange = async (e) => {
@@ -128,14 +141,19 @@ const UpdateActivity = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
+
     const data = {
       photo: imageTempUrl,
-      description,
+      description: htmlContent,
+      category: category ? category.label : '',
       title,
     };
     console.log(data);
 
-    if (imageTempUrl.length > 0 || description) {
+    if (imageTempUrl.length > 0 || rawContentState.blocks[0].text ||title) {
       console.log("Hello");
       dispatch(setLoader(true));
       try {
@@ -170,23 +188,30 @@ const UpdateActivity = () => {
 
   useEffect(() => {
     if (activityDetails) {
-      setDescription(activityDetails.description);
       setTitle(activityDetails.title);
+      setCategory({ value: activityDetails.category, label: activityDetails.category });
+      if (activityDetails.description) {
+        const blocksFromHTML = convertFromHTML(activityDetails.description);
+        const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+        const editorStateFromFetchedData = EditorState.createWithContent(contentState);
+        setEditorState(editorStateFromFetchedData);
+
+      }
 
       // Convert photo to array if it's not already an array
-    if(activityDetails.photo){
-      console.log(activityDetails.photo,"hhh")
-      if (Array.isArray(activityDetails.photo)) {
-        setImagePreview(activityDetails.photo);
-        setImageTempUrl(activityDetails.photo);
+      if (activityDetails.photo) {
+        console.log(activityDetails.photo, "hhh")
+        if (Array.isArray(activityDetails.photo)) {
+          setImagePreview(activityDetails.photo);
+          setImageTempUrl(activityDetails.photo);
+        } else {
+          setImagePreview([activityDetails.photo]);
+          setImageTempUrl([activityDetails.photo]);
+        }
       } else {
-        setImagePreview([activityDetails.photo]);
-        setImageTempUrl([activityDetails.photo]);
-      }
-    }else {
-      setImagePreview([]);
+        setImagePreview([]);
         setImageTempUrl([]);
-    }
+      }
     }
   }, [activityDetails]);
 
@@ -216,7 +241,7 @@ const UpdateActivity = () => {
       >
         <div className="container">
           <div className="row">
-            {imagePreview&&imagePreview.length > 0 ? (<div className="col-4  mb-5">
+            {imagePreview && imagePreview.length > 0 ? (<div className="col-4  mb-5">
               <div
                 className="card"
                 style={{ height: "375px", maxHeight: "700px", overflowY: "scroll" }}
@@ -263,14 +288,40 @@ const UpdateActivity = () => {
                   {message && (
                     <span className="error">{message}</span>
                   )}
-                  <div className="d-flex justify-content-between mb-3">
-                    <p className="fs-4 fw-2 text-success m-3">Activity</p>
-                    <button
-                      className=" btn-md btn btn-success hover-pointer btn-post-activity"
-                      onClick={() => navigate("/users/activities")}
-                    >
-                      View All Activities
-                    </button>
+
+                  <p className="text-success m-3">Activity</p>
+                  <div className="row mb-2" >
+                    <div className="col-md-3 col-12 mx-auto ">
+                      <button
+                        className="btn bg-warning btn-success btn-sm small hover-pointer btn-post-activity"
+                        onClick={() => navigate("/users/activities")}
+                      >
+                        View All Activities
+                      </button>
+                    </div>
+                    <div className="col-md-6 col-12 mt-2">
+                      <Select
+                        options={[
+                          { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
+                          { value: 'Sales', label: 'Sales' },
+                          { value: 'Marketing', label: 'Marketing' },
+                          { value: 'Manufacturing', label: 'Manufacturing' },
+                          { value: 'Service', label: 'Service' },
+                          { value: 'Finance', label: 'Finance' },
+                          { value: 'Real Estate', label: 'Real Estate' },
+                          { value: 'Healthcare', label: 'Healthcare' },
+                          { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
+                          { value: 'Hospitality', label: 'Hospitality' },
+                          { value: 'Education', label: 'Education' },
+                          { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+                          { value: 'Other', label: 'Other' },
+                          // Add other country options here
+                        ]}
+                        value={category}
+                        onChange={handleCategoryChange}
+                      />
+                    </div>
+
                   </div>
                   <div className="row">
                     <div className="input-group input-group-sm mb-3">
@@ -326,12 +377,13 @@ const UpdateActivity = () => {
                       </div>
                     </div>
                     <div className="col-sm-6 col-11 mx-auto">
-                      <textarea
-                        className="text-area form-control h-100 mt-2 fs-5"
-                        placeholder="Enter Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      ></textarea>
+                      <Editor
+                        editorState={editorState}
+                        onEditorStateChange={onEditorStateChange}
+                        wrapperClassName="wrapper-class"
+                        editorClassName="editor-class custom-editor-height editor-border p-2"
+                        toolbarClassName="toolbar-class toolbar-border"
+                      />
                       {errors && errors.description && (
                         <span className="error">{errors.description}</span>
                       )}

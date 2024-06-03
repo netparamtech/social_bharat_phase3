@@ -90,7 +90,6 @@ const CurrentJobOpening = () => {
         try {
             const response = await currentJobs(size, page, state, city, searchText);
             if (response && response.status === 200) {
-                console.log(response.data.data.totalRowsAffected, response.data.data.jobs)
                 setTotalRows(response.data.data.totalRowsAffected);
                 setDataStatic([...new Set([...dataStatic, ...response.data.data.jobs])]);
                 setCopyData(response.data.data);

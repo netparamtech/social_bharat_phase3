@@ -8,6 +8,11 @@ import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
+import Select from 'react-select';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const Activity = () => {
   const imageInputRef = useRef(null);
@@ -15,10 +20,12 @@ const Activity = () => {
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [activityPhotos, setActivityPhotos] = useState([]);
   const [imageTempUrl, setImageTempUrl] = useState([]);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title, setTitle] = useState('');
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState('');
+  const [category, setCategory] = useState('');
   const [defaultImage] = useState(
     "https://images.unsplash.com/photo-1477586957327-847a0f3f4fe3?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8amFpcHVyfGVufDB8fDB8fHww"
   );
@@ -27,11 +34,17 @@ const Activity = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
   const handleImageClick = () => {
     imageInputRef.current.click();
   };
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
+  }
+  const handleCategoryChange = (selectedOption) => {
+    setCategory(selectedOption);
   }
 
   const handleImageChange = async (e) => {
@@ -104,14 +117,18 @@ const Activity = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
+
     const data = {
       photo: imageTempUrl,
-      description,
+      description: htmlContent,
+      category: category && category.label,
       title,
     };
-    console.log(title)
 
-    if (imageTempUrl.length > 0 || description|| title) {
+    if (imageTempUrl.length > 0 || rawContentState.blocks[0].text || title) {
       dispatch(setLoader(true));
       try {
         const response = await uploadActivity(data);
@@ -214,17 +231,43 @@ const Activity = () => {
                   {message && (
                     <span className="error">{message}</span>
                   )}
-                  <div className="d-flex justify-content-between mb-3">
-                    <p className="fs-4 fw-2 text-success m-3">Activity</p>
-                    <button
-                      className=" btn-md btn btn-success hover-pointer btn-post-activity"
-                      onClick={() => navigate("/users/activities")}
-                    >
-                      View All Activities
-                    </button>
+
+                  <p className="text-success m-3">Activity</p>
+                  <div className="row mb-2" >
+                    <div className="col-md-3 col-12 mx-auto ">
+                      <button
+                        className="btn bg-warning btn-success btn-sm small hover-pointer btn-post-activity"
+                        onClick={() => navigate("/users/activities")}
+                      >
+                        View All Activities
+                      </button>
+                    </div>
+                    <div className="col-md-6 col-12 mt-2">
+                      <Select
+                        options={[
+                          { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
+                          { value: 'Sales', label: 'Sales' },
+                          { value: 'Marketing', label: 'Marketing' },
+                          { value: 'Manufacturing', label: 'Manufacturing' },
+                          { value: 'Service', label: 'Service' },
+                          { value: 'Finance', label: 'Finance' },
+                          { value: 'Real Estate', label: 'Real Estate' },
+                          { value: 'Healthcare', label: 'Healthcare' },
+                          { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
+                          { value: 'Hospitality', label: 'Hospitality' },
+                          { value: 'Education', label: 'Education' },
+                          { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+                          { value: 'Other', label: 'Other' },
+                          // Add other country options here
+                        ]}
+                        value={category}
+                        onChange={handleCategoryChange}
+                      />
+                    </div>
+
                   </div>
                   <div className="row">
-                    <div className="input-group input-group-sm mb-3">
+                    <div className=" input-group input-group-sm mb-3">
                       <div className="input-group-prepend">
                         <span className="input-group-text" id="inputGroup-sizing-sm" >Title</span>
                       </div>
@@ -233,6 +276,7 @@ const Activity = () => {
                         <span className="error">{errors.title}</span>
                       )}
                     </div>
+
                     <div className="col-sm-4 col-11 mx-auto">
                       <div className="">
                         <div className="img-container card card-block-md overflow-hidden">
@@ -277,16 +321,18 @@ const Activity = () => {
                       </div>
                     </div>
                     <div className="col-sm-6 col-11 mx-auto">
-                      <textarea
-                        className="text-area form-control h-100 mt-2 fs-5"
-                        placeholder="Enter Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      ></textarea>
+                      <Editor
+                        editorState={editorState}
+                        onEditorStateChange={onEditorStateChange}
+                        wrapperClassName="wrapper-class"
+                        editorClassName="editor-class custom-editor-height editor-border p-2"
+                        toolbarClassName="toolbar-class toolbar-border"
+                      />
                       {errors && errors.description && (
                         <span className="error">{errors.description}</span>
                       )}
                     </div>
+
                     <div className="mx-auto">
                       <button
                         className="btn-md btn w-100 btn-primary mt-4 "

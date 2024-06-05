@@ -2373,6 +2373,19 @@ legend {
   font-weight: bold;
 }
 
+.business-more-filter-block::-webkit-scrollbar {
+  display: none;
+}
+.business-more-filter-block{
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  background-color: #DFF0D8;
+  border-radius: 10px;
+}
+.scrollableDiv::-webkit-scrollbar {
+  display: none;
+}
+
 
 
 

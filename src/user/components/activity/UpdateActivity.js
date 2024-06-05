@@ -314,6 +314,7 @@ const UpdateActivity = () => {
                           { value: 'Hospitality', label: 'Hospitality' },
                           { value: 'Education', label: 'Education' },
                           { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+                          { value: 'Polity', label: 'Polity' },
                           { value: 'Other', label: 'Other' },
                           // Add other country options here
                         ]}

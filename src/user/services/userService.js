@@ -550,10 +550,10 @@ export const searchWithCityState = async (queryString) => {
 };
 
 //search business
-export const searchBusinessWithSearchText = async (size, page, state, city, searchText) => {
+export const searchBusinessWithSearchText = async (size, page, state, city, searchText,category) => {
   try {
     const response = await apiWithHeaders.get(
-      `/business/search?searchText=${searchText}&page=${page}&size=${size}&state=${state}&city=${city}`
+      `/business/search?searchText=${searchText}&category=${category}&page=${page}&size=${size}&state=${state}&city=${city}`
     );
     return response;
   } catch (error) {

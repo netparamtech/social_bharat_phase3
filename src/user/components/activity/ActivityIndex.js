@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { Avatar, Card, Carousel, Image, Modal } from "antd";
 import { Divider, List, Skeleton, Statistic } from 'antd';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import Meta from "antd/es/card/Meta";
 import Search from "antd/es/input/Search";
 import { NavDropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { logout } from "../../actions/userAction";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const ActivityIndex = () => {
   const user = useSelector((state) => state.userAuth);
@@ -60,8 +60,14 @@ const ActivityIndex = () => {
   }
 
   const handleSearchText = (e) => {
+    setItems([]);
     setSearchText(e.target.value);
-  };
+  }
+
+  const handleCategoryChange = (value) =>{
+    setItems([]);
+    setCategory(value);
+  }
 
   const deleteSingleActivity = async (activityId, userId) => {
     const isConfirmed = window.confirm("Do you want to delete the activity?");
@@ -69,7 +75,6 @@ const ActivityIndex = () => {
       try {
         const response = await deleteSingleActivityById(activityId, userId);
         if (response && response.status === 200) {
-          console.log(response.data.data);
           setItems(items.filter((item) => item.id !== activityId));
           setServerError("");
           toast.success("Deleted Activity Successfully");
@@ -92,11 +97,7 @@ const ActivityIndex = () => {
       const response = await fetchAllActivities(searchText, category, page, size);
       if (response && response.status === 200) {
         setTotalRows(response.data.data.totalRowsAffected);
-        if (page === 1) {
-          setItems(response.data.data.activities);
-        } else {
-          setItems([...new Set([...items, ...response.data.data.activities])]);
-        }
+        setItems([...new Set([...items, ...response.data.data.activities])]);
         setPage(page + 1);
         setLoading(false);
         setServerError("");
@@ -116,9 +117,13 @@ const ActivityIndex = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    loadMoreData();
+  }, []);
 
   useEffect(() => {
     // Check if the component is not just mounted
+    setPage(1);
     search(searchText, category, 1, size);
   }, [searchText, category]);
 
@@ -170,12 +175,6 @@ const ActivityIndex = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   const customTitle = (
@@ -275,29 +274,30 @@ const ActivityIndex = () => {
                     <>
                       <div className="bg-success text-light mx-auto" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
                       <div className="activities-filter-container mx-auto" style={{ overflow: 'scroll', height: '200px' }}>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('')}>All</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Information Technology')}>Information Technology</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Sports')}>Sports</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Sales')}>Sales</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Marketing')}>Marketing</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Manufacturing')}>Manufacturing</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Service')}>Service</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Finance')}>Finance</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Real Estate')}>Real Estate</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Healthcare')}>Healthcare</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Transportation and Logistics')}>Transportation and Logistics</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Hospitality')}>Hospitality</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Education')}>Education</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Nonprofit Organization')}>Nonprofit Organization</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => setCategory('Other')}>Other</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology')}>Information Technology</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sports')}>Sports</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sales')}>Sales</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Marketing')}>Marketing</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Manufacturing')}>Manufacturing</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Service')}>Service</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Finance')}>Finance</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Real Estate')}>Real Estate</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Healthcare')}>Healthcare</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Transportation and Logistics')}>Transportation and Logistics</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Hospitality')}>Hospitality</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Education')}>Education</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Nonprofit Organization')}>Nonprofit Organization</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Polity')}>Nonprofit Organization</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Other')}>Other</p>
                       </div>
                     </>
                   ) : ''
                 }
 
                 <div className="col-md-12 col-12 mb-2">
-                  <button
-                    className="btn bg-warning btn-success btn-sm small hover-pointer btn-post-activity"
+                  <button disabled
+                    className="btn bg-warning btn-success btn-sm small btn-post-activity"
                   >
                     Manage Your Activity
                   </button>
@@ -309,13 +309,14 @@ const ActivityIndex = () => {
             <div className="col-12 col-md-6 mx-auto" style={{ border: '1px solid gray', borderRadius: '10px' }}>
               <div className="mx-auto text-primary" style={{ borderRadius: '10px' }}>You Are Searching In - {category ? category : ''}</div>
 
-              <div className="" id="scrollableDiv1"
+              <div className="" id="scrollableDiv1123"
                 style={{
                   height: 400,
                   overflow: 'auto',
                   padding: '0 16px',
                   border: '1px solid rgba(140, 140, 140, 0.35)',
-                }}>
+                }}
+              >
 
                 <InfiniteScroll
                   dataLength={items.length}
@@ -331,7 +332,7 @@ const ActivityIndex = () => {
                     />
                   }
                   endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                  scrollableTarget="scrollableDiv1"
+                  scrollableTarget="scrollableDiv1123"
                 >
                   <div className="container pw-20 mt-3">
                     {groupedItems.map((pair, index) => (

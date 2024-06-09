@@ -51,13 +51,17 @@ const ViewCommunity = () => {
               <div className="col-lg-12">
                 {serverError && <p>{serverError}</p>}
                 <div className="mb-5 community-img">
+
                   <img src={data.banner_image} className=" img-fluid rounded-2" alt="Banner" />
                 </div>
                 <div className="card shadow mb-5 p-5">
                   {data && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: data.community_archive }}
-                    />
+                    <>
+                      <div><h2 className="fs-bold">{data.name}</h2></div>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: data.community_archive }}
+                      />
+                    </>
                   )}
                   <div>
                     {

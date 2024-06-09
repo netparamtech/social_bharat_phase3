@@ -25,7 +25,6 @@ const SearchPartner = () => {
   };
 
   const user = useSelector((state) => state.userAuth);
-
   const [loggedUserID, setLoggedUserID] = useState("");
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -446,141 +445,157 @@ const SearchPartner = () => {
               </div>
               <div className="card-body">
                 <div className="container">
-                  <div className="row">
-                    <div className="col-md-7 ps-0">
-                      {serverError && (
-                        <span className="error">{serverError}</span>
-                      )}
+                  {
+                    !isFilter && (
+                      <div className="row transition-filter wow animate__animated animate__zoomIn">
+                        <div className="col-md-7 ps-0">
+                          {serverError && (
+                            <span className="error">{serverError}</span>
+                          )}
 
-                    </div>
-                    <div className="row ms-auto me-auto justify-content-between">
+                        </div>
 
-                      <div className="mt-3 col-11 col-sm-2 custom-bottom-margin-search-partner">
-                        <label className="form-label ">
-                          Interested In
-                        </label>
-                        <select
-                          className="form-select form-control"
-                          aria-label="job profile select"
-                          value={gender}
-                          onChange={handleGenderChange}
-                        >
-                          <option value="">--- Gender---</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                        </select>
+                        <div className="row ms-auto me-auto justify-content-between">
 
-                      </div>
-                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        {
-                          gender && <img className="hover-pointer" src="/user/images/clear.jpg" style={{ marginLeft: '-10px' }} width={40} onClick={() => handleClear("gender")} />
-                        }
-                      </div>
+                          <div className="mt-3 col-11 col-sm-2 custom-bottom-margin-search-partner">
+                            <label className="form-label ">
+                              Interested In
+                            </label>
+                            <select
+                              className="form-select form-control"
+                              aria-label="job profile select"
+                              value={gender}
+                              onChange={handleGenderChange}
+                            >
+                              <option value="">--- Gender---</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+
+                          </div>
+                          <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                            {
+                              gender && <img className="hover-pointer" src="/user/images/clear.jpg" style={{ marginLeft: '-10px' }} width={40} onClick={() => handleClear("gender")} />
+                            }
+                          </div>
 
 
-                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
-                        <label className="form-label">State</label>
-                        <Select
-                          className="form-control"
-                          aria-label="Default select example"
-                          options={states && states.map((state) => ({
-                            value: state.name,
-                            label: state.name,
-                          }))}
-                          value={selectedState}
-                          onChange={handleStateChange}
-                        />
-                      </div>
-                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        {
-                          selectedState && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("state")} />
-                        }
-                      </div>
-                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
-                        <label className="form-label ">City</label>
-                        <Select
-                          className="form-control"
-                          aria-label="Default select example"
-                          options={cities.map((city) => ({
-                            value: city.name,
-                            label: city.name,
-                          }))}
-                          value={selectedCity}
-                          onChange={handleCityChange}
-                        />
-                      </div>
-                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        {
-                          selectedCity && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("city")} />
-                        }
-                      </div>
-                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
-                        <label className="form-label">Subcast</label>
-                        <Select
-                          id="community_id"
-                          className="form-control"
-                          aria-label="Default select example"
-                          value={subcast} // Provide a selected option state
-                          onChange={handleSubcastChange} // Your change handler function
-                          options={
-                            communities &&
-                            communities.map((data) => ({
-                              value: data.subcast_id,
-                              label: data.subcast,
-                            }))
+                          <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
+                            <label className="form-label">State</label>
+                            <Select
+                              className="form-control"
+                              aria-label="Default select example"
+                              options={states && states.map((state) => ({
+                                value: state.name,
+                                label: state.name,
+                              }))}
+                              value={selectedState}
+                              onChange={handleStateChange}
+                            />
+                          </div>
+                          <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                            {
+                              selectedState && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("state")} />
+                            }
+                          </div>
+                          <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
+                            <label className="form-label ">City</label>
+                            <Select
+                              className="form-control"
+                              aria-label="Default select example"
+                              options={cities.map((city) => ({
+                                value: city.name,
+                                label: city.name,
+                              }))}
+                              value={selectedCity}
+                              onChange={handleCityChange}
+                            />
+                          </div>
+                          <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                            {
+                              selectedCity && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("city")} />
+                            }
+                          </div>
+                          <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
+                            <label className="form-label">Subcast</label>
+                            <Select
+                              id="community_id"
+                              className="form-control"
+                              aria-label="Default select example"
+                              value={subcast} // Provide a selected option state
+                              onChange={handleSubcastChange} // Your change handler function
+                              options={
+                                communities &&
+                                communities.map((data) => ({
+                                  value: data.subcast_id,
+                                  label: data.subcast,
+                                }))
+                              }
+                              placeholder="Subcast"
+                            />
+                          </div>
+                          <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                            {
+                              subcast && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("subcast")} />
+                            }
+                          </div>
+                          <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
+                            <label className="form-label">Occupation</label>
+
+                            <select id="jobProfile" name="jobProfile" className="form-select form-control"
+                              aria-label="job profile select" value={occupation} onChange={handleOccupationChange}
+                            >
+                              <option value="">Select</option>
+                              {
+                                occupationOptions && occupationOptions.map((item, index) => (
+                                  <option value={item}>{item}</option>
+                                ))
+                              }
+                            </select>
+                          </div>
+                          <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
+                            {
+                              occupation && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("occupation")} />
+                            }
+                          </div>
+
+                        </div>
+                        <div className="row ms-auto me-auto mb-2 justify-content-between" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', marginTop: '30px' }}>
+                          <div className="col-11 col-md-9 d-flex position-relative">
+                            <input type="text" className="form-control" name="search" value={searchText} autoFocus onChange={handleSearchText} />
+
+                            <button type="button" style={{ borderRadius: '0px 10px 10px 0px', borderWidth: '0px 0px 0px 0px' }}>Search</button>
+                            {
+                              searchText && <img src="/user/images/Xicon.png" width={15}
+                                style={{ position: 'absolute', right: '100px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                                onClick={() => handleClear("search")}
+                              />}
+                          </div>
+                         <div className="col-md-3 col-11">
+                         {
+                            !isAndroidUsed && <a
+                              title="Add Business"
+                              className="btn btn-secondary w-100 btn-sm mb-2"
+                              onClick={handlePartnerClick}
+                              style={{ width: '100%', maxWidth: '200px', height: '40px' }}
+                            >
+                              ADD MATRIMONIAL
+                            </a>
                           }
-                          placeholder="Subcast"
-                        />
-                      </div>
-                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        {
-                          subcast && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("subcast")} />
-                        }
-                      </div>
-                      <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
-                        <label className="form-label">Occupation</label>
+                         </div>
+                        </div>
 
-                        <select id="jobProfile" name="jobProfile" className="form-select form-control"
-                          aria-label="job profile select" value={occupation} onChange={handleOccupationChange}
-                        >
-                          <option value="">Select</option>
-                          {
-                            occupationOptions && occupationOptions.map((item, index) => (
-                              <option value={item}>{item}</option>
-                            ))
-                          }
-                        </select>
                       </div>
-                      <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
-                        {
-                          occupation && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("occupation")} />
-                        }
-                      </div>
-
-                    </div>
-                    <div className="row ms-auto me-auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', marginTop: '30px' }}>
-                      <div className="col-11 col-md-6 d-flex position-relative">
-                        <input type="text" className="form-control" name="search" value={searchText} autoFocus onChange={handleSearchText} />
-
-                        <button type="button" style={{ borderRadius: '0px 10px 10px 0px', borderWidth: '0px 0px 0px 0px' }}>Search</button>
-                        {
-                          searchText && <img src="/user/images/Xicon.png" width={15}
-                            style={{ position: 'absolute', right: '100px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
-                            onClick={() => handleClear("search")}
-                          />}
-                      </div>
-                      {
-                        !isAndroidUsed && <a
-                          title="Add Business"
-                          className="btn btn-secondary w-100 btn-sm mb-2"
-                          onClick={handlePartnerClick}
-                          style={{ width: '100%', maxWidth: '200px', height: '40px' }}
-                        >
-                          ADD MATRIMONIAL
-                        </a>
-                      }
-                    </div>
-
+                    )
+                  }
+                  <div className="search-partner-filter-container mt-2 wow animate__animated animate__zoomIn">
+                    <a
+                      title="Filter"
+                      className="btn btn-primary btn-sm me-2 hover-pointer search-partner-filter"
+                      onClick={() => setIsFilter(!isFilter)}
+                    >
+                      <i className="fas fa-filter me-1"></i>{!isFilter?'Hide Filter':'Show Filter'}
+                    </a>
                   </div>
                 </div>
 
@@ -656,9 +671,7 @@ const SearchPartner = () => {
 
                                   </div>
                                   <div className="flex-grow-1 ms-3">
-                                    <div className="m-2">
-                                      {item && <GenerateBiodata userData={item} />}
-                                    </div>
+
                                     <h5 className="mb-1">{item.matrimonial_profile_name}</h5>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                       Job Type-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
@@ -709,7 +722,7 @@ const SearchPartner = () => {
 
 
                                     </div>
-                                    <div className="d-flex pt-1">
+                                    <div className="pt-1" style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
 
 
                                       <div
@@ -717,12 +730,18 @@ const SearchPartner = () => {
                                         onClick={() => handleChatclick(item)}
                                         style={{ flex: 1, justifyContent: 'space-between' }}
                                       >
-                                        <img
+
+                                        <img className=""
                                           src="/user/images/chat-icon.jpg"
                                           width="50px"
                                         />
                                       </div>
+
                                       <MatrimonialCard item={item} />
+                                      <div className="mt-3">
+                                        {item && <GenerateBiodata userData={item} />}
+                                      </div>
+
                                     </div>
                                   </div>
                                 </div>
@@ -739,7 +758,7 @@ const SearchPartner = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div >
       )}
       <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
         <a

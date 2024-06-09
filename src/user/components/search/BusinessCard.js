@@ -119,7 +119,10 @@ const BusinessCard = ({ item, index }) => {
                                     </Carousel>
 
                                 </div>
-                                <p>Other Details : <span className="text-muted">{item.description || "N/A"}</span></p>
+                                <p>
+                                  <span className="text-muted" dangerouslySetInnerHTML={{
+                                    __html: item.description}}></span>
+                                </p>
 
                             </div>
                         </div>

@@ -395,23 +395,23 @@ const SearchPeople = () => {
                                     <div className="flex-grow-1 ms-3">
                                       <h5 className="mb-1">{item.name}</h5>
                                       <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                        {item.occupation}
+                                        Job Details - {item.occupation?item.occupation:'N/A'}
                                       </p>
                                       <div
                                         className="d-flex justify-content-start rounded-3"
                                         style={{ backgroundColor: '#efefef' }}
                                       >
-                                        Education-{item.highest_qualification ? item.highest_qualification : 'N/A'}
+                                        Education - {item.highest_qualification ? item.highest_qualification : 'N/A'}
                                       </div>
                                       <div className="d-flex justify-content-start rounded-3 mt-2"
                                         style={{ backgroundColor: '#efefef' }}
                                       >
-                                        Age-{age(item.dob)} Years
+                                        Age - {age(item.dob)} Years
                                       </div>
                                       <div className="d-flex justify-content-start rounded-3 mt-2"
                                         style={{ backgroundColor: '#efefef' }}
                                       >
-                                        <p>City-{item.native_place_city}</p>
+                                        <p>City - {item.native_place_city}</p>
                                         <p>
                                           {item.native_place_state
                                             ? `(${item.native_place_state})`

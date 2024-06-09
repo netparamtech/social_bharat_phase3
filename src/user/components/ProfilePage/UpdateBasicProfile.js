@@ -248,14 +248,7 @@ const UpdateBasicProfile = () => {
 
     const arrayName = name.split(' ');
     const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-    let modifiedOccupation = occupation;
-    if (jobType !== null) {
-      if (modifiedOccupation.includes('/')) {
-        const itemsArray = modifiedOccupation.split('/');
-        modifiedOccupation = itemsArray[1];
-      }
-      modifiedOccupation = `${jobType.label}/${modifiedOccupation}`;
-    }
+   
     // Prepare the updated data
     const updatedData = {
       name: modifiedName,
@@ -266,7 +259,8 @@ const UpdateBasicProfile = () => {
       dob: dob,
       is_available_for_marriage: isAvailableForMarriage,
       marital_status: maritalStatus ? maritalStatus.label : '',
-      occupation: modifiedOccupation,
+      occupation: occupation,
+      job_type:jobType&&jobType.label,
       highest_qualification: qualification.label
     };
 
@@ -332,15 +326,8 @@ const UpdateBasicProfile = () => {
       setIsAvailableForMarriage(false);
       setShowAvailableForMarriage(false)
     }
-
-    if (user && user.user && user.user.occupation) {
-      const itemsArray = user.user.occupation.split('/');
-      setJobType({
-        value: itemsArray[0],
-        label: itemsArray[0]
-      });
-      setOccupation(itemsArray[1]);
-    }
+    setOccupation(user.user.occupation);
+    setJobType({value:user.user.job_type,label:user.user.job_type});
 
     setQualification({
       value: user && user.user && user.user.highest_qualification,

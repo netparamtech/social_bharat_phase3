@@ -2385,6 +2385,37 @@ legend {
 .scrollableDiv::-webkit-scrollbar {
   display: none;
 }
+#activity-post-section .filter-activity{
+  border-radius: 20px !important;
+}
+.search-partner-filter-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+.search-partner-filter{
+  border-radius: 20px !important;
+}
+.transition-filter {
+  transition: all 0.3s;
+  background-color: greenyellow;
+}
+
+#user-auth-section .user-auth-panel-info .card{
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  height: 9rem;
+  font-size: 15px;
+}
+#user-auth-section .user-auth-panel-info .card:hover{
+  scale: 1.1;
+  border: 1px solid red !important;
+  border: red;
+}
+#user-auth-section .user-auth-panel-info h4{
+  font-size: 17px;
+  font-weight: bold;
+}
 
 
 

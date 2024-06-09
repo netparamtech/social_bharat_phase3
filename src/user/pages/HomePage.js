@@ -1,3 +1,4 @@
+import './css/navbar.css';
 import './css/mainBanner.css';
 import './css/ourPartner.css';
 import './css/whySocial.css';

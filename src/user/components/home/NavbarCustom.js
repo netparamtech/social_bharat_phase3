@@ -322,7 +322,7 @@ const NavbarCustom = (props) => {
       <nav className="navbar navbar-transparent navbar-expand-lg">
         <div className="container">
           <a className="navbar-brand" onClick={handleHomeClicked}>
-            <img src={defaultLogo} alt="Logo" width={200} />
+            <img src={defaultLogo} alt="Logo" />
           </a>
 
           {/* Toggle button for small screens */}
@@ -343,8 +343,8 @@ const NavbarCustom = (props) => {
 
           {/* Navbar items */}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mx-auto mb-2 mb-lg-0" style={{width:isAuthenticUser?'873px':'320px'}}>
-            
+            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+
 
               {/* Navbar links */}
               <li className="nav-item">
@@ -434,31 +434,28 @@ const NavbarCustom = (props) => {
                   CONTACT
                 </a>
               </li>
-              <li>
               {!isAuthenticUser && (
-              <div className="button-container">
-                <button
-                  className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
-                    }`}
-                  onClick={handleLoginClicked}
-                >
-                  Login
-                </button>
-                <button
-                  className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ""
-                    }`}
-                  onClick={() => navigate("/register")}
-                >
-                  Sign Up
-                </button>
-              </div>
-            )}
-              </li>
-
+                <div className="button-container">
+                  <button
+                    className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
+                      }`}
+                    onClick={handleLoginClicked}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ""
+                      }`}
+                    onClick={() => navigate("/register")}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </ul>
 
             {/* Login and signup buttons */}
-           
+
 
             {/* User dropdown for authenticated users */}
             <ul className="navbar-nav ml-auto  mb-2 mb-lg-0" style={{ width: isAuthenticUser ? '200px' : '' }}>

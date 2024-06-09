@@ -44,15 +44,15 @@ const GenerateBiodata = (props) => {
             verticalPosition += 6;
             pdf.text(20, verticalPosition, `Father Gotra: ${matrimonialDetails.paternal_gotra}`);
             verticalPosition += 6;
-             // Job Details
-             const job = matrimonialDetails.matrimonial_profile_occupation;
-             const jobDetails = pdf.splitTextToSize(job, 170);
-             pdf.text(20, verticalPosition, "Job Profile");
-             verticalPosition += 6;
-             jobDetails.forEach(line => {
-                 pdf.text(20, verticalPosition, line);
-                 verticalPosition += 6;
-             });
+            // Job Details
+            const job = matrimonialDetails.matrimonial_profile_occupation;
+            const jobDetails = pdf.splitTextToSize(job, 170);
+            pdf.text(20, verticalPosition, "Job Profile");
+            verticalPosition += 6;
+            jobDetails.forEach(line => {
+                pdf.text(20, verticalPosition, line);
+                verticalPosition += 6;
+            });
             verticalPosition += 6;
             pdf.text(20, verticalPosition, `Number Of Brothers: ${matrimonialDetails.brother_count}`);
             verticalPosition += 6;
@@ -96,8 +96,14 @@ const GenerateBiodata = (props) => {
 
     return (
         <div>
-            {/* Add a button to trigger PDF generation */}
-            <button className='me-3 rounded bg-success text-light' onClick={() => generatePDF(userData)}>Download Biodata</button>
+            <a className="text-dark mt-3 hover-pointer-admin" onClick={() => generatePDF(userData)} title='View'
+                style={{ border: '1px solid', backgroundColor: 'greenyellow', borderRadius: '20px', padding: '4px', alignContent: 'center', textDecoration: 'none' }} >
+                Download
+                <img
+                    src="/user/images/downloads.png"
+                    width="20px" height={20}
+                />
+            </a>
         </div>
     );
 };

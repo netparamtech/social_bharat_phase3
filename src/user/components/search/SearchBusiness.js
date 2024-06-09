@@ -115,11 +115,14 @@ const SearchBusiness = () => {
     setSearchText(e.target.value);
   };
 
-  const fetchJobs = async (size, page, state, city, searchText,category) => {
+  const fetchJobs = async (size, page, state, city, searchText, category) => {
+    if (category === undefined) {
+      category = '';
+    }
 
     dispatch(setLoader(false));
     try {
-      const response = await searchBusinessWithSearchText(size, page, state, city, searchText,category);
+      const response = await searchBusinessWithSearchText(size, page, state, city, searchText, category);
       if (response && response.status === 200) {
         console.log(response.data.data.result, response.data.data.totalRowsAffected)
         setTotalRows(response.data.data.totalRowsAffected);
@@ -225,16 +228,16 @@ const SearchBusiness = () => {
   useEffect(() => {
     const state = selectedState ? selectedState.label : "";
     const city = selectedCity ? selectedCity.label : "";
-    fetchJobs(size, 1, state, city, searchText,category);
-  }, [searchText, selectedState, selectedCity,category]);
+    fetchJobs(size, 1, state, city, searchText, category);
+  }, [searchText, selectedState, selectedCity, category]);
   const handleScrollToUp = () => {
     window.scrollTo(0, 0);
   };
 
-  useEffect(() => {
-    setState(user && user.user && user.user.native_place_state);
-    setCity(user && user.user && user.user.native_place_city);
-  }, [user]);
+  // useEffect(() => {
+  //   setState(user && user.user && user.user.native_place_state);
+  //   setCity(user && user.user && user.user.native_place_city);
+  // }, [user]);
 
   useEffect(() => {
     // Check if selectedCountry is already set
@@ -289,7 +292,7 @@ const SearchBusiness = () => {
             </div>
 
             <div className="row col-12 col-md-12 mt-2">
-              <div className="col-md-3 col-12" style={{ display: isFilter ? '' : 'none' }}>
+              <div className="col-md-3 col-12">
                 <div className="bg-success text-light mx-auto p-2" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
                 <div className="business-more-filter-block mt-2" style={{ overflow: 'scroll', height: '400px' }}>
                   <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
@@ -315,13 +318,7 @@ const SearchBusiness = () => {
               <div className="col-md-3 col-12">
 
                 <div className="row p-4">
-                  <a
-                    title="Filter"
-                    className="btn btn-primary btn-sm me-2 hover-pointer"
-                    onClick={handleFilterClicked}
-                  >
-                    <i className="fas fa-filter me-1"></i>Filter
-                  </a>
+
                   <a
                     title="Add Business"
                     className="btn btn-primary mt-2"
@@ -329,9 +326,9 @@ const SearchBusiness = () => {
                   >
                     Promote Your Business{" "}
                   </a>
-                  <div className="mx-auto mt-3">
-                    <div className={`${isFilter ? "" : "d-none"}`}>
-                      <div className="col-12 col-md-12 mb-3">
+                  <div className="mt-3">
+                    <div>
+                      <div className=" mb-3">
                         <Select
                           options={states.map((state) => ({
                             value: state.name,
@@ -342,7 +339,7 @@ const SearchBusiness = () => {
                           placeholder="State"
                         />
                       </div>
-                      <div className="col-12 col-md-12 mb-3">
+                      <div className="mb-3">
                         <Select
                           options={cities.map((city) => ({
                             value: city.name,
@@ -354,7 +351,7 @@ const SearchBusiness = () => {
                         />
                       </div>
 
-                      <div className="col-12 col-md-12 mb-3 position-relative">
+                      <div className="mb-3 position-relative">
                         <div className="input-group">
                           <input
                             type="text"
@@ -416,11 +413,18 @@ const SearchBusiness = () => {
                       {data &&
                         data.map((item, idx) => (
 
-                          <div className={`${isFilter ? 'col-md-9' : 'col-md-6'} col-12 mt-2 mx-auto`} key={idx} >
-                            <div className="card" style={{ borderRadius: '15px', height: '500px' }}>
+                          <div className={`${isFilter ? 'col-md-9' : 'col-md-12'} col-12 mt-2 mx-auto`} key={idx} >
+                            <div className="card" style={{ borderRadius: '15px' }}>
                               <div className="card-body p-4">
                                 <h4 className="text-primary">{item.business_name}</h4>
                                 <p className='text-info'>({item.business_category})</p>
+                                <p>
+                                  <span className="text-muted" dangerouslySetInnerHTML={{
+                                    __html: item.description.length > 400
+                                      ? `${item.description.slice(0, 400)}...`
+                                      : item.description,
+                                  }}></span>
+                                </p>
                                 <div className={`text-black ${isAndroidUsed ? '' : ''}`}>
                                   {
                                     item.business_photos && <Carousel className="your-custom-carousel-class">
@@ -482,7 +486,7 @@ const SearchBusiness = () => {
                   {/* Repeat the user card structure as needed */}
                 </div>
               </div>
-              
+
             </div>
 
 
@@ -491,7 +495,7 @@ const SearchBusiness = () => {
           </div>
         </div>
       </div>
-    
+
     </div>
   );
 };

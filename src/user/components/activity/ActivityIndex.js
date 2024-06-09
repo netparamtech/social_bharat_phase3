@@ -64,9 +64,10 @@ const ActivityIndex = () => {
     setSearchText(e.target.value);
   }
 
-  const handleCategoryChange = (value) =>{
+  const handleCategoryChange = (value) => {
     setItems([]);
     setCategory(value);
+    setIsFilter(false);
   }
 
   const deleteSingleActivity = async (activityId, userId) => {
@@ -250,8 +251,14 @@ const ActivityIndex = () => {
             <div className="col-12 col-md-4">
 
               <div className="row mx-auto" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '10px', alignContent: 'center' }}>
-                <div className="col-md-8 col-12" >
-                  <button type="button" style={{ borderRadius: '10px', marginBottom: '10px' }} onClick={toggleFilter}>Filter More</button>
+                <div className="col-md-12 col-12" >
+                  <a
+                    title="Filter"
+                    className="btn btn-primary btn-sm me-2 hover-pointer filter-activity mb-2"
+                    onClick={toggleFilter}
+                  >
+                    <i className="fas fa-filter me-1"></i>Filter More
+                  </a>
                   <Search
                     classNames=""
                     placeholder="input search text"
@@ -306,7 +313,7 @@ const ActivityIndex = () => {
               </div>
 
             </div>
-            <div className="col-12 col-md-6 mx-auto" style={{ border: '1px solid gray', borderRadius: '10px' }}>
+            <div className="col-12 col-md-6 mx-auto">
               <div className="mx-auto text-primary" style={{ borderRadius: '10px' }}>You Are Searching In - {category ? category : ''}</div>
 
               <div className="" id="scrollableDiv1123"
@@ -314,7 +321,7 @@ const ActivityIndex = () => {
                   height: 400,
                   overflow: 'auto',
                   padding: '0 16px',
-                  border: '1px solid rgba(140, 140, 140, 0.35)',
+
                 }}
               >
 
@@ -344,7 +351,7 @@ const ActivityIndex = () => {
                                 <div className="search-partner-cards">
                                   <Card
                                     className="  mb-1"
-                                    style={{ height: item.photo ? '500px' : '' }}
+                                    // style={{ height: item.photo ? '500px' : '' }}
                                   >
                                     <div className="d-flex justify-content-between">
                                       <Meta
@@ -424,7 +431,7 @@ const ActivityIndex = () => {
                                     {item.photo &&
                                       Array.isArray(item.photo) &&
                                       item.photo.length > 0 ? (
-                                      <div className="photo-container mt-2 dotted-border-carousel">
+                                      <div className="photo-container mt-2 ">
                                         <Carousel
                                           className="photo-carousel"
                                           dotPosition="bottom"
@@ -456,32 +463,27 @@ const ActivityIndex = () => {
                                       />
                                     ) : (
                                       <div className="card card-body mt-2 border-0 mb-2">
-                                        <div className="px-5 pb-3 mt-5"
+                                        <div className=""
                                           dangerouslySetInnerHTML={{
                                             __html: item.description,
                                           }}
                                         />
                                       </div>
                                     )}
+                                    <div className="card card-body mt-2 border-0 mb-2">
+                                      {item.photo ? (
+                                        <div className=""
+                                          dangerouslySetInnerHTML={{
+                                            __html: item.description,
+                                          }}
+                                        />
 
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
                                   </Card>
-                                  <div className="card card-body mt-2 border-0 mb-2">
-                                    {item.photo ? (
-                                      <div className="px-5 pb-3 mt-5"
-                                        dangerouslySetInnerHTML={{
-                                          __html: item.description,
-                                        }}
-                                      />
-                                      // <p
-                                      //   className=" text-justify custom-activity-description"
-                                      //   style={{ overflowY: "scroll" }}
-                                      // >
-                                      //   {parseDescription(item.description)}
-                                      // </p>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
+
                                 </div>
                               </div>
                             </div>

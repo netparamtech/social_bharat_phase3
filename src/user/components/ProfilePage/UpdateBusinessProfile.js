@@ -4,6 +4,10 @@ import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
@@ -22,6 +26,7 @@ const UpdateBusinessProfile = (props) => {
   const [status, setStatus] = useState('');
   const [businessId, setBusinessId] = useState('');
   const [description, setDescription] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -38,6 +43,10 @@ const UpdateBusinessProfile = (props) => {
   const [serverError, setServerError] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
 
   const handleBusinessPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -132,6 +141,10 @@ const UpdateBusinessProfile = (props) => {
 
     event.preventDefault();
     dispatch(setLoader(true));
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
+
     const businessData = {
       id: parseInt(businessId),
       business_name: businessName,
@@ -145,9 +158,9 @@ const UpdateBusinessProfile = (props) => {
       contact3: contact3,
       business_website: businessWebsite,
       business_email: businessEmail,
-      business_photos: tempBusinessPhotoUrl.length>0?tempBusinessPhotoUrl:'',
+      business_photos: tempBusinessPhotoUrl.length > 0 ? tempBusinessPhotoUrl : '',
       status: status,
-      description,
+      description: htmlContent,
       google_map_link: googleMapLink,
     };
 
@@ -260,7 +273,13 @@ const UpdateBusinessProfile = (props) => {
       setStatus(businessDetails.status || '');
       setBusinessId(businessDetails.id);
       setGoogleMapLink(businessDetails.google_map_link || '');
-      setDescription(businessDetails.description || '');
+      if (businessDetails.DESCRIPTION) {
+        const blocksFromHTML = convertFromHTML(businessDetails.DESCRIPTION);
+        const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+        const editorStateFromFetchedData = EditorState.createWithContent(contentState);
+        setEditorState(editorStateFromFetchedData);
+
+      }
       {
         businessDetails && businessDetails.business_photos && Array.isArray(businessDetails.business_photos) ?
           (setTempBusinessPhotoUrl(businessDetails.business_photos || '')) : (businessDetails.business_photos ? setTempBusinessPhotoUrl([businessDetails.business_photos]) : setTempBusinessPhotoUrl([]))
@@ -325,18 +344,7 @@ const UpdateBusinessProfile = (props) => {
                           />
                           {errors.business_name && <span className='error'>{errors.business_name}</span>}
                         </div>
-                        {/* <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">*Business Category</label>
-                      <Select
-                        id="business_category"
-                        className=""
-                        value={businessCategory} // Provide a selected option state
-                        onChange={handleSelectCategoryChange} // Your change handler function
-                        options={businessCategories && businessCategories.map((category) => ({ value: category.id, label: category.title }))}
-                        placeholder="---Select Business Category---"
-                      />
-                      {errors.business_category && <span className='error'>{errors.business_category}</span>}
-                    </div> */}
+
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">Business Type{" "}<span className="text-danger">*</span></label>
                           <Select
@@ -533,33 +541,33 @@ const UpdateBusinessProfile = (props) => {
                           {errors.business_website && <span className='error'>{errors.business_website}</span>}
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Description</label>
-                          <p>(Please add your business details and links if any.)</p>
-                          <textarea type="text"
-                            name="businessWebsite"
-                            id="businessWebsite"
-                            placeholder="Enter Business Website Link"
-                            className="form-control"
-                            defaultValue={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                          />
-                          {errors.description && <span className='error'>{errors.description}</span>}
-                        </div>
-
-                      </div>
-                      <div className='row'>
-                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">Set Google Map</label>
                           <p>(Please add your business location  link.)</p>
                           <textarea type="text"
                             name="businessWebsite"
                             id="businessWebsite"
-                            placeholder="Enter Business Website Link"
+                            placeholder="Enter Google Map URL"
                             className="form-control"
                             defaultValue={googleMapLink}
                             onChange={(e) => setGoogleMapLink(e.target.value)}
                           />
                           {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                        </div>
+
+                      </div>
+                      <div className='row'>
+                        <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
+                          <label className="form-label">Description</label>
+                          <p>(Please add your business details and links if any.)</p>
+
+                          <Editor
+                            editorState={editorState}
+                            onEditorStateChange={onEditorStateChange}
+                            wrapperClassName="wrapper-class"
+                            editorClassName="editor-class custom-editor-height editor-border p-2"
+                            toolbarClassName="toolbar-class toolbar-border"
+                          />
+                          {errors.description && <span className='error'>{errors.description}</span>}
                         </div>
                       </div>
                     </div>

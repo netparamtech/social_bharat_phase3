@@ -235,6 +235,18 @@ const BasicProfile = (props) => {
                       </span>
                     </div>
                   </div>
+                  {
+                    user && user.data && user.data.job_type?
+                    <div className="mb-2 row">
+                    <label className="col-4">Job Sector </label>
+                    <div className="col-8">
+                      <span className="text-muted">
+                        {user && user.data && user.data.job_type ||
+                          "N/A"}
+                      </span>
+                    </div>
+                  </div>:''
+                  }
 
                   <div className="mb-2 row">
                     <label className="col-4">Marital Status </label>

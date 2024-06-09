@@ -29,10 +29,12 @@ const MatrimonialCard = ({ item, index }) => {
 
     return (
         <>
-            <a className="text-dark m-2 hover-pointer-admin" onClick={handleShow} title='View' >
+            <a className="text-dark mt-3 hover-pointer-admin" onClick={handleShow} title='View'
+                style={{ border: '1px solid', backgroundColor: 'greenyellow', borderRadius: '20px', padding: '4px', alignContent: 'center', textDecoration: 'none' }} >
+                VIEW
                 <img
                     src="/user/images/eye.png"
-                    width="40px"
+                    width="20px" height={20}
                 />
             </a>
             <Modal
@@ -70,7 +72,9 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>Package/Salary: <span className="text-muted">{(item.salary_package ? (item.salary_package === 'none') ? "N/A" : item.salary_package : "N/A")}</span></p>
                                                 <p>Date Of Birth: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>Education: <span className="text-muted">{(item.education) || "N/A"}</span></p>
-                                                <p>Job Profile: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
+                                                <p>Education Details: <span className="text-muted">{item.educational_details ? item.educational_details : ''}</span></p>
+                                                <p>Job Type: <span className="text-muted">{item.matrimonial_profile_occupation ? item.matrimonial_profile_occupation : ''}</span></p>
+                                                <p>Job Description: <span className="text-muted">{item.job_profile_description ? item.job_profile_description : ''}</span></p>
                                                 {
                                                     item.brother_count ? (
                                                         <>

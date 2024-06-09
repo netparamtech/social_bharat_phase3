@@ -59,7 +59,7 @@ function Contact() {
         setErrors("");
         setMessage(response.data.message);
         setAlertClass("alert-success");
-        toast.success("Enquiry successfully sent.",successOptions);
+        toast.success("Enquiry successfully sent.", successOptions);
         setName('');
         setEmail('');
         setMobile('');
@@ -70,7 +70,7 @@ function Contact() {
         setMessage("");
         setErrors(error.response.data.errors);
         setAlertClass("alert-danger");
-        toast.error("Failed to send enquiry. Please try again later.",errorOptions);
+        toast.error("Failed to send enquiry. Please try again later.", errorOptions);
       } else if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
         setAlertClass("alert-danger");
@@ -132,7 +132,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
 
-                              <i className="fa-solid fa-location-dot fs-2 text-primary"></i>
+                              <i className="fa-solid fa-location-dot fs-6 text-primary"></i>
                               <h4 className="ms-3 ">Address</h4>
                             </div>
                             <div>
@@ -150,33 +150,17 @@ function Contact() {
 
 
                               <Button type="btn" onClick={showModal}>
-                                <i className="fa-solid fa-phone-volume fs-2 text-primary"></i>
+                                <i className="fa-solid fa-phone-volume fs-6 text-primary"></i>
                               </Button>
                               <h4 className="ms-3">Call Us</h4>
-                              <Modal title="Select One" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                <div>
-                                  <span className="text-muted">
-                                    <a className="text-dark text-line-none" href={`tel:${settings && settings.phone1}`}>
-                                      +91-{settings && settings.phone1}
-                                    </a>
-                                    <br />
-                                    {settings && settings.phone2 &&
-
-                                      (
-                                        <a className="text-dark text-line-none" href={`tel:${settings && settings.phone2}`}>
-                                          +91-{settings && settings.phone2}
-                                        </a>
-                                      )
-
-                                    }
-
-                                  </span>
-                                </div>
-                              </Modal>
+                             
                             </div>
                             <div>
                               <span className="text-muted hover-pointer" onClick={showModal}>
-                                +91-{settings && settings.phone1}
+
+                                <a className="text-dark text-line-none m-2" href={`tel:${settings && settings.phone1}`}>
+                                  +91-{settings && settings.phone1}
+                                </a>
                                 <br />
                                 {
                                   settings && settings.phone2 && (
@@ -192,13 +176,13 @@ function Contact() {
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
-                              <i className="fa-solid fa-envelope fs-2 text-primary"></i>
+                              <i className="fa-solid fa-envelope fs-6 text-primary"></i>
                               <h4 className="ms-3">Email Us</h4>
                             </div>
                             <div>
                               <span className="text-muted">
                                 {" "}
-                                <a className="text-dark text-line-none" href={`mailto:${settings && settings.email1}`}>{settings && settings.email1}</a>
+                                <a className="text-dark text-line-none" style={{ fontSize: '15px' }} href={`mailto:${settings && settings.email1}`}>{settings && settings.email1}</a>
                                 <br />
                                 {settings && settings.email2 && (
                                   <a className="text-dark text-line-none" href={`mailto:${settings.email2}`}>{settings.email2}</a>
@@ -214,7 +198,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
 
-                              <i className="fa-solid fa-clock fs-2 text-primary"></i>
+                              <i className="fa-solid fa-clock fs-6 text-primary"></i>
                               <h4 className="ms-3">Open Hours</h4>
                             </div>
                             <div>

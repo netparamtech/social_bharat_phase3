@@ -285,7 +285,7 @@ const SearchPeople = () => {
         <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeoples-section" className="content-wrapper pt-4 mb-4" style={{ overflow: 'hidden' }}>
-          <div className="" >
+          <div className="container" >
             <div className="card shadow card-search">
               <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Members</div>
               <div className="card-body">

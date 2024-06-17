@@ -132,7 +132,9 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
 
-                              <i className="fa-solid fa-location-dot fs-6 text-primary"></i>
+                              <a href="https://www.google.com/maps/dir//Netparam+Technologies+Pvt.+Ltd.+Ground+floor+747,+Jan+Path,+Rani+Sati+Nagar,+Nirman+Nagar,+Brijlalpura+Jaipur,+Rajasthan+302019/@26.8854726,75.7427703,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x396dc9787b6e8159:0x7162ee3f35dc8f5a" target="_blank">
+                                <i className="fa-solid fa-location-dot fs-6 text-primary"></i>
+                              </a>
                               <h4 className="ms-3 ">Address</h4>
                             </div>
                             <div>
@@ -144,34 +146,29 @@ function Contact() {
                         </div>
                       </div>
                       <div className="mb-3 user-auth-panel-info col-md-6 col-sm-12">
-                        <div className="card shadow ">
+                        <div className="card shadow">
                           <div className="card-body">
-                            <div className="d-inline-flex">
-
-
+                            <div className="d-flex align-items-center">
                               <Button type="btn" onClick={showModal}>
                                 <i className="fa-solid fa-phone-volume fs-6 text-primary"></i>
                               </Button>
-                              <h4 className="ms-3">Call Us</h4>
-                             
+                              <h4 className="ms-3 mb-0">Call Us</h4>
                             </div>
                             <div>
-                              <span className="text-muted hover-pointer" onClick={showModal}>
-
+                              <span className="ms-3 text-muted hover-pointer" onClick={showModal}>
                                 <a className="text-dark text-line-none m-2" href={`tel:${settings && settings.phone1}`}>
                                   +91-{settings && settings.phone1}
                                 </a>
                                 <br />
-                                {
-                                  settings && settings.phone2 && (
-                                    <p> +91-{settings && settings.phone2}</p>
-                                  )
-                                }
+                                {settings && settings.phone2 && (
+                                  <p className="m-0">+91-{settings.phone2}</p>
+                                )}
                               </span>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="mb-3  user-auth-panel-info  col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
@@ -193,17 +190,18 @@ function Contact() {
                         </div>
                       </div>
 
-                      <div className="mb-3 user-auth-panel-info  col-md-6 col-sm-12">
+                      <div className="mb-3 user-auth-panel-info col-md-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
-                            <div className="d-inline-flex">
-
-                              <i className="fa-solid fa-clock fs-6 text-primary"></i>
-                              <h4 className="ms-3">Open Hours</h4>
+                            <div className="d-flex align-items-center mb-3">
+                              <a href="https://netparam.in/contact" target="_blank">
+                                <i className="fa-solid fa-clock fs-5 text-primary"></i>
+                              </a>
+                              <h4 className="ms-3 mb-0">Open Hours</h4>
                             </div>
                             <div>
                               <span className="text-muted">
-                                Monday - Sturday, 9:00 AM - 06:00 PM
+                                Monday - Saturday, 9:00 AM - 06:00 PM
                                 <br />
                                 Sunday - Off
                               </span>
@@ -211,6 +209,7 @@ function Contact() {
                           </div>
                         </div>
                       </div>
+
                     </div>
                   </div>
                 </div>

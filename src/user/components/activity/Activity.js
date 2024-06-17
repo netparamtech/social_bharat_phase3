@@ -242,8 +242,8 @@ const Activity = () => {
                         View All Activities
                       </button>
                     </div>
-                    <div className="col-md-6 col-12 mt-2">
-                      <Select
+                    <div className="col-md-6 col-12 mt-2" style={{zIndex:1000}}>
+                      <Select placeholder="Select Category ...."
                         options={[
                           { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
                           { value: 'Sales', label: 'Sales' },

@@ -257,7 +257,7 @@ const ActivityIndex = () => {
                     className="btn btn-primary btn-sm me-2 hover-pointer filter-activity mb-2"
                     onClick={toggleFilter}
                   >
-                    <i className="fas fa-filter me-1"></i>Filter More
+                    <i className="fas fa-filter me-1"></i>{isFilter?'Hide Filter':'Filter More'}
                   </a>
                   <Search
                     classNames=""
@@ -320,8 +320,6 @@ const ActivityIndex = () => {
                 style={{
                   height: 400,
                   overflow: 'auto',
-                  padding: '0 16px',
-
                 }}
               >
 
@@ -341,12 +339,12 @@ const ActivityIndex = () => {
                   endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                   scrollableTarget="scrollableDiv1123"
                 >
-                  <div className="container pw-20 mt-3">
+                  <div className="pw-20 mt-3">
                     {groupedItems.map((pair, index) => (
-                      <div className="row">
+                      <div className="">
                         {pair &&
                           pair.map((item, idx) => (
-                            <div className="col-12" key={idx}>
+                            <div className="" key={idx}>
                               <div className=" position-relative">
                                 <div className="search-partner-cards">
                                   <Card
@@ -426,7 +424,7 @@ const ActivityIndex = () => {
                                         </NavDropdown.Item>
                                       </NavDropdown>
                                     </div>
-                                    <div className="fs-4 m-2 ">{item.title}</div>
+                                    <div className="fs-4 m-2">{item.title}</div>
 
                                     {item.photo &&
                                       Array.isArray(item.photo) &&
@@ -455,11 +453,8 @@ const ActivityIndex = () => {
                                         src={item.photo}
                                         alt={`Photos ${idx + 1}`}
                                         className="card-img-top m-2"
-                                        style={{
-                                          height: "300px",
-                                          width: "100%",
-                                          objectFit: "contain",
-                                        }}
+                                        style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+
                                       />
                                     ) : (
                                       <div className="card card-body mt-2 border-0 mb-2">

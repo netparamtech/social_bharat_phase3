@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   fetchAllCitiesByStateID,
   fetchAllStatesByCountryID,
+  fetchCategoryByTitle,
   searchPeopleInService,
 } from "../../services/userService";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
 import NewChat from "../chats/NewChat";
 import Comment from "./Comment";
-import { Rate } from "antd";
+import { Divider, Rate } from "antd";
 import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
 
 const SearchUsersWithService = () => {
@@ -28,6 +29,8 @@ const SearchUsersWithService = () => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState('');
+  const [category, setCategory] = useState('');
+  const [cList, setClist] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState(
     "/admin/img/download.jpg"
@@ -147,11 +150,33 @@ const SearchUsersWithService = () => {
     }
   };
 
-
+  const getCategory = async () => {
+    try {
+      let response;
+      if (title) {
+        response = await fetchCategoryByTitle(title);
+      }
+      if (response && response.status === 200) {
+        setCategory(response.data.category);
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    } finally {
+    }
+  };
 
   useEffect(() => {
     if (items.length > 0) {
       setIssearchingPerformed(true);
+    } else {
+      setIssearchingPerformed(false);
     }
   }, [items]);
 
@@ -222,7 +247,7 @@ const SearchUsersWithService = () => {
   }, [searchText]);
 
   useEffect(() => {
-    // Check if selectedCountry is already set
+    getCategory();
     getAllStates();
   }, []);
 
@@ -243,6 +268,12 @@ const SearchUsersWithService = () => {
     return !isHidden;
   };
   useEffect(() => {
+    if (category) {
+      const list = category.split(',');
+      setClist(list);
+    }
+  }, [category]);
+  useEffect(() => {
     const handleResize = () => {
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
     };
@@ -260,16 +291,16 @@ const SearchUsersWithService = () => {
     return (
       <div className={`text-black${isAndroidUsed ? '' : 'd-flex'}`}>
 
-        <div className="col-md-4 col-sm-12 mb-4">
-          <img
-            src={item.photo ? item.photo : defaultImage}
-            alt={item.name}
-            className="img-fluid"
-            style={{ width: '100%', borderRadius: '10px' }}
-          />
-        </div>
+
         <div className="row">
-          <div className="col-md-8 col-sm-12">
+
+          <div className="col-md-5 col-sm-12">
+            <img
+              src={item.photo ? item.photo : defaultImage}
+              alt={item.name}
+              className="img-fluid"
+              style={{ width: '100px', height: '100px', borderRadius: '10px' }}
+            />
             <p className="fs-4 m-2">{item.name.toUpperCase()}</p>
             <Rate className="m-2" allowHalf defaultValue={parseFloat(item.avg_rating)} disabled />
             <p className="fw-bold fs-4 m-2">{item.avg_rating}</p>
@@ -284,83 +315,88 @@ const SearchUsersWithService = () => {
             </div>
 
           </div>
-          <div className="col-md-4 col-sm-12">
-            <div className="flex-grow-1 ms-3">
-              <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                {item.occupation}
-              </p>
-              <div
-                className="d-flex justify-content-start rounded-3"
-                style={{ backgroundColor: '#efefef' }}
-              >
-                Experience-{item.experience ? item.experience : 'N/A'}
-              </div>
-              <div className="d-flex justify-content-start rounded-3 mt-2"
-                style={{ backgroundColor: '#efefef' }}
-              >
-                {/* Age-{age(item.matrimonial_profile_dob)} Years */}
-              </div>
-              <div className="d-flex justify-content-start rounded-3 mt-2"
-                style={{ backgroundColor: '#efefef' }}
-              >
-                <p>Service At - {item.city}</p>
-                <p>
-                  {item.state
-                    ? `(${item.state})`
-                    : ""}
+          <div className="col-md-6">
+            <p> Providing Services In - {item.category}</p>
+            <div className="row">
+              <div className="flex-grow-1">
+                <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
+                  Occupation :  {item.occupation}
+
                 </p>
+                <div
+                  className="d-flex justify-content-start rounded-3"
+                  style={{ backgroundColor: '#efefef' }}
+                >
+                  Experience-{item.experience ? item.experience : 'N/A'}
+                </div>
+                <div className="d-flex justify-content-start rounded-3 mt-2"
+                  style={{ backgroundColor: '#efefef' }}
+                >
+                  {/* Age-{age(item.matrimonial_profile_dob)} Years */}
+                </div>
+                <div className="d-flex justify-content-start rounded-3 mt-2"
+                  style={{ backgroundColor: '#efefef' }}
+                >
+                  <p>Service At - {item.city}</p>
+                  <p>
+                    {item.state
+                      ? `(${item.state})`
+                      : ""}
+                  </p>
+                </div>
+                <div
+                  className="d-flex justify-content-start rounded-3"
+                  style={{ backgroundColor: '#efefef' }}
+                >
+                  <p className="">
+                    Contact Numbers:
+                    <a href={`tel:${item.mobile1}`}>
+                      {item.mobile1}
+                    </a>
+                    {item.mobile2 ? (
+                      <>
+                        ,{" "}
+                        <a href={`tel:${item.mobile2}`}>
+                          {item.mobile2}
+                        </a>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    {
+                      checkMobileVisibility(item.masked_mobile) ? (
+                        <p>
+                          <a href={`tel:${item.masked_mobile}`}>
+                            ,{item.masked_mobile}
+                          </a>
+                        </p>
+                      ) : ''
+                    }
+
+                  </p>{" "}
+                </div>
               </div>
-              <div
-                className="d-flex justify-content-start rounded-3"
+
+
+              <div className="d-flex justify-content-start rounded-3 mt-2"
                 style={{ backgroundColor: '#efefef' }}
               >
-                <p className="">
-                  Contact Numbers:
-                  <a href={`tel:${item.mobile1}`}>
-                    {item.mobile1}
-                  </a>
-                  {item.mobile2 ? (
-                    <>
-                      ,{" "}
-                      <a href={`tel:${item.mobile2}`}>
-                        {item.mobile2}
+                {
+                  checkMobileVisibility(item.mobile) ? (
+                    <p>
+                      <a href={`tel:${item.mobile}`}>
+                        {item.mobile}
                       </a>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                  {
-                    checkMobileVisibility(item.masked_mobile) ? (
-                      <p>
-                        <a href={`tel:${item.masked_mobile}`}>
-                          ,{item.masked_mobile}
-                        </a>
-                      </p>
-                    ) : ''
-                  }
-
-                </p>{" "}
+                    </p>
+                  ) : ''
+                }
               </div>
+
             </div>
-
-
-            <div className="d-flex justify-content-start rounded-3 mt-2"
-              style={{ backgroundColor: '#efefef' }}
-            >
-              {
-                checkMobileVisibility(item.mobile) ? (
-                  <p>
-                    <a href={`tel:${item.mobile}`}>
-                      {item.mobile}
-                    </a>
-                  </p>
-                ) : ''
-              }
-            </div>
-
           </div>
-
         </div>
+
+
       </div>
     );
   };
@@ -376,129 +412,184 @@ const SearchUsersWithService = () => {
           <div id="" className="container">
             <div className="card shadow card-search">
               <div className="card-header bg-darkskyblue">
-                {title}
-                <div className="d-sm-flex align-items-center float-right">
 
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer me-1 mb-2 mt-2"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate('/user/user-registered-services')
-                    }}
-                  >
-                    My Registered Services
-                  </a>
-                  <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate('/user/search/service')
-                    }}
-                  >
-                    View All Services/Create
-                  </a>
+                <div className="service-section-registered-users">
+                  <div className="">{title}</div>
+                  {
+                    !isAndroidUsed && (
+                      <div className="position-relative">
+                        <div className="input-group">
+                          <input
+                            type="text"
+                            placeholder="Search..."
+                            name="text"
+                            className="input form-control"
+                            value={searchText}
+                            onChange={handleSearchText}
+                          />
+                          <span className="input-group-text">
+                            <i className="fas fa-search ps-2"></i>
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  }
+                  <div>
+                    <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer me-1 mb-2 mt-2"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/user/user-registered-services')
+                      }}
+                    >
+                      My Registered Services
+                    </a>
+                    <a className="d-sm-inline-block btn btn-sm btn-primary shadow-sm hover-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/user/search/service')
+                      }}
+                    >
+                      View All Services/Create
+                    </a>
+                  </div>
                 </div>
+                {
+                  isAndroidUsed && (
+                    <div className="position-relative mt-2">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search..."
+                          name="text"
+                          className="input form-control"
+                          value={searchText}
+                          onChange={handleSearchText}
+                        />
+                        <span className="input-group-text">
+                          <i className="fas fa-search ps-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  )
+                }
               </div>
               <div className="card-body">
-                {serverError && <span className="error">{serverError}</span>}
-
-
-                {!isSearchingPerformed ? (
-                  <span className="error">No Data Available</span>
-                ) : (
-                  ""
-                )}
 
                 <div className="row">
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label className="form-label">State</label>
-
-                    <Select
-                      className=""
-                      options={states.map((state) => ({
-                        value: state.name,
-                        label: state.name,
-                      }))}
-                      value={selectedState}
-                      onChange={handleStateChange}
-                    />
+                  <div className="mb-3 col-lg-3 col-sm-12 col-xs-12 service-section-interested-field" style={{ border: '1px solid', backgroundColor: '#828E93', height: '400px', overflow: 'scroll' }}>
+                    <div className="text-light mt-2" style={{ width: '100%', border: '1px solid', padding: '4px', borderRadius: '10px', backgroundColor: '#66BB6A', alignContent: 'center' }}>Search By Your Choice</div>
+                    <div className="mt-2">
+                      {
+                        cList && cList.length > 0 && cList.map((item, index) => (
+                          <a className="hover-pointer text-decoration-none text-light">
+                            <p onClick={() => setSearchText(item)}>{item}</p>
+                          </a>
+                        ))
+                      }
+                    </div>
+                    <div>
+                      <i class="fs-4 text-light hover-pointer fa-solid fa-eraser service-filter-clear-button"
+                        style={{ border: '1px solid', padding: '4px', borderRadius: '10px' }}
+                        onClick={() => setSearchText('')}
+                      > Clear</i>
+                    </div>
                   </div>
+                  <div className="mb-3 col-lg-9 col-sm-12 col-xs-12">
+                    <div className="row">
 
-                  <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                    <label className="form-label">City</label>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">State</label>
 
-                    <Select
-                      options={cities.map((city) => ({
-                        value: city.name,
-                        label: city.name,
-                      }))}
-                      value={selectedCity}
-                      onChange={handleCityChange}
-                    />
-                  </div>
-                </div>
+                        <Select
+                          className=""
+                          options={states.map((state) => ({
+                            value: state.name,
+                            label: state.name,
+                          }))}
+                          value={selectedState}
+                          onChange={handleStateChange}
+                        />
+                      </div>
 
-                <div className="container-input mb-3">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    name="text"
-                    className="input form-control"
-                    value={searchText}
-                    onChange={handleSearchText}
-                  />
-                  <i className="fas fa-search"></i>
-                </div>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                        <label className="form-label">City</label>
 
-                <div className="row">
-                  <InfiniteScroll
-                    style={{ overflowX: "hidden" }}
-                    dataLength={items.length}
-                    next={fetchMoreData}
-                    hasMore={items.length < totalRows}
-                    loader={isLoading && <h4>Loading...</h4>}
-                  >
-                    {items.map((item, innerIndex) => (
-                      <div className="col-md-6 mt-2 mx-auto" key={innerIndex}>
-                        <div className="card" style={{ borderRadius: '15px' }}>
-                          <div className="card-body p-4">
-                            {isFeedbackClicked && innerIndex === index ? (
-                              <Comment handleFeedbackFlag={handleFeedbackFlag} data={data} />
-                            ) : (
-                              <UserCard
-                                item={item}
-                                isAndroidUsed={isAndroidUsed}
-                                handleChatclick={handleChatclick}
-                                handleFeedbackFlag={handleFeedbackFlag}
-                                innerIndex={innerIndex}
-                              />
+                        <Select
+                          options={cities.map((city) => ({
+                            value: city.name,
+                            label: city.name,
+                          }))}
+                          value={selectedCity}
+                          onChange={handleCityChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="container scrollableDiv" id="scrollableDiv"
+                      style={{
+                        height: 400,
+                        overflow: 'auto',
 
-                            )}
-                            <div className="d-flex pt-1">
-                              <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}>
-                                <img src="/user/images/chat-icon.jpg" width="40px" />
-                              </div>
-                              {/* <button type="button" className="btn me-1 flex-grow-1">
-                                <ViewProfileDrawerForMembers id={item.id} />
-                              </button> */}
-                              <button
+
+                      }}>
+                      <InfiniteScroll
+                        style={{ overflowX: "hidden" }}
+                        dataLength={items.length}
+                        next={fetchMoreData}
+                        hasMore={items.length < totalRows}
+                        loader={isLoading && <h4>Loading...</h4>}
+                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                        scrollableTarget="scrollableDiv"
+                      >
+                        {items.map((item, innerIndex) => (
+                          <div className="col-md-12 mt-2 mx-auto" key={innerIndex}>
+                            <div className="card" style={{ borderRadius: '15px' }}>
+                              <div className="card-body p-4">
+
+                                {isFeedbackClicked && innerIndex === index ? (
+                                  <Comment handleFeedbackFlag={handleFeedbackFlag} data={data} />
+                                ) : (
+                                  <UserCard
+                                    item={item}
+                                    isAndroidUsed={isAndroidUsed}
+                                    handleChatclick={handleChatclick}
+                                    handleFeedbackFlag={handleFeedbackFlag}
+                                    innerIndex={innerIndex}
+                                  />
+
+                                )}
+                                <div className="d-flex pt-1">
+                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}>
+                                    <img src="/user/images/chat-icon.jpg" width="40px" />
+                                  </div>
+                                  <button type="button" className="btn me-1 flex-grow-1">
+                                    <ViewProfileDrawerForMembers id={item.id} />
+                                  </button>
+                                  {/* <button
                                 type="button"
                                 className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
                                 onClick={()=>handleViewClick(item)}
                               >
                                 VIEW
-                              </button>
-                              <button
-                                type="button"
-                                className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
-                                onClick={() => handleFeedbackFlag(true, innerIndex, item)}
-                              >
-                                FEEDBACK
-                              </button>
+                              </button> */}
+                                  <button
+                                    type="button"
+                                    className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
+                                    onClick={() => handleFeedbackFlag(true, innerIndex, item)}
+                                  >
+                                    FEEDBACK
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    ))}
-                  </InfiniteScroll>
+                        ))}
+                      </InfiniteScroll>
+                    </div>
+                  </div>
+
+
+
+
                 </div>
 
               </div>

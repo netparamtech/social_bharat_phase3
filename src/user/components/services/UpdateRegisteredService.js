@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setLoader } from "../../actions/loaderAction";
-import { fetchAllCitiesByStateID, fetchAllServices, fetchAllStatesByCountryID, fetchUserRegisteredSingleService, updateUserService } from "../../services/userService";
+import { fetchAllCitiesByStateID, fetchAllServices, fetchAllStatesByCountryID, fetchCategoryByTitle, fetchUserRegisteredSingleService, updateUserService } from "../../services/userService";
 import Select from "react-select";
+import { Select as AntSelect, Space } from 'antd';
 
 const UpdateRegisteredService = () => {
     const { id } = useParams();
@@ -12,6 +13,10 @@ const UpdateRegisteredService = () => {
     const [dropdownOptions, setDropdownOptions] = useState([]);
     const [selectedService, setSelectedService] = useState("");
     const [serviceTitle, setServiceTitle] = useState('');
+    const [category, setCategory] = useState([]);
+    const [preCat, setPreCat] = useState('');
+    const [options, setOptions] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState([]);
     const [mobile1, setMobile1] = useState('');
     const [mobile2, setMobile2] = useState('');
     const [experience, setExperience] = useState('');
@@ -35,9 +40,14 @@ const UpdateRegisteredService = () => {
     const dispatch = useDispatch();
 
     const handleSelectService = (selectedOption) => {
-
         setSelectedService(selectedOption);
-    }
+        console.log(selectedOption)
+        let result = selectedOption.category.split(',');
+        setCategory(result);
+    };
+    const handleChange = (value) => {
+        setSelectedCategory(value);
+    };
 
     //state and city operations
     //state and city change operations
@@ -144,6 +154,18 @@ const UpdateRegisteredService = () => {
             dispatch(setLoader(false));
         }
     };
+    useEffect(() => {
+        if (category) {
+            let options = [];
+            category.map((item, index) => {
+                options.push({
+                    label: item,
+                    value: item,
+                });
+            })
+            setOptions(options);
+        }
+    }, [category]);
 
     useEffect(() => {
         // Update the dropdownOptions whenever copyService changes
@@ -151,8 +173,9 @@ const UpdateRegisteredService = () => {
             ...service.map((state) => ({
                 value: state.title,
                 label: state.title,
+                category: state.category,
             })),
-            { value: 'Other', label: 'Other' },
+            { value: 'Other', label: 'Other', category: 'Other' },
         ]);
     }, [service]);
 
@@ -189,11 +212,26 @@ const UpdateRegisteredService = () => {
 
             setDescription(data && data[0].description);
             setServiceTitle(data && data[0].title);
+            const res = data[0].category.split(',');
+            setSelectedCategory(res);
+
             setStatus(data && data[0].status);
             if (data[0].status === 'Active') {
                 setIsUpdate(true);
             } else {
                 setIsUpdate(false);
+            }
+            if (data && data[0].available_categories) {
+                const result = data[0].available_categories.split(',');
+                console.log(result)
+                let options = [];
+                result.map((item, index) => {
+                    options.push({
+                        label: item,
+                        value: item,
+                    });
+                })
+                setOptions(options);
             }
         }
     }, [data])
@@ -207,13 +245,18 @@ const UpdateRegisteredService = () => {
     }, []);
 
     const handleSubmit = async () => {
+        if (selectedCategory) {
+            const result = selectedCategory.toString();
+            setSelectedCategory(result);
+        }
         const data = {
             title: serviceTitle,
             mobile1,
             mobile2,
             experience,
-            state: selectedState&&selectedState.label ? selectedState.label : '',
-            city: selectedCity&&selectedCity.label ? selectedCity.label : '',
+            state: selectedState && selectedState.label ? selectedState.label : '',
+            city: selectedCity && selectedCity.label ? selectedCity.label : '',
+            category: selectedCategory ? selectedCategory : '',
             description,
             status,
         };
@@ -287,7 +330,7 @@ const UpdateRegisteredService = () => {
 
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
-                                <label>Service Title</label>
+                                    <label>Service Title</label>
                                     <input
                                         type="text"
                                         placeholder="Enter Service Title"
@@ -302,8 +345,34 @@ const UpdateRegisteredService = () => {
                                 </div>
                             </div>
                             <div className="row">
+                                <div className="form-group mb-4">
+                                    <Space
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                        direction="vertical"
+                                    >
+                                        <AntSelect
+                                            mode="multiple"
+                                            allowClear
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            value={selectedCategory}
+                                            placeholder="Please select categories..."
+                                            onChange={handleChange}
+                                            options={options}
+                                        />
+                                    </Space>
+                                    {errors.category && (
+                                        <span className="error">{errors.category}</span>
+                                    )}
+
+                                </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-md-6 form-group mb-4">
-                                <label>Mobile 1</label>
+                                    <label>Mobile 1</label>
                                     <input
                                         type="number"
                                         placeholder="Enter Your Mobile Number 1"
@@ -316,7 +385,7 @@ const UpdateRegisteredService = () => {
                                     )}
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
-                                <label>Mobile 2</label>
+                                    <label>Mobile 2</label>
                                     <input
                                         type="number"
                                         placeholder="Enter Your Mobile Number 2"
@@ -331,7 +400,7 @@ const UpdateRegisteredService = () => {
                             </div>
                             <div className="row">
                                 <div className="form-group mb-4 col-6">
-                                <label>State</label>
+                                    <label>State</label>
                                     <Select
                                         className="form-control"
                                         options={states.map((state) => ({
@@ -350,7 +419,7 @@ const UpdateRegisteredService = () => {
                                 </div>
 
                                 <div className="form-group mb-4 col-6">
-                                <label>City</label>
+                                    <label>City</label>
 
                                     <Select
                                         className="form-control"
@@ -371,7 +440,7 @@ const UpdateRegisteredService = () => {
                             </div>
                             <div className="row">
                                 <div className="col-md-6 form-group mb-4">
-                                <label>Experience</label>
+                                    <label>Experience</label>
                                     <input
                                         type="text"
                                         placeholder="Enter Experience"
@@ -384,7 +453,7 @@ const UpdateRegisteredService = () => {
                                     )}
                                 </div>
                                 <div className="col-md-6 form-group mb-4">
-                                <label>Service Provides At</label>
+                                    <label>Service Provides At</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -398,7 +467,7 @@ const UpdateRegisteredService = () => {
                                 </div>
                             </div>
                             <div className="form-group mb-4 ">
-                            <label>Description</label>
+                                <label>Description</label>
                                 <textarea
                                     className="form-control"
                                     placeholder="Enter details"

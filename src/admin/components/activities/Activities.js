@@ -166,15 +166,16 @@ const Activities = () => {
       ),
       sorter: true,
       sortDirections: ["asc", "desc"],
-      width: 350,
     },
 
     {
       title: "Description",
       dataIndex: "description",
       render: (text, record) => (
-        <div className="description-cell">
-          {record.description}
+        <div className="description-cell"  dangerouslySetInnerHTML={{
+          __html: record.description,
+        }}>
+          
         </div>
       ),
       ellipsis: true,
@@ -220,7 +221,7 @@ const Activities = () => {
         <div className="">
           <a
             className="collapse-item"
-            onClick={() => navigate(`/users/view/${record.user_id}`)}
+            onClick={() => navigate(`/admin/activity/${record.id}`)}
           >
             <i className="fas fa-eye"></i>
           </a>

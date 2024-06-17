@@ -20,7 +20,6 @@ import EnquiryPage from "./pages/enquiry/EnquiryPage";
 import TestimonialIndex from "./pages/TestimonialIndex";
 import EventPage from "./pages/event/EventPage";
 import ViewEvent from "./pages/event/ViewEvent";
-import ServerError from "./components/ServerError";
 import ServerErrorTransfer from "./components/ServerErrorTransfer";
 import ViewTestimonialPage from "./pages/ViewTestimonialPage";
 import TestScroll from "./components/Test/TestScroll";
@@ -51,6 +50,7 @@ import ActivitiesPage from "./pages/ActivitiesPage";
 import RegisteredUsersForSameJobPage from "./pages/jobs/RegisteredUsersForSameJobPage";
 import CreateCms from "./components/cms/CreateCms";
 import UpCms from "./components/cms/UpCms";
+import ViewActivityPage from "./pages/ViewActivityPage";
 
 const adminRoutes = [
     {
@@ -350,6 +350,11 @@ const adminRoutes = [
     {
         path: '/admin/activities',
         component: ActivitiesPage,
+        exact:true
+    },
+    {
+        path: '/admin/activity/:id',
+        component: ViewActivityPage,
         exact:true
     },
     {

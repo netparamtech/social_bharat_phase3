@@ -179,13 +179,13 @@ const MatrimonialInfo = () => {
 
                 matrimonialDetails && matrimonialDetails.length > 0 && isShowMatrimonial ? matrimonialDetails.map((item, index) => (
 
-                  <div className="col-11 col-md-3 mb-4 mx-auto mt-2">
+                  <div className="col-11 col-md-4 mb-4 mx-auto mt-2">
 
                     <div className={`card text-white h-100`} style={{ backgroundColor: getRandomColor() }}>
                       <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                           <div className="me-3">
-                            <div className="text-white-75 fs-4">{item.matrimonial_profile_name}</div>
+                            <div className="text-white-75 fs-6">{item.matrimonial_profile_name}</div>
 
 
 
@@ -220,7 +220,7 @@ const MatrimonialInfo = () => {
                         {item && <GenerateBiodata userData={item} />}
                         <div className="">
                           <MatrimonialCard item={item} />
-                          <a className='hover-pointer' onClick={() => navigate(`/user/update-matrimonial-profile/${item.id}`)} title="Edit">
+                          <a className='hover-pointer m-2' onClick={() => navigate(`/user/update-matrimonial-profile/${item.id}`)} title="Edit">
                             <i className="text-light fas fa-pencil-alt"></i>
                           </a>
                           <a className='hover-pointer m-2' onClick={() => handleMatrimonialToggleStatus(item.id)} title="Edit">

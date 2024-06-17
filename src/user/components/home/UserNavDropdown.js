@@ -155,7 +155,7 @@ function UserNavDropdown() {
                     ) : (
                         <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
                     )}
-                    <span className=''><span className={isAndroidUsed ? 'd-none' : ''} >Hi</span> {!isAndroidUsed && shortenName(userName.toUpperCase(), 8)}</span>
+                    {/* <span className=''><span className={isAndroidUsed ? 'd-none' : ''} >Hi</span> {!isAndroidUsed && shortenName(userName.toUpperCase(), 8)}</span> */}
                 </span>
             </Dropdown.Toggle>
 

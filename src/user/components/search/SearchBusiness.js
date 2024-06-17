@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { Carousel } from "react-bootstrap";
 import { logout } from "../../actions/userAction";
-import { Divider, Skeleton } from 'antd';
+import { Divider, Image, Skeleton } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { setLoader } from "../../actions/loaderAction";
 import BusinessCard from "./BusinessCard";
@@ -420,7 +420,7 @@ const SearchBusiness = () => {
                                 <p className='text-info'>({item.business_category})</p>
                                 <p>
                                   <span className="text-muted" dangerouslySetInnerHTML={{
-                                    __html: item.description.length > 400
+                                    __html: item && item.description&&item.description.length > 400
                                       ? `${item.description.slice(0, 400)}...`
                                       : item.description,
                                   }}></span>
@@ -431,12 +431,12 @@ const SearchBusiness = () => {
                                       {
                                         checkArray(item.business_photos).map((value, index) => (
                                           <Carousel.Item key={index}>
-                                            <div className="carousel-image-container">
-                                              <img
+                                            <div className="">
+                                              <Image
                                                 src={value}
                                                 alt={item.business_name}
-                                                className="d-block w-100 custom-carousel-item"
-
+                                                className=""
+                                                style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
                                               />
                                             </div>
                                           </Carousel.Item>

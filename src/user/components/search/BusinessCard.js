@@ -50,9 +50,25 @@ const BusinessCard = ({ item, index }) => {
                                 <div className='col-7'>
                                     <>
                                         <p>Posted By : <span className="text-muted">{(item.name) || "N/A"}</span></p>
-                                        <p>Location : <span className="text-muted">{item.city}{" "}({item.state}){", "}{item.country}</span></p>
-                                        <p>Business Email : <span className="text-muted">{item.business_email || "N/A"}</span></p>
-                                        <p>Our Website : <span className="text-muted">{item.business_website} ft</span></p>
+                                        <p style={{display:'flex'}}>Location : <span className="text-muted">{item.city}{" "}({item.state}){", "}{item.country}</span>{" "}
+                                            {
+                                                item.google_map_link ? (
+                                                    <div className="col-2">
+                                                        <a href={item.google_map_link} target="_blank">
+                                                            <i class="fs-2 text-success fa-sharp fa-solid fa-location-dot"></i>
+                                                        </a>
+                                                    </div>
+                                                ) : ''
+                                            }
+                                        </p>
+                                        <p>Business Email :
+                                            {
+                                                item && item.business_email ? (
+                                                    <a className="text-dark text-line-none box-custom" href={`mailto:${item && item.business_email}`}> <i className="fa-solid fa-envelope text-primary"></i>{" "}{item.business_email}</a>
+                                                ) : ''
+                                            }
+                                        </p>
+                                        <p>Our Website : <a href={item.business_website} target='_blank'><span className="">{item.business_website}</span></a></p>
 
                                         <p>
                                             Contact Numbers :
@@ -89,7 +105,7 @@ const BusinessCard = ({ item, index }) => {
                                         {item.business_photos && Array.isArray(item.business_photos) ?
                                             item.business_photos.map((value, index) => (
                                                 <Carousel.Item key={index} style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
-                                                    <img
+                                                    <Image
                                                         src={value}
                                                         alt={`Proposal Photo ${index + 1}`}
                                                         className="d-block w-100 custom-carousel-item"
@@ -100,28 +116,25 @@ const BusinessCard = ({ item, index }) => {
 
                                                 </Carousel.Item>
                                             )) : (
-                                                item.business_photos ? (<img
-                                                    src={item.business_photos}
-                                                    alt="Proposal Photo"
-                                                    className="d-block w-100 custom-carousel-item"
-                                                    style={{ objectFit: 'cover', height: '100%', width: '100%' }}
-                                                />) : ''
+                                                item.business_photos ? (<a href={item.business_photos} target='_blank'>
+                                                    <img
+                                                        src={item.business_photos}
+                                                        alt="Proposal Photo"
+                                                        className="d-block w-100 custom-carousel-item"
+                                                        style={{ objectFit: 'cover', height: '100%', width: '100%' }}
+                                                    />
+                                                </a>) : ''
                                             )}
-                                        {
-                                            item.google_map_link ? (
-                                                <div className="col-2">
-                                                    <a href={item.google_map_link} target="_blank">
-                                                        <img className="rounded" src={defaultMap} alt="Google Map" width={50} />
-                                                    </a>
-                                                </div>
-                                            ) : ''
-                                        }
+
                                     </Carousel>
+
 
                                 </div>
                                 <p>
-                                  <span className="text-muted" dangerouslySetInnerHTML={{
-                                    __html: item.description}}></span>
+
+                                    <span className="text-muted" dangerouslySetInnerHTML={{
+                                        __html: item.description
+                                    }}></span>
                                 </p>
 
                             </div>

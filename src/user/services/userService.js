@@ -399,6 +399,16 @@ export const updateBusinessInfo = async (data, id) => {
 };
 
 //fetch businessInfo by id
+export const fetchCategoryByTitle = async (title) => {
+  try {
+    const response = await apiWithHeaders.get(`/user/service/category/${title}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//fetch businessInfo by id
 export const fetchBusinessByID = async (id) => {
   try {
     const response = await apiWithHeaders.get(`/user/businesses/${id}`);

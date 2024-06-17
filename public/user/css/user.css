@@ -19,12 +19,8 @@ body {
 }
 
 body::-webkit-scrollbar {
- display: none;
+  display: none;
   /* Adjust the width as per your preference */
-}
-
-#customNavID .container {
-  max-width: 100% !important;
 }
 
 #job-board-section .container {
@@ -39,16 +35,6 @@ body::-webkit-scrollbar {
   background-color: #008374 !important;
 }
 
-#customNavID .navbar-brand img {
-  width: 200px;
-  object-fit: cover;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  /* background-image: 'user/images/sb-logo.png'; */
-  border-radius: 5px;
-}
-
 /* Add custom styles if needed */
 @media (max-width: 767px) {
   #customNavID .navbar-brand img {
@@ -56,59 +42,6 @@ body::-webkit-scrollbar {
     margin-left: 20px;
   }
 }
-
-/* @media (min-width: 768px) {
-  #customNavID .navbar-brand img {
-    max-width: 100px;
-    mar
-  }
-} */
-
-#customNavID .nav-item {
-  margin: auto 10px;
-  font-weight: 500 !important;
-  font-size: 16px !important;
-}
-
-#customNavID nav .nav-item .btn {
-  border: none !important;
-}
-
-/* Dark Navbar */
-#customNavID .navbar-dark {
-  background-color: #008374 !important;
-}
-
-#customNavID .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 131, 116, 0.99%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e ");
-}
-
-#customNavID .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.75);
-  transition: background-color 0.3s, color 0.3s;
-}
-@media (min-width: 992px) {
-  .navbar-expand-lg .navbar-nav {
-      flex-direction: row;
-      margin-left: auto;
-      width: 873px;
-  }
-}
-
-#customNavID .navbar-dark .navbar-nav .nav-link:hover,
-#customNavID .navbar-dark .navbar-nav .nav-link:focus {
-  background-color: #ffffff;
-  color: #008374;
-}
-
-#customNavID .navbar-dark .navbar-brand {
-  color: rgba(255, 255, 255, 1);
-}
-
-#customNavID .navbar-dark .navbar-toggler-icon {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 
 #customNavID .navbar-dark .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.5);
@@ -133,7 +66,6 @@ body::-webkit-scrollbar {
   background-color: transparent !important;
   background-color: #ffffff !important;
   position: fixed;
-  opacity: 0.9;
   z-index: 1000;
   width: 100%;
   top: 0px;
@@ -151,7 +83,7 @@ body::-webkit-scrollbar {
 }
 
 #customNavID .navbar-transparent .navbar-nav .nav-link {
-  color: #008374;
+  color: #014d44;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -161,18 +93,11 @@ body::-webkit-scrollbar {
   color: #ffffff !important;
 }
 
-/* #customNavID .navbar-transparent .navbar-nav .nav-link:active{
-  background-color: #008374;
-  color: #ffffff !important;
-} */
 
 #customNavID .navbar-transparent .navbar-brand {
   color: rgba(255, 255, 255, 1);
 }
 
-/* #customNavID .navbar-transparent .navbar-toggler-icon {
-  background-color: #008374;
-} */
 
 #customNavID .navbar-transparent .navbar-toggler {
   border-color: #008374;
@@ -884,7 +809,7 @@ a.btn.dropdown-toggle.show:focus {
 
 .box-custom {
   position: relative;
- 
+
 }
 
 .box-custom :hover {
@@ -1356,14 +1281,16 @@ a.btn.dropdown-toggle.show:focus {
 #chat {
   margin-top: 140px;
 }
-#searchPeoples-section{
+
+#searchPeoples-section {
   margin-top: 100px;
 }
-#service-section{
+
+#service-section {
   margin-top: 80px !important;
 }
 
-#activity-post-section{
+#activity-post-section {
   margin-top: 100px;
 }
 
@@ -1823,10 +1750,16 @@ input[type="number"] {
   margin-top: 20px;
 }
 
-#service-section .sevice-item .card {
-  height: 70px !important;
-  /* background-color: #006b5d; */
+#service-section .service-item .card {
+  height: 100px !important;
 }
+
+@media (max-width: 767px) {
+  #service-section .service-item .card {
+    height: 150px;
+  }
+}
+
 
 #service-section .sevice-item .card:hover {
   background-color: #637976 !important;
@@ -2101,7 +2034,6 @@ legend {
 
 .button-container {
   position: relative;
-  margin-left: 100px;
 }
 
 
@@ -2310,27 +2242,31 @@ legend {
   border-radius: 20px !important;
 }
 
-.ant-image{
+.ant-image {
   width: 100%;
 }
 
 .job-upload-resume::-webkit-scrollbar {
   display: none;
 }
+
 .card::-webkit-scrollbar {
   display: none;
 }
-.btn-custon-contact{
+
+.btn-custon-contact {
   width: 40px;
 }
+
 #searchPeople-section .scrollableDiv::-webkit-scrollbar {
   display: none;
 }
+
 #activity-post-section .scrollableDiv::-webkit-scrollbar {
   display: none;
 }
 
-.search-partner-cards{
+.search-partner-cards {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
 }
@@ -2338,7 +2274,8 @@ legend {
 .activities-filter-container::-webkit-scrollbar {
   display: none;
 }
-.activities-filter-container{
+
+.activities-filter-container {
   background-color: whitesmoke;
   border: 1px solid;
   border-radius: 10px;
@@ -2349,25 +2286,28 @@ legend {
 #searchPeople-section .custom-activity-description::-webkit-scrollbar {
   display: none;
 }
-.custom-bottom-margin-search-partner{
+
+.custom-bottom-margin-search-partner {
   margin-bottom: -1rem !important;
 }
 
 
 @media (min-width: 576px) {
   .col-sm-1 {
-      flex: 1 1 auto;
-      width: 0.333333%;
+    flex: 1 1 auto;
+    width: 0.333333%;
   }
 }
 
-#service-section .btn{
+#service-section .btn {
   border-radius: 20px !important;
 }
-.current-job-apply{
+
+.current-job-apply {
   background-color: lightgreen;
 }
-.current-job-apply:hover{
+
+.current-job-apply:hover {
   background-color: #40e060df;
   color: black;
   font-weight: bold;
@@ -2376,46 +2316,72 @@ legend {
 .business-more-filter-block::-webkit-scrollbar {
   display: none;
 }
-.business-more-filter-block{
+
+.business-more-filter-block {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   padding: 12px;
   background-color: #DFF0D8;
   border-radius: 10px;
 }
+
 .scrollableDiv::-webkit-scrollbar {
   display: none;
 }
-#activity-post-section .filter-activity{
+
+#activity-post-section .filter-activity {
   border-radius: 20px !important;
 }
-.search-partner-filter-container{
+
+.search-partner-filter-container {
   display: flex;
   justify-content: center;
   flex-direction: row;
   align-items: center;
 }
-.search-partner-filter{
+
+.search-partner-filter {
   border-radius: 20px !important;
 }
-.transition-filter {
+
+#searchPeoples-section .transition-filter {
   transition: all 0.3s;
-  background-color: greenyellow;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgb(212, 207, 207);
+  /* background-color: #4f7e96; */
 }
 
-#user-auth-section .user-auth-panel-info .card{
+#user-auth-section .user-auth-panel-info .card {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   height: 9rem;
   font-size: 15px;
 }
-#user-auth-section .user-auth-panel-info .card:hover{
-  scale: 1.1;
+
+#user-auth-section .user-auth-panel-info .card:hover {
   border: 1px solid red !important;
   border: red;
 }
-#user-auth-section .user-auth-panel-info h4{
+
+#user-auth-section .user-auth-panel-info h4 {
   font-size: 17px;
   font-weight: bold;
 }
+.service-section-registered-users{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.service-section-interested-field{
+  border-radius: 10px;
+}
+.service-section-interested-field::-webkit-scrollbar{
+  display: none;
+}
+.service-filter-clear-button:hover{
+  background-color: #637976;
+}
+
+
 
 
 

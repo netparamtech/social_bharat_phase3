@@ -947,6 +947,15 @@ export const toggleActivityPostStatus = async (id) => {
         throw error;
     }
 }
+//single activity
+export const oneActivity = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/activity/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 //delete single activity
 export const deleteActivity = async (id) => {
     try {

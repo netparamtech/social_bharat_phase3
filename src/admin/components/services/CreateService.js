@@ -6,6 +6,7 @@ const CreateService = () => {
     const { id } = useParams();
 
     const [title, setTitle] = useState("");
+    const [category, setCategory] = useState("");
     const [status, setStatus] = useState("");
     const [errors, setErrors] = useState("");
     const [message, setMessage] = useState("");
@@ -16,6 +17,9 @@ const CreateService = () => {
     const handleSelectCategoryChange = (e) => {
         setTitle(e.target.value);
     };
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -23,6 +27,7 @@ const CreateService = () => {
 
             const data = {
                 title,
+                category:category?category:'',
                 status,
             };
 
@@ -113,6 +118,24 @@ const CreateService = () => {
                                     </select>
                                     {errors.status && (
                                         <span className="error">{errors.status}</span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+
+                                <div className="form-group">
+                                    <label className="fw-bold"> Category</label>
+                                    <textarea
+                                        className="form-control"
+                                        id="name"
+                                        defaultValue={category}
+                                        onChange={handleCategoryChange}
+                                        placeholder="Enter Sub-Categories"
+                                    />
+                                    {errors.category && (
+                                        <span className="error">{errors.category}</span>
                                     )}
                                 </div>
                             </div>

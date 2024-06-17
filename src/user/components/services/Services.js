@@ -15,10 +15,14 @@ import Search from "antd/es/input/Search";
 import DropdownOnServices from "./DropdownOnServices";
 import Select from "react-select";
 import { logout } from "../../actions/userAction";
+import { Select as AntSelect, Space } from 'antd';
 
 const Services = () => {
   const [service, setService] = useState([]);
   const [copyService, setCopyService] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -78,6 +82,12 @@ const Services = () => {
     setMessage("");
     setAlertClass("");
     setSelectedService(selectedOption);
+    let result = selectedOption.category.split(',');
+    setCategory(result);
+  };
+
+  const handleChange = (value) => {
+    setSelectedCategory(value);
   };
 
   //state and city operations
@@ -195,6 +205,10 @@ const Services = () => {
   };
 
   const handleSubmit = async () => {
+    if(selectedCategory){
+      const result = selectedCategory.toString();
+      setSelectedCategory(result);
+    }
     const data = {
       title: serviceTitle,
       mobile1,
@@ -202,6 +216,7 @@ const Services = () => {
       experience,
       description,
       status,
+      category: selectedCategory?selectedCategory:'',
       state: selectedState && selectedState.label ? selectedState.label : '',
       city: selectedCity && selectedCity.label ? selectedCity.label : '',
     };
@@ -237,6 +252,19 @@ const Services = () => {
   };
 
   useEffect(() => {
+    if (category) {
+      let options = [];
+      category.map((item, index) => {
+        options.push({
+          label: item,
+          value: item,
+        });
+      })
+      setOptions(options);
+    }
+  }, [category]);
+
+  useEffect(() => {
     // Check if selectedCountry is already set
     getAllStates();
   }, []);
@@ -253,8 +281,9 @@ const Services = () => {
       ...copyService.map((state) => ({
         value: state.title,
         label: state.title,
+        category: state.category,
       })),
-      { value: "Other", label: "Other" },
+      { value: "Other", label: "Other", category: "Other" },
     ]);
   }, [copyService]);
 
@@ -343,14 +372,16 @@ const Services = () => {
 
                   <div
                     className="row mb-4 sevice-item"
-                    style={{ overflowY: "scroll", maxHeight: "600px" }}
+                    style={{ overflowY: "scroll", maxHeight: "400px" }}
                   >
                     {service.map((item, index) => (
-                      <div className="col-12 col-sm-4" key={index}>
-                        <div className="card card-body mt-2 bg-lightskyblue hover-pointer"
+                      <div className="col-12 col-sm-12" key={index}>
+                        <div className="card card-body mt-2 bg-lightskyblue hover-pointer" style={{ fontSize: '12px' }}
                           onClick={() => navigate(`/users-basedOn-services/${item.title}`)}>
-                          {item.title}
+                          <h6 className="fw-bold"> {item.title} </h6>
+                          <p className="text-mute">{item.category}</p>
                         </div>
+
                       </div>
                     ))}
                   </div>
@@ -406,6 +437,30 @@ const Services = () => {
                       {errors.title && (
                         <span className="error">{errors.title}</span>
                       )}
+                    </div>
+
+                    <div className="form-group mb-4">
+                      <Space
+                        style={{
+                          width: '100%',
+                        }}
+                        direction="vertical"
+                      >
+                        <AntSelect
+                          mode="multiple"
+                          allowClear
+                          style={{
+                            width: '100%',
+                          }}
+                          placeholder="Please select categories..."
+                          onChange={handleChange}
+                          options={options}
+                        />
+                      </Space>
+                      {errors.category && (
+                        <span className="error">{errors.category}</span>
+                      )}
+
                     </div>
                     <div className="form-group mb-4">
                       <input

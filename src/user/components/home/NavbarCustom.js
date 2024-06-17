@@ -6,6 +6,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
 import UserNavDropdown from "./UserNavDropdown";
 import { getToken } from "../../services/userService";
+import { WechatOutlined } from "@ant-design/icons";
 
 const NavbarCustom = (props) => {
   const { data, community } = props;
@@ -434,36 +435,36 @@ const NavbarCustom = (props) => {
                   CONTACT
                 </a>
               </li>
-              {!isAuthenticUser && (
-                <div className="button-container">
-                  <button
-                    className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
-                      }`}
-                    onClick={handleLoginClicked}
-                  >
-                    Login
-                  </button>
-                  <button
-                    className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ""
-                      }`}
-                    onClick={() => navigate("/register")}
-                  >
-                    Sign Up
-                  </button>
-                </div>
-              )}
+            
             </ul>
 
             {/* Login and signup buttons */}
 
 
             {/* User dropdown for authenticated users */}
-            <ul className="navbar-nav ml-auto  mb-2 mb-lg-0" style={{ width: isAuthenticUser ? '200px' : '' }}>
+            <ul className="navbar-nav ml-auto mb-2 mb-lg-0" style={{ width: isAuthenticUser ? '200px' : '' }}>
               <li className="">
                 {!isAndroidUsed && isAuthenticUser && isAuthenticUser ? (
                   <UserNavDropdown />
                 ) : (
-                  ""
+                  !isAuthenticUser && (
+                    <div className="button-container">
+                      <button
+                        className={`default-button fw-bold ${window.location.pathname === "/login" ? "custom-login-clicked" : ""
+                          }`}
+                        onClick={handleLoginClicked}
+                      >
+                        Login
+                      </button>
+                      <button
+                        className={`custom-button fw-bold ${window.location.pathname === "/register" ? "custom-signup-clicked" : ""
+                          }`}
+                        onClick={() => navigate("/register")}
+                      >
+                        Sign Up
+                      </button>
+                    </div>
+                  )
                 )}
               </li>
             </ul>
@@ -471,7 +472,7 @@ const NavbarCustom = (props) => {
             {/* Drawer for small screens */}
             <Drawer
               title="Menu"
-              placement="top"
+              placement="left"
               closable={true}
               onClose={showDrawer}
               open={visible}
@@ -481,6 +482,7 @@ const NavbarCustom = (props) => {
                 background: "rgba(255, 255, 255, 0.8)",
                 borderBottomLeftRadius: "3%",
                 borderBottomRightRadius: "3%",
+                width:"80%"
               }}
             >
               {/* Drawer content */}
@@ -493,45 +495,45 @@ const NavbarCustom = (props) => {
                       HOME
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleJobsClicked}>
                       <i className="fa-solid fa-business-time me-2"></i>
                       JOBS
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleBusinessClicked}>
                       <i className="fa-solid fa-business-time me-2"></i>
                       BUSINESS
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleServiceClick}>
                       <i className="fa fa-wrench me-2" aria-hidden="true"></i>
                       SERVICES
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleMatrimonialClicked}>
                       <i className="fa fa-ring me-2"></i>
                       MATRIMONIAL
                     </a>
                   </li>
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleMembersClicked}>
                       <i className="fa-solid fa-user me-2"></i>
                       MEMBERS
                     </a>
                   </li>
 
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleDashboardClicked}>
                       <i className="fa-sharp fa-solid fa-bars me-2" aria-hidden="true"></i>
                       DASHBOARD
                     </a>
                   </li>
 
-                  <li className="nav-item mt-2">
+                  <li className="nav-item mt-5">
                     <a className="nav-link" onClick={handleContactClicked}>
                       <i className="fas fa-address-book me-2"></i>CONTACT
                     </a>
@@ -540,7 +542,7 @@ const NavbarCustom = (props) => {
                   {isAuthenticUser && isAuthenticUser ? (
                     ""
                   ) : (
-                    <li className="nav-item mt-2">
+                    <li className="nav-item mt-5">
                       <a onClick={handleLoginClicked}>
                         <i className="fa fa-sign-in me-2" aria-hidden="true"></i>{" "}
                         LOGIN

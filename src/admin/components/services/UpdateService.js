@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import {  fetchServiceByID, updateService } from "../../services/AdminService";
+import { fetchServiceByID, updateService } from "../../services/AdminService";
 
 const UpdateService = () => {
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
@@ -15,8 +16,11 @@ const UpdateService = () => {
   const navigate = useNavigate();
 
   const handleSelectCategoryChange = (e) => {
-   setTitle(e.target.value);
+    setTitle(e.target.value);
   };
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  }
 
   const fetchService = async () => {
     try {
@@ -25,9 +29,14 @@ const UpdateService = () => {
         const serviceData = response.data.data;
 
         if (serviceData) {
-          setTitle(serviceData.title)
+          setTitle(serviceData.title);
         }
-      
+        if(serviceData){
+          if(serviceData.category){
+            setCategory(serviceData.category);
+          }
+        }
+
         setStatus(serviceData.status);
       }
 
@@ -36,7 +45,7 @@ const UpdateService = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -48,6 +57,7 @@ const UpdateService = () => {
 
       const data = {
         title,
+        category:category?category:'',
         status,
       };
 
@@ -72,7 +82,7 @@ const UpdateService = () => {
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
-        navigate('/server/error', { state: { errorMessage} });
+        navigate('/server/error', { state: { errorMessage } });
       }
     }
   };
@@ -111,7 +121,7 @@ const UpdateService = () => {
 
             <div className="row">
               <div className="col-md-6">
-                
+
                 <div className="form-group">
                   <label className="fw-bold"> Title</label>
                   <input
@@ -142,6 +152,24 @@ const UpdateService = () => {
                   </select>
                   {errors.status && (
                     <span className="error">{errors.status}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+
+                <div className="form-group">
+                  <label className="fw-bold"> Category</label>
+                  <textarea
+                    className="form-control"
+                    id="name"
+                    defaultValue={category}
+                    onChange={handleCategoryChange}
+                    placeholder="Enter Sub-Categories"
+                  />
+                  {errors.category && (
+                    <span className="error">{errors.category}</span>
                   )}
                 </div>
               </div>

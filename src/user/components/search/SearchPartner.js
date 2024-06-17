@@ -444,10 +444,10 @@ const SearchPartner = () => {
                 }
               </div>
               <div className="card-body">
-                <div className="container">
+                <div className="container matrimonial-header">
                   {
                     !isFilter && (
-                      <div className="row transition-filter wow animate__animated animate__zoomIn">
+                      <div className="row transition-filter">
                         <div className="col-md-7 ps-0">
                           {serverError && (
                             <span className="error">{serverError}</span>
@@ -621,7 +621,7 @@ const SearchPartner = () => {
                   ""
                 )}
 
-                <div className="scrollableDiv" id="scrollableDiv"
+                <div className="container scrollableDiv" id="scrollableDiv"
                   style={{
                     height: 400,
                     overflow: 'auto',

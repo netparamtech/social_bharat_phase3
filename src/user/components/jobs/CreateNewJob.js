@@ -207,7 +207,6 @@ function CreateNewJob(props) {
     const handleStateChange = (e) => {
         const inputValue = e.target.value;
         setSelectedState(inputValue);
-        console.log(inputValue, "inputValue")
         if (inputValue) {
             const selectedStateObject = states.find(
                 (state) => state.name === inputValue

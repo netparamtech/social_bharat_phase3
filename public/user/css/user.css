@@ -311,8 +311,8 @@ body::-webkit-scrollbar {
 }
 
 .dropdown-user-img-letter {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2.35rem;
+  width: 2.35rem;
   border-radius: 100% !important;
   background-color: #6387a6 !important;
   border: 1px solid rgb(247, 240, 240) !important;
@@ -1278,8 +1278,9 @@ a.btn.dropdown-toggle.show:focus {
 #auth-wrapper-cont,
 #comminity-banners-section,
 #setting-page,
+
 #chat {
-  margin-top: 140px;
+  margin-top: 100px;
 }
 
 #searchPeoples-section {
@@ -1534,10 +1535,18 @@ input[type="number"] {
 #chat .chat-messages {
   display: flex;
   flex-direction: column;
-  min-height: 300px;
-  max-height: 300px;
+  min-height: 350px;
+  max-height: 350px;
   overflow-y: scroll;
 }
+
+@media (max-width: 768px) and (orientation: portrait) {
+  #chat .chat-messages {
+    min-height: 600px;
+    max-height: 600px;
+  }
+}
+
 
 #chat .chat-message-left,
 .chat-message-right {
@@ -2365,22 +2374,49 @@ legend {
   font-size: 17px;
   font-weight: bold;
 }
-.service-section-registered-users{
+
+.service-section-registered-users {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
 }
-.service-section-interested-field{
+
+.service-section-interested-field {
   border-radius: 10px;
 }
-.service-section-interested-field::-webkit-scrollbar{
+
+.service-section-interested-field::-webkit-scrollbar {
   display: none;
 }
-.service-filter-clear-button:hover{
+
+.service-filter-clear-button:hover {
   background-color: #637976;
 }
 
+.package-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+}
+
+.package-container input {
+  flex-grow: 1;
+  padding-right: 80px;
+}
+
+.package-container select {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 70px;
+  height: calc(100%-16px);
+  margin-top: 0px;
+  z-index: 1000;
+  height: 40px;
+}
 
 
 

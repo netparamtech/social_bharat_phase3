@@ -5,6 +5,7 @@ import LoginWithOtp from '../otp/LoginWithOtp';
 import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import MobileInput from '../custom/MobileInput';
 
 const LoginWithMobile = (props) => {
 
@@ -114,17 +115,9 @@ const LoginWithMobile = (props) => {
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
-                        <Input
-                          type="number"
-                          name="mobile"
-                          id="mobile"
-                          placeholder="Enter your mobile number"
-                          className="input-height"
-                          maxLength="10" // Limit to 10 characters
-                          onChange={handleMobileChange}
-                          autoFocus
-                        />
-                        {errors.mobile && <span className='error'>{errors.mobile}</span>}
+                        <MobileInput handleMobileChange={handleMobileChange} 
+                        serverError={errors.mobile} isRequired={true} 
+                        isAutoFocused={true} placeholder="Enter your mobile number" />
                       </div>
                       <div className="row mb-3">
                         <button type="submit" className="btn-custom btn-primary-custom" onClick={handleSubmit}>

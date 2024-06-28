@@ -112,6 +112,9 @@ const SearchEvents = () => {
     setPage(1);
     setSearchText(e.target.value);
   };
+  const handlePostEventClick = () => {
+    navigate('/event');
+  }
 
   const handleMyEventsClick = () => {
     navigate('/user/my-events');
@@ -314,23 +317,18 @@ const SearchEvents = () => {
 
   return (
     <>
-      <div id="searchPeople-section" className="content-wrapper">
-        <div className="">
+      <div id="searchPeople-section" className="content-wrapper pt-4">
+        <div className="container">
           <div className="card-search ">
             {
               !isEventClick && featuredEvents.length > 0 ? <Carousel className="your-custom-carousel-class">
                 {featuredEvents &&
                   featuredEvents.map((item, index) => (
                     <Carousel.Item key={index}>
-                      <img
-                        src={item.banner_image}
-                        alt={item.title}
-                        className="d-block w-100 custom-carousel-item"
-                        height={500}
-                        onClick={() => changeEventClickFlag(true, item.id)}
-                      />
+                      <div className="mb-2" style={{ top: '0', left: '0', width: '100%', height: '100%',borderRadius:'10px', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={item.banner_image} style={{ width: '100%', height: '400px',borderRadius:'10px' }} onClick={() => changeEventClickFlag(true, item.id)} />
+                      </div>
                       <Carousel.Caption>
-                        <h3 className="carousel-title">{item.title}</h3>
                         <div>
                           <button
                             type="button"
@@ -353,7 +351,13 @@ const SearchEvents = () => {
                     {serverError && <span className="error">{serverError}</span>}
                     <div className="d-flex justify-content-between">
                       <h5 className="fw-3 mb-3">Search Events</h5>
-                      <h5 className="fw-3 mb-3 hover-pointer hover-pointer-green" onClick={handleMyEventsClick}>My Events</h5>
+                      <div className="mx-auto">
+                        <button className="btn btn-success" onClick={handlePostEventClick}>Post Your Event</button>
+                      </div>
+                      <div className="mx-auto">
+                        <button className="btn btn-success" onClick={handleMyEventsClick}>My Events</button>
+                      </div>
+
                     </div>
                     <div className="filter-content">
                       {city ? (
@@ -531,8 +535,9 @@ const SearchEvents = () => {
                                               ) : ''
                                             }
                                           </div>
-                                          <div>
-                                            <button type="button" className="fs-3 hover-pointer-green btn me-1 flex-grow-1"
+                                          <div className="mt-2">
+                                
+                                            <button className="btn mb-2 btn-success mx-auto"
                                               onClick={() => changeEventClickFlag(true, item.id)}>
                                               View
                                             </button>

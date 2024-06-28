@@ -16,6 +16,11 @@ import DropdownOnServices from "./DropdownOnServices";
 import Select from "react-select";
 import { logout } from "../../actions/userAction";
 import { Select as AntSelect, Space } from 'antd';
+import { toast } from "react-toastify";
+import MobileInput from "../custom/MobileInput";
+import InputField from "../custom/InputField";
+import SelectField from "../custom/SelectField";
+import TextAreaField from "../custom/TextAreaField";
 
 const Services = () => {
   const [service, setService] = useState([]);
@@ -93,6 +98,7 @@ const Services = () => {
   //state and city operations
   //state and city change operations
   const handleStateChange = (selectedOption) => {
+    setSelectedCity('');
     setSelectedState(selectedOption);
 
     if (selectedOption) {
@@ -105,7 +111,6 @@ const Services = () => {
     }
 
     // Update selected city to null when state changes
-    setSelectedCity(null);
   };
 
   const handleCityChange = (selectedOption) => {
@@ -205,7 +210,7 @@ const Services = () => {
   };
 
   const handleSubmit = async () => {
-    if(selectedCategory){
+    if (selectedCategory) {
       const result = selectedCategory.toString();
       setSelectedCategory(result);
     }
@@ -216,7 +221,7 @@ const Services = () => {
       experience,
       description,
       status,
-      category: selectedCategory?selectedCategory:'',
+      category: selectedCategory ? selectedCategory : '',
       state: selectedState && selectedState.label ? selectedState.label : '',
       city: selectedCity && selectedCity.label ? selectedCity.label : '',
     };
@@ -228,6 +233,7 @@ const Services = () => {
         window.scroll(0, 0);
         setErrors("");
         setAlertClass("alert-success");
+        toast.success("You have successfully registered in service.")
         setMessage(response.data.message);
 
       }
@@ -339,6 +345,21 @@ const Services = () => {
     objectFit: "cover", // Ensures the image covers the entire container while maintaining aspect ratio
   };
 
+  const stateOptions = (
+    states &&
+    states.map((option) => ({
+      value: option.name,
+      label: option.name,
+    }))
+  )
+  const cityOptions = (
+    cities &&
+    cities.map((option) => ({
+      value: option.name,
+      label: option.name,
+    }))
+  )
+
   return (
     <div id="service-section" className="content-wrapper pt-4 mb-5">
       <div className="container">
@@ -372,7 +393,7 @@ const Services = () => {
 
                   <div
                     className="row mb-4 sevice-item"
-                    style={{ overflowY: "scroll", maxHeight: "400px" }}
+                    style={{ overflowY: "scroll", maxHeight: isAndroidUsed ? '400px' : '700px' }}
                   >
                     {service.map((item, index) => (
                       <div className="col-12 col-sm-12" key={index}>
@@ -396,33 +417,21 @@ const Services = () => {
                     ADD SERVICE
                   </div>
                   <div className="card-body">
-                    {message && (
-                      <div className={`alert ${alertClass}`}>
-                        {alertClass === "alert-success" ? (
-                          <i className="fas fa-check-circle"></i>
-                        ) : (
-                          <i className="fas fa-exclamation-triangle"></i>
-                        )}
-                        {" " + message}
-                      </div>
-                    )}
+
                     <div className="form-group mb-4 ">
                       <p className="">
                         अगर आपकी सेवा उपलब्ध नहीं है, तो 'अन्य' (Other) विकल्प
                         चुनें।
                       </p>
-                      <Select
-                        className="form-control"
-                        aria-label="Default select example"
-                        options={dropdownOptions}
-                        value={selectedService}
-                        placeholder="Select Your Service"
-                        onChange={handleSelectService}
-                      />
+
+                      <SelectField handleSelectChange={handleSelectService} isRequired={true} value={selectedService}
+                        errorServer={errors.category} placeholder="Select Your Service"
+                        options={dropdownOptions} fieldName="Service category" />
                       {!selectedService && (
-                        <span className="">
-                          Select any service if not, then select 'Other'
-                        </span>
+                        <> {errors.category && <br />}
+                          <span className="">
+                            Select any service if not, then select 'Other'
+                          </span></>
                       )}
                     </div>
                     <div className="form-group mb-4">
@@ -451,6 +460,7 @@ const Services = () => {
                           allowClear
                           style={{
                             width: '100%',
+                            height: '60px'
                           }}
                           placeholder="Please select categories..."
                           onChange={handleChange}
@@ -463,94 +473,37 @@ const Services = () => {
 
                     </div>
                     <div className="form-group mb-4">
-                      <input
-                        type="text"
-                        placeholder="Enter Your Mobile Number 1"
-                        className="form-control"
-                        maxLength="10"
-                        pattern="[0-9]*"
-                        inputMode="numeric"
-                        value={mobile1}
-                        onChange={(e) => setMobile1(e.target.value)}
-                      />
-                      {errors.mobile1 && (
-                        <span className="error">{errors.mobile1}</span>
-                      )}
-                    </div>
-                    <div className="form-group mb-4">
-                      <input
-                        type="text"
-                        placeholder="Enter Your Mobile Number 2"
-                        className="form-control"
-                        maxLength="10"
-                        pattern="[0-9]*"
-                        inputMode="numeric"
-                        value={mobile2}
-                        onChange={(e) => setMobile2(e.target.value)}
-                      />
-                      {errors.mobile2 && (
-                        <span className="error">{errors.mobile2}</span>
-                      )}
-                    </div>
-                    <div className="form-group mb-4">
-                      <input
-                        type="text"
-                        placeholder="Enter Experience"
-                        className="form-control"
-                        value={experience}
-                        onChange={(e) => setExperience(e.target.value)}
-                      />
-                      {errors.experience && (
-                        <span className="error">{errors.experience}</span>
-                      )}
-                    </div>
-                    <div className="form-group mb-4">
 
-                      <Select
-                        className="form-control"
-                        options={states.map((state) => ({
-                          value: state.name,
-                          label: state.name,
-                        }))}
-                        value={selectedState}
-                        onChange={handleStateChange}
-                        placeholder="select state..."
-                      />
-                      {errors.state && (
-                        <span className="error">{errors.state}</span>
-                      )}
-
+                      <MobileInput handleMobileChange={(e) => setMobile1(e.target.value)} value={mobile1}
+                        errorServer={errors.mobile1} isRequired={true}
+                        placeholder="Enter your mobile number 1" />
+                    </div>
+                    <div className="form-group mb-4">
+                      <MobileInput handleMobileChange={(e) => setMobile2(e.target.value)} value={mobile2}
+                        errorServer={errors.mobile2} isRequired={false}
+                        placeholder="Enter your mobile number 2" />
+                    </div>
+                    <div className="form-group mb-4">
+                      <InputField handleChange={(e) => setExperience(e.target.value)}
+                        errorServer={errors.experience} placeholder="Enter your experience"
+                        fieldName="experience" value={experience} maxLength={30} isRequired={true} />
+                    </div>
+                    <div className="form-group mb-4">
+                      <SelectField handleSelectChange={handleStateChange} isRequired={true} value={selectedState}
+                        errorServer={errors.state} placeholder="select state..."
+                        options={stateOptions} fieldName="State" />
 
                     </div>
 
                     <div className="form-group mb-4">
-
-                      <Select
-                        className="form-control"
-                        options={cities.map((city) => ({
-                          value: city.name,
-                          label: city.name,
-                        }))}
-                        value={selectedCity}
-                        onChange={handleCityChange}
-                        placeholder="select city..."
-                      />
-                      {errors.city && (
-                        <span className="error">{errors.city}</span>
-                      )}
+                      <SelectField handleSelectChange={handleCityChange} isRequired={true} value={selectedCity}
+                        errorServer={errors.city} placeholder="select city..."
+                        options={cityOptions} fieldName="City" />
 
                     </div>
                     <div className="form-group mb-4 ">
-                      <textarea
-                        className="form-control"
-                        placeholder="Enter details"
-                        id="floatingTextarea"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      ></textarea>
-                      {errors.description && (
-                        <span className="error">{errors.description}</span>
-                      )}
+                      <TextAreaField handleChange={(e) => setDescription(e.target.value)} placeholder="Enter details (limit 400)"
+                        fieldName="Description" value={description} maxLength={400} errorServer={errors.description} isRequired={true} />
                     </div>
 
                     <div className="row mt-4">

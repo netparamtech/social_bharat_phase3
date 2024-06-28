@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   createTempUser,
   fetchAllActiveCommunities,
-  fetchAllCommunities,
   fetchBannerWithPageAndSection,
 } from "../../services/userService";
 import RegisterWithOtp from "../otp/RegisterWithOtp";
@@ -11,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import EnquiryModel from "./EnquiryModel";
+import MobileInput from "../custom/MobileInput";
+import InputField from "../custom/InputField";
+import SelectField from "../custom/SelectField";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -138,148 +140,117 @@ const RegisterForm = () => {
     }
   };
 
-  useEffect(() => {
-    fetchBanners();
-  }, []);
+  const castOption = (
+    casts &&
+    casts.map((option) => ({
+      value: option.id,
+      label: option.name,
+    }))
+  )
 
-  useEffect(() => {
-    fetchCommunities();
-  }, []);
+useEffect(() => {
+  fetchBanners();
+}, []);
 
-  return (
-    <div id="auth-wrapper" className="pt-5 pb-5">
-      <div className="container">
-        <div className="card shadow">
-          <div className="card-body">
-            {serverError && <span className='error'>{serverError}</span>}
-            <div className="row">
-              <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
-                <img
-                  src={imageUrls && imageUrls[0] ? imageUrls[0] : defaultImage}
-                  className="img-fluid"
-                  alt="Sign Up"
-                />
+useEffect(() => {
+  fetchCommunities();
+}, []);
+
+return (
+  <div id="auth-wrapper" className="pt-5 pb-5">
+    <div className="container">
+      <div className="card shadow">
+        <div className="card-body">
+          {serverError && <span className='error'>{serverError}</span>}
+          <div className="row">
+            <div className="col-md-6 d-none d-md-block  wow animate__animated animate__zoomIn">
+              <img
+                src={imageUrls && imageUrls[0] ? imageUrls[0] : defaultImage}
+                className="img-fluid"
+                alt="Sign Up"
+              />
+            </div>
+            <div className="col-md-6 col-sm-12 col-xs-12 p-5">
+              <div className="card-title">
+                <h3 className="mb-3">Sign up</h3>
               </div>
-              <div className="col-md-6 col-sm-12 col-xs-12 p-5">
-                <div className="card-title">
-                  <h3 className="mb-3">Sign up</h3>
-                </div>
 
-                {!isTempUserCreated ? (
-                  <form
-                    action="/dashboard"
-                    className="w-100 w-lg-75"
-                    onSubmit={handleSubmit}
-                  >
-                    <div className="row mb-3">
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Enter your name"
-                        className="form-control"
-                        onChange={handleNameChange}
-                        autoFocus
-                      />
-                      {errors.name && (
-                        <span className="error">{errors.name}</span>
-                      )}
-                    </div>
-                    <div className="row mb-3">
-                      <input
-                        type="number"
-                        name="mobile"
-                        id="mobile"
-                        placeholder="Enter your mobile number"
-                        className="form-control"
-                        maxLength="10" // Limit to 10 characters
-                        onInput={(e) => {
-                          // Trim the input to 10 characters
-                          e.target.value = e.target.value.slice(0, 10);
-                        }}
-                        onChange={handleMobileChange}
-                        autoFocus
-                      />
-                      {errors.mobile && (
-                        <span className="error">{errors.mobile}</span>
-                      )}
-                    </div>
-                    <div className="row mb-3">
-                      <Select
-                        id="community_id"
-                        className=""
-                        defaultValue={community_id} // Provide a selected option state
-                        onChange={handleSelectChange} // Your change handler function
-                        options={
-                          casts &&
-                          casts.map((cast) => ({
-                            value: cast.id,
-                            label: cast.name,
-                          }))
-                        }
-                        placeholder="---Select Community---"
-                      />
-
-                      {errors.community_id && (
-                        <span className="error">{errors.community_id}</span>
-                      )}
-                    </div>
-                    <div className="row mb-3">
-                      <button type="submit" className="btn-custom btn-primary-custom">
-                        Register
-                      </button>
-                    </div>
-                    <div className="row mt-3">
-                      <p className="fw-lighter fs-6">
-                        Already User?{" "}
-                        <a
-                          className="text-primary text-decoration-none hover-pointer"
-                          onClick={() => navigate("/login")}
-                        >
-                          Login
-                        </a>
-                        .
-                      </p>
-                    </div>
+              {!isTempUserCreated ? (
+                <form
+                  action="/dashboard"
+                  className="w-100 w-lg-75"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="row mb-3">
+                    <InputField handleChange={handleNameChange} isRequired={true} type="text" maxLength={50}
+                      errorServer={errors.name} isAutoFocused={true} fieldName="Name" placeholder="Enter your name" />
+                  </div>
+                  <div className="row mb-3">
+                    <MobileInput handleMobileChange={handleMobileChange}
+                      errorServer={errors.mobile} isRequired={true} placeholder="Enter your mobile number"
+                    />
+                  </div>
+                  <div className="row mb-3">
+                    <SelectField handleSelectChange={handleSelectChange} isRequired={true} defaultValue={community_id}
+                      errorServer={errors.community_id} placeholder="----Select Community----"
+                      options={castOption} fieldName="Community Name" />
+                  </div>
+                  <div className="row mb-3">
+                    <button type="submit" className="btn-custom btn-primary-custom">
+                      Register
+                    </button>
+                  </div>
+                  <div className="row mt-3">
                     <p className="fw-lighter fs-6">
-                      If you encounter any issues during the registration process, please{" "}
+                      Already User?{" "}
                       <a
                         className="text-primary text-decoration-none hover-pointer"
-                        onClick={() => toggleEnquiry()} // Add onClick event handler
+                        onClick={() => navigate("/login")}
                       >
-                        click here
-                      </a>{" "}
-                      for assistance with your queries.
+                        Login
+                      </a>
+                      .
                     </p>
-                    {
-                      isEnquiry && <div className="row mx-auto">
-                        <div className="col-12 col-md-5 card bg-info scale-on-hover m-2 hover-pointer" onClick={() => navigate('/contact')}>
-                          <div className="card-body text-light">
-                            General Enquiry
-                          </div>
+                  </div>
+                  <p className="fw-lighter fs-6">
+                    If you encounter any issues during the registration process, please{" "}
+                    <a
+                      className="text-primary text-decoration-none hover-pointer"
+                      onClick={() => toggleEnquiry()} // Add onClick event handler
+                    >
+                      click here
+                    </a>{" "}
+                    for assistance with your queries.
+                  </p>
+                  {
+                    isEnquiry && <div className="row mx-auto">
+                      <div className="col-12 col-md-5 card bg-info scale-on-hover m-2 hover-pointer" onClick={() => navigate('/contact')}>
+                        <div className="card-body text-light">
+                          General Enquiry
                         </div>
-                        <div className="col-12 col-md-5 card bg-lightorange scale-on-hover m-2 hover-pointer">
-                          <div className="card-body ">
-                            <EnquiryModel />
-                          </div>
-                        </div>
-
                       </div>
-                    }
-                  </form>
-                ) : (
-                  <RegisterWithOtp
-                    userDetail={{ mobile, name, community_id }}
-                    message={message}
-                  />
-                )}
-              </div>
+                      <div className="col-12 col-md-5 card bg-lightorange scale-on-hover m-2 hover-pointer">
+                        <div className="card-body ">
+                          <EnquiryModel />
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+                </form>
+              ) : (
+                <RegisterWithOtp
+                  userDetail={{ mobile, name, community_id }}
+                  message={message}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default RegisterForm;

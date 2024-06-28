@@ -12,6 +12,10 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const EventForm = () => {
   // State variables to store form input values
@@ -21,6 +25,7 @@ const EventForm = () => {
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
   const [description, setDescription] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
   const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
@@ -46,6 +51,10 @@ const EventForm = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
 
   const handleStartDateTimeChange = (date, dateString) => {
     setStartDateTime(dateString); // Update startDateTime with the selected date and time
@@ -192,15 +201,22 @@ const EventForm = () => {
 
     //Date/ Time Format
     function formatDateTime(dateTime) {
-      const date = new Date(dateTime);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      const hours = String(date.getHours()).padStart(2, "0");
-      const minutes = String(date.getMinutes()).padStart(2, "0");
-      const seconds = "00"; // You can set seconds to '00' if not provided in your input
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      if (dateTime) {
+        const date = new Date(dateTime);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = "00"; // You can set seconds to '00' if not provided in your input
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+      return '';
     }
+
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    const htmlContent = draftToHtml(rawContentState);
 
     const data = {
       event_type: selectedEventType && selectedEventType.value,
@@ -213,7 +229,7 @@ const EventForm = () => {
       end_datetime: formattedEndDateTime,
       banner_image: bannerImageTempUrl,
       thumb_image: thumbnailImageTempUrl,
-      description,
+      description: htmlContent,
     };
 
     try {
@@ -222,7 +238,7 @@ const EventForm = () => {
       if (response && response.status === 200) {
         setErrors("");
         toast.success('Event Created Successfully and in review processing, will be published soon.');
-
+        navigate('/user/search/events')
         // Reset file inputs
         thumbnailImageRef.current.value = null;
         bannerImageRef.current.value = null;
@@ -387,7 +403,7 @@ const EventForm = () => {
                     <div className="row">
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">Venue{" "}<span className="text-danger">*</span></label>
-                        <input
+                        <textarea
                           type="text"
                           name="venue"
                           id="exampleInput3"
@@ -430,14 +446,14 @@ const EventForm = () => {
                           <span className="error">{errors.thumbImage}</span>
                         )}
                       </div>
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                        <label htmlFor="description">Description</label>
-                        <textarea
-                          type="area"
-                          placeholder="Enter Your Event Details If Any"
-                          className="form-control mt-2"
-                          defaultValue={description}
-                          onChange={(e) => setDescription(e.target.value)}
+
+                      <div className="col-sm-6 col-12 mx-auto">
+                        <Editor
+                          editorState={editorState}
+                          onEditorStateChange={onEditorStateChange}
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class custom-editor-height editor-border p-2"
+                          toolbarClassName="toolbar-class toolbar-border"
                         />
                         {errors && errors.description && (
                           <span className="error">{errors.description}</span>

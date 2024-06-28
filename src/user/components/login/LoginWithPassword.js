@@ -5,9 +5,11 @@ import { useDispatch } from "react-redux";
 import { login } from "../../actions/userAction";
 import { Input } from "antd";
 import { setLoader, setModelAction } from "../../actions/loaderAction";
+import MobileInput from "../custom/MobileInput";
+import PasswordField from "../custom/PasswordField";
 
 const LoginWithPassword = (props) => {
-  
+
   const { chnageFlag } = props;
 
   const [mobile, setMobile] = useState("");
@@ -16,10 +18,10 @@ const LoginWithPassword = (props) => {
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
-  const [maxPassword,setMaxPassword] = useState(8);
+  const [maxPassword, setMaxPassword] = useState(8);
 
   const [imageUrls, setImageUrls] = useState([]);
-  const [defaultImage,setDefaultImage] = useState("/user/images/signup.png");
+  const [defaultImage, setDefaultImage] = useState("/user/images/signup.png");
 
   //onChange handler
   const handleMobileChange = (event) => {
@@ -111,12 +113,12 @@ const LoginWithPassword = (props) => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div className="container">
-        <div className={`card shadow ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 d-none d-md-block wow animate__animated animate__zoomIn">
                 <img
-                  src={imageUrls&&imageUrls[0]?imageUrls[0]:defaultImage}
+                  src={imageUrls && imageUrls[0] ? imageUrls[0] : defaultImage}
                   className="img-fluid"
                   alt="Signup"
                 />
@@ -141,33 +143,13 @@ const LoginWithPassword = (props) => {
                     </div>
                   )}
                   <div className="row mb-3">
-                    <Input
-                      type="number"
-                      name="mobile"
-                      id="mobile"
-                      placeholder="Enter mobile number"
-                      maxLength="10"
-                      className="input-height"
-                      onChange={handleMobileChange}
-                      autoFocus
-                    />
-                    {errors && errors.mobile && (
-                      <span className="error">{errors.mobile}</span>
-                    )}
+                    <MobileInput handleMobileChange={handleMobileChange}
+                      errorServer={errors.mobile} isRequired={true}
+                      isAutoFocused={true} placeholder="Enter your mobile number" />
                   </div>
                   <div className="row mb-3">
-                    <Input.Password
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter Password"
-                      className="input-height"
-                      onChange={handlePasswordChange}
-                    />
-
-                    {errors.password && (
-                      <span className="error">{errors.password}</span>
-                    )}
+                    <PasswordField handleChange={handlePasswordChange} value={password} errorServer={errors.password}
+                    fieldName="Password" isRequired={true} placeholder="Enter your password"/>
                   </div>
 
                   <div className="row mb-3">

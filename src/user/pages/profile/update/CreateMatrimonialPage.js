@@ -4,9 +4,6 @@ import CreateMatrimonial from '../../../components/ProfilePage/CreateMatrimonial
 
 const CreateMatrimonialPage = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
     return (
         <UserLayout>
             <CreateMatrimonial />

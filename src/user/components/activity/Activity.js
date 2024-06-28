@@ -128,7 +128,9 @@ const Activity = () => {
       title,
     };
 
-    if (imageTempUrl.length > 0 || rawContentState.blocks[0].text || title) {
+    const titleTrimmed = title?title.trim():''
+
+    if (imageTempUrl.length > 0 || htmlContent.length>8 || titleTrimmed) {
       dispatch(setLoader(true));
       try {
         const response = await uploadActivity(data);
@@ -272,11 +274,12 @@ const Activity = () => {
                       <div className="input-group-prepend">
                         <span className="input-group-text" id="inputGroup-sizing-sm" >Title</span>
                       </div>
-                      <input type="text" className="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" value={title} onChange={handleTitleChange} />
-                      {errors && errors.title && (
-                        <span className="error">{errors.title}</span>
-                      )}
+                      <input type="text" className={`form-control ${errors.title?'border-danger':''}`} aria-label="Large" aria-describedby="inputGroup-sizing-sm" value={title} onChange={handleTitleChange} />
+                     
                     </div>
+                    {errors && errors.title && (
+                        <span className="error mb-2">{errors.title}</span>
+                      )}
 
                     <div className="col-sm-4 col-11 mx-auto">
                       <div className="">

@@ -62,9 +62,9 @@ const GenerateBiodata = (props) => {
             verticalPosition += 6;
             pdf.text(20, verticalPosition, `Sister Details: ${matrimonialDetails.sisters_details}`);
             verticalPosition += 6;
-            pdf.text(20, verticalPosition, `Subcast: ${matrimonialDetails.subcast}`);
-            verticalPosition += 6;
-            pdf.text(20, verticalPosition, `Package Details: ${matrimonialDetails.salary_package}`);
+            // pdf.text(20, verticalPosition, `Subcast: ${matrimonialDetails.subcast}`);
+            // verticalPosition += 6;
+            pdf.text(20, verticalPosition, `Package Details: ${matrimonialDetails.salary_package?matrimonialDetails.salary_package:"Not Display"}`);
             verticalPosition += 6;
             // Other Details
             const otherDetails = matrimonialDetails.DESCRIPTION;

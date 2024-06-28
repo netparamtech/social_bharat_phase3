@@ -57,7 +57,7 @@ const UpdateMatrimonial = () => {
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
   const [brothersDetails, setBrothersDetails] = useState(''); // Details of brothers
   const [sistersDetails, setSistersDetails] = useState('');
-  const [packageValue, setPackageValue] = useState(''); // Change to null for react-select
+  const [packageValue, setPackageValue] = useState(0); // Change to null for react-select
   const [showBrotherDetail, setShowBrotherDetail] = useState(false);
   const [showSisterDetail, setShowSisterDetail] = useState(false);
 
@@ -101,6 +101,19 @@ const UpdateMatrimonial = () => {
   const [mobile, setMobile] = useState('');
   const [jobProfileDesc, setJobProfileDesc] = useState('');
   const [educaDetails, setEducaDetails] = useState('');
+  const [unit, setUnit] = useState('lakh'); // Default unit is "lakh"
+
+  const handleUnitChange = (event) => {
+    setUnit(event.target.value);
+  };
+  const onKeyPressPackage = (e) => {
+    const char = String.fromCharCode(e.which);
+    // Allow backspace, space, and alphabetical characters
+    if (e.keyCode === 8 || /[0-9]/.test(char)) {
+      return;
+    }
+    e.preventDefault();
+  };
 
   const navigate = useNavigate();
 
@@ -327,7 +340,7 @@ const UpdateMatrimonial = () => {
       sister_count: sisterCount ? sisterCount : 0,
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
-      salary_package: packageValue ? packageValue : '',
+      salary_package: packageValue ? (packageValue+" "+unit) : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_name: matrimonialProfileName,
       matrimonial_profile_occupation: matrimonialOccupation,
@@ -421,7 +434,11 @@ const UpdateMatrimonial = () => {
       setBrotherCount(userMatrimonial.brother_count);
       setEducation(userMatrimonial.education);
       setSisterCount(userMatrimonial.sister_count);
-      setPackageValue(userMatrimonial.salary_package);
+      if(userMatrimonial.salary_package){
+        let item = userMatrimonial.salary_package.split(" ");
+        setPackageValue(item[0]);
+        setUnit(item[1]);
+      }
       setMatrimonialOccupation(userMatrimonial.matrimonial_profile_occupation);
       setDescription(userMatrimonial.DESCRIPTION || "");
       setEducaDetails(userMatrimonial.educational_details || "");
@@ -1057,15 +1074,29 @@ const UpdateMatrimonial = () => {
                       </div>
 
                       <div className="row">
-                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Package</label>
+                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 package-container position-relative">
+                          <label className="form-label">Package (Annual)</label>
                           <input
+                            type="text"
                             value={packageValue}
                             className="form-control mt-2"
                             onChange={handlePackageChange}
                             placeholder="Enter Your Income..."
+                            maxLength={3}
+                            onKeyDown={onKeyPressPackage}
+                            inputMode="numeric"
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                           />
+                          <select
+                            value={unit}
+                            onChange={handleUnitChange}
+                            className="position-absolute"
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          >
+                            <option value="lakh">lakh</option>
+                            <option value="cr">cr</option>
+                          </select>
+                          <p style={{ fontSize: '12px' }}>(Only allow numeric value.)</p>
                           {errors && errors.salary_package && (
                             <span className="error">{errors.salary_package}</span>
                           )}

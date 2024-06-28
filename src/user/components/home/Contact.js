@@ -132,9 +132,7 @@ function Contact() {
                           <div className="card-body">
                             <div className="d-inline-flex">
 
-                              <a href="https://www.google.com/maps/dir//Netparam+Technologies+Pvt.+Ltd.+Ground+floor+747,+Jan+Path,+Rani+Sati+Nagar,+Nirman+Nagar,+Brijlalpura+Jaipur,+Rajasthan+302019/@26.8854726,75.7427703,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x396dc9787b6e8159:0x7162ee3f35dc8f5a" target="_blank">
-                                <i className="fa-solid fa-location-dot fs-6 text-primary"></i>
-                              </a>
+                              <i className="fa-solid fa-location-dot fs-6 text-primary"></i>
                               <h4 className="ms-3 ">Address</h4>
                             </div>
                             <div>
@@ -149,14 +147,12 @@ function Contact() {
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-flex align-items-center">
-                              <Button type="btn" onClick={showModal}>
-                                <i className="fa-solid fa-phone-volume fs-6 text-primary"></i>
-                              </Button>
+                              <i className="fa-solid fa-phone-volume fs-6 text-primary"></i>
                               <h4 className="ms-3 mb-0">Call Us</h4>
                             </div>
                             <div>
-                              <span className="ms-3 text-muted hover-pointer" onClick={showModal}>
-                                <a className="text-dark text-line-none m-2" href={`tel:${settings && settings.phone1}`}>
+                              <span className="text-muted hover-pointer" onClick={showModal}>
+                                <a className="text-dark text-line-none" href={`tel:${settings && settings.phone1}`}>
                                   +91-{settings && settings.phone1}
                                 </a>
                                 <br />
@@ -194,9 +190,7 @@ function Contact() {
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-3">
-                              <a href="https://netparam.in/contact" target="_blank">
-                                <i className="fa-solid fa-clock fs-5 text-primary"></i>
-                              </a>
+                              <i className="fa-solid fa-clock fs-5 text-primary"></i>
                               <h4 className="ms-3 mb-0">Open Hours</h4>
                             </div>
                             <div>
@@ -249,7 +243,7 @@ function Contact() {
                       </div>
                       <div className="form-group mb-4">
                         <input
-                          type="email"
+                          type="text"
                           placeholder="Enter Email"
                           className="form-control"
                           value={email}
@@ -261,12 +255,19 @@ function Contact() {
                       </div>
                       <div className="form-group mb-4">
                         <input
-                          type="number"
+                          type="text"  // Changed to text to use maxLength
                           className="form-control"
                           placeholder="Enter Mobile"
+                          maxLength={10}  // Limits the input to 10 characters
                           value={mobile}
-                          onChange={(e) => setMobile(e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*$/.test(value)) {  // Only allow digits
+                              setMobile(value);
+                            }
+                          }}
                         />
+
                         {errors.mobile && (
                           <span className="error">{errors.mobile}</span>
                         )}

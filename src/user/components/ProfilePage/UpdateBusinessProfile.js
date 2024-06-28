@@ -8,6 +8,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import MobileInput from '../custom/MobileInput';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
@@ -428,43 +429,19 @@ const UpdateBusinessProfile = (props) => {
                       </div>
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Contact 1{" "}<span className="text-danger">*</span></label>
-                          <input type="text"
-                            name="contact1"
-                            id="contact1"
-                            placeholder="Enter Contact 1"
-                            className="form-control"
-                            defaultValue={contact1}
-                            onChange={(e) => setContact1(e.target.value)}
-                          />
-                          {errors.contact1 && <span className='error'>{errors.contact1}</span>}
+                          <MobileInput handleMobileChange={(e) => setContact1(e.target.value)} value={contact1} errorServer={errors.contact1} label = "Contact 1" isRequired={true}
+                          placeholder="Enter your contact number 1" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Contact 2</label>
-                          <input type="text"
-                            name="contact2"
-                            id="contact2"
-                            placeholder="Enter Contact 2"
-                            className="form-control"
-                            defaultValue={contact2}
-                            onChange={(e) => setContact2(e.target.value)}
-                          />
-                          {errors.contact2 && <span className='error'>{errors.contact2}</span>}
+                          <MobileInput handleMobileChange={(e) => setContact2(e.target.value)} value={contact2} errorServer={errors.contact2} label = "Contact 2"
+                           placeholder="Enter your contact number 2" />
                         </div>
                       </div>
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Contact 3</label>
-                          <input type="text"
-                            name="contact3"
-                            id="contact3"
-                            placeholder="Enter Contact 3"
-                            className="form-control"
-                            defaultValue={contact3}
-                            onChange={(e) => setContact3(e.target.value)}
-                          />
-                          {errors.contact3 && <span className='error'>{errors.contact3}</span>}
+                          <MobileInput handleMobileChange={(e) => setContact3(e.target.value)} value={contact3} errorServer={errors.contact3} label = "Contact 3" 
+                          placeholder="Enter your contact number 3" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">Business Photos </label>

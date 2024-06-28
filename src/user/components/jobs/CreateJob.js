@@ -13,6 +13,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import InputField from "../custom/InputField";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -312,7 +313,7 @@ const CreateJob = (props) => {
                 <div className="row">
                     <div className="mb-3">
                         <div className={`card mx-auto rounded ${errors ? 'border-danger' : ''}`} style={{ flexDirection: 'column' }}>
-                           
+
                             <div className="card-body shadow" style={{ display: 'flow' }}>
                                 {serverError && <span className='error'>{serverError}</span>}
                                 {message && (
@@ -326,16 +327,9 @@ const CreateJob = (props) => {
                                     </div>
                                 )}
                                 <div className="form-group">
-                                    <label>Job Title:</label>
-                                    <input type="text"
-                                        className={`form-control ${errors.job_title ? 'border-danger' : ''}`}
-                                        placeholder="Enter Job Title"
-                                        defaultValue={jobTitle}
-                                        onChange={(e) => setJobTitle(e.target.value)}
-                                    />
-                                    {errors.job_title && (
-                                        <span className="error">{errors.job_title}</span>
-                                    )}
+                                    <InputField errorServer={errors.job_title} label="Job Title:" handleChange={(e) => setJobTitle(e.target.value)}
+                                        placeholder="Enter Job Title" value={jobTitle} isRequired={true} isAutoFocused={true}
+                                        maxLength={50} fieldName="Job title" />
                                 </div>
                                 <div className="form-group">
                                     <label>Job Sector:</label>
@@ -366,12 +360,13 @@ const CreateJob = (props) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Other Subheading(optional):</label>
+                                    <label>Company Name / Other Subheading(optional):</label>
                                     <input type="text"
                                         className="form-control"
                                         placeholder="i.e. company name or organization or other"
                                         defaultValue={subHeading}
                                         onChange={(e) => setSubHeading(e.target.value)}
+                                        maxLength={80}
                                     />
                                     {errors.subHeading && (
                                         <span className="error">{errors.subHeading}</span>
@@ -383,11 +378,11 @@ const CreateJob = (props) => {
                                         <label className="form-label">State</label>
 
                                         <Select
-                                            className=""
                                             options={states.map((state) => ({
                                                 value: state.name,
                                                 label: state.name,
                                             }))}
+                                            className={`form-control ${errors.state ? 'border-danger' : ''}`}
                                             value={selectedState}
                                             onChange={handleStateChange}
                                         />
@@ -406,6 +401,7 @@ const CreateJob = (props) => {
                                                 value: city.name,
                                                 label: city.name,
                                             }))}
+                                            className={`form-control ${errors.city ? 'border-danger' : ''}`}
                                             value={selectedCity}
                                             onChange={handleCityChange}
                                         />
@@ -507,7 +503,7 @@ const CreateJob = (props) => {
                                             <div className="mb-3">
                                                 <label>Apply Link</label>
                                                 <textarea type="text"
-                                                    className="form-control"
+                                                    className={`form-control ${errors.apply_link ? 'border-danger' : ''}`}
                                                     placeholder="Enter Description"
                                                     defaultValue={applyLink}
                                                     onChange={(e) => setApplyLink(e.target.value)}
@@ -517,7 +513,7 @@ const CreateJob = (props) => {
                                                 )}
                                             </div>
                                             <div className="mb-3">
-
+                                                <label>Other Details or Description if any </label>
                                                 <div className="">
 
                                                     <Editor

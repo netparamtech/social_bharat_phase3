@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/userAction';
 import { Input } from 'antd';
 import { setLoader } from '../../actions/loaderAction';
+import PasswordField from '../custom/PasswordField';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);
@@ -90,28 +91,12 @@ const SetPassword = () => {
                                 <form action='/dashboard' onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
-                                        <Input.Password
-                                            type="password"
-                                            name="newPassword"
-                                            id="newPassword"
-                                            placeholder="Enter New Password"
-                                            className="input-height"
-                                            onChange={handlePasswordChange}
-                                            autoFocus
-                                        />
-
-                                        {errors.password && <span className='error'>{errors.password}</span>}
+                                        <PasswordField handleChange={handlePasswordChange} errorServer={errors.password}
+                                            fieldName="Password" isRequired={true} value={password} placeholder="Enter New Password" />
                                     </div>
                                     <div className="row mb-3">
-                                        <Input.Password
-                                            type="password"
-                                            name="cPassword"
-                                            id="cPassword"
-                                            placeholder="Enter Confirm Password"
-                                            className="input-height"
-                                            onChange={handleConfirmPasswordChange}
-                                        />
-                                        {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
+                                        <PasswordField handleChange={handleConfirmPasswordChange} errorServer={errors.confirmPassword}
+                                            fieldName="Confirm password" isRequired={true} value={confirmPassword} placeholder="Enter Confirm Password" />
                                     </div>
                                     <div className="row mb-3">
                                         <button type="submit" className="btn btn-primary">

@@ -36,13 +36,13 @@ const Dashboard = () => {
           </marquee>
         </div>
         <div className="row">
-        <div className="col-lg-6 col-xl-3 mb-4">
+        <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card shadow bg-peal text-white h-100 ">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3 ">
                     <div className="text-white-75 small">Profile</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/profile")}>
                       Manage Profile <br />
                     </div>
                   </div>
@@ -65,13 +65,13 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card bg-secondary text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Jobs</div>
-                    <div className="text-lg">
+                    <div className="text-lg hover-pointer"  onClick={() => navigate("/user/search/job")}>
                       Jobs <br />
                     </div>
                   </div>
@@ -97,13 +97,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card bg-classicbrown text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Business</div>
-                    <div className="text-lg">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/search/business")}>
                       Business Promotion <br />
                     </div>
                   </div>
@@ -127,13 +127,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card bg-classicpink text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Services</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/search/service")}>
                       Services <br />
                     </div>
                   </div>
@@ -154,13 +154,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card bg-lightorange text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Matrimonial</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/search/partner")}>
                       Matrimonial <br />
                     </div>
                   </div>
@@ -181,13 +181,13 @@ const Dashboard = () => {
           </div>
 
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card bg-lightgreen text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Become Social</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/search")}>
                       Search Members <br />
                     </div>
                   </div>
@@ -210,13 +210,13 @@ const Dashboard = () => {
 
 
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card shadow bg-soil text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Event</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/search/events")}>
                       Event(s)<br />
                     </div>
                   </div>
@@ -241,13 +241,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card shadow bg-classicbrown text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
-                    <div className="text-white-75 small">Event</div>
-                    <div className="text-lg ">
+                    <div className="text-white-75 small">Activities</div>
+                    <div className="text-lg hover-pointer"  onClick={() => navigate("/users/activities")}>
                       Social Activities <br />
                     </div>
                   </div>
@@ -303,13 +303,13 @@ const Dashboard = () => {
 
 
 
-          <div className="col-lg-6 col-xl-3 mb-4">
+          <div className="col-lg-6 col-xl-4 mb-4">
             <div className="card shadow bg-navyblue  text-white h-100">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="me-3">
                     <div className="text-white-75 small">Share Your Feedback</div>
-                    <div className="text-lg ">
+                    <div className="text-lg hover-pointer" onClick={() => navigate("/user/rating")}>
                       Feedback <br />
                     </div>
                   </div>

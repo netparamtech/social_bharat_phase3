@@ -381,7 +381,7 @@ const SearchPeople = () => {
                           {pair.map((item, innerIndex) => (
 
                             <div className="col-md-6 mt-2" key={innerIndex}>
-                              <div className="card" style={{ borderRadius: '15px' }}>
+                              <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '350px' }}>
                                 <div className="card-body p-4 search-partner-cards">
                                   <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                     <div className="flex-shrink-0 m-3">
@@ -394,8 +394,11 @@ const SearchPeople = () => {
                                     </div>
                                     <div className="flex-grow-1 ms-3">
                                       <h5 className="mb-1">{item.name}</h5>
-                                      <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                        Job Details - {item.occupation?item.occupation:'N/A'}
+
+                                      <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
+                                        Job Details-{item.occupation ? item.occupation.length > 50 ? (
+                                          item.occupation.slice(0, 50) + "...."
+                                        ) : (item.occupation) : ''}
                                       </p>
                                       <div
                                         className="d-flex justify-content-start rounded-3"
@@ -431,7 +434,8 @@ const SearchPeople = () => {
                                           ) : ''
                                         }
                                       </div>
-                                      <div className="d-flex pt-1">
+
+                                      <div className="d-flex pt-1" >
                                         <div
                                           className="text-start ms-3 mt-2 hover-pointer"
                                           onClick={() => handleChatclick(item)}
@@ -441,10 +445,15 @@ const SearchPeople = () => {
                                             width="40px"
                                           />
                                         </div>
-
-                                        <button type="button" className="btn me-1 flex-grow-1">
-                                          <ViewProfileDrawerForMembers id={item.id} />
-                                        </button>
+                                        {
+                                          item.is_view ? (
+                                            <button type="button" className="btn me-1 flex-grow-1">
+                                              <ViewProfileDrawerForMembers id={item.id} />
+                                            </button>
+                                          ) : (<a className='btn me-1 flex-grow-1 mt-2 text-secondary d-inline'>
+                                            VIEW
+                                          </a>)
+                                        }
                                       </div>
                                     </div>
                                   </div>
@@ -459,8 +468,8 @@ const SearchPeople = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div >
+        </div >
       )}
     </>
   );

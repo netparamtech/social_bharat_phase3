@@ -319,9 +319,11 @@ const SearchUsersWithService = () => {
             <p> Providing Services In - {item.category}</p>
             <div className="row">
               <div className="flex-grow-1">
-                <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                  Occupation :  {item.occupation}
-
+              
+                <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
+                  Occupation-{item.occupation ? item.occupation.length > 50 ? (
+                    item.occupation.slice(0, 50) + "...."
+                  ) : (item.occupation) : ''}
                 </p>
                 <div
                   className="d-flex justify-content-start rounded-3"
@@ -344,7 +346,7 @@ const SearchUsersWithService = () => {
                       : ""}
                   </p>
                 </div>
-                <div
+                {/* <div
                   className="d-flex justify-content-start rounded-3"
                   style={{ backgroundColor: '#efefef' }}
                 >
@@ -374,7 +376,27 @@ const SearchUsersWithService = () => {
                     }
 
                   </p>{" "}
+                </div> */}
+                <div
+                  className="d-flex justify-content-start rounded-3"
+                  style={{ backgroundColor: '#efefef' }}
+                >
+                  <p className="mb-0">
+                    Contact Numbers:
+                    <a href={`tel:${item.mobile1}`}>{item.mobile1}</a>
+                    {item.mobile2 && (
+                      <>
+                        , <a href={`tel:${item.mobile2}`}>{item.mobile2}</a>
+                      </>
+                    )}
+                    {checkMobileVisibility(item.masked_mobile) && (
+                      <>
+                        , <a href={`tel:${item.masked_mobile}`}>{item.masked_mobile}</a>
+                      </>
+                    )}
+                  </p>
                 </div>
+
               </div>
 
 
@@ -482,13 +504,13 @@ const SearchUsersWithService = () => {
                       {
                         cList && cList.length > 0 && cList.map((item, index) => (
                           <a className="hover-pointer text-decoration-none text-light">
-                            <p onClick={() => setSearchText(item)}>{item}</p>
+                            <p onClick={() => setSearchText(item.trim())}>{item}</p>
                           </a>
                         ))
                       }
                     </div>
                     <div>
-                      <i class="fs-4 text-light hover-pointer fa-solid fa-eraser service-filter-clear-button"
+                      <i class="fs-6 text-light hover-pointer fa-solid fa-eraser service-filter-clear-button"
                         style={{ border: '1px solid', padding: '4px', borderRadius: '10px' }}
                         onClick={() => setSearchText('')}
                       > Clear</i>

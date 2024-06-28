@@ -11,6 +11,7 @@ import NotFound from "./NotFound";
 import CreateCurrentJobPage from "./user/pages/CreateCurrentJobPage";
 import UpdateCurrentOpeningPage from "./user/pages/UpdateCurrentOpeningPage";
 const LazyUserRoutes = React.lazy(() => import("./user/UserRoutes"));
+
 function App() {
 
   const isLoading = useSelector((state) => state.loader.isLoaderSet);

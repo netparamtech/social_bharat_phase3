@@ -11,12 +11,11 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import { Divider, Image } from "antd";
-import NewChat from "../chats/NewChat";
-import ViewProfileDrawer from "./ViewProfileDrawer";
+import { Divider } from "antd";
 import { logout } from "../../actions/userAction";
 import GenerateBiodata from "../ProfilePage/GenerateBiodata";
 import MatrimonialCard from "../ProfilePage/MatrimonialCard";
+import MatriChat from "../chats/MatriChat";
 
 const SearchPartner = () => {
   const handlePartnerClick = (e) => {
@@ -426,7 +425,7 @@ const SearchPartner = () => {
   return (
     <>
       {isChat ? (
-        <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
+        <MatriChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeoples-section" className="content-wrapper">
           <div className="mt-3">
@@ -571,18 +570,18 @@ const SearchPartner = () => {
                                 onClick={() => handleClear("search")}
                               />}
                           </div>
-                         <div className="col-md-3 col-11">
-                         {
-                            !isAndroidUsed && <a
-                              title="Add Business"
-                              className="btn btn-secondary w-100 btn-sm mb-2"
-                              onClick={handlePartnerClick}
-                              style={{ width: '100%', maxWidth: '200px', height: '40px' }}
-                            >
-                              ADD MATRIMONIAL
-                            </a>
-                          }
-                         </div>
+                          <div className="col-md-3 col-11">
+                            {
+                              !isAndroidUsed && <a
+                                title="Add Business"
+                                className="btn btn-secondary w-100 btn-sm mb-2"
+                                onClick={handlePartnerClick}
+                                style={{ width: '100%', maxWidth: '200px', height: '40px' }}
+                              >
+                                ADD MATRIMONIAL
+                              </a>
+                            }
+                          </div>
                         </div>
 
                       </div>
@@ -594,7 +593,7 @@ const SearchPartner = () => {
                       className="btn btn-primary btn-sm me-2 hover-pointer search-partner-filter"
                       onClick={() => setIsFilter(!isFilter)}
                     >
-                      <i className="fas fa-filter me-1"></i>{!isFilter?'Hide Filter':'Show Filter'}
+                      <i className="fas fa-filter me-1"></i>{!isFilter ? 'Hide Filter' : 'Show Filter'}
                     </a>
                   </div>
                 </div>
@@ -642,7 +641,7 @@ const SearchPartner = () => {
                         {pair.map((item, innerIndex) => (
 
                           <div className="col-md-6 mt-2" key={innerIndex}>
-                            <div className="card" style={{ borderRadius: '15px' }}>
+                            <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '450px' }}>
                               <div className="card-body p-4 search-partner-cards">
                                 <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                   <div className="flex-shrink-0">
@@ -676,8 +675,11 @@ const SearchPartner = () => {
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                       Job Type-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
                                     </p>
-                                    <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                      Job Description-{item.job_profile_description ? item.job_profile_description : ''}
+
+                                    <p className="mb-2 pb-1 justify-content-start text-wrap break-word" style={{ color: '#2b2a2a' }}>
+                                      Job Details-{item.job_profile_description ? item.job_profile_description.length > 50 ? (
+                                        item.educational_details.slice(0, 50) + "...."
+                                      ) : (item.job_profile_description) : ''}
                                     </p>
                                     <div
                                       className="d-flex justify-content-start rounded-3"
@@ -685,8 +687,10 @@ const SearchPartner = () => {
                                     >
                                       Education-{item.education ? item.education : 'N/A'}
                                     </div>
-                                    <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
-                                      Education Details-{item.educational_details ? item.educational_details : ''}
+                                    <p className="mb-2 pb-1 justify-content-start text-wrap break-word" style={{ color: '#2b2a2a' }}>
+                                      Education Details-{item.educational_details ? item.educational_details.length > 50 ? (
+                                        item.educational_details.slice(0, 50) + "...."
+                                      ) : (item.educational_details) : ''}
                                     </p>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
                                       style={{ backgroundColor: '#efefef' }}

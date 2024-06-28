@@ -19,6 +19,10 @@ const MyEvents = () => {
 
     const [defaultImage, setDefaultImage] = useState('img/de-default-1.jpeg');
 
+    const handleEventSearch = () =>{
+        navigate('/user/search/events')
+    }
+
     const handlePageChange = (page) => {
         setPage(page);
     };
@@ -195,6 +199,11 @@ const MyEvents = () => {
     return (
         <div id="service-section" className="pt-4 mb-5 container">
             {serverError && <span className="error">{serverError}</span>}
+            <div className="mx-auto mb-2">
+                <button className="btn btn-success" 
+                onClick={handleEventSearch}
+                >Search Events</button>
+            </div>
             <Table
                 title={() => 'My Events'}  // Set the title to 'Enquiries'
                 dataSource={data}

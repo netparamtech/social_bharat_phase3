@@ -337,10 +337,10 @@ const CurrentJobOpening = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.role}</td>
-                                        <td>{item.company}<br />{item.city}({item.state})</td>
+                                        <td>{item.company}<br />{item.state?<p>{item.city?item.city:''}{item.city?`(${item.state})`:` ${item.state} (India)`}</p>:'(India)'}</td>
                                         <td>
                                             {
-                                                isDateMoreThan15DaysOld(item.updated_at) ? '' : <p className="infinite-color-animation d-inline-block" style={{marginBottom:'-10px',marginLeft:'30px'}}>new</p>
+                                                isDateMoreThan15DaysOld(item.updated_at) ? '' : <><p className="infinite-color-animation d-inline-block" style={{marginBottom:'-10px',marginLeft:'30px'}}>new</p><br/></>
                                             }
                                             <a href={item.apply_url} target="_blank">
                                                 <button className="current-job-apply" style={{ borderRadius: '20px', border: 'none', padding: '5px', width: '80px' }} type="button">Apply</button>

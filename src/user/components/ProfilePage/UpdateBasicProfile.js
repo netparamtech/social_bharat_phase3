@@ -52,6 +52,8 @@ const UpdateBasicProfile = () => {
   const [qualificationID, setQualificationID] = useState('');
   const [qualificationList, setQualificationList] = useState([]);
   const [jobType, setJobType] = useState(null);
+  const minDate = '1900-01-01';
+  const maxDate = '2015-12-31';
   const maritalStatusOptions = [
     { value: "Single", label: "Single" },
     { value: "Married", label: "Married" },
@@ -494,6 +496,8 @@ const UpdateBasicProfile = () => {
                               className="form-control"
                               value={dob}
                               onChange={(e) => setDOB(e.target.value)}
+                              max={maxDate}
+                              min={minDate}
                             />
                             {errors.dob && (
                               <span className="error">{errors.dob}</span>

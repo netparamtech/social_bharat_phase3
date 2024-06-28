@@ -47,12 +47,11 @@ const SearchBusiness = () => {
   const [message, setMessage] = useState("");
   const [serverError, setServerError] = useState("");
 
-  const [isFilter, setIsFilter] = useState(true);
+  const [isFilter, setIsFilter] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleCategoryChange = (value) => {
-    setData([]);
     setCategory(value);
   }
   const handleIsDetailsClicked = (index) => {
@@ -61,12 +60,6 @@ const SearchBusiness = () => {
       [index]: !prevState[index]
     }));
   }
-
-  useEffect(() => {
-    if (isAndroidUsed) {
-      setIsFilter(false);
-    }
-  }, [isAndroidUsed]);
 
   const loadMoreData = () => {
     setLoading(false);
@@ -108,7 +101,8 @@ const SearchBusiness = () => {
   };
 
   const handleFilterClicked = () => {
-    setIsFilter(!isFilter ? true : false);
+    console.log(isFilter)
+    setIsFilter(!isFilter);
   };
 
   const handleSearchText = (e) => {
@@ -291,100 +285,125 @@ const SearchBusiness = () => {
               <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
             </div>
 
+            {
+              isAndroidUsed && (
+                <a
+                  title="Add Business"
+                  className="btn btn-primary mt-2"
+                  onClick={handleFilterClicked}
+                >
+                  {
+                    isFilter ? 'Hide Filter' : 'Show Filter'
+                  }
+                </a>
+              )
+            }
+
             <div className="row col-12 col-md-12 mt-2">
-              <div className="col-md-3 col-12">
-                <div className="bg-success text-light mx-auto p-2" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
-                <div className="business-more-filter-block mt-2" style={{ overflow: 'scroll', height: '400px' }}>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology')}>Information Technology</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sports')}>Sports</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sales')}>Sales</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Marketing')}>Marketing</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Manufacturing')}>Manufacturing</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Service')}>Service</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Finance')}>Finance</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Real Estate')}>Real Estate</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Healthcare')}>Healthcare</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Transportation and Logistics')}>Transportation and Logistics</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Hospitality')}>Hospitality</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Education')}>Education</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Nonprofit Organization')}>Nonprofit Organization</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Polity')}>Polity</p>
-                  <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Other')}>Other</p>
 
-                </div>
+              {
+                (isAndroidUsed && isFilter) || !isAndroidUsed ? (
+                  <>
+                    <div className="col-md-3 col-12">
+                      <div className="bg-success text-light mx-auto p-2" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
+                      <div className="business-more-filter-block mt-2" style={{ overflow: 'scroll', height: '400px' }}>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology (IT)')}>Information Technology (IT)</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sports')}>Sports</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sales')}>Sales</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Marketing')}>Marketing</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Manufacturing')}>Manufacturing</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Service')}>Service</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Finance')}>Finance</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Real Estate')}>Real Estate</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Healthcare')}>Healthcare</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Transportation and Logistics')}>Transportation and Logistics</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Hospitality')}>Hospitality</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Education')}>Education</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Nonprofit Organization')}>Nonprofit Organization</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Polity')}>Polity</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Other')}>Other</p>
 
-              </div>
-              <div className="col-md-3 col-12">
-
-                <div className="row p-4">
-
-                  <a
-                    title="Add Business"
-                    className="btn btn-primary mt-2"
-                    onClick={handlePromoteBusinessClick}
-                  >
-                    Promote Your Business{" "}
-                  </a>
-                  <div className="mt-3">
-                    <div>
-                      <div className=" mb-3">
-                        <Select
-                          options={states.map((state) => ({
-                            value: state.name,
-                            label: state.name,
-                          }))}
-                          value={selectedState}
-                          onChange={handleStateChange}
-                          placeholder="State"
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <Select
-                          options={cities.map((city) => ({
-                            value: city.name,
-                            label: city.name,
-                          }))}
-                          value={selectedCity}
-                          onChange={handleCityChange}
-                          placeholder="City"
-                        />
-                      </div>
-
-                      <div className="mb-3 position-relative">
-                        <div className="input-group">
-                          <input
-                            type="text"
-                            placeholder="Search Business by name, category, state, city, user name, address, google map"
-                            name="text"
-                            className="input form-control"
-                            value={searchText}
-                            onChange={handleSearchText}
-                          />
-                          <span className="input-group-text">
-                            <i className="fas fa-search ps-2"></i>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="mx-auto text-danger p-4">You Are Searching In
-                        {city ? (
-                          <p>
-                            {city}
-                            {state && `(${state})`}
-                          </p>
-                        ) : (
-                          <p>{state && `state - ${state}`}</p>
-                        )}
-                        {
-                          category && <p>category -  {category ? category : ''}</p>
-                        }
                       </div>
 
                     </div>
-                  </div>
-                </div>
+                    <div className="col-md-3 col-12">
 
-              </div>
+                      <div className="row p-4">
+
+                        <a
+                          title="Add Business"
+                          className="btn btn-primary mt-2"
+                          onClick={handlePromoteBusinessClick}
+                        >
+                          Promote Your Business{" "}
+                        </a>
+                        <div className="mt-3">
+                          <div>
+                            <div className=" mb-3">
+                              <Select
+                                options={states.map((state) => ({
+                                  value: state.name,
+                                  label: state.name,
+                                }))}
+                                value={selectedState}
+                                onChange={handleStateChange}
+                                placeholder="State"
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <Select
+                                options={cities.map((city) => ({
+                                  value: city.name,
+                                  label: city.name,
+                                }))}
+                                value={selectedCity}
+                                onChange={handleCityChange}
+                                placeholder="City"
+                              />
+                            </div>
+
+                            <div className="mb-3 position-relative">
+                              <div className="input-group">
+                                <input
+                                  type="text"
+                                  placeholder="Search Business by name, category, state, city, user name, address, google map"
+                                  name="text"
+                                  className="input form-control"
+                                  value={searchText}
+                                  onChange={handleSearchText}
+                                />
+                                <span className="input-group-text">
+                                  <i className="fas fa-search ps-2"></i>
+                                </span>
+                              </div>
+                            </div>
+                            <div>
+                              <a className="hover-pointer" onClick={() => navigate('/profile')}><p>Manage Your Business Profile</p></a>
+                            </div>
+                            <div className="mx-auto text-danger p-4">You Are Searching In
+                              {city ? (
+                                <p>
+                                  {city}
+                                  {state && `(${state})`}
+                                </p>
+                              ) : (
+                                <p>{state && `state - ${state}`}</p>
+                              )}
+                              {
+                                category && <p>category -  {category ? category : ''}</p>
+                              }
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </>
+                ) : ''
+              }
+
               <div className="col-md-6 col-12 mx-auto">
                 <div className="scrollableDiv" id="scrollableDiv"
                   style={{
@@ -420,7 +439,7 @@ const SearchBusiness = () => {
                                 <p className='text-info'>({item.business_category})</p>
                                 <p>
                                   <span className="text-muted" dangerouslySetInnerHTML={{
-                                    __html: item && item.description&&item.description.length > 400
+                                    __html: item && item.description && item.description.length > 400
                                       ? `${item.description.slice(0, 400)}...`
                                       : item.description,
                                   }}></span>

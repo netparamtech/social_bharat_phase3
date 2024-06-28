@@ -177,6 +177,13 @@ function Jobs() {
             dispatch(setLoader(false));
         }
     };
+    function formatFeeDetails(feeDetails) {
+        return feeDetails
+            .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;') // Replace tab characters with non-breaking spaces
+            .replace(/\n/g, '<br />'); // Replace newline characters with <br /> tags
+    }
+
+
     useEffect(() => {
         if (isResume) {
             fetchOtherDetails();
@@ -257,7 +264,7 @@ function Jobs() {
         setSearchText('');
         setSelectedState(null);
         setSelectedCity(null);
-        activeNavItem('');
+        setActiveNavItem('All');
     }
 
     const loadMoreData = () => {
@@ -885,17 +892,40 @@ function Jobs() {
     const handleCancelForContact = () => {
         setIsContactUsClicked(false);
     };
+    function addTargetBlank(description) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(description, 'text/html');
+        const links = doc.querySelectorAll('a');
+        links.forEach(link => {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        });
+        return doc.body.innerHTML;
+    }
+
     return (
         <div id="job-board-section" className="pt-2">
             <Layout className="container card mx-auto ">
                 <div className="row d-flex search-partner-cards">
+                    {
+                        isAndroidUsed && (
+                            <div id="current-job-section" className="col-12 col-md-5 mt-2">
+                                <div className="col-12 mb-3 search-partner-cards" >
+                                    <div className="">
+                                        <h4 className="text-danger">Current Openings</h4>
+                                        <div className="">
+                                            <CurrentJobOpening />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
                     <div className="col-md-2 col-12  " >
-                        {/* <div className="logo">
-          <img src="/user/images/sb-logo.png" className=" alt="Logo" />
-        </div> */}
+
                         <Menu mode={isAndroidUsed ? 'horizontal' : 'vertical'} theme="light" defaultSelectedKeys={["dashboard"]} >
                             <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
-                                <Link onClick={handleJobBoardClicked}>JOB BOARD</Link>
+                                <a onClick={() => handleJobBoardClicked()}>JOB BOARD</a>
                             </Menu.Item>
                             <Menu.Item key="communities">
                                 <Link onClick={() => handleNavItemClick('All')}>ALL</Link>
@@ -908,6 +938,9 @@ function Jobs() {
                             </Menu.Item>
                             <Menu.Item key="degrees">
                                 <Link onClick={() => handleNavItemClick('Freelance')}>FREELANCE</Link>
+                            </Menu.Item>
+                            <Menu.Item key="government">
+                                <Link onClick={() => handleNavItemClick('Govern')}>GOVERNMENTS</Link>
                             </Menu.Item>
                             <Menu.Item key="users">
                                 <Link onClick={() => handleNavItemClick('Other')}>OTHERS</Link>
@@ -1012,13 +1045,25 @@ function Jobs() {
                     </div>
                     <div className="col-12 col-md-5 mx-auto search-partner-cards">
                         <div className="container">
-                            <div className="">
+                            <div className="mt-2">
                                 <div className="d-flex justify-content-between">
                                     <h4>Job Board</h4>
+                                    {(searchText || selectedCity || selectedState) && (
+                                        <button
+                                            type="button"
+                                            className="mt-3 hover-pointer-red"
+                                            style={{ borderRadius: '5px' }}
+                                            onClick={handleJobBoardClicked}
+                                        >
+                                            Clear
+                                        </button>
+                                    )}
                                 </div>
-                                <p className="">You are searching {searchText ? [searchText] : ''} for-{activeNavItem} jobs in state-
+                                <p className="">
+                                    You are searching {searchText ? [searchText] : ''} for-{activeNavItem} jobs in state-
                                     {selectedState ? selectedState.label : "All"} and city-
-                                    {selectedCity ? selectedCity.label : "All"}</p>
+                                    {selectedCity ? selectedCity.label : "All"}
+                                </p>
 
                                 <div className="row mb-4">
 
@@ -1099,12 +1144,20 @@ function Jobs() {
                                     {
                                         dataStatic && dataStatic.map((item, index) => (
                                             <div key={index} className={`card ${isDetails[index] ? 'rotate-card' : ''}`} >
-                                                <img className={`card-img-top ${isDetails[index] ? 'hidden' : ''}`} src={checkUrl(item.logo) ? item.logo : (userPhoto ? userPhoto : defaultUserImage)} alt="Card image cap" style={{ width: isAndroidUsed ? '40px' : '100px', height: isAndroidUsed ? '40px' : '100px', marginTop: '30px', marginLeft: '10px' }} />
+                                                <img className={`card-img-top ${isDetails[index] ? 'hidden' : ''}`} src={checkUrl(item.logo) ? item.logo : defaultUserImage} alt="Card image cap" style={{ width: isAndroidUsed ? '40px' : '100px', height: isAndroidUsed ? '40px' : '100px', marginTop: '30px', marginLeft: '10px' }} />
                                                 <div className="card-body">
                                                     <div className={`section1 ${isDetails[index] ? 'hidden' : ''}`}>
                                                         <h5 className="card-title">{item.job_title}</h5>
                                                         <p className="card-text">{item.job_subheading}</p>
-                                                        <p className="card-text m-2 fw-bold">Jaipur(Rajasthan)</p>
+                                                        {
+                                                            item.state ? (
+                                                                <p className="card-text fw-bold">
+                                                                    {
+                                                                        item.city ? `${item.city}(${item.state})` : item.state
+                                                                    }
+                                                                </p>
+                                                            ) : ''
+                                                        }
                                                         <a href="#" className="btn" onClick={() => handleIsDetailsClicked(index)}>View Details</a>
                                                     </div>
                                                     <div className={`top-0 job-time-zone text-muted end-0 position-absolute section2 ${isDetails[index] ? 'hidden' : ''}`}>
@@ -1264,7 +1317,7 @@ function Jobs() {
                                                                 width={60}
                                                             />
                                                         </div>
-                                                        <div className="col-md-7 col-sm-8" style={{ alignItems: 'center' }}>
+                                                        <div className="col-md-12 col-sm-8" style={{ alignItems: 'center' }}>
                                                             <div className="row mt-2">
                                                                 <div className="col-md-12">
                                                                     <p className="m-0">
@@ -1280,82 +1333,93 @@ function Jobs() {
                                                                     { }
                                                                 </div>
 
-                                                                <div className="col-md-12">
-                                                                    {/* Display Job Start Date */}
-                                                                    <p className="m-0">
-                                                                        <b>Application Start : </b>
-                                                                        {formatDate(item.job_start_date)}
-                                                                    </p>
+                                                                <div className="row">
+                                                                    <div className="col-md-6">
+                                                                        {/* Display Job Start Date */}
+                                                                        <p className="m-0">
+                                                                            <b>Application Start : </b>
+                                                                            {formatDate(item.job_start_date)}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="col-md-6">
+                                                                        {/* Display Job End Date */}
+                                                                        <p className="m-0">
+                                                                            <b>Expire Date : </b>
+                                                                            {formatDate(item.job_end_date)}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
-                                                                <div className="col-md-12">
-                                                                    {/* Display Job End Date */}
-                                                                    <p className="m-0">
-                                                                        <b>Expire Date : </b>
-                                                                        {formatDate(item.job_end_date)}
-                                                                    </p>
+                                                                <div className="row">
+                                                                    <div className="col-lg-6 col-sm-6 ">
+                                                                        <p className="">
+                                                                            <b>Sector : </b>
+                                                                            {item.job_sector}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className="col-lg-6 col-sm-6">
+                                                                        <p>
+                                                                            {" "}
+                                                                            <b>Job Type : </b>
+                                                                            {item.job_type}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row">
+                                                                    {item.location ? (
+                                                                        <>
+                                                                            <div className="col-lg-6 col-sm-6">
+                                                                                <p className="">
+                                                                                    <b>Company Address : </b>
+                                                                                    {item.location}
+                                                                                </p>
+                                                                            </div>
+
+                                                                            <div className="col-lg-6 col-sm-6">
+                                                                                <p className="">
+                                                                                    <b>Location : </b>
+                                                                                    {`${item.state
+                                                                                        ? `${item.city}(${item.state})`
+                                                                                        : ""
+                                                                                        }`}
+                                                                                </p>
+                                                                            </div>
+                                                                        </>
+                                                                    ) : (
+                                                                        ""
+                                                                    )}
+                                                                </div>
+                                                                <div className="row">
+
+                                                                    {
+                                                                        checkUrl(item.attachment) ? (
+                                                                            <p className="row col-12">
+                                                                                <span className="col-5">
+                                                                                    <b> Attachment :</b>
+                                                                                </span>
+                                                                                {item.attachment && (
+                                                                                    <span className="col-7">
+                                                                                        <a
+                                                                                            href={item.attachment}
+                                                                                            download={`${item.job_title}.pdf`}
+                                                                                            target="_blank"
+                                                                                        >
+                                                                                            <i className="fa-regular fa-file-lines"></i> Download Attachment
+                                                                                        </a>
+
+                                                                                    </span>
+                                                                                )}
+                                                                            </p>
+
+
+                                                                        ) : ''
+                                                                    }
+
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <div className="col-lg-6 col-sm-6 ">
-                                                                <p className="">
-                                                                    <b>Sector : </b>
-                                                                    {item.job_sector}
-                                                                </p>
-                                                            </div>
-                                                            <div className="col-lg-6 col-sm-6">
-                                                                <p>
-                                                                    {" "}
-                                                                    <b>Job Type : </b>
-                                                                    {item.job_type}
-                                                                </p>
-                                                            </div>
-                                                            {item.location ? (
-                                                                <>
-                                                                    <div className="col-lg-6 col-sm-6">
-                                                                        <p className="">
-                                                                            <b>Company Address : </b>
-                                                                            {item.location}
-                                                                        </p>
-                                                                    </div>
-
-                                                                    <div className="col-lg-6 col-sm-6">
-                                                                        <p className="">
-                                                                            <b>Location : </b>
-                                                                            {`${item.state
-                                                                                ? `${item.city}(${item.state})`
-                                                                                : ""
-                                                                                }`}
-                                                                        </p>
-                                                                    </div>
-                                                                </>
-                                                            ) : (
-                                                                ""
-                                                            )}
-
-                                                            {
-                                                                checkUrl(item.attachment) ? (
-                                                                    <p className="row col-12">
-                                                                        <span className="col-5">
-                                                                            <b> Attachment :</b>
-                                                                        </span>
-                                                                        {item.attachment && (
-                                                                            <span className="col-7">
-                                                                                <a
-                                                                                    href={item.attachment}
-                                                                                    download={`${item.job_title}.pdf`}
-                                                                                    target="_blank"
-                                                                                >
-                                                                                    <i className="fa-regular fa-file-lines"></i> Download Attachment
-                                                                                </a>
-
-                                                                            </span>
-                                                                        )}
-                                                                    </p>
 
 
-                                                                ) : ''
-                                                            }
                                                             {
                                                                 item.apply_link ? (
                                                                     <div className="row m-1">
@@ -1372,15 +1436,32 @@ function Jobs() {
 
                                                                 ) : ""
                                                             }
+                                                            {
+                                                                item.fee_details ? (
+                                                                    <div className="row m-1">
+                                                                        <div className="col-12 col-md-6">
+                                                                            <b>Fee Details:</b>
+                                                                        </div>
+                                                                        <div className="col-12" dangerouslySetInnerHTML={{
+                                                                            __html: formatFeeDetails(item.fee_details)
+                                                                        }}>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                ) : ""
+                                                            }
                                                             <div key={index} className="row m-1">
                                                                 <div className="col-12 col-md-6"><b>Description :</b></div>
                                                                 <div className="col-12">
-                                                                    <p
-                                                                        className=""
+                                                                    <div
                                                                         dangerouslySetInnerHTML={{
-                                                                            __html: selectedIndex === index ? item.description : `${item && item.description && item.description.slice(0, 300)}<span style='color: gray;'>${item.description.length > 300 ? '...' : ''}</span>`
+                                                                            __html: selectedIndex === index
+                                                                                ? addTargetBlank(item.description)
+                                                                                : `${item && item.description && item.description.slice(0, 300)}<span style='color: gray;'>${item.description.length > 300 ? '...' : ''}</span>`
                                                                         }}
-                                                                    ></p>
+                                                                    />
                                                                     {
                                                                         item.description.length > 300 && <button className="mx-auto over-pointer-g-effect" onClick={() => toggleDescription(index)}>
                                                                             {selectedIndex === index ? 'Show Less' : 'Show More'}
@@ -1402,17 +1483,18 @@ function Jobs() {
                             </div>
                         </div>
                     </div>
-                    <div id="current-job-section" className="col-12 col-md-5 mt-2">
-                        <div className="col-12 mb-3 search-partner-cards" >
-                            <div className="">
-                                <h4 className="text-danger">Current Openings</h4>
+                    {!isAndroidUsed && (
+                        <div id="current-job-section" className="col-12 col-md-5 mt-2">
+                            <div className="col-12 mb-3 search-partner-cards" >
                                 <div className="">
-                                    <CurrentJobOpening />
+                                    <h4 className="text-danger">Current Openings</h4>
+                                    <div className="">
+                                        <CurrentJobOpening />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                    )}
                 </div>
             </Layout>
         </div>

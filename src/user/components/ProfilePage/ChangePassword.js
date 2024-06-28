@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import PasswordField from '../custom/PasswordField';
 
 const ChangePassword = () => {
 
@@ -59,7 +60,7 @@ const ChangePassword = () => {
     return (
         <div id="auth-wrapper" className="pt-5 pb-5">
             <div id="changePassword" className="container">
-                <div className = {`card shadow mx-auto ${errors ? 'border-danger':''}`}>
+                <div className={`card shadow mx-auto ${errors ? 'border-danger' : ''}`}>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-12 col-sm-12 col-xs-12 p-5">
@@ -69,26 +70,14 @@ const ChangePassword = () => {
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
-                                        <Input.Password
-                                            type="password"
-                                            name="newPassword"
-                                            id="newPassword"
-                                            placeholder="Enter New Password"
-                                            className="input-height"
-                                            onChange={handlePasswordChange}
-                                        />
-                                        {errors.password && <span className='error'>{errors.password}</span>}
+                                        <PasswordField handleChange={handlePasswordChange} errorServer={errors.password}
+                                            fieldName="Password" isRequired={true} value={password} placeholder="Enter New Password" 
+                                            minLength={6} />
                                     </div>
                                     <div className="row mb-3">
-                                        <Input.Password
-                                            type="password"
-                                            name="cPassword"
-                                            id="cPassword"
-                                            placeholder="Enter Confirm Password"
-                                            className="input-height"
-                                            onChange={handleConfirmPasswordChange}
-                                        />
-                                        {errors.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
+                                        <PasswordField handleChange={handleConfirmPasswordChange} errorServer={errors.confirmPassword}
+                                            fieldName="Confirm password" isRequired={true} value={confirmPassword} placeholder="Enter Confirm Password"
+                                            minLength={6} />
                                     </div>
                                     <div className="row mb-3">
                                         <button type="submit" className="btn btn-primary">

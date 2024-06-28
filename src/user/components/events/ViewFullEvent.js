@@ -74,7 +74,7 @@ const ViewFullEvent = (props) => {
                         <div class="card-body text-center">
                             <span onClick={() => changeEventClickFlag(false)} class="position-absolute top-0 end-0 mt-2 me-2">
                                 {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
-                            <button className="hover-pointer-red round-button-delete"><i class="fa fa-remove"></i></button>
+                                <button className="hover-pointer-red round-button-delete"><i class="fa fa-remove"></i></button>
                             </span>
                             <img src={data.photo ? data.photo : "/user/images/OIP.jpg"} alt="avatar"
                                 class="rounded-circle img-fluid" width={150} />
@@ -82,10 +82,7 @@ const ViewFullEvent = (props) => {
                             <p class="text-muted mb-1">{data.occupation && data.occupation}</p>
                             <p class="text-muted mb-4">{data && data.native_place_city}</p>
                             <p class="text-muted mb-4">Email-{data && data.email}</p>
-                            {/* <div class="d-flex justify-content-center mb-2">
-                                <button type="button" class="btn btn-primary">Follow</button>
-                                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-                            </div> */}
+                          
                         </div>
                     </div>
                 </div>
@@ -206,11 +203,14 @@ const ViewFullEvent = (props) => {
                             </div>
                         </div>
                         {
-                            data && data.description ? (
-                                <div className="card-footer">
-                                    <p className="fs-5 fw-bold">{data && data.title}</p>
-                                    
-                                    {data.description}</div>
+                            data && data.DESCRIPTION ? (
+                                <div className="card-body">
+                                    <div className=""
+                                        dangerouslySetInnerHTML={{
+                                            __html: data.DESCRIPTION,
+                                        }}
+                                    />
+                                </div>
                             ) : ''
                         }
                     </div>

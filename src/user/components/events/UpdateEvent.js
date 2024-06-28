@@ -14,6 +14,10 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { toast } from "react-toastify";
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const UpdateEvent = () => {
     const { id } = useParams();
@@ -27,6 +31,7 @@ const UpdateEvent = () => {
 
     const [thumbnailImageTempUrl, setThumbnailImageTempUrl] = useState("");
     const [bannerImageTempUrl, setBannerImageTempUrl] = useState("");
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const [selectedCountry, setSelectedCountry] = useState("India");
     const [selectedState, setSelectedState] = useState(""); // Change state to selectedState
@@ -53,6 +58,9 @@ const UpdateEvent = () => {
         { value: "Communited", label: "Only For MY Community" },
         { value: "General", label: "General(For All Communities)" },
     ];
+    const onEditorStateChange = (editorState) => {
+        setEditorState(editorState);
+    };
 
     const handleStartDateTimeChange = (date, dateString) => {
         setStartDateTime(dateString); // Update startDateTime with the selected date and time
@@ -192,7 +200,7 @@ const UpdateEvent = () => {
                 });
                 setSelectedEventType({
                     value: data.event_type,
-                    label: data.event_type==='General'?'General(For All Communities)':'Only For MY Community',
+                    label: data.event_type === 'General' ? 'General(For All Communities)' : 'Only For MY Community',
                 });
             }
             setStartDateTime(data.start_datetime);
@@ -202,7 +210,13 @@ const UpdateEvent = () => {
             setBannerImageTempUrl(data.banner_image);
             setThumbnailPreview(data.thumb_image);
             setBannerPreview(data.banner_image);
-            setDescription(data.description);
+            if (data.DESCRIPTION) {
+                const blocksFromHTML = convertFromHTML(data.DESCRIPTION);
+                const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+                const editorStateFromFetchedData = EditorState.createWithContent(contentState);
+                setEditorState(editorStateFromFetchedData);
+
+            }
         }
     }, [data]);
 
@@ -267,6 +281,10 @@ const UpdateEvent = () => {
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
 
+        const contentState = editorState.getCurrentContent();
+        const rawContentState = convertToRaw(contentState);
+        const htmlContent = draftToHtml(rawContentState);
+
         const data = {
             event_type: selectedEventType && selectedEventType.value,
             title,
@@ -278,7 +296,7 @@ const UpdateEvent = () => {
             end_datetime: formattedEndDateTime,
             banner_image: bannerImageTempUrl,
             thumb_image: thumbnailImageTempUrl,
-            description,
+            description: htmlContent,
         };
 
         try {
@@ -525,14 +543,14 @@ const UpdateEvent = () => {
                                                     />
                                                 )}
                                             </div>
-                                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                                <label htmlFor="description">Description</label>
-                                                <textarea
-                                                    type="area"
-                                                    placeholder="Enter Your Event Details If Any"
-                                                    className="form-control mt-2"
-                                                    defaultValue={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
+                                          
+                                            <div className="col-sm-6 col-12 mx-auto">
+                                                <Editor
+                                                    editorState={editorState}
+                                                    onEditorStateChange={onEditorStateChange}
+                                                    wrapperClassName="wrapper-class"
+                                                    editorClassName="editor-class custom-editor-height editor-border p-2"
+                                                    toolbarClassName="toolbar-class toolbar-border"
                                                 />
                                                 {errors && errors.description && (
                                                     <span className="error">{errors.description}</span>

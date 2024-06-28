@@ -1265,11 +1265,32 @@ export const receiveMessage = async (id) => {
   }
 };
 
+//all messages of logged user
+export const receiveMessageAll = async () => {
+  try {
+    const response = await apiWithHeaders.get('/chat/messages/chated');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //toggle-mobile-visiblity
 export const toggleMobile = async (id) => {
   try {
     const response = await apiWithHeaders.put(
       "/users/settings/toggle-mobile-visiblity"
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+//toggle-view-visiblity
+export const toggleView = async (id) => {
+  try {
+    const response = await apiWithHeaders.put(
+      "/users/settings/toggle-view-visiblity"
     );
     return response;
   } catch (error) {

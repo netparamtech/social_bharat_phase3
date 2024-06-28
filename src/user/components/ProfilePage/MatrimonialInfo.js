@@ -38,21 +38,11 @@ const MatrimonialInfo = () => {
       setMatrimonialDetails(filteredData);
     }
   }, [searchText]);
-
+  
   function getRandomColor() {
-    const characters = "1234567890ABCDEF";
-    let color = "#";
-
-    // Loop until a valid color is generated
-    do {
-      // Generate six random characters from the 'characters' string
-      for (let i = 0; i < 6; i++) {
-        color += characters[Math.floor(Math.random() * characters.length)];
-      }
-      // Exclude black, white, and red
-    } while (color === "#000000" || color === "#FFFFFF" || color === "#FF0000");
-
-    return color;
+    const colors = ["#6c757d", "#afeeee", "#8b4513", "#ff69b4", "#ffa07a", "#90ee90", "#a0522d", "#000080"];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
   }
 
   const navigate = useNavigate();
@@ -161,7 +151,7 @@ const MatrimonialInfo = () => {
             </a>
           </div>
           {serverError && <p className="fs-4 text-danger">{serverError}</p>}
-          <div className="row m-2" style={{maxHeight:'400px',overflow:'scroll'}}>
+          <div className="row m-2" style={{ maxHeight: '400px', overflow: 'scroll' }}>
             {
               isSearch && (
                 <div className="col-xl-3 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s' }}>

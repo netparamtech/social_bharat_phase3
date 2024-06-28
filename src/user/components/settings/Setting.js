@@ -1,6 +1,6 @@
 import { Switch } from "antd";
 import { useEffect, useState } from "react";
-import { getUserFullProfile, toggleMobile } from "../../services/userService";
+import { getUserFullProfile, toggleMobile, toggleView } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
@@ -12,6 +12,7 @@ const Setting = () => {
   const [alertClass, setAlertClass] = useState("");
 
   const [isMobileVisible, setIsMobileVisible] = useState(false);
+  const [isViewVisible, setIsViewVisible] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,10 +59,34 @@ const Setting = () => {
       dispatch(setLoader(false));
     }
   }
+  const handleToggleChangeForViewButton = async () => {
+    setIsViewVisible(!isViewVisible);
+    dispatch(setLoader(false));
+    try {
+      const response = await toggleView();
+      if (response && response.status === 200) {
+        setMessage(response.data.message);
+
+      }
+    } catch (error) {
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
   useEffect(() => {
     if (user && user.data && user.data.mobile) {
       const isHidden = /\*/.test(user.data.mobile);
       setIsMobileVisible(!isHidden);
+    }
+    if (user && user.data && user.data.is_view) {
+      setIsViewVisible(user.data.is_view);
     }
   }, [user]);
 
@@ -92,6 +117,20 @@ const Setting = () => {
                   <Switch
                     checked={isMobileVisible}
                     onChange={handleToggleChangeForMobile}
+                  />
+
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-start">
+                  <div className="ms-2 me-auto">
+                    <div className=" text-setting-page">Public / Private Profile</div>
+                    <label className="text-muted">
+                      Allow to show your profile visible to others
+                    </label>
+                  </div>
+
+                  <Switch
+                    checked={isViewVisible}
+                    onChange={handleToggleChangeForViewButton}
                   />
 
                 </li>

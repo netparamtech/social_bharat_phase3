@@ -6,6 +6,7 @@ import { fetchOneCommunity, userLogout } from '../../services/userService';
 import { setLoader } from '../../actions/loaderAction';
 import BharatMandirDrawer from './BharatMandirDrawer';
 import { logout } from '../../actions/userAction';
+import { WechatOutlined } from '@ant-design/icons';
 function UserNavDropdown() {
     const { id } = useParams();
 
@@ -155,6 +156,7 @@ function UserNavDropdown() {
                     ) : (
                         <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
                     )}
+                   
                     {/* <span className=''><span className={isAndroidUsed ? 'd-none' : ''} >Hi</span> {!isAndroidUsed && shortenName(userName.toUpperCase(), 8)}</span> */}
                 </span>
             </Dropdown.Toggle>

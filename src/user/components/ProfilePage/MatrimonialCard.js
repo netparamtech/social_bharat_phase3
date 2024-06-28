@@ -1,5 +1,5 @@
 import { Image } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -7,7 +7,8 @@ import Carousel from 'react-bootstrap/Carousel';
 
 const MatrimonialCard = ({ item, index }) => {
     const [show, setShow] = useState(false);
-    const [isHindi, setIsHindi] = useState(false)
+    const [isHindi, setIsHindi] = useState(false);
+    const [isAndroidUsed, setIsAndroidUsed] = useState(false);
     const navigate = useNavigate();
 
     const handleClose = () => setShow(false);
@@ -26,16 +27,34 @@ const MatrimonialCard = ({ item, index }) => {
             .split('/');
         return `${month}-${day}-${year}`;
     };
+    useEffect(() => {
+        const handleResize = () => {
+            setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
+        };
+
+        // Listen for window resize events
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Call initially to set the correct value
+
+        // Cleanup the event listener when component is unmounted
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     return (
         <>
             <a className="text-dark mt-3 hover-pointer-admin" onClick={handleShow} title='View'
                 style={{ border: '1px solid', backgroundColor: 'greenyellow', borderRadius: '20px', padding: '4px', alignContent: 'center', textDecoration: 'none' }} >
                 VIEW
-                <img
-                    src="/user/images/eye.png"
-                    width="20px" height={20}
-                />
+                {
+                    isAndroidUsed ? '' : (
+                        <img
+                            src="/user/images/eye.png"
+                            width="20px" height={20}
+                        />
+                    )
+                }
             </a>
             <Modal
                 show={show}
@@ -69,7 +88,7 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>Mother Name: <span className="text-muted">{(item.mother_name) || "N/A"}</span></p>
                                                 <p>Manglic: <span className="text-muted">{item.is_manglik || "N/A"}</span></p>
                                                 <p>Height: <span className="text-muted">{item.height_in_feet} ft</span></p>
-                                                <p>Package/Salary: <span className="text-muted">{(item.salary_package ? (item.salary_package === 'none') ? "N/A" : item.salary_package : "N/A")}</span></p>
+                                                <p>Package/Salary (Annual): <span className="text-muted">{item.salary_package}</span></p>
                                                 <p>Date Of Birth: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>Education: <span className="text-muted">{(item.education) || "N/A"}</span></p>
                                                 <p>Education Details: <span className="text-muted">{item.educational_details ? item.educational_details : ''}</span></p>
@@ -126,7 +145,7 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>मां का नाम: <span className="text-muted">{(item.mother_name) || "N/A"}</span></p>
                                                 <p>मांगलिक: <span className="text-muted">{item.is_manglik || "N/A"}</span></p>
                                                 <p>ऊचाई: <span className="text-muted">{item.height_in_feet} ft</span></p>
-                                                <p>पैकेज/वेतन: <span className="text-muted">{(item.salary_package ? (item.salary_package === 'none') ? "N/A" : item.salary_package : "N/A")}</span></p>
+                                                <p>पैकेज/वेतन (वार्षिक): <span className="text-muted">{item.salary_package}</span></p>
                                                 <p>जन्म तिथि: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>शिक्षा: <span className="text-muted">{(item.education) || "N/A"}</span></p>
                                                 <p>नौकरी की प्रोफाइल: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>

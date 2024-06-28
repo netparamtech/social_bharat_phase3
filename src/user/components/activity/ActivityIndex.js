@@ -257,7 +257,7 @@ const ActivityIndex = () => {
                     className="btn btn-primary btn-sm me-2 hover-pointer filter-activity mb-2"
                     onClick={toggleFilter}
                   >
-                    <i className="fas fa-filter me-1"></i>{isFilter?'Hide Filter':'Filter More'}
+                    <i className="fas fa-filter me-1"></i>{isFilter ? 'Hide Filter' : 'Filter More'}
                   </a>
                   <Search
                     classNames=""
@@ -282,7 +282,7 @@ const ActivityIndex = () => {
                       <div className="bg-success text-light mx-auto" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
                       <div className="activities-filter-container mx-auto" style={{ overflow: 'scroll', height: '200px' }}>
                         <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology')}>Information Technology</p>
+                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology (IT)')}>Information Technology (IT)</p>
                         <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sports')}>Sports</p>
                         <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sales')}>Sales</p>
                         <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Marketing')}>Marketing</p>
@@ -349,7 +349,7 @@ const ActivityIndex = () => {
                                 <div className="search-partner-cards">
                                   <Card
                                     className="  mb-1"
-                                    // style={{ height: item.photo ? '500px' : '' }}
+                                  // style={{ height: item.photo ? '500px' : '' }}
                                   >
                                     <div className="d-flex justify-content-between">
                                       <Meta
@@ -425,7 +425,6 @@ const ActivityIndex = () => {
                                       </NavDropdown>
                                     </div>
                                     <div className="fs-4 m-2">{item.title}</div>
-
                                     {item.photo &&
                                       Array.isArray(item.photo) &&
                                       item.photo.length > 0 ? (

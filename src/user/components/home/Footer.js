@@ -17,7 +17,7 @@ const Footer = (props) => {
 
   const handleHomeClick = () => {
     if (isAuthenticUser) {
-      isPasswordSet ? navigate("/dashboard") : navigate("/set-password");
+      isPasswordSet ? navigate("/") : navigate("/set-password");
     } else {
       navigate("/");
     }

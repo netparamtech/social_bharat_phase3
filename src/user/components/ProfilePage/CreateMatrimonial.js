@@ -16,6 +16,8 @@ import { DatePicker } from "antd";
 import dayjs from 'dayjs';
 import { yyyyMmDdFormat } from "../../util/DateConvertor";
 import { setLoader } from "../../actions/loaderAction";
+import MobileInput from "../custom/MobileInput";
+import InputField from "../custom/InputField";
 
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
@@ -56,7 +58,7 @@ const CreateMatrimonial = () => {
   const [numSisters, setNumSisters] = useState(0); // Number of sisters
   const [brothersDetails, setBrothersDetails] = useState(''); // Details of brothers
   const [sistersDetails, setSistersDetails] = useState('');
-  const [packageValue, setPackageValue] = useState(''); // Change to null for react-select
+  const [packageValue, setPackageValue] = useState(0); // Change to null for react-select
   const [showBrotherDetail, setShowBrotherDetail] = useState(false);
   const [showSisterDetail, setShowSisterDetail] = useState(false);
 
@@ -100,6 +102,12 @@ const CreateMatrimonial = () => {
   const [mobile, setMobile] = useState('');
   const [jobProfileDesc, setJobProfileDesc] = useState('');
   const [educaDetails, setEducaDetails] = useState('');
+  const [unit, setUnit] = useState('lakh'); // Default unit is "lakh"
+
+  const handleUnitChange = (event) => {
+    console.log(packageValue,unit)
+    setUnit(event.target.value);
+  };
 
   const navigate = useNavigate();
 
@@ -292,6 +300,7 @@ const CreateMatrimonial = () => {
 
     const trimmedTempProposalPhotoUrl = tempProposalPhotoUrl.map(item => item.trim()).filter((item) => item !== '');
     console.log(trimmedTempProposalPhotoUrl.length, "Check create length")
+    console.log(packageValue,unit)
 
     const matrimonialData = {
       father_name: fatherName,
@@ -305,7 +314,7 @@ const CreateMatrimonial = () => {
       sister_count: sisterCount ? sisterCount : 0,
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
-      salary_package: packageValue ? packageValue : '',
+      salary_package: packageValue ? (packageValue+" "+unit) : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_name: matrimonialProfileName,
       matrimonial_profile_dob: dob,
@@ -318,7 +327,7 @@ const CreateMatrimonial = () => {
       matrimonial_profile_name: matrimonialProfileName,
       description,
       contact_number: mobile,
-      educational_details:educaDetails,
+      educational_details: educaDetails,
       job_profile_description: jobProfileDesc,
       state: selectedState && selectedState.label,
       city: selectedCity && selectedCity.label,
@@ -463,6 +472,17 @@ const CreateMatrimonial = () => {
       }
     }
   };
+
+  const onKeyPressPackage = (e) => {
+    const char = String.fromCharCode(e.which);
+    // Allow backspace, space, and alphabetical characters
+    if (e.keyCode === 8 || /[0-9]/.test(char)) {
+      return;
+    }
+    e.preventDefault();
+  };
+  const minDate = '1900-01-01';
+  const maxDate = '2015-12-31';
 
   useEffect(() => {
     if (selectedState) {
@@ -649,58 +669,23 @@ const CreateMatrimonial = () => {
                       </div>
                       <div className="row">
                         <div className="mb-3 col-lg-12 col-sm-12 col-xs-12">
-                          <label className="form-label">{nameLabel} {" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="fatherName"
-                            id="fatherName"
-                            placeholder="Enter your full name"
-                            className="form-control "
-                            autoFocus
-                            defaultValue={matrimonialProfileName}
-                            onChange={(e) => setMatrimonialProfileName(e.target.value)}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-
-                          />
-                          {errors && errors.matrimonial_profile_name && (
-                            <span className="error">{errors.matrimonial_profile_name}</span>
-                          )}
+                          <InputField handleChange={(e) => setMatrimonialProfileName(e.target.value)} isRequired={true} label={nameLabel} type="text"
+                            errorServer={errors.matrimonial_profile_name} isAutoFocused={true} placeholder="Enter your full name"
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} fieldName="Name" />
                         </div>
                       </div>
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Father Name {" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="fatherName"
-                            id="fatherName"
-                            placeholder="Enter Father Name"
-                            className="form-control "
-                            autoFocus
-                            defaultValue={fatherName}
-                            onChange={(e) => setFatherName(e.target.value)}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-
-                          />
-                          {errors && errors.father_name && (
-                            <span className="error">{errors.father_name}</span>
-                          )}
+                          <InputField handleChange={(e) => setFatherName(e.target.value)} isRequired={true} label="Father Name" type="text"
+                            errorServer={errors.father_name} isAutoFocused={true} placeholder="Enter your father name"
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            fieldName="Father name" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Mother Name {" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="motherName"
-                            id="motherName"
-                            placeholder="Enter Mother Name"
-                            className="form-control"
-                            defaultValue={motherName}
-                            onChange={(e) => setMotherName(e.target.value)}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                          />
-                          {errors && errors.mother_name && (
-                            <span className="error">{errors.mother_name}</span>
-                          )}
+                          <InputField handleChange={(e) => setMotherName(e.target.value)} isRequired={true} label="Mother Name"
+                            errorServer={errors.mother_name} isAutoFocused={true} placeholder="Enter your mother name" type="text"
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            fieldName="Mother name" />
                         </div>
                       </div>
 
@@ -734,6 +719,8 @@ const CreateMatrimonial = () => {
                             defaultValue={dob}
                             onChange={handleDateChange}
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            min={minDate}
+                            max={maxDate}
 
                           />
                           {errors && errors.matrimonial_profile_dob && (
@@ -804,40 +791,20 @@ const CreateMatrimonial = () => {
                           )}
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Paternal Gotra </label>
-                          <input
-                            type="text"
-                            name="gotra"
-                            id="gotra"
-                            placeholder="Enter Gotra"
-                            className="form-control"
-                            defaultValue={paternalGotra}
-                            onChange={(e) => setPaternalGotra(e.target.value)}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                          />
-                          {errors && errors.gotra && (
-                            <span className="error">{errors.paternal_gotra}</span>
-                          )}
+                          <InputField handleChange={(e) => setPaternalGotra(e.target.value)} label="Paternal Gotra" type="text"
+                            errorServer={errors.paternal_gotra} placeholder="Enter your paternal gotra"
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} fieldName="Paternal gotra" />
+
                         </div>
 
                       </div>
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Maternal Gotra</label>
-                          <input
-                            type="text"
-                            name="maternal"
-                            id="maternal"
-                            placeholder="Enter Maternal Gotra"
-                            className="form-control"
-                            defaultValue={maternalGotra}
-                            onChange={(e) => setMaternalGotra(e.target.value)}
-                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
-                          />
-                          {errors && errors.maternal_gotra && (
-                            <span className="error">{errors.maternal_gotra}</span>
-                          )}
+                          <InputField handleChange={(e) => setMaternalGotra(e.target.value)} label="Maternal Gotra" type="text"
+                            errorServer={errors.maternal_gotra} placeholder="Enter your maternal gotra"
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} fieldName="Maternal gotra" />
+
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">Manglik</label>
@@ -896,25 +863,30 @@ const CreateMatrimonial = () => {
                         <div className="row">
                           <div className="mb-3 col-12 col-md-6">
                             <label className="form-label">Job Description </label>
-                            <textarea className="form-control" placeholder="Enter Your Job Details" value={jobProfileDesc} onChange={handleJobProfileDes}></textarea>
+                            <textarea className="form-control" placeholder="Enter Your Job Details" value={jobProfileDesc} onChange={handleJobProfileDes}
+                              isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            ></textarea>
                           </div>
                           <div className="mb-3 col-12 col-md-6">
                             <label className="form-label">Educational Details </label>
-                            <textarea className="form-control" placeholder="Enter Your Educational Details" value={educaDetails} onChange={handleEdcacDetails}></textarea>
+                            <textarea className="form-control" placeholder="Enter Your Educational Details" value={educaDetails} onChange={handleEdcacDetails}
+                              isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                            ></textarea>
                           </div>
                         </div>
                         <div class="mb-3 col-12">
                           <label className="form-label">Contact Detail {" "}<span className="text-danger">*</span></label>
                           <div className="form-check">
-                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked} />
+                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked}
+                              isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} />
                             <label className="form-check-label" for="useMyNumber">Use My Number</label>
                           </div>
                           <div>
-                            <input type="text" className="form-control" placeholder="Enter Mobile Number.." value={mobile} onChange={handleMobileNumberClicked} />
+                            <MobileInput handleMobileChange={handleMobileNumberClicked} value={mobile}
+                              errorServer={errors.contact_number} isRequired={true}
+                              placeholder="Enter your mobile number" isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} />
                           </div>
-                          {errors && errors.contact_number && (
-                            <span className="error">{errors.contact_number}</span>
-                          )}
+
                         </div>
 
 
@@ -971,7 +943,6 @@ const CreateMatrimonial = () => {
                       <div className="row">
                         <div className={`mb-3 ${isBrotherDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showBrotherDetail ? '' : 'd-none'}`}>
                           <label className="form-label">Brothers Details</label>
-
                           <textarea
                             type="area"
                             placeholder="Enter Your Brother(s) details"
@@ -984,7 +955,6 @@ const CreateMatrimonial = () => {
                             <span className="error">{errors.brothers_details}</span>
                           )}
                         </div>
-
                         <div className={`mb-3 ${isSisterDetails ? 'col-lg-6' : 'col-lg-12'} col-sm-12 col-xs-12 ${showSisterDetail ? '' : 'd-none'}`}>
                           <label className="form-label">Sisters Details</label>
                           <textarea
@@ -1001,17 +971,30 @@ const CreateMatrimonial = () => {
                         </div>
                       </div>
 
-
                       <div className="row">
-                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Package</label>
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 package-container position-relative">
+                          <label className="form-label">Package (Annual)</label>
                           <input
+                            type="text"
                             value={packageValue}
                             className="form-control mt-2"
                             onChange={handlePackageChange}
                             placeholder="Enter Your Income..."
+                            maxLength={3}
+                            onKeyDown={onKeyPressPackage}
+                            inputMode="numeric"
                             disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                           />
+                          <select
+                            value={unit}
+                            onChange={handleUnitChange}
+                            className="position-absolute"
+                            disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
+                          >
+                            <option value="lakh">lakh</option>
+                            <option value="cr">cr</option>
+                          </select>
+                          <p style={{ fontSize: '12px' }}>(Only allow numeric value.)</p>
                           {errors && errors.salary_package && (
                             <span className="error">{errors.salary_package}</span>
                           )}
@@ -1032,7 +1015,7 @@ const CreateMatrimonial = () => {
                                 name=""
                                 id=""
                                 min="1"
-                                max="15"
+                                max="9"
                                 value={heightFeet}
                                 disabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                                 onChange={(e) =>
@@ -1117,7 +1100,7 @@ const CreateMatrimonial = () => {
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">Biodata</label>
-                          <p>upload biodata in pdf format only</p>
+                          <p>upload biodata (in pdf format only)</p>
                           <input
                             type="file"
                             className="form-control"
@@ -1143,6 +1126,7 @@ const CreateMatrimonial = () => {
                             placeholder="Enter Other Details If Any..."
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'}
                           >
                           </textarea>
                         </div>

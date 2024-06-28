@@ -44,6 +44,7 @@ import CreateJobProfilePage from "./pages/CreateJobProfilePage";
 import CreateMatrimonialPage from "./pages/profile/update/CreateMatrimonialPage";
 import JobsPage from "./pages/JobsPage";
 import UserServiceInfoPage from "./pages/UserServiceInfoPage";
+import ChatBoardPage from "./pages/ChatBoardPage";
 
 const UserRoutes = () => {
     return [
@@ -331,9 +332,14 @@ const UserRoutes = () => {
             exact: true
         },
         {
-            path:'/user/service/info/:id',
+            path: '/user/service/info/:id',
             component: UserServiceInfoPage,
-            exact:true
+            exact: true
+        },
+        {
+            path: '/user/chat/board',
+            component: ChatBoardPage,
+            exact: true
         }
 
     ];

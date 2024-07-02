@@ -49,6 +49,7 @@ const MobileInput = ({ handleMobileChange, value, errorServer, label, isAutoFocu
     };
     useEffect(() => {
         if (errorServer) {
+            console.log(errorServer)
             setIsServerErr(true);
         } else {
             setError('');

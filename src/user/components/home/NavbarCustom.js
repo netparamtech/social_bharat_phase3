@@ -355,22 +355,11 @@ const NavbarCustom = (props) => {
             <div className="" style={{ position: 'fixed', left: isAndroidUsed ? '75vw' : '94vw', color: '', fontSize: '60px', top: '90vh' }}
               onClick={() => navigate('/user/chat/board')} >
               <div style={{ position: 'relative', display: 'inline-block' }} onClick={handleChatClicked}>
-                {/* <WechatOutlined style={{ fontSize: '44px' }} /> */}
 
                 {
                   window.location.pathname === '/user/chat/board' || window.location.pathname === '/login' || window.location.pathname === '/register' ? '' : <img src="/user/images/chat-new.png" width={20} style={{ width: isAndroidUsed ? '70px' : '50px', zIndex: 1000 }} />
                 }
-                {/* <p className="" style={{
-                  position: 'absolute',
-                  top: '0px',
-                  backgroundColor:'red',
-                  borderRadius:'50%',
-                  color:'white',
-                  right: '0px',
-                  color: 'white',
-                  padding: '1px 6px',
-                  fontSize: '12px'
-                }}>5</p> */}
+
               </div>
 
             </div>

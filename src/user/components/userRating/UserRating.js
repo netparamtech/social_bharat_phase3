@@ -43,7 +43,7 @@ const UserRating = () => {
         setAlertClass("alert-success");
 
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate(-1);
         }, 1000);
       }
     } catch (error) {

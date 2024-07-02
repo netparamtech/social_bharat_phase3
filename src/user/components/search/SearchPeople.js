@@ -253,6 +253,14 @@ const SearchPeople = () => {
     }
   }, [selectedCountry]);
 
+  const handleClearClicked = () => {
+    setSearchText('');
+    setSelectedState(null);
+    setSelectedCity(null);
+    setState('');
+    setCity('');
+  }
+
   const groupedItems = [];
   for (let i = 0; i < items.length; i += 2) {
     const pair = items.slice(i, i + 2); // Change 3 to 2 here
@@ -287,7 +295,19 @@ const SearchPeople = () => {
         <div id="searchPeoples-section" className="content-wrapper pt-4 mb-4" style={{ overflow: 'hidden' }}>
           <div className="container" >
             <div className="card shadow card-search">
-              <div className="card-header mx-auto mt-2 fs-3 fw-bold">Search Members</div>
+              <div className="card-header d-flex justify-content-between mt-2 fw-bold">
+                <p>Search Members</p>
+                {(searchText || selectedCity || selectedState) && (
+                  <button
+                    type="button"
+                    className="hover-pointer-red"
+                    style={{ borderRadius: '5px' }}
+                    onClick={handleClearClicked}
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
               <div className="card-body">
                 {serverError && <span className="error">{serverError}</span>}
                 <div className="d-flex">
@@ -402,17 +422,14 @@ const SearchPeople = () => {
                                       </p>
                                       <div
                                         className="d-flex justify-content-start rounded-3"
-                                        style={{ backgroundColor: '#efefef' }}
                                       >
                                         Education - {item.highest_qualification ? item.highest_qualification : 'N/A'}
                                       </div>
                                       <div className="d-flex justify-content-start rounded-3 mt-2"
-                                        style={{ backgroundColor: '#efefef' }}
                                       >
                                         Age - {age(item.dob)} Years
                                       </div>
                                       <div className="d-flex justify-content-start rounded-3 mt-2"
-                                        style={{ backgroundColor: '#efefef' }}
                                       >
                                         <p>City - {item.native_place_city}</p>
                                         <p>
@@ -422,7 +439,6 @@ const SearchPeople = () => {
                                         </p>
                                       </div>
                                       <div className="d-flex justify-content-start rounded-3 mt-2"
-                                        style={{ backgroundColor: '#efefef' }}
                                       >
                                         {
                                           checkMobileVisibility(item.mobile) ? (
@@ -435,7 +451,7 @@ const SearchPeople = () => {
                                         }
                                       </div>
 
-                                      <div className="d-flex pt-1" >
+                                      <div className="card-footer d-flex pt-1" >
                                         <div
                                           className="text-start ms-3 mt-2 hover-pointer"
                                           onClick={() => handleChatclick(item)}

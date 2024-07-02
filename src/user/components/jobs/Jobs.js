@@ -5,12 +5,11 @@ import CountUp from "react-countup";
 import {
     DashboardOutlined,
     QuestionCircleOutlined,
-    CalendarOutlined,
     HistoryOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import CurrentJobOpening from "./CurrentJobOpening";
-import { Divider, Skeleton } from 'antd';
+import { Divider, Skeleton, Button as AntdButton, Modal as AntdModel } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { applyJob, deleteUserPostedSingleJob, fetchAllCitiesByStateID, fetchAllJobsPosted, fetchAllStatesByCountryID, findOtherdetails, jobsApplicantStatistics, toggleJobRequest, updateResume, uploadPdf } from "../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +40,7 @@ function Jobs() {
     const [isApplyClicked, setIsApplyClicked] = useState(false);
     const [appliedJob, setAppliedJob] = useState("");
     const [jobId, setJobId] = useState("");
+    const [open, setOpen] = useState(false);
 
     const [selectedState, setSelectedState] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
@@ -51,6 +51,7 @@ function Jobs() {
     const [isAppliedJob, setIsAppliedJob] = useState(false);
     const [isMyJob, setIsMyJob] = useState(false);
     const [userPhoto, setUserPhoto] = useState('');
+    const [viewDetail, setViewDetails] = useState('');
     const [defaultUserImage, setDefaultUserImage] = useState(
         "/admin/img/download.jpg"
     );
@@ -93,6 +94,11 @@ function Jobs() {
 
     const handleThumbClicked = () => {
         setIsThumbUp(!isThumbUp);
+    }
+
+    const handleModelClicked = (item) => {
+        setOpen(!open);
+        setViewDetails(item);
     }
 
     const handleApplyClicked = (value, item) => {
@@ -904,7 +910,7 @@ function Jobs() {
     }
 
     return (
-        <div id="job-board-section" className="pt-2">
+        <div id="job-board-section" className="pt-2 mb-4">
             <Layout className="container card mx-auto ">
                 <div className="row d-flex search-partner-cards">
                     {
@@ -921,7 +927,7 @@ function Jobs() {
                             </div>
                         )
                     }
-                    <div className="col-md-2 col-12  " >
+                    <div className="col-md-2 col-12">
 
                         <Menu mode={isAndroidUsed ? 'horizontal' : 'vertical'} theme="light" defaultSelectedKeys={["dashboard"]} >
                             <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
@@ -946,12 +952,10 @@ function Jobs() {
                                 <Link onClick={() => handleNavItemClick('Other')}>OTHERS</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="myjobs">
-                                <Link onClick={() => handleNavItemClick('myJobs')}>MY JOBS</Link>
-                            </Menu.Item>
+
 
                             <Menu.Item key="testimonials" icon={<img src="/user/images/createNewJob.png" width={15} ></img>}>
-                                <Link onClick={() => showModal()}>CREATE NEW</Link>
+                                <Link onClick={() => showModal()}>CREATE NEW JOB</Link>
                             </Menu.Item>
                             <Menu.Item key="bharatMataMandir" icon={<HistoryOutlined />}>
                                 <Link onClick={showModalForResume}>UPLOAD RESUME</Link>
@@ -959,12 +963,15 @@ function Jobs() {
                             <Menu.Item key="services" icon={<QuestionCircleOutlined />}>
                                 <Link onClick={() => handleIsContactUs()}>CONTACT US</Link>
                             </Menu.Item>
+                            <Menu.Item key="myjobs">
+                                <Link onClick={() => handleNavItemClick('myJobs')}>MY CREATED JOBS</Link>
+                            </Menu.Item>
+                            <Menu.Item key="appliedJobs">
+                                <Link to="/user/all/applied/jobs">MY APPLIED JOBS</Link>
+                            </Menu.Item>
 
                         </Menu>
-                        <div className="text-info fs-5 text-decoration-none m-2 ms-2">
-                            <img src="/user/images/appliedJob.jpg" width={30} ></img>
-                            <Link className="text-info fw-bold m-2" to="/user/all/applied/jobs">APPLIED JOBS</Link>
-                        </div>
+
                         {
                             isAndroidUsed ? (
                                 ""
@@ -1158,7 +1165,63 @@ function Jobs() {
                                                                 </p>
                                                             ) : ''
                                                         }
-                                                        <a href="#" className="btn" onClick={() => handleIsDetailsClicked(index)}>View Details</a>
+                                                        <AntdButton type="primary" onClick={() => handleModelClicked(item)}>
+                                                            View Details
+                                                        </AntdButton>
+                                                        {activeNavItem === 'myJobs' ? (
+                                                            <div className="card-footer mt-2 d-flex justify-content-between">
+                                                                <a className="hover-pointer btn"> <i
+                                                                    className="fa fa-edit hover-pointer text-light"
+                                                                    title="Edit"
+                                                                    onClick={() =>
+                                                                        changeUpdateClickedFlag(item.id)
+                                                                    }
+                                                                />Edit</a>
+                                                                {
+                                                                    item.job_request_status === 'Active' ? (
+                                                                        <a
+                                                                            className="ms-3 btn"
+                                                                            href=""
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                handleJobToggleStatus(item.id);
+                                                                            }}
+                                                                        >
+                                                                            <i
+                                                                                className=" fa fa-thumbs-up text-success"
+                                                                                title="Active"
+                                                                            />
+                                                                            Active
+                                                                        </a>
+                                                                    ) : (
+                                                                        <a
+                                                                            className="text-secondary ms-3 btn"
+                                                                            href=""
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                handleJobToggleStatus(item.id);
+                                                                            }}
+                                                                        >
+                                                                            <i
+                                                                                className="fa fa-thumbs-down  text-secondary"
+                                                                                title="Inactive"
+                                                                            />
+                                                                            Inactive
+                                                                        </a>
+                                                                    )
+                                                                }
+
+
+                                                                {
+                                                                    jobPermission && <a className='btn text-danger ms-3'
+                                                                        onClick={() => deleteJob(item.id)}
+                                                                        title="Delete">
+                                                                        <i className="text-success fas fa-trash"></i>
+                                                                        Delete
+                                                                    </a>
+                                                                }
+                                                            </div>
+                                                        ) : ''}
                                                     </div>
                                                     <div className={`top-0 job-time-zone text-muted end-0 position-absolute section2 ${isDetails[index] ? 'hidden' : ''}`}>
                                                         <p>{formatDate(item.job_start_date)}</p>
@@ -1193,14 +1256,14 @@ function Jobs() {
                                                                             <div className="">
                                                                                 {activeNavItem === "myJobs" ? (
                                                                                     <p
-                                                                                        className="m-0 p-0"
+                                                                                        className="m-0 p-0 btn bg-light"
                                                                                         onClick={() =>
                                                                                             navigate(
                                                                                                 `/user/applied/${item.id}/job-details`
                                                                                             )
                                                                                         }
                                                                                     >
-                                                                                        Applied
+                                                                                        Application(s)
                                                                                         <span className="">
                                                                                             -{value.user_count}
                                                                                         </span>
@@ -1211,52 +1274,6 @@ function Jobs() {
                                                                             ""
                                                                         )
                                                                     )}
-                                                                    <i
-                                                                        className="fa fa-edit me-2 hover-pointer text-success"
-                                                                        title="Edit"
-                                                                        onClick={() =>
-                                                                            changeUpdateClickedFlag(item.id)
-                                                                        }
-                                                                    />
-
-                                                                    {item.job_request_status ===
-                                                                        "Active" ? (
-                                                                        <a
-                                                                            className="ms-3"
-                                                                            href=""
-                                                                            onClick={(e) => {
-                                                                                e.preventDefault();
-                                                                                handleJobToggleStatus(item.id);
-                                                                            }}
-                                                                        >
-                                                                            <i
-                                                                                className=" fa fa-thumbs-up text-success"
-                                                                                title="Active"
-                                                                            />
-                                                                        </a>
-                                                                    ) : (
-                                                                        <a
-                                                                            className="text-secondary ms-3"
-                                                                            href=""
-                                                                            onClick={(e) => {
-                                                                                e.preventDefault();
-                                                                                handleJobToggleStatus(item.id);
-                                                                            }}
-                                                                        >
-                                                                            <i
-                                                                                className="fa fa-thumbs-down  text-secondary"
-                                                                                title="Inactive"
-                                                                            />
-                                                                        </a>
-
-                                                                    )}
-                                                                    {
-                                                                        jobPermission && <a className='text-danger ms-3'
-                                                                            onClick={() => deleteJob(item.id)}
-                                                                            title="Delete">
-                                                                            <i className="text-success fas fa-trash"></i>
-                                                                        </a>
-                                                                    }
                                                                 </div>
                                                             ) : (
                                                                 ""
@@ -1274,205 +1291,212 @@ function Jobs() {
                                                         </div>
                                                     </div>
 
-                                                    <div className={`${!isDetails[index] ? 'hidden' : ''}`}>
-                                                        <span
-                                                            onClick={() => handleIsDetailsClicked(index)}
-                                                            className="position-absolute top-0 end-0 me-2 mt-1">
-                                                            {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
-                                                            <button className="hover-pointer-red round-button-delete"><i className="fa fa-remove"></i></button>
-                                                        </span>
 
-                                                        <div className="top-0 job-time-zone text-muted end-0 position-absolute mt-5">
-                                                            {formatDate(item.updated_at)}
-                                                            <br />
-                                                            {
-                                                                item.job_apply_form === 'Inactive' ? (item.is_job_applied === 'false' && item.job_apply_form === 'Inactive' ? (
-                                                                    <a
-                                                                        className="btn btn-success"
-                                                                        onClick={() => handleApplyClicked(true, item)}
-                                                                    >
-                                                                        Easy Apply
-                                                                    </a>
-                                                                ) : (
-                                                                    <a
-                                                                        className="btn btn-success"
-                                                                    >
-                                                                        Submitted
-                                                                    </a>
-                                                                )) : (
-                                                                    <a href={item.apply_link} target="_blank"
-                                                                        className="btn btn-success"
-                                                                    >
-                                                                        Easy Apply
-                                                                    </a>
-                                                                )
-                                                            }
-                                                        </div>
-                                                        <div className="">
-                                                            <img
-                                                                src={checkUrl(item.logo) ? item.logo : (userPhoto ? userPhoto : defaultUserImage)}
-                                                                alt={item.name}
-                                                                title={item.name}
-                                                                className="avatar img-fluid img-circle"
-                                                                width={60}
-                                                            />
-                                                        </div>
-                                                        <div className="col-md-12 col-sm-8" style={{ alignItems: 'center' }}>
-                                                            <div className="row mt-2">
-                                                                <div className="col-md-12">
-                                                                    <p className="m-0">
-                                                                        <b>Company Name : </b>{" "}
-                                                                        {item.job_subheading}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="col-md-12">
-                                                                    <p className="m-0 ">
-                                                                        <b>Job Title : </b>
-                                                                        {item.job_title}
-                                                                    </p>
-                                                                    { }
-                                                                </div>
-
-                                                                <div className="row">
-                                                                    <div className="col-md-6">
-                                                                        {/* Display Job Start Date */}
-                                                                        <p className="m-0">
-                                                                            <b>Application Start : </b>
-                                                                            {formatDate(item.job_start_date)}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="col-md-6">
-                                                                        {/* Display Job End Date */}
-                                                                        <p className="m-0">
-                                                                            <b>Expire Date : </b>
-                                                                            {formatDate(item.job_end_date)}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row">
-                                                                    <div className="col-lg-6 col-sm-6 ">
-                                                                        <p className="">
-                                                                            <b>Sector : </b>
-                                                                            {item.job_sector}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="col-lg-6 col-sm-6">
-                                                                        <p>
-                                                                            {" "}
-                                                                            <b>Job Type : </b>
-                                                                            {item.job_type}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="row">
-                                                                    {item.location ? (
-                                                                        <>
-                                                                            <div className="col-lg-6 col-sm-6">
-                                                                                <p className="">
-                                                                                    <b>Company Address : </b>
-                                                                                    {item.location}
-                                                                                </p>
-                                                                            </div>
-
-                                                                            <div className="col-lg-6 col-sm-6">
-                                                                                <p className="">
-                                                                                    <b>Location : </b>
-                                                                                    {`${item.state
-                                                                                        ? `${item.city}(${item.state})`
-                                                                                        : ""
-                                                                                        }`}
-                                                                                </p>
-                                                                            </div>
-                                                                        </>
-                                                                    ) : (
-                                                                        ""
-                                                                    )}
-                                                                </div>
-                                                                <div className="row">
-
+                                                    <AntdModel
+                                                        title={viewDetail.job_title}
+                                                        open={open}
+                                                        onOk={() => setOpen(false)}
+                                                        onCancel={() => setOpen(false)}
+                                                        width={1000}
+                                                    >
+                                                        {
+                                                            viewDetail &&
+                                                            <>
+                                                                <div className="top-0 job-time-zone text-muted end-0 position-absolute mt-5">
+                                                                    {formatDate(viewDetail.updated_at)}
+                                                                    <br />
                                                                     {
-                                                                        checkUrl(item.attachment) ? (
-                                                                            <p className="row col-12">
-                                                                                <span className="col-5">
-                                                                                    <b> Attachment :</b>
-                                                                                </span>
-                                                                                {item.attachment && (
-                                                                                    <span className="col-7">
-                                                                                        <a
-                                                                                            href={item.attachment}
-                                                                                            download={`${item.job_title}.pdf`}
-                                                                                            target="_blank"
-                                                                                        >
-                                                                                            <i className="fa-regular fa-file-lines"></i> Download Attachment
-                                                                                        </a>
-
-                                                                                    </span>
-                                                                                )}
-                                                                            </p>
-
-
-                                                                        ) : ''
-                                                                    }
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-
-
-                                                            {
-                                                                item.apply_link ? (
-                                                                    <div className="row m-1">
-                                                                        <div className="col-12 col-md-6">
-                                                                            <b>Apply Link:</b>
-                                                                        </div>
-                                                                        <div className="col-12">
-                                                                            <a className="d-block" href={item.apply_link} target="_blank" rel="noopener noreferrer">
-                                                                                {item.apply_link}
+                                                                        viewDetail.job_apply_form === 'Inactive' ? (viewDetail.is_job_applied === 'false' && viewDetail.job_apply_form === 'Inactive' ? (
+                                                                            <a
+                                                                                className="btn btn-success"
+                                                                                onClick={() => handleApplyClicked(true, viewDetail)}
+                                                                            >
+                                                                                Easy Apply
                                                                             </a>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                ) : ""
-                                                            }
-                                                            {
-                                                                item.fee_details ? (
-                                                                    <div className="row m-1">
-                                                                        <div className="col-12 col-md-6">
-                                                                            <b>Fee Details:</b>
-                                                                        </div>
-                                                                        <div className="col-12" dangerouslySetInnerHTML={{
-                                                                            __html: formatFeeDetails(item.fee_details)
-                                                                        }}>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                ) : ""
-                                                            }
-                                                            <div key={index} className="row m-1">
-                                                                <div className="col-12 col-md-6"><b>Description :</b></div>
-                                                                <div className="col-12">
-                                                                    <div
-                                                                        dangerouslySetInnerHTML={{
-                                                                            __html: selectedIndex === index
-                                                                                ? addTargetBlank(item.description)
-                                                                                : `${item && item.description && item.description.slice(0, 300)}<span style='color: gray;'>${item.description.length > 300 ? '...' : ''}</span>`
-                                                                        }}
-                                                                    />
-                                                                    {
-                                                                        item.description.length > 300 && <button className="mx-auto over-pointer-g-effect" onClick={() => toggleDescription(index)}>
-                                                                            {selectedIndex === index ? 'Show Less' : 'Show More'}
-                                                                        </button>
+                                                                        ) : (
+                                                                            <a
+                                                                                className="btn btn-success"
+                                                                            >
+                                                                                Submitted
+                                                                            </a>
+                                                                        )) : (
+                                                                            <a href={viewDetail.apply_link} target="_blank"
+                                                                                className="btn btn-success"
+                                                                            >
+                                                                                Easy Apply
+                                                                            </a>
+                                                                        )
                                                                     }
                                                                 </div>
-                                                            </div>
+                                                                <div className="">
+                                                                    <img
+                                                                        src={checkUrl(viewDetail.logo) ? viewDetail.logo : (userPhoto ? userPhoto : defaultUserImage)}
+                                                                        alt={viewDetail.name}
+                                                                        title={viewDetail.name}
+                                                                        className="avatar img-fluid img-circle"
+                                                                        width={60}
+                                                                    />
+                                                                </div>
+                                                                <div className="col-md-12 col-sm-8" style={{ alignItems: 'center' }}>
+                                                                    <div className="row mt-2">
+                                                                        <div className="col-md-12">
+                                                                            <p className="m-0">
+                                                                                <b>Company Name : </b>{" "}
+                                                                                {viewDetail.job_subheading}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div className="col-md-12">
+                                                                            <p className="m-0 ">
+                                                                                <b>Job Title : </b>
+                                                                                {viewDetail.job_title}
+                                                                            </p>
+                                                                            { }
+                                                                        </div>
+
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                {/* Display Job Start Date */}
+                                                                                <p className="m-0">
+                                                                                    <b>Application Start : </b>
+                                                                                    {formatDate(viewDetail.job_start_date)}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                {/* Display Job End Date */}
+                                                                                <p className="m-0">
+                                                                                    <b>Expire Date : </b>
+                                                                                    {formatDate(viewDetail.job_end_date)}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="row">
+                                                                            <div className="col-lg-6 col-sm-6 ">
+                                                                                <p className="">
+                                                                                    <b>Sector : </b>
+                                                                                    {viewDetail.job_sector}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div className="col-lg-6 col-sm-6">
+                                                                                <p>
+                                                                                    {" "}
+                                                                                    <b>Job Type : </b>
+                                                                                    {viewDetail.job_type}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="row">
+                                                                            {viewDetail.location ? (
+                                                                                <>
+                                                                                    <div className="col-lg-6 col-sm-6">
+                                                                                        <p className="">
+                                                                                            <b>Company Address : </b>
+                                                                                            {viewDetail.location}
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    <div className="col-lg-6 col-sm-6">
+                                                                                        <p className="">
+                                                                                            <b>Location : </b>
+                                                                                            {`${viewDetail.state
+                                                                                                ? `${viewDetail.city}(${viewDetail.state})`
+                                                                                                : ""
+                                                                                                }`}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </>
+                                                                            ) : (
+                                                                                ""
+                                                                            )}
+                                                                        </div>
+                                                                        <div className="row">
+
+                                                                            {
+                                                                                checkUrl(viewDetail.attachment) ? (
+                                                                                    <p className="row col-12">
+                                                                                        <span className="col-5">
+                                                                                            <b> Attachment :</b>
+                                                                                        </span>
+                                                                                        {viewDetail.attachment && (
+                                                                                            <span className="col-7">
+                                                                                                <a
+                                                                                                    href={viewDetail.attachment}
+                                                                                                    download={`${viewDetail.job_title}.pdf`}
+                                                                                                    target="_blank"
+                                                                                                >
+                                                                                                    <i className="fa-regular fa-file-lines"></i> Download Attachment
+                                                                                                </a>
+
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </p>
 
 
-                                                        </div>
-                                                    </div>
+                                                                                ) : ''
+                                                                            }
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+
+
+                                                                    {
+                                                                        viewDetail.apply_link ? (
+                                                                            <div className="row m-1">
+                                                                                <div className="col-12 col-md-6">
+                                                                                    <b>Apply Link:</b>
+                                                                                </div>
+                                                                                <div className="col-12">
+                                                                                    <a className="d-block" href={viewDetail.apply_link} target="_blank" rel="noopener noreferrer">
+                                                                                        {viewDetail.apply_link}
+                                                                                    </a>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        ) : ""
+                                                                    }
+                                                                    {
+                                                                        viewDetail.fee_details ? (
+                                                                            <div className="row m-1">
+                                                                                <div className="col-12 col-md-6">
+                                                                                    <b>Fee Details:</b>
+                                                                                </div>
+                                                                                <div className="col-12" dangerouslySetInnerHTML={{
+                                                                                    __html: formatFeeDetails(viewDetail.fee_details)
+                                                                                }}>
+
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        ) : ""
+                                                                    }
+                                                                    <div key={index} className="row m-1">
+                                                                        <div className="col-12 col-md-6"><b>Description :</b></div>
+                                                                        <div className="col-12">
+                                                                            <div
+                                                                                dangerouslySetInnerHTML={{
+                                                                                    __html: selectedIndex === index
+                                                                                        ? addTargetBlank(viewDetail.description)
+                                                                                        : `${viewDetail && viewDetail.description && viewDetail.description.slice(0, 300)}<span style='color: gray;'>${viewDetail.description.length > 300 ? '...' : ''}</span>`
+                                                                                }}
+                                                                            />
+                                                                            {
+                                                                                viewDetail.description.length > 300 && <button className="mx-auto over-pointer-g-effect" onClick={() => toggleDescription(index)}>
+                                                                                    {selectedIndex === index ? 'Show Less' : 'Show More'}
+                                                                                </button>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </>
+                                                        }
+
+
+                                                    </AntdModel>
                                                 </div>
                                             </div>
                                         ))

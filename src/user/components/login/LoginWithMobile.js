@@ -59,6 +59,10 @@ const LoginWithMobile = (props) => {
       else if (error.response && error.response.status === 401) {
         navigate('/login');
       }
+      //many otp request
+      else if (error.response && error.response.status === 429) {
+        setServerError(error.response.data.message);
+      }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
@@ -116,7 +120,7 @@ const LoginWithMobile = (props) => {
                       {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
                         <MobileInput handleMobileChange={handleMobileChange} 
-                        serverError={errors.mobile} isRequired={true} 
+                        errorServer={errors.mobile} isRequired={true} 
                         isAutoFocused={true} placeholder="Enter your mobile number" />
                       </div>
                       <div className="row mb-3">

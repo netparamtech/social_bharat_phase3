@@ -398,6 +398,16 @@ export const updateBusinessInfo = async (data, id) => {
   }
 };
 
+//fetch businessInfo by user_id
+export const fetchSelfCreatedLatestBusiness = async (id) => {
+  try {
+    const response = await apiWithHeaders.get(`/user/latest-businesses/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //fetch businessInfo by id
 export const fetchCategoryByTitle = async (title) => {
   try {

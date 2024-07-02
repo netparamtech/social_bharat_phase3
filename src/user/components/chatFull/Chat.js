@@ -32,7 +32,7 @@ const Chat = (props) => {
   const [userMessage, setUserMessage] = useState('');
 
   const handleCloseClick = () => {
-    changeChatFlag(false);
+    navigate("/");
   };
 
   const handleSendClicked = () => {
@@ -50,13 +50,6 @@ const Chat = (props) => {
       try {
         const response = await sendMessage(data);
         if (response && response.status === 200) {
-          const newMessage = {
-            id: '',
-            sender_id: loggedID,
-            receiver_id: selectedUser.sender_id === loggedID ? selectedUser.receiver_id : selectedUser.sender_id,
-            message,
-          }
-          console.log(newMessage)
           setServerError("");
           handleSendClicked();
           allChatMessage();
@@ -217,7 +210,7 @@ const Chat = (props) => {
             <div className="row g-0">
               <div className="col-12 col-md-4 bg-light" style={{ borderRight: '1px solid #CECECE', height: '450px' }}>
                 <div className="py-2 px-4 border-bottom bg-primary">
-                  <div className="d-flex align-items-center py-1">
+                  <div className="d-flex align-items-center justify-content-between py-1">
                     <div className="position-relative">
                       {loggedUserProfile ? (
                         <img
@@ -235,6 +228,16 @@ const Chat = (props) => {
                           {loggedUserFirstLatter}
                         </button>
                       )}
+
+                    </div>
+                    <div>
+                      <span
+                        className="btn fs-4  btn-whi close-button-chat"
+                        onClick={() => handleCloseClick()}
+                        title="Close"
+                      >
+                        <i className="fa-regular fa-circle-xmark hover-pointer"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -372,9 +375,21 @@ const Chat = (props) => {
                                 ) : (
                                   <div className="chat-message-left pb-4">
                                     <div>
-                                      {selectedUser && selectedUser.sender_photo ? (
+                                      {selectedUser && selectedUser.sender_id === loggedID ? (selectedUser.receiver_photo ? <Image
+                                        src={selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_photo : selectedUser.sender_photo}
+                                        className="rounded-circle mr-1 m-1"
+                                        alt={selectedUser.sender_name}
+                                        style={{ width: '40px', height: '40px' }}
+                                      /> : <button
+                                        type="button"
+                                        className="dropdown-user-img-letter mr-1 m-2"
+                                      >
+                                        {
+                                          selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name.charAt(0).toUpperCase() : selectedUser.sender_name.charAt(0).toUpperCase()
+                                        }
+                                      </button>) : selectedUser.sender_photo ? (
                                         <Image
-                                          src={selectedUser.sender_photo}
+                                          src={selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_photo : selectedUser.sender_photo}
                                           className="rounded-circle mr-1 m-1"
                                           alt={selectedUser.sender_name}
                                           style={{ width: '40px', height: '40px' }}
@@ -384,13 +399,17 @@ const Chat = (props) => {
                                           type="button"
                                           className="dropdown-user-img-letter mr-1 m-2"
                                         >
-                                          {selectedUser && selectedUser.sender_name.charAt(0).toUpperCase()}
+                                          {
+                                            selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name.charAt(0).toUpperCase() : selectedUser.sender_name.charAt(0).toUpperCase()
+                                          }
                                         </button>
                                       )}
                                     </div>
                                     <div className="flex-shrink-1 bg-white rounded py-2 px-3 ml-3">
                                       <div className="font-weight-bold">
-                                        {selectedUser && selectedUser.sender_name}
+                                        {
+                                          selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name : selectedUser.sender_name
+                                        }
                                       </div>
                                       <div className="font-messages">
                                         {item.message}

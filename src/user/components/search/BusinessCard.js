@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Carousel from 'react-bootstrap/Carousel';
 
-const BusinessCard = ({ item, index }) => {
+const BusinessCard = ({ item, index, name }) => {
     const [show, setShow] = useState(false);
     const [defaultMap, setDefaultMap] = useState("/user/images/location.png");
     const navigate = useNavigate();
@@ -29,7 +29,9 @@ const BusinessCard = ({ item, index }) => {
 
     return (
         <>
-            <a className="btn over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>Show More</a>
+            {
+                name === 'Business' ? <a className="btn mt-2 over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>{item.business_name}</a> : <a className="btn over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>Show More</a>
+            }
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -50,7 +52,7 @@ const BusinessCard = ({ item, index }) => {
                                 <div className='col-7'>
                                     <>
                                         <p>Posted By : <span className="text-muted">{(item.name) || "N/A"}</span></p>
-                                        <p style={{display:'flex'}}>Location : <span className="text-muted">{item.city}{" "}({item.state}){", "}{item.country}</span>{" "}
+                                        <p style={{ display: 'flex' }}>Location : <span className="text-muted">{item.city}{" "}({item.state}){", "}{item.country}</span>{" "}
                                             {
                                                 item.google_map_link ? (
                                                     <div className="col-2">

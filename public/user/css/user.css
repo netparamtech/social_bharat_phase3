@@ -2417,6 +2417,23 @@ legend {
   z-index: 1000;
   height: 40px;
 }
+.text-wrap-break-word {
+  white-space: normal;  /* Allows text to wrap */
+  word-wrap: break-word; /* Older standard, mostly for IE */
+  word-break: break-word; /* Modern standard */
+}
+#searchPeoples-section .text-wrap-break-word {
+  white-space: normal;  /* Allows text to wrap */
+  word-wrap: break-word; /* Older standard, mostly for IE */
+  word-break: break-word; /* Modern standard */
+}
+#searchPeoples-section .card-footer{
+  background-color: white;
+}
+#searchPeoples-section .card-header{
+  background-color: white;
+}
+
 
 
 

@@ -14,6 +14,7 @@ import NewChat from "../chats/NewChat";
 import Comment from "./Comment";
 import { Divider, Rate } from "antd";
 import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
+import ServiceChat from "../chats/ServiceChat";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -428,7 +429,7 @@ const SearchUsersWithService = () => {
   return (
     <>
       {isChat ? (
-        <NewChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
+        <ServiceChat changeChatFlag={changeChatFlag} selectedUser={selectedUser} />
       ) : (
         <div id="searchPeoples-section" className="content-wrapper pt-4 mb-4">
           <div id="" className="container">
@@ -608,10 +609,6 @@ const SearchUsersWithService = () => {
                       </InfiniteScroll>
                     </div>
                   </div>
-
-
-
-
                 </div>
 
               </div>
@@ -619,16 +616,7 @@ const SearchUsersWithService = () => {
           </div>
         </div>
       )}
-      <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
-        <a
-          className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
-          id=""
-          onClick={handleScrollToUp}
-          title="Refresh"
-        >
-          <i className="fa fa-arrow-up" aria-hidden="true"></i>
-        </a>
-      </div>
+    
     </>
   );
 };

@@ -360,17 +360,9 @@ const CreateJob = (props) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Company Name / Other Subheading(optional):</label>
-                                    <input type="text"
-                                        className="form-control"
-                                        placeholder="i.e. company name or organization or other"
-                                        defaultValue={subHeading}
-                                        onChange={(e) => setSubHeading(e.target.value)}
-                                        maxLength={80}
-                                    />
-                                    {errors.subHeading && (
-                                        <span className="error">{errors.subHeading}</span>
-                                    )}
+                                    <InputField errorServer={errors.job_subheading} label="Company Name / Other Subheading(optional):" handleChange={(e) => setSubHeading(e.target.value)}
+                                        placeholder="i.e. company name or organization or other" value={subHeading}
+                                        fieldName="company name or organization or other" />
                                 </div>
 
                                 <div className="row">

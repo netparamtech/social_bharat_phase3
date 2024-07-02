@@ -85,6 +85,11 @@ const LoginWithOtp = (props) => {
         setErrorMessage(error.response.data.message);
         setErrors("");
       }
+      //multi request send error
+      else if (error.response && error.response.status === 429) {
+        setErrorMessage(error.response.data.message);
+        setErrors("");
+      }
 
       //User Bloked
       else if (error.response && error.response.status === 451) {
@@ -115,6 +120,11 @@ const LoginWithOtp = (props) => {
       //Unauthorized
       else if (error.response && error.response.status === 401) {
         navigate("/login");
+      }
+      //multi request send error
+      else if (error.response && error.response.status === 429) {
+        setErrorMessage(error.response.data.message);
+        setErrors("");
       }
       //Internal Server Error
       else if (error.response && error.response.status === 500) {

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { setLoader } from "../../actions/loaderAction";
 import { Image } from "antd";
 
-const MatriChat = (props) => {
+const ServiceChat = (props) => {
   const user = useSelector((state) => state.userAuth);
 
   const { changeChatFlag, selectedUser } = props;
@@ -38,7 +38,7 @@ const MatriChat = (props) => {
       dispatch(setLoader(false));
 
       const data = {
-        receiver_id: selectedUser.userId,
+        receiver_id: selectedUser.id,
         message,
       };
       try {
@@ -76,7 +76,7 @@ const MatriChat = (props) => {
   const receiveChatMessage = async () => {
     dispatch(setLoader(false));
     try {
-      const response = await receiveMessage(selectedUser.userId);
+      const response = await receiveMessage(selectedUser.id);
       if (response && response.status === 200) {
         const sortedMessages = response.data.data
           .sort((a, b) => a.timestamp - b.timestamp)
@@ -325,4 +325,4 @@ const MatriChat = (props) => {
   );
 };
 
-export default MatriChat;
+export default ServiceChat;

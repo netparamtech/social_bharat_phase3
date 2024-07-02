@@ -67,7 +67,7 @@ const MatrimonialCard = ({ item, index }) => {
                     <Modal.Title>
                         <div className='row'>
                             <div className='col-6'>
-                                <h4 className="text-danger">{item.matrimonial_profile_name}</h4>
+                                <h4 className="text-danger text-wrap-break-word">{item.matrimonial_profile_name}</h4>
                             </div>
                             <div className='col-6'>
                                 <h6 className='fw-bold text-primary hover-pointer' onClick={() => setIsHindi(!isHindi)}>{isHindi ? 'See In English' : 'हिंदी में देखें'}</h6>
@@ -91,9 +91,9 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>Package/Salary (Annual): <span className="text-muted">{item.salary_package}</span></p>
                                                 <p>Date Of Birth: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>Education: <span className="text-muted">{(item.education) || "N/A"}</span></p>
-                                                <p>Education Details: <span className="text-muted">{item.educational_details ? item.educational_details : ''}</span></p>
+                                                <p>Education Details: <span className="text-muted text-wrap-break-word">{item.educational_details ? item.educational_details : ''}</span></p>
                                                 <p>Job Type: <span className="text-muted">{item.matrimonial_profile_occupation ? item.matrimonial_profile_occupation : ''}</span></p>
-                                                <p>Job Description: <span className="text-muted">{item.job_profile_description ? item.job_profile_description : ''}</span></p>
+                                                <p>Job Description: <span className="text-muted text-wrap-break-word">{item.job_profile_description ? item.job_profile_description : ''}</span></p>
                                                 {
                                                     item.brother_count ? (
                                                         <>
@@ -148,7 +148,7 @@ const MatrimonialCard = ({ item, index }) => {
                                                 <p>पैकेज/वेतन (वार्षिक): <span className="text-muted">{item.salary_package}</span></p>
                                                 <p>जन्म तिथि: <span className="text-muted">{formatDate(item.matrimonial_profile_dob) || "N/A"}</span></p>
                                                 <p>शिक्षा: <span className="text-muted">{(item.education) || "N/A"}</span></p>
-                                                <p>नौकरी की प्रोफाइल: <span className="text-muted">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
+                                                <p>नौकरी की प्रोफाइल: <span className="text-muted text-wrap-break-word">{(item.matrimonial_profile_occupation) || "N/A"}</span></p>
                                                 {
                                                     item.brother_count ? (
                                                         <>

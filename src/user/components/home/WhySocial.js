@@ -67,7 +67,7 @@ const WhySocial = (props) => {
           </div>
           <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 d-md-block wow animate__animated animate__zoomIn">
             <div className="image-zoom-containerm fade-in-image">
-              <Carousel effect="fade" autoplay>
+              <Carousel effect="fade" autoplay dots={{ className: 'custom-carousel-dots' }}>
                 {aboutCMS && aboutCMS.images && aboutCMS.images.map((item, index) => (
                   <div key={index} style={contentStyle} className='zoom-on-hover'>
                   <img src={item} className="img-fluid image-zoom pb-3" alt={`Banner ${index}`} />

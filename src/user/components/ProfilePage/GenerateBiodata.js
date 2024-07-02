@@ -77,7 +77,7 @@ const GenerateBiodata = (props) => {
             });
         }
         // Save the PDF with a specific name
-        pdf.save('user_biodata.pdf');
+        pdf.save(`${userData.matrimonial_profile_name}_biodata.pdf`);
     };
 
     useEffect(() => {

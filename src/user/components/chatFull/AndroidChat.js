@@ -53,12 +53,6 @@ const AndroidChat = (props) => {
             try {
                 const response = await sendMessage(data);
                 if (response && response.status === 200) {
-                    const newMessage = {
-                        id: '',
-                        sender_id: selectedUser.sender_id === loggedID ? selectedUser.sender_id : selectedUser.receiver_id,
-                        receiver_id: selectedUser.sender_id === loggedID ? selectedUser.receiver_id : selectedUser.sender_id,
-                        message,
-                    }
                     setServerError("");
                     handleSendClicked();
                     allChatMessage();
@@ -373,9 +367,21 @@ const AndroidChat = (props) => {
                                                                     ) : (
                                                                         <div className="chat-message-left pb-4">
                                                                             <div>
-                                                                                {selectedUser && selectedUser.sender_photo ? (
+                                                                                {selectedUser && selectedUser.sender_id === loggedID ? (selectedUser.receiver_photo ? <Image
+                                                                                    src={selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_photo : selectedUser.sender_photo}
+                                                                                    className="rounded-circle mr-1 m-1"
+                                                                                    alt={selectedUser.sender_name}
+                                                                                    style={{ width: '40px', height: '40px' }}
+                                                                                /> : <button
+                                                                                    type="button"
+                                                                                    className="dropdown-user-img-letter mr-1 m-2"
+                                                                                >
+                                                                                    {
+                                                                                        selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name.charAt(0).toUpperCase() : selectedUser.sender_name.charAt(0).toUpperCase()
+                                                                                    }
+                                                                                </button>) : selectedUser.sender_photo ? (
                                                                                     <Image
-                                                                                        src={selectedUser.sender_photo}
+                                                                                        src={selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_photo : selectedUser.sender_photo}
                                                                                         className="rounded-circle mr-1 m-1"
                                                                                         alt={selectedUser.sender_name}
                                                                                         style={{ width: '40px', height: '40px' }}
@@ -385,13 +391,17 @@ const AndroidChat = (props) => {
                                                                                         type="button"
                                                                                         className="dropdown-user-img-letter mr-1 m-2"
                                                                                     >
-                                                                                        {selectedUser && selectedUser.sender_name.charAt(0).toUpperCase()}
+                                                                                        {
+                                                                                            selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name.charAt(0).toUpperCase() : selectedUser.sender_name.charAt(0).toUpperCase()
+                                                                                        }
                                                                                     </button>
                                                                                 )}
                                                                             </div>
                                                                             <div className="flex-shrink-1 bg-white rounded py-2 px-3 ml-3">
                                                                                 <div className="font-weight-bold">
-                                                                                    {selectedUser && selectedUser.sender_name}
+                                                                                    {
+                                                                                        selectedUser && selectedUser.sender_id === loggedID ? selectedUser.receiver_name : selectedUser.sender_name
+                                                                                    }
                                                                                 </div>
                                                                                 <div className="font-messages">
                                                                                     {item.message}

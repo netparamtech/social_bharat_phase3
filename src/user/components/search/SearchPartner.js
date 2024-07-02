@@ -474,7 +474,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
                             {
-                              gender && <img className="hover-pointer" src="/user/images/clear.jpg" style={{ marginLeft: '-10px' }} width={40} onClick={() => handleClear("gender")} />
+                              gender && <img className="hover-pointer" src="/user/images/delete2.png" width={40} style={{ marginLeft: '-20px' }} onClick={() => handleClear("gender")} />
                             }
                           </div>
 
@@ -494,7 +494,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
                             {
-                              selectedState && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("state")} />
+                              selectedState && <img className="hover-pointer" src="/user/images/delete2.png" width={40} style={{ marginLeft: '-20px' }} onClick={() => handleClear("state")} />
                             }
                           </div>
                           <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
@@ -512,7 +512,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
                             {
-                              selectedCity && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("city")} />
+                              selectedCity && <img className="hover-pointer" src="/user/images/delete2.png" width={40} style={{ marginLeft: '-20px' }} onClick={() => handleClear("city")} />
                             }
                           </div>
                           <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
@@ -535,7 +535,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
                             {
-                              subcast && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("subcast")} />
+                              subcast && <img className="hover-pointer" src="/user/images/delete2.png" width={40} style={{ marginLeft: '-20px' }} onClick={() => handleClear("subcast")} />
                             }
                           </div>
                           <div className="custom-bottom-margin-search-partner mt-3 col-11 col-sm-2">
@@ -554,7 +554,7 @@ const SearchPartner = () => {
                           </div>
                           <div className="mt-5 col-1 col-sm-1 custom-bottom-margin-search-partner">
                             {
-                              occupation && <img className="hover-pointer" src="/user/images/clear.jpg" width={40} style={{ marginLeft: '-10px' }} onClick={() => handleClear("occupation")} />
+                              occupation && <img className="hover-pointer" src="/user/images/delete2.png" width={40} style={{ marginLeft: '-20px' }} onClick={() => handleClear("occupation")} />
                             }
                           </div>
 
@@ -641,7 +641,7 @@ const SearchPartner = () => {
                         {pair.map((item, innerIndex) => (
 
                           <div className="col-md-6 mt-2" key={innerIndex}>
-                            <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '450px' }}>
+                            <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '550px' }}>
                               <div className="card-body p-4 search-partner-cards">
                                 <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                   <div className="flex-shrink-0">
@@ -671,34 +671,31 @@ const SearchPartner = () => {
                                   </div>
                                   <div className="flex-grow-1 ms-3">
 
-                                    <h5 className="mb-1">{item.matrimonial_profile_name}</h5>
+                                    <h5 className="mb-1  text-wrap-break-word">{item.matrimonial_profile_name}</h5>
                                     <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
                                       Job Type-{item.matrimonial_profile_occupation ? (item.matrimonial_profile_occupation.length > 50 ? item.matrimonial_profile_occupation.slice(0, 50) : item.matrimonial_profile_occupation) : 'N/A'}
                                     </p>
 
-                                    <p className="mb-2 pb-1 justify-content-start text-wrap break-word" style={{ color: '#2b2a2a' }}>
+                                    <p className="mb-2 pb-1 justify-content-start text-wrap-break-word " style={{ color: '#2b2a2a' }}>
                                       Job Details-{item.job_profile_description ? item.job_profile_description.length > 50 ? (
-                                        item.educational_details.slice(0, 50) + "...."
+                                        item.job_profile_description.slice(0, 50) + "...."
                                       ) : (item.job_profile_description) : ''}
                                     </p>
                                     <div
                                       className="d-flex justify-content-start rounded-3"
-                                      style={{ backgroundColor: '#efefef' }}
                                     >
                                       Education-{item.education ? item.education : 'N/A'}
                                     </div>
-                                    <p className="mb-2 pb-1 justify-content-start text-wrap break-word" style={{ color: '#2b2a2a' }}>
+                                    <p className="mb-2 pb-1 justify-content-start text-wrap-break-word" style={{ color: '#2b2a2a' }}>
                                       Education Details-{item.educational_details ? item.educational_details.length > 50 ? (
                                         item.educational_details.slice(0, 50) + "...."
                                       ) : (item.educational_details) : ''}
                                     </p>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
                                     >
                                       Age-{age(item.matrimonial_profile_dob)} Years
                                     </div>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
                                     >
                                       <p>City-{item.city}</p>
                                       <p>
@@ -708,7 +705,6 @@ const SearchPartner = () => {
                                       </p>
                                     </div>
                                     <div className="d-flex justify-content-start rounded-3 mt-2"
-                                      style={{ backgroundColor: '#efefef' }}
                                     >
                                       {
                                         item.contact_number ? (
@@ -726,7 +722,7 @@ const SearchPartner = () => {
 
 
                                     </div>
-                                    <div className="pt-1" style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+                                    <div className="card-footer pt-1" style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
 
 
                                       <div
@@ -764,7 +760,7 @@ const SearchPartner = () => {
           </div>
         </div >
       )}
-      <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
+      {/* <div className={`scroll-to-up ${isChat ? "d-none" : ""}`}>
         <a
           className="btn btn-primary btn-sm me-2 mb-2 hover-pointer"
           id=""
@@ -773,7 +769,7 @@ const SearchPartner = () => {
         >
           <i className="fa fa-arrow-up" aria-hidden="true"></i>
         </a>
-      </div>
+      </div> */}
     </>
   );
 };

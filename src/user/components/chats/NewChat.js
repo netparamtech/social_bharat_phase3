@@ -44,13 +44,6 @@ const NewChat = (props) => {
       try {
         const response = await sendMessage(data);
         if (response && response.status === 200) {
-          const newMessage = {
-            id: '',
-            sender_id: loggedID,
-            receiver_id: selectedUser.sender_id === loggedID ? selectedUser.receiver_id : selectedUser.sender_id,
-            message,
-          }
-          console.log(newMessage)
           setServerError("");
           handleSendClicked();
           setMessage("");
@@ -202,9 +195,6 @@ const NewChat = (props) => {
                         {" "}
                         {selectedUser && selectedUser.name}
                       </strong>
-                      {/* <div className="text-muted small ">
-                                                <em className="text-white">Online</em>
-                                            </div> */}
                     </div>
                     <div>
                       <span

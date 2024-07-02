@@ -175,7 +175,7 @@ const MatrimonialInfo = () => {
                       <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                           <div className="me-3">
-                            <div className="text-white-75 fs-6">{item.matrimonial_profile_name}</div>
+                            <div className="text-white-75 fs-6 text-wrap-break-word">{item.matrimonial_profile_name}</div>
 
 
 

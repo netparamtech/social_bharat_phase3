@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, Button, Col, Row, Divider, Image, Collapse } from "antd";
 import { useNavigate } from "react-router-dom";
-import { fetchSelfMatrimonialById, getSearchedUserFullProfile } from "../../services/userService";
+import { fetchSelfCreatedLatestBusiness, fetchSelfMatrimonialById, getSearchedUserFullProfile } from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
+import BusinessCard from "./BusinessCard";
 
 const DescriptionItem = ({ title, content }) => (
     <Row>
@@ -30,7 +31,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
     const [educationDetails, setEducationDetails] = useState([]);
     const [businessDetails, setBusinessDetails] = useState([]);
     const [businessPhotos, setBusinessPhotos] = useState([]);
-    const [matrimonial,setMatrimonial] = useState('');
+    const [matrimonial, setMatrimonial] = useState('');
 
     const [serverError, setServerError] = useState("");
 
@@ -45,7 +46,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
         setVisible(false);
     };
 
-    const getSelfMatrimonial = async(id) => {
+    const getSelfMatrimonial = async (id) => {
         dispatch(setLoader(true));
         try {
             const response = await fetchSelfMatrimonialById(id);
@@ -74,6 +75,30 @@ const ViewProfileDrawerForMembers = ({ id }) => {
             const response = await getSearchedUserFullProfile(id);
             if (response && response.status === 200) {
                 setUser(response.data.data);
+                setServerError('');
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                navigate("/login");
+            } else if (error.response && error.response.status === 500) {
+                setServerError("Oops! Something went wrong on our server.");
+            } else if (error.response && error.response.status === 404) {
+                dispatch(logout());
+                navigate('/');
+            }
+        } finally {
+            dispatch(setLoader(false));
+        }
+    };
+
+    //getBusinessDetails
+    const getBusinessDetails = async () => {
+        dispatch(setLoader(true));
+        try {
+            const response = await fetchSelfCreatedLatestBusiness(id);
+            if (response && response.status === 200) {
+                setBusinessDetails(response.data.data);
                 setServerError('');
             }
         } catch (error) {
@@ -123,17 +148,17 @@ const ViewProfileDrawerForMembers = ({ id }) => {
     useEffect(() => {
         if (visible) {
             getUserProfile();
-            getSelfMatrimonial(id)
+            getSelfMatrimonial(id);
+            getBusinessDetails(id);
         }
     }, [visible]);
-   
+
     useEffect(() => {
         setProfileImage(
             (user && user.photo && user.photo) || "/user/images/OIP.jpg"
         );
         setContactDetails(user?.contacts);
         setEducationDetails(user?.education);
-        setBusinessDetails(user?.businesses);
         setBusinessPhotos(
             user && user.businesses && user.businesses.business_photos
         );
@@ -353,19 +378,19 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             <div className="col-6">
                                                                 <label className="">
                                                                     {matrimonial.biodata && (
-                                                                            <span>
-                                                                                <a
-                                                                                    href={matrimonial.biodata}
-                                                                                    download="biodata.pdf"
-                                                                                >
-                                                                                    <i className="fa-regular fa-file-lines"></i>{" "}
-                                                                                    Download Biodata
-                                                                                </a>
-                                                                                &nbsp;(
-                                                                                {getFileType(matrimonial.biodata)}
-                                                                                )
-                                                                            </span>
-                                                                        )}
+                                                                        <span>
+                                                                            <a
+                                                                                href={matrimonial.biodata}
+                                                                                download="biodata.pdf"
+                                                                            >
+                                                                                <i className="fa-regular fa-file-lines"></i>{" "}
+                                                                                Download Biodata
+                                                                            </a>
+                                                                            &nbsp;(
+                                                                            {getFileType(matrimonial.biodata)}
+                                                                            )
+                                                                        </span>
+                                                                    )}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -381,16 +406,16 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                                 </div>
                                                                 <div className="col-6">
                                                                     <label className="proposal-Photo">
-                                                                        {matrimonial &&  matrimonial.proposal_photos&&
-                                                                            Array.isArray( matrimonial.proposal_photos) ? (
-                                                                                matrimonial.proposal_photos.map((item, idx) => (
+                                                                        {matrimonial && matrimonial.proposal_photos &&
+                                                                            Array.isArray(matrimonial.proposal_photos) ? (
+                                                                            matrimonial.proposal_photos.map((item, idx) => (
                                                                                 <a href={item} target="_blank">
                                                                                     <img className="m-1" src={item} />{" "}
                                                                                 </a>
                                                                             ))
                                                                         ) : (
-                                                                            <a href={ matrimonial.proposal_photos} target="_blank">
-                                                                                <img src={ matrimonial.proposal_photos} />
+                                                                            <a href={matrimonial.proposal_photos} target="_blank">
+                                                                                <img src={matrimonial.proposal_photos} />
                                                                             </a>
                                                                         )}
                                                                     </label>
@@ -641,102 +666,102 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                         {businessDetails && businessDetails.length > 0 ? (
                                             <Collapse accordion>
                                                 {businessDetails.map((item, value) => (
-                                                    <Panel
-                                                        header={
-                                                            <span className="mb-3  fs-6">{`Business ${value + 1
-                                                                }`}</span>
-                                                        }
-                                                        key={value}
-                                                        className=""
-                                                    >
-                                                        <table className="table table-striped ">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td className="fw-bold">City</td>
-                                                                    <td className="text-muted">{item.city}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">State</td>
-                                                                    <td className="text-muted">{item.state}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">Country</td>
-                                                                    <td className="text-muted">{item.country}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">Contact 1</td>
-                                                                    <td className="text-muted">{item.contact1}</td>
-                                                                </tr>
+                                                    // <Panel
+                                                    //     header={
+                                                    //         <span className="mb-3  fs-6">{`${item.business_name}`}</span>
+                                                    //     }
+                                                    //     key={value}
+                                                    //     className=""
+                                                    // >
+                                                    //     <table className="table table-striped ">
+                                                    //         <tbody>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">City</td>
+                                                    //                 <td className="text-muted">{item.city}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">State</td>
+                                                    //                 <td className="text-muted">{item.state}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Country</td>
+                                                    //                 <td className="text-muted">{item.country}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Contact 1</td>
+                                                    //                 <td className="text-muted">{item.contact1}</td>
+                                                    //             </tr>
 
-                                                                {item.contact2 && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Contact 2</td>
-                                                                        <td className="text-muted">
-                                                                            {item.contact2}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.contact2 && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Contact 2</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.contact2}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.contact3 && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Contact 3</td>
-                                                                        <td className="text-muted">
-                                                                            {item.contact3}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.contact3 && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Contact 3</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.contact3}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.business_email && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Website Email</td>
-                                                                        <td
-                                                                            className="text-muted"
-                                                                            style={{
-                                                                                maxWidth: "300px",
-                                                                                wordWrap: "break-word",
-                                                                            }}
-                                                                        >
-                                                                            {item.business_email}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.business_email && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Website Email</td>
+                                                    //                     <td
+                                                    //                         className="text-muted"
+                                                    //                         style={{
+                                                    //                             maxWidth: "300px",
+                                                    //                             wordWrap: "break-word",
+                                                    //                         }}
+                                                    //                     >
+                                                    //                         {item.business_email}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.business_website && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Website Link</td>
-                                                                        <td className="text-muted">
-                                                                            {item.business_website}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.business_website && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Website Link</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.business_website}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {businessPhotos && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Business Photos</td>
-                                                                        <td className="proposal-Photo">
-                                                                            {businessPhotos &&
-                                                                                Array.isArray(businessPhotos) ? (
-                                                                                businessPhotos.map((item, idx) => (
-                                                                                    <a href={item} target="_blank">
-                                                                                        <img className="m-1" src={item} />
-                                                                                    </a>
-                                                                                ))
-                                                                            ) : (
-                                                                                <a href={businessPhotos} target="_blank">
-                                                                                    <img src={businessPhotos} />
-                                                                                </a>
-                                                                            )}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {businessPhotos && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Business Photos</td>
+                                                    //                     <td className="proposal-Photo">
+                                                    //                         {businessPhotos &&
+                                                    //                             Array.isArray(businessPhotos) ? (
+                                                    //                             businessPhotos.map((item, idx) => (
+                                                    //                                 <a href={item} target="_blank">
+                                                    //                                     <img className="m-1" src={item} />
+                                                    //                                 </a>
+                                                    //                             ))
+                                                    //                         ) : (
+                                                    //                             <a href={businessPhotos} target="_blank">
+                                                    //                                 <img src={businessPhotos} />
+                                                    //                             </a>
+                                                    //                         )}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                <tr>
-                                                                    <td className="fw-bold">Status</td>
-                                                                    <td className="text-muted">{item.status}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </Panel>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Status</td>
+                                                    //                 <td className="text-muted">{item.status}</td>
+                                                    //             </tr>
+                                                    //         </tbody>
+                                                    //     </table>
+                                                    // </Panel>
+                                                    <BusinessCard item={item} name="Business" />
                                                 ))}
                                             </Collapse>
                                         ) : (

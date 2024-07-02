@@ -46,7 +46,7 @@ const UserRatingModel = () => {
 
         setTimeout(() => {
           dispatch(setModelAction(false));
-          navigate("/dashboard");
+          navigate(-1);
         }, 1000);
       }
     } catch (error) {

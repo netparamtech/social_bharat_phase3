@@ -30,8 +30,12 @@ const BusinessCard = ({ item, index, name }) => {
     return (
         <>
             {
-                name === 'Business' ? <a className="btn mt-2 over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>{item.business_name}</a> : <a className="btn over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>Show More</a>
+                name === 'Business' ? <a className="btn mt-2 over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>{item.business_name}</a> :
+                name === 'admin' ? <a className="btn over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'><i className="fas fa-eye"></i></a>:<a className="btn over-pointer-g-effect mx-auto btn-toggle" onClick={handleShow} title='View'>Show More</a>
+                
             }
+            
+          
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -112,8 +116,8 @@ const BusinessCard = ({ item, index, name }) => {
                                                         alt={`Proposal Photo ${index + 1}`}
                                                         className="d-block w-100 custom-carousel-item"
                                                         height={300}
-                                                        style={{ objectFit: 'cover', height: '100%', width: '100%' }}
-                                                    //onClick={() => changeEventClickFlag(true, item.id)}
+                                                        style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                                        //onClick={() => changeEventClickFlag(true, item.id)}
                                                     />
 
                                                 </Carousel.Item>
@@ -123,8 +127,8 @@ const BusinessCard = ({ item, index, name }) => {
                                                         src={item.business_photos}
                                                         alt="Proposal Photo"
                                                         className="d-block w-100 custom-carousel-item"
-                                                        style={{ objectFit: 'cover', height: '100%', width: '100%' }}
-                                                    />
+                                                        style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                                        />
                                                 </a>) : ''
                                             )}
 

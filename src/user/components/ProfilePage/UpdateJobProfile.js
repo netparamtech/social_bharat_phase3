@@ -5,9 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { setLoader } from '../../actions/loaderAction';
 import { useDispatch } from 'react-redux';
 import Select from "react-select";
+import InputField from '../custom/InputField';
+import HtmlSelect from '../custom/HtmlSelect';
+import SelectField from '../custom/SelectField';
 
 const UpdateJobProfile = (props) => {
-  const {id} = useParams();
+  const { id } = useParams();
   const { jobDetails } = props;
 
   const [companyName, setCompanyName] = useState("");
@@ -29,6 +32,10 @@ const UpdateJobProfile = (props) => {
     { value: "9 years", label: "9 years" },
     { value: "10 years", label: "10 years" },
     // Add more options as needed
+  ];
+  const jobTypeOptions = [
+    { value: 'PART TIME', label: 'PART TIME' },
+    { value: 'FULL TIME', label: 'FULL TIME' },
   ];
   const [errors, setErrors] = useState("");
   const [serverError, setServerError] = useState("");
@@ -59,7 +66,7 @@ const UpdateJobProfile = (props) => {
     };
 
     try {
-      const response = await updateJobDetail(jobProfileData,id);
+      const response = await updateJobDetail(jobProfileData, id);
       if (response && response.status === 200) {
         setErrors('');
         setServerError('');
@@ -88,7 +95,7 @@ const UpdateJobProfile = (props) => {
       setCompanyName(jobDetails.company_name);
       setDesignation(jobDetails.designation);
       setJobType(jobDetails.job_type);
-      setSelectedExperience({value:jobDetails.experience,label:jobDetails.experience});
+      setSelectedExperience({ value: jobDetails.experience, label: jobDetails.experience });
 
       // Set jobType based on job_type from jobDetails
       if (jobDetails.job_type === "PART_TIME") {
@@ -115,95 +122,25 @@ const UpdateJobProfile = (props) => {
                 <form className="w-100 w-lg-75" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Company Name{" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="companyName"
-                        id="companyName"
-                        placeholder="Enter company name"
-                        className="form-control"
-                        defaultValue={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                      />
-                      {errors.company_name && (
-                        <span className="error">{errors.company_name}</span>
-                      )}
+                      <InputField handleChange={(e) => setCompanyName(e.target.value)} isRequired={true} label="Company Name"
+                        errorServer={errors.company_name} isAutoFocused={true} placeholder="Enter company name" value={companyName}
+                        fieldName="Company Name" maxLength={100} />
                     </div>
                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Designation{" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="text"
-                        name="designation"
-                        id="designation"
-                        placeholder="Enter designation"
-                        className="form-control"
-                        defaultValue={designation}
-                        onChange={(e) => setDesignation(e.target.value)}
-                      />
-                      {errors.designation && (
-                        <span className="error">{errors.designation}</span>
-                      )}
+                      <InputField handleChange={(e) => setDesignation(e.target.value)} isRequired={true} label="Designation"
+                        errorServer={errors.designation} isAutoFocused={false} placeholder="Enter designation"
+                        fieldName="Designation" maxLength={100} value={designation} />
                     </div>
                   </div>
-
-                  {/* <div className="row">
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Job Start Date {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="date"
-                        name="jobStartDate"
-                        id="jobStartDate"
-                        placeholder=""
-                        className="form-control"
-                        defaultValue={jobStartDate}
-                        onChange={(e) => setJobStartDate(e.target.value)}
-                      />
-                      {errors.job_start_date && (
-                        <span className="error">{errors.job_start_date}</span>
-                      )}
-                    </div>
-                    <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                      <label className="form-label">Job End Date {" "}<span className="text-danger">*</span></label>
-                      <input
-                        type="date"
-                        name="jobEndDate"
-                        id="jobEndDate"
-                        placeholder=""
-                        className="form-control"
-                        defaultValue={jobEndDate}
-                        onChange={(e) => setJobEndDate(e.target.value)}
-                      />
-                      {errors.job_end_date && (
-                        <span className="error">{errors.job_end_date}</span>
-                      )}
-                    </div>
-                  </div> */}
-
                   <div className="row">
                     <div className="mb-3 col-lg-6 col-sm-6 col-xs-12">
-                      <label className="form-label">Job Type{" "}<span className="text-danger">*</span></label>
-                      <select
-                        className="form-select form-control"
-                        aria-label="Default select example"
-                        value={jobType}
-                        onChange={(e) => setJobType(e.target.value)}
-                      >
-                        <option value="">--- Job Type ---</option>
-                        <option value="PART TIME">PART TIME</option>
-                        <option value="FULL TIME">FULL TIME</option>
-                      </select>
-                      {errors.job_type && (
-                        <span className="error">{errors.job_type}</span>
-                      )}
+                      <HtmlSelect handleSelectChange={(e) => setJobType(e.target.value)} options={jobTypeOptions} value={jobType} isRequired={true} errorServer={errors.job_type}
+                        label="Job Type" fieldName="Job Type" />
                     </div>
                     <div className='mb-3 col-lg-6 col-sm-6 col-xs-12'>
-                      <label className="form-label">Experience</label>
-                      <Select
-                        options={experienceOptions}
-                        value={selectedExperience}
-                        onChange={handleExperienceChange}
-                        placeholder="Select..."
-                      />
+                      <SelectField handleSelectChange={handleExperienceChange} isRequired={true} value={selectedExperience}
+                        errorServer={errors.experience} placeholder="Select Experience ..." label="Experience"
+                        options={experienceOptions} fieldName="Experience" />
                     </div>
                   </div>
                   <div className="row mt-4">

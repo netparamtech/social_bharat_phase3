@@ -325,20 +325,9 @@ const SearchEvents = () => {
                 {featuredEvents &&
                   featuredEvents.map((item, index) => (
                     <Carousel.Item key={index}>
-                      <div className="mb-2" style={{ top: '0', left: '0', width: '100%', height: '100%',borderRadius:'10px', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src={item.banner_image} style={{ width: '100%', height: '400px',borderRadius:'10px' }} onClick={() => changeEventClickFlag(true, item.id)} />
+                      <div className="mb-2" style={{ top: '0', left: '0', width: '100%', height: '100%', borderRadius: '10px', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={item.banner_image} style={{ width: '100%', height: '400px', borderRadius: '10px' }} onClick={() => changeEventClickFlag(true, item.id)} />
                       </div>
-                      <Carousel.Caption>
-                        <div>
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-lg fs-3 hover-pointer-green"
-                            onClick={() => changeEventClickFlag(true, item.id)}
-                          >
-                            View
-                          </button>
-                        </div>
-                      </Carousel.Caption>
                     </Carousel.Item>
                   ))}
               </Carousel> : ''
@@ -536,7 +525,7 @@ const SearchEvents = () => {
                                             }
                                           </div>
                                           <div className="mt-2">
-                                
+
                                             <button className="btn mb-2 btn-success mx-auto"
                                               onClick={() => changeEventClickFlag(true, item.id)}>
                                               View

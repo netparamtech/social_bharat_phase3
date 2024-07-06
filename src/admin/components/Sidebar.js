@@ -92,8 +92,11 @@ function Sidebar({ collapsed, onCollapse }) {
           <Menu.Item key="cms" icon={<AppstoreOutlined />}>
             <Link to="/admin/cms">CMS</Link>
           </Menu.Item>
-          <Menu.Item key="cms" icon={<AppstoreOutlined />}>
+          <Menu.Item key="activities" icon={<AppstoreOutlined />}>
             <Link to="/admin/activities">ACTIVITIES</Link>
+          </Menu.Item>
+          <Menu.Item key="businesses" icon={<img style={{backgroundColor:'white'}} src="/admin/img/briefcase.png" width={15} />}>
+            <Link to="/admin/businesses">BUSINESS</Link>
           </Menu.Item>
         </Menu>
       </Sider>

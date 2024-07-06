@@ -51,6 +51,8 @@ import RegisteredUsersForSameJobPage from "./pages/jobs/RegisteredUsersForSameJo
 import CreateCms from "./components/cms/CreateCms";
 import UpCms from "./components/cms/UpCms";
 import ViewActivityPage from "./pages/ViewActivityPage";
+import BusinessPage from "./pages/BusinessPage";
+import MatrimonialInfoPage from "./pages/MatrimonialInfoPage";
 
 const adminRoutes = [
     {
@@ -355,6 +357,16 @@ const adminRoutes = [
     {
         path: '/admin/activity/:id',
         component: ViewActivityPage,
+        exact:true
+    },
+    {
+        path: '/admin/matrimonial/:id',
+        component: MatrimonialInfoPage,
+        exact:true
+    },
+    {
+        path: '/admin/businesses',
+        component: BusinessPage,
         exact:true
     },
     {

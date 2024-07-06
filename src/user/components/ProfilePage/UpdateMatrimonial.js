@@ -246,7 +246,6 @@ const UpdateMatrimonial = () => {
       dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
         setMessagePhotos(error.response.data.message);
       }
 
@@ -283,7 +282,6 @@ const UpdateMatrimonial = () => {
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
         setMessageBiodata(error.response.data.message);
       }
 
@@ -340,7 +338,7 @@ const UpdateMatrimonial = () => {
       sister_count: sisterCount ? sisterCount : 0,
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
-      salary_package: packageValue ? (packageValue+" "+unit) : '',
+      salary_package: packageValue ? (packageValue + " " + unit) : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_name: matrimonialProfileName,
       matrimonial_profile_occupation: matrimonialOccupation,
@@ -434,7 +432,7 @@ const UpdateMatrimonial = () => {
       setBrotherCount(userMatrimonial.brother_count);
       setEducation(userMatrimonial.education);
       setSisterCount(userMatrimonial.sister_count);
-      if(userMatrimonial.salary_package){
+      if (userMatrimonial.salary_package) {
         let item = userMatrimonial.salary_package.split(" ");
         setPackageValue(item[0]);
         setUnit(item[1]);
@@ -1074,7 +1072,7 @@ const UpdateMatrimonial = () => {
                       </div>
 
                       <div className="row">
-                      <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 package-container position-relative">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 package-container position-relative">
                           <label className="form-label">Package (Annual)</label>
                           <input
                             type="text"
@@ -1166,7 +1164,7 @@ const UpdateMatrimonial = () => {
                           <input
                             type="file"
                             className="form-control"
-                            accept="images/*"
+                            accept="image/jpeg, image/png"
                             id="proposalPhoto"
                             defaultValue={proposalPhoto}
                             onChange={handleProposalPhotoChange}

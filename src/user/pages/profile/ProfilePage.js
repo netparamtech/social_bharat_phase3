@@ -7,7 +7,7 @@ import ContactInfo from '../../components/ProfilePage/ContactInfo';
 import { getUserFullProfile } from '../../services/userService';
 import JobInfo from '../../components/ProfilePage/JobInfo';
 import BusinessInfo from '../../components/ProfilePage/BusinessInfo';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import GenerateBiodata from '../../components/ProfilePage/GenerateBiodata';
@@ -15,6 +15,8 @@ import { logout } from '../../actions/userAction';
 
 
 const ProfilePage = () => {
+
+    const { scrollValue } = useParams();
 
     const [user, setUser] = useState();
     const navigate = useNavigate();
@@ -46,7 +48,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         getUserProfile();
-        window.scrollTo(0, 0);
+        window.scrollTo(0, scrollValue ? parseInt(atob(scrollValue)) : 0);
     }, [])
 
     return (

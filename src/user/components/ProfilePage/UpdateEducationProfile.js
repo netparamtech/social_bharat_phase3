@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { fetchAllActiveQualifications, fetchAllDegrees, updateEducationalDetails } from '../../services/userService';
-import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { fetchAllDegrees, getSingleEducationDetails, updateEducationalDetails } from '../../services/userService';
+import HtmlSelect from '../custom/HtmlSelect';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import SelectField from '../custom/SelectField';
+import InputField from '../custom/InputField';
 
 const UpdateEducationProfile = (props) => {
-  const { educationDetails } = props;
+  // const { educationDetails } = props;
+  const {id} = useParams();
   const [degrees, setDegrees] = useState([]);
+  const [educationDetails,setEducationDetails] = useState([]);
   const [qualification, setQualification] = useState("");
   const [degreeId, setDegreeId] = useState('');
   const [degree, setDegree] = useState('');
@@ -49,16 +53,29 @@ const UpdateEducationProfile = (props) => {
     setPassingYear(e.target.value);
   };
 
-  const passingYearOptions = [];
-  let currentYear = new Date().getFullYear();
-  currentYear = currentYear+5;
-  for (let year = currentYear; year >= currentYear - 50; year--) {
-    passingYearOptions.push(
-      <option key={year} value={year}>
-        {year}
-      </option>
-    );
-  }
+  const generatePassingYearOptions = () => {
+    const passingYearOptions = [];
+    let currentYear = new Date().getFullYear() + 5;
+    for (let year = currentYear; year >= currentYear - 50; year--) {
+      passingYearOptions.push({ value: year.toString(), label: year.toString() });
+    }
+    return passingYearOptions;
+  };
+
+  const passingYearOptions = generatePassingYearOptions();
+
+  const customOptions = (
+    degrees &&
+    degrees.map((degree) => ({
+      value: degree.id,
+      label: degree.title,
+    }))
+  );
+  const scoreOptions = [
+    { value: 'PERCENTAGE', label: 'PERCENTAGE' },
+    { value: 'GRADE', label: 'GRADE' },
+    { value: 'CGPA', label: 'CGPA' },
+  ];
 
 
   const handleSubmit = async (e) => {
@@ -76,7 +93,7 @@ const UpdateEducationProfile = (props) => {
     };
 
     try {
-      const response = await updateEducationalDetails(requestData);
+      const response = await updateEducationalDetails(requestData,id);
       if (response && response.status === 200) {
         setErrors('');
         setServerError('');
@@ -125,6 +142,29 @@ const UpdateEducationProfile = (props) => {
     }
   }
 
+  const fetchSingleEduction = async () => {
+    dispatch(setLoader(true));
+    try {
+      const response = await getSingleEducationDetails(id);
+      if (response && response.status === 200) {
+        setEducationDetails(response.data.data);
+        setServerError('');
+        dispatch(setLoader(false));
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+
+      //Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+      //Internal Server Error
+      else if (error.response && error.response.status === 500) {
+        setServerError("Oops! Something went wrong on our server.");
+      }
+    }
+  }
+
   useEffect(() => {
     fetchDegrees();
   }, []);
@@ -151,6 +191,7 @@ const UpdateEducationProfile = (props) => {
   }, [educationDetails]);
 
   useEffect(() => {
+    fetchSingleEduction();
     setServerError('');
     setErrors('');
   }, []);
@@ -169,66 +210,27 @@ const UpdateEducationProfile = (props) => {
                     <div className="card p-3">
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Degree{" "}<span className="text-danger">*</span></label>
-                          <Select
-                            id="degree"
-                            className="form-control"
-                            value={degree} // Use the degree prop directly as the default value
-                            onChange={handleDegreeIdChange}
-                            options={
-                              degrees &&
-                              degrees.map((degree) => ({
-                                value: degree.id,
-                                label: degree.title,
-                              }))
-                            }
-                            placeholder="---Select Degree---"
-                          />
-                          {errors.degree_id && <span className='error'>{errors.degree_id}</span>}
+                          <SelectField handleSelectChange={handleDegreeIdChange} isRequired={true} value={degree}
+                            errorServer={errors.degree_id} placeholder="---Select Degree---" label="Degree"
+                            options={customOptions} fieldName="Degree" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Field Of Study{" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="university"
-                            id="university"
-                            placeholder="Enter Study Field"
-                            className="form-control"
-                            defaultValue={studyField}
-                            onChange={handleStudyFieldChange}
-                          />
-                          {errors.field_of_study && <span className='error'>{errors.field_of_study}</span>}
+                          <InputField handleChange={handleStudyFieldChange} isRequired={true} label="Field Of Study"
+                            errorServer={errors.field_of_study} isAutoFocused={false} placeholder="Enter Study Field"
+                            fieldName="Field Of Study" maxLength={100} value={studyField} />
                         </div>
                       </div>
 
                       <div className="row">
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">University/Institution{" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="university"
-                            id="university"
-                            placeholder="Enter university name"
-                            className="form-control"
-                            defaultValue={university}
-                            onChange={handleUniversityChange}
-                          />
-                          {errors.institution_name && <span className='error'>{errors.institution_name}</span>}
+                          <InputField handleChange={handleUniversityChange} isRequired={true} label="Institution" type="neumeric"
+                            errorServer={errors.institution_name} isAutoFocused={false} placeholder="Enter university name"
+                            fieldName="Institution" maxLength={100} value={university} />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Passing Year{" "}<span className="text-danger">*</span></label>
-                          <select
-                            name="year"
-                            id="year"
-                            className="form-control"
-                            value={passingYear}
-                            onChange={handlePassingYearChange}
-                          >
-                            <option value="" >---Select Passing Year---</option>
-                            {passingYearOptions}
-                          </select>
-                          {errors.passing_year && <span className='error'>{errors.passing_year}</span>}
+                          <HtmlSelect handleSelectChange={handlePassingYearChange} options={passingYearOptions} value={passingYear} isRequired={true} errorServer={errors.passing_year}
+                            label="Passing Year" fieldName="Passing Year" />
                         </div>
 
                       </div>
@@ -236,29 +238,24 @@ const UpdateEducationProfile = (props) => {
                       <div className="row">
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Score Type{" "}<span className="text-danger">*</span></label>
-                          <select className="form-select form-control" aria-label="Default select example"
-                            onChange={handleScoreTypeChange}
-                            value={scoreType}
-                          >
-                            <option value="">---Select Score Type---</option>
-                            <option value="PERCENTAGE">PERCENTAGE</option>
-                            <option value="GRADE">GRADE</option>
-                          </select>
-                          {errors.score_type && <span className='error'>{errors.score_type}</span>}
+                          <HtmlSelect handleSelectChange={handleScoreTypeChange} options={scoreOptions} value={scoreType} isRequired={true} errorServer={errors.score_type}
+                            label="Score Type" fieldName="Score Type" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Score{" "}<span className="text-danger">*</span></label>
-                          <input
-                            type="text"
-                            name="Score"
-                            id="Score"
-                            placeholder="Enter Score"
-                            className="form-control"
-                            defaultValue={score}
-                            onChange={handleScoreChange}
-                          />
-                          {errors.score && <span className='error'>{errors.score}</span>}
+                          {
+                            (scoreType === 'PERCENTAGE'||scoreType==='CGPA') ? (
+                              <>
+                              <p className="warning">Please enter the percentage/cgpa rounded off to the nearest value.</p>
+                              <InputField handleChange={handleScoreChange} isRequired={true} label="Score" type="numeric"
+                                errorServer={errors.score} isAutoFocused={false} placeholder="Enter Score"
+                                fieldName="Score" maxLength={3} value={score} min={0} max={100} />
+                              </>
+                            ) : (
+                              <InputField handleChange={handleScoreChange} isRequired={true} label="Score" type="text"
+                                errorServer={errors.score} isAutoFocused={false} placeholder="Enter Score"
+                                fieldName="Score" maxLength={2} value={score} />
+                            )
+                          }
                         </div>
 
 

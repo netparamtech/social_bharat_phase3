@@ -45,6 +45,7 @@ import CreateMatrimonialPage from "./pages/profile/update/CreateMatrimonialPage"
 import JobsPage from "./pages/JobsPage";
 import UserServiceInfoPage from "./pages/UserServiceInfoPage";
 import ChatBoardPage from "./pages/ChatBoardPage";
+import CreateEducationPage from "./pages/profile/update/CreateEducationPage";
 
 const UserRoutes = () => {
     return [
@@ -91,6 +92,11 @@ const UserRoutes = () => {
             exact: true
         },
 
+        {
+            path: '/profile/:scrollValue',
+            component: ProfilePage,
+            exact: true
+        },
         {
             path: '/profile',
             component: ProfilePage,
@@ -168,8 +174,8 @@ const UserRoutes = () => {
         },
 
         {
-            path: '/user/update-education-profile',
-            component: UpdateEducationPage,
+            path: '/user/create-education-profile',
+            component: CreateEducationPage,
             exact: true
         },
 

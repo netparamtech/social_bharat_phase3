@@ -36,6 +36,7 @@ const SearchBusiness = () => {
   const [isAndroidUsed, setIsAndroidUsed] = useState(false);
   const [defaultMap, setDefaultMap] = useState("/user/images/location.png");
   const [isDetails, setIsDetails] = useState(false);
+  const [scrollValue, setScrollValue] = useState(1000);
 
   //to show state and city according to user search
 
@@ -244,6 +245,9 @@ const SearchBusiness = () => {
   }, [city]);
   useEffect(() => {
     const handleResize = () => {
+      if (window.innerWidth < 1000) {
+        setScrollValue(1500);
+      }
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
     };
 
@@ -379,7 +383,7 @@ const SearchBusiness = () => {
                               </div>
                             </div>
                             <div>
-                              <a className="hover-pointer" onClick={() => navigate('/profile')}><p>Manage Your Business Profile</p></a>
+                              <a className="hover-pointer" onClick={() => navigate(`/profile/${btoa(scrollValue.toString())}`)}><p>Manage Your Business Profile</p></a>
                             </div>
                             <div className="mx-auto text-danger p-4">You Are Searching In
                               {city ? (

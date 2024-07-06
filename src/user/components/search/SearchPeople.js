@@ -401,7 +401,7 @@ const SearchPeople = () => {
                           {pair.map((item, innerIndex) => (
 
                             <div className="col-md-6 mt-2" key={innerIndex}>
-                              <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '350px' }}>
+                              <div className="card" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '400px' }}>
                                 <div className="card-body p-4 search-partner-cards">
                                   <div className={`text-black ${isAndroidUsed ? '' : 'd-flex'}`}>
                                     <div className="flex-shrink-0 m-3">
@@ -415,7 +415,7 @@ const SearchPeople = () => {
                                     <div className="flex-grow-1 ms-3">
                                       <h5 className="mb-1">{item.name}</h5>
 
-                                      <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
+                                      <p className="mb-2 pb-1 justify-content-start text-wrap-break-word" style={{ color: '#2b2a2a' }}>
                                         Job Details-{item.occupation ? item.occupation.length > 50 ? (
                                           item.occupation.slice(0, 50) + "...."
                                         ) : (item.occupation) : ''}

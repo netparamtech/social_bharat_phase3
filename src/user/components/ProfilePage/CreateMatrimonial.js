@@ -105,7 +105,7 @@ const CreateMatrimonial = () => {
   const [unit, setUnit] = useState('lakh'); // Default unit is "lakh"
 
   const handleUnitChange = (event) => {
-    console.log(packageValue,unit)
+    console.log(packageValue, unit)
     setUnit(event.target.value);
   };
 
@@ -239,7 +239,6 @@ const CreateMatrimonial = () => {
       dispatch(setLoader(false));
       // Handle error
       if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
         setMessagePhotos(error.response.data.message);
       }
 
@@ -277,7 +276,6 @@ const CreateMatrimonial = () => {
     } catch (error) {
       // Handle error
       if (error.response && error.response.status === 400) {
-        setErrors(error.response.data.errors);
         setMessageBiodata(error.response.data.message);
       }
 
@@ -300,7 +298,7 @@ const CreateMatrimonial = () => {
 
     const trimmedTempProposalPhotoUrl = tempProposalPhotoUrl.map(item => item.trim()).filter((item) => item !== '');
     console.log(trimmedTempProposalPhotoUrl.length, "Check create length")
-    console.log(packageValue,unit)
+    console.log(packageValue, unit)
 
     const matrimonialData = {
       father_name: fatherName,
@@ -314,7 +312,7 @@ const CreateMatrimonial = () => {
       sister_count: sisterCount ? sisterCount : 0,
       brothers_details: brothersDetails ? brothersDetails : '',
       sisters_details: sistersDetails ? sistersDetails : '',
-      salary_package: packageValue ? (packageValue+" "+unit) : '',
+      salary_package: packageValue ? (packageValue + " " + unit) : '',
       matrimonial_profile_gender: gender,
       matrimonial_profile_name: matrimonialProfileName,
       matrimonial_profile_dob: dob,
@@ -497,84 +495,6 @@ const CreateMatrimonial = () => {
       setCommunityName(community && community.name);
     }
   }, [community]);
-
-  //   useEffect(() => {
-  //     // Set default values from userMatrimonial prop when it changes
-  //     if (userMatrimonial) {
-  //       setMatrimonialProfileName(userMatrimonial.matrimonial_profile_name || "N/A")
-  //       setFatherName(userMatrimonial.father_name || "N/A");
-  //       setMotherName(userMatrimonial.mother_name || "N/A");
-  //       setSkinTone(userMatrimonial.skin_tone || "");
-  //       setHeightFeet(getFeet(userMatrimonial.height_in_feet) || 0);
-  //       setHeightInch(getInches(userMatrimonial.height_in_feet) || 0);
-  //       setWeight(userMatrimonial.weight_in_kg || "N/A");
-  //       setCast(userMatrimonial.cast || communityName);
-  //       setGotraSelf(userMatrimonial.gotra || "N/A");
-  //       setMaternalGotra(userMatrimonial.maternal_gotra || "N/A");
-  //       setPaternalGotra(userMatrimonial.paternal_gotra || "N/A");
-  //       setProposalPhoto(userMatrimonial.proposal_photos || "N/A");
-  //       setBrotherCount(userMatrimonial.brother_count);
-  //       setSisterCount(userMatrimonial.sister_count);
-  //       setPackageValue(userMatrimonial.salary_package);
-  //       setDescription(userMatrimonial.description || "");
-  //       {
-  //         userMatrimonial && userMatrimonial.proposal_photos && (
-  //           setTempProposalPhotoUrl(
-  //             Array.isArray(userMatrimonial.proposal_photos)
-  //               ? userMatrimonial.proposal_photos
-  //               : [userMatrimonial.proposal_photos]
-  //           )
-  //         )
-  //       }
-
-
-  //       {
-  //         userMatrimonial &&
-  //           userMatrimonial.proposal_photos &&
-  //           Array.isArray(userMatrimonial.proposal_photos)
-  //           ? setProposalPreview(userMatrimonial.proposal_photos || "")
-  //           : setProposalPreview([userMatrimonial.proposal_photos] || "");
-  //       }
-
-  //       setBiodataFile(userMatrimonial.biodata || "");
-  //       setBiodataPreview(userMatrimonial.biodata || "");
-  //       setTempBiodataFileUrl(userMatrimonial.biodata || "");
-  //       setSubcast({ value: userMatrimonial.subcast_id, label: userMatrimonial.subcast });
-  //       setSubcastId(userMatrimonial.subcast_id);
-
-  //       if (userMatrimonial.brothers_details) {
-
-  //         setBrothersDetails(userMatrimonial.brothers_details);
-  //         setShowBrotherDetail(true);
-  //       } else {
-  //         setIsBrotherDetails(false);
-  //       }
-  //       if (userMatrimonial.sisters_details) {
-  //         setSistersDetails(userMatrimonial.sisters_details);
-  //         setShowSisterDetail(true);
-  //       } else {
-  //         setIsSisterDetails(false);
-  //       }
-
-  //       if (userMatrimonial.profile_created_for !== null) {
-  //         setUpdateFor({
-  //           value: userMatrimonial.profile_created_for,
-  //           label: userMatrimonial.profile_created_for,
-  //         });
-  //         if (userMatrimonial.profile_created_for === 'Self') {
-  //           setGender(user.user.gender);
-
-  //           setDOB(yyyyMmDdFormat(user.user.dob));
-  //         } else {
-  //           setGender(userMatrimonial.matrimonial_profile_gender);
-  //           setDOB(yyyyMmDdFormat(userMatrimonial.matrimonial_profile_dob));
-  //         }
-  //       }
-
-  //       // You can similarly handle the proposalPhoto and biodataFile values here if needed
-  //     }
-
-  //   }, [userMatrimonial]);
 
   useEffect(() => {
     if (updateFor && user) {
@@ -1064,7 +984,7 @@ const CreateMatrimonial = () => {
                           <input
                             type="file"
                             className="form-control"
-                            accept="images/*"
+                            accept="image/jpeg, image/png"
                             id="proposalPhoto"
                             defaultValue={proposalPhoto}
                             onChange={handleProposalPhotoChange}

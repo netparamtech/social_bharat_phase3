@@ -1,7 +1,7 @@
 import CountUp from "react-countup";
 import { Statistic } from "antd";
 import { useEffect, useState } from "react";
-import { fetchAdminDashboardStatistics, fetchAdminDashboardStatisticsForActivities } from "../services/AdminService";
+import { fetchAdminDashboardStatistics, fetchAdminDashboardStatisticsForActivities, fetchAdminDashboardStatisticsForBusiness, fetchAdminDashboardStatisticsForMatrimonial, fetchAdminInfoStatistics } from "../services/AdminService";
 import { useNavigate } from "react-router-dom";
 import UsersChart from "./charts/UsersChart";
 import ServiceChart from "./charts/ServiceChart";
@@ -15,10 +15,20 @@ const BodyContent = () => {
   const [isView, setIsView] = useState(false);
   const [totalJobs, setTotalJobs] = useState(0);
   const [isActivityShow, setIsActivityShow] = useState(false);
+  const [isBusinessShow, setIsBusinessShow] = useState(false);
   const [activities, setActivities] = useState([]);
   const [copyActivity, setCopyActivity] = useState([]);
   const [activityInput, setActivityInput] = useState('');
+  const [business, setBusiness] = useState([]);
+  const [copyBusiness, setCopyBusiness] = useState([]);
+  const [matrimonials, setMatrimonials] = useState('');
+  const [copyMatrimonial, setCopyMatrimonial] = useState('');
+  const [isMatrimonialShow, setIsMatrimonialShow] = useState(false);
+  const [activeAdmin, setActiveAdmin] = useState('');
+  const [isShowAdmin, setIsShowAdmin] = useState(false);
+  const [matrimonialInput, setMatrimonialInput] = useState('');
   const socialActivityIcon = '/admin/img/social-activity.png';
+  const BusinessIcon = '/admin/img/briefcase.png'
 
   const navigate = useNavigate();
 
@@ -28,12 +38,35 @@ const BodyContent = () => {
   const handleActivityShow = () => {
     setIsActivityShow(!isActivityShow);
   }
+
   const handleActivityChange = (e) => {
     setActivityInput(e.target.value);
     const filteredResults = copyActivity.filter((item) =>
       item.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setActivities(filteredResults);
+  }
+  const handleBusinessShow = () => {
+    setIsBusinessShow(!isBusinessShow);
+  }
+  const handleBusinessChange = (e) => {
+    setActivityInput(e.target.value);
+    const filteredResults = copyBusiness.filter((item) =>
+      item.posted_by.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setBusiness(filteredResults);
+  }
+
+  const handleMatrimonialShow = () => {
+    setIsMatrimonialShow(!isMatrimonialShow);
+  }
+
+  const handleMatrimonialChange = (e) => {
+    setMatrimonialInput(e.target.value);
+    const filteredResults = copyMatrimonial.filter((item) =>
+      item.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setMatrimonials(filteredResults);
   }
 
   const fetchDashboardStatistics = async () => {
@@ -71,13 +104,61 @@ const BodyContent = () => {
       }
     }
   };
+  const fetchBusinessesStatistics = async () => {
+    try {
+      const response = await fetchAdminDashboardStatisticsForBusiness();
+      if (response && response.status === 200) {
+        setBusiness(response.data.result);
+        setCopyBusiness(response.data.result);
+      }
+    } catch (error) {
+      // Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate("/server/error", { state: { errorMessage } });
+      }
+    }
+  };
+  const fetchMatrimonialStatistics = async () => {
+    try {
+      const response = await fetchAdminDashboardStatisticsForMatrimonial();
+      if (response && response.status === 200) {
+        setMatrimonials(response.data.result);
+        setCopyMatrimonial(response.data.result);
+      }
+    } catch (error) {
+      // Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate("/server/error", { state: { errorMessage } });
+      }
+    }
+  };
+  const fetchAdminStatistics = async () => {
+    try {
+      const response = await fetchAdminInfoStatistics();
+      if (response && response.status === 200) {
+        setActiveAdmin(response.data.result);
+      }
+    } catch (error) {
+      // Unauthorized
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate("/server/error", { state: { errorMessage } });
+      }
+    }
+  };
   useEffect(() => {
     if (statistics) {
       if (statistics.companesePosted.length > 0) {
         setCompanese(statistics.companesePosted);
       }
-      console.log(statistics.job_statistics)
-
       setJobStatic(statistics.job_statistics);
 
     }
@@ -88,12 +169,25 @@ const BodyContent = () => {
     }
   }, [isActivityShow])
   useEffect(() => {
+    if (isBusinessShow) {
+      fetchBusinessesStatistics();
+    }
+  }, [isBusinessShow]);
+  useEffect(() => {
+    if (isMatrimonialShow) {
+      fetchMatrimonialStatistics();
+    }
+  }, [isMatrimonialShow])
+  useEffect(() => {
+    if (isShowAdmin) {
+      fetchAdminStatistics();
+    }
+  }, [isShowAdmin])
+  useEffect(() => {
     if (jobStatic.length > 0) {
       if (jobStatic.length > 1) {
-        console.log("Hello")
         setTotalJobs(jobStatic[0].totalCount + jobStatic[1].totalCount)
       } else {
-        console.log("Rahul")
         setTotalJobs(jobStatic[0].totalCount)
       }
     }
@@ -119,7 +213,7 @@ const BodyContent = () => {
       {/* <!-- Content Row --> */}
       <div className="row">
 
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-primary shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -136,6 +230,21 @@ const BodyContent = () => {
                         </span>
                       }
                       value={statistics && statistics.user_count}
+                      formatter={formatter}
+                    />
+                  </div>
+                  <div className="card-footer">
+
+                    <Statistic
+
+                      title={
+                        <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                          <a className="text-danger hover-pointer-admin stretched-link">
+                            ACTIVE ADMINS
+                          </a>
+                        </span>
+                      }
+                      value={statistics && statistics.admin_count}
                       formatter={formatter}
                     />
                   </div>
@@ -159,7 +268,7 @@ const BodyContent = () => {
           </div>
         </div>
 
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-primary shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -170,7 +279,7 @@ const BodyContent = () => {
 
                       title={
                         <span className="text-xs font-weight-bold  text-uppercase mb-1">
-                          <a className="text-primary stretched-link" onClick={() => navigate('/admin/usersWithCommunity')}>
+                          <a className="text-primary stretched-link" onClick={() => navigate('/admin/communities')}>
                             USERS With Community
                           </a>
                         </span>
@@ -199,7 +308,7 @@ const BodyContent = () => {
           </div>
         </div>
 
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-success shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -232,7 +341,7 @@ const BodyContent = () => {
           </div>
         </div>
 
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-info shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -242,11 +351,17 @@ const BodyContent = () => {
                       <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
                         <Statistic
                           title={
-                            <span className="text-xs font-weight-bold  text-uppercase mb-1">
+                            <span className="text-xs font-weight-bold text-uppercase mb-1">
                               <a className="text-info stretched-link" onClick={() => navigate('/admin/users')}>
                                 MATRIMONIALS
                               </a>
+                              <a className="text-primary m-2 stretched-link"
+                                onClick={() => handleMatrimonialShow()}
+                              >
+                                View More
+                              </a>
                             </span>
+
                           }
                           value={
                             statistics &&
@@ -282,9 +397,48 @@ const BodyContent = () => {
               </div>
             </div>
           </div>
+          {
+            isMatrimonialShow && (
+              <div className="card card-body shadow col-xl-11 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s', overflow: 'scroll' }}>
+                <div className="input-group rounded">
+                  <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={handleMatrimonialChange} />
+                  <span className="input-group-text border-0" id="search-addon">
+                    <i className="fas fa-search"></i>
+                  </span>
+                </div>
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Community Name</th>
+                      <th>Matrimonial Posted</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      matrimonials && matrimonials.length > 0 && matrimonials.map((item) => (
+
+                        <tr>
+                          <td>{item.name}</td>
+                          <td>{item.totalCount}</td>
+                          <td><a
+                            className="collapse-item"
+                            onClick={() => navigate(`/admin/matrimonial/${item.community_id}`)}
+                          >
+                            <i className="fas fa-eye"></i>
+                          </a></td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+
+              </div>
+            )
+          }
         </div>
 
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-warning shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -313,7 +467,7 @@ const BodyContent = () => {
             </div>
           </div>
         </div>
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-4 col-md-6 mb-4">
           <div className="card border-left-warning shadow h-100 py-2">
             <div className="card-body">
               <div className="row align-items-center">
@@ -324,7 +478,6 @@ const BodyContent = () => {
                         title={
                           <span className="text-xs font-weight-bold  text-uppercase mb-1 d-flex">
                             <a className="text-success stretched-link"
-                            // onClick={() => navigate('/admin/event/index')}
                             >
                               Total Social Activities
                             </a>
@@ -343,7 +496,7 @@ const BodyContent = () => {
                   </div>
                 </div>
                 <div className="col-auto">
-                  <img src={socialActivityIcon} width={50} />
+                  <img src={socialActivityIcon} width={30} />
                 </div>
               </div>
             </div>
@@ -375,6 +528,78 @@ const BodyContent = () => {
                           <td><img src={item.photo} width={50} height={50}></img></td>
                           <td>{item.name}</td>
                           <td>{item.totalCount}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+
+              </div>
+            )
+          }
+        </div>
+        <div className="col-xl-4 col-md-6 mb-4">
+          <div className="card border-left-warning shadow h-100 py-2">
+            <div className="card-body">
+              <div className="row align-items-center">
+                <div className="col mr-2">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      <Statistic
+                        title={
+                          <span className="text-xs font-weight-bold  text-uppercase mb-1 d-flex">
+                            <a className="text-success stretched-link"
+                            // onClick={() => navigate('/admin/event/index')}
+                            >
+                              Total Business Posted
+                            </a>
+                            <a className="text-primary stretched-link"
+                              onClick={() => handleBusinessShow()}
+                            >
+                              View More
+                            </a>
+                          </span>
+                        }
+                        value={statistics && statistics.business_count}
+                        formatter={formatter}
+                      />
+
+                    </div>
+                  </div>
+                </div>
+                <div className="col-auto">
+                  <img src={BusinessIcon} width={40} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {
+            isBusinessShow && (
+              <div className="card card-body shadow col-xl-11 col-md-6 mb-4" style={{ position: 'absolute', zIndex: 9999, transition: 'height 0.8s', overflow: 'scroll' }}>
+                <div className="input-group rounded">
+                  <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={handleBusinessChange} />
+                  <span className="input-group-text border-0" id="search-addon">
+                    <i className="fas fa-search"></i>
+                  </span>
+                </div>
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Profile</th>
+                      <th>Name</th>
+                      <th>Total Business Posted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      business && business.length > 0 && business.map((item) => (
+
+                        <tr>
+                          <td><img src={item.user_photo} width={50} height={50}></img></td>
+                          <td>{item.posted_by}</td>
+                          <td>{item.totalPosted}</td>
                         </tr>
                       ))
                     }

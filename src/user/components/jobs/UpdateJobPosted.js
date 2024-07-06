@@ -108,7 +108,6 @@ const UpdateJobPosted = (props) => {
         } catch (error) {
             // Handle error
             if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
                 setMessageAttachment(error.response.data.message);
             }
 
@@ -140,7 +139,6 @@ const UpdateJobPosted = (props) => {
         } catch (error) {
             // Handle error
             if (error.response && error.response.status === 400) {
-                setErrors(error.response.data.errors);
                 setMessageLogo(error.response.data.message);
             }
 

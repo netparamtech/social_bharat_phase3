@@ -221,10 +221,18 @@ export const createJobDetail = async (data) => {
 //update job info
 export const updateJobDetail = async (data, jobId) => {
   try {
-    const response = await apiWithHeaders.put(
-      `/profile/${jobId}/update-job-details`,
-      data
-    );
+    let response;
+    if (jobId) {
+      response = await apiWithHeaders.put(
+        `/profile/${jobId}/update-job-details`,
+        data
+      );
+    } else {
+      response = await apiWithHeaders.post(
+        'profile/create-job-details',
+        data
+      );
+    }
     return response;
   } catch (error) {
     throw error;
@@ -268,11 +276,22 @@ export const getSearchedUserFullProfile = async (id) => {
 };
 
 //educational detail update module
-
-export const updateEducationalDetails = async (data) => {
+export const updateEducationalDetails = async (data, id) => {
   try {
     const response = await apiWithHeaders.put(
-      "/profile/update-educational-details",
+      `/profile/update-educational-details/${id}`,
+      data
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+//educational detail create module
+export const createEducationalDetails = async (data) => {
+  try {
+    const response = await apiWithHeaders.post(
+      '/profile/create-educational-details',
       data
     );
     return response;
@@ -570,7 +589,7 @@ export const searchWithCityState = async (queryString) => {
 };
 
 //search business
-export const searchBusinessWithSearchText = async (size, page, state, city, searchText,category) => {
+export const searchBusinessWithSearchText = async (size, page, state, city, searchText, category) => {
   try {
     const response = await apiWithHeaders.get(
       `/business/search?searchText=${searchText}&category=${category}&page=${page}&size=${size}&state=${state}&city=${city}`
@@ -1129,7 +1148,7 @@ export const deleteCurrentJob = async (id) => {
   }
 }
 //current jobs
-export const currentJobs = async (size,page, state, city,searchText) => {
+export const currentJobs = async (size, page, state, city, searchText) => {
   try {
     const response = await apiWithHeaders.get(`/user/current-jobs?page=${page}&size=${size}&state=${state}&city=${city}&searchText=${searchText}`);
     return response;
@@ -1209,7 +1228,7 @@ export const uploadActivity = async (data) => {
 };
 
 //fetch all activities
-export const fetchAllActivities = async (searchText,category, page, size) => {
+export const fetchAllActivities = async (searchText, category, page, size) => {
   try {
     const response = await apiWithHeaders.get(
       `/users/activities?searchQuery=${searchText}&category=${category}&page=${page}&size=${size}`

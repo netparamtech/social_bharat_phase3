@@ -28,14 +28,14 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
         valueIn = valueIn.replace(/\d/g, '');
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleChange(e);
+        handleChange(e,errorMsg);
     }
     const onKeyPress = (e) => {
         const char = String.fromCharCode(e.which);
         // Allow backspace, space, and alphabetical characters
         let regex = '';
         if (type === "numeric") {
-            regex = /[0-9]/;
+            regex = /[0-9.]/;
         } else if (type === "text") {
             regex = /[a-zA-Z]/;
         } else {
@@ -63,7 +63,7 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
                 type="text"
                 name="text"
                 id="name"
-                defaultValue={value}
+                value={value}
                 placeholder={placeholder}
                 className="input-height"
                 onChange={onChange}

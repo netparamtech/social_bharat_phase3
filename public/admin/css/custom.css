@@ -237,5 +237,10 @@ div.Table {
   border-color: red; /* Change border color */
   color: red;
 }
+.text-wrap-break-word {
+  white-space: normal;  /* Allows text to wrap */
+  word-wrap: break-word; /* Older standard, mostly for IE */
+  word-break: break-word; /* Modern standard */
+}
 
 

@@ -431,6 +431,35 @@ export const fetchBusinessCategorieWithId = async (id) => {
     }
 }
 
+//fetch Businesses
+export const fetchAllBusinesses = async (page, size, searchQuery, state, city) => {
+    try {
+        const response = await apiWithHeaders.get(`/all/business?page=${page}&size=${size}&searchText=${searchQuery}&state=${state}&city=${city}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//toggle business
+export const toggleBusinessPosted = async (id) => {
+    try {
+        const response = await apiWithHeaders.patch(`/toggle-business/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//delete business
+export const deleteBusinessPosted = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/delete-business/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //fetch All Degrees
 export const fetchAllEnquiries = async (page, size, searchQuery, sortField, sortOrder) => {
     try {
@@ -455,6 +484,16 @@ export const deleteEnquiry = async (id) => {
 export const updateToggleStatusForEnquiry = async (clickedUserId) => {
     try {
         const response = await apiWithHeaders.patch(`/enquiries/${clickedUserId}/toggle-status`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+//change toggle-status of matrimonial by admin
+export const updateToggleStatusForMatrimonial = async (matriId) => {
+    try {
+        const response = await apiWithHeaders.patch(`/profile/matrimonial/toggle-status/${matriId}`);
         return response;
     } catch (error) {
         throw error;
@@ -791,6 +830,60 @@ export const fetchAdminDashboardStatisticsForActivities = async () => {
         throw error;
     }
 }
+//fetch stats for activities
+export const fetchAdminDashboardStatisticsForBusiness = async () => {
+    try {
+        const response = await apiWithHeaders.get('/dashboard-statistics/business-statistics');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch stats for matrimonnial
+export const fetchAdminDashboardStatisticsForMatrimonial = async () => {
+    try {
+        const response = await apiWithHeaders.get('/dashboard-statistics/matrimonial-statistics');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch stats for admin count info
+export const fetchAdminInfoStatistics = async () => {
+    try {
+        const response = await apiWithHeaders.get('/dashboard-statistics/admin-info-statistics');
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch user posted matrimonial count
+export const fetchCountOfMatrimonialPostedUserWiseAsInOneCommunity = async (searchText,page,size,communityId) => {
+    try {
+        const response = await apiWithHeaders.get(`/dashboard-statistics/admin-matrimonial-info-statistics?searchText=${searchText}&page=${page}&size=${size}&community_id=${communityId}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//delete single matrimonial
+export const deleteSingleMatrimonial = async (id) => {
+    try {
+        const response = await apiWithHeaders.delete(`/profile/matrimonial/delete/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//fetch stats for admin count info
+export const fetchAllMatrimonialByOneUser = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/fetch-matrimonialByOneUser/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //create email
 export const createMail = async (data) => {
@@ -1003,7 +1096,7 @@ export const fetchAllCms = async () => {
 export const createCms = async (data) => {
     try {
         const response = await apiWithHeaders.post(
-            '/cms',data
+            '/cms', data
         );
         return response;
     } catch (error) {
@@ -1011,10 +1104,10 @@ export const createCms = async (data) => {
     }
 };
 //update cms
-export const updateCmsById = async (id,data) => {
+export const updateCmsById = async (id, data) => {
     try {
         const response = await apiWithHeaders.post(
-            `/cms/${id}`,data
+            `/cms/${id}`, data
         );
         return response;
     } catch (error) {

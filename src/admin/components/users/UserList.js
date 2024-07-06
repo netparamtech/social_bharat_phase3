@@ -437,7 +437,7 @@ const UserList = () => {
     dispatch(setLoader(true));
 
     try {
-      const response = await fetchAllUsers(page, totalRows, searchQuery, sortField, sortOrder);
+      const response = await fetchAllUsers(page, totalRows, searchQuery,searchAdmin, sortField, sortOrder);
       const fetchedData = response.data.data;
       if (fetchedData !== null) {
         // Create a new workbook

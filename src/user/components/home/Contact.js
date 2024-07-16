@@ -6,6 +6,9 @@ import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
+import InputField from "../custom/InputField";
+import MobileInput from "../custom/MobileInput";
+import TextAreaField from "../custom/TextAreaField";
 
 function Contact() {
   // State variables to store form input values
@@ -17,6 +20,10 @@ function Contact() {
   const [settings, setSettings] = useState({});
 
   const [errors, setErrors] = useState("");
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [mobileError, setMobileError] = useState('');
+  const [queryError, setQueryError] = useState('');
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
@@ -45,6 +52,9 @@ function Contact() {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (nameError || emailError || mobileError || queryError || !name || !email || !mobile || !userQuery) {
+      return;
+    }
     dispatch(setLoader(true));
     const data = {
       name,
@@ -230,59 +240,36 @@ function Contact() {
                       <h4 className="mb-4 ">Send message for enquiry</h4>
                       <div>(All fields are required to fill.)</div>
                       <div className="form-group mb-4">
-                        <input
-                          type="text"
-                          placeholder="Enter Name"
-                          className="form-control"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                        {errors.name && (
-                          <span className="error">{errors.name}</span>
-                        )}
+                        <InputField handleChange={(e, errorMsg) => {
+                          setName(e.target.value);
+                          setNameError(errorMsg);
+                        }} isRequired={true} type="text"
+                          errorServer={errors.name} isAutoFocused={true} placeholder="Enter Your Name"
+                          maxLength={50} value={name} fieldName="Name" />
                       </div>
                       <div className="form-group mb-4">
-                        <input
-                          type="text"
-                          placeholder="Enter Email"
-                          className="form-control"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        {errors.email && (
-                          <span className="error">{errors.email}</span>
-                        )}
+                        <InputField handleChange={(e, errorMsg) => {
+                          setEmail(e.target.value);
+                          setEmailError(errorMsg);
+                        }} isRequired={false} boxFor="email"
+                          errorServer={errors.email} isAutoFocused={false} placeholder="Enter Your Email (Optional)"
+                          maxLength={100} value={email} fieldName="Email" />
                       </div>
                       <div className="form-group mb-4">
-                        <input
-                          type="text"  // Changed to text to use maxLength
-                          className="form-control"
-                          placeholder="Enter Mobile"
-                          maxLength={10}  // Limits the input to 10 characters
-                          value={mobile}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (/^\d*$/.test(value)) {  // Only allow digits
-                              setMobile(value);
-                            }
-                          }}
-                        />
-
-                        {errors.mobile && (
-                          <span className="error">{errors.mobile}</span>
-                        )}
+                        <MobileInput handleMobileChange={(e, errorMsg) => {
+                          setMobile(e.target.value);
+                          setMobileError(errorMsg);
+                        }} isRequired={true}
+                          errorServer={errors.mobile} isAutoFocused={false} placeholder="Enter Your Mobile"
+                          value={mobile} fieldName="Mobile" />
                       </div>
                       <div className="form-group mb-4 ">
-                        <textarea
-                          className="form-control"
-                          placeholder="Leave a comment here"
-                          id="floatingTextarea"
-                          value={userQuery}
-                          onChange={(e) => setUserQuery(e.target.value)}
-                        ></textarea>
-                        {errors.message && (
-                          <span className="error">{errors.message}</span>
-                        )}
+                        <TextAreaField handleChange={(e, errorMsg) => {
+                          setUserQuery(e.target.value);
+                          setQueryError(errorMsg);
+                        }} isRequired={true}
+                          errorServer={errors.message} isAutoFocused={false} placeholder="Leave a query here"
+                          maxLength={255} value={userQuery} fieldName="Message" />
                       </div>
                       <div className="form-group">
                         <button

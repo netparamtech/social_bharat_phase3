@@ -9,7 +9,8 @@ export const login = async (email, password) => {
     }
 }
 
-export const logout = async () => {
+export const adminLogout = async () => {
+    console.log("Hello")
     try {
         const response = await apiWithHeaders.post('/logout');
         return response;
@@ -489,6 +490,15 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
         throw error;
     }
 }
+//reply enquiry
+export const replyEnquiry = async (data) => {
+    try {
+        const response = await apiWithHeaders.post('/create/enquiry/reply',data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //change toggle-status of matrimonial by admin
 export const updateToggleStatusForMatrimonial = async (matriId) => {
@@ -858,7 +868,7 @@ export const fetchAdminInfoStatistics = async () => {
     }
 }
 //fetch user posted matrimonial count
-export const fetchCountOfMatrimonialPostedUserWiseAsInOneCommunity = async (searchText,page,size,communityId) => {
+export const fetchCountOfMatrimonialPostedUserWiseAsInOneCommunity = async (searchText, page, size, communityId) => {
     try {
         const response = await apiWithHeaders.get(`/dashboard-statistics/admin-matrimonial-info-statistics?searchText=${searchText}&page=${page}&size=${size}&community_id=${communityId}`);
         return response;

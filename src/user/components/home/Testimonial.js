@@ -18,7 +18,7 @@ const Testimonials = () => {
 
   const handleReviewClick = (e) => {
     e.preventDefault();
-   isAuthenticUser? navigate('/user/rating'): navigate('/login');
+    isAuthenticUser ? navigate('/user/rating') : navigate('/login');
   }
 
 
@@ -88,7 +88,7 @@ const Testimonials = () => {
     <section id="testimonials" className="wow animate__animated animate__zoomIn" style={{ backgroundImage: `url(${statsBg[0] && statsBg[0].banner_urls[0]})` }}>
       <div id="carouselExampleInterval" className="text-center">
         <div className="">
-          <Carousel autoplay>
+          <Carousel autoplay dots={false}>
             {data.map((item, index) => (
               <div key={index}>
                 <div className="text-center">
@@ -96,6 +96,7 @@ const Testimonials = () => {
                     className="rounded-circle shadow-1-strong mb-3 mx-auto"
                     src={item.photo || "/user/images/OIP.jpg"} // Use default image if imageUrl is not available
                     alt={`User ${index + 1}`}
+                    style={{ top: '0', left: '0', width: '90px', height: '90px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
                   />
                   <div className="mb-2 h5 text-muted comment-text mx-auto">{item.name}</div>
                   <div className="mb-2 comment-text mx-auto">{item.message}</div>
@@ -106,7 +107,7 @@ const Testimonials = () => {
           </Carousel>
 
         </div>
-       
+
         <button className="btn btn-primary rounded fw-bold" onClick={handleReviewClick}>Share Your Review</button>
 
       </div>

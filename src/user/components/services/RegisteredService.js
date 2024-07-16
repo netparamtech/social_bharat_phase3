@@ -153,9 +153,11 @@ const RegisteredService = () => {
             <div className="container">
                 <div className="card shadow card-search">
                     <div className="card-header bg-darkskyblue">
-                        <div className="d-sm-flex align-items-center justify-content-between ">
+                        <div className="d-flex justify-content-between">
                             REGISTERED SERVICES
-                            <a className="text-decoration-none hover-pointer" onClick={()=>navigate(-1)}>GO BACK</a>
+                            {
+                                !isAndroidUsed && <a className="text-decoration-none hover-pointer" onClick={() => navigate(-1)}>GO BACK</a>
+                            }
 
                             <DropdownOnServices path={window.location.pathname} />
                         </div>

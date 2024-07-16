@@ -28,13 +28,13 @@ const JobInfo = (props) => {
                           <tbody>
                             <tr>
                               <td className="fw-bold font-14">Company Name</td>
-                              <td className="text-muted">
+                              <td className="text-muted text-wrap-break-word">
                                 {item.company_name || "NA"}
                               </td>
                             </tr>
                             <tr>
                               <td className="fw-bold font-14">Designation</td>
-                              <td className="text-muted">
+                              <td className="text-muted text-wrap-break-word">
                                 {item.designation || "NA"}
                               </td>
                             </tr>

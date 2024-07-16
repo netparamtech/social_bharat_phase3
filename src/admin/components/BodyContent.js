@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import UsersChart from "./charts/UsersChart";
 import ServiceChart from "./charts/ServiceChart";
 import JobChart from "./charts/JobChart";
+import { useDispatch } from "react-redux";
+import { logout } from "../actions/authActions";
 
 const formatter = (value) => <CountUp end={value} separator="," />;
 const BodyContent = () => {
@@ -31,6 +33,7 @@ const BodyContent = () => {
   const BusinessIcon = '/admin/img/briefcase.png'
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleIsView = () => {
     setIsView(!isView);
@@ -74,12 +77,11 @@ const BodyContent = () => {
       const response = await fetchAdminDashboardStatistics();
       if (response && response.status === 200) {
         setStatistics(response.data.data);
-
-        console.log(response.data.data)
       }
     } catch (error) {
       // Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
@@ -97,6 +99,7 @@ const BodyContent = () => {
     } catch (error) {
       // Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
@@ -114,6 +117,7 @@ const BodyContent = () => {
     } catch (error) {
       // Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
@@ -131,6 +135,7 @@ const BodyContent = () => {
     } catch (error) {
       // Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
@@ -147,6 +152,7 @@ const BodyContent = () => {
     } catch (error) {
       // Unauthorized
       if (error.response && error.response.status === 401) {
+        dispatch(logout());
         navigate("/admin");
       } else if (error.response && error.response.status === 500) {
         let errorMessage = error.response.data.message;
@@ -233,7 +239,7 @@ const BodyContent = () => {
                       formatter={formatter}
                     />
                   </div>
-                  <div className="card-footer">
+                  {/* <div className="card-footer">
 
                     <Statistic
 
@@ -247,7 +253,7 @@ const BodyContent = () => {
                       value={statistics && statistics.admin_count}
                       formatter={formatter}
                     />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="col-auto">
                   <h1>

@@ -115,7 +115,7 @@ const BharatMandirDrawer = () => {
                                     <a className="hover-pointer">
                                         <img
                                             src={community.thumbnail_image}
-                                            style={imageStyles}
+                                            style={{ top: '0', left: '0', width: '100%', height: '100px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
                                             alt={community.name}
                                             width={100}
                                             height={100}

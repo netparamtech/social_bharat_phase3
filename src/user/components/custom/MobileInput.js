@@ -29,7 +29,7 @@ const MobileInput = ({ handleMobileChange, value, errorServer, label, isAutoFocu
         const valueIn = e.target.value;
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleMobileChange(e);
+        handleMobileChange(e, errorMsg);
 
     }
     const handleKeyDown = (e) => {

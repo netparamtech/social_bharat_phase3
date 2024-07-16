@@ -2,21 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, Avatar } from 'antd';
 import 'antd/dist/antd'; // Import Ant Design CSS
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { logout } from '../services/AdminService';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminLogout } from '../services/AdminService';
+import { logout } from '../actions/authActions';
 
 // ...
 
 const AdminProfileDropdown = () => {
 
     const user = useSelector((state) => state.auth.user);
+    const tokenExpireDate = user && user.token && user.token.expire_at;
+    const [isAuthenticUser, setIsAuthenticatedUser] = useState(user && user.isAuthenticated)
     const defaultPhoto = '/admin/img/user-add-icon.png';
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userProfile, setUserProfile] = useState('');
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        if (tokenExpireDate) {
+            const expireDate = new Date(tokenExpireDate);
+            const currentDate = new Date();
+            if (expireDate < currentDate && window.location.pathname !== '/admin') {
+                dispatch(logout())
+                setIsAuthenticatedUser(false);
+                navigate('/admin')
+            } else if (expireDate < currentDate) {
+                dispatch(logout())
+            }
+        }
+    }, [tokenExpireDate]);
 
     useEffect(() => {
         if (user) {
@@ -28,14 +47,17 @@ const AdminProfileDropdown = () => {
 
     const handleLogOutClick = async () => {
         try {
-            const response = await logout();
+            const response = await adminLogout();
 
             if (response.status === 200) {
-
+                dispatch(logout())
                 navigate('/admin');
             }
         } catch (error) {
+            console.log(error.response.status)
             if (error.response && error.response.status === 401) {
+                dispatch(logout());
+                console.log("logout success")
                 navigate('/admin');
             } else if (error.response && error.response.status === 500) {
                 navigate('/admin');
@@ -107,7 +129,7 @@ const AdminProfileDropdown = () => {
             trigger={['hover']}
             placement="bottomRight"
         >
-            
+
             <a
                 className="btn btn-icon btn-transparent-dark"
                 onClick={(e) => e.preventDefault()}

@@ -14,6 +14,7 @@ const LoginWithMobile = (props) => {
   const [mobile, setMobile] = useState('');
   const [errors, setErrors] = useState('');
   const [message, setMessage] = useState('');
+  const [mobileError, setMobileError] = useState('');
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [serverError, setServerError] = useState('');
 
@@ -23,8 +24,9 @@ const LoginWithMobile = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleMobileChange = (event) => {
+  const handleMobileChange = (event, errorMsg) => {
     setMobile(event.target.value);
+    setMobileError(errorMsg);
   }
 
   const handleLoginClicked = () => {
@@ -33,10 +35,12 @@ const LoginWithMobile = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch(setLoader(true));
     const cleanMobile = mobile.replace(/^0+/, '');
+    if (mobileError || !mobile) {
+      return;
+    }
     try {
-
+      dispatch(setLoader(true));
       const response = await attemptLoginWithMobile(cleanMobile);
 
       if (response && response.status === 200) {
@@ -44,12 +48,9 @@ const LoginWithMobile = (props) => {
         setMessage(response.data.message);
         setServerError('');
         handleLoginClicked();
-        dispatch(setLoader(false));
       }
 
     } catch (error) {
-      dispatch(setLoader(false));
-
       if (error.response && error.response.status === 400) {
         setErrors(error.response.data.errors);
         setServerError('');
@@ -67,6 +68,8 @@ const LoginWithMobile = (props) => {
       else if (error.response && error.response.status === 500) {
         setServerError("Oops! Something went wrong on our server.");
       }
+    } finally {
+      dispatch(setLoader(false));
     }
   }
 
@@ -119,9 +122,9 @@ const LoginWithMobile = (props) => {
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
-                        <MobileInput handleMobileChange={handleMobileChange} 
-                        errorServer={errors.mobile} isRequired={true} 
-                        isAutoFocused={true} placeholder="Enter your mobile number" />
+                        <MobileInput handleMobileChange={handleMobileChange}
+                          errorServer={errors.mobile} isRequired={true}
+                          isAutoFocused={true} placeholder="Enter your mobile number" />
                       </div>
                       <div className="row mb-3">
                         <button type="submit" className="btn-custom btn-primary-custom" onClick={handleSubmit}>

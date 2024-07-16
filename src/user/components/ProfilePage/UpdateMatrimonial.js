@@ -104,6 +104,7 @@ const UpdateMatrimonial = () => {
   const [unit, setUnit] = useState('lakh'); // Default unit is "lakh"
 
   const handleUnitChange = (event) => {
+    console.log(event.target.value)
     setUnit(event.target.value);
   };
   const onKeyPressPackage = (e) => {
@@ -325,7 +326,7 @@ const UpdateMatrimonial = () => {
     dispatch(setLoader(true));
 
     const trimmedTempProposalPhotoUrl = tempProposalPhotoUrl.map(item => item.trim()).filter((item) => item !== '');
-
+console.log(unit)
     const matrimonialData = {
       father_name: fatherName,
       mother_name: motherName,

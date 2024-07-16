@@ -28,7 +28,7 @@ function App() {
         } else {
           setIsAdmin(user.user.is_admin);
           if (user.user.is_admin) {
-              
+
           }
         }
       } else {
@@ -36,11 +36,11 @@ function App() {
       }
     }
   }, [user]);
-  useEffect(()=>{
-    if(isAdmin){
-      setHaveJobPermission(user.user.permissions&&user.user.permissions.have_job_permission);
+  useEffect(() => {
+    if (isAdmin) {
+      setHaveJobPermission(user.user.permissions && user.user.permissions.have_job_permission);
     }
-  },[isAdmin]);
+  }, [isAdmin]);
 
   return (
     <div className="">
@@ -69,26 +69,13 @@ function App() {
               }
 
 
-              {
-                adminRoutes.map((route, index) => (
-                  <>
-                    <Route key={index} path={route.path}
-                      element={
-                        route.path !== '/admin' ? (
-                          <ProtectedRoute element={route.component} />
-                        ) : (
-                          <route.component />
-                        )
-                      } />
-                    <Route
-                      path="/*"
-                      element={<NotFound />}
-                    />
-                  </>
-
-
-                ))
-              }
+              {adminRoutes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={<ProtectedRoute element={route.component} path={route.path} />}
+                />
+              ))}
               {
                 isAdmin ? (
                   haveJobPermission &&

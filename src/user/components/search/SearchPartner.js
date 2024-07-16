@@ -29,7 +29,7 @@ const SearchPartner = () => {
   const [searchText, setSearchText] = useState("");
   const [communities, setCommunities] = useState([]);
   const [defaultImage, setDefaultImage] = useState(
-    "/admin/img/download.jpg"
+    "/user/images/default5.jpg"
   );
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);
@@ -446,7 +446,7 @@ const SearchPartner = () => {
                 <div className="container matrimonial-header">
                   {
                     !isFilter && (
-                      <div className="row transition-filter">
+                      <div className={`row ${isAndroidUsed ? '' : 'transition-filter'}`}>
                         <div className="col-md-7 ps-0">
                           {serverError && (
                             <span className="error">{serverError}</span>

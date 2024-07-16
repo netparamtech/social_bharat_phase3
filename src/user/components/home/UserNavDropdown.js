@@ -140,7 +140,7 @@ function UserNavDropdown() {
 
     return (
         <Dropdown>
-            <Dropdown.Toggle variant="" id="dropdown-basic">
+            <Dropdown.Toggle variant="" id="dropdown-basic" className="no-outline">
                 <span
                     className=""
                     onClick={(e) => e.preventDefault()}
@@ -161,7 +161,7 @@ function UserNavDropdown() {
                 </span>
             </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+            <Dropdown.Menu className='custom-dropdown-menu'>
                 <Dropdown.Item>
                     <h6 className="dropdown-header d-flex align-items-center menu-font">
                         <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
@@ -170,15 +170,14 @@ function UserNavDropdown() {
                             <div className="dropdown-user-details-email menu-font">{userEmail}</div>
                         </div>
                     </h6>
-                    <div className="dropdown-divider"></div>
                 </Dropdown.Item>
                 <Dropdown.Item>
                     <h6 className="dropdown-header d-flex align-items-center">
                         {
                             community && community.thumbnail_image ? (
-                                <img className="dropdown-thubnail-img me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
+                                <img className="me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
                             ) : (
-                                <div className="dropdown-user-details">
+                                <div className="">
                                     <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
                                 </div>
                             )
@@ -189,7 +188,6 @@ function UserNavDropdown() {
               } */}
 
                     </h6>
-                    <div className="dropdown-divider"></div>
                 </Dropdown.Item>
                 <Dropdown.Item onClick={handleProfileClick}>
                     <span className={`menu-font ${window.location.pathname === "/profile" || window.location.pathname === "/user/update-basic-profile" ||

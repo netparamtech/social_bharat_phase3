@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createJobDetail } from '../../services/userService';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setLoader } from '../../actions/loaderAction';
 import { useDispatch } from 'react-redux';
-import Select from "react-select";
 import InputField from '../custom/InputField';
 import SelectField from '../custom/SelectField';
 import HtmlSelect from '../custom/HtmlSelect';

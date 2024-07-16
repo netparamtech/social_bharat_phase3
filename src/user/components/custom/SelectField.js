@@ -22,7 +22,7 @@ const SelectField = ({ handleSelectChange,options, value, errorServer, label, is
         const valueIn = value.label;
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleSelectChange(value);
+        handleSelectChange(value,errorMsg);
     }
 
     const customStyles = {

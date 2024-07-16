@@ -85,7 +85,7 @@ const UserRating = () => {
   return (
     <>
       <div id="rating-authpage">
-        <div className="text-dark">
+        <div className="container text-dark">
           <div className="row d-flex justify-content-center">
             
             <div className="col-md-6 col-lg-12 col-xl-12 mt-2">

@@ -6,6 +6,9 @@ import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
+import TextAreaField from "../custom/TextAreaField";
+import MobileInput from "../custom/MobileInput";
+import InputField from "../custom/InputField";
 
 function ContactUsPage(props) {
     const { handleIsContactUs } = props;
@@ -69,8 +72,9 @@ function ContactUsPage(props) {
 
     return (
         <div className="card mx-auto" style={{ borderRadius: '30px', backgroundColor: '#E2EAF4' }}>
-            <div
-                className="mx-auto"
+            <form
+                className="user-auth-form-contact p-4"
+                onSubmit={handleSubmit}
             >
                 {message && (
                     <div className={`alert ${alertClass}`}>
@@ -82,68 +86,37 @@ function ContactUsPage(props) {
                         {" " + message}
                     </div>
                 )}
-               
+                <h4 className="mb-4 ">Send message for enquiry</h4>
                 <div>(All fields are required to fill.)</div>
-               
                 <div className="form-group mb-4">
-                    <input
-                        type="text"
-                        placeholder="Enter Name"
-                        className="form-control"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    {errors.name && (
-                        <span className="error">{errors.name}</span>
-                    )}
+                    <InputField handleChange={(e) => setName(e.target.value)} isRequired={true} type="text"
+                        errorServer={errors.name} isAutoFocused={true} placeholder="Enter Your Name"
+                        maxLength={50} value={name} fieldName="Name" />
                 </div>
                 <div className="form-group mb-4">
-                    <input
-                        type="email"
-                        placeholder="Enter Email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {errors.email && (
-                        <span className="error">{errors.email}</span>
-                    )}
+                    <InputField handleChange={(e) => setEmail(e.target.value)} isRequired={false} boxFor="email"
+                        errorServer={errors.email} isAutoFocused={false} placeholder="Enter Your Email (Optional)"
+                        maxLength={100} value={email} fieldName="Email" />
                 </div>
                 <div className="form-group mb-4">
-                    <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Enter Mobile"
-                        value={mobile}
-                        onChange={(e) => setMobile(e.target.value)}
-                    />
-                    {errors.mobile && (
-                        <span className="error">{errors.mobile}</span>
-                    )}
+                    <MobileInput handleMobileChange={(e) => setMobile(e.target.value)} isRequired={true}
+                        errorServer={errors.mobile} isAutoFocused={false} placeholder="Enter Your Mobile"
+                        value={mobile} fieldName="Mobile" />
                 </div>
                 <div className="form-group mb-4 ">
-                    <textarea
-                        className="form-control"
-                        placeholder="Leave a comment here"
-                        id="floatingTextarea"
-                        value={userQuery}
-                        onChange={(e) => setUserQuery(e.target.value)}
-                    ></textarea>
-                    {errors.message && (
-                        <span className="error">{errors.message}</span>
-                    )}
+                    <TextAreaField handleChange={(e) => setUserQuery(e.target.value)} isRequired={true}
+                        errorServer={errors.message} isAutoFocused={false} placeholder="Leave a query here"
+                        maxLength={255} value={userQuery} fieldName="Message" />
                 </div>
-                <div className="form-group" style={{display:'flex',justifyContent:'center'}}>
+                <div className="form-group">
                     <button
-                        className="mx-auto over-pointer-g-effect bg-success text-light btn-custon-contact"
-                        type="button"
-                        onClick={handleSubmit}
-                        style={{width:'100px',height:'40px'}}
+                        className="form-control w-100 btn-primary"
+                        type="submit"
                     >
                         Submit
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

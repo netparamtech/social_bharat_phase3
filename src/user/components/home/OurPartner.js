@@ -71,7 +71,7 @@ function OurPartner() {
       <div className="container">
         <div className="row">
           <div className="card shadow text-white h-100 costomer-logos">
-          {serverError && <span className='error'>{serverError}</span>}
+            {serverError && <span className='error'>{serverError}</span>}
             <Slider {...settings}>
               {casts && casts.length > 0 &&
                 casts.map(
@@ -90,6 +90,24 @@ function OurPartner() {
                     )
                 )}
             </Slider>
+            <div className="partner-slider mb-2" style={{ display: 'flex', flexDirection: 'row', overflow: 'scroll', gap: '4px' }}>
+              {/* {casts && casts.length > 0 &&
+                casts.map(
+                  (community) =>
+                    community.thumbnail_image && (
+                      <div className="icon-box d-inline-flex" key={community.id}>
+                        <a className="hover-pointer">
+                          <img
+                            src={community.thumbnail_image}
+                            className="mt-2"
+                            alt={community.name}
+                            onClick={() => handleImageClick(community.name)}
+                          />
+                        </a>
+                      </div>
+                    )
+                )} */}
+            </div>
           </div>
         </div>
       </div>

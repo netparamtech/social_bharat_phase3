@@ -25,7 +25,7 @@ const TextAreaField = ({ handleChange, value, errorServer, label, isAutoFocused,
         valueIn = valueIn.replace(/\d/g, '');
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleChange(e);
+        handleChange(e, errorMsg);
     }
 
     useEffect(() => {

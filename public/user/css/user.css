@@ -640,7 +640,7 @@ a.btn.dropdown-toggle.show:focus {
 .dropdown-user-img {
   height: 2.5rem;
   width: 2.5rem;
-  margin-right: 1rem;
+  margin-right: -2.5rem;
   border-radius: 100%;
 }
 
@@ -2394,6 +2394,10 @@ legend {
   background-color: #637976;
 }
 
+#partner .partner-slider::-webkit-scrollbar {
+  display: none;
+}
+
 .package-container {
   display: flex;
   align-items: center;
@@ -2417,24 +2421,128 @@ legend {
   z-index: 1000;
   height: 40px;
 }
+
 .text-wrap-break-word {
-  white-space: normal;  /* Allows text to wrap */
-  word-wrap: break-word; /* Older standard, mostly for IE */
-  word-break: break-word; /* Modern standard */
+  white-space: normal;
+  /* Allows text to wrap */
+  word-wrap: break-word;
+  /* Older standard, mostly for IE */
+  word-break: break-word;
+  /* Modern standard */
 }
+
 #searchPeoples-section .text-wrap-break-word {
-  white-space: normal;  /* Allows text to wrap */
-  word-wrap: break-word; /* Older standard, mostly for IE */
-  word-break: break-word; /* Modern standard */
+  white-space: normal;
+  /* Allows text to wrap */
+  word-wrap: break-word;
+  /* Older standard, mostly for IE */
+  word-break: break-word;
+  /* Modern standard */
 }
-#searchPeoples-section .card-footer{
-  background-color: white;
-}
-#searchPeoples-section .card-header{
+
+#searchPeoples-section .card-footer {
   background-color: white;
 }
 
+#searchPeoples-section .card-header {
+  background-color: white;
+}
 
+.selected-category {
+  color: red;
+}
+
+.partner-slider {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  gap: 4px;
+}
+
+.icon-box {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+
+.contact-container {
+  align-items: center;
+  display: flex;
+  border-radius: 0.75rem;
+  justify-content: start;
+  /* equivalent to rounded-3 */
+}
+
+.contact-number {
+  margin-bottom: 0;
+  /* equivalent to mb-0 */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width:768px) {
+  .contact-number {
+    flex-direction: column;
+  }
+}
+
+.service-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 14px;
+}
+
+@media (max-width:768px) {
+  .service-container {
+    flex-direction: column;
+  }
+}
+
+.service-container .clear-button {
+  border: 1px solid;
+  background: transparent;
+  border-radius: 20px;
+  width: 100px;
+  height: 40px;
+  margin-top: 10px;
+}
+.service-container .clear-button:hover{
+  background-color: red;
+  cursor: pointer;
+  color: white;
+}
+.service-container .clear-button:disabled {
+  cursor: not-allowed;
+  background-color: white; /* or any other color you want */
+  color: #666;
+}
+@media (max-width:768px) {
+  .service-container .clear-button {
+    margin-top: 0;
+  }
+}
+
+#dropdown-basic .no-outline:focus {
+  outline: none;
+  box-shadow: none;
+
+}
+.custom-dropdown-menu {
+  --bs-dropdown-link-active-bg: none; /* Change this to your desired color */
+}
+#searchPeoples-section .matrimonial-generate-biodata:hover{
+  background-color: #6b8475;
+  color: white !important;
+}
+@media (max-width:768px) {
+  .matrimonial-generate-biodata img{
+    display: none;
+  }
+}
 
 
 

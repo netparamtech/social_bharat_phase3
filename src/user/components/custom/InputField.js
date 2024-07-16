@@ -2,7 +2,7 @@
 import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder, isDisabled, maxLength, type, minLength }) => {
+const InputField = ({ handleChange, boxFor, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder,classname, isDisabled, maxLength, type, minLength }) => {
     const [error, setError] = useState('');
     const [isServerErr, setIsServerErr] = useState(false);
     const validateMobile = (val) => {
@@ -21,6 +21,14 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
         if (val.length > maxLength) {
             return `Maximum length is ${maxLength} characters.`;
         }
+        if (boxFor) {
+            if (boxFor === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/;
+                if (!emailRegex.test(val)) {
+                    return `Please enter a valid email address.`;
+                }
+            }
+        }
         return '';
     }
     const onChange = (e) => {
@@ -28,7 +36,7 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
         valueIn = valueIn.replace(/\d/g, '');
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleChange(e,errorMsg);
+        handleChange(e, errorMsg);
     }
     const onKeyPress = (e) => {
         const char = String.fromCharCode(e.which);
@@ -39,7 +47,7 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
         } else if (type === "text") {
             regex = /[a-zA-Z]/;
         } else {
-            regex = /[a-zA-Z0-9]/;
+            regex = /[a-zA-Z0-9.]*/;
         }
         if (e.keyCode === 8 || e.keyCode === 32 || regex.test(char)) {
             return;
@@ -60,12 +68,12 @@ const InputField = ({ handleChange, value, errorServer, label, isAutoFocused, is
                 label && <label className="form-label">{label}{isRequired && <span className="text-danger">{" "}*</span>}</label>
             }
             <Input
-                type="text"
+                type={boxFor ? boxFor : 'text'}
                 name="text"
                 id="name"
                 value={value}
                 placeholder={placeholder}
-                className="input-height"
+                className={`input-height ${classname}`}
                 onChange={onChange}
                 autoFocus={isAutoFocused}
                 onKeyDown={onKeyPress}

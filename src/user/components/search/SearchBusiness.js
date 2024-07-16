@@ -52,9 +52,30 @@ const SearchBusiness = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleCategoryChange = (value) => {
-    setCategory(value);
-  }
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const categories = [
+    '',
+    'Information Technology (IT)',
+    'Sports',
+    'Sales',
+    'Marketing',
+    'Manufacturing',
+    'Service',
+    'Finance',
+    'Real Estate',
+    'Healthcare',
+    'Transportation and Logistics',
+    'Hospitality',
+    'Education',
+    'Nonprofit Organization',
+    'Polity',
+    'Other',
+  ];
   const handleIsDetailsClicked = (index) => {
     setIsDetails(prevState => ({
       ...prevState,
@@ -72,7 +93,7 @@ const SearchBusiness = () => {
 
       const state = selectedState ? selectedState.label : "";
       const city = selectedCity ? selectedCity.label : "";
-      fetchJobs(size, page, state, city, searchText);
+      fetchJobs(size, page, state, city, searchText, selectedCategory);
     }
   };
 
@@ -155,7 +176,6 @@ const SearchBusiness = () => {
       city: selectedCity ? selectedCity.label : "",
       // Add other modal fields to the queryParams
     };
-
     // Construct the query string from the queryParams object
     const queryString = new URLSearchParams(queryParams).toString();
     try {
@@ -175,6 +195,15 @@ const SearchBusiness = () => {
       }
     }
   };
+  const handleClearClick = () => {
+    setSearchText('');
+    setCity('');
+    setState('');
+    setSelectedCity('');
+    setSelectedState('');
+    setSelectedCategory('');
+  }
+
 
   const getAllStates = async () => {
     try {
@@ -223,8 +252,8 @@ const SearchBusiness = () => {
   useEffect(() => {
     const state = selectedState ? selectedState.label : "";
     const city = selectedCity ? selectedCity.label : "";
-    fetchJobs(size, 1, state, city, searchText, category);
-  }, [searchText, selectedState, selectedCity, category]);
+    fetchJobs(size, 1, state, city, searchText, selectedCategory);
+  }, [searchText, selectedState, selectedCity, selectedCategory]);
   const handleScrollToUp = () => {
     window.scrollTo(0, 0);
   };
@@ -289,11 +318,12 @@ const SearchBusiness = () => {
               <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
             </div>
 
-            {
+           <div className="d-flex justify-content-between">
+           {
               isAndroidUsed && (
                 <a
                   title="Add Business"
-                  className="btn btn-primary mt-2"
+                  className="btn btn-primary"
                   onClick={handleFilterClicked}
                 >
                   {
@@ -302,32 +332,35 @@ const SearchBusiness = () => {
                 </a>
               )
             }
+            {
+              isAndroidUsed && (
+               <div className="">
+                 <button type="button" className="btn hover-pointer hover-pointer-red" style={{ border: '1px solid' }}
+                  onClick={handleClearClick} disabled={!searchText && !state && !city && !selectedCategory}>
+                  Clear
+                </button>
+               </div>
+              )
+            }
+           </div>
 
             <div className="row col-12 col-md-12 mt-2">
 
               {
                 (isAndroidUsed && isFilter) || !isAndroidUsed ? (
                   <>
-                    <div className="col-md-3 col-12">
+                    <div className="col-md-3 col-12 side-filter-business position-relative">
                       <div className="bg-success text-light mx-auto p-2" style={{ borderRadius: '10px' }}>You Can Choose Your Interesting Field</div>
                       <div className="business-more-filter-block mt-2" style={{ overflow: 'scroll', height: '400px' }}>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('')}>All</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Information Technology (IT)')}>Information Technology (IT)</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sports')}>Sports</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Sales')}>Sales</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Marketing')}>Marketing</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Manufacturing')}>Manufacturing</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Service')}>Service</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Finance')}>Finance</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Real Estate')}>Real Estate</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Healthcare')}>Healthcare</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Transportation and Logistics')}>Transportation and Logistics</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Hospitality')}>Hospitality</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Education')}>Education</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Nonprofit Organization')}>Nonprofit Organization</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Polity')}>Polity</p>
-                        <p className="hover-pointer hover-pointer-green" onClick={() => handleCategoryChange('Other')}>Other</p>
-
+                        {categories.map((category, index) => (
+                          <p
+                            key={index}
+                            className={`hover-pointer ${selectedCategory === category ? 'selected-category' : 'hover-pointer-green'}`}
+                            onClick={() => handleCategoryChange(category)}
+                          >
+                            {category === '' ? 'All' : category}
+                          </p>
+                        ))}
                       </div>
 
                     </div>
@@ -385,7 +418,7 @@ const SearchBusiness = () => {
                             <div>
                               <a className="hover-pointer" onClick={() => navigate(`/profile/${btoa(scrollValue.toString())}`)}><p>Manage Your Business Profile</p></a>
                             </div>
-                            <div className="mx-auto text-danger p-4">You Are Searching In
+                            {/* <div className="mx-auto text-danger p-4">You Are Searching In
                               {city ? (
                                 <p>
                                   {city}
@@ -397,8 +430,11 @@ const SearchBusiness = () => {
                               {
                                 category && <p>category -  {category ? category : ''}</p>
                               }
-                            </div>
-
+                            </div> */}
+                            <button type="button" className="btn hover-pointer hover-pointer-red" style={{ border: '1px solid' }}
+                              onClick={handleClearClick} disabled={!searchText && !state && !city && !selectedCategory}>
+                              Clear
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -439,7 +475,7 @@ const SearchBusiness = () => {
                           <div className={`${isFilter ? 'col-md-9' : 'col-md-12'} col-12 mt-2 mx-auto`} key={idx} >
                             <div className="card" style={{ borderRadius: '15px' }}>
                               <div className="card-body p-4">
-                                <h4 className="text-primary">{item.business_name}</h4>
+                                <h4 className="text-primary">{item.business_name && item.business_name.toUpperCase()}</h4>
                                 <p className='text-info'>({item.business_category})</p>
                                 <p>
                                   <span className="text-muted" dangerouslySetInnerHTML={{

@@ -52,7 +52,11 @@ const ViewCommunity = () => {
                 {serverError && <p>{serverError}</p>}
                 <div className="mb-5 community-img">
 
-                  <img src={data.banner_image} className=" img-fluid rounded-2" alt="Banner" />
+                  <img src={data.banner_image} 
+                  className=" img-fluid rounded-2" 
+                  alt="Banner"
+                  style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                  />
                 </div>
                 <div className="card shadow mb-5 p-5">
                   {data && (

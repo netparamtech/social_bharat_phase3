@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+// import Carousel from 'react-bootstrap/Carousel';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import { fetchBannerWithPageAndSection } from '../../services/userService';
 import Banner from './Banner';
-import { toast } from 'react-toastify';
-import { generalMessage, infoOptions } from '../../../toastOption';
 import BannerContent from './BannerContent';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 function CarousalBanner() {
     const [index, setIndex] = useState(0);
@@ -23,12 +23,32 @@ function CarousalBanner() {
     const dispatch = useDispatch();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    const [direction, setDirection] = useState(1);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIndex(prevIndex => {
+                let newIndex = prevIndex + direction;
+                if (newIndex >= imageUrls.length) {
+                    setDirection(-1);
+                    newIndex = imageUrls.length - 2;
+                } else if (newIndex < 0) {
+                    setDirection(1);
+                    newIndex = 1;
+                }
+                return newIndex;
+            });
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [imageUrls.length, direction]);
+
     const nextSlide = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
     };
 
     useEffect(() => {
-        const intervalId = setInterval(nextSlide, 3000);
+        const intervalId = setInterval(nextSlide, 0);
         return () => clearInterval(intervalId);
     }, []);
 
@@ -132,18 +152,27 @@ function CarousalBanner() {
 
                                 </div>
                             }
-                            <div className='' style={{ position: 'relative', height: '400px', width: '100%' }}>
-                                <Carousel activeIndex={index} onSelect={handleSelect}>
-                                    {imageUrls && imageUrls.length > 0 && imageUrls.map((item, index) => (
-                                        <Carousel.Item key={index}>
-                                            <div style={{ top: '0', left: '0', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                                                <img src={item} style={{ width: '100%', height: '400px' }} />
-                                            </div>
-                                        </Carousel.Item>
+
+                            <div style={{ position: 'relative', height: '400px', width: '100%' }}>
+
+                                <Carousel
+                                    selectedItem={index}
+                                    autoPlay
+                                    infiniteLoop
+                                    interval={3000}
+                                    showThumbs={false}
+                                    showArrows={true}
+                                    showStatus={false}
+                                    dynamicHeight={false}>
+
+                                    {imageUrls && imageUrls.length > 0 && imageUrls.map((item, idx) => (
+                                        <div style={{ top: '0', left: '0', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                                            <img src={item} style={{ width: '100%', height: '400px', margin: '0 10px' }} alt={`Slide ${idx}`} />
+                                        </div>
                                     ))}
+
                                 </Carousel>
                             </div>
-
                         </div>
                     </div>
                 ) : <Banner />

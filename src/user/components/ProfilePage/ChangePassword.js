@@ -5,6 +5,8 @@ import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import PasswordField from '../custom/PasswordField';
+import { toast } from 'react-toastify';
+import { successOptions } from '../../../toastOption';
 
 const ChangePassword = () => {
 
@@ -36,7 +38,8 @@ const ChangePassword = () => {
 
                 setErrors('');
                 setServerError('');
-                navigate('/dashboard');
+                toast.success("Your password have been changed successfully.", successOptions)
+                navigate(-1);
                 dispatch(setLoader(false));
             }
         } catch (error) {
@@ -71,7 +74,7 @@ const ChangePassword = () => {
                                     {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
                                         <PasswordField handleChange={handlePasswordChange} errorServer={errors.password}
-                                            fieldName="Password" isRequired={true} value={password} placeholder="Enter New Password" 
+                                            fieldName="Password" isRequired={true} value={password} placeholder="Enter New Password"
                                             minLength={6} />
                                     </div>
                                     <div className="row mb-3">

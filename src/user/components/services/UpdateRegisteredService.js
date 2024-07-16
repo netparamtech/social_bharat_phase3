@@ -5,6 +5,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { fetchAllCitiesByStateID, fetchAllServices, fetchAllStatesByCountryID, fetchCategoryByTitle, fetchUserRegisteredSingleService, updateUserService } from "../../services/userService";
 import Select from "react-select";
 import { Select as AntSelect, Space } from 'antd';
+import { logout } from "../../actions/userAction";
 
 const UpdateRegisteredService = () => {
     const { id } = useParams();
@@ -24,6 +25,7 @@ const UpdateRegisteredService = () => {
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('Inactive');
     const [disableServiceTitle, setDisableServiceTitle] = useState(true);
+    const [copyService, setCopyService] = useState([]);
     const [isUpdate, setIsUpdate] = useState(false);
 
     const [errors, setErrors] = useState('');
@@ -41,9 +43,10 @@ const UpdateRegisteredService = () => {
 
     const handleSelectService = (selectedOption) => {
         setSelectedService(selectedOption);
-        console.log(selectedOption)
-        let result = selectedOption.category.split(',');
-        setCategory(result);
+        if (selectedOption) {
+            let result = selectedOption.category.split(',');
+            setCategory(result);
+        }
     };
     const handleChange = (value) => {
         setSelectedCategory(value);
@@ -118,22 +121,27 @@ const UpdateRegisteredService = () => {
     const fetchServices = async () => {
         dispatch(setLoader(false));
         try {
-            const response = await fetchAllServices();
-            if (response && response.status === 200) {
-                setService(response.data.data);
-                setServerError('');
-            }
+          const response = await fetchAllServices();
+          if (response && response.status === 200) {
+            const filteredFetch = response.data.data.filter(
+              (item) => item && item.status === "Active"
+            );
+            setService(filteredFetch);
+            setCopyService(filteredFetch);
+            setServerError("");
+          }
         } catch (error) {
-            //Unauthorized
-            if (error.response && error.response.status === 401) {
-                navigate("/login");
-            } else if (error.response && error.response.status === 500) {
-                setServerError("Oops! Something went wrong on our server.");
-            }
+          //Unauthorized
+          if (error.response && error.response.status === 401) {
+            dispatch(logout());
+            navigate("/login");
+          } else if (error.response && error.response.status === 500) {
+            setServerError("Oops! Something went wrong on our server.");
+          }
         } finally {
-            dispatch(setLoader(false));
+          dispatch(setLoader(false));
         }
-    };
+      };
 
     const fetchSingleService = async () => {
         dispatch(setLoader(false));
@@ -203,6 +211,7 @@ const UpdateRegisteredService = () => {
             setMobile1(data && data[0].mobile1);
             setMobile2(data && data[0].mobile2);
             setExperience(data && data[0].experience);
+            setLocation(data && data[0].location);
             if (data && data[0].state) {
                 setSelectedState({ value: data && data[0].state, label: data && data[0].state });
             }
@@ -245,18 +254,19 @@ const UpdateRegisteredService = () => {
     }, []);
 
     const handleSubmit = async () => {
+        let category = '';
         if (selectedCategory) {
-            const result = selectedCategory.toString();
-            setSelectedCategory(result);
+            category = selectedCategory.toString();
         }
         const data = {
             title: serviceTitle,
             mobile1,
             mobile2,
             experience,
+            location,
             state: selectedState && selectedState.label ? selectedState.label : '',
             city: selectedCity && selectedCity.label ? selectedCity.label : '',
-            category: selectedCategory ? selectedCategory : '',
+            category: category ? category : '',
             description,
             status,
         };
@@ -479,9 +489,9 @@ const UpdateRegisteredService = () => {
                                     <span className="error">{errors.description}</span>
                                 )}
                             </div>
-                            <div className="form-group">
+                            <div className="form-group mx-auto col-md-3 col-12">
                                 <button
-                                    className="form-control w-100 btn-success bg-primary fs-5"
+                                    className="form-control w-100 btn-success fs-5"
                                     type="submit"
                                     onClick={handleSubmit}
                                 >

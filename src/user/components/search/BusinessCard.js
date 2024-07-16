@@ -45,7 +45,7 @@ const BusinessCard = ({ item, index, name }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h4 className="text-danger">{item.business_name}</h4>
+                        <h4 className="text-danger">{item.business_name&&item.business_name.toUpperCase()}</h4>
                         <p className='text-info'>({item.business_category})</p>
                     </Modal.Title>
                 </Modal.Header>

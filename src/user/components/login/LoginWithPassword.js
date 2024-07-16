@@ -19,16 +19,20 @@ const LoginWithPassword = (props) => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
   const [maxPassword, setMaxPassword] = useState(8);
+  const [mobileError, setMobileError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const [imageUrls, setImageUrls] = useState([]);
   const [defaultImage, setDefaultImage] = useState("/user/images/signup.png");
 
   //onChange handler
-  const handleMobileChange = (event) => {
+  const handleMobileChange = (event, errorMsg) => {
+    setMobileError(errorMsg);
     setMobile(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event, errorMsg) => {
+    setPasswordError(errorMsg);
     setPassword(event.target.value);
   };
 
@@ -61,11 +65,13 @@ const LoginWithPassword = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    dispatch(setLoader(true));
     event.preventDefault();
     const cleanMobile = mobile.replace(/^0+/, '');
-
+    if (mobileError || passwordError || !mobile || !password) {
+      return;
+    }
     try {
+      dispatch(setLoader(true));
       const response = await loginWithPassword(cleanMobile, password);
       if (response && response.status === 200) {
         setErrors("");
@@ -79,7 +85,6 @@ const LoginWithPassword = (props) => {
         } else {
           navigate("/setPassword");
         }
-        dispatch(setLoader(false))
       }
     } catch (error) {
       dispatch(setLoader(false));
@@ -100,6 +105,8 @@ const LoginWithPassword = (props) => {
         setErrors('');
         setAlertClass("alert-danger");
       }
+    } finally {
+      dispatch(setLoader(false))
     }
   };
   const openLoginWithOtpForm = () => {
@@ -149,7 +156,7 @@ const LoginWithPassword = (props) => {
                   </div>
                   <div className="row mb-3">
                     <PasswordField handleChange={handlePasswordChange} value={password} errorServer={errors.password}
-                    fieldName="Password" isRequired={true} placeholder="Enter your password"/>
+                      fieldName="Password" isRequired={true} placeholder="Enter your password" />
                   </div>
 
                   <div className="row mb-3">

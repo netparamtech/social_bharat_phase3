@@ -220,6 +220,7 @@ const Services = () => {
       mobile2,
       experience,
       description,
+      location,
       status,
       category: selectedCategory ? selectedCategory : '',
       state: selectedState && selectedState.label ? selectedState.label : '',
@@ -393,7 +394,7 @@ const Services = () => {
 
                   <div
                     className="row mb-4 sevice-item"
-                    style={{ overflowY: "scroll", maxHeight: isAndroidUsed ? '400px' : '700px' }}
+                    style={{ overflowY: "scroll", maxHeight: isAndroidUsed ? '400px' : '800px' }}
                   >
                     {service.map((item, index) => (
                       <div className="col-12 col-sm-12" key={index}>
@@ -425,10 +426,10 @@ const Services = () => {
                       </p>
 
                       <SelectField handleSelectChange={handleSelectService} isRequired={true} value={selectedService}
-                        errorServer={errors.category} placeholder="Select Your Service"
+                        errorServer={errors.title} placeholder="Select Your Service"
                         options={dropdownOptions} fieldName="Service category" />
                       {!selectedService && (
-                        <> {errors.category && <br />}
+                        <> {errors.title && <br />}
                           <span className="">
                             Select any service if not, then select 'Other'
                           </span></>
@@ -500,6 +501,11 @@ const Services = () => {
                         errorServer={errors.city} placeholder="select city..."
                         options={cityOptions} fieldName="City" />
 
+                    </div>
+                    <div className="form-group mb-4">
+                      <InputField handleChange={(e) => setLocation(e.target.value)}
+                        errorServer={errors.location} placeholder="Enter your location"
+                        fieldName="Location" value={location} maxLength={255} isRequired={true} />
                     </div>
                     <div className="form-group mb-4 ">
                       <TextAreaField handleChange={(e) => setDescription(e.target.value)} placeholder="Enter details (limit 400)"

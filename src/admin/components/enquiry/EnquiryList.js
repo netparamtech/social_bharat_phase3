@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
+import ReplyModel from './ReplyModel';
 
 const EnquiryList = () => {
   const [data, setData] = useState([]);
@@ -198,6 +199,9 @@ const EnquiryList = () => {
     {
       title: 'Message', dataIndex: 'message', sorter: true,
       sortDirections: ['asc', 'desc'],
+      render: (text, record) => (
+        <p style={{ wordWrap: 'break-word', wordBreak: 'break-word' }} className='text-wrap-break-word'>{record.message}</p>
+      ),
     },
     {
       title: 'Remark', dataIndex: 'remark',
@@ -211,6 +215,7 @@ const EnquiryList = () => {
           </select>
         </div>
       ),
+      width:150
     },
 
     {
@@ -267,6 +272,27 @@ const EnquiryList = () => {
             }}
           >
             <i className="fas fa-trash"></i>
+          </a>
+        </div>
+      ),
+      fixed: 'right',
+      width: 100,
+    },
+    {
+      title: 'Reply',
+      dataIndex: 'actions',
+      render: (text, record) => (
+        <div>
+
+          <a
+            className="collapse-item"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              // handleDeleteEnquiry(record.id);
+            }}
+          >
+            <ReplyModel item = {record} />
           </a>
         </div>
       ),

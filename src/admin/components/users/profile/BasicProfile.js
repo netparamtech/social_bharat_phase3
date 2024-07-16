@@ -35,8 +35,8 @@ const BasicProfile = (props) => {
     <div id="" className="content-wrapper ">
       <div className="container">
         <div className="row mb-3 fw fs-5">
-          <div className="col-md-3 mb-sm-3 ">
-            <div className="card shadow">
+          <div className="col-md-12 mb-sm-3 bg-warning p-2 ">
+            <div className="card shadow p-1" style={{borderRadius:'10px'}}>
               <div className="container-profilepic mx-auto  card-block-md overflow-hidden ">
                 <img
                   src={
@@ -47,7 +47,7 @@ const BasicProfile = (props) => {
                   title={userDetails?.data?.name}
                 />
               </div>
-              <div className="card-body ">
+              <div className="card-body mx-auto ">
                 <p className=" text-center mb-0">
                   <b>{userDetails?.data?.name.toUpperCase()}</b>
                 </p><span>{userDetails?.data?.community?.name}</span>
@@ -67,7 +67,7 @@ const BasicProfile = (props) => {
             </div>
           </div>
 
-          <Card className="col-md-9 w-100 w-lg-75">
+          <Card className="col-md-12 w-100 w-lg-75">
             <div className="row">
               <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                 <div className="row">
@@ -140,7 +140,7 @@ const BasicProfile = (props) => {
                     <label className="fw-bold">Occupation :</label>
                   </div>
                   <div className="col-md-8">
-                    <label className="">{userDetails?.data?.occupation ? userDetails.data.occupation : 'N/A'}</label>
+                    <label className="text-wrap-break-word">{userDetails?.data?.occupation ? userDetails.data.occupation : 'N/A'}</label>
                   </div>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 
 const WhySocial = (props) => {
-  const {aboutCMS} = props;
+  const { aboutCMS } = props;
   const [imageUrls, setImageUrls] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ const WhySocial = (props) => {
     lineHeight: '160px',
     textAlign: 'center',
     background: '#364d79',
+    border: '3px solid'
   };
 
   useEffect(() => {
@@ -57,20 +58,22 @@ const WhySocial = (props) => {
             <h1 className='text-success'>{aboutCMS && aboutCMS.title && aboutCMS.title}</h1>
             <h5 className='text-primary'>{aboutCMS && aboutCMS.subtitle && aboutCMS.subtitle}</h5>
             <ul>
-             <li
-              dangerouslySetInnerHTML={{
-                    __html:aboutCMS && aboutCMS.content,
-                  }}
-             />
-             
+              <li
+                dangerouslySetInnerHTML={{
+                  __html: aboutCMS && aboutCMS.content,
+                }}
+              />
+
             </ul>
           </div>
           <div className="col-lg-6 col-md-6 float-end mt-0 mt-lg-5 d-md-block wow animate__animated animate__zoomIn">
-            <div className="image-zoom-containerm fade-in-image">
-              <Carousel effect="fade" autoplay dots={{ className: 'custom-carousel-dots' }}>
+            <div className="image-zoom-container fade-in-image">
+              <Carousel effect="fade" autoplay dots={false}>
                 {aboutCMS && aboutCMS.images && aboutCMS.images.map((item, index) => (
                   <div key={index} style={contentStyle} className='zoom-on-hover'>
-                  <img src={item} className="img-fluid image-zoom pb-3" alt={`Banner ${index}`} />
+                    <img src={item} className="img-fluid image-zoom pb-3" alt={`Banner ${index}`}
+                      style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                    />
 
                   </div>
                 ))}

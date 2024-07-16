@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-const SelectField = ({ handleSelectChange, options, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder, isDisabled, isMulti, defaultValue }) => {
+const SelectField = ({ handleSelectChange, options, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder, isDisabled, isMulti, defaultValue,classname }) => {
     const [error, setError] = useState('');
     const [isServerErr, setIsServerErr] = useState(false);
     const validateSelect = (val) => {
@@ -21,7 +21,7 @@ const SelectField = ({ handleSelectChange, options, value, errorServer, label, i
         const valueIn = value;
         const errorMsg = validateSelect(valueIn);
         setError(errorMsg);
-        handleSelectChange(valueIn);
+        handleSelectChange(valueIn,errorMsg);
     }
 
     const getBorderColor = () => {
@@ -42,7 +42,7 @@ const SelectField = ({ handleSelectChange, options, value, errorServer, label, i
                 label && <label className="form-label">{label}{isRequired && <span className="text-danger">{" "}*</span>}</label>
             }
             <select
-                className="form-select"
+                className={`form-select ${classname}`}
                 id="community_id"
                 value={value} // Provide a selected option state
                 onChange={onChange} // Your change handler function
@@ -55,7 +55,7 @@ const SelectField = ({ handleSelectChange, options, value, errorServer, label, i
                     appearance: 'none',
                 }}
             >
-                <option value="">Select an option</option>
+                <option value=''>Select an option</option>
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}

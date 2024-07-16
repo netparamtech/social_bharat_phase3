@@ -24,7 +24,7 @@ const PasswordField = ({ handleChange, value, errorServer, label, isAutoFocused,
         const valueIn = e.target.value;
         const errorMsg = validateMobile(valueIn);
         setError(errorMsg);
-        handleChange(e);
+        handleChange(e, errorMsg);
     }
     useEffect(() => {
         if (errorServer) {

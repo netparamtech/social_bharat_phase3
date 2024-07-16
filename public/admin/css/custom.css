@@ -242,5 +242,48 @@ div.Table {
   word-wrap: break-word; /* Older standard, mostly for IE */
   word-break: break-word; /* Modern standard */
 }
-
-
+.reply-model-container{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+.reply-model-container .reply-socialbharat{
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 10px;
+  align-content: center;
+  background-color: bisque;
+  border: 1px solid;
+  border-bottom: none;
+  cursor: pointer;
+  flex-grow: 1;
+}
+.reply-model-container .reply-email{
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 10px;
+  align-content: center;
+  background-color: #e4e8ed;
+  cursor: pointer;
+  flex-grow: 1;
+}
+.reply-model-container .reply-model-form{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  background-color: bisque;
+}
+.text-wrap-break-word {
+  white-space: normal;
+  /* Allows text to wrap */
+  word-wrap: break-word;
+  /* Older standard, mostly for IE */
+  word-break: break-word;
+  /* Modern standard */
+}

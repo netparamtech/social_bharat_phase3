@@ -10,11 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setLoader } from "../../actions/loaderAction";
-import NewChat from "../chats/NewChat";
 import Comment from "./Comment";
 import { Divider, Rate } from "antd";
-import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
 import ServiceChat from "../chats/ServiceChat";
+import FlatRentServiceBannerDrawer from "./FlatRentServiceBannerDrawer";
+import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -180,6 +180,11 @@ const SearchUsersWithService = () => {
       setIssearchingPerformed(false);
     }
   }, [items]);
+  const handleClearButton = () => {
+    setSearchText('');
+    setSelectedState('');
+    setSelectedCity('');
+  }
 
   const fetchMoreData = () => {
     if (!isLoading && items.length < totalRows) {
@@ -320,7 +325,7 @@ const SearchUsersWithService = () => {
             <p> Providing Services In - {item.category}</p>
             <div className="row">
               <div className="flex-grow-1">
-              
+
                 <p className="mb-2 pb-1 justify-content-start" style={{ color: '#2b2a2a' }}>
                   Occupation-{item.occupation ? item.occupation.length > 50 ? (
                     item.occupation.slice(0, 50) + "...."
@@ -328,7 +333,6 @@ const SearchUsersWithService = () => {
                 </p>
                 <div
                   className="d-flex justify-content-start rounded-3"
-                  style={{ backgroundColor: '#efefef' }}
                 >
                   Experience-{item.experience ? item.experience : 'N/A'}
                 </div>
@@ -338,7 +342,6 @@ const SearchUsersWithService = () => {
                   {/* Age-{age(item.matrimonial_profile_dob)} Years */}
                 </div>
                 <div className="d-flex justify-content-start rounded-3 mt-2"
-                  style={{ backgroundColor: '#efefef' }}
                 >
                   <p>Service At - {item.city}</p>
                   <p>
@@ -347,6 +350,7 @@ const SearchUsersWithService = () => {
                       : ""}
                   </p>
                 </div>
+                <p>({item.location})</p>
                 {/* <div
                   className="d-flex justify-content-start rounded-3"
                   style={{ backgroundColor: '#efefef' }}
@@ -379,20 +383,19 @@ const SearchUsersWithService = () => {
                   </p>{" "}
                 </div> */}
                 <div
-                  className="d-flex justify-content-start rounded-3"
-                  style={{ backgroundColor: '#efefef' }}
+                  className=" contact-container"
                 >
-                  <p className="mb-0">
+                  <p className="mb-0 contact-number">
                     Contact Numbers:
                     <a href={`tel:${item.mobile1}`}>{item.mobile1}</a>
                     {item.mobile2 && (
                       <>
-                        , <a href={`tel:${item.mobile2}`}>{item.mobile2}</a>
+                        <a href={`tel:${item.mobile2}`}>{item.mobile2}</a>
                       </>
                     )}
                     {checkMobileVisibility(item.masked_mobile) && (
                       <>
-                        , <a href={`tel:${item.masked_mobile}`}>{item.masked_mobile}</a>
+                        <a href={`tel:${item.masked_mobile}`}>{item.masked_mobile}</a>
                       </>
                     )}
                   </p>
@@ -402,7 +405,6 @@ const SearchUsersWithService = () => {
 
 
               <div className="d-flex justify-content-start rounded-3 mt-2"
-                style={{ backgroundColor: '#efefef' }}
               >
                 {
                   checkMobileVisibility(item.mobile) ? (
@@ -510,15 +512,10 @@ const SearchUsersWithService = () => {
                         ))
                       }
                     </div>
-                    <div>
-                      <i class="fs-6 text-light hover-pointer fa-solid fa-eraser service-filter-clear-button"
-                        style={{ border: '1px solid', padding: '4px', borderRadius: '10px' }}
-                        onClick={() => setSearchText('')}
-                      > Clear</i>
-                    </div>
+                   
                   </div>
                   <div className="mb-3 col-lg-9 col-sm-12 col-xs-12">
-                    <div className="row">
+                    <div className="service-container">
 
                       <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                         <label className="form-label">State</label>
@@ -546,7 +543,12 @@ const SearchUsersWithService = () => {
                           onChange={handleCityChange}
                         />
                       </div>
+                      <button className="clear-button" 
+                      type="button" disabled={!searchText&&!selectedCity&&!selectedState}
+                      onClick={handleClearButton}
+                      >Clear</button>
                     </div>
+                    <p style={{fontSize:'12px'}}>(you can search by service title, category name, state, city, area, provider name etc.)</p>
                     <div className="container scrollableDiv" id="scrollableDiv"
                       style={{
                         height: 400,
@@ -587,6 +589,9 @@ const SearchUsersWithService = () => {
                                   <button type="button" className="btn me-1 flex-grow-1">
                                     <ViewProfileDrawerForMembers id={item.id} />
                                   </button>
+                                   {/* <button type="button" className="btn me-1 flex-grow-1">
+                                    <FlatRentServiceBannerDrawer items = {item} />
+                                  </button> */}
                                   {/* <button
                                 type="button"
                                 className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
@@ -616,7 +621,7 @@ const SearchUsersWithService = () => {
           </div>
         </div>
       )}
-    
+
     </>
   );
 };

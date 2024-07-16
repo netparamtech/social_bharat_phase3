@@ -21,7 +21,7 @@ const SearchPeople = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState(
-    "/admin/img/download.jpg"
+    "/user/images/default5.jpg"
   );
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);

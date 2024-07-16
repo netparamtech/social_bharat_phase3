@@ -6,6 +6,9 @@ import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
 import { errorOptions, successOptions } from "../../../toastOption";
+import TextAreaField from "../custom/TextAreaField";
+import MobileInput from "../custom/MobileInput";
+import InputField from "../custom/InputField";
 
 function CommunityEnquiry(props) {
     // State variables to store form input values
@@ -105,55 +108,38 @@ function CommunityEnquiry(props) {
             className="user-auth-form-contact"
             onSubmit={handleSubmit}
         >
-
+            {message && (
+                <div className={`alert ${alertClass}`}>
+                    {alertClass === "alert-success" ? (
+                        <i className="fas fa-check-circle"></i>
+                    ) : (
+                        <i className="fas fa-exclamation-triangle"></i>
+                    )}
+                    {" " + message}
+                </div>
+            )}
+            <h4 className="mb-4 ">Send message for enquiry</h4>
+            <div>(All fields are required to fill.)</div>
             <div className="form-group mb-4">
-                <input
-                    type="text"
-                    placeholder="Enter Name"
-                    className="form-control"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                {errors.name && (
-                    <span className="error">{errors.name}</span>
-                )}
+                <InputField handleChange={(e) => setName(e.target.value)} isRequired={true} type="text"
+                    errorServer={errors.name} isAutoFocused={true} placeholder="Enter Your Name"
+                    maxLength={50} value={name} fieldName="Name" />
             </div>
             <div className="form-group mb-4">
-                <input
-                    type="email"
-                    placeholder="Enter Email"
-                    className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                {errors.email && (
-                    <span className="error">{errors.email}</span>
-                )}
+                <InputField handleChange={(e) => setEmail(e.target.value)} isRequired={false} boxFor="email"
+                    errorServer={errors.email} isAutoFocused={false} placeholder="Enter Your Email (Optional)"
+                    maxLength={100} value={email} fieldName="Email" />
             </div>
             <div className="form-group mb-4">
-                <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Enter Mobile"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                />
-                {errors.mobile && (
-                    <span className="error">{errors.mobile}</span>
-                )}
+                <MobileInput handleMobileChange={(e) => setMobile(e.target.value)} isRequired={true}
+                    errorServer={errors.mobile} isAutoFocused={false} placeholder="Enter Your Mobile"
+                    value={mobile} fieldName="Mobile" />
             </div>
             <div className="form-group mb-4 ">
-                <textarea
-                    className="form-control"
-                    style={{ height: '200px' }}
-                    placeholder="Please provide a comprehensive description of the community you intend to add, including any sub-communities, if applicable"
-                    id="floatingTextarea"
-                    value={userQuery}
-                    onChange={(e) => setUserQuery(e.target.value)}
-                ></textarea>
-                {errors.message && (
-                    <span className="error">{errors.message}</span>
-                )}
+                <TextAreaField handleChange={(e) => setUserQuery(e.target.value)} isRequired={true}
+                    errorServer={errors.message} isAutoFocused={false} placeholder="Please provide a comprehensive description of the 
+                    community you intend to add, including any sub-community, if applicable."
+                    maxLength={255} value={userQuery} fieldName="Message" />
             </div>
             <div className="form-group">
                 <button

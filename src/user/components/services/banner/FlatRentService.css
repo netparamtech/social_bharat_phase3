@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #flat-rent-service {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #flat-rent-service h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  #flat-rent-service p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  #flat-rent-service img {
+    width: 100%;
+    height: 400px;
+    transition: transform 0.5s ease;
+  }
+  
+  @media (max-width:768px) {
+    #flat-rent-service img {
+      width: 300px;
+    }
+  }
+  
+  #flat-rent-service .cta {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #flat-rent-service .cta:hover {
+    background-color: #0056b3;
+  }
+  
+  #flat-rent-service .details-container {
+    border: 1px solid;
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    border-radius: 20px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 14px 18px rgba(0, 0, 155, 0.1);
+    background-color: #333;
+    color: #fff;
+  }
+  
+  #flat-rent-service .reviews {
+    margin-top: 10px;
+    color: #fff;
+    height: 200px;
+    overflow-y: scroll;
+    background-color: #666;
+    border-radius: 20px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 14px 18px rgba(0, 0, 155, 0.1);
+  }
+  #flat-rent-service .reviews::-webkit-scrollbar{
+    display: none;
+  }
+  
+  #flat-rent-service h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #fff;
+    margin-top: 10px;
+  }
+  
+  #flat-rent-service .review {
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  #flat-rent-service .review p {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  
+  #flat-rent-service .review .reviewer {
+    font-weight: bold;
+  }
+  
+  #flat-rent-service .contact {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  #flat-rent-service .contact h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  #flat-rent-service .contact-info {
+    font-size: 1.2em;
+    color: #fff;
+  }
+  
+  #flat-rent-service .logo {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  
+  #flat-rent-service .logo img {
+    width: 150px;
+  }
+  
+  #flat-rent-service .service-image-container {
+    display: flex;
+    object-fit: cover;
+    overflow: scroll;
+    gap: 10px;
+    height: 400px;
+    border-radius: 20px;
+    align-items: center;
+  }
+  
+  #flat-rent-service .service-image-container::-webkit-scrollbar {
+    display: none;
+  }
+  

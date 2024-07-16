@@ -11,6 +11,7 @@ import Search from 'antd/es/input/Search';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import ReplyModel from './ReplyModel';
+import { render } from '@testing-library/react';
 
 const EnquiryList = () => {
   const [data, setData] = useState([]);
@@ -182,12 +183,15 @@ const EnquiryList = () => {
     {
       title: 'Name', dataIndex: 'name', sorter: true,
       sortDirections: ['asc', 'desc'],
+      render:(text,record)=>(
+        <p className='text-wrap-break-word'>{record.name}</p>
+      ),
       with: 150,
     },
     {
       title: 'Email', dataIndex: 'email',
       render: (text, record) => (
-        !record.email ? "Not Available" : record.email
+        !record.email ? "Not Available" : <p className='text-wrap-break-word'>{record.email}</p>
       ),
       sorter: true,
       sortDirections: ['asc', 'desc'],
@@ -211,7 +215,7 @@ const EnquiryList = () => {
             <option value="">Select</option>
             <option value="done">Done</option>
             <option value="pending">Pending</option>
-            <option value="inProgress">In Progress</option>
+            <option value="In Progress">In Progress</option>
           </select>
         </div>
       ),

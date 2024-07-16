@@ -7,57 +7,60 @@ import { useNavigate } from 'react-router-dom';
 const ReplyModel = ({ item }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [message,setMessage] = useState('');
-    const [mobile,setMobile] = useState('');
-    const [enqId,setEnqId] = useState('');
+    const [message, setMessage] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [enqId, setEnqId] = useState('');
+
+    const [errors, setErrors] = useState('');
     const navigate = useNavigate();
-
-    const showLoading = () => {
-        setOpen(true);
-        setLoading(true);
-
-        // Simple loading mock. You should add cleanup logic in real world.
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    };
-
-    const handleSubmit = async () =>{
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
+    }
+    const handleSubmit = async () => {
         try {
+            setLoading(true);
             const data = {
-                enq_id:enqId,
+                enq_id: enqId,
                 mobile,
                 message
             }
             const response = await replyEnquiry(data);
             if (response && response.status === 201) {
-                toast.success('Message Sent Successfully.',successOptions);
+                setErrors('');
+                setMessage("");
+                setOpen(false);
+                toast.success('Message Sent Successfully.', successOptions);
             }
-          } catch (error) {
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                setErrors(error.response.data.errors);
+            }
             if (error.response && error.response.status === 401) {
-              navigate("/admin");
+                navigate("/admin");
             } else if (error.response && error.response.status === 500) {
-              let errorMessage = error.response.data.message;
-              navigate('/server/error', { state: { errorMessage } });
+                let errorMessage = error.response.data.message;
+                navigate('/server/error', { state: { errorMessage } });
             }
-          }
+        } finally {
+            setLoading(false);
+        }
     }
 
-    useEffect(()=>{
-        if(item){
+    useEffect(() => {
+        if (item) {
             setMobile(item.mobile);
             setEnqId(item.id);
         }
-    },[item])
+    }, [item])
     return (
         <>
-            <Button type="primary" onClick={showLoading}>
+            <Button type="primary" onClick={() => setOpen(true)}>
                 Reply
             </Button>
             <Modal
                 title={<p>Loading Modal</p>}
                 footer={
-                    <Button className='mt-2' type="primary" onClick={showLoading}>
+                    <Button className='mt-2' type="primary" onClick={handleSubmit}>
                         Submit
                     </Button>
                 }
@@ -68,8 +71,8 @@ const ReplyModel = ({ item }) => {
                 {/* {item.mobile} */}
                 <form>
                     <div className='row reply-model-container'>
-                        <div className='row'>Reply To - "{item.message}"</div>
-                        <div className='' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                        <div className='row text-wrap-break-word'>Reply To - "{item.message}"</div>
+                        <div className='' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <div className='reply-socialbharat'>Reply</div>
                             <div className='reply-email'>Reply By Email</div>
                         </div>
@@ -80,13 +83,16 @@ const ReplyModel = ({ item }) => {
                                 value={item.mobile}
                                 disabled
                             />
+                            {errors.mobile && <span className="error">{errors.mobile}</span>}
                         </div>
                         <div className='row'>
                             <textarea
                                 className='form-control-reply mt-2'
-                                placeholder='Enter Mobile Number'
-                                defaultValue={item.toString()}
+                                placeholder='Enter your message.'
+                                value={message}
+                                onChange={handleMessageChange}
                             />
+                            {errors.message && <span className="error">{errors.message}</span>}
                         </div>
                     </div>
                 </form>

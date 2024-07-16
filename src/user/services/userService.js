@@ -684,6 +684,15 @@ export const enquiry = async (data) => {
     throw error;
   }
 };
+//my enquiries
+export const fetchMyEnquiries = async (mobile,page,size) => {
+  try {
+    const response = await apiWithHeaders.get(`/enquiries?mobile=${mobile}&page=${page}&size=${size}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 //testimonial(feedback)
 export const userFeedback = async (data) => {

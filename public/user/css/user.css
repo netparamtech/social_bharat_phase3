@@ -2544,7 +2544,25 @@ legend {
   }
 }
 
-
+.user-contact-enquiry{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.contact-info-enquiry-reply{
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: column;
+}
+.user-contact-enquiry-reply{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
 
 
 /* Add your existing styles for btn, btn-ternary, and hover-pointer-red */

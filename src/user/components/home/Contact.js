@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { enquiry, fetchAllSiteSettings } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
 import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
@@ -9,8 +9,10 @@ import { errorOptions, successOptions } from "../../../toastOption";
 import InputField from "../custom/InputField";
 import MobileInput from "../custom/MobileInput";
 import TextAreaField from "../custom/TextAreaField";
+import MyEnquiries from "./MyEnquiries";
 
 function Contact() {
+  const user = useSelector((state) => state.userAuth);
   // State variables to store form input values
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,6 +31,12 @@ function Contact() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(user!==null){
+      setMobile(user.user.mobile);
+    }
+  },[user]);
 
   //fetch site setting 
   const fetchSettings = async () => {
@@ -237,7 +245,10 @@ function Contact() {
                           {" " + message}
                         </div>
                       )}
-                      <h4 className="mb-4 ">Send message for enquiry</h4>
+                      <div className="user-contact-enquiry">
+                        <h4 className="mb-4 ">Send message for enquiry</h4>
+                        <MyEnquiries />
+                      </div>
                       <div>(All fields are required to fill.)</div>
                       <div className="form-group mb-4">
                         <InputField handleChange={(e, errorMsg) => {

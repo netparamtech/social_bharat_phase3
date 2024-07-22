@@ -14,6 +14,9 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import InputField from "../custom/InputField";
+import SelectField from "../custom/SelectField";
+import TextAreaField from "../custom/TextAreaField";
+import { errorOptions } from "../../../toastOption";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -56,6 +59,15 @@ const CreateJob = (props) => {
     const [states, setStates] = useState([]);
     const [countryID, setCountryID] = useState(101);
 
+    //validation-hooks
+    const [jobTitleError, setJobTitleError] = useState('');
+    const [jobSectorError, setJobSectorError] = useState('');
+    const [jobTypeError, setJobTypeError] = useState('');
+    const [stateError, setStateError] = useState('');
+    const [cityError, setCityError] = useState('');
+    const [feeError, setFeeError] = useState('');
+    const [appStartDateError, setAppStartDateError] = useState('');
+    const [appEndDateError, setAppEndDateError] = useState('');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -72,16 +84,32 @@ const CreateJob = (props) => {
         { value: "Government Jobs", label: "Government Jobs" },
         { value: "Other", label: "Other" },
     ];
+    const stateOptions = (
+        states &&
+        states.map((option) => ({
+            value: option.name,
+            label: option.name,
+        }))
+    )
+    const cityOptions = (
+        cities &&
+        cities.map((option) => ({
+            value: option.name,
+            label: option.name,
+        }))
+    )
 
     const onEditorStateChange = (editorState) => {
         setEditorState(editorState);
     };
 
-    const handleJobTypeChange = (selectedOption) => {
+    const handleJobTypeChange = (selectedOption, errorMsg) => {
         setJobType(selectedOption);
+        setJobTypeError(errorMsg);
     }
-    const handleJobSectorChange = (selectedOption) => {
+    const handleJobSectorChange = (selectedOption, errorMsg) => {
         setJobSector(selectedOption);
+        setJobSectorError(errorMsg);
     }
     const handleAttachmentChange = async (e) => {
         const file = e.target.files[0];
@@ -167,8 +195,9 @@ const CreateJob = (props) => {
     }
 
     //state and city change operations
-    const handleStateChange = (selectedOption) => {
+    const handleStateChange = (selectedOption, errorMsg) => {
         setSelectedState(selectedOption);
+        setStateError(errorMsg);
 
         if (selectedOption) {
             const selectedStateObject = states.find(
@@ -183,8 +212,9 @@ const CreateJob = (props) => {
         setSelectedCity(null);
     };
 
-    const handleCityChange = (selectedOption) => {
+    const handleCityChange = (selectedOption, errorMsg) => {
         setSelectedCity(selectedOption);
+        setCityError(errorMsg);
     };
 
     const getAllStates = async () => {
@@ -234,6 +264,10 @@ const CreateJob = (props) => {
     };
 
     const handleSubmit = async () => {
+        if(jobTitleError||jobSectorError||jobTypeError||stateError||cityError||feeError||!jobTitle||!jobSector||!jobType||!selectedState||!selectedCity||!application_fee_details){
+            toast.error("Please fill in all the required fields before submitting.",errorOptions);
+            return;
+        }
         dispatch(setLoader(true));
 
         const contentState = editorState.getCurrentContent();
@@ -325,79 +359,45 @@ const CreateJob = (props) => {
                                     </div>
                                 )}
                                 <div className="form-group">
-                                    <InputField errorServer={errors.job_title} label="Job Title:" handleChange={(e) => setJobTitle(e.target.value)}
+                                    <InputField errorServer={errors.job_title} label="Job Title:" handleChange={(e, errorMsg) => {
+                                        setJobTitle(e.target.value);
+                                        setJobTitleError(errorMsg);
+                                    }}
                                         placeholder="Enter Job Title" value={jobTitle} isRequired={true} isAutoFocused={true}
                                         maxLength={50} fieldName="Job title" />
                                 </div>
                                 <div className="form-group">
-                                    <label>Job Sector:</label>
-                                    <Select
-                                        className={`form-control ${errors.job_sector ? 'border-danger' : ''}`}
-                                        options={jobSectorOption}
-                                        value={jobSector}
-                                        onChange={handleJobSectorChange}
-                                        placeholder="Select Job Type..."
-                                    />
-                                    {errors.job_sector && (
-                                        <span className="error">{errors.job_sector}</span>
-                                    )}
+                                    <SelectField handleSelectChange={handleJobSectorChange} isRequired={true} value={jobSector}
+                                        errorServer={errors.job_sector} placeholder="Select Job Type..." label="Job Sector:"
+                                        options={jobSectorOption} fieldName="Job sector" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Job Type:</label>
-                                    <Select
-                                        className={`form-control ${errors.job_type ? 'border-danger' : ''}`}
-                                        options={jobTypeOption}
-                                        value={jobType}
-                                        onChange={handleJobTypeChange}
-                                        placeholder="Select Job Type..."
-                                    />
-                                    {errors.job_type && (
-                                        <span className="error">{errors.job_type}</span>
-                                    )}
+                                    <SelectField handleSelectChange={handleJobTypeChange} isRequired={true} value={jobType}
+                                        errorServer={errors.job_type} placeholder="Select Job Type..." label="Job Type:"
+                                        options={jobTypeOption} fieldName="Job type" />
                                 </div>
 
                                 <div className="form-group">
                                     <InputField errorServer={errors.job_subheading} label="Company Name / Other Subheading(optional):" handleChange={(e) => setSubHeading(e.target.value)}
-                                        placeholder="i.e. company name or organization or other" value={subHeading}
+                                        placeholder="i.e. company name or organization or other" value={subHeading} maxLength={100}
                                         fieldName="company name or organization or other" />
                                 </div>
 
                                 <div className="row">
                                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                        <label className="form-label">State</label>
 
-                                        <Select
-                                            options={states.map((state) => ({
-                                                value: state.name,
-                                                label: state.name,
-                                            }))}
-                                            className={`form-control ${errors.state ? 'border-danger' : ''}`}
-                                            value={selectedState}
-                                            onChange={handleStateChange}
-                                        />
-                                        {errors.state && (
-                                            <span className="error">{errors.state}</span>
-                                        )}
+                                        <SelectField handleSelectChange={handleStateChange} isRequired={true} value={selectedState}
+                                            errorServer={errors.state} placeholder="select state..." label="State (for government job state is optional.)"
+                                            options={stateOptions} fieldName="State" />
 
 
                                     </div>
 
                                     <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                        <label className="form-label">City</label>
-
-                                        <Select
-                                            options={cities.map((city) => ({
-                                                value: city.name,
-                                                label: city.name,
-                                            }))}
-                                            className={`form-control ${errors.city ? 'border-danger' : ''}`}
-                                            value={selectedCity}
-                                            onChange={handleCityChange}
-                                        />
-                                        {errors.city && (
-                                            <span className="error">{errors.city}</span>
-                                        )}
+                                        <SelectField handleSelectChange={handleCityChange} isRequired={true} value={selectedCity}
+                                            errorServer={errors.city} placeholder="select city..." label="City (for government job city is optional.)"
+                                            options={cityOptions} fieldName="City" />
 
                                     </div>
                                 </div>
@@ -416,21 +416,16 @@ const CreateJob = (props) => {
                                         )}
                                     </div>
                                     <div className="col-12 col-md-6">
-                                        <label>Short Information about Application Fee</label>
-                                        <textarea type="text"
-                                            className={`form-control ${errors.fee_details ? 'border-danger' : ''}`}
-                                            placeholder="Enter application fee details or details about fee..."
-                                            defaultValue={application_fee_details}
-                                            onChange={(e) => setApplication_fee_details(e.target.value)}
-                                        />
-                                        {errors.fee_details && (
-                                            <span className="error">{errors.fee_details}</span>
-                                        )}
+                                        <TextAreaField handleChange={(e, errorMsg) => {
+                                            setApplication_fee_details(e.target.value);
+                                            setFeeError(errorMsg);
+                                        }} placeholder="Enter application fee details or details about fee..."
+                                            fieldName="Fee detail" value={application_fee_details} maxLength={1000} errorServer={errors.fee_details} isRequired={true} label="Short Information about Application Fee" />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-12 col-md-6">
-                                        <label className="">Application Start</label>
+                                        <label className="">Application Start<span className="text-danger">{" "}*</span></label>
                                         <input
                                             type="date"
                                             name="jobStartDate"
@@ -446,7 +441,7 @@ const CreateJob = (props) => {
                                     </div>
 
                                     <div className="col-12 col-md-6">
-                                        <label className="">Application End</label>
+                                        <label className="">Application End<span className="text-danger">{" "}*</span></label>
                                         <input
                                             type="date"
                                             name="jobStartDate"

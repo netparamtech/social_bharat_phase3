@@ -173,7 +173,7 @@ const Activities = () => {
       dataIndex: "description",
       render: (text, record) => (
         <div className="description-cell"  dangerouslySetInnerHTML={{
-          __html: record.description,
+          __html: record.description.slice(0,100),
         }}>
           
         </div>

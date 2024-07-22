@@ -2,7 +2,7 @@
 import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-const InputField = ({ handleChange, boxFor, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder,classname, isDisabled, maxLength, type, minLength }) => {
+const InputField = ({ handleChange, boxFor, value, errorServer, label, isAutoFocused, isRequired, fieldName, placeholder, classname, isDisabled, maxLength, type, minLength }) => {
     const [error, setError] = useState('');
     const [isServerErr, setIsServerErr] = useState(false);
     const validateMobile = (val) => {
@@ -26,6 +26,19 @@ const InputField = ({ handleChange, boxFor, value, errorServer, label, isAutoFoc
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/;
                 if (!emailRegex.test(val)) {
                     return `Please enter a valid email address.`;
+                }
+            }
+            if (boxFor === 'link') {
+                const urlPattern = new RegExp(
+                    '^(https?:\\/\\/)?' + // protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name and extension
+                    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+                    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+                    '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
+                );
+                if (!urlPattern.test(val)) {
+                    return `Please enter a valid URL.`;
                 }
             }
         }

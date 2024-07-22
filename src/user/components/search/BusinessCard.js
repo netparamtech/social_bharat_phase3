@@ -110,15 +110,17 @@ const BusinessCard = ({ item, index, name }) => {
                                     <Carousel className="your-custom-carousel-class" style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
                                         {item.business_photos && Array.isArray(item.business_photos) ?
                                             item.business_photos.map((value, index) => (
-                                                <Carousel.Item key={index} style={{ objectFit: 'cover', height: '100%', width: '100%' }}>
-                                                    <Image
+                                                <Carousel.Item key={index} style={{ objectFit: 'cover', height: '200px', width: '100%' }}>
+                                                   <a href={value} target='_blank'>
+                                                   <Image
+                                                        preview={false}
                                                         src={value}
                                                         alt={`Proposal Photo ${index + 1}`}
                                                         className="d-block w-100 custom-carousel-item"
                                                         height={300}
                                                         style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
-                                                        //onClick={() => changeEventClickFlag(true, item.id)}
                                                     />
+                                                   </a>
 
                                                 </Carousel.Item>
                                             )) : (

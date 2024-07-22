@@ -21,6 +21,8 @@ import InputField from "../custom/InputField";
 import SelectField from "../custom/SelectField";
 import HtmlSelect from '../custom/HtmlSelect';
 import TextAreaField from "../custom/TextAreaField";
+import { errorOptions } from "../../../toastOption";
+import { toast } from "react-toastify";
 
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
@@ -359,7 +361,9 @@ const CreateMatrimonial = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (careatedForError || nameError || fatherNameError || motherNameError || stateError || cityError || mobileError
-      || subcastError || dobError || genderError) {
+      || subcastError || dobError || genderError || !updateFor || !matrimonialProfileName || !fatherName || !motherName ||
+      !selectedState || !selectedCity || !mobile || !subcast_id || !dob || !gender) {
+      toast.error("Please fill in all the required fields before submitting.", errorOptions);
       return;
     }
 
@@ -1001,27 +1005,7 @@ const CreateMatrimonial = () => {
                         <button type="submit" className="btn btn-primary"
                           disabled={
                             (
-                              (updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married') ||
-                              careatedForError ||
-                              nameError ||
-                              fatherNameError ||
-                              motherNameError ||
-                              stateError ||
-                              cityError ||
-                              mobileError ||
-                              subcastError ||
-                              dobError ||
-                              genderError ||
-                              !matrimonialProfileName ||
-                              !updateFor ||
-                              !fatherName ||
-                              !motherName ||
-                              !selectedState ||
-                              !selectedCity ||
-                              !mobile ||
-                              !subcast ||
-                              !dob ||
-                              !gender
+                              (updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married')
                             )
                           }
                         >

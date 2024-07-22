@@ -213,8 +213,8 @@ const EnquiryList = () => {
         <div>
           <select type='select' className='form-select' defaultValue={record.remark} onChange={(e) => handleRemarkChange(record.id, e)} onBlur={() => submitRemark(record.id)}>
             <option value="">Select</option>
-            <option value="done">Done</option>
-            <option value="pending">Pending</option>
+            <option value="Done">Done</option>
+            <option value="Pending">Pending</option>
             <option value="In Progress">In Progress</option>
           </select>
         </div>

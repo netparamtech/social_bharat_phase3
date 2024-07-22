@@ -21,6 +21,7 @@ import MobileInput from "../custom/MobileInput";
 import InputField from "../custom/InputField";
 import SelectField from "../custom/SelectField";
 import TextAreaField from "../custom/TextAreaField";
+import { errorOptions } from "../../../toastOption";
 
 const Services = () => {
   const [service, setService] = useState([]);
@@ -60,6 +61,17 @@ const Services = () => {
   const [message, setMessage] = useState("");
   const [alertClass, setAlertClass] = useState("");
 
+  //validations error
+  const [titleError, setTitleError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
+  const [mobile1Error, setMobile1Error] = useState('');
+  const [mobile2Error, setMobile2Error] = useState('');
+  const [experienceError, setExperienceError] = useState('');
+  const [stateError, setStateError] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [locationError, setLocationError] = useState('');
+  const [detailsError, setDetailsError] = useState('');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -83,12 +95,14 @@ const Services = () => {
     setService(filteredData);
   };
 
-  const handleSelectService = (selectedOption) => {
+  const handleSelectService = (selectedOption, errorMsg) => {
+    setTitleError(errorMsg);
     setMessage("");
     setAlertClass("");
     setSelectedService(selectedOption);
     let result = selectedOption.category.split(',');
     setCategory(result);
+    setSelectedCategory([]);
   };
 
   const handleChange = (value) => {
@@ -97,9 +111,10 @@ const Services = () => {
 
   //state and city operations
   //state and city change operations
-  const handleStateChange = (selectedOption) => {
+  const handleStateChange = (selectedOption, errorMsg) => {
     setSelectedCity('');
     setSelectedState(selectedOption);
+    setStateError(errorMsg);
 
     if (selectedOption) {
       const selectedStateObject = states.find(
@@ -113,8 +128,9 @@ const Services = () => {
     // Update selected city to null when state changes
   };
 
-  const handleCityChange = (selectedOption) => {
+  const handleCityChange = (selectedOption, errorMsg) => {
     setSelectedCity(selectedOption);
+    setCityError(errorMsg);
   };
 
   const getAllStates = async () => {
@@ -210,9 +226,16 @@ const Services = () => {
   };
 
   const handleSubmit = async () => {
+    let result;
     if (selectedCategory) {
-      const result = selectedCategory.toString();
+      result = selectedCategory.toString();
       setSelectedCategory(result);
+    }
+    if (titleError || categoryError || mobile1Error || mobile2Error || experienceError ||
+      stateError || cityError || locationError || detailsError || !selectedService || !selectedCategory || !mobile1 ||
+      !experience || !selectedState || !selectedCity || !location || !description) {
+      toast.error("Please fill in all the fields before submitting.", errorOptions);
+      return;
     }
     const data = {
       title: serviceTitle,
@@ -222,7 +245,7 @@ const Services = () => {
       description,
       location,
       status,
-      category: selectedCategory ? selectedCategory : '',
+      category: result,
       state: selectedState && selectedState.label ? selectedState.label : '',
       city: selectedCity && selectedCity.label ? selectedCity.label : '',
     };
@@ -464,6 +487,7 @@ const Services = () => {
                             height: '60px'
                           }}
                           placeholder="Please select categories..."
+                          value={selectedCategory}
                           onChange={handleChange}
                           options={options}
                         />
@@ -475,17 +499,26 @@ const Services = () => {
                     </div>
                     <div className="form-group mb-4">
 
-                      <MobileInput handleMobileChange={(e) => setMobile1(e.target.value)} value={mobile1}
+                      <MobileInput handleMobileChange={(e, errorMsg) => {
+                        setMobile1(e.target.value);
+                        setMobile1Error(errorMsg);
+                      }} value={mobile1}
                         errorServer={errors.mobile1} isRequired={true}
-                        placeholder="Enter your mobile number 1" />
+                        placeholder="Please enter your primary mobile number (10 digits)." />
                     </div>
                     <div className="form-group mb-4">
-                      <MobileInput handleMobileChange={(e) => setMobile2(e.target.value)} value={mobile2}
+                      <MobileInput handleMobileChange={(e, errorMsg) => {
+                        setMobile2(e.target.value);
+                        setMobile2Error(errorMsg);
+                      }} value={mobile2}
                         errorServer={errors.mobile2} isRequired={false}
-                        placeholder="Enter your mobile number 2" />
+                        placeholder="Enter your mobile number 2 (Optional)" />
                     </div>
                     <div className="form-group mb-4">
-                      <InputField handleChange={(e) => setExperience(e.target.value)}
+                      <InputField handleChange={(e, errorMsg) => {
+                        setExperience(e.target.value);
+                        setExperienceError(errorMsg);
+                      }}
                         errorServer={errors.experience} placeholder="Enter your experience"
                         fieldName="experience" value={experience} maxLength={30} isRequired={true} />
                     </div>
@@ -503,13 +536,19 @@ const Services = () => {
 
                     </div>
                     <div className="form-group mb-4">
-                      <InputField handleChange={(e) => setLocation(e.target.value)}
+                      <InputField handleChange={(e, errorMsg) => {
+                        setLocation(e.target.value);
+                        setLocationError(errorMsg);
+                      }}
                         errorServer={errors.location} placeholder="Enter your location"
                         fieldName="Location" value={location} maxLength={255} isRequired={true} />
                     </div>
                     <div className="form-group mb-4 ">
-                      <TextAreaField handleChange={(e) => setDescription(e.target.value)} placeholder="Enter details (limit 400)"
-                        fieldName="Description" value={description} maxLength={400} errorServer={errors.description} isRequired={true} />
+                      <TextAreaField handleChange={(e, errorMsg) => {
+                        setDescription(e.target.value);
+                        setDetailsError(errorMsg);
+                      }} placeholder="Enter details (limit 700)"
+                        fieldName="Description" value={description} maxLength={700} errorServer={errors.description} isRequired={true} />
                     </div>
 
                     <div className="row mt-4">

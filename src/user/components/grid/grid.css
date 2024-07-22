@@ -1,0 +1,41 @@
+#social-bharat-image-grid .grid-container{
+    /* height: 300px;
+    width: 100%;
+    max-width: 400px; */
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
+    border: 1px solid;
+    border-radius: 15px; /* Add border radius */
+    overflow: hidden; 
+}
+#social-bharat-image-grid .grid-item{
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#social-bharat-image-grid .grid-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* Ensure images cover the entire grid item without distortion */
+}
+#social-bharat-image-grid .item-1{
+   /* grid-row-start: 1;
+   grid-row-end: 1; */
+}
+#social-bharat-image-grid .item-5{
+    background-color: rgb(127, 21, 21);
+}
+#social-bharat-image-grid .item-4{
+    background-color: rgb(34, 171, 128);
+}
+#social-bharat-image-grid .item-3{
+    background-color: rgb(15, 12, 105);
+}
+#social-bharat-image-grid .item-2{
+    background-color: rgb(99, 127, 21);
+
+}
+#social-bharat-image-grid .item-1{
+}

@@ -1,9 +1,10 @@
 import Grid from "./Grid";
+import "./grid.css";
 
-const GridController = () => {
+const GridController = ({item}) => {
     return(
-        <div>
-            <Grid />
+        <div className="" style={{display:'flex',justifyContent:'center',borderRadius:'10px'}}>
+            <Grid item={item} />
         </div>
     );
 }

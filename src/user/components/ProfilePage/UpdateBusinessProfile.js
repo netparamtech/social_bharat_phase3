@@ -9,6 +9,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import MobileInput from '../custom/MobileInput';
+import InputField from '../custom/InputField';
+import SelectField from '../custom/SelectField';
+import TextAreaField from '../custom/TextAreaField';
+import { toast } from 'react-toastify';
+import { errorOptions } from '../../../toastOption';
 
 const UpdateBusinessProfile = (props) => {
   const { businessDetails } = props;
@@ -42,12 +47,42 @@ const UpdateBusinessProfile = (props) => {
 
   const [errors, setErrors] = useState('');
   const [serverError, setServerError] = useState('');
+  //validation errors
+  const [bnameError, setBnameError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
+  const [addressError, setAddressError] = useState('');
+  const [countryError, setCountryError] = useState('');
+  const [stateError, setStateError] = useState('');
+  const [cityError, useCityError] = useState('');
+  const [contact1Error, setContact1Error] = useState('');
+  const [contact2Error, setContact2Error] = useState('');
+  const [contact3Error, setContact3Error] = useState('');
+  const [businessEmailError, setBusinessEmailError] = useState('');
+  const [websiteError, setWebsiteError] = useState('');
+  const [googleMapLinkError, setGoogleMapLinkError] = useState('');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
+
+  const businessCatOptions = [
+    { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
+    { value: 'Sales', label: 'Sales' },
+    { value: 'Marketing', label: 'Marketing' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Service', label: 'Service' },
+    { value: 'Finance', label: 'Finance' },
+    { value: 'Real Estate', label: 'Real Estate' },
+    { value: 'Healthcare', label: 'Healthcare' },
+    { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
+    { value: 'Hospitality', label: 'Hospitality' },
+    { value: 'Education', label: 'Education' },
+    { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
+    // Add other country options here
+  ]
 
   const handleBusinessPhotoChange = async (e) => {
     const selectedFiles = e.target.files;
@@ -139,8 +174,15 @@ const UpdateBusinessProfile = (props) => {
   };
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
+    if(bnameError||categoryError||addressError||countryError||stateError||
+      cityError||contact1Error||contact2Error||contact3Error||businessEmailError||websiteError||
+      googleMapLinkError||!businessName||!businessType||!streetAddress||!selectedCountry||!selectedState||!selectedCity||
+      !contact1
+    ){
+      toast.error("Please fill in all the required fields before submitting.",errorOptions);
+      return;
+    }
     dispatch(setLoader(true));
     const contentState = editorState.getCurrentContent();
     const rawContentState = convertToRaw(contentState);
@@ -316,7 +358,13 @@ const UpdateBusinessProfile = (props) => {
       }
     }
   }, [states]);
-
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      borderRadius: '5px',
+    }),
+    // You can add more styles overrides for other parts of the select component
+  };
 
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
@@ -333,57 +381,31 @@ const UpdateBusinessProfile = (props) => {
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Business Name{" "}<span className="text-danger">*</span></label>
-                          <input type="text"
-                            name="businessName"
-                            id="businessName"
-                            placeholder="Enter Business Name"
-                            className="form-control"
-                            autoFocus
-                            defaultValue={businessName}
-                            onChange={(e) => setBusinessName(e.target.value)}
-                          />
-                          {errors.business_name && <span className='error'>{errors.business_name}</span>}
+
+                          <InputField errorServer={errors.business_name} label="Business Name" handleChange={(e, errorMsg) => {
+                            setBusinessName(e.target.value);
+                            setBnameError(errorMsg);
+                          }}
+                            placeholder="Enter Business Name" value={businessName} isRequired={true} isAutoFocused={true}
+                            maxLength={200} fieldName="Business name" />
                         </div>
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Business Type{" "}<span className="text-danger">*</span></label>
-                          <Select
-                            options={[
-                              { value: 'Information Technology (IT)', label: 'Information Technology (IT)' },
-                              { value: 'Sales', label: 'Sales' },
-                              { value: 'Marketing', label: 'Marketing' },
-                              { value: 'Manufacturing', label: 'Manufacturing' },
-                              { value: 'Service', label: 'Service' },
-                              { value: 'Finance', label: 'Finance' },
-                              { value: 'Real Estate', label: 'Real Estate' },
-                              { value: 'Healthcare', label: 'Healthcare' },
-                              { value: 'Transportation and Logistics', label: 'Transportation and Logistics' },
-                              { value: 'Hospitality', label: 'Hospitality' },
-                              { value: 'Education', label: 'Education' },
-                              { value: 'Nonprofit Organizations', label: 'Nonprofit Organizations' },
-                              // Add other country options here
-                            ]}
-                            value={businessType}
-                            onChange={handleBusinessType}
-                          />
-
-                          {errors.business_category && <span className='error'>{errors.business_category}</span>}
+                          <SelectField handleSelectChange={handleBusinessType} isRequired={true} value={businessType}
+                            errorServer={errors.business_category} placeholder="Select business field..." label="Business Type"
+                            options={businessCatOptions} fieldName="Business type" />
                         </div>
                       </div>
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Street Address{" "}<span className="text-danger">*</span></label>
-                          <input type="text"
-                            name="stressAddress"
-                            id="stressAddress"
-                            placeholder="Enter Street Address"
-                            className="form-control"
-                            defaultValue={streetAddress}
-                            onChange={(e) => setStreetAddress(e.target.value)}
-                          />
-                          {errors.street_address && <span className='error'>{errors.street_address}</span>}
+
+                          <InputField errorServer={errors.street_address} label="Street Address" handleChange={(e, errorMsg) => {
+                            setStreetAddress(e.target.value);
+                            setAddressError(errorMsg);
+                          }}
+                            placeholder="Enter Street Address" value={streetAddress} isRequired={true}
+                            maxLength={100} fieldName="Street address" />
                         </div>
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -396,6 +418,7 @@ const UpdateBusinessProfile = (props) => {
                             ]}
                             value={selectedCountry}
                             onChange={handleCountryChange}
+                            styles={customStyles}
                           />
 
 
@@ -409,18 +432,19 @@ const UpdateBusinessProfile = (props) => {
 
                           <Select
                             options={states.map(state => ({ value: state.name, label: state.name }))}
-                            value={selectedState}
+                            value={selectedState} styles={customStyles}
                             onChange={handleStateChange}
                           />
 
                           {errors.state && <span className='error'>{errors.state}</span>}
+                          
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                           <label className="form-label">City{" "}<span className="text-danger">*</span></label>
 
                           <Select
                             options={cities.map(city => ({ value: city.name, label: city.name }))}
-                            value={selectedCity}
+                            value={selectedCity} styles={customStyles}
                             onChange={handleCityChange}
                           />
                           {errors.city && <span className='error'>{errors.city}</span>}
@@ -429,22 +453,31 @@ const UpdateBusinessProfile = (props) => {
                       </div>
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <MobileInput handleMobileChange={(e) => setContact1(e.target.value)} value={contact1} errorServer={errors.contact1} label = "Contact 1" isRequired={true}
-                          placeholder="Enter your contact number 1" />
+                          <MobileInput handleMobileChange={(e,errorMsg) => {
+                            setContact1(e.target.value);
+                            setContact1Error(errorMsg);
+                          }} value={contact1} errorServer={errors.contact1} label="Contact 1" isRequired={true}
+                            placeholder="Enter your contact number 1" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <MobileInput handleMobileChange={(e) => setContact2(e.target.value)} value={contact2} errorServer={errors.contact2} label = "Contact 2"
-                           placeholder="Enter your contact number 2" />
+                          <MobileInput handleMobileChange={(e,errorMsg) => {
+                            setContact2(e.target.value);
+                            setContact2Error(errorMsg);
+                          }} value={contact2} errorServer={errors.contact2} label="Contact 2"
+                            placeholder="Enter your contact number 2" />
                         </div>
                       </div>
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <MobileInput handleMobileChange={(e) => setContact3(e.target.value)} value={contact3} errorServer={errors.contact3} label = "Contact 3" 
-                          placeholder="Enter your contact number 3" />
+                          <MobileInput handleMobileChange={(e,errorMsg) => {
+                            setContact3(e.target.value);
+                            setContact3Error(errorMsg);
+                          }} value={contact3} errorServer={errors.contact3} label="Contact 3"
+                            placeholder="Enter your contact number 3" />
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Business Photos </label>
+                          <label className="form-label">Business Photos{" "}<span className="text-danger">*</span></label>
                           <input
                             type="file"
                             className="form-control"
@@ -472,16 +505,13 @@ const UpdateBusinessProfile = (props) => {
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Business Email</label>
-                          <input type="email"
-                            name="email"
-                            id="email"
-                            placeholder="Enter Email"
-                            className="form-control"
-                            defaultValue={businessEmail}
-                            onChange={(e) => setBusinessEmail(e.target.value)}
-                          />
-                          {errors.business_email && <span className='error'>{errors.business_email}</span>}
+
+                          <InputField errorServer={errors.business_email} label="Business Email" handleChange={(e, errorMsg) => {
+                            setBusinessEmail(e.target.value);
+                            setBusinessEmailError(errorMsg);
+                          }}
+                            placeholder="Enter Email" value={businessEmail} isRequired={false} boxFor="email"
+                            maxLength={255} fieldName="Business email" />
                         </div>
 
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -505,30 +535,23 @@ const UpdateBusinessProfile = (props) => {
                       </div>
                       <div className='row'>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Business Website</label>
                           <p>(Please add your business website link if any.)</p>
-                          <textarea type="text"
-                            name="businessWebsite"
-                            id="businessWebsite"
-                            placeholder="Enter Business Website Link"
-                            className="form-control"
-                            defaultValue={businessWebsite}
-                            onChange={(e) => setBusinessWebsite(e.target.value)}
-                          />
-                          {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                          <TextAreaField handleChange={(e, errorMsg) => {
+                            setBusinessWebsite(e.target.value);
+                            setWebsiteError(errorMsg);
+                          }} placeholder="Enter Business Website Link" label="Business Website" boxFor="link"
+                            fieldName="Business website" value={businessWebsite} maxLength={255}
+                            errorServer={errors.business_website} isRequired={false} />
+
                         </div>
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                          <label className="form-label">Set Google Map</label>
                           <p>(Please add your business location  link.)</p>
-                          <textarea type="text"
-                            name="businessWebsite"
-                            id="businessWebsite"
-                            placeholder="Enter Google Map URL"
-                            className="form-control"
-                            defaultValue={googleMapLink}
-                            onChange={(e) => setGoogleMapLink(e.target.value)}
-                          />
-                          {errors.business_website && <span className='error'>{errors.business_website}</span>}
+                          <TextAreaField handleChange={(e, errorMsg) => {
+                            setGoogleMapLink(e.target.value);
+                            setGoogleMapLinkError(errorMsg);
+                          }} placeholder="Enter Google Map URL" label="Set Google Map" boxFor="link"
+                            fieldName="Google map" value={googleMapLink} maxLength={400}
+                            errorServer={errors.business_website} isRequired={false} />
                         </div>
 
                       </div>

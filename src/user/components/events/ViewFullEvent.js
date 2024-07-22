@@ -7,7 +7,7 @@ import { fetchEventByID } from "../../services/userService";
 const ViewFullEvent = (props) => {
     const { changeEventClickFlag, id } = props;
 
-    const defaultPhoto = "/user/images/user.png";
+    const defaultPhoto = "/user/images/default-event.png";
 
     const [data, setData] = useState({
         title: "",
@@ -76,20 +76,29 @@ const ViewFullEvent = (props) => {
                                 {/* <i class="fs-1 fw-bold hover-pointer hover-pointer-red remove-btn-custom fa fa-remove"></i> */}
                                 <button className="hover-pointer-red round-button-delete"><i class="fa fa-remove"></i></button>
                             </span>
-                            <img src={data.photo ? data.photo : "/user/images/OIP.jpg"} alt="avatar"
-                                class="rounded-circle img-fluid" width={150} />
-                            <h5 class="my-3">{data.name && data.name}</h5>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                                <div style={{ height: '100px', width: '100px', borderRadius: '10px', overflow: 'hidden' }}>
+                                    <Image
+                                        src={data.photo ? data.photo : "/user/images/OIP.jpg"}
+                                        title={data.name ? data.name : ""}
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%',
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <h5 class="">{data.name && data.name}</h5>
                             <p class="text-muted mb-1">{data.occupation && data.occupation}</p>
                             <p class="text-muted mb-4">{data && data.native_place_city}</p>
                             <p class="text-muted mb-4">Email-{data && data.email}</p>
-                          
+
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="auth-wrapper" className="mt-0 pb-5">
-                <div id="event-info" className="container">
+                <div id="event-info" className="">
                     <div className="card">
                         <div className="card-body">
                             <div className="row">
@@ -98,7 +107,7 @@ const ViewFullEvent = (props) => {
                                         <h3 className="mb-3 fw-bold fs-5">Event Info</h3>
                                     </div>
                                     <form className="p-3">
-                                        <div className="row">
+                                        <div className="row text-wrap-break-word">
                                             <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
                                                 <div className="row">
                                                     <div className="col-md-4">
@@ -156,15 +165,15 @@ const ViewFullEvent = (props) => {
 
                                         <div className="row">
                                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                                <div className="row">
-                                                    <div className="col-md-4">
+                                                <div className="" style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                                                    <div className="">
                                                         <label htmlFor="status" className="fw-bold">
                                                             Thumb Image
                                                         </label>
                                                     </div>
-                                                    <div className="col-md-8">
+                                                    <div className="" style={{border:'1px solid',borderRadius:'20px'}}>
                                                         <Image
-                                                            height={70}
+                                                            height={200}
                                                             src={
                                                                 data.thumb_image
                                                                     ? data.thumb_image
@@ -177,15 +186,15 @@ const ViewFullEvent = (props) => {
                                             </div>
 
                                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                                                <div className="row">
-                                                    <div className="col-md-4">
+                                                <div className="" style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                                                    <div className="">
                                                         <label htmlFor="status" className="fw-bold">
                                                             Banner Image
                                                         </label>
                                                     </div>
-                                                    <div className="col-md-8">
+                                                    <div className="" style={{border:'1px solid',borderRadius:'20px'}}>
                                                         <Image
-                                                            height={70}
+                                                            height={200}
                                                             src={
                                                                 data.banner_image
                                                                     ? data.banner_image
@@ -215,6 +224,10 @@ const ViewFullEvent = (props) => {
                         }
                     </div>
                 </div>
+            </div>
+
+            <div id="auth-wrapper" className="mt-0 pb-5">
+               
             </div>
         </>
     );

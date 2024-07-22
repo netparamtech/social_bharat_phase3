@@ -81,29 +81,27 @@ const ViewActivities = () => {
 
     return (
         <>
-            <div id="basic-profile-section" className="content-wrapper pt-4">
-                <div className="container">
+            <div id="basic-profile-section" className="content-wrapper pt-4 bg-warning" style={{ borderRadius: '10px' }}>
+                <div className="container bg-warning">
                     <div className="row">
-                        <div className="col-md-3 mb-sm-3 ">
-                            <div className="card shadow">
-                                <div className="container-profilepic mx-auto card card-block-md overflow-hidden ">
+                        <div className="col-md-3 mb-sm-3 " style={{ height: '100px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                                <div style={{ height: '100px', width: '100px', borderRadius: '10px', overflow: 'hidden' }}>
                                     <Image
                                         src={data.user_photo ? data.user_photo : "/user/images/OIP.jpg"}
-                                        title={data.name && data.name}
+                                        title={data.name ? data.name : ""}
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%',
+                                        }}
                                     />
                                 </div>
-                                <div className="card-body ">
-                                    <a className="hover-pointer-admin" onClick={() => navigate(`/users/view/${data.user_id}`)}>
-                                        <p className="card-text text-center mb-0">
-                                            {data.name && data.name}
-                                        </p>
-                                    </a>
-
-                                </div>
                             </div>
+
                         </div>
 
-                        <Card className="col-md-9 w-100 w-lg-75 mt-2">
+                        <Card className="col-md-9 w-lg-75">
                             <div className="row w-50">
                                 <div className="col-md-3">
                                     <label className="fw-bold">Name - </label>
@@ -196,12 +194,13 @@ const ViewActivities = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
                                             {data.activity_photo &&
                                                 checkUrl(data.activity_photo).map((item, index) => (
                                                     <Image
                                                         src={item}
                                                         title={data.title && data.title}
+                                                        width={200} height={200}
                                                     />
                                                 ))
                                             }

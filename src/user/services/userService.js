@@ -694,6 +694,16 @@ export const fetchMyEnquiries = async (mobile,page,size) => {
   }
 };
 
+//fetch all enquiries chat
+export const fetchEnquiriesChat = async (mobile,page,size) => {
+  try {
+    const response = await apiConfig.get(`/general/enquiries?mobile=${mobile}&page=${page}&size=${size}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //testimonial(feedback)
 export const userFeedback = async (data) => {
   try {
@@ -837,7 +847,8 @@ export const fetchSinglePageCMS = async (page) => {
 //fetch all services
 export const fetchAllServices = async () => {
   try {
-    const response = await apiWithHeaders.get("/user/services");
+    const status = 'Active';
+    const response = await apiWithHeaders.get(`/user/services/${status}`);
     return response;
   } catch (error) {
     throw error;

@@ -60,7 +60,8 @@ function Contact() {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (nameError || emailError || mobileError || queryError || !name || !email || !mobile || !userQuery) {
+    if (nameError || emailError || mobileError || queryError || !name  || !mobile || !userQuery) {
+      toast.error("Please fill in all the required fields before submitting.",errorOptions);
       return;
     }
     dispatch(setLoader(true));
@@ -78,10 +79,9 @@ function Contact() {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         toast.success("Enquiry successfully sent.", successOptions);
-        setName('');
-        setEmail('');
-        setMobile('');
-        setUserQuery('');
+        // setName('');
+        // setEmail('');
+        // setUserQuery('');
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

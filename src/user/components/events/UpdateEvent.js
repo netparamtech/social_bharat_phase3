@@ -478,13 +478,14 @@ const UpdateEvent = () => {
                                         <div className="row">
                                             <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
                                                 <label className="form-label">Venue{" "}<span className="text-danger">*</span></label>
-                                                <input
+                                                <textarea
                                                     type="text"
                                                     name="venue"
                                                     id="exampleInput3"
                                                     placeholder="Enter Venue"
                                                     className="form-control"
                                                     value={venue}
+                                                    maxLength={100}
                                                     onChange={(e) => setVenue(e.target.value)}
                                                 />
                                                 {errors.venue && (

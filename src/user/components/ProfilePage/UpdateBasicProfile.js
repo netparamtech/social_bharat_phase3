@@ -17,6 +17,11 @@ import { useMemo } from 'react';
 import { setLoader } from "../../actions/loaderAction";
 import WOW from 'wowjs';
 import { yyyyMmDdFormat } from "../../util/DateConvertor";
+import InputField from "../custom/InputField";
+import HtmlSelect from '../custom/HtmlSelect';
+import SelectField from "../custom/SelectField";
+import { toast } from "react-toastify";
+import { errorOptions } from "../../../toastOption";
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
@@ -72,33 +77,70 @@ const UpdateBasicProfile = () => {
   const [showMarriageStatus, setShowMarriageStatus] = useState(false);
   const [showAvailableForMarriage, setShowAvailableForMarriage] = useState(false);
 
+  //validation error
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [genderError, setGenderError] = useState('');
+  const [dobError, setDobError] = useState('');
+  const [stateError, setStateError] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [highQualificationError, setHighQualificationError] = useState('');
+  const [jobTypeError, setJobTypeError] = useState('');
+  const [jobDetailsError, setJobDetailsError] = useState('');
+  const [maritalStatusError, setMaritalStatusError] = useState('');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e, errorMsg) => {
     setName(e.target.value);
+    setNameError(errorMsg);
   };
 
-  const handleGenderChange = (e) => {
+  const handleGenderChange = (e, errorMsg) => {
     setGender(e.target.value);
+    setGenderError(errorMsg);
   };
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e, errorMsg) => {
     setEmail(e.target.value);
+    setEmailError(errorMsg);
   };
 
-  const handleMaritalStatusChange = (selectedOption) => {
+  const genderOptions = [
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' }
+  ]
+  const stateOptions = (
+    states &&
+    states.map((option) => ({
+      value: option.name,
+      label: option.name,
+    }))
+  )
+  const cityOptions = (
+    cities &&
+    cities.map((option) => ({
+      value: option.name,
+      label: option.name,
+    }))
+  )
+
+  const handleMaritalStatusChange = (selectedOption, errorMsg) => {
+    setMaritalStatusError(errorMsg);
     setMaritalStatus(selectedOption);
   };
 
   // Handle onChange for each input field
-  const handleQualificationChange = (selectedOption) => {
+  const handleQualificationChange = (selectedOption, errorMsg) => {
+    setHighQualificationError(errorMsg);
     setQualificationID(selectedOption.value);
     setQualification(selectedOption); // Update the degree state with the selected option
   };
 
-  const handleJobType = (selectedOption) => {
+  const handleJobType = (selectedOption, errorMsg) => {
     if (selectedOption) {
+      setJobTypeError(errorMsg);
       setJobType(selectedOption);
     }
   }
@@ -128,7 +170,8 @@ const UpdateBasicProfile = () => {
     }
   };
 
-  const handleStateChange = (selectedOption) => {
+  const handleStateChange = (selectedOption, errorMsg) => {
+    setStateError(errorMsg);
     setSelectedState(selectedOption);
 
     if (selectedOption) {
@@ -144,7 +187,8 @@ const UpdateBasicProfile = () => {
     setSelectedCity(null);
   };
 
-  const handleCityChange = (selectedOption) => {
+  const handleCityChange = (selectedOption, errorMsg) => {
+    setCityError(errorMsg);
     setSelectedCity(selectedOption);
   };
 
@@ -246,11 +290,20 @@ const UpdateBasicProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(nameError||emailError||genderError||dobError||
+      stateError||cityError||highQualificationError||
+      jobTypeError||maritalStatusError||jobDetailsError||
+      !name||!email||!gender||!dob||!selectedState||!selectedCity||
+      !occupation||!jobType||!maritalStatus
+    ){
+      toast.error("Please fill in all the required fields before submitting.",errorOptions);
+      return;
+    }
     dispatch(setLoader(true));
 
     const arrayName = name.split(' ');
     const modifiedName = arrayName.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-   
+
     // Prepare the updated data
     const updatedData = {
       name: modifiedName,
@@ -262,7 +315,7 @@ const UpdateBasicProfile = () => {
       is_available_for_marriage: isAvailableForMarriage,
       marital_status: maritalStatus ? maritalStatus.label : '',
       occupation: occupation,
-      job_type:jobType&&jobType.label,
+      job_type: jobType && jobType.label,
       highest_qualification: qualification.label
     };
 
@@ -329,7 +382,7 @@ const UpdateBasicProfile = () => {
       setShowAvailableForMarriage(false)
     }
     setOccupation(user.user.occupation);
-    setJobType({value:user.user.job_type,label:user.user.job_type});
+    setJobType({ value: user.user.job_type, label: user.user.job_type });
 
     setQualification({
       value: user && user.user && user.user.highest_qualification,
@@ -415,7 +468,6 @@ const UpdateBasicProfile = () => {
     fetchLoggedUserCommunity();
   }, []);
 
-
   return (
     <Context.Provider value={contextValue}>
       {contextHolder}
@@ -432,57 +484,23 @@ const UpdateBasicProfile = () => {
                       <div className="card p-3">
                         <div className="row ">
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
-                            <label className="form-label">Name{" "}<span className="text-danger">*</span></label>
-
-                            <input
-                              type="text"
-                              name="name"
-                              id="name"
+                            <InputField errorServer={errors.name} label="Name" handleChange={handleNameChange}
                               placeholder="Enter your name. Example: Vipul Sharma"
-                              className="form-control"
-                              defaultValue={name}
-                              onChange={handleNameChange}
-                              autoFocus
-                            />
-                            {errors.name && (
-                              <span className="error">{errors.name}</span>
-                            )}
-
-
+                              value={name} isRequired={true} isAutoFocused={true}
+                              maxLength={100} fieldName="Name" />
                           </div>
 
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">Email </label>
-                            <input
-                              type="email"
-                              name="email"
-                              id="email"
+                            <InputField errorServer={errors.email} label="Email" handleChange={handleEmailChange} boxFor="email"
                               placeholder="Enter Email"
-                              className="form-control"
-                              defaultValue={email}
-                              onChange={handleEmailChange}
-                            />
-                            {errors.email && (
-                              <span className="error">{errors.email}</span>
-                            )}
+                              value={email} isRequired={true} isAutoFocused={false}
+                              maxLength={100} fieldName="Email" />
                           </div>
                         </div>
                         <div className="row">
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">Gender{" "}<span className="text-danger">*</span></label>
-                            <select
-                              className="form-select form-control"
-                              aria-label="Default select example"
-                              defaultValue={gender}
-                              onChange={handleGenderChange}
-                            >
-                              <option value="">---Select Gender---</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                            </select>
-                            {errors.gender && (
-                              <span className="error">{errors.gender}</span>
-                            )}
+                            <HtmlSelect handleSelectChange={handleGenderChange} options={genderOptions} value={gender} isRequired={true} errorServer={errors.gender}
+                              label="Gender" fieldName="Gender" />
                           </div>
 
 
@@ -507,67 +525,30 @@ const UpdateBasicProfile = () => {
                         </div>
                         <div className="row">
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">State{" "}<span className="text-danger">*</span></label>
-
-                            <Select
-                              className="form-control"
-                              aria-label="Default select example"
-                             
-                              options={states.map((state) => ({
-                                value: state.name,
-                                label: state.name,
-                              }))}
-                              value={selectedState}
-                              onChange={handleStateChange}
-                            />
-
-                            {errors.native_place_state && (
-                              <span className="error">
-                                {errors.native_place_state}
-                              </span>
-                            )}
+                            <SelectField handleSelectChange={handleStateChange} isRequired={true} value={selectedState}
+                              errorServer={errors.native_place_state} placeholder="select state..." label="State"
+                              options={stateOptions} fieldName="State" />
                           </div>
 
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="">City{" "}<span className="text-danger">*</span></label>
-
-                            <Select
-                             className="form-control"
-                             aria-label="Default select example"
-                              placeholder="Select City"
-                              options={cities.map((city) => ({
-                                value: city.name,
-                                label: city.name,
-                              }))}
-                              value={selectedCity}
-                              onChange={handleCityChange}
-                            />
-                            {errors.native_place_city && (
-                              <span className="error">
-                                {errors.native_place_city}
-                              </span>
-                            )}
+                            <SelectField handleSelectChange={handleCityChange} isRequired={true} value={selectedCity}
+                              errorServer={errors.native_place_city} placeholder="select city..."
+                              options={cityOptions} fieldName="City" label="City" />
                           </div>
                         </div>
 
                         <div className="row">
 
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">Highest Qualification{" "}<span className="text-danger">*</span></label>
-                            <Select
-                              id="qualification"
-                              className="form-control"
-                              value={qualification} // Use the degree prop directly as the default value
-                              onChange={handleQualificationChange}
+                            <SelectField handleSelectChange={handleQualificationChange} isRequired={true} value={qualification}
+                              errorServer={errors.highest_qualification} placeholder="---Select...---" label="Highest Qualification"
                               options={
                                 qualificationList &&
                                 qualificationList.map((qualification) => ({
                                   value: qualification.title,
                                   label: qualification.title,
                                 }))
-                              }
-                              placeholder="---Select...---"
-                            />
+                              } fieldName="Highest qualification" />
                           </div>
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12 ">
                             <label className="form-label">Community</label>
@@ -585,39 +566,28 @@ const UpdateBasicProfile = () => {
                         </div>
                         <div className="row">
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">Job Type {" "}<span className="text-danger">*</span></label>
-                            <Select
-                              options={occupationOptions}
-                              value={jobType}
-                              onChange={handleJobType}
-                              placeholder="Select..."
-                            />
+                            <SelectField handleSelectChange={handleJobType} isRequired={true} value={jobType}
+                              errorServer={errors.job_type} placeholder="Select..."
+                              options={occupationOptions} fieldName="Job Type" label="Job Type" />
                             {/* Add error handling if needed */}
                           </div>
                           <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                            <label className="form-label">Job Detail {" "}<span className="text-danger">*</span></label>
-                            <input
-                              type="text"
-                              name="occupation"
-                              id="occupation"
+                            <InputField errorServer={errors.occupation} label="Job Detail" handleChange={(e, errorMsg) => {
+                              setOccupation(e.target.value);
+                              setJobDetailsError(errorMsg);
+                            }}
                               placeholder="Example: Software Engineer, Grocery Shop Owner"
-                              className="form-control"
-                              defaultValue={occupation}
-                              onChange={(e) => setOccupation(e.target.value)}
-
-                            />
+                              value={occupation} isRequired={true}
+                              maxLength={200} fieldName="Job Detail" />
                             {/* Add error handling if needed */}
                           </div>
                         </div>
                         <div className="row">
                           <div className={`mb-3 col-lg-6 col-sm-12 col-xs-12 ${showMarriageStatus ? '' : 'd-none'}`}>
-                            <label className="form-label">Marital Status{" "}<span className="text-danger">*</span></label>
-                            <Select
-                              options={maritalStatusOptions}
-                              value={maritalStatus}
-                              onChange={handleMaritalStatusChange}
-                              placeholder="Select..."
-                            />
+
+                            <SelectField handleSelectChange={handleMaritalStatusChange} isRequired={true} value={maritalStatus}
+                              errorServer={errors.marital_status} placeholder="Select..."
+                              options={maritalStatusOptions} fieldName="Marital status" label="Marital Status" />
                           </div>
 
 

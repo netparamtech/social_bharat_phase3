@@ -338,15 +338,16 @@ const SearchEvents = () => {
                 <div className="card">
                   <div className="card-body">
                     {serverError && <span className="error">{serverError}</span>}
-                    <div className="d-flex justify-content-between">
-                      <h5 className="fw-3 mb-3">Search Events</h5>
-                      <div className="mx-auto">
-                        <button className="btn btn-success" onClick={handlePostEventClick}>Post Your Event</button>
+                    <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
+                      <h5 className="fw-bold mb-0">Search Events</h5>
+                      <div className="d-flex">
+                        <button className="btn btn-success mx-2" onClick={handlePostEventClick}>
+                          Post Your Event
+                        </button>
+                        <button className="btn btn-success mx-2" onClick={handleMyEventsClick}>
+                          My Events
+                        </button>
                       </div>
-                      <div className="mx-auto">
-                        <button className="btn btn-success" onClick={handleMyEventsClick}>My Events</button>
-                      </div>
-
                     </div>
                     <div className="filter-content">
                       {city ? (
@@ -446,94 +447,84 @@ const SearchEvents = () => {
                               {pair.map((item, innerIndex) => (
 
                                 <div className="col-md-6 mt-2" key={innerIndex}>
-                                  <div className="card" style={{ borderRadius: '15px' }}>
+                                  <div className="card text-wrap-break-word" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '', fontSize: '14px', lineHeight: '16px' }}>
                                     <div className="card-body p-4 search-partner-cards">
-                                      <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'row', display: isAndroidUsed ? '' : 'flex' }}>
-                                        <div className="">
-                                          {
-                                            item.banner_image ? (
-                                              <div className="col-12 flex-shrink-0">
-                                                <img
-                                                  src={item.banner_image}
-                                                  alt={item.name}
-                                                  className="img-fluid"
-                                                  style={{ width: '100%', borderRadius: '10px', height: '300px' }}
-                                                  onClick={() => changeEventClickFlag(true, item.id)}
+                                      <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'column', display: isAndroidUsed ? '' : 'flex' }}>
+                                        {item.banner_image && (
+                                          <div className="col-12 flex-shrink-0 mb-3">
+                                            <img
+                                              src={item.banner_image}
+                                              alt={item.name}
+                                              className="img-fluid rounded-3"
+                                              style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                              onClick={() => changeEventClickFlag(true, item.id)}
+                                            />
+                                          </div>
+                                        )}
 
-                                                />
-                                              </div>
-                                            ) : ''
-                                          }
-                                        </div>
-
-                                        <div className="flex-grow-1 ms-3 mt-2">
-                                          <h5 className="mb-1">{item.title}</h5>
-                                          <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                            Posted By : <b>{item.name}</b>
-                                          </p>
-                                          <p className="mb-2 pb-1" style={{ color: '#2b2a2a' }}>
-                                            Event For : <b>{item.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
-                                          </p>
-                                          <div
-                                            className="d-flex justify-content-start rounded-3"
-                                            style={{ backgroundColor: '#efefef' }}
-                                          >
-                                            <p>
-                                              venue-
-                                              {item.venue
-                                                ? item.venue
-                                                : "N/A"}
+                                        <div className={`flex-grow-1 ms-3 mt-2 ${isAndroidUsed ? '' : 'd-flex'} align-items-center justify-content-center flex-column`}>
+                                          <div className="p-3 bg-light rounded-3 shadow-sm mb-3">
+                                            <h5 className="mb-1 text-truncate" style={{ maxHeight: '100px', overflow: 'hidden', width: '100%', maxWidth: '300px' }}>
+                                              {item.title}
+                                            </h5>
+                                            <p className="mb-2 pb-1 text-muted">
+                                              <i className="fa-solid fa-user me-2 text-primary"></i>
+                                              Posted By: <b>{item.name}</b>
                                             </p>
-                                          </div>
-                                          <div className="d-flex justify-content-start rounded-3 mt-2"
-                                            style={{ backgroundColor: '#efefef' }}
-                                          >
-                                            <p className="m-2">
-                                              State-
-                                              {item.state
-                                                ? item.state
-                                                : "N/A"}{" ,"}
+                                            <p className="mb-2 pb-1 text-muted">
+                                              <i className="fa-solid fa-users me-2 text-primary"></i>
+                                              Event For: <b>{item.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
                                             </p>
-                                            <p className="m-2">
-                                              City-
-                                              {item.city
-                                                ? item.city
-                                                : "N/A"}
-                                            </p>
-                                          </div>
-                                          <div className="d-flex justify-content-start rounded-3 mt-2"
-                                            style={{ backgroundColor: '#efefef' }}
-                                          >
-                                            <p>Start Date/Time{" "}-{" "}{formatDate(item.start_datetime)}</p>
-                                          </div>
-                                          <div className="d-flex justify-content-start rounded-3 mt-2"
-                                            style={{ backgroundColor: '#efefef' }}
-                                          >
-                                            <p>End Date/Time{" "}-{" "}{formatDate(item.end_datetime)}</p>
-                                          </div>
-                                          <div className="d-flex justify-content-start rounded-3 mt-2"
-                                            style={{ backgroundColor: '#efefef' }}
-                                          >
-                                            {
-                                              checkMobileVisibility(item.mobile) ? (
-                                                <p>
-                                                  <a href={`tel:${item.mobile}`}>
-                                                    {item.mobile}
-                                                  </a>
+                                            <div className="d-flex align-items-center mb-2">
+                                              <i className="fa-solid fa-map-marker-alt me-2 text-primary"></i>
+                                              <p className="mb-0 text-truncate" style={{ maxHeight: '40px', overflow: 'hidden' }}>
+                                                Venue: {item.venue ? item.venue : "N/A"}
+                                              </p>
+                                            </div>
+                                            <div className="d-flex flex-column align-items-start bg-white p-3 rounded-3 shadow-sm">
+                                              <div className="d-flex align-items-center mb-2">
+                                                <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
+                                                <p className="mb-0">
+                                                  <strong>Start Date/Time:</strong> {formatDate(item.start_datetime)}
                                                 </p>
-                                              ) : ''
-                                            }
+                                              </div>
+                                              <div className="d-flex align-items-center">
+                                                <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
+                                                <p className="mb-0">
+                                                  <strong>End Date/Time:</strong> {formatDate(item.end_datetime)}
+                                                </p>
+                                              </div>
+                                            </div>
                                           </div>
-                                          <div className="mt-2">
 
-                                            <button className="btn mb-2 btn-success mx-auto"
-                                              onClick={() => changeEventClickFlag(true, item.id)}>
+                                          <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                            <p className="mb-0 me-3">
+                                              <strong>State:</strong> {item.state ? item.state : "N/A"}
+                                            </p>
+                                            <p className="mb-0">
+                                              <strong>City:</strong> {item.city ? item.city : "N/A"}
+                                            </p>
+                                          </div>
+
+                                          {checkMobileVisibility(item.mobile) && (
+                                            <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                              <i className="fa-solid fa-phone text-primary me-2"></i>
+                                              <p className="mb-0">
+                                                <a href={`tel:${item.mobile}`} className="text-dark text-decoration-none">
+                                                  {item.mobile}
+                                                </a>
+                                              </p>
+                                            </div>
+                                          )}
+
+                                          <div className="text-center">
+                                            <button className="btn btn-success" onClick={() => changeEventClickFlag(true, item.id)}>
                                               View
                                             </button>
                                           </div>
-
                                         </div>
                                       </div>
+
                                     </div>
                                   </div>
                                 </div>

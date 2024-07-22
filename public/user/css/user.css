@@ -1293,6 +1293,7 @@ a.btn.dropdown-toggle.show:focus {
 
 #activity-post-section {
   margin-top: 100px;
+  background-color: var(--web-wash);
 }
 
 #activity-custom {
@@ -2271,9 +2272,9 @@ legend {
   display: none;
 }
 
-#activity-post-section .scrollableDiv::-webkit-scrollbar {
+/* #activity-post-section .scrollableDiv::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .search-partner-cards {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -2510,16 +2511,20 @@ legend {
   height: 40px;
   margin-top: 10px;
 }
-.service-container .clear-button:hover{
+
+.service-container .clear-button:hover {
   background-color: red;
   cursor: pointer;
   color: white;
 }
+
 .service-container .clear-button:disabled {
   cursor: not-allowed;
-  background-color: white; /* or any other color you want */
+  background-color: white;
+  /* or any other color you want */
   color: #666;
 }
+
 @media (max-width:768px) {
   .service-container .clear-button {
     margin-top: 0;
@@ -2531,37 +2536,83 @@ legend {
   box-shadow: none;
 
 }
+
 .custom-dropdown-menu {
-  --bs-dropdown-link-active-bg: none; /* Change this to your desired color */
+  --bs-dropdown-link-active-bg: none;
+  /* Change this to your desired color */
 }
-#searchPeoples-section .matrimonial-generate-biodata:hover{
+
+#searchPeoples-section .matrimonial-generate-biodata:hover {
   background-color: #6b8475;
   color: white !important;
 }
+
 @media (max-width:768px) {
-  .matrimonial-generate-biodata img{
+  .matrimonial-generate-biodata img {
     display: none;
   }
 }
 
-.user-contact-enquiry{
+.user-contact-enquiry {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
 }
-.contact-info-enquiry-reply{
+
+.contact-info-enquiry-reply {
   display: flex;
   justify-content: space-between;
   align-items: start;
   flex-direction: column;
 }
-.user-contact-enquiry-reply{
+
+.user-contact-enquiry-reply {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+}
+
+.user-contact-enquiry-reply-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   flex-direction: row;
   gap: 20px;
+}
+
+.ant-card .ant-card-body {
+  padding: 0px !important;
+  border-radius: none;
+}
+
+.activity-share-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.activity-comment-container{
+  position: relative;
+  display: inline-block;
+  font-size: 16px; /* Adjust the size as needed */
+}
+
+.activity-comment-container .comment-value {
+  position: absolute;
+  top: -5px;
+  /* Adjust as needed */
+  right: -15px;
+  /* Adjust as needed */
+  font-size: 16px;
+  /* Adjust the size as needed */
+  border-radius: 50%;
+  padding: 2px 5px;
+  /* Adjust padding as needed */
+}
+.form-control {
+  border-radius: 5px !important;
+  padding: 0.5rem 0.75rem !important;
 }
 
 

@@ -318,31 +318,31 @@ const SearchBusiness = () => {
               <h5 className="fw-3 d-none d-sm-block">Search Business</h5>
             </div>
 
-           <div className="d-flex justify-content-between">
-           {
-              isAndroidUsed && (
-                <a
-                  title="Add Business"
-                  className="btn btn-primary"
-                  onClick={handleFilterClicked}
-                >
-                  {
-                    isFilter ? 'Hide Filter' : 'Show Filter'
-                  }
-                </a>
-              )
-            }
-            {
-              isAndroidUsed && (
-               <div className="">
-                 <button type="button" className="btn hover-pointer hover-pointer-red" style={{ border: '1px solid' }}
-                  onClick={handleClearClick} disabled={!searchText && !state && !city && !selectedCategory}>
-                  Clear
-                </button>
-               </div>
-              )
-            }
-           </div>
+            <div className="d-flex justify-content-between">
+              {
+                isAndroidUsed && (
+                  <a
+                    title="Add Business"
+                    className="btn btn-primary"
+                    onClick={handleFilterClicked}
+                  >
+                    {
+                      isFilter ? 'Hide Filter' : 'Show Filter'
+                    }
+                  </a>
+                )
+              }
+              {
+                isAndroidUsed && (
+                  <div className="">
+                    <button type="button" className="btn hover-pointer hover-pointer-red" style={{ border: '1px solid' }}
+                      onClick={handleClearClick} disabled={!searchText && !state && !city && !selectedCategory}>
+                      Clear
+                    </button>
+                  </div>
+                )
+              }
+            </div>
 
             <div className="row col-12 col-md-12 mt-2">
 
@@ -523,11 +523,11 @@ const SearchBusiness = () => {
                                   item.google_map_link ? (
                                     <div className="">
                                       <a href={item.google_map_link} target="_blank">
-                                        <img className="rounded" src={defaultMap} alt="Google Map" width={30} height={40} />
-                                      </a>
+                                        <i class="fs-2 text-success fa-sharp fa-solid fa-location-dot"></i>                                      </a>
                                     </div>
-                                  ) : <img className="rounded" style={{ opacity: 0.5 }} src={defaultMap} alt="Google Map" width={30} height={40} />
-                                }
+                                  ) :
+                                    <i class="fs-2 text-success fa-sharp fa-solid fa-location-dot" disabled style={{opacity:0.5}}></i>
+                                    }
 
                               </div>
 

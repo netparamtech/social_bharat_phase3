@@ -46,6 +46,7 @@ import JobsPage from "./pages/JobsPage";
 import UserServiceInfoPage from "./pages/UserServiceInfoPage";
 import ChatBoardPage from "./pages/ChatBoardPage";
 import CreateEducationPage from "./pages/profile/update/CreateEducationPage";
+import GridController from "./components/grid/GridController";
 
 const UserRoutes = () => {
     return [
@@ -345,6 +346,11 @@ const UserRoutes = () => {
         {
             path: '/user/chat/board',
             component: ChatBoardPage,
+            exact: true
+        },
+        {
+            path: '/grid',
+            component: GridController,
             exact: true
         }
 

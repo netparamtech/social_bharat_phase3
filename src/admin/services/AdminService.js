@@ -493,7 +493,16 @@ export const updateToggleStatusForEnquiry = async (clickedUserId) => {
 //reply enquiry
 export const replyEnquiry = async (data) => {
     try {
-        const response = await apiWithHeaders.post('/create/enquiry/reply',data);
+        const response = await apiWithHeaders.post('/create/enquiry/reply', data);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+//find reply by id
+export const findReply = async (id) => {
+    try {
+        const response = await apiWithHeaders.get(`/find/reply/${id}`);
         return response;
     } catch (error) {
         throw error;

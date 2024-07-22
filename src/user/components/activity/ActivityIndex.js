@@ -14,6 +14,8 @@ import { NavDropdown } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { logout } from "../../actions/userAction";
 import InfiniteScroll from "react-infinite-scroll-component";
+import GridController from "../grid/GridController";
+import ShareContent from "../share/ShareContent";
 
 const ActivityIndex = () => {
   const user = useSelector((state) => state.userAuth);
@@ -214,6 +216,12 @@ const ActivityIndex = () => {
       }
     });
   };
+
+  const style = {
+    height: '1px',
+    backgroundColor: '#ccc',
+    width: '100%',
+  };
   useEffect(() => {
     const handleResize = () => {
       setIsAndroidUsed(window.innerWidth < 1000); // Adjust the threshold based on your design considerations
@@ -228,11 +236,15 @@ const ActivityIndex = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const handleClearClick = () => {
+    setSearchText('');
+    handleCategoryChange('');
+  }
 
   return (
     <div id="activity-post-section" className="content-wrapper  mb-4">
       <div className="container pt-4" id="">
-        <div className="card shadow card-search">
+        <div className="card card-search" style={{ backgroundColor: '#e7efef' }}>
           <div className="card-header mx-auto">
             <h4 > ACTIVITIES</h4>
 
@@ -263,6 +275,7 @@ const ActivityIndex = () => {
                     classNames=""
                     placeholder="input search text"
                     allowClear
+                    value={searchText}
                     enterButton={searchIcon}
                     size="large"
                     onChange={handleSearchText}
@@ -302,11 +315,18 @@ const ActivityIndex = () => {
                   ) : ''
                 }
 
-                <div className="col-md-12 col-12 mb-2">
+                <div className="col-md-12 col-12 mb-2 mx-auto">
                   <button disabled
                     className="btn bg-warning btn-success btn-sm small btn-post-activity"
                   >
                     Manage Your Activity
+                  </button>
+
+                </div>
+                <div className="row col-6">
+                  <button type="button" className={`hover-pointer ${searchText||category?'hover-pointer-red':''}`} style={{ border: '1px solid', borderRadius: '20px' }}
+                    onClick={handleClearClick} disabled={!searchText && !category}>
+                    Clear
                   </button>
                 </div>
 
@@ -339,7 +359,7 @@ const ActivityIndex = () => {
                   endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                   scrollableTarget="scrollableDiv1123"
                 >
-                  <div className="pw-20 mt-3">
+                  <div className="pw-20">
                     {groupedItems.map((pair, index) => (
                       <div className="">
                         {pair &&
@@ -351,7 +371,7 @@ const ActivityIndex = () => {
                                     className="  mb-1"
                                   // style={{ height: item.photo ? '500px' : '' }}
                                   >
-                                    <div className="d-flex justify-content-between">
+                                    <div className="d-flex justify-content-between" style={{ paddingLeft: '24px', paddingRight: '24px', marginTop: '20px' }}>
                                       <Meta
                                         avatar={
                                           item.user_profile ? (
@@ -424,7 +444,7 @@ const ActivityIndex = () => {
                                         </NavDropdown.Item>
                                       </NavDropdown>
                                     </div>
-                                    <div className="fs-4 m-2">{item.title}</div>
+                                    <div className={`fs-4 ${item.title ? 'card card-body mt-2 border-0 mb-2' : ''}`}>{item.title}</div>
                                     {item.photo &&
                                       Array.isArray(item.photo) &&
                                       item.photo.length > 0 ? (
@@ -441,20 +461,24 @@ const ActivityIndex = () => {
                                                 src={photo}
                                                 alt={`Photos ${photoIdx + 1}`}
                                                 className="carousel-image"
-                                                style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                                style={{ top: '0', left: '0', width: '100%', height: isAndroidUsed ? '200px' : '400px', justifyContent: 'center', alignItems: 'center' }}
                                               />
+
                                             </div>
                                           ))}
                                         </Carousel>
+                                        {/* <GridController item={item.photo} /> */}
                                       </div>
                                     ) : item.photo ? (
-                                      <Image
-                                        src={item.photo}
-                                        alt={`Photos ${idx + 1}`}
-                                        className="card-img-top m-2"
-                                        style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                      <>
+                                        <Image
+                                          src={item.photo}
+                                          alt={`Photos ${idx + 1}`}
+                                          className="card-img-top"
+                                          style={{ top: '0', left: '0', width: '100%', height: isAndroidUsed ? '200px' : '400px', justifyContent: 'center', alignItems: 'center' }}
+                                        />
 
-                                      />
+                                      </>
                                     ) : (
                                       <div className="card card-body mt-2 border-0 mb-2">
                                         <div className=""
@@ -462,20 +486,42 @@ const ActivityIndex = () => {
                                             __html: item.description,
                                           }}
                                         />
+                                        <div style={style}></div>
+                                        <div className="activity-share-container">
+                                          <div className="activity-comment-container">
+                                            <a className="hover-pointer hover-pointer-green" disabled>Comment</a>
+                                            {/* <span class="comment-value">5</span> */}
+                                          </div>
+                                          <ShareContent
+                                            imageUrl=''
+                                            imageAlt={item.title}
+                                            shareUrl="https://www.socialbharat.org/users/activities"
+                                            des={item.title} />
+                                        </div>
+
                                       </div>
                                     )}
-                                    <div className="card card-body mt-2 border-0 mb-2">
-                                      {item.photo ? (
+                                    {
+                                      item.photo ? <div className="card card-body mt-2 border-0 mb-2">
                                         <div className=""
                                           dangerouslySetInnerHTML={{
                                             __html: item.description,
                                           }}
                                         />
-
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
+                                        <div style={style}></div>
+                                        <div className="activity-share-container">
+                                          <div className="activity-comment-container">
+                                            <a className="hover-pointer hover-pointer-green" disabled>Comment</a>
+                                            {/* <span class="comment-value">5</span> */}
+                                          </div>
+                                          <ShareContent
+                                            imageUrl=''
+                                            imageAlt={item.title}
+                                            shareUrl="https://www.socialbharat.org/users/activities"
+                                            des={item.title} />
+                                        </div>
+                                      </div> : ''
+                                    }
                                   </Card>
 
                                 </div>

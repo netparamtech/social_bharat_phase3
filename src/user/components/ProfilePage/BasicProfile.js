@@ -148,7 +148,7 @@ const BasicProfile = (props) => {
               </div>
 
               <div className="card-body mx-auto text-center">
-                <p className="card-text  mb-0">
+                <p className="card-text mb-0 text-wrap-break-word">
                   {(user && user.data && user.data.name) || "N/A"}
                 </p>
 

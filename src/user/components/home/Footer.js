@@ -88,7 +88,7 @@ const Footer = (props) => {
       className=" text-start lh-lg wow animate_animated animate_fadeInUp"
     >
       {
-        window.location.pathname !== "/user/search/job" && (
+        ((window.location.pathname !== "/user/search/job")&&(window.location.pathname!=="/users/activities"))&& (
           <div className="container ">
             <div className="row pt-4 pb-3  wow animate__animated animate__zoomIn">
               <div className="col-lg-3 col-md-6 col-sm-12 mb-3">

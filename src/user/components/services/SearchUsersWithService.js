@@ -41,6 +41,7 @@ const SearchUsersWithService = () => {
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
   const [isFeedbackClicked, setIsFeedbackClicked] = useState(false);
   const [index, setIndex] = useState(0);
+  const [isViewMore, setIsViewMore] = useState(false);
 
   //to show state and city according to user search
 
@@ -173,6 +174,11 @@ const SearchUsersWithService = () => {
     }
   };
 
+  const getArray = (value) => {
+    const items = value.split(',').map(item => item.trim());
+    return items;
+  }
+
   useEffect(() => {
     if (items.length > 0) {
       setIssearchingPerformed(true);
@@ -304,7 +310,7 @@ const SearchUsersWithService = () => {
             <img
               src={item.photo ? item.photo : defaultImage}
               alt={item.name}
-              className="img-fluid"
+              className="img-fluid m-2"
               style={{ width: '100px', height: '100px', borderRadius: '10px' }}
             />
             <p className="fs-4 m-2">{item.name.toUpperCase()}</p>
@@ -316,13 +322,24 @@ const SearchUsersWithService = () => {
             <div className=" comment-text m-2" style={{ width: isAndroidUsed ? '250px' : '300px' }}>
               Description :
               <p
-              >{item.description}</p>
+              >{item.description ? (item.description.length > 200 ? (<div>
+                <p>{item.description.slice(0, 200).concat(isViewMore ? '' : '....')}
+                  {isViewMore ? item.description.slice(300) : ''}</p>
+                <button type="button" onClick={() => setIsViewMore(!isViewMore)}>{isViewMore ? 'Show Less' : 'View More'}</button>
+              </div>) : item.description) : ''}</p>
 
             </div>
 
           </div>
           <div className="col-md-6">
-            <p> Providing Services In - {item.category}</p>
+            <p> Providing Services In -
+              {/* {item.category} */}
+              <div className="row">
+                {getArray(item.category).map((item, index) => (
+                  <p className="col-12 col-md-4 m-2" style={{border:'1px solid',borderRadius:'20px',display:'flex',justifyContent:'center'}}>{item}</p>
+                ))}
+              </div>
+            </p>
             <div className="row">
               <div className="flex-grow-1">
 
@@ -512,7 +529,7 @@ const SearchUsersWithService = () => {
                         ))
                       }
                     </div>
-                   
+
                   </div>
                   <div className="mb-3 col-lg-9 col-sm-12 col-xs-12">
                     <div className="service-container">
@@ -543,12 +560,12 @@ const SearchUsersWithService = () => {
                           onChange={handleCityChange}
                         />
                       </div>
-                      <button className="clear-button" 
-                      type="button" disabled={!searchText&&!selectedCity&&!selectedState}
-                      onClick={handleClearButton}
+                      <button className="clear-button"
+                        type="button" disabled={!searchText && !selectedCity && !selectedState}
+                        onClick={handleClearButton}
                       >Clear</button>
                     </div>
-                    <p style={{fontSize:'12px'}}>(you can search by service title, category name, state, city, area, provider name etc.)</p>
+                    <p style={{ fontSize: '12px' }}>(you can search by service title, category name, state, city, area, provider name etc.)</p>
                     <div className="container scrollableDiv" id="scrollableDiv"
                       style={{
                         height: 400,
@@ -589,7 +606,7 @@ const SearchUsersWithService = () => {
                                   <button type="button" className="btn me-1 flex-grow-1">
                                     <ViewProfileDrawerForMembers id={item.id} />
                                   </button>
-                                   {/* <button type="button" className="btn me-1 flex-grow-1">
+                                  {/* <button type="button" className="btn me-1 flex-grow-1">
                                     <FlatRentServiceBannerDrawer items = {item} />
                                   </button> */}
                                   {/* <button

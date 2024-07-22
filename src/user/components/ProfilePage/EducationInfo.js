@@ -150,7 +150,7 @@ const EducationInfo = (props) => {
               ) : (
                 <div className="add-more-info hover-pointer ">
                   <a
-                    onClick={() => navigate("/user/update-education-profile")}
+                    onClick={() => navigate("/user/create-education-profile")}
                     className="btn btn-secondary"
                   >
                     Add Education Info{" "}

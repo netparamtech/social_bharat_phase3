@@ -6,6 +6,8 @@ import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setLoader } from '../../actions/loaderAction';
 import MobileInput from '../custom/MobileInput';
+import { toast } from 'react-toastify';
+import { errorOptions } from '../../../toastOption';
 
 const LoginWithMobile = (props) => {
 
@@ -37,6 +39,7 @@ const LoginWithMobile = (props) => {
     event.preventDefault();
     const cleanMobile = mobile.replace(/^0+/, '');
     if (mobileError || !mobile) {
+      toast.error("Please fill in the mobile number before submitting.", errorOptions);
       return;
     }
     try {
@@ -122,7 +125,7 @@ const LoginWithMobile = (props) => {
                     <form action="/dashboard" className="w-100 w-lg-75" onSubmit={handleSubmit}>
                       {serverError && <span className='error'>{serverError}</span>}
                       <div className="row mb-3">
-                        <MobileInput handleMobileChange={handleMobileChange}
+                        <MobileInput handleMobileChange={handleMobileChange} htmlFor="login"
                           errorServer={errors.mobile} isRequired={true}
                           isAutoFocused={true} placeholder="Enter your mobile number" />
                       </div>

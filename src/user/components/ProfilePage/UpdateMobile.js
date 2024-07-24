@@ -4,9 +4,13 @@ import CheckOtpToUpdateMobile from "../otp/CheckOtpToUpdateMobile";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
+import MobileInput from "../custom/MobileInput";
+import { toast } from "react-toastify";
+import { errorOptions } from "../../../toastOption";
 
 const UpdateMobile = () => {
   const [mobile, setMobile] = useState("");
+  const [mobileError, setMobileError] = useState('');
   const [errors, setErrors] = useState("");
   const [message, setMessage] = useState("");
   const [serverError, setServerError] = useState("");
@@ -15,8 +19,9 @@ const UpdateMobile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleMobileChange = (event) => {
+  const handleMobileChange = (event, errorMsg) => {
     setMobile(event.target.value);
+    setMobileError(errorMsg);
   };
 
   const handleMobileValid = () => {
@@ -25,6 +30,10 @@ const UpdateMobile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(mobileError||!mobile){
+      toast.error("Please fill in the mobile number before submitting.", errorOptions);
+      return 
+    }
     dispatch(setLoader(true));
     const cleanMobile = mobile.replace(/^0+/, '');
 
@@ -36,7 +45,7 @@ const UpdateMobile = () => {
         setMessage(response.data.message);
         handleMobileValid();
         setServerError('');
-       
+
       }
     } catch (error) {
       // Handle validation errors
@@ -60,7 +69,7 @@ const UpdateMobile = () => {
   return (
     <div id="auth-wrapper" className="pt-5 pb-5">
       <div id="changePassword" className="container">
-        <div className = {`card shadow mx-auto ${errors ? 'border-danger':''}`}>
+        <div className={`card shadow mx-auto ${errors ? 'border-danger' : ''}`}>
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 p-4">
@@ -74,23 +83,10 @@ const UpdateMobile = () => {
                     className="w-100 w-lg-75"
                   >
                     <div className="row mb-3">
-                      <input
-                        type="number"
-                        name="mobile"
-                        id="mobile"
-                        placeholder="Enter your mobile number"
-                        className="form-control"
-                        maxLength="10" // Limit to 10 characters
-                        onInput={(e) => {
-                          // Trim the input to 10 characters
-                          e.target.value = e.target.value.slice(0, 10);
-                        }}
-                        onChange={handleMobileChange}
-                        autoFocus
+                      <MobileInput handleMobileChange={handleMobileChange} htmlFor="update"
+                        errorServer={errors.mobile} isRequired={true} placeholder="Enter your mobile number"
+                        isAutoFocused={true}
                       />
-                      {errors.mobile && (
-                        <span className="error">{errors.mobile}</span>
-                      )}
                     </div>
 
                     <div className="row mb-3">

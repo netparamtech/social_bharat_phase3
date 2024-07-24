@@ -26,6 +26,16 @@ export const createUser = async (data) => {
   }
 };
 
+//check mobile
+export const checkMobile = async (data) => {
+  try {
+    const response = await apiConfig.post("/check-mobile", data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //attempt login with mobile
 
 export const attemptLoginWithMobile = async (mobile) => {

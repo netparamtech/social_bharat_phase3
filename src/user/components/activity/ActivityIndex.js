@@ -240,6 +240,11 @@ const ActivityIndex = () => {
     setSearchText('');
     handleCategoryChange('');
   }
+  const [isEnglish, setIsEnglish] = useState(true);
+
+  const toggleLanguage = () => {
+    setIsEnglish(prevIsEnglish => !prevIsEnglish);
+  };
 
   return (
     <div id="activity-post-section" className="content-wrapper  mb-4">
@@ -324,7 +329,7 @@ const ActivityIndex = () => {
 
                 </div>
                 <div className="row col-6">
-                  <button type="button" className={`hover-pointer ${searchText||category?'hover-pointer-red':''}`} style={{ border: '1px solid', borderRadius: '20px' }}
+                  <button type="button" className={`hover-pointer ${searchText || category ? 'hover-pointer-red' : ''}`} style={{ border: '1px solid', borderRadius: '20px' }}
                     onClick={handleClearClick} disabled={!searchText && !category}>
                     Clear
                   </button>
@@ -335,7 +340,14 @@ const ActivityIndex = () => {
             </div>
             <div className="col-12 col-md-6 mx-auto">
               <div className="mx-auto text-primary" style={{ borderRadius: '10px' }}>You Are Searching In - {category ? category : ''}</div>
-
+              <div style={styles.container}>
+                <span style={styles.label}>{isEnglish ? 'English' : 'हिंदी'}</span>
+                <label style={styles.switch}>
+                  <input type="checkbox" checked={!isEnglish} onChange={toggleLanguage} />
+                  <span style={styles.slider}></span>
+                </label>
+                <span style={styles.label}>{isEnglish ? 'हिंदी' : 'English'}</span>
+              </div>
               <div className="" id="scrollableDiv1123"
                 style={{
                   height: 400,
@@ -449,7 +461,7 @@ const ActivityIndex = () => {
                                       Array.isArray(item.photo) &&
                                       item.photo.length > 0 ? (
                                       <div className="photo-container mt-2 ">
-                                        <Carousel
+                                        {/* <Carousel
                                           className="photo-carousel"
                                           dotPosition="bottom"
                                           autoplay
@@ -466,8 +478,8 @@ const ActivityIndex = () => {
 
                                             </div>
                                           ))}
-                                        </Carousel>
-                                        {/* <GridController item={item.photo} /> */}
+                                        </Carousel> */}
+                                        <GridController item={item.photo} />
                                       </div>
                                     ) : item.photo ? (
                                       <>
@@ -542,6 +554,52 @@ const ActivityIndex = () => {
       </div>
     </div>
   );
+};
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  label: {
+    margin: '0 10px',
+  },
+  switch: {
+    position: 'relative',
+    display: 'inline-block',
+    width: '60px',
+    height: '34px',
+  },
+  slider: {
+    position: 'absolute',
+    cursor: 'pointer',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    backgroundColor: '#ccc',
+    transition: '.4s',
+    borderRadius: '34px',
+  },
+  'slider:before': {
+    position: 'absolute',
+    content: '""',
+    height: '26px',
+    width: '26px',
+    left: '4px',
+    bottom: '4px',
+    backgroundColor: 'white',
+    transition: '.4s',
+    borderRadius: '50%',
+  },
+  input: {
+    display: 'none',
+  },
+  'input:checked + .slider': {
+    backgroundColor: '#2196F3',
+  },
+  'input:checked + .slider:before': {
+    transform: 'translateX(26px)',
+  },
 };
 
 export default ActivityIndex;

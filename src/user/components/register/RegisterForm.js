@@ -13,6 +13,8 @@ import EnquiryModel from "./EnquiryModel";
 import MobileInput from "../custom/MobileInput";
 import InputField from "../custom/InputField";
 import SelectField from "../custom/SelectField";
+import { toast } from "react-toastify";
+import { errorOptions } from "../../../toastOption";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -99,6 +101,7 @@ const RegisterForm = () => {
       community_id,
     };
     if (nameError || mobileError || communityError || !name || !mobile || !community_id) {
+      toast.error("Please fill in the name, mobile number and community before submitting.", errorOptions);
       return;
     }
     try {
@@ -195,7 +198,7 @@ const RegisterForm = () => {
                         errorServer={errors.name} isAutoFocused={true} fieldName="Name" placeholder="Enter your name" />
                     </div>
                     <div className="row mb-3">
-                      <MobileInput handleMobileChange={handleMobileChange}
+                      <MobileInput handleMobileChange={handleMobileChange} htmlFor="register"
                         errorServer={errors.mobile} isRequired={true} placeholder="Enter your mobile number"
                       />
                     </div>

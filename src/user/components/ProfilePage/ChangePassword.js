@@ -73,12 +73,12 @@ const ChangePassword = () => {
                                 <form onSubmit={handleSubmit} className="w-100 w-lg-75">
                                     {serverError && <span className='error'>{serverError}</span>}
                                     <div className="row mb-3">
-                                        <PasswordField handleChange={handlePasswordChange} errorServer={errors.password}
+                                        <PasswordField htmlFor="password" handleChange={handlePasswordChange} errorServer={errors.password}
                                             fieldName="Password" isRequired={true} value={password} placeholder="Enter New Password"
                                             minLength={6} />
                                     </div>
                                     <div className="row mb-3">
-                                        <PasswordField handleChange={handleConfirmPasswordChange} errorServer={errors.confirmPassword}
+                                        <PasswordField confPass={password} handleChange={handleConfirmPasswordChange} errorServer={errors.confirmPassword}
                                             fieldName="Confirm password" isRequired={true} value={confirmPassword} placeholder="Enter Confirm Password"
                                             minLength={6} />
                                     </div>

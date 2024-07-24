@@ -1,10 +1,12 @@
 // MobileNumberInput.js
 import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { checkMobile } from '../../services/userService';
 
-const MobileInput = ({ handleMobileChange, value, errorServer, label, isAutoFocused, isRequired, isDisabled, placeholder }) => {
+const MobileInput = ({ handleMobileChange, htmlFor, value, errorServer, label, isAutoFocused, isRequired, isDisabled, placeholder }) => {
     const [error, setError] = useState('');
     const [isServerErr, setIsServerErr] = useState(false);
+    const [bError, setBerror] = useState('');
     const validateMobile = (val) => {
         setIsServerErr(false);
         if (isRequired && !val) {
@@ -25,13 +27,92 @@ const MobileInput = ({ handleMobileChange, value, errorServer, label, isAutoFocu
         return '';
     }
 
-    const onChange = (e) => {
-        const valueIn = e.target.value;
-        const errorMsg = validateMobile(valueIn);
-        setError(errorMsg);
-        handleMobileChange(e, errorMsg);
+    const validatedMobileServer = async (val) => {
+        try {
+            const data = {
+                mobile: val,
+            }
+            const response = await checkMobile(data);
+            if (response && response.status === 200) {
+                const { isValid, message } = response.data;
+                if (!isValid) {
+                    console.log(message)
+                    return message || 'Mobile number is not registered.';
+                }
+                return '';
 
+            }
+        } catch (error) {
+            console.error('Error checking mobile number:', error);
+            return 'Unable to verify mobile number.';
+        }
     }
+    const validatedMobileServerForRegistered = async (val) => {
+        try {
+            const data = {
+                mobile: val,
+            }
+            const response = await checkMobile(data);
+            if (response && response.status === 200) {
+                const { isValid, message } = response.data;
+                if (isValid) {
+                    console.log(message)
+                    return message || 'Mobile number is already registered.';
+                }
+                return '';
+
+            }
+        } catch (error) {
+            console.error('Error checking mobile number:', error);
+            return 'Unable to verify mobile number.';
+        }
+    }
+    const validatedMobileServerForUpdate = async (val) => {
+        try {
+            const data = {
+                mobile: val,
+            }
+            const response = await checkMobile(data);
+            if (response && response.status === 200) {
+                const { isValid, message } = response.data;
+                if (isValid) {
+                    console.log(message)
+                    return 'Mobile number is not available.';
+                }
+                return '';
+
+            }
+        } catch (error) {
+            console.error('Error checking mobile number:', error);
+            return 'Unable to verify mobile number.';
+        }
+    }
+
+    const onChange = async (e) => {
+        const valueIn = e.target.value;
+        const localError = validateMobile(valueIn);
+        setError(localError);
+
+        if (!localError && valueIn.length === 10 && htmlFor === 'login') {
+            const serverError = await validatedMobileServer(valueIn);
+            setError(serverError);
+            setIsServerErr(!!serverError);
+            handleMobileChange(e, serverError);
+        } else if (!localError && valueIn.length === 10 && htmlFor === 'register') {
+            const serverError = await validatedMobileServerForRegistered(valueIn);
+            setError(serverError);
+            setIsServerErr(!!serverError);
+            handleMobileChange(e, serverError);
+        }else if (!localError && valueIn.length === 10 && htmlFor === 'update') {
+            const serverError = await validatedMobileServerForUpdate(valueIn);
+            setError(serverError);
+            setIsServerErr(!!serverError);
+            handleMobileChange(e, serverError);
+        } else {
+            setIsServerErr(false);
+            handleMobileChange(e, localError);
+        }
+    };
     const handleKeyDown = (e) => {
         // Allow only numeric keys, backspace, delete, arrow keys, and tab
         if (
@@ -49,7 +130,6 @@ const MobileInput = ({ handleMobileChange, value, errorServer, label, isAutoFocu
     };
     useEffect(() => {
         if (errorServer) {
-            console.log(errorServer)
             setIsServerErr(true);
         } else {
             setError('');

@@ -7,6 +7,8 @@ import { Input } from "antd";
 import { setLoader, setModelAction } from "../../actions/loaderAction";
 import MobileInput from "../custom/MobileInput";
 import PasswordField from "../custom/PasswordField";
+import { toast } from "react-toastify";
+import { errorOptions } from "../../../toastOption";
 
 const LoginWithPassword = (props) => {
 
@@ -68,6 +70,7 @@ const LoginWithPassword = (props) => {
     event.preventDefault();
     const cleanMobile = mobile.replace(/^0+/, '');
     if (mobileError || passwordError || !mobile || !password) {
+      toast.error("Please fill in the mobile number and password before submitting.", errorOptions);
       return;
     }
     try {
@@ -150,7 +153,7 @@ const LoginWithPassword = (props) => {
                     </div>
                   )}
                   <div className="row mb-3">
-                    <MobileInput handleMobileChange={handleMobileChange}
+                    <MobileInput handleMobileChange={handleMobileChange} htmlFor="login"
                       errorServer={errors.mobile} isRequired={true}
                       isAutoFocused={true} placeholder="Enter your mobile number" />
                   </div>

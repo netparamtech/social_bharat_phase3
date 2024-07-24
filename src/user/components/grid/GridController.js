@@ -1,5 +1,4 @@
 import Grid from "./Grid";
-import "./grid.css";
 
 const GridController = ({item}) => {
     return(

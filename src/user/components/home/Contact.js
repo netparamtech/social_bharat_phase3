@@ -79,9 +79,9 @@ function Contact() {
         setMessage(response.data.message);
         setAlertClass("alert-success");
         toast.success("Enquiry successfully sent.", successOptions);
-        // setName('');
-        // setEmail('');
-        // setUserQuery('');
+        setName('');
+        setEmail('');
+        setUserQuery('');
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {

@@ -15,6 +15,7 @@ import { Divider, Rate } from "antd";
 import ServiceChat from "../chats/ServiceChat";
 import FlatRentServiceBannerDrawer from "./FlatRentServiceBannerDrawer";
 import ViewProfileDrawerForMembers from "../search/ViewProfileDrawerForMembers";
+import CardData from "./CardData";
 
 const SearchUsersWithService = () => {
   const { title } = useParams();
@@ -336,7 +337,7 @@ const SearchUsersWithService = () => {
               {/* {item.category} */}
               <div className="row">
                 {getArray(item.category).map((item, index) => (
-                  <p className="col-12 col-md-4 m-2" style={{border:'1px solid',borderRadius:'20px',display:'flex',justifyContent:'center'}}>{item}</p>
+                  <p className="col-12 col-md-12 m-2" style={{border:'1px solid',borderRadius:'20px',display:'flex',justifyContent:'center'}}>{item}</p>
                 ))}
               </div>
             </p>
@@ -368,37 +369,7 @@ const SearchUsersWithService = () => {
                   </p>
                 </div>
                 <p>({item.location})</p>
-                {/* <div
-                  className="d-flex justify-content-start rounded-3"
-                  style={{ backgroundColor: '#efefef' }}
-                >
-                  <p className="">
-                    Contact Numbers:
-                    <a href={`tel:${item.mobile1}`}>
-                      {item.mobile1}
-                    </a>
-                    {item.mobile2 ? (
-                      <>
-                        ,{" "}
-                        <a href={`tel:${item.mobile2}`}>
-                          {item.mobile2}
-                        </a>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {
-                      checkMobileVisibility(item.masked_mobile) ? (
-                        <p>
-                          <a href={`tel:${item.masked_mobile}`}>
-                            ,{item.masked_mobile}
-                          </a>
-                        </p>
-                      ) : ''
-                    }
-
-                  </p>{" "}
-                </div> */}
+               
                 <div
                   className=" contact-container"
                 >
@@ -583,14 +554,11 @@ const SearchUsersWithService = () => {
                         scrollableTarget="scrollableDiv"
                       >
                         {items.map((item, innerIndex) => (
-                          <div className="col-md-12 mt-2 mx-auto" key={innerIndex}>
-                            <div className="card" style={{ borderRadius: '15px' }}>
-                              <div className="card-body p-4">
-
-                                {isFeedbackClicked && innerIndex === index ? (
+                         <div className="mt-2">
+                           {isFeedbackClicked && innerIndex === index ? (
                                   <Comment handleFeedbackFlag={handleFeedbackFlag} data={data} />
                                 ) : (
-                                  <UserCard
+                                  <CardData
                                     item={item}
                                     isAndroidUsed={isAndroidUsed}
                                     handleChatclick={handleChatclick}
@@ -599,34 +567,7 @@ const SearchUsersWithService = () => {
                                   />
 
                                 )}
-                                <div className="d-flex pt-1">
-                                  <div className="text-start ms-3 mt-2 hover-pointer" onClick={() => handleChatclick(item)}>
-                                    <img src="/user/images/chat-icon.jpg" width="40px" />
-                                  </div>
-                                  <button type="button" className="btn me-1 flex-grow-1">
-                                    <ViewProfileDrawerForMembers id={item.id} />
-                                  </button>
-                                  {/* <button type="button" className="btn me-1 flex-grow-1">
-                                    <FlatRentServiceBannerDrawer items = {item} />
-                                  </button> */}
-                                  {/* <button
-                                type="button"
-                                className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
-                                onClick={()=>handleViewClick(item)}
-                              >
-                                VIEW
-                              </button> */}
-                                  <button
-                                    type="button"
-                                    className="btn me-1 flex-grow-1 nav-link text-success hover-pointer d-inline"
-                                    onClick={() => handleFeedbackFlag(true, innerIndex, item)}
-                                  >
-                                    FEEDBACK
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                         </div>
                         ))}
                       </InfiniteScroll>
                     </div>

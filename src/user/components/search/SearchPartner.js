@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   fetchAllCitiesByStateID,
-  fetchAllCommunities,
   fetchAllStatesByCountryID,
   fetchAllSubcasts,
   searchPartner,
@@ -740,6 +739,7 @@ const SearchPartner = () => {
                                       <MatrimonialCard item={item} />
                                       <div className="mt-3">
                                         {item && <GenerateBiodata userData={item} />}
+                                      
                                       </div>
 
                                     </div>

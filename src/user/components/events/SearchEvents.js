@@ -15,6 +15,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { Carousel } from "react-bootstrap";
 import ViewFullEvent from "./ViewFullEvent";
 import { Divider } from "antd";
+import { Card, Navbar, Form, FormControl, Button, Container, Row, Col, Dropdown, Modal, Image } from 'react-bootstrap';
 
 const SearchEvents = () => {
   const user = useSelector((state) => state.userAuth);
@@ -24,6 +25,8 @@ const SearchEvents = () => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [defaultImage, setDefaultImage] = useState("/admin/img/download.jpg");
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showFullModalDescription, setShowFullModalDescription] = useState(false);
 
   const [isSearchingPerformed, setIssearchingPerformed] = useState(false);
 
@@ -68,7 +71,8 @@ const SearchEvents = () => {
   const handleIsFilterChange = () => {
     setIsFilter(!isFilter);
   }
-
+  const toggleDescription = () => setShowFullDescription(!showFullDescription);
+  const toggleModalDescription = () => setShowFullModalDescription(!showFullModalDescription);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -332,215 +336,325 @@ const SearchEvents = () => {
                   ))}
               </Carousel> : ''
             }
-            {
-              !isEventClick ? (
+            <div className="card">
+              <div className="card-body">
+                {serverError && <span className="error">{serverError}</span>}
+                <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
+                  <h5 className="fw-bold mb-0">Search Events</h5>
+                  <div className="d-flex">
+                    <a onClick={handlePostEventClick} className="badge bg-success rounded-pill m-3 text-wrap-break-word text-decoration-none hover-pointer">
+                      Post Your Event
+                    </a>
+                    <a onClick={handleMyEventsClick} className="badge bg-success rounded-pill m-3 text-wrap-break-word text-decoration-none hover-pointer">
+                      My Events
+                    </a>
 
-                <div className="card">
-                  <div className="card-body">
-                    {serverError && <span className="error">{serverError}</span>}
-                    <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
-                      <h5 className="fw-bold mb-0">Search Events</h5>
-                      <div className="d-flex">
-                        <button className="btn btn-success mx-2" onClick={handlePostEventClick}>
-                          Post Your Event
-                        </button>
-                        <button className="btn btn-success mx-2" onClick={handleMyEventsClick}>
-                          My Events
-                        </button>
+                  </div>
+                </div>
+                <div className="filter-content">
+                  {city ? (
+                    <p>
+                      {city}
+                      {state && `(${state})`}
+                    </p>
+                  ) : (
+                    <p>{state && `state - ${state}`}</p>
+                  )}
+                </div>
+                {!isSearchingPerformed ? (
+                  <span className="error">No Data Available</span>
+                ) : (
+                  ""
+                )}
+                {
+                  !isFilter ? (
+                    <div className="row ">
+                      <div className="mb-3 mt-2 col-12 col-sm-4">
+                        <label className="form-label text-light">State</label>
+                        <Select
+                          options={states.map((state) => ({
+                            value: state.name,
+                            label: state.name,
+                          }))}
+                          value={selectedState}
+                          placeholder="Select State...."
+                          onChange={handleStateChange}
+                        />
                       </div>
-                    </div>
-                    <div className="filter-content">
-                      {city ? (
-                        <p>
-                          {city}
-                          {state && `(${state})`}
-                        </p>
-                      ) : (
-                        <p>{state && `state - ${state}`}</p>
-                      )}
-                    </div>
-                    {!isSearchingPerformed ? (
-                      <span className="error">No Data Available</span>
-                    ) : (
-                      ""
-                    )}
-                    {
-                      !isFilter ? (
-                        <div className="row ">
-                          <div className="mb-3 mt-2 col-12 col-sm-4">
-                            <label className="form-label text-light">State</label>
-                            <Select
-                              options={states.map((state) => ({
-                                value: state.name,
-                                label: state.name,
-                              }))}
-                              value={selectedState}
-                              placeholder="Select State...."
-                              onChange={handleStateChange}
-                            />
-                          </div>
-                          <div className="mb-3 mt-2 col-12 col-sm-4">
-                            <label className="form-label text-light">City</label>
-                            <Select
-                              options={cities.map((city) => ({
-                                value: city.name,
-                                label: city.name,
-                              }))}
-                              value={selectedCity}
-                              placeholder="Select City...."
-                              onChange={handleCityChange}
-                            />
-                          </div>
-                          <div className="mb-3 mt-2 col-12 col-sm-4 position-relative">
-                            <label className="form-label text-light">Search</label>
-                            <div className="input-group">
-                              <input
-                                type="text"
-                                placeholder="search by name, event title, state and city...."
-                                name="text"
-                                className="input form-control border-success"
-                                value={searchText}
-                                onChange={handleSearchText}
-                              />
-                              <span className="input-group-text">
-                                <i className="fas fa-search"></i>
-                              </span>
-                            </div>
-                          </div>
-
-
+                      <div className="mb-3 mt-2 col-12 col-sm-4">
+                        <label className="form-label text-light">City</label>
+                        <Select
+                          options={cities.map((city) => ({
+                            value: city.name,
+                            label: city.name,
+                          }))}
+                          value={selectedCity}
+                          placeholder="Select City...."
+                          onChange={handleCityChange}
+                        />
+                      </div>
+                      <div className="mb-3 mt-2 col-12 col-sm-4 position-relative">
+                        <label className="form-label text-light">Search</label>
+                        <div className="input-group">
+                          <input
+                            type="text"
+                            placeholder="search by name, event title, state and city...."
+                            name="text"
+                            className="input form-control border-success"
+                            value={searchText}
+                            onChange={handleSearchText}
+                          />
+                          <span className="input-group-text">
+                            <i className="fas fa-search"></i>
+                          </span>
                         </div>
-                      ) : ''
-                    }
-                    {
-                      isAndroidUsed ? (
-                        <div className="mx-auto">
-                          <button className="btn mb-2 btn-success" onClick={handleIsFilterChange}>{!isFilter ? 'Hide Filter' : 'Filter'}</button>
-                        </div>
-                      ) : ''
-                    }
-
-                    <div className=""></div>
-
-                    <div className="" id="scrollableDiv"
-                      style={{
-                        height: 400,
-                        overflow: 'auto',
-                        fontSize: ''
+                      </div>
 
 
-                      }}>
-                      {/* Repeat the user card structure as needed */}
-                      <InfiniteScroll
-                        style={{ overflowX: "hidden" }}
-                        dataLength={items.length}
-                        next={fetchMoreData}
-                        hasMore={items.length < totalRows}
-                        loader={isLoading && <h4>Loading...</h4>}
-                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                        scrollableTarget="scrollableDiv"
-                      >
-                        <div className="container pw-20">
-                          {groupedItems.map((pair, index) => (
-                            <div className="row" key={index}>
+                    </div>
+                  ) : ''
+                }
+                {
+                  isAndroidUsed ? (
+                    <div className="mx-auto">
+                      <button className="btn mb-2 btn-success" onClick={handleIsFilterChange}>{!isFilter ? 'Hide Filter' : 'Filter'}</button>
+                    </div>
+                  ) : ''
+                }
 
-                              {pair.map((item, innerIndex) => (
+                <div className=""></div>
 
-                                <div className="col-md-6 mt-2" key={innerIndex}>
-                                  <div className="card text-wrap-break-word" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '', fontSize: '14px', lineHeight: '16px' }}>
-                                    <div className="card-body p-4 search-partner-cards">
-                                      <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'column', display: isAndroidUsed ? '' : 'flex' }}>
-                                        {item.banner_image && (
-                                          <div className="col-12 flex-shrink-0 mb-3">
-                                            <img
-                                              src={item.banner_image}
-                                              alt={item.name}
-                                              className="img-fluid rounded-3"
-                                              style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
-                                              onClick={() => changeEventClickFlag(true, item.id)}
-                                            />
-                                          </div>
-                                        )}
+                <div className="" id="scrollableDiv"
+                  style={{
+                    height: 400,
+                    overflow: 'auto',
+                    fontSize: ''
 
-                                        <div className={`flex-grow-1 ms-3 mt-2 ${isAndroidUsed ? '' : 'd-flex'} align-items-center justify-content-center flex-column`}>
-                                          <div className="p-3 bg-light rounded-3 shadow-sm mb-3">
-                                            <h5 className="mb-1 text-truncate" style={{ maxHeight: '100px', overflow: 'hidden', width: '100%', maxWidth: '300px' }}>
-                                              {item.title}
-                                            </h5>
-                                            <p className="mb-2 pb-1 text-muted">
-                                              <i className="fa-solid fa-user me-2 text-primary"></i>
-                                              Posted By: <b>{item.name}</b>
-                                            </p>
-                                            <p className="mb-2 pb-1 text-muted">
-                                              <i className="fa-solid fa-users me-2 text-primary"></i>
-                                              Event For: <b>{item.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
-                                            </p>
-                                            <div className="d-flex align-items-center mb-2">
-                                              <i className="fa-solid fa-map-marker-alt me-2 text-primary"></i>
-                                              <p className="mb-0 text-truncate" style={{ maxHeight: '40px', overflow: 'hidden' }}>
-                                                Venue: {item.venue ? item.venue : "N/A"}
-                                              </p>
-                                            </div>
-                                            <div className="d-flex flex-column align-items-start bg-white p-3 rounded-3 shadow-sm">
-                                              <div className="d-flex align-items-center mb-2">
-                                                <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
-                                                <p className="mb-0">
-                                                  <strong>Start Date/Time:</strong> {formatDate(item.start_datetime)}
-                                                </p>
-                                              </div>
-                                              <div className="d-flex align-items-center">
-                                                <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
-                                                <p className="mb-0">
-                                                  <strong>End Date/Time:</strong> {formatDate(item.end_datetime)}
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </div>
 
-                                          <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
-                                            <p className="mb-0 me-3">
-                                              <strong>State:</strong> {item.state ? item.state : "N/A"}
-                                            </p>
+                  }}>
+                  {/* Repeat the user card structure as needed */}
+                  <InfiniteScroll
+                    style={{ overflowX: "hidden" }}
+                    dataLength={items.length}
+                    next={fetchMoreData}
+                    hasMore={items.length < totalRows}
+                    loader={isLoading && <h4>Loading...</h4>}
+                    endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                    scrollableTarget="scrollableDiv"
+                  >
+                    <div className="container pw-20">
+                      {groupedItems.map((pair, index) => (
+                        <div className="row" key={index}>
+
+                          {pair.map((item, innerIndex) => (
+
+                            <div className="col-md-6 mt-2" key={innerIndex}>
+                              <div className="card text-wrap-break-word" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '', fontSize: '14px', lineHeight: '16px' }}>
+                                <div className="card-body p-4 search-partner-cards">
+                                  <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'column', display: isAndroidUsed ? '' : 'flex' }}>
+                                    {item.banner_image && (
+                                      <div className="col-12 flex-shrink-0 mb-3">
+                                        <img
+                                          src={item.banner_image}
+                                          alt={item.name}
+                                          className="img-fluid rounded-3"
+                                          style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                          onClick={() => changeEventClickFlag(true, item.id)}
+                                        />
+                                      </div>
+                                    )}
+
+                                    <div className={`flex-grow-1 ms-3 mt-2 ${isAndroidUsed ? '' : 'd-flex'} align-items-center justify-content-center flex-column`}>
+                                      <div className="p-3 bg-light rounded-3 shadow-sm mb-3">
+                                        <h5 className="mb-1 text-truncate" style={{ maxHeight: '100px', overflow: 'hidden', width: '100%', maxWidth: '300px' }}>
+                                          {item.title}
+                                        </h5>
+                                        <p className="mb-2 pb-1 text-muted">
+                                          <i className="fa-solid fa-user me-2 text-primary"></i>
+                                          Posted By: <b>{item.name}</b>
+                                        </p>
+                                        <p className="mb-2 pb-1 text-muted">
+                                          <i className="fa-solid fa-users me-2 text-primary"></i>
+                                          Event For: <b>{item.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
+                                        </p>
+                                        <div className="d-flex align-items-center mb-2">
+                                          <i className="fa-solid fa-map-marker-alt me-2 text-primary"></i>
+                                          <p className="mb-0 text-truncate text-wrap-break-word" style={{ overflow: 'hidden' }}>
+                                            Venue: {item.venue ? item.venue : "N/A"}
+                                          </p>
+                                        </div>
+                                        <div className="d-flex flex-column align-items-start bg-white p-3 rounded-3 shadow-sm">
+                                          <div className="d-flex align-items-center mb-2">
+                                            <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
                                             <p className="mb-0">
-                                              <strong>City:</strong> {item.city ? item.city : "N/A"}
+                                              <strong>Start Date/Time:</strong> {formatDate(item.start_datetime)}
                                             </p>
                                           </div>
-
-                                          {checkMobileVisibility(item.mobile) && (
-                                            <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
-                                              <i className="fa-solid fa-phone text-primary me-2"></i>
-                                              <p className="mb-0">
-                                                <a href={`tel:${item.mobile}`} className="text-dark text-decoration-none">
-                                                  {item.mobile}
-                                                </a>
-                                              </p>
-                                            </div>
-                                          )}
-
-                                          <div className="text-center">
-                                            <button className="btn btn-success" onClick={() => changeEventClickFlag(true, item.id)}>
-                                              View
-                                            </button>
+                                          <div className="d-flex align-items-center">
+                                            <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
+                                            <p className="mb-0">
+                                              <strong>End Date/Time:</strong> {formatDate(item.end_datetime)}
+                                            </p>
                                           </div>
                                         </div>
                                       </div>
 
+                                      <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                        <p className="mb-0 me-3">
+                                          <strong>State:</strong> {item.state ? item.state : "N/A"}
+                                        </p>
+                                        <p className="mb-0">
+                                          <strong>City:</strong> {item.city ? item.city : "N/A"}
+                                        </p>
+                                      </div>
+
+                                      {checkMobileVisibility(item.mobile) && (
+                                        <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                          <i className="fa-solid fa-phone text-primary me-2"></i>
+                                          <p className="mb-0">
+                                            <a href={`tel:${item.mobile}`} className="text-dark text-decoration-none">
+                                              {item.mobile}
+                                            </a>
+                                          </p>
+                                        </div>
+                                      )}
+
+                                      <div className="text-center">
+                                        <button className="btn btn-success" onClick={() => {
+                                          setIsEventClick(true);
+                                          setData(item);
+                                        }}>
+                                          View
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
+
                                 </div>
-                              ))}
+                              </div>
                             </div>
                           ))}
                         </div>
-                      </InfiniteScroll>
+                      ))}
                     </div>
-                  </div>
+                  </InfiniteScroll>
                 </div>
-              ) : (
-                <ViewFullEvent changeEventClickFlag={changeEventClickFlag} id={eventId} />
-              )
-            }
+              </div>
+              <Modal show={isEventClick} onHide={() => setIsEventClick(false)} size="lg">
+                <Modal.Header closeButton>
+                  <Modal.Title><p className="text-wrap-break-word">{data && data.title}'s Details</p></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <Col md={2}>
+                      <Image className="mx-auto" src={data.photo ? data.photo : defaultImage} width={100} height={200} rounded fluid />
+                    </Col>
+                    {
+                      data && (
+                        <Col md={8}>
+                          <div className="card text-wrap-break-word mt-2" style={{ borderRadius: '15px', height: isAndroidUsed ? '' : '', fontSize: '14px', lineHeight: '16px' }}>
+                            <div className="card-body p-4 search-partner-cards">
+                              <div className={`text-black ${isAndroidUsed ? '' : ''}`} style={{ flexDirection: 'column', display: isAndroidUsed ? '' : 'flex' }}>
+                                {data.banner_image && (
+                                  <div className="col-12 flex-shrink-0 mb-3">
+                                    <img
+                                      src={data.banner_image}
+                                      alt={data.title}
+                                      className="img-fluid rounded-3"
+                                      style={{ top: '0', left: '0', width: '100%', height: '200px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }}
+                                      onClick={() => {
+                                        setIsEventClick(true);
+                                        setData(true);
+                                      }}
+                                    />
+                                  </div>
+                                )}
 
+                                <div className={`flex-grow-1 ms-3 mt-2 ${isAndroidUsed ? '' : 'd-flex'} align-items-center justify-content-center flex-column`}>
+                                  <div className="p-3 bg-light rounded-3 shadow-sm mb-3">
+                                    <h5 className="mb-1 text-truncate text-wrap-break-word">
+                                      {data.title}
+                                    </h5>
+                                    <p className="mb-2 pb-1 text-muted">
+                                      <i className="fa-solid fa-user me-2 text-primary"></i>
+                                      Posted By: <b>{data.name}</b>
+                                    </p>
+                                    <p className="mb-2 pb-1 text-muted">
+                                      <i className="fa-solid fa-users me-2 text-primary"></i>
+                                      Event For: <b>{data.event_type === 'Communited' ? 'Communited' : 'For all Communities'}</b>
+                                    </p>
+                                    <div className="d-flex align-items-center mb-2">
+                                      <i className="fa-solid fa-map-marker-alt me-2 text-primary"></i>
+                                      <p className="mb-0 text-truncate text-wrap-break-word" style={{ overflow: 'hidden' }}>
+                                        Venue: {data.venue ? data.venue : "N/A"}
+                                      </p>
+                                    </div>
+                                    <div className="d-flex flex-column align-items-start bg-white p-3 rounded-3 shadow-sm">
+                                      <div className="d-flex align-items-center mb-2">
+                                        <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
+                                        <p className="mb-0">
+                                          <strong>Start Date/Time:</strong> {formatDate(data.start_datetime)}
+                                        </p>
+                                      </div>
+                                      <div className="d-flex align-items-center">
+                                        <i className="fa-solid fa-calendar-alt text-primary me-2"></i>
+                                        <p className="mb-0">
+                                          <strong>End Date/Time:</strong> {formatDate(data.end_datetime)}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                    <p className="mb-0 me-3">
+                                      <strong>State:</strong> {data.state ? data.state : "N/A"}
+                                    </p>
+                                    <p className="mb-0">
+                                      <strong>City:</strong> {data.city ? data.city : "N/A"}
+                                    </p>
+                                  </div>
+
+                                  {checkMobileVisibility(data.mobile) && (
+                                    <div className="d-flex justify-content-start align-items-center bg-light p-3 rounded-3 shadow-sm mb-3">
+                                      <i className="fa-solid fa-phone text-primary me-2"></i>
+                                      <p className="mb-0">
+                                        <a href={`tel:${data.mobile}`} className="text-dark text-decoration-none">
+                                          {data.mobile}
+                                        </a>
+                                      </p>
+                                    </div>
+                                  )}
+
+                                  <p><strong>Description:</strong></p>
+                                  <p
+                                    className="col-12"
+                                    dangerouslySetInnerHTML={{
+                                      __html: data.DESCRIPTION
+                                    }}
+                                  ></p>
+
+                                  <div className="text-center">
+                                    <button className="btn btn-success" onClick={() => {
+                                      setIsEventClick(false);
+                                      setData('');
+                                    }}>
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </Col>
+                      )
+                    }
+                  </Row>
+
+                </Modal.Body>
+
+              </Modal>
+            </div>
           </div>
         </div>
       </div>

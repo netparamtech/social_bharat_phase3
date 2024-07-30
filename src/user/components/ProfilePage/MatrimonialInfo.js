@@ -7,8 +7,6 @@ import GenerateBiodata from "./GenerateBiodata";
 import { logout } from "../../actions/userAction";
 import MatrimonialCard from "./MatrimonialCard";
 import { Image } from 'antd';
-import { SearchOutlined, FileSearchOutlined } from '@ant-design/icons';
-
 
 const MatrimonialInfo = () => {
   const [matrimonialDetails, setMatrimonialDetails] = useState([]);
@@ -38,7 +36,7 @@ const MatrimonialInfo = () => {
       setMatrimonialDetails(filteredData);
     }
   }, [searchText]);
-  
+
   function getRandomColor() {
     const colors = ["#6c757d", "#afeeee", "#8b4513", "#ff69b4", "#ffa07a", "#90ee90", "#a0522d", "#000080"];
     const randomIndex = Math.floor(Math.random() * colors.length);
@@ -124,6 +122,22 @@ const MatrimonialInfo = () => {
     fetchMatrimonialDetails()
   }, []);
 
+  const age = (dob) => {
+    if (dob !== null) {
+      const dobDate = new Date(dob);
+      const currentDate = new Date();
+
+      // Calculate the age in years
+      const ageInMilliseconds = currentDate - dobDate;
+      const ageInYears = Math.floor(
+        ageInMilliseconds / (1000 * 60 * 60 * 24 * 365)
+      );
+
+      return ageInYears;
+    }
+    return "N/A";
+  };
+
   return (
     <div id="matrimonial-section" className="content-wrapper pt-4">
       <div className="container">
@@ -171,7 +185,7 @@ const MatrimonialInfo = () => {
 
                   <div className="col-11 col-md-4 mb-4 mx-auto mt-2">
 
-                    <div className={`card text-white h-100`} style={{ backgroundColor: getRandomColor() }}>
+                    <div className={`card h-100`} >
                       <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                           <div className="me-3">
@@ -208,6 +222,7 @@ const MatrimonialInfo = () => {
                       </div>
                       <div className="card-footer d-flex align-items-center justify-content-between small">
                         {item && <GenerateBiodata userData={item} />}
+                      
                         <div className="">
                           <MatrimonialCard item={item} />
                           <a className='hover-pointer m-2' onClick={() => navigate(`/user/update-matrimonial-profile/${item.id}`)} title="Edit">

@@ -44,18 +44,10 @@ const MatrimonialCard = ({ item, index }) => {
 
     return (
         <>
-            <a className="text-dark mt-3 hover-pointer-admin matrimonial-generate-biodata" onClick={handleShow} title='View'
+            <button className="text-dark mt-3 hover-pointer-admin matrimonial-generate-biodata" onClick={handleShow} title='View'
                 style={{ border: '1px solid', borderRadius: '20px', padding: '4px', alignContent: 'center', textDecoration: 'none' }} >
                 VIEW
-                {
-                    isAndroidUsed ? '' : (
-                        <img
-                            src="/user/images/eye.png"
-                            width="20px" height={20}
-                        />
-                    )
-                }
-            </a>
+            </button>
             <Modal
                 show={show}
                 onHide={handleClose}

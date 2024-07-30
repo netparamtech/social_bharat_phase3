@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Drawer, Button, Col, Row, Divider, Image, Collapse } from "antd";
 import { useNavigate } from "react-router-dom";
 import { fetchSelfCreatedLatestBusiness, fetchSelfMatrimonialById, getSearchedUserFullProfile } from "../../services/userService";
@@ -164,7 +164,17 @@ const ViewProfileDrawerForMembers = ({ id }) => {
             user && user.businesses && user.businesses.business_photos
         );
     }, [user]);
+    const section1Ref = useRef(null);
+    const section2Ref = useRef(null);
+    const section3Ref = useRef(null);
+    const section4Ref = useRef(null);
+    const section5Ref = useRef(null);
+    const section6Ref = useRef(null);
+    const section7Ref = useRef(null);
 
+    const scrollToSection = (ref) => {
+        ref.current.scrollIntoView({ behavior: 'smooth' });
+      };
 
     return (
         <div>
@@ -179,34 +189,37 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 open={visible}
             >
                 <div className="drawer-header mt-5">
-                    <p className="d-flex ">
-                        <a href="#basic-view" className="me-2 me-sm-3">
+                    <p className="">
+                        <a onClick={()=>scrollToSection(section1Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Basic
                         </a>
-                        <a href="#auth-wrapper" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section2Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Matrimonial
                         </a>
-                        <a href="#contact-section" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section3Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Address
                         </a>
-                        <a href="#auth-wrapper-job" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section4Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Job
                         </a>
-                        <a href="#education-section" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section5Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Education
                         </a>
-                        <a href="#contacts" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section6Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Contacts
                         </a>
-                        <a href="#businesses-section" className="me-2 me-sm-3">
+                        <a onClick={()=>scrollToSection(section7Ref)} className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none hover-pointer">
                             Business
                         </a>
+                        {/* <a href="#businesses-section" className="badge bg-primary rounded-pill m-1 text-wrap-break-word text-decoration-none">
+                            <img src="/user/images/"
+                        </a> */}
                     </p>
                 </div>
                 {serverError && <span className="error">{serverError}</span>}
 
 
-                <div id="basic-view" className="mt-2">
+                <div id="basic-view" ref={section1Ref} className="mt-2">
                     <p
                         className="site-description-item-profile-p"
                         style={{
@@ -265,7 +278,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                     <Divider />
                 </div>
 
-                <div id="auth-wrapper" className="pt-2 pb-3 mt-2">
+                <div id="auth-wrapper" ref={section2Ref} className="pt-2 pb-3 mt-2">
                     <div id="event-info" className="">
                         <div className="card">
                             <div className="row">
@@ -305,6 +318,18 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                 </div>
 
                                                 <div className="row">
+                                                    <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <label className="fw-bold">Matrimonial Created For :</label>
+                                                            </div>
+                                                            <div className="col-md-4">
+                                                                <label className="">
+                                                                    {matrimonial.profile_created_for || "N/A"}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div className="mb-2 col-md-6 col-sm-12 col-xs-12">
                                                         <div className="row">
                                                             <div className="col-6">
@@ -455,7 +480,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 </div>
 
 
-                <div id="contact-section" className="content-wrapper pt-2">
+                <div id="contact-section" ref={section3Ref} className="content-wrapper pt-2">
                     <div className="">
                         <div className="card">
                             <div className="card-title bg-success bg-gradient text-white pt-2 ps-2">
@@ -497,7 +522,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 </div>
 
 
-                <div id="auth-wrapper-job" className="pt-2  mt-2">
+                <div id="auth-wrapper-job" ref={section4Ref} className="pt-2  mt-2">
                     <div id="event-info" className="">
                         <div className="card">
                             <div className="card-title bg-success bg-gradient text-white pt-2 ps-2">
@@ -516,28 +541,17 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Company Name</td>
-                                                                    <td className="text-muted fw-bold">
+                                                                    <td className="text-muted fw-bold text-wrap-break-word">
                                                                         {item.company_name || "NA"}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Designation</td>
-                                                                    <td className="text-muted">
+                                                                    <td className="text-muted text-wrap-break-word">
                                                                         {item.designation || "NA"}
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>Job Start Date</td>
-                                                                    <td className="text-muted">
-                                                                        {formatDate(item.job_start_date) || "NA"}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Job End Date</td>
-                                                                    <td className="text-muted">
-                                                                        {formatDate(item.job_end_date) || "NA"}
-                                                                    </td>
-                                                                </tr>
+
                                                                 <tr>
                                                                     <td>Job Type</td>
                                                                     <td className="text-muted">
@@ -546,6 +560,12 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                                                             : item.job_type === "FULL_TIME"
                                                                                 ? "FULL TIME"
                                                                                 : ""}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Experience</td>
+                                                                    <td className="text-muted text-wrap-break-word">
+                                                                        {item.experience || "NA"}
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -566,7 +586,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 </div>
 
 
-                <div id="education-section" className="content-wrapper pt-2">
+                <div id="education-section" ref={section5Ref} className="content-wrapper pt-2">
                     <div className="">
                         <div className="card">
                             <div className="card-title bg-success bg-gradient text-white pt-2 ps-2">
@@ -655,7 +675,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 </div>
 
 
-                <div id="businesses-section" className="content-wrapper pt-2">
+                <div id="businesses-section" ref={section6Ref} className="content-wrapper pt-2">
                     <div className="">
                         <div className="card">
                             <div className="card-title bg-success bg-gradient text-white pt-2 ps-2">
@@ -667,102 +687,102 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                                         {businessDetails && businessDetails.length > 0 ? (
                                             <Collapse accordion>
                                                 {businessDetails.map((item, value) => (
-                                                    <Panel
-                                                        header={
-                                                            <span className="mb-3  fs-6">{`Business-${value+1}`}</span>
-                                                        }
-                                                        key={value}
-                                                        className=""
-                                                    >
-                                                        <table className="table table-striped ">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td className="fw-bold">City</td>
-                                                                    <td className="text-muted">{item.city}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">State</td>
-                                                                    <td className="text-muted">{item.state}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">Country</td>
-                                                                    <td className="text-muted">{item.country}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="fw-bold">Contact 1</td>
-                                                                    <td className="text-muted">{item.contact1}</td>
-                                                                </tr>
+                                                    // <Panel
+                                                    //     header={
+                                                    //         <span className="mb-3  fs-6">{`Business-${value+1}`}</span>
+                                                    //     }
+                                                    //     key={value}
+                                                    //     className=""
+                                                    // >
+                                                    //     <table className="table table-striped ">
+                                                    //         <tbody>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">City</td>
+                                                    //                 <td className="text-muted">{item.city}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">State</td>
+                                                    //                 <td className="text-muted">{item.state}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Country</td>
+                                                    //                 <td className="text-muted">{item.country}</td>
+                                                    //             </tr>
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Contact 1</td>
+                                                    //                 <td className="text-muted">{item.contact1}</td>
+                                                    //             </tr>
 
-                                                                {item.contact2 && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Contact 2</td>
-                                                                        <td className="text-muted">
-                                                                            {item.contact2}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.contact2 && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Contact 2</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.contact2}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.contact3 && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Contact 3</td>
-                                                                        <td className="text-muted">
-                                                                            {item.contact3}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.contact3 && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Contact 3</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.contact3}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.business_email && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Website Email</td>
-                                                                        <td
-                                                                            className="text-muted"
-                                                                            style={{
-                                                                                maxWidth: "300px",
-                                                                                wordWrap: "break-word",
-                                                                            }}
-                                                                        >
-                                                                            {item.business_email}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.business_email && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Website Email</td>
+                                                    //                     <td
+                                                    //                         className="text-muted"
+                                                    //                         style={{
+                                                    //                             maxWidth: "300px",
+                                                    //                             wordWrap: "break-word",
+                                                    //                         }}
+                                                    //                     >
+                                                    //                         {item.business_email}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {item.business_website && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Website Link</td>
-                                                                        <td className="text-muted">
-                                                                            {item.business_website}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {item.business_website && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Website Link</td>
+                                                    //                     <td className="text-muted">
+                                                    //                         {item.business_website}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                {businessPhotos && (
-                                                                    <tr>
-                                                                        <td className="fw-bold">Business Photos</td>
-                                                                        <td className="proposal-Photo">
-                                                                            {businessPhotos &&
-                                                                                Array.isArray(businessPhotos) ? (
-                                                                                businessPhotos.map((item, idx) => (
-                                                                                    <a href={item} target="_blank">
-                                                                                        <img className="m-1" src={item} />
-                                                                                    </a>
-                                                                                ))
-                                                                            ) : (
-                                                                                <a href={businessPhotos} target="_blank">
-                                                                                    <img src={businessPhotos} />
-                                                                                </a>
-                                                                            )}
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
+                                                    //             {businessPhotos && (
+                                                    //                 <tr>
+                                                    //                     <td className="fw-bold">Business Photos</td>
+                                                    //                     <td className="proposal-Photo">
+                                                    //                         {businessPhotos &&
+                                                    //                             Array.isArray(businessPhotos) ? (
+                                                    //                             businessPhotos.map((item, idx) => (
+                                                    //                                 <a href={item} target="_blank">
+                                                    //                                     <img className="m-1" src={item} />
+                                                    //                                 </a>
+                                                    //                             ))
+                                                    //                         ) : (
+                                                    //                             <a href={businessPhotos} target="_blank">
+                                                    //                                 <img src={businessPhotos} />
+                                                    //                             </a>
+                                                    //                         )}
+                                                    //                     </td>
+                                                    //                 </tr>
+                                                    //             )}
 
-                                                                <tr>
-                                                                    <td className="fw-bold">Status</td>
-                                                                    <td className="text-muted">{item.status}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </Panel>
-                                                    // <BusinessCard item={item} name="Business" />
+                                                    //             <tr>
+                                                    //                 <td className="fw-bold">Status</td>
+                                                    //                 <td className="text-muted">{item.status}</td>
+                                                    //             </tr>
+                                                    //         </tbody>
+                                                    //     </table>
+                                                    // </Panel>
+                                                    <BusinessCard item={item} name="Business" />
                                                 ))}
                                             </Collapse>
                                         ) : (
@@ -780,7 +800,7 @@ const ViewProfileDrawerForMembers = ({ id }) => {
                 </div>
 
 
-                <div id="contacts" className="mb-3">
+                <div id="contacts" ref={section7Ref} className="mb-3">
                     <div className="card">
                         <div className="card-title bg-success bg-gradient text-white pt-2 ps-2">
                             <label className="mb-2 fw-bold fs-6 ">Contacts Info</label>

@@ -6,7 +6,7 @@ import { fetchOneCommunity, userLogout } from '../../services/userService';
 import { setLoader } from '../../actions/loaderAction';
 import BharatMandirDrawer from './BharatMandirDrawer';
 import { logout } from '../../actions/userAction';
-import { WechatOutlined } from '@ant-design/icons';
+
 function UserNavDropdown() {
     const { id } = useParams();
 
@@ -141,11 +141,10 @@ function UserNavDropdown() {
     return (
         <Dropdown>
             <Dropdown.Toggle variant="" id="dropdown-basic" className="no-outline">
-                <span
+                <div
                     className=""
                     onClick={(e) => e.preventDefault()}
                 >
-
                     {userProfile ? (
                         <img
                             src={userProfile}
@@ -156,13 +155,11 @@ function UserNavDropdown() {
                     ) : (
                         <button type='button' className='dropdown-user-img-letter m-2'>{loggedUserFirstLatter}</button>
                     )}
-                   
-                    {/* <span className=''><span className={isAndroidUsed ? 'd-none' : ''} >Hi</span> {!isAndroidUsed && shortenName(userName.toUpperCase(), 8)}</span> */}
-                </span>
+                </div>
             </Dropdown.Toggle>
 
             <Dropdown.Menu className='custom-dropdown-menu'>
-                <Dropdown.Item>
+                <Dropdown.Item as="div">
                     <h6 className="dropdown-header d-flex align-items-center menu-font">
                         <img className="dropdown-user-img me-2" src={userProfile || '/user/images/OIP.jpg'} alt="User" />
                         <div className="dropdown-user-details">
@@ -171,52 +168,45 @@ function UserNavDropdown() {
                         </div>
                     </h6>
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item as="div">
                     <h6 className="dropdown-header d-flex align-items-center">
-                        {
-                            community && community.thumbnail_image ? (
-                                <img className="me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
-                            ) : (
-                                <div className="">
-                                    <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
-                                </div>
-                            )
-                        }
-
-                        {/* {
-                community && <span className="dropdown-user-details-name menu-font">{community.name || ""}</span>
-              } */}
-
+                        {community && community.thumbnail_image ? (
+                            <img className="me-2" src={community.thumbnail_image || defaultPhoto} alt="User" />
+                        ) : (
+                            <div className="">
+                                <div className="dropdown-user-details-name menu-font">{community && community.name}</div>
+                            </div>
+                        )}
                     </h6>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={handleProfileClick}>
-                    <span className={`menu-font ${window.location.pathname === "/profile" || window.location.pathname === "/user/update-basic-profile" ||
+                <Dropdown.Item as="div" onClick={handleProfileClick}>
+                    <span className={`menu-font hover-pointer ${window.location.pathname === "/profile" || window.location.pathname === "/user/update-basic-profile" ||
                         window.location.pathname === "/update-mobile" || window.location.pathname === "/user/update-matrimonial-profile" ||
                         window.location.pathname === "/user/update-education-profile" || window.location.pathname === "/user/update-business-profile" || window.location.pathname === `/user/update-business-profile/${id}` ||
                         window.location.pathname === "/user/update-contact" || window.location.pathname === `/user/update-contact/${id}` || window.location.pathname === "/user/update-job-profile"
                         || window.location.pathname === `/user/update-job-profile/${id}` || window.location.pathname === `/user/update-contact/:id` ||
                         window.location.pathname === `/user/update-education-profile/${id}` ? "custom-active-user" : "inactive"
-                        }`}>
+                    }`}>
                         <i className="fas fa-user-alt m-2"></i> PROFILE
                     </span>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={handleChangePasswordClick}>
-                    <span className={`menu-font ${window.location.pathname === "/change/password" ? "custom-active-user" : "inactive"
-                        }`}>
+                <Dropdown.Item as="div" onClick={handleChangePasswordClick}>
+                    <span className={`menu-font hover-pointer ${window.location.pathname === "/change/password" ? "custom-active-user" : "inactive"
+                    }`}>
                         <i className="fas fa-key m-2"></i> CHANGE PASSWORD
                     </span>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={handleSettingClick}>
-                    <span className={`menu-font ${window.location.pathname === "/user/setting" ? "custom-active-user" : "inactive"
-                        }`}>
+                <Dropdown.Item as="div" onClick={handleSettingClick}>
+                    <span className={`menu-font hover-pointer ${window.location.pathname === "/user/setting" ? "custom-active-user" : "inactive"
+                    }`}>
                         <i className="fas fa-cog m-2"></i> SETTING
                     </span>
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item as="div">
                     <BharatMandirDrawer />
                 </Dropdown.Item>
-                <Dropdown.Item onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
-                    <span className='menu-font'>
+                <Dropdown.Item as="div" onClick={(e) => { e.preventDefault(); handleLogOutClick(); }}>
+                    <span className='menu-font hover-pointer'>
                         <i className="fas fa-sign-out m-2"></i> LOGOUT
                     </span>
                 </Dropdown.Item>

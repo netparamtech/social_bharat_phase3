@@ -13,14 +13,10 @@ import { setLoader } from '../../actions/loaderAction';
 import GenerateBiodata from '../../components/ProfilePage/GenerateBiodata';
 import { logout } from '../../actions/userAction';
 
-
 const ProfilePage = () => {
-
     const { scrollValue } = useParams();
-
     const [user, setUser] = useState();
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const getUserProfile = async () => {
@@ -31,25 +27,35 @@ const ProfilePage = () => {
                 setUser(response.data);
             }
         } catch (error) {
-            //Unauthorized
             if (error.response && error.response.status === 401) {
                 dispatch(logout());
                 navigate('/login');
             } else if (error.response && error.response.status === 404) {
-            }
-            //Internal Server Error
-            else if (error.response && error.response.status === 500) {
-                // navigate('/login');
+                // Handle not found error
+            } else if (error.response && error.response.status === 500) {
+                // Handle internal server error
             }
         } finally {
             dispatch(setLoader(false));
         }
-    }
+    };
 
     useEffect(() => {
         getUserProfile();
-        window.scrollTo(0, scrollValue ? parseInt(atob(scrollValue)) : 0);
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (scrollValue) {
+            const sectionId = 'business-info';
+            const scrollToSection = () => {
+                const sectionElement = document.getElementById(sectionId);
+                if (sectionElement) {
+                    sectionElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+            setTimeout(scrollToSection, 500); // Adjust the delay if necessary
+        }
+    }, [scrollValue]);
 
     return (
         <UserLayout>
@@ -57,7 +63,9 @@ const ProfilePage = () => {
             <MatrimonialInfo user={user} />
             <EducationInfo user={user} />
             <ContactInfo user={user} />
-            <BusinessInfo user={user} />
+            <div id='business-info'>
+                <BusinessInfo user={user} />
+            </div>
             <JobInfo user={user} />
         </UserLayout>
     );

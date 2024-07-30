@@ -145,7 +145,7 @@ function Contact() {
                 <div className="card shadow mb-3">
                   <div className="card-body">
                     <div className="row wow animate__animated animate__fadeInLeft">
-                      <div className=" mb-3  user-auth-panel-info  col-md-6 col-sm-12">
+                      <div className=" mb-3  user-auth-panel-info  col-lg-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
@@ -161,7 +161,7 @@ function Contact() {
                           </div>
                         </div>
                       </div>
-                      <div className="mb-3 user-auth-panel-info col-md-6 col-sm-12">
+                      <div className="mb-3 user-auth-panel-info col-lg-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-flex align-items-center">
@@ -183,7 +183,7 @@ function Contact() {
                         </div>
                       </div>
 
-                      <div className="mb-3  user-auth-panel-info  col-md-6 col-sm-12">
+                      <div className="mb-3  user-auth-panel-info  col-lg-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-inline-flex">
@@ -204,7 +204,7 @@ function Contact() {
                         </div>
                       </div>
 
-                      <div className="mb-3 user-auth-panel-info col-md-6 col-sm-12">
+                      <div className="mb-3 user-auth-panel-info col-lg-6 col-sm-12">
                         <div className="card shadow">
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-3">

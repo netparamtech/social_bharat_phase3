@@ -13,7 +13,6 @@ import UpdateCurrentOpeningPage from "./user/pages/UpdateCurrentOpeningPage";
 const LazyUserRoutes = React.lazy(() => import("./user/UserRoutes"));
 
 function App() {
-
   const isLoading = useSelector((state) => state.loader.isLoaderSet);
   const user = useSelector((state) => state.userAuth);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -27,15 +26,13 @@ function App() {
           dispatch(logout());
         } else {
           setIsAdmin(user.user.is_admin);
-          if (user.user.is_admin) {
-
-          }
         }
       } else {
         dispatch(logout());
       }
     }
   }, [user]);
+
   useEffect(() => {
     if (isAdmin) {
       setHaveJobPermission(user.user.permissions && user.user.permissions.have_job_permission);
@@ -44,59 +41,46 @@ function App() {
 
   return (
     <div className="">
-
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Spin spinning={isLoading}>
             <Routes>
-              {
-                UserRoutes().map((route, index) => (
-                  <>
-                    <Route key={index} path={route.path}
-                      element={
-                        (route.path !== '/login' && route.path !== '/:name' && route.path !== '/' && route.path !== '/register' && route.path !== '/contact' && route.path !== '/user/block' && route.path !== '/about' && route.path !== '/social-bharat-provides') ? (
-                          <UserProtectedRoute element={route.component} path={route.path} />
-                        ) : (
-                          <route.component />
-                        )
-                      } />
-                    <Route
-                      path="/"
-                      element={<LazyUserRoutes />}
-                    />
-                  </>
-                ))
-              }
-
-
+              {UserRoutes().map((route, index) => (
+                <Route
+                  key={`user-route-${index}`}
+                  path={route.path}
+                  element={
+                    (route.path !== '/login' && route.path !== '/:name' && route.path !== '/' && route.path !== '/register' && route.path !== '/contact' && route.path !== '/user/block' && route.path !== '/about' && route.path !== '/social-bharat-provides') ? (
+                      <UserProtectedRoute element={route.component} path={route.path} />
+                    ) : (
+                      <route.component />
+                    )
+                  }
+                />
+              ))}
+              <Route key="lazy-user-routes" path="/" element={<LazyUserRoutes />} />
               {adminRoutes.map((route, index) => (
                 <Route
-                  key={index}
+                  key={`admin-route-${index}`}
                   path={route.path}
                   element={<ProtectedRoute element={route.component} path={route.path} />}
                 />
               ))}
-              {
-                isAdmin ? (
-                  haveJobPermission &&
+              {isAdmin ? (
+                haveJobPermission && (
                   <>
-                    <Route path="/user/create/current-job" element={<CreateCurrentJobPage />} />
-                    <Route path="/user/update/current-job/:id" element={<UpdateCurrentOpeningPage />} />
+                    <Route key="create-current-job" path="/user/create/current-job" element={<CreateCurrentJobPage />} />
+                    <Route key="update-current-job" path="/user/update/current-job/:id" element={<UpdateCurrentOpeningPage />} />
                   </>
-                ) : <Route
-                  path="/*"
-                  element={<NotFound />}
-                />
-              }
-
+                )
+              ) : (
+                <Route key="not-found" path="/*" element={<NotFound />} />
+              )}
             </Routes>
           </Spin>
-        </Suspense >
+        </Suspense>
       </Router>
-
     </div>
-
-
   );
 }
 

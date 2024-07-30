@@ -35,7 +35,7 @@ const AndroidChat = (props) => {
     }
 
     const handleCloseClick = () => {
-        changeChatFlag(false);
+        navigate(-1)
     };
 
     const handleSendClicked = () => {
@@ -210,7 +210,7 @@ const AndroidChat = (props) => {
                             {
                                 isSideLabel && <div className="col-12 col-md-4 bg-light" style={{ borderRight: '1px solid #CECECE', height: '' }}>
                                     <div className="py-2 px-4 border-bottom bg-primary">
-                                        <div className="d-flex align-items-center py-1">
+                                        <div className="d-flex justify-content-between py-1">
                                             <div className="position-relative">
                                                 {loggedUserProfile ? (
                                                     <img
@@ -228,6 +228,15 @@ const AndroidChat = (props) => {
                                                         {loggedUserFirstLatter}
                                                     </button>
                                                 )}
+                                            </div>
+                                            <div>
+                                                <span
+                                                    className="btn fs-4  btn-whi close-button-chat"
+                                                    onClick={handleCloseClick}
+                                                    title="Close"
+                                                >
+                                                    <i className="fa-regular fa-circle-xmark hover-pointer"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

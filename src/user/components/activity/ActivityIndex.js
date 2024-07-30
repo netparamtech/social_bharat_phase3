@@ -6,7 +6,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../actions/loaderAction";
-import { Avatar, Card, Carousel, Image, Modal } from "antd";
+import { Avatar, Card, Carousel, Image, Modal, Switch } from "antd";
 import { Divider, List, Skeleton, Statistic } from 'antd';
 import Meta from "antd/es/card/Meta";
 import Search from "antd/es/input/Search";
@@ -240,10 +240,10 @@ const ActivityIndex = () => {
     setSearchText('');
     handleCategoryChange('');
   }
-  const [isEnglish, setIsEnglish] = useState(true);
+  const [isGrid, setIsGrid] = useState(false);
 
   const toggleLanguage = () => {
-    setIsEnglish(prevIsEnglish => !prevIsEnglish);
+    setIsGrid(prevIsEnglish => !prevIsEnglish);
   };
 
   return (
@@ -341,12 +341,11 @@ const ActivityIndex = () => {
             <div className="col-12 col-md-6 mx-auto">
               <div className="mx-auto text-primary" style={{ borderRadius: '10px' }}>You Are Searching In - {category ? category : ''}</div>
               <div style={styles.container}>
-                <span style={styles.label}>{isEnglish ? 'English' : 'हिंदी'}</span>
+                <span style={styles.label}>{isGrid ?'Slide Effect': 'Grid View'}</span>
                 <label style={styles.switch}>
-                  <input type="checkbox" checked={!isEnglish} onChange={toggleLanguage} />
-                  <span style={styles.slider}></span>
+                  <Switch defaultChecked onChange={toggleLanguage} />
                 </label>
-                <span style={styles.label}>{isEnglish ? 'हिंदी' : 'English'}</span>
+                <span style={styles.label}>{isGrid ?'Grid View': 'Slide Effect' }</span>
               </div>
               <div className="" id="scrollableDiv1123"
                 style={{
@@ -461,25 +460,29 @@ const ActivityIndex = () => {
                                       Array.isArray(item.photo) &&
                                       item.photo.length > 0 ? (
                                       <div className="photo-container mt-2 ">
-                                        {/* <Carousel
-                                          className="photo-carousel"
-                                          dotPosition="bottom"
-                                          autoplay
-                                          effect="fade"
-                                        >
-                                          {item.photo.map((photo, photoIdx) => (
-                                            <div key={photoIdx}>
-                                              <Image
-                                                src={photo}
-                                                alt={`Photos ${photoIdx + 1}`}
-                                                className="carousel-image"
-                                                style={{ top: '0', left: '0', width: '100%', height: isAndroidUsed ? '200px' : '400px', justifyContent: 'center', alignItems: 'center' }}
-                                              />
+                                        {
+                                          !isGrid ? (
+                                            <Carousel
+                                              className="photo-carousel"
+                                              dotPosition="bottom"
+                                              autoplay
+                                              effect="fade"
+                                            >
+                                              {item.photo.map((photo, photoIdx) => (
+                                                <div key={photoIdx}>
+                                                  <Image
+                                                    src={photo}
+                                                    alt={`Photos ${photoIdx + 1}`}
+                                                    className="carousel-image"
+                                                    style={{ top: '0', left: '0', width: '100%', height: isAndroidUsed ? '200px' : '400px', justifyContent: 'center', alignItems: 'center' }}
+                                                  />
 
-                                            </div>
-                                          ))}
-                                        </Carousel> */}
-                                        <GridController item={item.photo} />
+                                                </div>
+                                              ))}
+                                            </Carousel>
+                                          ) : (<GridController item={item.photo} />)
+                                        }
+
                                       </div>
                                     ) : item.photo ? (
                                       <>
@@ -567,7 +570,7 @@ const styles = {
     position: 'relative',
     display: 'inline-block',
     width: '60px',
-    height: '34px',
+    height: '24px',
   },
   slider: {
     position: 'absolute',
@@ -584,7 +587,7 @@ const styles = {
     position: 'absolute',
     content: '""',
     height: '26px',
-    width: '26px',
+    width: '60px',
     left: '4px',
     bottom: '4px',
     backgroundColor: 'white',

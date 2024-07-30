@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchSelfMatrimonialById } from '../../../services/AdminService';
+import { useDispatch } from 'react-redux';
+import { setLoader } from '../../../actions/loaderAction';
 
 const MatrimonialInfo = (props) => {
   const { userDetails } = props;
-  const matrimonialDetails = userDetails?.data?.matrimonial;
-  const proposalPhotos = userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].proposal_photos;
+  const id = userDetails?.data?.id;
+  const [proposalPhotos, setProposalPhotos] = useState([]);
   const [brotherDetails, setBrotherDetails] = useState('');
   const [sisterDetails, setSisterDetails] = useState('');
+
+  const [matrimonial, setMatrimonial] = useState('');
+  const [serverError, setServerError] = useState('');
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getFileType = (url) => {
     // Extract the file extension from the URL
@@ -22,14 +32,45 @@ const MatrimonialInfo = (props) => {
     // Use the mapping or show the extension as-is
     return fileTypeMappings[extension] || extension.toUpperCase();
   };
-  useEffect(() => {
-    setBrotherDetails(userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].brothers_details);
-    setSisterDetails(userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].sisters_details);
-  }, [userDetails]);
 
-  useEffect(()=>{
-    window.scrollTo(0, 0);
-  },[]);
+  const getSelfMatrimonial = async (id) => {
+    dispatch(setLoader(true));
+    try {
+      const response = await fetchSelfMatrimonialById(id);
+      if (response && response.status === 200) {
+        setMatrimonial(response.data.data);
+        setServerError('');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        navigate("/admin");
+      } else if (error.response && error.response.status === 500) {
+        let errorMessage = error.response.data.message;
+        navigate("/server/error", { state: { errorMessage } });
+      }
+    } finally {
+      dispatch(setLoader(false));
+    }
+  }
+  const getArray = (value) => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    return [value];
+  }
+  useEffect(() => {
+    if (matrimonial) {
+      setBrotherDetails(matrimonial.brothers_details);
+      setSisterDetails(matrimonial.sisters_details);
+      setProposalPhotos(getArray(matrimonial.proposal_photos));
+    }
+  }, [matrimonial]);
+
+  useEffect(() => {
+    if (id) {
+      getSelfMatrimonial(id)
+    }
+  }, [id]);
 
   return (
     <div>
@@ -42,7 +83,7 @@ const MatrimonialInfo = (props) => {
                   <div className="card-title">
                     <h5 className="mb-3 text-primary">Matrimonial Info</h5>
                   </div>
-                  {userDetails && userDetails.data && userDetails.data.matrimonial[0] ? (
+                  {matrimonial ? (
                     <form className="p-3 mb-3 ">
                       <div className="row">
                         <div className="mb-3 col-md-6  col-sm-12 col-xs-12">
@@ -51,7 +92,7 @@ const MatrimonialInfo = (props) => {
                               <label className="fw-bold">Father Name :</label>
                             </div>
                             <div className="col-md-8">
-                              <label className="">{userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].father_name||"N/A"}</label>
+                              <label className="">{matrimonial.father_name || "N/A"}</label>
                             </div>
                           </div>
                         </div>
@@ -63,7 +104,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].mother_name||"N/A"}
+                                {matrimonial.mother_name || "N/A"}
                               </label>
                             </div>
                           </div>
@@ -74,15 +115,16 @@ const MatrimonialInfo = (props) => {
                         <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                           <div className="row">
                             <div className="col-md-4">
-                              <label className="fw-bold">
-                                Skin Tone :
-                              </label>
+                              <label className="fw-bold">Matrimonial Created For :</label>
                             </div>
                             <div className="col-md-8">
-                              <label className="">N/A</label>
+                              <label className="">
+                                {matrimonial.profile_created_for || "N/A"}
+                              </label>
                             </div>
                           </div>
                         </div>
+
 
                         <div className="mb-3 col-md-6 col-sm-12 col-xs-12">
                           <div className="row">
@@ -91,7 +133,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].height_in_feet||"N/A"}
+                                {matrimonial.height_in_feet || "N/A"}
                               </label>
                             </div>
                           </div>
@@ -108,7 +150,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].brother_count||"N/A"}
+                                {matrimonial.brother_count || "N/A"}
                               </label>
                             </div>
                           </div>
@@ -123,45 +165,45 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].sister_count||"N/A"}
+                                {matrimonial.sister_count || "N/A"}
                               </label>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                     
-                       <div className="row">
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                              <div className="row">
-                                <div className="col-4">
-                                  <label htmlFor="status" className="fw-bold">
-                                    Brother Details :
-                                  </label>
-                                </div>
-                                <div className="col-8">
-                                  <label className="w-75" >
-                                    {brotherDetails||"N/A"}
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
 
-                            <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
-                              <div className="row">
-                                <div className="col-md-4">
-                                  <label htmlFor="status" className="fw-bold ">
-                                    Sister Details :
-                                  </label>
-                                </div>
-                                <div className="col-md-8">
-                                  <label className="w-75">
-                                    {sisterDetails||"N/A"}
-                                  </label>
-                                </div>
-                              </div>
+                      <div className="row">
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <div className="row">
+                            <div className="col-4">
+                              <label htmlFor="status" className="fw-bold">
+                                Brother Details :
+                              </label>
+                            </div>
+                            <div className="col-8">
+                              <label className="w-75" >
+                                {brotherDetails || "N/A"}
+                              </label>
                             </div>
                           </div>
+                        </div>
+
+                        <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
+                          <div className="row">
+                            <div className="col-md-4">
+                              <label htmlFor="status" className="fw-bold ">
+                                Sister Details :
+                              </label>
+                            </div>
+                            <div className="col-md-8">
+                              <label className="w-75">
+                                {sisterDetails || "N/A"}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div className="row">
                         <div className="mb-3 col-lg-6 col-sm-12 col-xs-12">
@@ -173,7 +215,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].is_manglik===0?'NO':'YES'}
+                                {matrimonial.is_manglik}
                               </label>
                             </div>
                           </div>
@@ -188,7 +230,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].salary_package||"N/A"}
+                                {matrimonial.salary_package || "N/A"}
                               </label>
                             </div>
                           </div>
@@ -206,7 +248,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].paternal_gotra||"N/A"}                          </label>
+                                {matrimonial.paternal_gotra || "N/A"}                          </label>
                             </div>
                           </div>
                         </div>
@@ -220,7 +262,7 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].maternal_gotra||"N/A"}
+                                {matrimonial.maternal_gotra || "N/A"}
                               </label>
                             </div>
                           </div>
@@ -235,12 +277,12 @@ const MatrimonialInfo = (props) => {
                             </div>
                             <div className="col-md-8">
                               <label className="">
-                                {userDetails && userDetails.data && userDetails.data.matrimonial[0] && userDetails.data.matrimonial[0].biodata && (
+                                {matrimonial.biodata && (
                                   <span>
-                                    <a href={userDetails.data.matrimonial[0].biodata} download="biodata.pdf" target="_blank">
+                                    <a href={matrimonial.biodata} download="biodata.pdf" target="_blank">
                                       <i className="fa-regular fa-file-lines"></i> Download Biodata
                                     </a>
-                                    &nbsp;({getFileType(userDetails.data.matrimonial[0].biodata)})
+                                    &nbsp;({getFileType(matrimonial.biodata)})
                                   </span>
                                 )}
                               </label>
@@ -259,14 +301,10 @@ const MatrimonialInfo = (props) => {
                               <div className="col-md-8">
                                 <label className="proposal-Photo">
                                   {
-                                    proposalPhotos && Array.isArray(proposalPhotos) ? (proposalPhotos.map((item, idx) => (
+                                    proposalPhotos ? proposalPhotos.map((item, idx) => (
                                       <a href={item} target='_blank'>
                                         <img className='m-1' src={item} /> </a>
-                                    ))) : (
-                                      <a href={proposalPhotos} target='_blank'>
-                                        <img src={proposalPhotos} />
-                                      </a>
-                                    )
+                                    )) : ''
                                   }
                                 </label>
                               </div>

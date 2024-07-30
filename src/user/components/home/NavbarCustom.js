@@ -6,7 +6,7 @@ import { setLoader } from "../../actions/loaderAction";
 import { logout } from "../../actions/userAction";
 import UserNavDropdown from "./UserNavDropdown";
 import { getToken } from "../../services/userService";
-import { WechatOutlined } from "@ant-design/icons";
+import Chatbot from "./ChatBot";
 
 const NavbarCustom = (props) => {
   const { data, community } = props;
@@ -23,6 +23,14 @@ const NavbarCustom = (props) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showChat, setShowChat] = useState(false);
+
+  const toggleChatBox = () => {
+    setShowChat(!showChat);
+  };
+  const closeChatBox = () => {
+    setShowChat(false);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -352,17 +360,85 @@ const NavbarCustom = (props) => {
         <div className="container">
           <a className="navbar-brand">
             <img src={defaultLogo} alt="Logo" onClick={handleHomeClicked} />
-            <div className="" style={{ position: 'fixed', left: isAndroidUsed ? '75vw' : '94vw', color: '', fontSize: '60px', top: '90vh' }}
-              onClick={() => navigate('/user/chat/board')} >
-              <div style={{ position: 'relative', display: 'inline-block' }} onClick={handleChatClicked}>
+            <div>
+      <div
+        className="chat-button"
+        onClick={() => navigate('/user/chat/board')}
+      >
+        <div
+          className="chat-icon-container"
+          onClick={handleChatClicked}
+        >
+          {window.location.pathname === '/user/chat/board' ||
+          window.location.pathname === '/login' ||
+          window.location.pathname === '/register' ? (
+            ''
+          ) : (
+            <img
+              src="/user/images/chat-new.png"
+              alt="Chat"
+              className={isAndroidUsed ? 'chat-icon-android' : 'chat-icon'}
+            />
+          )}
+        </div>
 
-                {
-                  window.location.pathname === '/user/chat/board' || window.location.pathname === '/login' || window.location.pathname === '/register' ? '' : <img src="/user/images/chat-new.png" width={20} style={{ width: isAndroidUsed ? '70px' : '50px', zIndex: 1000 }} />
-                }
+        <style>
+          {`
+            @keyframes scaleAnimation {
+              0%, 100% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.2);
+              }
+            }
+          `}
+        </style>
+      </div>
+      <div>
+        <Chatbot />
+      </div>
 
-              </div>
+      <style>{`
+        .chat-button {
+          position: fixed;
+          left: ${isAndroidUsed ? '85vw' : '94vw'};
+          top: 79vh;
+          font-size: 60px;
+          animation: scaleAnimation 2s infinite;
+          z-index: 1000;
+        }
 
-            </div>
+        .chat-icon-container {
+          position: relative;
+          display: inline-block;
+        }
+
+        .chat-icon {
+          width: 50px;
+        }
+
+        .chat-icon-android {
+          width: 70px;
+        }
+
+        @media (max-width: 768px) {
+          .chat-button {
+            left: ${isAndroidUsed ? '75vw' : '85vw'};
+            top: 70vh;
+            font-size: 40px;
+          }
+
+          .chat-icon {
+            width: 40px;
+          }
+
+          .chat-icon-android {
+            width: 50px;
+          }
+        }
+      `}</style>
+    </div>
           </a>
 
           {/* Toggle button for small screens */}
@@ -396,6 +472,7 @@ const NavbarCustom = (props) => {
                   HOME
                 </a>
               </li>
+
               <li className="nav-item">
                 <a
                   className={`nav-link rounded ${window.location.pathname === "/user/search/job" || window.location.pathname === "/user/job/create" || window.location.pathname === "/user/all/applied/jobs"

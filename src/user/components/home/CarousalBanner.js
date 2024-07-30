@@ -166,7 +166,7 @@ function CarousalBanner() {
                                     dynamicHeight={false}>
 
                                     {imageUrls && imageUrls.length > 0 && imageUrls.map((item, idx) => (
-                                        <div style={{ top: '0', left: '0', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                                        <div key={idx} style={{ top: '0', left: '0', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                                             <img src={item} style={{ width: '100%', height: '400px', margin: '0 10px' }} alt={`Slide ${idx}`} />
                                         </div>
                                     ))}

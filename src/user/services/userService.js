@@ -868,7 +868,7 @@ export const fetchAllServices = async () => {
 //fetch user registered services
 export const fetchUserRegisteredServices = async () => {
   try {
-    const response = await apiWithHeaders.get("/user/services/registered");
+    const response = await apiWithHeaders.get("/authorized/user/services/registered");
     return response;
   } catch (error) {
     throw error;

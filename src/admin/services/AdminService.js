@@ -55,6 +55,15 @@ export const updateProfilePicture = async (formData) => {
         throw error;
     }
 }
+//fetch self-matrimonial
+export const fetchSelfMatrimonialById = async (id) => {
+    try {
+      const response = await apiWithFileHeaders.get(`/user/self-profile/matrimonial/${id}`);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 //upload multiple images
 export const uploadMultipleImages = async (formData) => {

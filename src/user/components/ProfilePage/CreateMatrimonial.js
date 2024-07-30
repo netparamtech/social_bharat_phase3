@@ -804,12 +804,12 @@ const CreateMatrimonial = () => {
                               fieldName="Educational Details" value={educaDetails} maxLength={400} isRequired={false} isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} />
                           </div>
                         </div>
-                        <div class="mb-3 col-12">
+                        <div className="mb-3 col-12">
                           <label className="form-label">Contact Detail {" "}<span className="text-danger">*</span></label>
                           <div className="form-check">
-                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} checked={isMyNumber} onClick={handleIsMyNumberClicked}
+                            <input className="form-check-input" type="radio" name="contactOption" id="useMyNumber" value={isMyNumber} defaultChecked={isMyNumber} onClick={handleIsMyNumberClicked}
                               isDisabled={updateFor && maritalStatus && updateFor.label === 'Self' && maritalStatus === 'Married'} />
-                            <label className="form-check-label" for="useMyNumber">Use My Number</label>
+                            <label className="form-check-label" htmlFor="useMyNumber">Use My Number</label>
                           </div>
                           <div>
                             <MobileInput handleMobileChange={handleMobileNumberClicked} value={mobile}

@@ -105,7 +105,7 @@ function Grid({ item }) {
                         <span className="close-button" onClick={closeModal}>
                             &times;
                         </span>
-                        <img src={selectedImage} alt="Selected" className="modal-image" />
+                        <img src={selectedImage} alt="Selected" className="modal-image" style={{ top: '0', left: '0', width: '100%', height: '400px', justifyContent: 'center', alignItems: 'center', borderRadius: '20px' }} />
                     </div>
                 </div>
             )}

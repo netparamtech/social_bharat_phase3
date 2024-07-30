@@ -918,7 +918,7 @@ function Jobs() {
                             <div id="current-job-section" className="col-12 col-md-5 mt-2">
                                 <div className="col-12 mb-3 search-partner-cards" >
                                     <div className="">
-                                        <h4 className="text-danger">Current Openings</h4>
+                                        <h4 className="text-danger">Referral Job Opening</h4>
                                         <div className="">
                                             <CurrentJobOpening />
                                         </div>
@@ -1054,7 +1054,7 @@ function Jobs() {
                         <div className="container">
                             <div className="mt-2">
                                 <div className="d-flex justify-content-between">
-                                    <h4>Job Board</h4>
+                                    <h4>Current Government and Private Jobs</h4>
                                     {(searchText || selectedCity || selectedState) && (
                                         <button
                                             type="button"
@@ -1511,7 +1511,7 @@ function Jobs() {
                         <div id="current-job-section" className="col-12 col-md-5 mt-2">
                             <div className="col-12 mb-3 search-partner-cards" >
                                 <div className="">
-                                    <h4 className="text-danger">Current Openings</h4>
+                                    <h4 className="text-danger">Referral Job Opening</h4>
                                     <div className="">
                                         <CurrentJobOpening />
                                     </div>

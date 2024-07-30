@@ -352,7 +352,7 @@ const UserRoutes = () => {
             path: '/grid',
             component: GridController,
             exact: true
-        }
+        },
 
     ];
 }

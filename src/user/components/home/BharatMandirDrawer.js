@@ -88,7 +88,7 @@ const BharatMandirDrawer = () => {
     return (
         <div id='bharatmatamandir'>
 
-            <li className='' onClick={showDrawer}>
+            <li className='hover-pointer' onClick={showDrawer}>
                 <i className="fa fa-history m-2" fill="currentColor" aria-hidden="true"></i>
                 BHARAT MANDIR
             </li>

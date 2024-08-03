@@ -38,7 +38,7 @@ body::-webkit-scrollbar {
 /* Add custom styles if needed */
 @media (max-width: 1300px) {
   #customNavID .navbar-brand img {
-    max-width: 100px;
+    max-width: 150px;
     margin-left: 20px;
   }
 }

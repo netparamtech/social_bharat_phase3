@@ -6,6 +6,8 @@ import { login } from '../../actions/userAction';
 import { Input } from 'antd';
 import { setLoader } from '../../actions/loaderAction';
 import PasswordField from '../custom/PasswordField';
+import { toast } from 'react-toastify';
+import { errorOptions } from '../../../toastOption';
 
 const SetPassword = () => {
     const loggedUser = useSelector((state) => state.userAuth);
@@ -20,20 +22,29 @@ const SetPassword = () => {
     const [alertClass, setAlertClass] = useState('');
     const [serverError, setServerError] = useState("");
 
+    const [passwordError,setPasswordError] = useState('');
+    const [confPassError,setConfPassError] = useState('');
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordChange = (event,errMsg) => {
         setPassword(event.target.value);
+        setPasswordError(errMsg);
     }
 
-    const handleConfirmPasswordChange = (event) => {
+    const handleConfirmPasswordChange = (event,errMsg) => {
         setConfirmPassword(event.target.value);
+        setConfPassError(errMsg);
     }
 
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+        if(passwordError||confPassError||!password||!confirmPassword){
+            toast.error("Please fill in all the required fields before submitting.",errorOptions);
+            return;
+        }
         dispatch(setLoader(true));
 
         const updatedUser = {

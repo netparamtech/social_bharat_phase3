@@ -361,29 +361,29 @@ const NavbarCustom = (props) => {
           <a className="navbar-brand">
             <img src={defaultLogo} alt="Logo" onClick={handleHomeClicked} />
             <div>
-      <div
-        className="chat-button"
-        onClick={() => navigate('/user/chat/board')}
-      >
-        <div
-          className="chat-icon-container"
-          onClick={handleChatClicked}
-        >
-          {window.location.pathname === '/user/chat/board' ||
-          window.location.pathname === '/login' ||
-          window.location.pathname === '/register' ? (
-            ''
-          ) : (
-            <img
-              src="/user/images/chat-new.png"
-              alt="Chat"
-              className={isAndroidUsed ? 'chat-icon-android' : 'chat-icon'}
-            />
-          )}
-        </div>
+              <div
+                className="chat-button"
+                onClick={() => navigate('/user/chat/board')}
+              >
+                <div
+                  className="chat-icon-container"
+                  onClick={handleChatClicked}
+                >
+                  {window.location.pathname === '/user/chat/board' ||
+                    window.location.pathname === '/login' ||
+                    window.location.pathname === '/register' ? (
+                    ''
+                  ) : (
+                    <img
+                      src="/user/images/chat-new.png"
+                      alt="Chat"
+                      className={isAndroidUsed ? 'chat-icon-android' : 'chat-icon'}
+                    />
+                  )}
+                </div>
 
-        <style>
-          {`
+                <style>
+                  {`
             @keyframes scaleAnimation {
               0%, 100% {
                 transform: scale(1);
@@ -393,17 +393,17 @@ const NavbarCustom = (props) => {
               }
             }
           `}
-        </style>
-      </div>
-      <div>
-        <Chatbot />
-      </div>
+                </style>
+              </div>
+              <div>
+                <Chatbot />
+              </div>
 
-      <style>{`
+              <style>{`
         .chat-button {
           position: fixed;
           left: ${isAndroidUsed ? '85vw' : '94vw'};
-          top: 79vh;
+          top: 69vh;
           font-size: 60px;
           animation: scaleAnimation 2s infinite;
           z-index: 1000;
@@ -438,7 +438,7 @@ const NavbarCustom = (props) => {
           }
         }
       `}</style>
-    </div>
+            </div>
           </a>
 
           {/* Toggle button for small screens */}
@@ -588,7 +588,7 @@ const NavbarCustom = (props) => {
 
             {/* Drawer for small screens */}
             <Drawer
-              title="Menu"
+              title="Menu "
               placement="left"
               closable={true}
               onClose={showDrawer}

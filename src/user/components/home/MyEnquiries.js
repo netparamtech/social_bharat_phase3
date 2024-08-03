@@ -10,6 +10,7 @@ import GeneralEnquiry from './GeneralEnquiry';
 
 const MyEnquiries = () => {
     const user = useSelector((state) => state.userAuth);
+    const [isAuthenticUser, setIsAuthenticatedUser] = useState(user && user.isAuthenticated)
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [serverError, setServerError] = useState('');
@@ -141,7 +142,7 @@ const MyEnquiries = () => {
                     <Button  style={{backgroundColor:isGeneral?'':'red'}} type="primary" onClick={() => {
                         setOpen(true);
                         setIsGeneral(false);
-                    }}>
+                    }} disabled={!isAuthenticUser}>
                         My Enquiries
                     </Button>
                     <Button style={{backgroundColor:isGeneral?'red':''}} type="primary" onClick={handleGeneralClicked}>

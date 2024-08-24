@@ -126,7 +126,7 @@ const Chatbot = () => {
               ></i>
             </div>
             <iframe
-              src="http://127.0.0.1:5000/"
+              src="https://chatbot.socialbharat.org/"
               width="100%"
               height="100%"
               style={{ border: 'none' }}

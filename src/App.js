@@ -1,15 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { Suspense, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Spin } from "antd";
 import adminRoutes from "./admin/routes";
 import ProtectedRoute from "./admin/utils/ProtectedRoute";
 import UserProtectedRoute from "./user/util/UserProtectedRoute";
-import { useDispatch, useSelector } from "react-redux";
-import { Spin } from "antd";
 import UserRoutes from "./user/UserRoutes";
 import { logout } from "./user/actions/userAction";
 import NotFound from "./NotFound";
 import CreateCurrentJobPage from "./user/pages/CreateCurrentJobPage";
 import UpdateCurrentOpeningPage from "./user/pages/UpdateCurrentOpeningPage";
+
 const LazyUserRoutes = React.lazy(() => import("./user/UserRoutes"));
 
 function App() {
@@ -31,18 +32,18 @@ function App() {
         dispatch(logout());
       }
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (isAdmin) {
       setHaveJobPermission(user.user.permissions && user.user.permissions.have_job_permission);
     }
-  }, [isAdmin]);
+  }, [isAdmin, user]);
 
   return (
     <div className="">
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>loading...</div>}>
           <Spin spinning={isLoading}>
             <Routes>
               {UserRoutes().map((route, index) => (
